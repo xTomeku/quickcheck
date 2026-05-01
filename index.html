@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickCheck - Gestisci la tua Carriera Universitaria</title>
+    <meta name="description" content="QuickCheck è l'app definitiva per gli studenti UniSalento. Consulta orari, prenota esami e organizza le tue note in modo semplice e veloce.">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (location.pathname.endsWith('.html')) {
+            const cleanUrl = location.pathname.substring(0, location.pathname.length - 5);
+            window.history.replaceState(null, '', cleanUrl);
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-main">
+            <button class="hamburger" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="index" class="nav-brand">
+                <img src="assets/logo.png" alt="QuickCheck Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'2\'><path d=\'M9 11l3 3L22 4\'/><path d=\'M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11\'/></svg>'">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index" class="active">Home</a></li>
+                <li><a href="download">Download</a></li>
+                <li><a href="credits">Credits</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <img src="assets/logo.png" alt="QuickCheck App Icon" class="hero-logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 24 24\' fill=\'%23001A33\' stroke=\'%23D4AF37\' stroke-width=\'1\'><rect x=\'2\' y=\'2\' width=\'20\' height=\'20\' rx=\'5\' ry=\'5\'/><path d=\'M8 12l3 3 5-5\'/></svg>'">
+            <h2 class="hero-app-name">QuickCheck</h2>
+            <h1>Il tuo percorso accademico, a portata di tap.</h1>
+            <p>Progettata per gli studenti dell'Università del Salento. Visualizza e organizza i tuoi orari, ricerca le aule e consulta la rubrica del personale d'Ateneo in un'unica interfaccia elegante e intuitiva.</p>
+            
+            <div class="btn-group">
+                <div class="btn-wrapper">
+                    <a href="#" id="hero-download-btn" class="btn btn-primary"> <!-- link dinamico -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        Scarica APK
+                    </a>
+                    <span class="platform-subtitle">Android</span>
+                </div>
+                <div class="btn-wrapper">
+                    <a href="https://quick-check-unisalento.vercel.app/" class="btn btn-secondary"> <!-- link webapp -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                        Vai alla Web App
+                    </a>
+                    <span class="platform-subtitle">iOS, Android e PC</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="wavy-divider">
+            <svg viewBox="0 0 1200 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 20 C 50 0, 50 40, 100 20 C 150 0, 150 40, 200 20 C 250 0, 250 40, 300 20 C 350 0, 350 40, 400 20 C 450 0, 450 40, 500 20 C 550 0, 550 40, 600 20 C 650 0, 650 40, 700 20 C 750 0, 750 40, 800 20 C 850 0, 850 40, 900 20 C 950 0, 950 40, 1000 20 C 1050 0, 1050 40, 1100 20 C 1150 0, 1150 40, 1200 20" stroke="rgba(255, 255, 255, 0.15)" stroke-width="3" fill="none" />
+            </svg>
+        </div>
+
+        <!-- Features Grid -->
+        <section class="features">
+            <h2 class="section-title">Cosa offre QuickCheck</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon">📅</div>
+                    <h3>Orari Lezioni</h3>
+                    <p>Sincronizzazione in tempo reale con i calendari di ateneo. Visualizzazione ad elenco o a tabella con indicazione delle aule e note dei docenti.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Personalizza Orario</h3>
+                    <p>Seleziona solo le materie che segui per generare un orario su misura, eliminando il disordine delle lezioni che non ti interessano.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🏫</div>
+                    <h3>Ricerca Aule</h3>
+                    <p>Trova rapidamente le aule per le tue lezioni e verifica la disponibilità degli spazi in tempo reale.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">📇</div>
+                    <h3>Rubrica Ateneo</h3>
+                    <p>Accedi facilmente ai contatti del personale accademico UniSalento per comunicazioni rapide ed efficaci.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💾</div>
+                    <h3>Modalità Offline</h3>
+                    <p>Accedi ai tuoi orari salvati anche senza connessione internet. I dati sono sempre disponibili sul tuo dispositivo.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>Design Premium</h3>
+                    <p>Modalità scura immersiva con accenti dorati, navigazione fluida e animazioni studiate per la migliore esperienza.</p>
+                </div>
+                
+            </div>
+        </section>
+    </main>
+
+    <div class="wavy-divider">
+            <svg viewBox="0 0 1200 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 20 C 50 0, 50 40, 100 20 C 150 0, 150 40, 200 20 C 250 0, 250 40, 300 20 C 350 0, 350 40, 400 20 C 450 0, 450 40, 500 20 C 550 0, 550 40, 600 20 C 650 0, 650 40, 700 20 C 750 0, 750 40, 800 20 C 850 0, 850 40, 900 20 C 950 0, 950 40, 1000 20 C 1050 0, 1050 40, 1100 20 C 1150 0, 1150 40, 1200 20" stroke="rgba(255, 255, 255, 0.15)" stroke-width="3" fill="none" />
+            </svg>
+        </div>
+
+        <!-- Contacts Section -->
+        <section class="contacts-section">
+            <h2 class="section-title">Hai bisogno di aiuto?</h2>
+            <p style="color: var(--text-muted);">Siamo a tua disposizione per suggerimenti o segnalazioni bug</p>
+            
+            <div class="contacts-grid" id="contacts-container">
+                <!-- Dynamic Content -->
+                <p style="color: var(--text-muted);">Caricamento contatti...</p>
+            </div>
+        </section>
+
+    <footer style="text-align: center; padding: 2rem; margin-top: 4rem; border-top: 1px solid var(--glass-border);">
+        <a href="https://github.com/xTomeku/Quick_Check_Unisalento" target="_blank" rel="noopener noreferrer" class="footer-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        </a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>

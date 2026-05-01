@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - QuickCheck</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        if (location.pathname.endsWith('.html')) {
+            const cleanUrl = location.pathname.substring(0, location.pathname.length - 5);
+            window.history.replaceState(null, '', cleanUrl);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        .admin-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        .login-card {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 0.6rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            background: var(--primary-gold);
+            color: var(--bg-dark);
+            border-color: var(--primary-gold);
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .update-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+
+        .update-item-info h3 {
+            margin-bottom: 0.2rem;
+            color: var(--primary-gold);
+        }
+
+        .update-item-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .badge-latest {
+            background: var(--primary-gold);
+            color: var(--primary-blue-dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-main">
+            <a href="index" class="nav-brand">
+                <img src="assets/logo.png" alt="Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index">Sito</a></li>
+                <li><a href="#" class="active">Admin</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Login Form -->
+        <section id="login-section" class="admin-container">
+            <div class="card login-card">
+                <h2 style="text-align: center; margin-bottom: 2rem;">Accedi</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required placeholder="Inserisci la tua email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" required placeholder="Inserisci la password">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entra</button>
+                    <p id="login-error" style="color: #ff4d4d; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none;">Credenziali errate</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Admin Dashboard -->
+        <section id="admin-dashboard" class="admin-container hidden">
+            <div class="admin-header">
+                <div>
+                    <h1>Pannello Admin</h1>
+                    <p id="user-email-display" style="color: var(--text-muted); font-size: 0.9rem;"></p>
+                </div>
+                <button id="logout-btn" class="btn btn-secondary btn-sm">Esci</button>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="updates-section">Aggiornamenti</button>
+                <button class="tab-btn" data-tab="credits-section">Credits</button>
+                <button class="tab-btn" data-tab="contacts-section">Contatti</button>
+            </div>
+
+            <!-- Updates Section -->
+            <div id="updates-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Gestione Versioni</h2>
+                    <button id="add-update-btn" class="btn btn-primary btn-sm">+ Nuovo</button>
+                </div>
+                <div id="updates-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- Credits Section -->
+            <div id="credits-section" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Gestione Credits</h2>
+                    <button id="add-credit-btn" class="btn btn-primary btn-sm">+ Nuova Scheda</button>
+                </div>
+                <div id="credits-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- Contacts Management Section -->
+            <div id="contacts-section" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Gestione Link Contatto</h2>
+                    <button id="add-contact-btn" class="btn btn-primary btn-sm">+ Nuovo Contatto</button>
+                </div>
+                <div id="contacts-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Update Modal -->
+    <div id="update-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="modal-title" style="margin-bottom: 1.5rem;">Aggiungi Aggiornamento</h2>
+            <form id="update-form">
+                <input type="hidden" id="update-id">
+                <div class="form-group">
+                    <label for="v-version">Versione (es. v1.4.0)</label>
+                    <input type="text" id="v-version" class="form-control" placeholder="v1.4.0">
+                </div>
+                <div class="form-group">
+                    <label for="v-date">Data (es. 15 Aprile 2026)</label>
+                    <input type="text" id="v-date" class="form-control" placeholder="15 Aprile 2026">
+                </div>
+                <div class="form-group">
+                    <label for="v-url">URL Download (APK)</label>
+                    <input type="url" id="v-url" class="form-control" placeholder="https://github.com/...">
+                </div>
+                <div class="form-group">
+                    <label for="v-details">Dettagli Sottotitolo (es. Solo Android • 6.4 MB)</label>
+                    <input type="text" id="v-details" class="form-control" placeholder="Solo Android • 6.4 MB">
+                </div>
+                <div class="form-group">
+                    <label for="v-changes">Patch Notes (Una riga per ogni punto)</label>
+                    <textarea id="v-changes" class="form-control" placeholder="Aggiunta funzione X&#10;Fixato bug Y"></textarea>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="v-latest" style="width: 20px; height: 20px;">
+                    <label for="v-latest" style="margin: 0;">Imposta come Ultima Versione (In evidenza)</label>
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Credit Modal -->
+    <div id="credit-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="credit-modal-title">Nuova Scheda Credit</h2>
+            <form id="credit-form">
+                <input type="hidden" id="credit-id">
+                <div class="form-group">
+                    <label for="c-category">Categoria (es. Sviluppo Principale)</label>
+                    <input type="text" id="c-category" class="form-control" placeholder="Es: Tecnologie Utilizzate">
+                </div>
+                <div class="form-group">
+                    <label for="c-title">Titolo Scheda</label>
+                    <input type="text" id="c-title" class="form-control" placeholder="Es: Flutter">
+                </div>
+                <div class="form-group">
+                    <label for="c-description">Descrizione</label>
+                    <textarea id="c-description" class="form-control" rows="3" placeholder="Descrizione del ruolo o della tecnologia"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="c-order">Ordine di visualizzazione</label>
+                    <input type="number" id="c-order" class="form-control" value="0">
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-credit-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="contact-modal-title">Nuovo Contatto</h2>
+            <form id="contact-form">
+                <input type="hidden" id="contact-id">
+                <div class="form-group">
+                    <label for="co-icon">Icona (Emoji, es: 📧, 💻, 📢)</label>
+                    <input type="text" id="co-icon" class="form-control" placeholder="Es: 📧">
+                </div>
+                <div class="form-group">
+                    <label for="co-label">Etichetta (Es: Email, GitHub, Telegram)</label>
+                    <input type="text" id="co-label" class="form-control" placeholder="Es: Email">
+                </div>
+                <div class="form-group">
+                    <label for="co-value">Testo Visualizzato (Es: sciurba.stefano@gmail.com)</label>
+                    <input type="text" id="co-value" class="form-control" placeholder="Es: Nome Utente o Email">
+                </div>
+                <div class="form-group">
+                    <label for="co-url">URL Link (Es: mailto:... o https://...)</label>
+                    <input type="text" id="co-url" class="form-control" placeholder="Es: https://t.me/...">
+                </div>
+                <div class="form-group">
+                    <label for="co-order">Ordine</label>
+                    <input type="number" id="co-order" class="form-control" value="0">
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-contact-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>
