@@ -464,9 +464,9 @@ footer {
     text-align: center;
     padding: 2rem;
     border-top: 1px solid var(--glass-border);
-    background: rgba(0, 26, 51, 0.8);
+    background: transparent;
     color: var(--text-muted);
-    margin-top: auto;
+    margin-top: 2rem; /* Margine ridotto e centralizzato qui */
 }
 
 /* Responsive Design */
@@ -679,7 +679,7 @@ footer {
 
 /* Legal Section */
 .legal-section {
-    padding: 4rem 5%;
+    padding: 4rem 5% 1rem 5%; /* Ridotto il padding inferiore a 1rem */
     max-width: 900px;
     margin: 0 auto;
     border-top: 1px solid var(--glass-border);
@@ -687,7 +687,11 @@ footer {
 }
 
 .legal-block {
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+}
+
+.legal-block:last-child {
+    margin-bottom: 0;
 }
 
 .legal-block h2 {
