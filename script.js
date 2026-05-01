@@ -16,10 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Supabase Configuration
-    const SUPABASE_URL = 'https://wcqbkqtsthihtosvnnct.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjcWJrcXRzdGhpaHRvc3ZubmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0NTg4NzgsImV4cCI6MjA5MzAzNDg3OH0.LLO3eCJSujeS0OaFd2JSLBm5c2TbZXD7BBcMmv-Coxc';
-
     // Initialize Supabase only if we are on pages that need it
     const hasDynamicElements = document.getElementById('latest-update-container') || 
                                document.getElementById('timeline-container') || 
@@ -28,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                document.getElementById('contacts-container');
 
     if (window.supabase && hasDynamicElements) {
-        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
         loadAllDynamicContent(supabaseClient);
     }
 });

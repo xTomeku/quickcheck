@@ -1,7 +1,5 @@
-const SUPABASE_URL = 'https://wcqbkqtsthihtosvnnct.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndjcWJrcXRzdGhpaHRvc3ZubmN0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc0NTg4NzgsImV4cCI6MjA5MzAzNDg3OH0.LLO3eCJSujeS0OaFd2JSLBm5c2TbZXD7BBcMmv-Coxc';
-
-const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+/* global supabase */
+const _supabase = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
 
 // Login & Core DOM
 const loginSection = document.getElementById('login-section');
@@ -30,6 +28,9 @@ const sections = {
 // Legal DOM
 const legalList = document.getElementById('legal-list');
 const addLegalBtn = document.getElementById('add-legal-btn');
+const legalModal = document.getElementById('legal-modal');
+const legalForm = document.getElementById('legal-form');
+const closeLegalModal = document.getElementById('close-legal-modal');
 
 // Credits DOM
 const creditsList = document.getElementById('credits-list');
@@ -426,13 +427,6 @@ async function deleteContact(id) {
     if (error) alert(error.message);
     else fetchContacts();
 }
-
-// Legal DOM
-const legalList = document.getElementById('legal-list');
-const addLegalBtn = document.getElementById('add-legal-btn');
-const legalModal = document.getElementById('legal-modal');
-const legalForm = document.getElementById('legal-form');
-const closeLegalModal = document.getElementById('close-legal-modal');
 
 // Legal Logic
 async function fetchLegal() {
