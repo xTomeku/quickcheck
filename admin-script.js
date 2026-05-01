@@ -23,8 +23,13 @@ const tabBtns = document.querySelectorAll('.tab-btn');
 const sections = {
     'updates-section': document.getElementById('updates-section'),
     'credits-section': document.getElementById('credits-section'),
-    'contacts-section': document.getElementById('contacts-section')
+    'contacts-section': document.getElementById('contacts-section'),
+    'legal-section': document.getElementById('legal-section')
 };
+
+// Legal DOM
+const legalList = document.getElementById('legal-list');
+const addLegalBtn = document.getElementById('add-legal-btn');
 
 // Credits DOM
 const creditsList = document.getElementById('credits-list');
@@ -57,6 +62,7 @@ function showDashboard(user) {
     fetchUpdates();
     fetchCredits();
     fetchContacts();
+    fetchLegal();
 }
 
 // Tab Switching
@@ -420,5 +426,77 @@ async function deleteContact(id) {
     if (error) alert(error.message);
     else fetchContacts();
 }
+
+// Legal Logic (Reusing Credits Modal)
+async function fetchLegal() {
+    legalList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento note legali...</p>';
+    
+    const { data, error } = await _supabase
+        .from('credits')
+        .select('*')
+        .or('category.eq.Termini di Servizio,category.eq.Informativa sulla Privacy')
+        .order('category', { ascending: false }) // Group by category
+        .order('order_index', { ascending: true });
+
+    if (error) {
+        legalList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
+        return;
+    }
+
+    legalList.innerHTML = '';
+    if (data.length === 0) {
+        legalList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna nota legale creata.</p>';
+    }
+
+    data.forEach(note => {
+        const item = document.createElement('div');
+        item.className = 'update-item';
+        item.innerHTML = `
+            <div class="update-item-info">
+                <h3>${note.title} <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${note.category}</span></h3>
+                <p>${note.description.substring(0, 100)}${note.description.length > 100 ? '...' : ''}</p>
+            </div>
+            <div class="actions">
+                <button class="btn btn-secondary btn-sm edit-legal-btn" data-id="${note.id}" style="margin-top:0">Modifica</button>
+                <button class="btn btn-secondary btn-sm delete-legal-btn" data-id="${note.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+            </div>
+        `;
+        legalList.appendChild(item);
+    });
+
+    document.querySelectorAll('.edit-legal-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            openCreditEditModal(btn.dataset.id, data);
+        });
+    });
+
+    document.querySelectorAll('.delete-legal-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteLegal(btn.dataset.id));
+    });
+}
+
+addLegalBtn.addEventListener('click', () => {
+    creditForm.reset();
+    document.getElementById('credit-id').value = '';
+    document.getElementById('c-category').value = 'Termini di Servizio'; // Default
+    document.getElementById('credit-modal-title').textContent = 'Nuova Nota Legale';
+    creditModal.classList.remove('hidden');
+});
+
+async function deleteLegal(id) {
+    if (!confirm('Eliminare questa nota legale?')) return;
+    const { error } = await _supabase.from('credits').delete().eq('id', id);
+    if (error) alert(error.message);
+    else fetchLegal();
+}
+
+// Intercept credit form submit to also refresh legal list if needed
+const originalCreditSubmit = creditForm.onsubmit; // Wait, it uses addEventListener
+// I'll just update fetchCredits to also fetchLegal if we are in that tab or just always
+// Better: update the submit listener to call both
+creditForm.addEventListener('submit', () => {
+    // This is already handled by the existing listener but we need to ensure legalList refreshes
+    setTimeout(fetchLegal, 500); 
+});
 
 checkSession();

@@ -45,6 +45,54 @@ async function loadAllDynamicContent(_supabase) {
     } else if (document.getElementById('latest-update-container') || document.getElementById('hero-download-btn')) {
         loadDynamicUpdates(_supabase);
     }
+
+    // Legal Content (only on Home)
+    if (document.getElementById('legal-container')) {
+        loadLegal(_supabase);
+    }
+}
+
+async function loadLegal(_supabase) {
+    const container = document.getElementById('legal-container');
+    // We use the credits table but with specific legal categories
+    const { data, error } = await _supabase
+        .from('credits')
+        .select('*')
+        .or('category.eq.Termini di Servizio,category.eq.Informativa sulla Privacy')
+        .order('order_index', { ascending: true });
+
+    if (error || !data || data.length === 0) return;
+
+    // Group by category
+    const grouped = data.reduce((acc, item) => {
+        if (!acc[item.category]) acc[item.category] = [];
+        acc[item.category].push(item);
+        return acc;
+    }, {});
+
+    container.innerHTML = '';
+    
+    // Fixed order for legal sections
+    const categories = ['Termini di Servizio', 'Informativa sulla Privacy'];
+    
+    categories.forEach(cat => {
+        if (grouped[cat]) {
+            const block = document.createElement('div');
+            block.className = 'legal-block';
+            
+            let html = `<h2>${cat}</h2>`;
+            grouped[cat].forEach(item => {
+                html += `
+                    <div class="legal-item">
+                        <span class="item-title">${item.title}</span> ${item.description}
+                    </div>
+                `;
+            });
+            
+            block.innerHTML = html;
+            container.appendChild(block);
+        }
+    });
 }
 
 async function loadContacts(_supabase) {
