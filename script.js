@@ -54,11 +54,10 @@ async function loadAllDynamicContent(_supabase) {
 
 async function loadLegal(_supabase) {
     const container = document.getElementById('legal-container');
-    // We use the credits table but with specific legal categories
+    // We now use the dedicated 'legal' table
     const { data, error } = await _supabase
-        .from('credits')
+        .from('legal')
         .select('*')
-        .or('category.eq.Termini di Servizio,category.eq.Informativa sulla Privacy')
         .order('order_index', { ascending: true });
 
     if (error || !data || data.length === 0) return;

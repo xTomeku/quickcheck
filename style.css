@@ -238,12 +238,9 @@ main {
 }
 
 .btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex: 1;
-    width: 100%;
-    text-align: center;
     gap: 10px;
     padding: 1.2rem 2.5rem;
     border-radius: var(--border-radius);
@@ -253,6 +250,8 @@ main {
     transition: var(--transition);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    width: fit-content;
+    border: none;
 }
 
 .btn-lg {
@@ -266,10 +265,13 @@ main {
 }
 
 .btn-sm {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    margin-top: 1rem;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.85rem;
     border-radius: 8px;
+}
+
+.btn-block {
+    width: 100%;
 }
 
 .btn-primary {

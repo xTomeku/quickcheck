@@ -183,7 +183,7 @@
                         <label for="password">Password</label>
                         <input type="password" id="password" class="form-control" required placeholder="Inserisci la password">
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Entra</button>
+                    <button type="submit" class="btn btn-primary btn-block">Entra</button>
                     <p id="login-error" style="color: #ff4d4d; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none;">Credenziali errate</p>
                 </form>
             </div>
@@ -352,6 +352,39 @@
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-contact-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Legal Modal -->
+    <div id="legal-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="legal-modal-title">Nuova Nota Legale</h2>
+            <form id="legal-form">
+                <input type="hidden" id="legal-id">
+                <div class="form-group">
+                    <label for="l-category">Categoria (Termini di Servizio / Informativa sulla Privacy)</label>
+                    <select id="l-category" class="form-control">
+                        <option value="Termini di Servizio">Termini di Servizio</option>
+                        <option value="Informativa sulla Privacy">Informativa sulla Privacy</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="l-title">Titolo Punto (es. 1. ACCETTAZIONE:)</label>
+                    <input type="text" id="l-title" class="form-control" placeholder="Es: 1. ACCETTAZIONE:">
+                </div>
+                <div class="form-group">
+                    <label for="l-description">Descrizione / Contenuto</label>
+                    <textarea id="l-description" class="form-control" rows="5" placeholder="Testo della clausola..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="l-order">Ordine di visualizzazione</label>
+                    <input type="number" id="l-order" class="form-control" value="0">
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-legal-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
                 </div>
             </form>
         </div>

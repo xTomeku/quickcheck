@@ -427,15 +427,21 @@ async function deleteContact(id) {
     else fetchContacts();
 }
 
-// Legal Logic (Reusing Credits Modal)
+// Legal DOM
+const legalList = document.getElementById('legal-list');
+const addLegalBtn = document.getElementById('add-legal-btn');
+const legalModal = document.getElementById('legal-modal');
+const legalForm = document.getElementById('legal-form');
+const closeLegalModal = document.getElementById('close-legal-modal');
+
+// Legal Logic
 async function fetchLegal() {
     legalList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento note legali...</p>';
     
     const { data, error } = await _supabase
-        .from('credits')
+        .from('legal')
         .select('*')
-        .or('category.eq.Termini di Servizio,category.eq.Informativa sulla Privacy')
-        .order('category', { ascending: false }) // Group by category
+        .order('category', { ascending: false })
         .order('order_index', { ascending: true });
 
     if (error) {
@@ -465,9 +471,7 @@ async function fetchLegal() {
     });
 
     document.querySelectorAll('.edit-legal-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            openCreditEditModal(btn.dataset.id, data);
-        });
+        btn.addEventListener('click', () => openLegalEditModal(btn.dataset.id, data));
     });
 
     document.querySelectorAll('.delete-legal-btn').forEach(btn => {
@@ -475,28 +479,59 @@ async function fetchLegal() {
     });
 }
 
+function openLegalEditModal(id, data) {
+    const note = data.find(l => l.id === id);
+    if (!note) return;
+
+    document.getElementById('legal-id').value = note.id;
+    document.getElementById('l-category').value = note.category;
+    document.getElementById('l-title').value = note.title;
+    document.getElementById('l-description').value = note.description;
+    document.getElementById('l-order').value = note.order_index;
+    
+    document.getElementById('legal-modal-title').textContent = 'Modifica Nota Legale';
+    legalModal.classList.remove('hidden');
+}
+
 addLegalBtn.addEventListener('click', () => {
-    creditForm.reset();
-    document.getElementById('credit-id').value = '';
-    document.getElementById('c-category').value = 'Termini di Servizio'; // Default
-    document.getElementById('credit-modal-title').textContent = 'Nuova Nota Legale';
-    creditModal.classList.remove('hidden');
+    legalForm.reset();
+    document.getElementById('legal-id').value = '';
+    document.getElementById('legal-modal-title').textContent = 'Nuova Nota Legale';
+    legalModal.classList.remove('hidden');
+});
+
+closeLegalModal.addEventListener('click', () => legalModal.classList.add('hidden'));
+
+legalForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('legal-id').value;
+    const category = document.getElementById('l-category').value;
+    const title = document.getElementById('l-title').value;
+    const description = document.getElementById('l-description').value;
+    const order_index = parseInt(document.getElementById('l-order').value) || 0;
+
+    const payload = { category, title, description, order_index };
+
+    let result;
+    if (id) {
+        result = await _supabase.from('legal').update(payload).eq('id', id);
+    } else {
+        result = await _supabase.from('legal').insert([payload]);
+    }
+
+    if (result.error) {
+        alert('Errore: ' + result.error.message);
+    } else {
+        legalModal.classList.add('hidden');
+        fetchLegal();
+    }
 });
 
 async function deleteLegal(id) {
     if (!confirm('Eliminare questa nota legale?')) return;
-    const { error } = await _supabase.from('credits').delete().eq('id', id);
+    const { error } = await _supabase.from('legal').delete().eq('id', id);
     if (error) alert(error.message);
     else fetchLegal();
 }
-
-// Intercept credit form submit to also refresh legal list if needed
-const originalCreditSubmit = creditForm.onsubmit; // Wait, it uses addEventListener
-// I'll just update fetchCredits to also fetchLegal if we are in that tab or just always
-// Better: update the submit listener to call both
-creditForm.addEventListener('submit', () => {
-    // This is already handled by the existing listener but we need to ensure legalList refreshes
-    setTimeout(fetchLegal, 500); 
-});
 
 checkSession();
