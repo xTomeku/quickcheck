@@ -210,14 +210,22 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     align-items: stretch;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
 }
 
 .btn-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+    align-items: stretch; /* Cambiato da center per permettere al bottone di riempire la larghezza */
+    gap: 0.75rem;
     flex: 1;
+    min-width: 280px; /* Impedisce che diventino troppo stretti su PC */
+}
+
+.btn-wrapper .platform-subtitle {
+    text-align: center;
 }
 
 .platform-subtitle {
@@ -241,8 +249,8 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 1.2rem 2.5rem;
+    gap: 12px;
+    padding: 1.2rem 2rem;
     border-radius: var(--border-radius);
     font-weight: 600;
     font-size: 1.1rem;
@@ -250,8 +258,9 @@ main {
     transition: var(--transition);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    width: fit-content;
+    width: 100%; /* Occupa tutto lo spazio del wrapper */
     border: none;
+    white-space: nowrap; /* Evita che il testo vada a capo su PC */
 }
 
 .btn-lg {
@@ -519,6 +528,7 @@ footer {
 
     .btn-wrapper {
         width: calc(50% - 5px);
+        min-width: auto; /* Reset min-width for mobile */
     }
     
     .btn {
@@ -527,6 +537,7 @@ footer {
         padding: 1rem 0.5rem;
         font-size: 0.8rem;
         justify-content: center;
+        white-space: normal; /* Allow wrapping on mobile if necessary */
     }
     .wavy-divider {
         margin: 1.5rem auto;
