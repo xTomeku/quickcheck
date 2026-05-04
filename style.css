@@ -783,12 +783,16 @@ footer {
     display: flex;
     gap: 2rem;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding: 2rem 0;
-    scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+
+/* Animazione fluida per scorrimento continuo */
+.carousel-container.animating {
+    scroll-behavior: auto; /* Necessario per lo scorrimento pixel per pixel */
 }
 
 .carousel-container::-webkit-scrollbar {

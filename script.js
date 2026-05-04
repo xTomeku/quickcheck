@@ -349,11 +349,12 @@ async function loadGallery(_supabase) {
     }
 
     container.innerHTML = '';
-    data.forEach((item) => {
-        const showcaseItem = document.createElement('div');
-        showcaseItem.className = 'showcase-item';
-        
-        showcaseItem.innerHTML = `
+    
+    // Funzione per creare un item
+    const createItem = (item) => {
+        const div = document.createElement('div');
+        div.className = 'showcase-item';
+        div.innerHTML = `
             <div class="phone-wrapper">
                 <div class="phone-inner">
                     <img src="${item.image_url}" alt="${item.title}">
@@ -363,11 +364,33 @@ async function loadGallery(_supabase) {
                 <h3>${item.title}</h3>
             </div>
         `;
-        
-        container.appendChild(showcaseItem);
-    });
+        return div;
+    };
 
-    // Carousel Logic
+    // Renderizziamo gli item originali
+    data.forEach(item => container.appendChild(createItem(item)));
+    
+    // CLONAZIONE: raddoppiamo gli item per l'effetto infinito
+    data.forEach(item => container.appendChild(createItem(item)));
+
+    // Continuous Scroll Logic
+    let scrollSpeed = 0.8; // Velocità (pixel per frame)
+    let isPaused = false;
+    let animationFrame;
+
+    const animate = () => {
+        if (!isPaused) {
+            container.scrollLeft += scrollSpeed;
+            
+            // Se arriviamo a metà (fine della prima serie di foto), resettiamo a 0 senza scatti
+            if (container.scrollLeft >= container.scrollWidth / 2) {
+                container.scrollLeft = 0;
+            }
+        }
+        animationFrame = requestAnimationFrame(animate);
+    };
+
+    // Gestione Pulsanti (facoltativa, per scorrimento veloce)
     if (prevBtn && nextBtn) {
         nextBtn.addEventListener('click', () => {
             container.scrollBy({ left: 300, behavior: 'smooth' });
@@ -376,4 +399,16 @@ async function loadGallery(_supabase) {
             container.scrollBy({ left: -300, behavior: 'smooth' });
         });
     }
+
+    // Avvio animazione
+    container.classList.add('animating');
+    animate();
+
+    // Pausa al passaggio del mouse
+    container.addEventListener('mouseenter', () => isPaused = true);
+    container.addEventListener('mouseleave', () => isPaused = false);
+    
+    // Supporto Touch (mobile)
+    container.addEventListener('touchstart', () => isPaused = true);
+    container.addEventListener('touchend', () => isPaused = false);
 }
