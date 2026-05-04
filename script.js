@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                document.getElementById('timeline-container') || 
                                document.getElementById('hero-download-btn') ||
                                document.getElementById('credits-container') ||
-                               document.getElementById('contacts-container');
+                               document.getElementById('contacts-container') ||
+                               document.getElementById('features-grid');
 
     if (window.supabase && hasDynamicElements) {
         const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
@@ -73,6 +74,10 @@ async function loadAllDynamicContent(_supabase) {
 
     if (document.getElementById('gallery-container')) {
         promises.push(loadGallery(_supabase));
+    }
+
+    if (document.getElementById('features-grid')) {
+        promises.push(loadFeatures(_supabase));
     }
 
     await Promise.all(promises);
@@ -371,4 +376,38 @@ async function loadGallery(_supabase) {
     const isMobile = window.innerWidth <= 768;
     const duration = isMobile ? data.length * 4 : data.length * 7;
     track.style.animationDuration = `${duration}s`;
+}
+
+async function loadFeatures(_supabase) {
+    const container = document.getElementById('features-grid');
+    if (!container) return;
+
+    const { data, error } = await _supabase
+        .from('features')
+        .select('*')
+        .order('order_index', { ascending: true });
+
+    if (error) {
+        console.error('Errore caricamento features:', error);
+        container.innerHTML = '<p style="color: red;">Errore nel caricamento delle funzionalità.</p>';
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-muted);">Nessuna funzionalità configurata.</p>';
+        return;
+    }
+
+    container.innerHTML = '';
+    data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = `card reveal delay-${(index % 6) + 1}`;
+        
+        card.innerHTML = `
+            <div class="card-icon">${item.icon}</div>
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+        `;
+        container.appendChild(card);
+    });
 }

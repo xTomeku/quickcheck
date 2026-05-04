@@ -197,10 +197,22 @@
 
             <div class="tabs">
                 <button class="tab-btn active" data-tab="updates-section">Aggiornamenti</button>
+                <button class="tab-btn" data-tab="features-section">Funzionalità</button>
                 <button class="tab-btn" data-tab="credits-section">Credits</button>
                 <button class="tab-btn" data-tab="gallery-section">Galleria</button>
                 <button class="tab-btn" data-tab="contacts-section">Contatti</button>
                 <button class="tab-btn" data-tab="legal-section">Legale</button>
+            </div>
+
+            <!-- Features Section -->
+            <div id="features-section" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Gestione Funzionalità</h2>
+                    <button id="add-feature-btn" class="btn btn-primary btn-sm">+ Nuova Funzionalità</button>
+                </div>
+                <div id="features-list">
+                    <!-- Dynamic Content -->
+                </div>
             </div>
 
             <!-- Updates Section -->
@@ -423,6 +435,36 @@
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-gallery-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Feature Modal -->
+    <div id="feature-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="feature-modal-title">Nuova Funzionalità</h2>
+            <form id="feature-form">
+                <input type="hidden" id="feature-id">
+                <div class="form-group">
+                    <label for="f-icon">Icona (Emoji, es: 📅, 🎨, 🏫)</label>
+                    <input type="text" id="f-icon" class="form-control" placeholder="Es: 📅">
+                </div>
+                <div class="form-group">
+                    <label for="f-title">Titolo</label>
+                    <input type="text" id="f-title" class="form-control" placeholder="Es: Orari Lezioni">
+                </div>
+                <div class="form-group">
+                    <label for="f-description">Descrizione</label>
+                    <textarea id="f-description" class="form-control" rows="3" placeholder="Breve descrizione della funzione"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="f-order">Ordine</label>
+                    <input type="number" id="f-order" class="form-control" value="0">
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-feature-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
                 </div>
             </form>
         </div>

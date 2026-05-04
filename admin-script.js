@@ -23,8 +23,16 @@ const sections = {
     'credits-section': document.getElementById('credits-section'),
     'gallery-section': document.getElementById('gallery-section'),
     'contacts-section': document.getElementById('contacts-section'),
-    'legal-section': document.getElementById('legal-section')
+    'legal-section': document.getElementById('legal-section'),
+    'features-section': document.getElementById('features-section')
 };
+
+// Features DOM
+const featuresList = document.getElementById('features-list');
+const addFeatureBtn = document.getElementById('add-feature-btn');
+const featureModal = document.getElementById('feature-modal');
+const featureForm = document.getElementById('feature-form');
+const closeFeatureModal = document.getElementById('close-feature-modal');
 
 // Legal DOM
 const legalList = document.getElementById('legal-list');
@@ -73,6 +81,7 @@ function showDashboard(user) {
     fetchGallery();
     fetchContacts();
     fetchLegal();
+    fetchFeatures();
 }
 
 // Tab Switching
@@ -681,6 +690,105 @@ async function deleteGallery(id) {
     const { error } = await _supabase.from('gallery').delete().eq('id', id);
     if (error) alert(error.message);
     else fetchGallery();
+}
+
+// Features Logic
+async function fetchFeatures() {
+    featuresList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento funzionalità...</p>';
+    
+    const { data, error } = await _supabase
+        .from('features')
+        .select('*')
+        .order('order_index', { ascending: true });
+
+    if (error) {
+        featuresList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
+        return;
+    }
+
+    featuresList.innerHTML = '';
+    if (data.length === 0) {
+        featuresList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna funzionalità creata.</p>';
+    }
+
+    data.forEach(feature => {
+        const item = document.createElement('div');
+        item.className = 'update-item';
+        item.innerHTML = `
+            <div class="update-item-info">
+                <h3>${feature.icon} ${feature.title}</h3>
+                <p>${feature.description}</p>
+            </div>
+            <div class="actions">
+                <button class="btn btn-secondary btn-sm edit-feature-btn" data-id="${feature.id}" style="margin-top:0">Modifica</button>
+                <button class="btn btn-secondary btn-sm delete-feature-btn" data-id="${feature.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+            </div>
+        `;
+        featuresList.appendChild(item);
+    });
+
+    document.querySelectorAll('.edit-feature-btn').forEach(btn => {
+        btn.addEventListener('click', () => openFeatureEditModal(btn.dataset.id, data));
+    });
+
+    document.querySelectorAll('.delete-feature-btn').forEach(btn => {
+        btn.addEventListener('click', () => deleteFeature(btn.dataset.id));
+    });
+}
+
+function openFeatureEditModal(id, data) {
+    const feature = data.find(f => f.id === id);
+    if (!feature) return;
+
+    document.getElementById('feature-id').value = feature.id;
+    document.getElementById('f-icon').value = feature.icon;
+    document.getElementById('f-title').value = feature.title;
+    document.getElementById('f-description').value = feature.description;
+    document.getElementById('f-order').value = feature.order_index;
+    
+    document.getElementById('feature-modal-title').textContent = 'Modifica Funzionalità';
+    featureModal.classList.remove('hidden');
+}
+
+addFeatureBtn.addEventListener('click', () => {
+    featureForm.reset();
+    document.getElementById('feature-id').value = '';
+    document.getElementById('feature-modal-title').textContent = 'Nuova Funzionalità';
+    featureModal.classList.remove('hidden');
+});
+
+closeFeatureModal.addEventListener('click', () => featureModal.classList.add('hidden'));
+
+featureForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('feature-id').value;
+    const icon = document.getElementById('f-icon').value;
+    const title = document.getElementById('f-title').value;
+    const description = document.getElementById('f-description').value;
+    const order_index = parseInt(document.getElementById('f-order').value) || 0;
+
+    const payload = { icon, title, description, order_index };
+
+    let result;
+    if (id) {
+        result = await _supabase.from('features').update(payload).eq('id', id);
+    } else {
+        result = await _supabase.from('features').insert([payload]);
+    }
+
+    if (result.error) {
+        alert('Errore: ' + result.error.message);
+    } else {
+        featureModal.classList.add('hidden');
+        fetchFeatures();
+    }
+});
+
+async function deleteFeature(id) {
+    if (!confirm('Eliminare questa funzionalità?')) return;
+    const { error } = await _supabase.from('features').delete().eq('id', id);
+    if (error) alert(error.message);
+    else fetchFeatures();
 }
 
 checkSession();
