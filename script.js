@@ -402,10 +402,4 @@ async function loadGallery(_supabase) {
     // Forza lo stile per l'animazione e avvia
     container.style.overflowX = 'hidden';
     animate();
-
-    // Eventi Pausa
-    container.addEventListener('mouseenter', () => isPaused = true);
-    container.addEventListener('mouseleave', () => isPaused = false);
-    container.addEventListener('touchstart', () => isPaused = true);
-    container.addEventListener('touchend', () => isPaused = false);
 }
