@@ -27,7 +27,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
         loadAllDynamicContent(supabaseClient);
     }
+
+    // Scroll Reveal Initialization
+    initScrollReveal();
 });
+
+function initScrollReveal() {
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    
+    const observerOptions = {
+        threshold: 0.15,
+        rootMargin: "0px 0px -50px 0px"
+    };
+
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Optional: stop observing once revealed
+                // observer.unobserve(entry.target); 
+            }
+        });
+    }, observerOptions);
+
+    reveals.forEach(el => revealObserver.observe(el));
+}
 
 async function loadAllDynamicContent(_supabase) {
     // Contacts (always present in footer area)
@@ -78,7 +102,7 @@ async function loadLegal(_supabase) {
             let html = `<h2>${cat}</h2>`;
             grouped[cat].forEach(item => {
                 html += `
-                    <div class="legal-item">
+                    <div class="legal-item reveal">
                         <span class="item-title">${item.title}</span> ${item.description}
                     </div>
                 `;
@@ -109,10 +133,10 @@ async function loadContacts(_supabase) {
     }
 
     container.innerHTML = '';
-    data.forEach(item => {
+    data.forEach((item, index) => {
         const card = document.createElement('a');
         card.href = item.url;
-        card.className = 'contact-card';
+        card.className = `contact-card reveal delay-${(index % 6) + 1}`;
         if (item.url.startsWith('http')) card.target = '_blank';
         
         card.innerHTML = `
@@ -164,9 +188,9 @@ async function loadCredits(_supabase) {
             });
         } else {
             contentHtml += `<div class="credits-grid">`;
-            grouped[category].forEach(item => {
+            grouped[category].forEach((item, index) => {
                 contentHtml += `
-                    <div class="card">
+                    <div class="card reveal delay-${(index % 6) + 1}">
                         <h3>${item.title}</h3>
                         <p>${item.description}</p>
                     </div>
@@ -233,7 +257,7 @@ async function loadDynamicUpdates(_supabase) {
                 <p class="platform-subtitle" style="margin-top: 0.5rem; text-align: center;">${latest.details || ''}</p>
             </div>
 
-            <div class="card patch-card latest-card">
+            <div class="card patch-card latest-card reveal">
                 <div class="patch-header no-toggle">
                     <div class="patch-info">
                         <span class="patch-version">${latest.version}</span>
@@ -252,9 +276,9 @@ async function loadDynamicUpdates(_supabase) {
     // Render Timeline
     if (timelineContainer) {
         timelineContainer.innerHTML = '';
-        others.forEach(update => {
+        others.forEach((update, index) => {
             const card = document.createElement('div');
-            card.className = 'card patch-card collapsed';
+            card.className = 'card patch-card collapsed reveal';
             card.innerHTML = `
                 <div class="patch-header">
                     <div class="patch-info">
@@ -282,6 +306,9 @@ async function loadDynamicUpdates(_supabase) {
             timelineContainer.appendChild(card);
         });
     }
+    
+    // Refresh Observer for new elements
+    initScrollReveal();
 }
 
 function formatChange(text) {
