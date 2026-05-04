@@ -605,6 +605,9 @@ function openGalleryEditModal(id, data) {
     document.getElementById('g-url').value = item.image_url;
     document.getElementById('g-order').value = item.order_index;
     
+    // Resetta il campo file per evitare di trascinare vecchi upload
+    document.getElementById('g-file').value = '';
+    
     document.getElementById('gallery-modal-title').textContent = 'Modifica Immagine';
     galleryModal.classList.remove('hidden');
 }
@@ -612,6 +615,7 @@ function openGalleryEditModal(id, data) {
 addGalleryBtn.addEventListener('click', () => {
     galleryForm.reset();
     document.getElementById('gallery-id').value = '';
+    document.getElementById('g-file').value = ''; // Assicuriamoci che sia vuoto
     document.getElementById('gallery-modal-title').textContent = 'Nuova Immagine Galleria';
     galleryModal.classList.remove('hidden');
 });
