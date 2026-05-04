@@ -622,8 +622,38 @@ galleryForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const id = document.getElementById('gallery-id').value;
     const title = document.getElementById('g-title').value;
-    const image_url = document.getElementById('g-url').value;
+    const fileInput = document.getElementById('g-file');
+    let image_url = document.getElementById('g-url').value;
     const order_index = parseInt(document.getElementById('g-order').value) || 0;
+
+    // Se c'è un file selezionato, caricalo prima
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { data, error: uploadError } = await _supabase.storage
+            .from('gallery')
+            .upload(filePath, file);
+
+        if (uploadError) {
+            alert('Errore caricamento file: ' + uploadError.message);
+            return;
+        }
+
+        // Ottieni URL pubblico
+        const { data: { publicUrl } } = _supabase.storage
+            .from('gallery')
+            .getPublicUrl(filePath);
+            
+        image_url = publicUrl;
+    }
+
+    if (!image_url) {
+        alert('Inserisci un URL o carica un file');
+        return;
+    }
 
     const payload = { title, image_url, order_index };
 

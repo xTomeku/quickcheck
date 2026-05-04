@@ -48,6 +48,7 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
+
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -408,9 +409,12 @@
                     <input type="text" id="g-title" class="form-control" placeholder="Es: Home Orario">
                 </div>
                 <div class="form-group">
-                    <label for="g-url">URL Immagine (Screenshot lungo)</label>
+                    <label for="g-file">Carica Immagine (Scegli file)</label>
+                    <input type="file" id="g-file" class="form-control" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="g-url">O usa URL esterno (Opzionale)</label>
                     <input type="url" id="g-url" class="form-control" placeholder="https://...">
-                    <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 5px;">Carica l'immagine su un servizio di hosting (es. Imgur) e incolla qui l'URL diretto.</p>
                 </div>
                 <div class="form-group">
                     <label for="g-order">Ordine</label>
