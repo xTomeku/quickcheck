@@ -399,22 +399,13 @@ async function loadGallery(_supabase) {
         });
     }
 
-    // Avvio animazione
+    // Forza lo stile per l'animazione e avvia
+    container.style.overflowX = 'hidden';
     animate();
 
     // Eventi Pausa
     container.addEventListener('mouseenter', () => isPaused = true);
     container.addEventListener('mouseleave', () => isPaused = false);
-    
-    // Supporto Touch (mobile) per swipe manuale
-    container.addEventListener('touchstart', () => {
-        isPaused = true;
-    }, { passive: true });
-
-    container.addEventListener('touchend', () => {
-        // Piccola pausa prima di far ripartire l'animazione automatica
-        setTimeout(() => {
-            isPaused = false;
-        }, 2000); 
-    }, { passive: true });
+    container.addEventListener('touchstart', () => isPaused = true);
+    container.addEventListener('touchend', () => isPaused = false);
 }

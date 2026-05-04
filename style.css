@@ -786,12 +786,10 @@ footer {
 .carousel-container {
     display: flex;
     gap: 3.5rem;
-    overflow-x: auto; /* Permette lo swipe manuale */
+    overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding: 2rem 0;
-    cursor: grab;
-    -webkit-overflow-scrolling: touch;
 }
 
 .showcase-item {
