@@ -87,11 +87,24 @@ function showDashboard(user) {
 // Tab Switching
 tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
+        const targetId = btn.dataset.tab;
+        const targetSection = document.getElementById(targetId);
+
+        if (!targetSection) {
+            console.error(`Sezione non trovata: ${targetId}`);
+            return;
+        }
+
+        // Rimuove active da tutti i bottoni
         tabBtns.forEach(b => b.classList.remove('active'));
+        // Aggiunge active a quello cliccato
         btn.classList.add('active');
         
-        Object.values(sections).forEach(s => s.classList.add('hidden'));
-        sections[btn.dataset.tab].classList.remove('hidden');
+        // Nasconde tutte le sezioni che hanno la classe 'section-content' o che sono nel nostro oggetto
+        document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
+        
+        // Mostra la sezione target
+        targetSection.classList.remove('hidden');
     });
 });
 
