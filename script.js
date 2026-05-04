@@ -374,7 +374,7 @@ async function loadGallery(_supabase) {
     data.forEach(item => container.appendChild(createItem(item)));
 
     // Continuous Scroll Logic
-    let scrollSpeed = 0.8; // Velocità (pixel per frame)
+    let scrollSpeed = 0.4; // Velocità ridotta (pixel per frame)
     let isPaused = false;
     let animationFrame;
 
