@@ -785,11 +785,20 @@ footer {
 
 .carousel-container {
     display: flex;
-    gap: 3.5rem;
-    overflow-x: hidden;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    overflow: hidden; /* Nasconde il track mentre scorre */
     padding: 2rem 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 3.5rem;
+    animation: marquee 28s linear infinite;
+    will-change: transform;
+}
+
+@keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* -50% perché abbiamo i cloni */
 }
 
 .showcase-item {

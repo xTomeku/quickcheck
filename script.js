@@ -331,10 +331,9 @@ function formatChange(text) {
 
 async function loadGallery(_supabase) {
     const container = document.getElementById('gallery-container');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
+    const track = document.getElementById('carousel-track');
 
-    if (!container) return;
+    if (!container || !track) return;
 
     const { data, error } = await _supabase
         .from('gallery')
@@ -342,22 +341,18 @@ async function loadGallery(_supabase) {
         .order('order_index', { ascending: true });
 
     if (error || !data || data.length === 0) {
-        if (container.closest('.showcase-section')) {
-            container.closest('.showcase-section').style.display = 'none';
-        }
+        const section = container.closest('.showcase-section');
+        if (section) section.style.display = 'none';
         return;
     }
 
-    container.innerHTML = '';
-    
-    // Funzione per creare un item
     const createItem = (item) => {
         const div = document.createElement('div');
         div.className = 'showcase-item';
         div.innerHTML = `
             <div class="phone-wrapper">
                 <div class="phone-inner">
-                    <img src="${item.image_url}" alt="${item.title}">
+                    <img src="${item.image_url}" alt="${item.title}" loading="lazy">
                 </div>
             </div>
             <div class="showcase-info">
@@ -367,39 +362,13 @@ async function loadGallery(_supabase) {
         return div;
     };
 
-    // Renderizziamo gli item originali
-    data.forEach(item => container.appendChild(createItem(item)));
-    
-    // CLONAZIONE: raddoppiamo gli item per l'effetto infinito
-    data.forEach(item => container.appendChild(createItem(item)));
+    // Popola il track con gli item originali e i cloni per il loop infinito
+    data.forEach(item => track.appendChild(createItem(item)));
+    data.forEach(item => track.appendChild(createItem(item))); // Cloni
 
-    // Continuous Scroll Logic
-    // Velocità bilanciata: 0.5 su PC (fluido ma calmo), 0.8 su Mobile
-    let scrollSpeed = window.innerWidth > 768 ? 0.5 : 0.8; 
-    let isPaused = false;
-
-    const animate = () => {
-        if (!isPaused && container) {
-            container.scrollLeft += scrollSpeed;
-            
-            if (container.scrollLeft >= container.scrollWidth / 2) {
-                container.scrollLeft = 0;
-            }
-        }
-        requestAnimationFrame(animate);
-    };
-
-    // Gestione Pulsanti
-    if (prevBtn && nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            container.scrollBy({ left: 300, behavior: 'smooth' });
-        });
-        prevBtn.addEventListener('click', () => {
-            container.scrollBy({ left: -300, behavior: 'smooth' });
-        });
-    }
-
-    // Forza lo stile per l'animazione e avvia
-    container.style.overflowX = 'hidden';
-    animate();
+    // Calcola la durata dell'animazione in base alla larghezza totale
+    // Più lenta su PC, più veloce su mobile
+    const isMobile = window.innerWidth <= 768;
+    const duration = isMobile ? data.length * 4 : data.length * 7;
+    track.style.animationDuration = `${duration}s`;
 }
