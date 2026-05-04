@@ -528,16 +528,36 @@ footer {
 
     .btn-wrapper {
         width: calc(50% - 5px);
-        min-width: auto; /* Reset min-width for mobile */
+        min-width: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .btn-wrapper .btn {
+        flex: 1; /* Fa sì che i pulsanti abbiano la stessa altezza se il wrapper si allunga */
     }
     
     .btn {
         width: 100%;
         min-width: auto;
-        padding: 1rem 0.5rem;
-        font-size: 0.8rem;
+        padding: 0.8rem 0.4rem;
+        font-size: 0.75rem;
+        gap: 6px;
         justify-content: center;
-        white-space: normal; /* Allow wrapping on mobile if necessary */
+        white-space: normal;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    .btn svg {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    .platform-subtitle {
+        font-size: 0.7rem;
+        margin-top: -4px; /* Avvicina il sottotitolo al pulsante */
     }
     .wavy-divider {
         margin: 1.5rem auto;
