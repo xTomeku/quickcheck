@@ -399,8 +399,7 @@ async function loadGallery(_supabase) {
         });
     }
 
-    // Forza lo stile per l'animazione e avvia
-    container.style.overflowX = 'hidden';
+    // Avvio animazione
     animate();
 
     // Eventi Pausa
