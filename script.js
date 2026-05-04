@@ -374,8 +374,8 @@ async function loadGallery(_supabase) {
     data.forEach(item => container.appendChild(createItem(item)));
 
     // Continuous Scroll Logic
-    // Velocità differenziata: più lenta su PC (0.3), più veloce su Mobile (0.6)
-    let scrollSpeed = window.innerWidth > 768 ? 0.3 : 0.6; 
+    // Velocità bilanciata: 0.5 su PC (fluido ma calmo), 0.8 su Mobile
+    let scrollSpeed = window.innerWidth > 768 ? 0.5 : 0.8; 
     let isPaused = false;
 
     const animate = () => {
