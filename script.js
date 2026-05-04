@@ -185,16 +185,28 @@ async function loadDynamicUpdates(_supabase) {
     const timelineContainer = document.getElementById('timeline-container');
     const heroBtn = document.getElementById('hero-download-btn');
 
-    const { data, error } = await _supabase
+    let { data, error } = await _supabase
         .from('updates')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select('*');
 
     if (error) {
         console.error('Error fetching updates:', error);
         if (latestContainer) latestContainer.innerHTML = '<p style="text-align:center; color:red;">Errore nel caricamento dei dati.</p>';
         return;
     }
+
+    // Ordinamento semantico delle versioni (dalla più recente alla più vecchia)
+    data.sort((a, b) => {
+        const parse = (v) => v.replace(/[^0-9.]/g, '').split('.').map(Number);
+        const vA = parse(a.version);
+        const vB = parse(b.version);
+        for (let i = 0; i < Math.max(vA.length, vB.length); i++) {
+            const numA = vA[i] || 0;
+            const numB = vB[i] || 0;
+            if (numA !== numB) return numB - numA;
+        }
+        return 0;
+    });
 
     if (data.length === 0) {
         if (latestContainer) latestContainer.innerHTML = '<p style="text-align:center;">Nessun aggiornamento disponibile.</p>';

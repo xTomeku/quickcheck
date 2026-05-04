@@ -115,15 +115,27 @@ logoutBtn.addEventListener('click', async () => {
 async function fetchUpdates() {
     updatesList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento...</p>';
     
-    const { data, error } = await _supabase
+    let { data, error } = await _supabase
         .from('updates')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select('*');
 
     if (error) {
         updatesList.innerHTML = `<p style="color: red;">Errore: ${error.message}</p>`;
         return;
     }
+
+    // Ordinamento semantico delle versioni (dalla più recente alla più vecchia)
+    data.sort((a, b) => {
+        const parse = (v) => v.replace(/[^0-9.]/g, '').split('.').map(Number);
+        const vA = parse(a.version);
+        const vB = parse(b.version);
+        for (let i = 0; i < Math.max(vA.length, vB.length); i++) {
+            const numA = vA[i] || 0;
+            const numB = vB[i] || 0;
+            if (numA !== numB) return numB - numA;
+        }
+        return 0;
+    });
 
     if (data.length === 0) {
         updatesList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun aggiornamento trovato.</p>';
