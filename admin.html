@@ -197,6 +197,7 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="updates-section">Aggiornamenti</button>
                 <button class="tab-btn" data-tab="credits-section">Credits</button>
+                <button class="tab-btn" data-tab="gallery-section">Galleria</button>
                 <button class="tab-btn" data-tab="contacts-section">Contatti</button>
                 <button class="tab-btn" data-tab="legal-section">Legale</button>
             </div>
@@ -219,6 +220,17 @@
                     <button id="add-credit-btn" class="btn btn-primary btn-sm">+ Nuova Scheda</button>
                 </div>
                 <div id="credits-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- Gallery Management Section -->
+            <div id="gallery-section" class="hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Gestione Galleria</h2>
+                    <button id="add-gallery-btn" class="btn btn-primary btn-sm">+ Nuova Immagine</button>
+                </div>
+                <div id="gallery-list">
                     <!-- Dynamic Content -->
                 </div>
             </div>
@@ -380,6 +392,33 @@
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-legal-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Gallery Modal -->
+    <div id="gallery-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="gallery-modal-title">Nuova Immagine Galleria</h2>
+            <form id="gallery-form">
+                <input type="hidden" id="gallery-id">
+                <div class="form-group">
+                    <label for="g-title">Titolo (es. Home Orario)</label>
+                    <input type="text" id="g-title" class="form-control" placeholder="Es: Home Orario">
+                </div>
+                <div class="form-group">
+                    <label for="g-url">URL Immagine (Screenshot lungo)</label>
+                    <input type="url" id="g-url" class="form-control" placeholder="https://...">
+                    <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 5px;">Carica l'immagine su un servizio di hosting (es. Imgur) e incolla qui l'URL diretto.</p>
+                </div>
+                <div class="form-group">
+                    <label for="g-order">Ordine</label>
+                    <input type="number" id="g-order" class="form-control" value="0">
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-gallery-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
                 </div>
             </form>
         </div>

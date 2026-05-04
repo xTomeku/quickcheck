@@ -764,6 +764,129 @@ footer {
     font-weight: 600;
 }
 
+/* Carousel Showcase Section */
+.showcase-section {
+    padding: 6rem 5%;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-wrapper {
+    position: relative;
+    max-width: 1200px;
+    margin: 4rem auto 0;
+    padding: 0 50px;
+}
+
+.carousel-container {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 2rem 0;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.showcase-item {
+    flex: 0 0 auto;
+    width: 280px;
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    transition: var(--transition);
+}
+
+.showcase-item:hover {
+    transform: translateY(-10px);
+}
+
+.showcase-info h3 {
+    color: var(--primary-gold);
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+/* Phone Mockup for Carousel */
+.phone-wrapper {
+    position: relative;
+    width: 260px;
+    height: 540px;
+    background: #000;
+    border-radius: 40px;
+    padding: 10px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    border: 4px solid #1a1a1a;
+}
+
+.phone-inner {
+    width: 100%;
+    height: 100%;
+    background: #121212;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+}
+
+.phone-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Carousel Controls */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    color: var(--primary-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+}
+
+.carousel-btn:hover {
+    background: var(--primary-gold);
+    color: var(--primary-blue-dark);
+}
+
+.carousel-btn.prev { left: 0; }
+.carousel-btn.next { right: 0; }
+
+@media (max-width: 768px) {
+    .carousel-wrapper {
+        padding: 0;
+    }
+    .carousel-btn {
+        display: none; /* Swipe su mobile */
+    }
+    .showcase-item {
+        width: 240px;
+    }
+    .phone-wrapper {
+        width: 220px;
+        height: 460px;
+    }
+}
+
 /* Scroll Reveal Animations */
 .reveal {
     opacity: 0;

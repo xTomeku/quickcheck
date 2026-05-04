@@ -71,6 +71,10 @@ async function loadAllDynamicContent(_supabase) {
         promises.push(loadLegal(_supabase));
     }
 
+    if (document.getElementById('gallery-container')) {
+        promises.push(loadGallery(_supabase));
+    }
+
     await Promise.all(promises);
     
     // Una volta che tutto il contenuto dinamico è nel DOM, inizializziamo le animazioni
@@ -323,4 +327,53 @@ function formatChange(text) {
         return `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;
     }
     return text;
+}
+
+async function loadGallery(_supabase) {
+    const container = document.getElementById('gallery-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    if (!container) return;
+
+    const { data, error } = await _supabase
+        .from('gallery')
+        .select('*')
+        .order('order_index', { ascending: true });
+
+    if (error || !data || data.length === 0) {
+        if (container.closest('.showcase-section')) {
+            container.closest('.showcase-section').style.display = 'none';
+        }
+        return;
+    }
+
+    container.innerHTML = '';
+    data.forEach((item) => {
+        const showcaseItem = document.createElement('div');
+        showcaseItem.className = 'showcase-item';
+        
+        showcaseItem.innerHTML = `
+            <div class="phone-wrapper">
+                <div class="phone-inner">
+                    <img src="${item.image_url}" alt="${item.title}">
+                </div>
+            </div>
+            <div class="showcase-info">
+                <h3>${item.title}</h3>
+            </div>
+        `;
+        
+        container.appendChild(showcaseItem);
+    });
+
+    // Carousel Logic
+    if (prevBtn && nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            container.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+        prevBtn.addEventListener('click', () => {
+            container.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+    }
 }
