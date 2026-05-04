@@ -374,7 +374,8 @@ async function loadGallery(_supabase) {
     data.forEach(item => container.appendChild(createItem(item)));
 
     // Continuous Scroll Logic
-    let scrollSpeed = 0.6; 
+    // Velocità differenziata: più lenta su PC (0.3), più veloce su Mobile (0.6)
+    let scrollSpeed = window.innerWidth > 768 ? 0.3 : 0.6; 
     let isPaused = false;
 
     const animate = () => {
@@ -405,6 +406,16 @@ async function loadGallery(_supabase) {
     // Eventi Pausa
     container.addEventListener('mouseenter', () => isPaused = true);
     container.addEventListener('mouseleave', () => isPaused = false);
-    container.addEventListener('touchstart', () => isPaused = true);
-    container.addEventListener('touchend', () => isPaused = false);
+    
+    // Supporto Touch (mobile) per swipe manuale
+    container.addEventListener('touchstart', () => {
+        isPaused = true;
+    }, { passive: true });
+
+    container.addEventListener('touchend', () => {
+        // Piccola pausa prima di far ripartire l'animazione automatica
+        setTimeout(() => {
+            isPaused = false;
+        }, 2000); 
+    }, { passive: true });
 }

@@ -506,6 +506,7 @@ footer {
         border-bottom-right-radius: 40px;
     }
 
+
     .nav-links.active {
         left: 0;
     }
@@ -774,53 +775,34 @@ footer {
 
 .carousel-wrapper {
     position: relative;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 4rem auto 0;
-    padding: 0 50px;
+    padding: 0;
+    /* Effetto dissolvenza ai lati */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
 }
 
 .carousel-container {
     display: flex;
-    gap: 2rem;
-    overflow-x: auto;
+    gap: 3.5rem;
+    overflow-x: auto; /* Permette lo swipe manuale */
     scrollbar-width: none;
     -ms-overflow-style: none;
     padding: 2rem 0;
-    -webkit-overflow-scrolling: touch;
     cursor: grab;
-}
-
-/* Animazione fluida per scorrimento continuo */
-.carousel-container.animating {
-    scroll-behavior: auto; /* Necessario per lo scorrimento pixel per pixel */
-}
-
-.carousel-container::-webkit-scrollbar {
-    display: none;
+    -webkit-overflow-scrolling: touch;
 }
 
 .showcase-item {
     flex: 0 0 auto;
-    width: 280px;
-    scroll-snap-align: center;
+    width: 260px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
     transition: var(--transition);
 }
 
-.showcase-item:hover {
-    transform: translateY(-10px);
-}
-
-.showcase-info h3 {
-    color: var(--primary-gold);
-    font-size: 1.2rem;
-    margin-top: 1rem;
-}
-
-/* Phone Mockup for Carousel */
 .phone-wrapper {
     position: relative;
     width: 260px;
@@ -847,47 +829,27 @@ footer {
     object-fit: cover;
 }
 
-/* Carousel Controls */
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 50px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    border-radius: 50%;
+.showcase-info h3 {
     color: var(--primary-gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    transition: var(--transition);
+    font-size: 1.1rem;
+    margin-top: 1.5rem;
+    text-align: center;
 }
 
-.carousel-btn:hover {
-    background: var(--primary-gold);
-    color: var(--primary-blue-dark);
+.carousel-btn {
+    display: none !important;
 }
-
-.carousel-btn.prev { left: 0; }
-.carousel-btn.next { right: 0; }
 
 @media (max-width: 768px) {
     .carousel-wrapper {
-        padding: 0;
+        -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     }
-    .carousel-btn {
-        display: none; /* Swipe su mobile */
-    }
-    .showcase-item {
-        width: 240px;
+    .showcase-item, .phone-wrapper {
+        width: 200px;
     }
     .phone-wrapper {
-        width: 220px;
-        height: 460px;
+        height: 420px;
     }
 }
 
