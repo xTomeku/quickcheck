@@ -265,7 +265,7 @@ main {
 
 .wavy-divider {
     width: 90%;
-    margin: 3rem auto;
+    margin: 2rem auto;
     display: flex;
     justify-content: center;
 }
@@ -791,7 +791,7 @@ footer {
 
 /* Carousel Showcase Section */
 .showcase-section {
-    padding: 2rem 5% 4rem 5%;
+    padding: 1rem 5% 4rem 5%;
     text-align: center;
     overflow: hidden;
     position: relative;
