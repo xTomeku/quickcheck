@@ -36,8 +36,8 @@ function initScrollReveal() {
     const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
     
     const observerOptions = {
-        threshold: 0.15,
-        rootMargin: "0px 0px -50px 0px"
+        threshold: 0.1,
+        rootMargin: "0px 0px -20px 0px"
     };
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
@@ -54,22 +54,27 @@ function initScrollReveal() {
 }
 
 async function loadAllDynamicContent(_supabase) {
-    // Contacts (always present in footer area)
+    // Carichiamo tutto in parallelo ma aspettiamo che finiscano tutti
+    const promises = [];
+
     if (document.getElementById('contacts-container')) {
-        loadContacts(_supabase);
+        promises.push(loadContacts(_supabase));
     }
 
-    // Page specific
     if (document.getElementById('credits-container')) {
-        loadCredits(_supabase);
+        promises.push(loadCredits(_supabase));
     } else if (document.getElementById('latest-update-container') || document.getElementById('hero-download-btn')) {
-        loadDynamicUpdates(_supabase);
+        promises.push(loadDynamicUpdates(_supabase));
     }
 
-    // Legal Content (only on Home)
     if (document.getElementById('legal-container')) {
-        loadLegal(_supabase);
+        promises.push(loadLegal(_supabase));
     }
+
+    await Promise.all(promises);
+    
+    // Una volta che tutto il contenuto dinamico è nel DOM, inizializziamo le animazioni
+    initScrollReveal();
 }
 
 async function loadLegal(_supabase) {
@@ -308,7 +313,7 @@ async function loadDynamicUpdates(_supabase) {
     }
     
     // Refresh Observer for new elements
-    initScrollReveal();
+    // initScrollReveal(); // Rimosso da qui perché ora è gestito centralmente in loadAllDynamicContent
 }
 
 function formatChange(text) {
