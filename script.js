@@ -374,23 +374,21 @@ async function loadGallery(_supabase) {
     data.forEach(item => container.appendChild(createItem(item)));
 
     // Continuous Scroll Logic
-    let scrollSpeed = 0.4; // Velocità ridotta (pixel per frame)
+    let scrollSpeed = 0.6; 
     let isPaused = false;
-    let animationFrame;
 
     const animate = () => {
-        if (!isPaused) {
+        if (!isPaused && container) {
             container.scrollLeft += scrollSpeed;
             
-            // Se arriviamo a metà (fine della prima serie di foto), resettiamo a 0 senza scatti
             if (container.scrollLeft >= container.scrollWidth / 2) {
                 container.scrollLeft = 0;
             }
         }
-        animationFrame = requestAnimationFrame(animate);
+        requestAnimationFrame(animate);
     };
 
-    // Gestione Pulsanti (facoltativa, per scorrimento veloce)
+    // Gestione Pulsanti
     if (prevBtn && nextBtn) {
         nextBtn.addEventListener('click', () => {
             container.scrollBy({ left: 300, behavior: 'smooth' });
@@ -400,15 +398,13 @@ async function loadGallery(_supabase) {
         });
     }
 
-    // Avvio animazione
-    container.classList.add('animating');
+    // Forza lo stile per l'animazione e avvia
+    container.style.overflowX = 'hidden';
     animate();
 
-    // Pausa al passaggio del mouse
+    // Eventi Pausa
     container.addEventListener('mouseenter', () => isPaused = true);
     container.addEventListener('mouseleave', () => isPaused = false);
-    
-    // Supporto Touch (mobile)
     container.addEventListener('touchstart', () => isPaused = true);
     container.addEventListener('touchend', () => isPaused = false);
 }
