@@ -173,13 +173,16 @@ async function fetchUpdates() {
         return;
     }
 
-    updatesList.innerHTML = '';
     data.forEach(update => {
         const item = document.createElement('div');
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
-                <h3>${update.version} ${update.is_latest ? '<span class="badge-latest">ULTIMA</span>' : ''}</h3>
+                <h3>
+                    ${update.version} 
+                    ${update.is_latest ? '<span class="badge-latest">ULTIMA</span>' : ''}
+                    ${!update.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}
+                </h3>
                 <p>${update.date} • ${update.details || 'Nessun dettaglio'}</p>
             </div>
             <div class="actions">
@@ -223,6 +226,7 @@ function openEditModal(id, data) {
     document.getElementById('v-details').value = update.details || '';
     document.getElementById('v-changes').value = update.changes.join('\n');
     document.getElementById('v-latest').checked = update.is_latest;
+    document.getElementById('v-visible').checked = update.is_visible !== false; // default true if undefined
     
     document.getElementById('modal-title').textContent = 'Modifica Aggiornamento';
     updateModal.classList.remove('hidden');
@@ -237,8 +241,9 @@ updateForm.addEventListener('submit', async (e) => {
     const details = document.getElementById('v-details').value;
     const changes = document.getElementById('v-changes').value.split('\n').filter(line => line.trim() !== '');
     const is_latest = document.getElementById('v-latest').checked;
+    const is_visible = document.getElementById('v-visible').checked;
 
-    const payload = { version, date, download_url, details, changes, is_latest };
+    const payload = { version, date, download_url, details, changes, is_latest, is_visible };
 
     // If this is latest, unset others (simplified logic)
     if (is_latest) {
@@ -295,7 +300,11 @@ async function fetchCredits() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
-                <h3>${credit.title} <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${credit.category}</span></h3>
+                <h3>
+                    ${credit.title} 
+                    <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${credit.category}</span>
+                    ${!credit.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}
+                </h3>
                 <p>${credit.description.substring(0, 100)}${credit.description.length > 100 ? '...' : ''}</p>
             </div>
             <div class="actions">
@@ -324,6 +333,7 @@ function openCreditEditModal(id, data) {
     document.getElementById('c-title').value = credit.title;
     document.getElementById('c-description').value = credit.description;
     document.getElementById('c-order').value = credit.order_index;
+    document.getElementById('c-visible').checked = credit.is_visible !== false;
     
     document.getElementById('credit-modal-title').textContent = 'Modifica Scheda';
     creditModal.classList.remove('hidden');
@@ -345,8 +355,9 @@ creditForm.addEventListener('submit', async (e) => {
     const title = document.getElementById('c-title').value;
     const description = document.getElementById('c-description').value;
     const order_index = parseInt(document.getElementById('c-order').value) || 0;
+    const is_visible = document.getElementById('c-visible').checked;
 
-    const payload = { category, title, description, order_index };
+    const payload = { category, title, description, order_index, is_visible };
 
     let result;
     if (id) {
@@ -394,7 +405,7 @@ async function fetchContacts() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
-                <h3>${contact.icon} ${contact.label}</h3>
+                <h3>${contact.icon} ${contact.label} ${!contact.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${contact.value}</p>
             </div>
             <div class="actions">
@@ -424,6 +435,7 @@ function openContactEditModal(id, data) {
     document.getElementById('co-value').value = contact.value;
     document.getElementById('co-url').value = contact.url;
     document.getElementById('co-order').value = contact.order_index;
+    document.getElementById('co-visible').checked = contact.is_visible !== false;
     
     document.getElementById('contact-modal-title').textContent = 'Modifica Contatto';
     contactModal.classList.remove('hidden');
@@ -446,8 +458,9 @@ contactForm.addEventListener('submit', async (e) => {
     const value = document.getElementById('co-value').value;
     const url = document.getElementById('co-url').value;
     const order_index = parseInt(document.getElementById('co-order').value) || 0;
+    const is_visible = document.getElementById('co-visible').checked;
 
-    const payload = { icon, label, value, url, order_index };
+    const payload = { icon, label, value, url, order_index, is_visible };
 
     let result;
     if (id) {
@@ -496,7 +509,7 @@ async function fetchLegal() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
-                <h3>${note.title} <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${note.category}</span></h3>
+                <h3>${note.title} <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${note.category}</span> ${!note.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${note.description.substring(0, 100)}${note.description.length > 100 ? '...' : ''}</p>
             </div>
             <div class="actions">
@@ -525,6 +538,7 @@ function openLegalEditModal(id, data) {
     document.getElementById('l-title').value = note.title;
     document.getElementById('l-description').value = note.description;
     document.getElementById('l-order').value = note.order_index;
+    document.getElementById('l-visible').checked = note.is_visible !== false;
     
     document.getElementById('legal-modal-title').textContent = 'Modifica Nota Legale';
     legalModal.classList.remove('hidden');
@@ -546,8 +560,9 @@ legalForm.addEventListener('submit', async (e) => {
     const title = document.getElementById('l-title').value;
     const description = document.getElementById('l-description').value;
     const order_index = parseInt(document.getElementById('l-order').value) || 0;
+    const is_visible = document.getElementById('l-visible').checked;
 
-    const payload = { category, title, description, order_index };
+    const payload = { category, title, description, order_index, is_visible };
 
     let result;
     if (id) {
@@ -597,7 +612,7 @@ async function fetchGallery() {
             <div class="update-item-info" style="display: flex; align-items: center; gap: 15px;">
                 <img src="${item.image_url}" style="width: 50px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--glass-border);">
                 <div>
-                    <h3>${item.title}</h3>
+                    <h3>${item.title} ${!item.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                     <p style="font-size: 0.7rem; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.image_url}</p>
                 </div>
             </div>
@@ -626,6 +641,7 @@ function openGalleryEditModal(id, data) {
     document.getElementById('g-title').value = item.title;
     document.getElementById('g-url').value = item.image_url;
     document.getElementById('g-order').value = item.order_index;
+    document.getElementById('g-visible').checked = item.is_visible !== false;
     
     // Resetta il campo file per evitare di trascinare vecchi upload
     document.getElementById('g-file').value = '';
@@ -680,8 +696,8 @@ galleryForm.addEventListener('submit', async (e) => {
         alert('Inserisci un URL o carica un file');
         return;
     }
-
-    const payload = { title, image_url, order_index };
+    const is_visible = document.getElementById('g-visible').checked;
+    const payload = { title, image_url, order_index, is_visible };
 
     let result;
     if (id) {
@@ -729,7 +745,7 @@ async function fetchFeatures() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
-                <h3>${feature.icon} ${feature.title}</h3>
+                <h3>${feature.icon} ${feature.title} ${!feature.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${feature.description}</p>
             </div>
             <div class="actions">
@@ -758,6 +774,7 @@ function openFeatureEditModal(id, data) {
     document.getElementById('f-title').value = feature.title;
     document.getElementById('f-description').value = feature.description;
     document.getElementById('f-order').value = feature.order_index;
+    document.getElementById('f-visible').checked = feature.is_visible !== false;
     
     document.getElementById('feature-modal-title').textContent = 'Modifica Funzionalità';
     featureModal.classList.remove('hidden');
@@ -779,8 +796,9 @@ featureForm.addEventListener('submit', async (e) => {
     const title = document.getElementById('f-title').value;
     const description = document.getElementById('f-description').value;
     const order_index = parseInt(document.getElementById('f-order').value) || 0;
+    const is_visible = document.getElementById('f-visible').checked;
 
-    const payload = { icon, title, description, order_index };
+    const payload = { icon, title, description, order_index, is_visible };
 
     let result;
     if (id) {

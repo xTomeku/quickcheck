@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - QuickCheck</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="assets/icona.png">
     <script src="config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
@@ -141,25 +142,36 @@
             resize: vertical;
         }
 
-        .badge-latest {
-            background: var(--primary-gold);
-            color: var(--primary-blue-dark);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-weight: 800;
-            margin-left: 10px;
-        }
+            .badge-latest {
+                background: var(--primary-gold);
+                color: var(--primary-blue-dark);
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 0.7rem;
+                font-weight: 800;
+                margin-left: 10px;
+            }
+
+            .badge-draft {
+                background: rgba(255, 255, 255, 0.1);
+                color: var(--text-muted);
+                border: 1px solid var(--glass-border);
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 0.7rem;
+                font-weight: 600;
+                margin-left: 10px;
+            }
     </style>
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-main">
-            <a href="index" class="nav-brand">
+            <a href="index.html" class="nav-brand">
                 <img src="assets/logo.png" alt="Logo">
             </a>
             <ul class="nav-links">
-                <li><a href="index">Sito</a></li>
+                <li><a href="index.html">Sito</a></li>
                 <li><a href="#" class="active">Admin</a></li>
             </ul>
         </div>
@@ -305,6 +317,14 @@
                     <input type="checkbox" id="v-latest" style="width: 20px; height: 20px;">
                     <label for="v-latest" style="margin: 0;">Imposta come Ultima Versione (In evidenza)</label>
                 </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="v-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="v-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="v-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="v-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
+                </div>
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
@@ -334,6 +354,10 @@
                 <div class="form-group">
                     <label for="c-order">Ordine di visualizzazione</label>
                     <input type="number" id="c-order" class="form-control" value="0">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="c-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="c-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
                 </div>
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
@@ -369,6 +393,10 @@
                     <label for="co-order">Ordine</label>
                     <input type="number" id="co-order" class="form-control" value="0">
                 </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="co-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="co-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
+                </div>
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-contact-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
@@ -402,6 +430,10 @@
                     <label for="l-order">Ordine di visualizzazione</label>
                     <input type="number" id="l-order" class="form-control" value="0">
                 </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="l-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="l-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
+                </div>
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-legal-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
@@ -432,6 +464,10 @@
                     <label for="g-order">Ordine</label>
                     <input type="number" id="g-order" class="form-control" value="0">
                 </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="g-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="g-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
+                </div>
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-gallery-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
@@ -461,6 +497,10 @@
                 <div class="form-group">
                     <label for="f-order">Ordine</label>
                     <input type="number" id="f-order" class="form-control" value="0">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="f-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="f-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
                 </div>
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>

@@ -92,6 +92,7 @@ async function loadLegal(_supabase) {
     const { data, error } = await _supabase
         .from('legal')
         .select('*')
+        .eq('is_visible', true)
         .order('order_index', { ascending: true });
 
     if (error || !data || data.length === 0) return;
@@ -133,6 +134,7 @@ async function loadContacts(_supabase) {
     const { data, error } = await _supabase
         .from('contacts')
         .select('*')
+        .eq('is_visible', true)
         .order('order_index', { ascending: true });
 
     if (error) {
@@ -167,6 +169,7 @@ async function loadCredits(_supabase) {
     const { data, error } = await _supabase
         .from('credits')
         .select('*')
+        .eq('is_visible', true)
         .order('order_index', { ascending: true });
 
     if (error) {
@@ -225,7 +228,8 @@ async function loadDynamicUpdates(_supabase) {
 
     let { data, error } = await _supabase
         .from('updates')
-        .select('*');
+        .select('*')
+        .eq('is_visible', true);
 
     if (error) {
         console.error('Error fetching updates:', error);
@@ -343,6 +347,7 @@ async function loadGallery(_supabase) {
     const { data, error } = await _supabase
         .from('gallery')
         .select('*')
+        .eq('is_visible', true)
         .order('order_index', { ascending: true });
 
     if (error || !data || data.length === 0) {
@@ -385,6 +390,7 @@ async function loadFeatures(_supabase) {
     const { data, error } = await _supabase
         .from('features')
         .select('*')
+        .eq('is_visible', true)
         .order('order_index', { ascending: true });
 
     if (error) {
