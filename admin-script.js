@@ -155,8 +155,13 @@ async function fetchUpdates() {
         return;
     }
 
-    // Ordinamento semantico delle versioni (dalla più recente alla più vecchia)
+    // Ordinamento: Prima per Visibilità (Pubblicati -> Bozze), poi per Versione
     data.sort((a, b) => {
+        // Se uno è visibile e l'altro no, il visibile vince
+        if (a.is_visible !== b.is_visible) {
+            return a.is_visible ? -1 : 1;
+        }
+
         const parse = (v) => v.replace(/[^0-9.]/g, '').split('.').map(Number);
         const vA = parse(a.version);
         const vB = parse(b.version);
@@ -290,6 +295,12 @@ async function fetchCredits() {
         return;
     }
 
+    // Ordinamento: Visibili prima, poi per ordine
+    data.sort((a, b) => {
+        if (a.is_visible !== b.is_visible) return a.is_visible ? -1 : 1;
+        return (a.order_index || 0) - (b.order_index || 0);
+    });
+
     creditsList.innerHTML = '';
     if (data.length === 0) {
         creditsList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna scheda creata.</p>';
@@ -395,6 +406,12 @@ async function fetchContacts() {
         return;
     }
 
+    // Ordinamento: Visibili prima
+    data.sort((a, b) => {
+        if (a.is_visible !== b.is_visible) return a.is_visible ? -1 : 1;
+        return (a.order_index || 0) - (b.order_index || 0);
+    });
+
     contactsList.innerHTML = '';
     if (data.length === 0) {
         contactsList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun contatto creato.</p>';
@@ -499,6 +516,14 @@ async function fetchLegal() {
         return;
     }
 
+    // Ordinamento: Visibili prima
+    data.sort((a, b) => {
+        if (a.is_visible !== b.is_visible) return a.is_visible ? -1 : 1;
+        // Se entrambi hanno stessa visibilità, ordina per categoria e poi indice
+        if (a.category !== b.category) return a.category > b.category ? -1 : 1;
+        return (a.order_index || 0) - (b.order_index || 0);
+    });
+
     legalList.innerHTML = '';
     if (data.length === 0) {
         legalList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna nota legale creata.</p>';
@@ -599,6 +624,12 @@ async function fetchGallery() {
         galleryList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
         return;
     }
+
+    // Ordinamento: Visibili prima
+    data.sort((a, b) => {
+        if (a.is_visible !== b.is_visible) return a.is_visible ? -1 : 1;
+        return (a.order_index || 0) - (b.order_index || 0);
+    });
 
     galleryList.innerHTML = '';
     if (data.length === 0) {
@@ -734,6 +765,12 @@ async function fetchFeatures() {
         featuresList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
         return;
     }
+
+    // Ordinamento: Visibili prima
+    data.sort((a, b) => {
+        if (a.is_visible !== b.is_visible) return a.is_visible ? -1 : 1;
+        return (a.order_index || 0) - (b.order_index || 0);
+    });
 
     featuresList.innerHTML = '';
     if (data.length === 0) {
