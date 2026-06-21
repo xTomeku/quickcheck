@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /admin-script.js
+Disallow: /config.js
+
+Sitemap: https://xtomeku.github.io/quickcheck/sitemap.xml
