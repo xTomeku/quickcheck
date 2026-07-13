@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                document.getElementById('hero-download-btn') ||
                                document.getElementById('credits-container') ||
                                document.getElementById('contacts-container') ||
-                               document.getElementById('features-grid');
+                               document.getElementById('features-grid') ||
+                               document.getElementById('privacy-container');
 
     if (window.supabase && hasDynamicElements) {
         const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
@@ -72,6 +73,10 @@ async function loadAllDynamicContent(_supabase) {
         promises.push(loadLegal(_supabase));
     }
 
+    if (document.getElementById('privacy-container')) {
+        promises.push(loadPrivacy(_supabase));
+    }
+
     if (document.getElementById('gallery-container')) {
         promises.push(loadGallery(_supabase));
     }
@@ -88,45 +93,75 @@ async function loadAllDynamicContent(_supabase) {
 
 async function loadLegal(_supabase) {
     const container = document.getElementById('legal-container');
-    // We now use the dedicated 'legal' table
     const { data, error } = await _supabase
         .from('legal')
         .select('*')
         .eq('is_visible', true)
         .order('order_index', { ascending: true });
 
-    if (error || !data || data.length === 0) return;
+    if (error || !data || data.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
 
-    // Group by category
-    const grouped = data.reduce((acc, item) => {
-        if (!acc[item.category]) acc[item.category] = [];
-        acc[item.category].push(item);
-        return acc;
-    }, {});
+    const termsData = data.filter(item => item.category === 'Termini di Servizio');
 
     container.innerHTML = '';
     
-    // Fixed order for legal sections
-    const categories = ['Termini di Servizio', 'Informativa sulla Privacy'];
+    if (termsData.length > 0) {
+        container.style.display = 'block';
+        const block = document.createElement('div');
+        block.className = 'legal-block';
+        
+        let html = `<h2>Termini di Servizio</h2>`;
+        termsData.forEach(item => {
+            html += `
+                <div class="legal-item reveal">
+                    <span class="item-title">${item.title}</span> ${item.description}
+                </div>
+            `;
+        });
+        
+        block.innerHTML = html;
+        container.appendChild(block);
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+async function loadPrivacy(_supabase) {
+    const container = document.getElementById('privacy-container');
+    const { data, error } = await _supabase
+        .from('legal')
+        .select('*')
+        .eq('is_visible', true)
+        .eq('category', 'Informativa sulla Privacy')
+        .order('order_index', { ascending: true });
+
+    if (error || !data || data.length === 0) return;
+
+    container.innerHTML = '';
     
-    categories.forEach(cat => {
-        if (grouped[cat]) {
-            const block = document.createElement('div');
-            block.className = 'legal-block';
-            
-            let html = `<h2>${cat}</h2>`;
-            grouped[cat].forEach(item => {
-                html += `
-                    <div class="legal-item reveal">
-                        <span class="item-title">${item.title}</span> ${item.description}
-                    </div>
-                `;
-            });
-            
-            block.innerHTML = html;
-            container.appendChild(block);
-        }
+    const wrapper = document.createElement('div');
+    wrapper.style.display = 'flex';
+    wrapper.style.flexDirection = 'column';
+    wrapper.style.gap = '1.5rem';
+    wrapper.style.maxWidth = '800px';
+    wrapper.style.margin = '0 auto';
+    
+    data.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = `card reveal delay-${(index % 6) + 1}`;
+        card.style.textAlign = 'left';
+        
+        card.innerHTML = `
+            <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">${item.title}</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">${item.description}</p>
+        `;
+        wrapper.appendChild(card);
     });
+    
+    container.appendChild(wrapper);
 }
 
 async function loadContacts(_supabase) {
