@@ -64,6 +64,87 @@ const addFaqBtn = document.getElementById('add-faq-btn');
 const faqModal = document.getElementById('faq-modal');
 const faqForm = document.getElementById('faq-form');
 const closeFaqModal = document.getElementById('close-faq-modal');
+// ===== UTILS: Toast, Confirm, Drag&Drop =====
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `
+        <span style="font-size: 1.2rem;">${type === 'success' ? '✓' : '⚠'}</span>
+        <span>${message}</span>
+    `;
+    container.appendChild(toast);
+    
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10);
+    
+    // Remove after 3s
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function customConfirm(message) {
+    return new Promise((resolve) => {
+        const modal = document.getElementById('custom-confirm');
+        const msgEl = document.getElementById('confirm-message');
+        const btnYes = document.getElementById('confirm-yes');
+        const btnNo = document.getElementById('confirm-no');
+        
+        msgEl.textContent = message;
+        modal.classList.remove('hidden');
+        
+        const cleanup = () => {
+            modal.classList.add('hidden');
+            btnYes.removeEventListener('click', onYes);
+            btnNo.removeEventListener('click', onNo);
+        };
+        
+        const onYes = () => { cleanup(); resolve(true); };
+        const onNo = () => { cleanup(); resolve(false); };
+        
+        btnYes.addEventListener('click', onYes);
+        btnNo.addEventListener('click', onNo);
+    });
+}
+
+function initSortable(listElement, tableName) {
+    if (!window.Sortable) return;
+    
+    new Sortable(listElement, {
+        animation: 150,
+        handle: '.drag-handle',
+        ghostClass: 'sortable-ghost',
+        onEnd: async function (evt) {
+            if (evt.oldIndex === evt.newIndex) return;
+            
+            // Get all items in new order
+            const items = Array.from(listElement.children);
+            const updates = items.map((item, index) => {
+                const editBtn = item.querySelector('.actions button[data-id], .actions button[onclick^="edit"]');
+                let id;
+                if (editBtn.dataset.id) id = editBtn.dataset.id;
+                else {
+                    // Extract ID from onclick="editFunc(ID)"
+                    const match = editBtn.getAttribute('onclick').match(/\d+/);
+                    id = match ? match[0] : null;
+                }
+                return { id: parseInt(id), order_index: index };
+            }).filter(item => item.id);
+
+            // Send bulk update to Supabase
+            try {
+                const { error } = await _supabase.from(tableName).upsert(updates);
+                if (error) throw error;
+                showToast('Ordine aggiornato con successo');
+            } catch (err) {
+                showToast('Errore nel salvataggio dell\'ordine', 'error');
+                console.error(err);
+            }
+        }
+    });
+}
 
 // Check Session on Start
 async function checkSession() {
@@ -186,6 +267,7 @@ async function fetchUpdates() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
+                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>
                     ${update.version} 
                     ${update.is_latest ? '<span class="badge-latest">ULTIMA</span>' : ''}
@@ -266,19 +348,20 @@ updateForm.addEventListener('submit', async (e) => {
     }
 
     if (result.error) {
-        alert('Errore nel salvataggio: ' + result.error.message);
+        showToast('Errore nel salvataggio: ' + result.error.message, 'error');
     } else {
         updateModal.classList.add('hidden');
         fetchUpdates();
+        showToast('Aggiornamento salvato!');
     }
 });
 
 async function deleteUpdate(id) {
-    if (!confirm('Sei sicuro di voler eliminare questo aggiornamento?')) return;
+    if (!(await customConfirm('Sei sicuro di voler eliminare questo aggiornamento?'))) return;
     
     const { error } = await _supabase.from('updates').delete().eq('id', id);
     if (error) {
-        alert('Errore nell\'eliminazione: ' + error.message);
+        showToast('Errore nell\'eliminazione: ' + error.message, 'error');
     } else {
         fetchUpdates();
     }
@@ -314,6 +397,7 @@ async function fetchCredits() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
+                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>
                     ${credit.title} 
                     <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${credit.category}</span>
@@ -381,17 +465,18 @@ creditForm.addEventListener('submit', async (e) => {
     }
 
     if (result.error) {
-        alert('Errore: ' + result.error.message);
+        showToast('Errore: ' + result.error.message, 'error');
     } else {
         creditModal.classList.add('hidden');
         fetchCredits();
+        showToast('Credito salvato!');
     }
 });
 
 async function deleteCredit(id) {
-    if (!confirm('Eliminare questa scheda?')) return;
+    if (!(await customConfirm('Eliminare questa scheda?'))) return;
     const { error } = await _supabase.from('credits').delete().eq('id', id);
-    if (error) alert(error.message);
+    if (error) showToast(error.message, 'error');
     else fetchCredits();
 }
 
@@ -425,6 +510,7 @@ async function fetchContacts() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
+                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>${contact.icon} ${contact.label} ${!contact.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${contact.value}</p>
             </div>
@@ -490,17 +576,18 @@ contactForm.addEventListener('submit', async (e) => {
     }
 
     if (result.error) {
-        alert('Errore: ' + result.error.message);
+        showToast('Errore: ' + result.error.message, 'error');
     } else {
         contactModal.classList.add('hidden');
         fetchContacts();
+        showToast('Contatto salvato!');
     }
 });
 
 async function deleteContact(id) {
-    if (!confirm('Eliminare questo contatto?')) return;
+    if (!(await customConfirm('Eliminare questo contatto?'))) return;
     const { error } = await _supabase.from('contacts').delete().eq('id', id);
-    if (error) alert(error.message);
+    if (error) showToast(error.message, 'error');
     else fetchContacts();
 }
 
@@ -537,6 +624,7 @@ async function fetchLegal() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
+                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>${note.title} <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${note.category}</span> ${!note.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${note.description.substring(0, 100)}${note.description.length > 100 ? '...' : ''}</p>
             </div>
@@ -600,17 +688,18 @@ legalForm.addEventListener('submit', async (e) => {
     }
 
     if (result.error) {
-        alert('Errore: ' + result.error.message);
+        showToast('Errore: ' + result.error.message, 'error');
     } else {
         legalModal.classList.add('hidden');
         fetchLegal();
+        showToast('Nota legale salvata!');
     }
 });
 
 async function deleteLegal(id) {
-    if (!confirm('Eliminare questa nota legale?')) return;
+    if (!(await customConfirm('Eliminare questa nota legale?'))) return;
     const { error } = await _supabase.from('legal').delete().eq('id', id);
-    if (error) alert(error.message);
+    if (error) showToast(error.message, 'error');
     else fetchLegal();
 }
 
@@ -645,6 +734,7 @@ async function fetchFeatures() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
+                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>${feature.icon} ${feature.title} ${!feature.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${feature.description}</p>
             </div>
@@ -708,17 +798,18 @@ featureForm.addEventListener('submit', async (e) => {
     }
 
     if (result.error) {
-        alert('Errore: ' + result.error.message);
+        showToast('Errore: ' + result.error.message, 'error');
     } else {
         featureModal.classList.add('hidden');
         fetchFeatures();
+        showToast('Funzionalità salvata!');
     }
 });
 
 async function deleteFeature(id) {
-    if (!confirm('Eliminare questa funzionalità?')) return;
+    if (!(await customConfirm('Eliminare questa funzionalità?'))) return;
     const { error } = await _supabase.from('features').delete().eq('id', id);
-    if (error) alert(error.message);
+    if (error) showToast(error.message, 'error');
     else fetchFeatures();
 }
 
@@ -734,6 +825,7 @@ async function fetchFAQ() {
         el.className = 'update-item';
         el.innerHTML = `
             <div class="update-item-info">
+                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>${item.question} ${!item.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${item.answer.substring(0, 80)}${item.answer.length > 80 ? '...' : ''}</p>
             </div>
@@ -744,6 +836,8 @@ async function fetchFAQ() {
         `;
         faqList.appendChild(el);
     });
+
+    initSortable(faqList, 'faq');
 }
 
 addFaqBtn.addEventListener('click', () => {
@@ -758,7 +852,7 @@ closeFaqModal.addEventListener('click', () => faqModal.classList.add('hidden'));
 
 async function editFaq(id) {
     const { data, error } = await _supabase.from('faq').select('*').eq('id', id).single();
-    if (error || !data) { alert('Errore nel caricamento'); return; }
+    if (error || !data) { showToast('Errore nel caricamento', 'error'); return; }
 
     document.getElementById('faq-modal-title').textContent = 'Modifica FAQ';
     document.getElementById('faq-id').value = data.id;
@@ -787,17 +881,18 @@ faqForm.addEventListener('submit', async (e) => {
     }
 
     if (error) {
-        alert('Errore: ' + error.message);
+        showToast('Errore: ' + error.message, 'error');
     } else {
         faqModal.classList.add('hidden');
         fetchFAQ();
+        showToast('FAQ salvata!');
     }
 });
 
 async function deleteFaq(id) {
-    if (!confirm('Eliminare questa FAQ?')) return;
+    if (!(await customConfirm('Eliminare questa FAQ?'))) return;
     const { error } = await _supabase.from('faq').delete().eq('id', id);
-    if (error) alert(error.message);
+    if (error) showToast(error.message, 'error');
     else fetchFAQ();
 }
 
