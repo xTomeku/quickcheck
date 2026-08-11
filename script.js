@@ -6,24 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             hamburger.classList.toggle('toggle');
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            hamburger.setAttribute('aria-expanded', !isExpanded);
         });
 
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 hamburger.classList.remove('toggle');
+                hamburger.setAttribute('aria-expanded', 'false');
             });
         });
     }
 
-    // Initialize Supabase only if we are on pages that need it
     const hasDynamicElements = document.getElementById('latest-update-container') || 
                                document.getElementById('timeline-container') || 
                                document.getElementById('hero-download-btn') ||
                                document.getElementById('credits-container') ||
                                document.getElementById('contacts-container') ||
                                document.getElementById('features-grid') ||
-                               document.getElementById('privacy-container');
+                               document.getElementById('privacy-container') ||
+                               document.getElementById('faq-container');
 
     if (window.supabase && hasDynamicElements) {
         const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
@@ -32,6 +35,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Scroll Reveal Initialization
     initScrollReveal();
+
+    // Back to Top logic
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 });
 
 function initScrollReveal() {
@@ -77,12 +95,19 @@ async function loadAllDynamicContent(_supabase) {
         promises.push(loadPrivacy(_supabase));
     }
 
-    if (document.getElementById('gallery-container')) {
-        promises.push(loadGallery(_supabase));
-    }
+
 
     if (document.getElementById('features-grid')) {
         promises.push(loadFeatures(_supabase));
+    }
+
+    if (document.getElementById('faq-container')) {
+        promises.push(loadFAQ(_supabase));
+    }
+
+    // Stats Bar (uses GitHub API + data already loaded)
+    if (document.getElementById('stat-downloads')) {
+        promises.push(loadStats(_supabase));
     }
 
     await Promise.all(promises);
@@ -166,6 +191,41 @@ async function loadPrivacy(_supabase) {
 
 async function loadContacts(_supabase) {
     const container = document.getElementById('contacts-container');
+    const cacheKey = 'qc_cache_contacts';
+    const cached = localStorage.getItem(cacheKey);
+
+    const renderData = (data) => {
+        if (!data || data.length === 0) {
+            container.innerHTML = '';
+            return;
+        }
+        container.innerHTML = '';
+        data.forEach((item, index) => {
+            const card = document.createElement('a');
+            card.href = item.url;
+            card.className = `contact-card reveal delay-${(index % 6) + 1}`;
+            if (item.url.startsWith('http')) card.target = '_blank';
+            
+            card.innerHTML = `
+                <span class="contact-icon">${item.icon}</span>
+                <h3>${item.label}</h3>
+                <p>${item.value}</p>
+            `;
+            container.appendChild(card);
+        });
+        initScrollReveal();
+    };
+
+    if (cached) {
+        try { renderData(JSON.parse(cached)); } catch(e) {}
+    } else {
+        container.innerHTML = `
+            <div class="skeleton-wrapper">
+                ${Array(3).fill('<div class="skeleton-card"><div class="skeleton skeleton-icon"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></div>').join('')}
+            </div>
+        `;
+    }
+
     const { data, error } = await _supabase
         .from('contacts')
         .select('*')
@@ -174,33 +234,76 @@ async function loadContacts(_supabase) {
 
     if (error) {
         console.error('Errore Supabase:', error);
-        container.innerHTML = '';
+        if (!cached) container.innerHTML = '';
         return;
     }
 
-    if (!data || data.length === 0) {
-        container.innerHTML = ''; // Rimuove "Caricamento..." se non ci sono dati
-        return;
+    const freshString = JSON.stringify(data);
+    if (freshString !== cached) {
+        localStorage.setItem(cacheKey, freshString);
+        renderData(data);
     }
-
-    container.innerHTML = '';
-    data.forEach((item, index) => {
-        const card = document.createElement('a');
-        card.href = item.url;
-        card.className = `contact-card reveal delay-${(index % 6) + 1}`;
-        if (item.url.startsWith('http')) card.target = '_blank';
-        
-        card.innerHTML = `
-            <span class="contact-icon">${item.icon}</span>
-            <h3>${item.label}</h3>
-            <p>${item.value}</p>
-        `;
-        container.appendChild(card);
-    });
 }
 
 async function loadCredits(_supabase) {
     const container = document.getElementById('credits-container');
+    const cacheKey = 'qc_cache_credits';
+    const cached = localStorage.getItem(cacheKey);
+
+    const renderData = (data) => {
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun riconoscimento presente.</p>';
+            return;
+        }
+
+        const grouped = data.reduce((acc, item) => {
+            const cat = item.category || 'Generale';
+            if (!acc[cat]) acc[cat] = [];
+            acc[cat].push(item);
+            return acc;
+        }, {});
+
+        container.innerHTML = '';
+        
+        for (const category in grouped) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'credit-category';
+            
+            let contentHtml = `<h2>${category}</h2>`;
+            
+            if (category.toLowerCase().includes('legale') || category.toLowerCase().includes('note')) {
+                grouped[category].forEach(item => {
+                    contentHtml += `<p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; text-align: center;">${item.description}</p>`;
+                });
+            } else {
+                contentHtml += `<div class="credits-grid">`;
+                grouped[category].forEach((item, index) => {
+                    contentHtml += `
+                        <div class="card reveal delay-${(index % 6) + 1}">
+                            <h3>${item.title}</h3>
+                            <p>${item.description}</p>
+                        </div>
+                    `;
+                });
+                contentHtml += `</div>`;
+            }
+            
+            categoryDiv.innerHTML = contentHtml;
+            container.appendChild(categoryDiv);
+        }
+        initScrollReveal();
+    };
+
+    if (cached) {
+        try { renderData(JSON.parse(cached)); } catch(e) {}
+    } else {
+        container.innerHTML = `
+            <div class="skeleton-wrapper" style="margin-top: 3rem;">
+                ${Array(3).fill('<div class="skeleton-card"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>').join('')}
+            </div>
+        `;
+    }
+
     const { data, error } = await _supabase
         .from('credits')
         .select('*')
@@ -208,51 +311,14 @@ async function loadCredits(_supabase) {
         .order('order_index', { ascending: true });
 
     if (error) {
-        container.innerHTML = `<p style="color: #ff4d4d;">Errore caricamento credits.</p>`;
+        if (!cached) container.innerHTML = `<p style="color: #ff4d4d;">Errore caricamento credits.</p>`;
         return;
     }
 
-    if (!data || data.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun riconoscimento presente.</p>';
-        return;
-    }
-
-    // Group by category
-    const grouped = data.reduce((acc, item) => {
-        const cat = item.category || 'Generale'; // Default se vuoto
-        if (!acc[cat]) acc[cat] = [];
-        acc[cat].push(item);
-        return acc;
-    }, {});
-
-    container.innerHTML = '';
-    
-    for (const category in grouped) {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'credit-category';
-        
-        let contentHtml = `<h2>${category}</h2>`;
-        
-        // Use grid only if not 'Note Legali' or similar (simple heuristic)
-        if (category.toLowerCase().includes('legale') || category.toLowerCase().includes('note')) {
-            grouped[category].forEach(item => {
-                contentHtml += `<p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; text-align: center;">${item.description}</p>`;
-            });
-        } else {
-            contentHtml += `<div class="credits-grid">`;
-            grouped[category].forEach((item, index) => {
-                contentHtml += `
-                    <div class="card reveal delay-${(index % 6) + 1}">
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                    </div>
-                `;
-            });
-            contentHtml += `</div>`;
-        }
-        
-        categoryDiv.innerHTML = contentHtml;
-        container.appendChild(categoryDiv);
+    const freshString = JSON.stringify(data);
+    if (freshString !== cached) {
+        localStorage.setItem(cacheKey, freshString);
+        renderData(data);
     }
 }
 
@@ -373,54 +439,44 @@ function formatChange(text) {
     return text;
 }
 
-async function loadGallery(_supabase) {
-    const container = document.getElementById('gallery-container');
-    const track = document.getElementById('carousel-track');
-
-    if (!container || !track) return;
-
-    const { data, error } = await _supabase
-        .from('gallery')
-        .select('*')
-        .eq('is_visible', true)
-        .order('order_index', { ascending: true });
-
-    if (error || !data || data.length === 0) {
-        const section = container.closest('.showcase-section');
-        if (section) section.style.display = 'none';
-        return;
-    }
-
-    const createItem = (item) => {
-        const div = document.createElement('div');
-        div.className = 'showcase-item';
-        div.innerHTML = `
-            <div class="phone-wrapper">
-                <div class="phone-inner">
-                    <img src="${item.image_url}" alt="${item.title}" loading="lazy">
-                </div>
-            </div>
-            <div class="showcase-info">
-                <h3>${item.title}</h3>
-            </div>
-        `;
-        return div;
-    };
-
-    // Popola il track con gli item originali e i cloni per il loop infinito
-    data.forEach(item => track.appendChild(createItem(item)));
-    data.forEach(item => track.appendChild(createItem(item))); // Cloni
-
-    // Calcola la durata dell'animazione in base alla larghezza totale
-    // Più lenta su PC, più veloce su mobile
-    const isMobile = window.innerWidth <= 768;
-    const duration = isMobile ? data.length * 4 : data.length * 7;
-    track.style.animationDuration = `${duration}s`;
-}
 
 async function loadFeatures(_supabase) {
     const container = document.getElementById('features-grid');
     if (!container) return;
+
+    const cacheKey = 'qc_cache_features';
+    const cached = localStorage.getItem(cacheKey);
+
+    const renderData = (data) => {
+        if (!data || data.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-muted);">Nessuna funzionalità configurata.</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+        data.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = `card reveal delay-${(index % 6) + 1}`;
+            
+            card.innerHTML = `
+                <div class="card-icon">${item.icon}</div>
+                <h3>${item.title}</h3>
+                <p>${item.description}</p>
+            `;
+            container.appendChild(card);
+        });
+        initScrollReveal();
+    };
+
+    if (cached) {
+        try { renderData(JSON.parse(cached)); } catch(e) {}
+    } else {
+        container.innerHTML = `
+            <div class="skeleton-wrapper">
+                ${Array(3).fill('<div class="skeleton-card"><div class="skeleton skeleton-icon"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>').join('')}
+            </div>
+        `;
+    }
 
     const { data, error } = await _supabase
         .from('features')
@@ -430,25 +486,145 @@ async function loadFeatures(_supabase) {
 
     if (error) {
         console.error('Errore caricamento features:', error);
-        container.innerHTML = '<p style="color: red;">Errore nel caricamento delle funzionalità.</p>';
+        if (!cached) container.innerHTML = '<p style="color: red;">Errore nel caricamento delle funzionalità.</p>';
         return;
     }
 
-    if (!data || data.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-muted);">Nessuna funzionalità configurata.</p>';
-        return;
+    const freshString = JSON.stringify(data);
+    if (freshString !== cached) {
+        localStorage.setItem(cacheKey, freshString);
+        renderData(data);
+    }
+}
+
+// ===== Stats Bar =====
+async function loadStats(_supabase) {
+    const downloadsEl = document.getElementById('stat-downloads');
+    const updatedEl = document.getElementById('stat-updated');
+
+    // Count-up animation helper
+    function animateCounter(el, target) {
+        if (target <= 0) { el.textContent = '0'; return; }
+        const duration = 1500;
+        const start = performance.now();
+        const step = (now) => {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+            el.textContent = Math.floor(eased * target).toLocaleString('it-IT');
+            if (progress < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
     }
 
-    container.innerHTML = '';
-    data.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = `card reveal delay-${(index % 6) + 1}`;
-        
-        card.innerHTML = `
-            <div class="card-icon">${item.icon}</div>
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
+    // 1. Downloads from GitHub API
+    try {
+        const res = await fetch('https://api.github.com/repos/xTomeku/Quick_Check_Unisalento/releases');
+        if (res.ok) {
+            const releases = await res.json();
+            let totalDownloads = 0;
+            releases.forEach(release => {
+                (release.assets || []).forEach(asset => {
+                    totalDownloads += asset.download_count || 0;
+                });
+            });
+            downloadsEl.dataset.target = totalDownloads;
+            animateCounter(downloadsEl, totalDownloads);
+        }
+    } catch (e) {
+        console.warn('Impossibile caricare stats download da GitHub:', e);
+    }
+
+    // 2. Last update date (from Supabase updates)
+    const cachedUpdates = localStorage.getItem('qc_cache_updates');
+    if (cachedUpdates) {
+        try {
+            const updates = JSON.parse(cachedUpdates);
+            if (updates.length > 0) updatedEl.textContent = updates[0].date || '—';
+        } catch(e) {}
+    }
+    const { data: updateData } = await _supabase
+        .from('updates')
+        .select('date')
+        .eq('is_visible', true)
+        .order('created_at', { ascending: false })
+        .limit(1);
+    if (updateData && updateData.length > 0) {
+        updatedEl.textContent = updateData[0].date;
+        localStorage.setItem('qc_cache_updates', JSON.stringify(updateData));
+    }
+}
+
+// ===== FAQ (Dynamic from Supabase) =====
+async function loadFAQ(_supabase) {
+    const container = document.getElementById('faq-container');
+    if (!container) return;
+
+    const cacheKey = 'qc_cache_faq';
+    const cached = localStorage.getItem(cacheKey);
+
+    const renderData = (data) => {
+        if (!data || data.length === 0) {
+            container.innerHTML = '';
+            const section = container.closest('.faq-section');
+            if (section) section.style.display = 'none';
+            return;
+        }
+
+        container.innerHTML = '';
+        data.forEach((item, index) => {
+            const faqItem = document.createElement('div');
+            faqItem.className = `faq-item reveal delay-${(index % 6) + 1}`;
+            faqItem.innerHTML = `
+                <div class="faq-question">
+                    <h3>${item.question}</h3>
+                    <span class="faq-toggle">+</span>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">${item.answer}</div>
+                </div>
+            `;
+            // Accordion toggle
+            faqItem.querySelector('.faq-question').addEventListener('click', () => {
+                // Close other open items
+                container.querySelectorAll('.faq-item.open').forEach(openItem => {
+                    if (openItem !== faqItem) openItem.classList.remove('open');
+                });
+                faqItem.classList.toggle('open');
+            });
+            container.appendChild(faqItem);
+        });
+        initScrollReveal();
+    };
+
+    if (cached) {
+        try { renderData(JSON.parse(cached)); } catch(e) {}
+    } else {
+        container.innerHTML = `
+            <div class="skeleton-wrapper" style="flex-direction: column; gap: 1rem;">
+                ${Array(3).fill('<div class="skeleton" style="height: 56px; border-radius: 12px; width: 100%;"></div>').join('')}
+            </div>
         `;
-        container.appendChild(card);
-    });
+    }
+
+    const { data, error } = await _supabase
+        .from('faq')
+        .select('*')
+        .eq('is_visible', true)
+        .order('order_index', { ascending: true });
+
+    if (error) {
+        console.error('Errore caricamento FAQ:', error);
+        if (!cached) {
+            container.innerHTML = '';
+            const section = container.closest('.faq-section');
+            if (section) section.style.display = 'none';
+        }
+        return;
+    }
+
+    const freshString = JSON.stringify(data);
+    if (freshString !== cached) {
+        localStorage.setItem(cacheKey, freshString);
+        renderData(data);
+    }
 }

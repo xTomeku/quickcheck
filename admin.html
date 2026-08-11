@@ -211,9 +211,9 @@
                 <button class="tab-btn active" data-tab="updates-section">Aggiornamenti</button>
                 <button class="tab-btn" data-tab="features-section">Funzionalità</button>
                 <button class="tab-btn" data-tab="credits-section">Credits</button>
-                <button class="tab-btn" data-tab="gallery-section">Galleria</button>
                 <button class="tab-btn" data-tab="contacts-section">Contatti</button>
                 <button class="tab-btn" data-tab="legal-section">Legale</button>
+                <button class="tab-btn" data-tab="faq-admin-section">FAQ</button>
             </div>
 
             <!-- Features Section -->
@@ -249,16 +249,6 @@
                 </div>
             </div>
 
-            <!-- Gallery Management Section -->
-            <div id="gallery-section" class="section-content hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                    <h2>Gestione Galleria</h2>
-                    <button id="add-gallery-btn" class="btn btn-primary btn-sm">+ Nuova Immagine</button>
-                </div>
-                <div id="gallery-list">
-                    <!-- Dynamic Content -->
-                </div>
-            </div>
 
             <!-- Contacts Management Section -->
             <div id="contacts-section" class="section-content hidden">
@@ -281,6 +271,17 @@
                     <button id="add-legal-btn" class="btn btn-primary btn-sm">+ Nuova Nota</button>
                 </div>
                 <div id="legal-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- FAQ Admin Section -->
+            <div id="faq-admin-section" class="section-content hidden">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Gestione FAQ</h2>
+                    <button id="add-faq-btn" class="btn btn-primary btn-sm">+ Nuova FAQ</button>
+                </div>
+                <div id="faq-list">
                     <!-- Dynamic Content -->
                 </div>
             </div>
@@ -438,39 +439,6 @@
         </div>
     </div>
 
-    <!-- Gallery Modal -->
-    <div id="gallery-modal" class="modal hidden">
-        <div class="modal-content">
-            <h2 id="gallery-modal-title">Nuova Immagine Galleria</h2>
-            <form id="gallery-form">
-                <input type="hidden" id="gallery-id">
-                <div class="form-group">
-                    <label for="g-title">Titolo (es. Home Orario)</label>
-                    <input type="text" id="g-title" class="form-control" placeholder="Es: Home Orario">
-                </div>
-                <div class="form-group">
-                    <label for="g-file">Carica Immagine (Scegli file)</label>
-                    <input type="file" id="g-file" class="form-control" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label for="g-url">O usa URL esterno (Opzionale)</label>
-                    <input type="url" id="g-url" class="form-control" placeholder="https://...">
-                </div>
-                <div class="form-group">
-                    <label for="g-order">Ordine</label>
-                    <input type="number" id="g-order" class="form-control" value="0">
-                </div>
-                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" id="g-visible" style="width: 20px; height: 20px;" checked>
-                    <label for="g-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
-                </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
-                    <button type="button" id="close-gallery-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <!-- Feature Modal -->
     <div id="feature-modal" class="modal hidden">
@@ -501,6 +469,36 @@
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
                     <button type="button" id="close-feature-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- FAQ Modal -->
+    <div id="faq-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 id="faq-modal-title">Nuova FAQ</h2>
+            <form id="faq-form">
+                <input type="hidden" id="faq-id">
+                <div class="form-group">
+                    <label for="fq-question">Domanda</label>
+                    <input type="text" id="fq-question" class="form-control" placeholder="Es: L'app è gratuita?">
+                </div>
+                <div class="form-group">
+                    <label for="fq-answer">Risposta</label>
+                    <textarea id="fq-answer" class="form-control" rows="4" placeholder="Es: Sì, QuickCheck è completamente gratuita."></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fq-order">Ordine</label>
+                    <input type="number" id="fq-order" class="form-control" value="0">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+                    <input type="checkbox" id="fq-visible" style="width: 20px; height: 20px;" checked>
+                    <label for="fq-visible" style="margin: 0;">Visibile sul sito (Pubblica)</label>
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2;">Salva</button>
+                    <button type="button" id="close-faq-modal" class="btn btn-secondary" style="flex: 1;">Annulla</button>
                 </div>
             </form>
         </div>

@@ -24,7 +24,8 @@ const sections = {
     'gallery-section': document.getElementById('gallery-section'),
     'contacts-section': document.getElementById('contacts-section'),
     'legal-section': document.getElementById('legal-section'),
-    'features-section': document.getElementById('features-section')
+    'features-section': document.getElementById('features-section'),
+    'faq-admin-section': document.getElementById('faq-admin-section')
 };
 
 // Features DOM
@@ -55,12 +56,14 @@ const contactModal = document.getElementById('contact-modal');
 const contactForm = document.getElementById('contact-form');
 const closeContactModal = document.getElementById('close-contact-modal');
 
-// Gallery DOM
-const galleryList = document.getElementById('gallery-list');
-const addGalleryBtn = document.getElementById('add-gallery-btn');
-const galleryModal = document.getElementById('gallery-modal');
-const galleryForm = document.getElementById('gallery-form');
-const closeGalleryModal = document.getElementById('close-gallery-modal');
+
+
+// FAQ DOM
+const faqList = document.getElementById('faq-list');
+const addFaqBtn = document.getElementById('add-faq-btn');
+const faqModal = document.getElementById('faq-modal');
+const faqForm = document.getElementById('faq-form');
+const closeFaqModal = document.getElementById('close-faq-modal');
 
 // Check Session on Start
 async function checkSession() {
@@ -78,10 +81,10 @@ function showDashboard(user) {
     userEmailDisplay.textContent = `Loggato come: ${user.email}`;
     fetchUpdates();
     fetchCredits();
-    fetchGallery();
     fetchContacts();
     fetchLegal();
     fetchFeatures();
+    fetchFAQ();
 }
 
 // Tab Switching
@@ -611,146 +614,6 @@ async function deleteLegal(id) {
     else fetchLegal();
 }
 
-// Gallery Logic
-async function fetchGallery() {
-    galleryList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento galleria...</p>';
-    
-    const { data, error } = await _supabase
-        .from('gallery')
-        .select('*')
-        .order('order_index', { ascending: true });
-
-    if (error) {
-        galleryList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
-        return;
-    }
-
-    // Ordinamento: Visibili prima
-    data.sort((a, b) => {
-        if (a.is_visible !== b.is_visible) return a.is_visible ? -1 : 1;
-        return (a.order_index || 0) - (b.order_index || 0);
-    });
-
-    galleryList.innerHTML = '';
-    if (data.length === 0) {
-        galleryList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna immagine in galleria.</p>';
-    }
-
-    data.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'update-item';
-        div.innerHTML = `
-            <div class="update-item-info" style="display: flex; align-items: center; gap: 15px;">
-                <img src="${item.image_url}" style="width: 50px; height: 80px; object-fit: cover; border-radius: 4px; border: 1px solid var(--glass-border);">
-                <div>
-                    <h3>${item.title} ${!item.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
-                    <p style="font-size: 0.7rem; max-width: 300px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${item.image_url}</p>
-                </div>
-            </div>
-            <div class="actions">
-                <button class="btn btn-secondary btn-sm edit-gallery-btn" data-id="${item.id}" style="margin-top:0">Modifica</button>
-                <button class="btn btn-secondary btn-sm delete-gallery-btn" data-id="${item.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
-            </div>
-        `;
-        galleryList.appendChild(div);
-    });
-
-    document.querySelectorAll('.edit-gallery-btn').forEach(btn => {
-        btn.addEventListener('click', () => openGalleryEditModal(btn.dataset.id, data));
-    });
-
-    document.querySelectorAll('.delete-gallery-btn').forEach(btn => {
-        btn.addEventListener('click', () => deleteGallery(btn.dataset.id));
-    });
-}
-
-function openGalleryEditModal(id, data) {
-    const item = data.find(g => g.id == id);
-    if (!item) return;
-
-    document.getElementById('gallery-id').value = item.id;
-    document.getElementById('g-title').value = item.title;
-    document.getElementById('g-url').value = item.image_url;
-    document.getElementById('g-order').value = item.order_index;
-    document.getElementById('g-visible').checked = item.is_visible !== false;
-    
-    // Resetta il campo file per evitare di trascinare vecchi upload
-    document.getElementById('g-file').value = '';
-    
-    document.getElementById('gallery-modal-title').textContent = 'Modifica Immagine';
-    galleryModal.classList.remove('hidden');
-}
-
-addGalleryBtn.addEventListener('click', () => {
-    galleryForm.reset();
-    document.getElementById('gallery-id').value = '';
-    document.getElementById('g-file').value = ''; // Assicuriamoci che sia vuoto
-    document.getElementById('gallery-modal-title').textContent = 'Nuova Immagine Galleria';
-    galleryModal.classList.remove('hidden');
-});
-
-closeGalleryModal.addEventListener('click', () => galleryModal.classList.add('hidden'));
-
-galleryForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const id = document.getElementById('gallery-id').value;
-    const title = document.getElementById('g-title').value;
-    const fileInput = document.getElementById('g-file');
-    let image_url = document.getElementById('g-url').value;
-    const order_index = parseInt(document.getElementById('g-order').value) || 0;
-
-    // Se c'è un file selezionato, caricalo prima
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random().toString(36).substring(2)}-${Date.now()}.${fileExt}`;
-        const filePath = `${fileName}`;
-
-        const { data, error: uploadError } = await _supabase.storage
-            .from('gallery')
-            .upload(filePath, file);
-
-        if (uploadError) {
-            alert('Errore caricamento file: ' + uploadError.message);
-            return;
-        }
-
-        // Ottieni URL pubblico
-        const { data: { publicUrl } } = _supabase.storage
-            .from('gallery')
-            .getPublicUrl(filePath);
-            
-        image_url = publicUrl;
-    }
-
-    if (!image_url) {
-        alert('Inserisci un URL o carica un file');
-        return;
-    }
-    const is_visible = document.getElementById('g-visible').checked;
-    const payload = { title, image_url, order_index, is_visible };
-
-    let result;
-    if (id) {
-        result = await _supabase.from('gallery').update(payload).eq('id', id);
-    } else {
-        result = await _supabase.from('gallery').insert([payload]);
-    }
-
-    if (result.error) {
-        alert('Errore: ' + result.error.message);
-    } else {
-        galleryModal.classList.add('hidden');
-        fetchGallery();
-    }
-});
-
-async function deleteGallery(id) {
-    if (!confirm('Eliminare questa immagine dalla galleria?')) return;
-    const { error } = await _supabase.from('gallery').delete().eq('id', id);
-    if (error) alert(error.message);
-    else fetchGallery();
-}
 
 // Features Logic
 async function fetchFeatures() {
@@ -857,6 +720,85 @@ async function deleteFeature(id) {
     const { error } = await _supabase.from('features').delete().eq('id', id);
     if (error) alert(error.message);
     else fetchFeatures();
+}
+
+// ===== FAQ CRUD =====
+async function fetchFAQ() {
+    const { data, error } = await _supabase.from('faq').select('*').order('order_index', { ascending: true });
+    if (error) { faqList.innerHTML = `<p style="color:red;">Errore: ${error.message}</p>`; return; }
+    if (!data || data.length === 0) { faqList.innerHTML = '<p style="color:var(--text-muted);">Nessuna FAQ presente.</p>'; return; }
+
+    faqList.innerHTML = '';
+    data.forEach(item => {
+        const el = document.createElement('div');
+        el.className = 'update-item';
+        el.innerHTML = `
+            <div class="update-item-info">
+                <h3>${item.question} ${!item.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
+                <p>${item.answer.substring(0, 80)}${item.answer.length > 80 ? '...' : ''}</p>
+            </div>
+            <div class="actions">
+                <button class="btn btn-secondary btn-sm" onclick="editFaq(${item.id})">Modifica</button>
+                <button class="btn btn-secondary btn-sm" onclick="deleteFaq(${item.id})" style="color:#ff4d4d;">Elimina</button>
+            </div>
+        `;
+        faqList.appendChild(el);
+    });
+}
+
+addFaqBtn.addEventListener('click', () => {
+    document.getElementById('faq-modal-title').textContent = 'Nuova FAQ';
+    faqForm.reset();
+    document.getElementById('faq-id').value = '';
+    document.getElementById('fq-visible').checked = true;
+    faqModal.classList.remove('hidden');
+});
+
+closeFaqModal.addEventListener('click', () => faqModal.classList.add('hidden'));
+
+async function editFaq(id) {
+    const { data, error } = await _supabase.from('faq').select('*').eq('id', id).single();
+    if (error || !data) { alert('Errore nel caricamento'); return; }
+
+    document.getElementById('faq-modal-title').textContent = 'Modifica FAQ';
+    document.getElementById('faq-id').value = data.id;
+    document.getElementById('fq-question').value = data.question;
+    document.getElementById('fq-answer').value = data.answer;
+    document.getElementById('fq-order').value = data.order_index;
+    document.getElementById('fq-visible').checked = data.is_visible;
+    faqModal.classList.remove('hidden');
+}
+
+faqForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const id = document.getElementById('faq-id').value;
+    const payload = {
+        question: document.getElementById('fq-question').value,
+        answer: document.getElementById('fq-answer').value,
+        order_index: parseInt(document.getElementById('fq-order').value) || 0,
+        is_visible: document.getElementById('fq-visible').checked,
+    };
+
+    let error;
+    if (id) {
+        ({ error } = await _supabase.from('faq').update(payload).eq('id', id));
+    } else {
+        ({ error } = await _supabase.from('faq').insert([payload]));
+    }
+
+    if (error) {
+        alert('Errore: ' + error.message);
+    } else {
+        faqModal.classList.add('hidden');
+        fetchFAQ();
+    }
+});
+
+async function deleteFaq(id) {
+    if (!confirm('Eliminare questa FAQ?')) return;
+    const { error } = await _supabase.from('faq').delete().eq('id', id);
+    if (error) alert(error.message);
+    else fetchFAQ();
 }
 
 checkSession();
