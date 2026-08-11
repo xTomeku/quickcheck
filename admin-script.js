@@ -133,10 +133,14 @@ function initSortable(listElement, tableName) {
                 return { id: parseInt(id), order_index: index };
             }).filter(item => item.id);
 
-            // Send bulk update to Supabase
+            // Send sequential updates to Supabase
             try {
-                const { error } = await _supabase.from(tableName).upsert(updates);
-                if (error) throw error;
+                for (const item of updates) {
+                    const { error } = await _supabase.from(tableName)
+                        .update({ order_index: item.order_index })
+                        .eq('id', item.id);
+                    if (error) throw error;
+                }
                 showToast('Ordine aggiornato con successo');
             } catch (err) {
                 showToast('Errore nel salvataggio dell\'ordine', 'error');
