@@ -291,6 +291,8 @@ async function fetchUpdates() {
     document.querySelectorAll('.delete-btn').forEach(btn => {
         btn.addEventListener('click', () => deleteUpdate(btn.dataset.id));
     });
+
+    initSortable(updatesList, 'updates');
 }
 
 // CRUD Operations
@@ -420,6 +422,8 @@ async function fetchCredits() {
     document.querySelectorAll('.delete-credit-btn').forEach(btn => {
         btn.addEventListener('click', () => deleteCredit(btn.dataset.id));
     });
+
+    initSortable(creditsList, 'credits');
 }
 
 function openCreditEditModal(id, data) {
@@ -529,6 +533,8 @@ async function fetchContacts() {
     document.querySelectorAll('.delete-contact-btn').forEach(btn => {
         btn.addEventListener('click', () => deleteContact(btn.dataset.id));
     });
+
+    initSortable(contactsList, 'contacts');
 }
 
 function openContactEditModal(id, data) {
@@ -643,6 +649,8 @@ async function fetchLegal() {
     document.querySelectorAll('.delete-legal-btn').forEach(btn => {
         btn.addEventListener('click', () => deleteLegal(btn.dataset.id));
     });
+
+    initSortable(legalList, 'legal');
 }
 
 function openLegalEditModal(id, data) {
@@ -753,6 +761,8 @@ async function fetchFeatures() {
     document.querySelectorAll('.delete-feature-btn').forEach(btn => {
         btn.addEventListener('click', () => deleteFeature(btn.dataset.id));
     });
+
+    initSortable(featuresList, 'features');
 }
 
 function openFeatureEditModal(id, data) {
