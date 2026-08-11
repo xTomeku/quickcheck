@@ -57,37 +57,68 @@
             align-items: center;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .admin-header h1 {
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-container .btn {
+            width: auto;
+            min-width: auto;
+            border-radius: 20px;
+            text-transform: none;
+            letter-spacing: normal;
         }
 
         .tabs {
             display: flex;
-            gap: 1rem;
+            gap: 2rem;
             margin-bottom: 2rem;
             overflow-x: auto;
             padding-bottom: 0.5rem;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .tabs::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Edge */
+            display: none;
         }
 
         .tab-btn {
-            padding: 0.6rem 1.2rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
+            padding: 0.5rem 0.5rem;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            border-radius: 0;
             color: var(--text-muted);
             cursor: pointer;
             transition: var(--transition);
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: white;
         }
 
         .tab-btn.active {
-            background: var(--primary-gold);
-            color: var(--bg-dark);
-            border-color: var(--primary-gold);
+            background: transparent;
+            color: var(--primary-gold);
+            border-bottom-color: var(--primary-gold);
             font-weight: 600;
         }
 
@@ -100,25 +131,31 @@
             justify-content: space-between;
             align-items: center;
             padding: 1.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(20, 20, 20, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
             margin-bottom: 1rem;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .update-item:hover {
-            border-color: rgba(212, 175, 55, 0.3);
-            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .drag-handle {
             cursor: grab;
-            color: var(--text-muted);
+            color: rgba(255,255,255,0.2);
             margin-right: 15px;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             display: flex;
             align-items: center;
+            transition: color 0.3s;
+        }
+        
+        .update-item:hover .drag-handle {
+            color: var(--primary-gold);
         }
 
         .drag-handle:active {
@@ -285,7 +322,7 @@
 
             <!-- Features Section -->
             <div id="features-section" class="section-content hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="section-header">
                     <h2>Gestione Funzionalità</h2>
                     <button id="add-feature-btn" class="btn btn-primary btn-sm">+ Nuova Funzionalità</button>
                 </div>
@@ -296,7 +333,7 @@
 
             <!-- Updates Section -->
             <div id="updates-section" class="section-content">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="section-header">
                     <h2>Gestione Versioni</h2>
                     <button id="add-update-btn" class="btn btn-primary btn-sm">+ Nuovo</button>
                 </div>
@@ -307,7 +344,7 @@
 
             <!-- Credits Section -->
             <div id="credits-section" class="section-content hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="section-header">
                     <h2>Gestione Credits</h2>
                     <button id="add-credit-btn" class="btn btn-primary btn-sm">+ Nuova Scheda</button>
                 </div>
@@ -319,7 +356,7 @@
 
             <!-- Contacts Management Section -->
             <div id="contacts-section" class="section-content hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="section-header">
                     <h2>Gestione Link Contatto</h2>
                     <button id="add-contact-btn" class="btn btn-primary btn-sm">+ Nuovo Contatto</button>
                 </div>
@@ -330,7 +367,7 @@
 
             <!-- Legal Management Section -->
             <div id="legal-section" class="section-content hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="section-header">
                     <div>
                         <h2>Gestione Note Legali</h2>
                         <p style="color: var(--text-muted); font-size: 0.8rem;">Usa le categorie "Termini di Servizio" o "Informativa sulla Privacy"</p>
@@ -344,7 +381,7 @@
 
             <!-- FAQ Admin Section -->
             <div id="faq-admin-section" class="section-content hidden">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div class="section-header">
                     <h2>Gestione FAQ</h2>
                     <button id="add-faq-btn" class="btn btn-primary btn-sm">+ Nuova FAQ</button>
                 </div>
