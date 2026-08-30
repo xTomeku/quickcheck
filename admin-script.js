@@ -19,6 +19,7 @@ const closeModal = document.getElementById('close-modal');
 // Tabs
 const tabBtns = document.querySelectorAll('.tab-btn');
 const sections = {
+    'analytics-section': document.getElementById('analytics-section'),
     'updates-section': document.getElementById('updates-section'),
     'credits-section': document.getElementById('credits-section'),
     'gallery-section': document.getElementById('gallery-section'),
@@ -57,6 +58,18 @@ const contactForm = document.getElementById('contact-form');
 const closeContactModal = document.getElementById('close-contact-modal');
 
 
+
+// Analytics DOM
+const refreshAnalyticsBtn = document.getElementById('refresh-analytics-btn');
+const refreshIcon = document.getElementById('refresh-icon');
+const analyticsLastSync = document.getElementById('analytics-last-sync');
+const kpiTotalDownloads = document.getElementById('kpi-total-downloads');
+const kpiTopVersion = document.getElementById('kpi-top-version');
+const kpiTopVersionSub = document.getElementById('kpi-top-version-sub');
+const kpiLatestVersion = document.getElementById('kpi-latest-version');
+const kpiLatestVersionSub = document.getElementById('kpi-latest-version-sub');
+const kpiTotalReleases = document.getElementById('kpi-total-releases');
+const analyticsVersionsList = document.getElementById('analytics-versions-list');
 
 // FAQ DOM
 const faqList = document.getElementById('faq-list');
@@ -164,6 +177,7 @@ function showDashboard(user) {
     loginSection.classList.add('hidden');
     adminDashboard.classList.remove('hidden');
     userEmailDisplay.textContent = `Loggato come: ${user.email}`;
+    fetchDownloadStats();
     fetchUpdates();
     fetchCredits();
     fetchContacts();
@@ -908,6 +922,195 @@ async function deleteFaq(id) {
     const { error } = await _supabase.from('faq').delete().eq('id', id);
     if (error) showToast(error.message, 'error');
     else fetchFAQ();
+}
+
+// ===== Analytics / Statistiche Download =====
+async function fetchDownloadStats(isManualRefresh = false) {
+    if (!analyticsVersionsList) return;
+
+    if (refreshIcon) refreshIcon.classList.add('spinning');
+    if (refreshAnalyticsBtn) refreshAnalyticsBtn.disabled = true;
+
+    const cacheKey = 'qc_cache_admin_stats';
+    const cached = localStorage.getItem(cacheKey);
+
+    const renderStats = (releases) => {
+        let totalDownloads = 0;
+        let releaseStats = [];
+
+        releases.forEach(rel => {
+            let relDownloads = 0;
+            let apkAssets = [];
+
+            (rel.assets || []).forEach(asset => {
+                const count = asset.download_count || 0;
+                relDownloads += count;
+                totalDownloads += count;
+                apkAssets.push({
+                    name: asset.name,
+                    size: asset.size ? (asset.size / (1024 * 1024)).toFixed(1) + ' MB' : null,
+                    downloads: count,
+                    url: asset.browser_download_url
+                });
+            });
+
+            releaseStats.push({
+                tag: rel.tag_name,
+                name: rel.name || rel.tag_name,
+                downloads: relDownloads,
+                published_at: rel.published_at || rel.created_at,
+                html_url: rel.html_url,
+                assets: apkAssets,
+                is_draft: rel.draft,
+                is_prerelease: rel.prerelease
+            });
+        });
+
+        // Top Version (max downloads)
+        let topRel = releaseStats.length > 0
+            ? releaseStats.reduce((max, cur) => cur.downloads > max.downloads ? cur : max, releaseStats[0])
+            : null;
+
+        // Latest Version (first in list)
+        let latestRel = releaseStats.length > 0 ? releaseStats[0] : null;
+
+        // Update KPIs
+        if (kpiTotalDownloads) {
+            animateValue(kpiTotalDownloads, totalDownloads);
+        }
+        if (kpiTotalReleases) {
+            kpiTotalReleases.textContent = releaseStats.length.toString();
+        }
+        if (kpiTopVersion && topRel) {
+            kpiTopVersion.textContent = topRel.tag;
+            const pct = totalDownloads > 0 ? Math.round((topRel.downloads / totalDownloads) * 100) : 0;
+            if (kpiTopVersionSub) {
+                kpiTopVersionSub.textContent = `${topRel.downloads.toLocaleString('it-IT')} download (${pct}% del tot)`;
+            }
+        }
+        if (kpiLatestVersion && latestRel) {
+            kpiLatestVersion.textContent = latestRel.tag;
+            if (kpiLatestVersionSub) {
+                kpiLatestVersionSub.textContent = `${latestRel.downloads.toLocaleString('it-IT')} download`;
+            }
+        }
+
+        // Render Breakdown List
+        if (releaseStats.length === 0) {
+            analyticsVersionsList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Nessuna release trovata su GitHub.</p>';
+            return;
+        }
+
+        analyticsVersionsList.innerHTML = '';
+        releaseStats.forEach((rel, idx) => {
+            const isTop = topRel && rel.tag === topRel.tag && rel.downloads > 0;
+            const isLatest = idx === 0;
+            const pct = totalDownloads > 0 ? ((rel.downloads / totalDownloads) * 100).toFixed(1) : '0.0';
+            
+            const dateStr = rel.published_at 
+                ? new Date(rel.published_at).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' })
+                : 'Data sconosciuta';
+
+            const assetInfo = rel.assets.map(a => `${a.name}${a.size ? ` (${a.size})` : ''}`).join(', ') || 'Nessun file APK allegato';
+
+            const card = document.createElement('div');
+            card.className = 'version-stat-item';
+            card.innerHTML = `
+                <div class="version-stat-header">
+                    <div class="version-stat-title">
+                        <span>${rel.tag}</span>
+                        ${isLatest ? '<span class="badge-latest">ULTIMA</span>' : ''}
+                        ${isTop ? '<span style="background: rgba(212,175,55,0.2); color: var(--primary-gold); border: 1px solid rgba(212,175,55,0.4); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">★ PIÙ SCARICATA</span>' : ''}
+                        ${rel.name && rel.name !== rel.tag ? `<span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">— ${rel.name}</span>` : ''}
+                    </div>
+                    <div class="version-stat-count">
+                        <span class="version-stat-number">${rel.downloads.toLocaleString('it-IT')}</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">download (${pct}%)</span>
+                    </div>
+                </div>
+
+                <div class="version-stat-meta">
+                    <span>📦 ${assetInfo} • 📅 ${dateStr}</span>
+                    <a href="${rel.html_url}" target="_blank" rel="noopener noreferrer" class="badge-gh" title="Visualizza release su GitHub">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+
+                <div class="version-progress-container">
+                    <div class="version-progress-bar" style="width: 0%;" data-target-width="${pct}%"></div>
+                </div>
+            `;
+            analyticsVersionsList.appendChild(card);
+        });
+
+        // Animate progress bars
+        setTimeout(() => {
+            document.querySelectorAll('.version-progress-bar').forEach(bar => {
+                bar.style.width = bar.dataset.targetWidth || '0%';
+            });
+        }, 50);
+
+        if (analyticsLastSync) {
+            const now = new Date();
+            analyticsLastSync.textContent = `Aggiornato alle ${now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+        }
+    };
+
+    // If cached data exists and it's not a forced manual refresh, render it immediately
+    if (cached && !isManualRefresh) {
+        try {
+            renderStats(JSON.parse(cached));
+        } catch(e) {}
+    }
+
+    try {
+        const res = await fetch('https://api.github.com/repos/xTomeku/Quick_Check_Unisalento/releases');
+        if (!res.ok) {
+            throw new Error(`GitHub API HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        localStorage.setItem(cacheKey, JSON.stringify(data));
+        renderStats(data);
+        if (isManualRefresh) {
+            showToast('Statistiche aggiornate con successo!');
+        }
+    } catch (err) {
+        console.error('Errore fetch GitHub Releases:', err);
+        if (!cached) {
+            analyticsVersionsList.innerHTML = `
+                <div style="text-align: center; padding: 2rem 0;">
+                    <p style="color: #ff4d4d; margin-bottom: 1rem;">Impossibile recuperare i dati da GitHub Releases (${err.message}).</p>
+                    <button class="btn btn-secondary btn-sm" onclick="fetchDownloadStats(true)">Riprova</button>
+                </div>
+            `;
+        } else {
+            showToast('Errore durante l\'aggiornamento delle statistiche', 'error');
+        }
+    } finally {
+        if (refreshIcon) refreshIcon.classList.remove('spinning');
+        if (refreshAnalyticsBtn) refreshAnalyticsBtn.disabled = false;
+    }
+}
+
+function animateValue(el, target) {
+    if (!el) return;
+    if (target <= 0) { el.textContent = '0'; return; }
+    const duration = 800;
+    const start = performance.now();
+    const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString('it-IT');
+        if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+}
+
+if (refreshAnalyticsBtn) {
+    refreshAnalyticsBtn.addEventListener('click', () => {
+        fetchDownloadStats(true);
+    });
 }
 
 checkSession();

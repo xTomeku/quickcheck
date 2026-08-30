@@ -326,6 +326,193 @@
 
         .toast.success { border-left: 4px solid #4caf50; }
         .toast.error { border-left: 4px solid #f44336; }
+
+        /* Analytics Dashboard Styles */
+        .analytics-kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: linear-gradient(145deg, rgba(30, 30, 30, 0.7), rgba(20, 20, 20, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.25rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .kpi-icon-wrap {
+            font-size: 1.8rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 14px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            flex-shrink: 0;
+        }
+
+        .kpi-content {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+        }
+
+        .kpi-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+
+        .kpi-value {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .kpi-sub {
+            font-size: 0.75rem;
+            color: var(--primary-gold);
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .analytics-breakdown-card {
+            background: linear-gradient(145deg, rgba(25, 25, 25, 0.7), rgba(18, 18, 18, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .version-stat-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            margin-bottom: 1rem;
+            transition: all 0.25s ease;
+        }
+
+        .version-stat-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(212, 175, 55, 0.25);
+        }
+
+        .version-stat-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .version-stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .version-stat-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: white;
+            flex-wrap: wrap;
+        }
+
+        .version-stat-count {
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+
+        .version-stat-number {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary-gold);
+        }
+
+        .version-stat-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.6rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .version-progress-container {
+            height: 8px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .version-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37 0%, #FFD700 100%);
+            border-radius: 6px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .badge-gh {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+        }
+
+        .badge-gh:hover {
+            color: var(--primary-gold);
+            border-color: rgba(212, 175, 55, 0.3);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .spinning {
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -372,12 +559,77 @@
             </div>
 
             <div class="tabs">
-                <button class="tab-btn active" data-tab="updates-section">Aggiornamenti</button>
+                <button class="tab-btn active" data-tab="analytics-section">Statistiche</button>
+                <button class="tab-btn" data-tab="updates-section">Aggiornamenti</button>
                 <button class="tab-btn" data-tab="features-section">Funzionalità</button>
                 <button class="tab-btn" data-tab="credits-section">Credits</button>
                 <button class="tab-btn" data-tab="contacts-section">Contatti</button>
                 <button class="tab-btn" data-tab="legal-section">Legale</button>
                 <button class="tab-btn" data-tab="faq-admin-section">FAQ</button>
+            </div>
+
+            <!-- Analytics / Statistiche Download Section -->
+            <div id="analytics-section" class="section-content">
+                <div class="section-header">
+                    <div>
+                        <h2>Statistiche Download</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Metriche e download in tempo reale sincronizzati da GitHub Releases</p>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; align-items: center;">
+                        <span id="analytics-last-sync" style="font-size: 0.8rem; color: var(--text-muted);"></span>
+                        <button id="refresh-analytics-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                            <svg id="refresh-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                            Aggiorna
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="analytics-kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap">📥</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Download Totali</span>
+                            <h3 id="kpi-total-downloads" class="kpi-value">0</h3>
+                            <span class="kpi-sub">Tutte le versioni</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap">🏆</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Versione Top</span>
+                            <h3 id="kpi-top-version" class="kpi-value">—</h3>
+                            <span id="kpi-top-version-sub" class="kpi-sub">0 download</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap">🚀</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Ultima Versione</span>
+                            <h3 id="kpi-latest-version" class="kpi-value">—</h3>
+                            <span id="kpi-latest-version-sub" class="kpi-sub">0 download</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap">📦</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Release GitHub</span>
+                            <h3 id="kpi-total-releases" class="kpi-value">0</h3>
+                            <span class="kpi-sub">Versioni pubblicate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Versions Breakdown Card -->
+                <div class="analytics-breakdown-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <h3 style="font-size: 1.15rem; color: var(--text-main); font-weight: 700;">Dettaglio Download per Versione</h3>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Dati aggregati per ciascun file APK</span>
+                    </div>
+                    <div id="analytics-versions-list">
+                        <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento statistiche in corso...</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Features Section -->
@@ -392,7 +644,7 @@
             </div>
 
             <!-- Updates Section -->
-            <div id="updates-section" class="section-content">
+            <div id="updates-section" class="section-content hidden">
                 <div class="section-header">
                     <h2>Gestione Versioni</h2>
                     <button id="add-update-btn" class="btn btn-primary btn-sm">+ Nuovo</button>
