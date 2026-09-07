@@ -7,3 +7,4 @@ Disallow: /config.js
 Disallow: /admin*
 
 Sitemap: https://xtomeku.github.io/quickcheck/sitemap.xml
+Sitemap: https://xtomeku.github.io/quickcheck/sitemap.txt
