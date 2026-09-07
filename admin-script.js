@@ -421,6 +421,7 @@ async function fetchCredits() {
                 <h3>
                     ${credit.title} 
                     <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${credit.category}</span>
+                    ${credit.url ? `<a href="${credit.url}" target="_blank" style="color: var(--primary-gold); font-size: 0.8rem; margin-left: 8px; text-decoration: none;" title="${credit.url}">🔗 Link</a>` : ''}
                     ${!credit.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}
                 </h3>
                 <p>${credit.description.substring(0, 100)}${credit.description.length > 100 ? '...' : ''}</p>
@@ -452,6 +453,7 @@ function openCreditEditModal(id, data) {
     document.getElementById('c-category').value = credit.category;
     document.getElementById('c-title').value = credit.title;
     document.getElementById('c-description').value = credit.description;
+    document.getElementById('c-url').value = credit.url || '';
     document.getElementById('c-order').value = credit.order_index;
     document.getElementById('c-visible').checked = credit.is_visible !== false;
     
@@ -462,6 +464,7 @@ function openCreditEditModal(id, data) {
 addCreditBtn.addEventListener('click', () => {
     creditForm.reset();
     document.getElementById('credit-id').value = '';
+    document.getElementById('c-url').value = '';
     document.getElementById('credit-modal-title').textContent = 'Nuova Scheda Credit';
     creditModal.classList.remove('hidden');
 });
@@ -474,10 +477,11 @@ creditForm.addEventListener('submit', async (e) => {
     const category = document.getElementById('c-category').value;
     const title = document.getElementById('c-title').value;
     const description = document.getElementById('c-description').value;
+    const url = document.getElementById('c-url').value.trim() || null;
     const order_index = parseInt(document.getElementById('c-order').value) || 0;
     const is_visible = document.getElementById('c-visible').checked;
 
-    const payload = { category, title, description, order_index, is_visible };
+    const payload = { category, title, description, order_index, is_visible, url };
 
     let result;
     if (id) {
@@ -487,7 +491,11 @@ creditForm.addEventListener('submit', async (e) => {
     }
 
     if (result.error) {
-        showToast('Errore: ' + result.error.message, 'error');
+        if (result.error.message && result.error.message.includes('url')) {
+            showToast('Errore: La colonna "url" non esiste ancora nella tabella "credits" su Supabase. Creala prima di salvare il link!', 'error');
+        } else {
+            showToast('Errore: ' + result.error.message, 'error');
+        }
     } else {
         creditModal.classList.add('hidden');
         fetchCredits();
