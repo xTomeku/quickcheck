@@ -1143,7 +1143,7 @@ if (refreshAnalyticsBtn) {
 
 // ===== Telemetria Anonima Utenti QuickCheck (Supabase) =====
 // Variabile modalità simulazione dati demo (attiva di default per visualizzare subito l'anteprima)
-let isDemoStatsMode = true;
+let isDemoStatsMode = false;
 
 function generateDemoStats() {
     const list = [];
