@@ -648,6 +648,10 @@
                             <span style="font-size: 0.8rem; color: var(--text-muted);">Ping all'avvio dell'app • Privacy 100% anonima</span>
                         </div>
                         <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" id="toggle-demo-stats-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #c084fc; border-color: rgba(168, 85, 247, 0.35); background: rgba(168, 85, 247, 0.08);">
+                                <span>🧪</span>
+                                <span id="demo-btn-text">Simula Dati Demo</span>
+                            </button>
                             <button type="button" id="open-export-modal-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                                 Esporta Dati
@@ -701,29 +705,38 @@
 
                     <!-- Grafico Interattivo Andamento Accessi -->
                     <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
                             <div>
                                 <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Andamento Temporale Accessi</h4>
                                 <span style="font-size: 0.8rem; color: var(--text-muted);">Clicca sulle piattaforme per mostrare o nascondere le linee nel grafico</span>
                             </div>
-                            <!-- Toggle Filtri Piattaforma Linee Grafico -->
-                            <div id="chart-platform-toggles" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-                                <button type="button" class="chart-toggle-btn active" data-dataset="0" style="--btn-color: #FFD700; --btn-glow: rgba(255, 215, 0, 0.18);">
-                                    <span class="toggle-dot" style="background: #FFD700;"></span>
-                                    <span>Totale</span>
-                                </button>
-                                <button type="button" class="chart-toggle-btn active" data-dataset="1" style="--btn-color: #22c55e; --btn-glow: rgba(34, 197, 94, 0.18);">
-                                    <span class="toggle-dot" style="background: #22c55e;"></span>
-                                    <span>APK Android</span>
-                                </button>
-                                <button type="button" class="chart-toggle-btn active" data-dataset="2" style="--btn-color: #a855f7; --btn-glow: rgba(168, 85, 247, 0.18);">
-                                    <span class="toggle-dot" style="background: #a855f7;"></span>
-                                    <span>PWA Standalone</span>
-                                </button>
-                                <button type="button" class="chart-toggle-btn active" data-dataset="3" style="--btn-color: #38bdf8; --btn-glow: rgba(56, 189, 248, 0.18);">
-                                    <span class="toggle-dot" style="background: #38bdf8;"></span>
-                                    <span>Web Browser</span>
-                                </button>
+                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                                <!-- Selettore Intervallo Temporale -->
+                                <div id="user-stats-range-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
+                                    <button type="button" class="user-range-btn" data-days="7" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">7G</button>
+                                    <button type="button" class="user-range-btn active" data-days="30" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); border: none; color: #111; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">30G</button>
+                                    <button type="button" class="user-range-btn" data-days="90" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">90G</button>
+                                    <button type="button" class="user-range-btn" data-days="365" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Tutto</button>
+                                </div>
+                                <!-- Toggle Filtri Piattaforma Linee Grafico -->
+                                <div id="chart-platform-toggles" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="0" style="--btn-color: #FFD700; --btn-glow: rgba(255, 215, 0, 0.18);">
+                                        <span class="toggle-dot" style="background: #FFD700;"></span>
+                                        <span>Totale</span>
+                                    </button>
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="1" style="--btn-color: #22c55e; --btn-glow: rgba(34, 197, 94, 0.18);">
+                                        <span class="toggle-dot" style="background: #22c55e;"></span>
+                                        <span>APK</span>
+                                    </button>
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="2" style="--btn-color: #a855f7; --btn-glow: rgba(168, 85, 247, 0.18);">
+                                        <span class="toggle-dot" style="background: #a855f7;"></span>
+                                        <span>PWA</span>
+                                    </button>
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="3" style="--btn-color: #38bdf8; --btn-glow: rgba(56, 189, 248, 0.18);">
+                                        <span class="toggle-dot" style="background: #38bdf8;"></span>
+                                        <span>Web</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div style="position: relative; height: 320px; width: 100%;">
@@ -738,20 +751,11 @@
                                 <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Storico Giornaliero per Piattaforma</h4>
                                 <span style="font-size: 0.8rem; color: var(--text-muted);">Ripartizione dettagliata tra Android APK, PWA installata e Web browser</span>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                                <!-- Selettore Intervallo Temporale -->
-                                <div id="user-stats-range-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
-                                    <button type="button" class="user-range-btn" data-days="7" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">7G</button>
-                                    <button type="button" class="user-range-btn active" data-days="30" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); border: none; color: #111; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">30G</button>
-                                    <button type="button" class="user-range-btn" data-days="90" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">90G</button>
-                                    <button type="button" class="user-range-btn" data-days="365" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Tutto</button>
-                                </div>
-                                <!-- Legenda Piattaforme -->
-                                <div style="display: flex; gap: 12px; font-size: 0.75rem;">
-                                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span> APK</span>
-                                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> PWA</span>
-                                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span> Web</span>
-                                </div>
+                            <!-- Legenda Piattaforme -->
+                            <div style="display: flex; gap: 12px; font-size: 0.75rem;">
+                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span> APK</span>
+                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> PWA</span>
+                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span> Web</span>
                             </div>
                         </div>
                         <div id="user-stats-history-list" style="overflow-x: auto;">

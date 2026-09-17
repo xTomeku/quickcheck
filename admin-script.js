@@ -1142,13 +1142,64 @@ if (refreshAnalyticsBtn) {
 }
 
 // ===== Telemetria Anonima Utenti QuickCheck (Supabase) =====
+// Variabile modalità simulazione dati demo (attiva di default per visualizzare subito l'anteprima)
+let isDemoStatsMode = true;
+
+function generateDemoStats() {
+    const list = [];
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+
+    // Genera 30 giorni di storico realistico con trend, picchi nel fine settimana e oscillazioni
+    for (let i = 0; i < 30; i++) {
+        const d = new Date();
+        d.setDate(now.getDate() - i);
+        const dataStr = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+        const dayOfWeek = d.getDay();
+        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+        const trend = Math.floor((30 - i) * 1.6);
+
+        const apkBase = Math.floor(18 + trend + Math.sin(i * 0.8) * 8 + (isWeekend ? 12 : 0));
+        const pwaBase = Math.floor(10 + Math.floor(trend * 0.6) + Math.cos(i * 0.9) * 5 + (isWeekend ? 7 : 0));
+        const webBase = Math.floor(7 + Math.floor(trend * 0.4) + (i % 4 === 0 ? 6 : 0));
+
+        const apk = Math.max(3, apkBase);
+        const pwa = Math.max(2, pwaBase);
+        const web = Math.max(1, webBase);
+        const totale = apk + pwa + web;
+
+        list.push({
+            data: dataStr,
+            utenti_unici_totali: totale,
+            utenti_apk: apk,
+            utenti_pwa: pwa,
+            utenti_web_browser: web
+        });
+    }
+    return list;
+}
+
 /**
- * Recupera le statistiche di accesso giornaliero da Supabase.
+ * Recupera le statistiche di accesso giornaliero da Supabase (o genera dati demo se attiva la simulazione).
  * Interroga prioritariamente la vista aggregata 'v_utenti_unici_giornalieri'.
  * In caso di assenza della vista, esegue il fallback aggregando i record di 'app_accessi'.
  */
 async function fetchUserStats(days = currentStatsRangeDays) {
     if (!userStatsHistoryList) return;
+
+    // Se la modalità demo è attiva, mostra dati simulati realistici
+    if (isDemoStatsMode) {
+        let demo = generateDemoStats();
+        if (days && days < 365) {
+            demo = demo.slice(0, days);
+        }
+        if (kpiUsersRangeLabel) {
+            kpiUsersRangeLabel.textContent = days >= 365 ? 'Accessi Totali Storico (Demo)' : `Accessi Ultimi ${days} Giorni (Demo)`;
+        }
+        renderUserStats(demo);
+        return;
+    }
 
     try {
         // Aggiorna l'etichetta del KPI in base ai giorni selezionati
@@ -1605,6 +1656,35 @@ document.querySelectorAll('.user-range-btn').forEach(btn => {
         fetchUserStats(currentStatsRangeDays);
     });
 });
+
+// Gestione pulsante attivazione/disattivazione Modalità Dati Demo
+const toggleDemoStatsBtn = document.getElementById('toggle-demo-stats-btn');
+const demoBtnText = document.getElementById('demo-btn-text');
+
+if (toggleDemoStatsBtn) {
+    if (isDemoStatsMode) {
+        toggleDemoStatsBtn.style.background = 'rgba(168, 85, 247, 0.25)';
+        toggleDemoStatsBtn.style.borderColor = '#c084fc';
+        if (demoBtnText) demoBtnText.textContent = 'Disattiva Demo';
+    }
+
+    toggleDemoStatsBtn.addEventListener('click', () => {
+        isDemoStatsMode = !isDemoStatsMode;
+
+        if (isDemoStatsMode) {
+            toggleDemoStatsBtn.style.background = 'rgba(168, 85, 247, 0.25)';
+            toggleDemoStatsBtn.style.borderColor = '#c084fc';
+            if (demoBtnText) demoBtnText.textContent = 'Disattiva Demo';
+            showToast('Modalità Demo attivata: dati simulati negli ultimi 30 giorni', 'success');
+        } else {
+            toggleDemoStatsBtn.style.background = 'rgba(168, 85, 247, 0.08)';
+            toggleDemoStatsBtn.style.borderColor = 'rgba(168, 85, 247, 0.35)';
+            if (demoBtnText) demoBtnText.textContent = 'Simula Dati Demo';
+            showToast('Dati reali Supabase ripristinati', 'success');
+        }
+        fetchUserStats(currentStatsRangeDays);
+    });
+}
 
 
 // ============================================================
