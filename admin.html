@@ -15,6 +15,7 @@
     <script src="config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         .admin-container {
             max-width: 900px;
@@ -519,6 +520,52 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
+
+        /* Chart & Platform Toggle Pills */
+        .chart-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+            user-select: none;
+        }
+
+        .chart-toggle-btn:hover {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .chart-toggle-btn.active {
+            color: #fff;
+            border-color: var(--btn-color);
+            background: var(--btn-glow);
+            box-shadow: 0 0 12px var(--btn-glow);
+        }
+
+        .chart-toggle-btn .toggle-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            transition: opacity 0.25s ease, transform 0.25s ease;
+        }
+
+        .chart-toggle-btn:not(.active) .toggle-dot {
+            opacity: 0.3;
+            transform: scale(0.8);
+        }
+
+        .chart-toggle-btn:not(.active) {
+            opacity: 0.4;
+            text-decoration: line-through;
+        }
     </style>
 </head>
 <body>
@@ -649,6 +696,38 @@
                                 <h3 id="kpi-users-total30" class="kpi-value">0</h3>
                                 <span class="kpi-sub">Totale accessi unici</span>
                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Grafico Interattivo Andamento Accessi -->
+                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                            <div>
+                                <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Andamento Temporale Accessi</h4>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">Clicca sulle piattaforme per mostrare o nascondere le linee nel grafico</span>
+                            </div>
+                            <!-- Toggle Filtri Piattaforma Linee Grafico -->
+                            <div id="chart-platform-toggles" style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+                                <button type="button" class="chart-toggle-btn active" data-dataset="0" style="--btn-color: #FFD700; --btn-glow: rgba(255, 215, 0, 0.18);">
+                                    <span class="toggle-dot" style="background: #FFD700;"></span>
+                                    <span>Totale</span>
+                                </button>
+                                <button type="button" class="chart-toggle-btn active" data-dataset="1" style="--btn-color: #22c55e; --btn-glow: rgba(34, 197, 94, 0.18);">
+                                    <span class="toggle-dot" style="background: #22c55e;"></span>
+                                    <span>APK Android</span>
+                                </button>
+                                <button type="button" class="chart-toggle-btn active" data-dataset="2" style="--btn-color: #a855f7; --btn-glow: rgba(168, 85, 247, 0.18);">
+                                    <span class="toggle-dot" style="background: #a855f7;"></span>
+                                    <span>PWA Standalone</span>
+                                </button>
+                                <button type="button" class="chart-toggle-btn active" data-dataset="3" style="--btn-color: #38bdf8; --btn-glow: rgba(56, 189, 248, 0.18);">
+                                    <span class="toggle-dot" style="background: #38bdf8;"></span>
+                                    <span>Web Browser</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div style="position: relative; height: 320px; width: 100%;">
+                            <canvas id="user-stats-chart"></canvas>
                         </div>
                     </div>
 
@@ -1096,7 +1175,8 @@
                 <div class="form-group">
                     <label for="export-format-type">Formato File</label>
                     <select id="export-format-type" class="form-control">
-                        <option value="csv">CSV (Excel, Google Fogli)</option>
+                        <option value="csv" selected>CSV per Excel (separatore ';' punto e virgola)</option>
+                        <option value="csv_comma">CSV Standard (separatore ',' virgola)</option>
                         <option value="json">JSON (Sviluppatori / API)</option>
                     </select>
                 </div>

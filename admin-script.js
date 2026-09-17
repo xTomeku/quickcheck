@@ -1197,6 +1197,10 @@ async function fetchUserStats(days = currentStatsRangeDays) {
                 utenti_pwa: raggruppati[d].pwa.size,
                 utenti_web_browser: raggruppati[d].web.size
             }));
+
+            if (days && days < 365) {
+                data = data.slice(0, days);
+            }
         }
 
         renderUserStats(data || []);
@@ -1213,12 +1217,245 @@ async function fetchUserStats(days = currentStatsRangeDays) {
     }
 }
 
+// ============================================================
+// GRAFICO TELEMETRIA UTENTI MULTILINEA (CHART.JS)
+// ============================================================
+let userStatsChart = null;
+let chartTogglesInitialized = false;
+
+// Plugin custom: linea verticale bianca di guida (crosshair) all'hover
+const verticalCrosshairPlugin = {
+    id: 'verticalCrosshair',
+    afterDraw: (chart) => {
+        if (chart.tooltip && chart.tooltip.opacity > 0 && chart.tooltip.dataPoints && chart.tooltip.dataPoints.length > 0) {
+            const ctx = chart.ctx;
+            const x = chart.tooltip.dataPoints[0].element.x;
+            const topY = chart.scales.y.top;
+            const bottomY = chart.scales.y.bottom;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x, topY);
+            ctx.lineTo(x, bottomY);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.stroke();
+            ctx.restore();
+        }
+    }
+};
+
+function formatChartDate(isoDateStr) {
+    if (!isoDateStr) return '';
+    const parts = isoDateStr.split('-');
+    if (parts.length < 3) return isoDateStr;
+    const date = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+    return date.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' });
+}
+
+function renderUserStatsChart(records) {
+    const canvas = document.getElementById('user-stats-chart');
+    if (!canvas || !window.Chart) return;
+
+    const ctx = canvas.getContext('2d');
+
+    // Ordine cronologico per l'asse X (dal giorno più vecchio a oggi)
+    const chronRecords = [...(records || [])].reverse();
+
+    const labels = chronRecords.map(r => formatChartDate(r.data));
+    const dataTotale = chronRecords.map(r => Number(r.utenti_unici_totali) || 0);
+    const dataApk = chronRecords.map(r => Number(r.utenti_apk) || 0);
+    const dataPwa = chronRecords.map(r => Number(r.utenti_pwa) || 0);
+    const dataWeb = chronRecords.map(r => Number(r.utenti_web_browser) || 0);
+
+    const createAreaGrad = (r, g, b) => {
+        const grad = ctx.createLinearGradient(0, 0, 0, 300);
+        grad.addColorStop(0, `rgba(${r}, ${g}, ${b}, 0.25)`);
+        grad.addColorStop(0.7, `rgba(${r}, ${g}, ${b}, 0.03)`);
+        grad.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`);
+        return grad;
+    };
+
+    const isSinglePoint = chronRecords.length <= 1;
+
+    const datasets = [
+        {
+            label: 'Totale Unici',
+            data: dataTotale,
+            borderColor: '#FFD700',
+            backgroundColor: createAreaGrad(255, 215, 0),
+            borderWidth: 2,
+            tension: 0.35,
+            fill: true,
+            pointRadius: isSinglePoint ? 6 : 2,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#FFD700',
+            pointBorderColor: '#111',
+            pointBorderWidth: 2
+        },
+        {
+            label: 'APK Android',
+            data: dataApk,
+            borderColor: '#22c55e',
+            backgroundColor: createAreaGrad(34, 197, 94),
+            borderWidth: 2,
+            tension: 0.35,
+            fill: true,
+            pointRadius: isSinglePoint ? 6 : 2,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#22c55e',
+            pointBorderColor: '#111',
+            pointBorderWidth: 2
+        },
+        {
+            label: 'PWA Standalone',
+            data: dataPwa,
+            borderColor: '#a855f7',
+            backgroundColor: createAreaGrad(168, 85, 247),
+            borderWidth: 2,
+            tension: 0.35,
+            fill: true,
+            pointRadius: isSinglePoint ? 6 : 2,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#a855f7',
+            pointBorderColor: '#111',
+            pointBorderWidth: 2
+        },
+        {
+            label: 'Web Browser',
+            data: dataWeb,
+            borderColor: '#38bdf8',
+            backgroundColor: createAreaGrad(56, 189, 248),
+            borderWidth: 2,
+            tension: 0.35,
+            fill: true,
+            pointRadius: isSinglePoint ? 6 : 2,
+            pointHoverRadius: 6,
+            pointBackgroundColor: '#38bdf8',
+            pointBorderColor: '#111',
+            pointBorderWidth: 2
+        }
+    ];
+
+    if (userStatsChart) {
+        userStatsChart.data.labels = labels;
+        datasets.forEach((ds, idx) => {
+            if (userStatsChart.data.datasets[idx]) {
+                userStatsChart.data.datasets[idx].data = ds.data;
+                userStatsChart.data.datasets[idx].backgroundColor = ds.backgroundColor;
+                userStatsChart.data.datasets[idx].pointRadius = ds.pointRadius;
+            } else {
+                userStatsChart.data.datasets.push(ds);
+            }
+        });
+        userStatsChart.update();
+        return;
+    }
+
+    userStatsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: datasets
+        },
+        plugins: [verticalCrosshairPlugin],
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            plugins: {
+                legend: {
+                    display: false // Gestito tramite le nostre pillole HTML custom
+                },
+                tooltip: {
+                    enabled: true,
+                    backgroundColor: 'rgba(12, 12, 12, 0.94)',
+                    titleColor: '#fff',
+                    titleFont: { size: 12, weight: '700' },
+                    bodyColor: '#e2e8f0',
+                    bodyFont: { size: 12 },
+                    borderColor: 'rgba(255, 255, 255, 0.15)',
+                    borderWidth: 1,
+                    padding: 12,
+                    cornerRadius: 10,
+                    displayColors: true,
+                    boxWidth: 8,
+                    boxHeight: 8,
+                    usePointStyle: true,
+                    callbacks: {
+                        label: (context) => ` ${context.dataset.label}: ${context.parsed.y}`
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.45)',
+                        font: { size: 11 },
+                        maxRotation: 0,
+                        autoSkip: true,
+                        maxTicksLimit: 12
+                    },
+                    border: {
+                        display: false
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.45)',
+                        font: { size: 11 },
+                        precision: 0,
+                        autoSkip: true,
+                        maxTicksLimit: 6
+                    },
+                    border: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+
+    initChartToggles();
+}
+
+function initChartToggles() {
+    if (chartTogglesInitialized) return;
+    chartTogglesInitialized = true;
+
+    document.querySelectorAll('.chart-toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (!userStatsChart) return;
+            const dsIdx = parseInt(btn.dataset.dataset, 10);
+            const isVisible = userStatsChart.isDatasetVisible(dsIdx);
+            userStatsChart.setDatasetVisibility(dsIdx, !isVisible);
+            userStatsChart.update();
+            btn.classList.toggle('active', !isVisible);
+        });
+    });
+}
+
 /**
- * Renderizza le card KPI e la tabella dello storico accessi giornaliero.
+ * Renderizza le card KPI, il grafico e la tabella dello storico accessi giornaliero.
  * Include badge colorati per le piattaforme (APK, PWA, Web) e mini-barra percentuale.
  */
 function renderUserStats(records) {
     if (!userStatsHistoryList) return;
+
+    // Aggiorna o crea il grafico interattivo multilinea
+    renderUserStatsChart(records);
 
     // Determinazione date oggi e ieri nel formato YYYY-MM-DD
     const now = new Date();
@@ -1492,10 +1729,19 @@ if (exportStatsForm) {
                 blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8;' });
                 filename = `quickcheck_telemetria_${timestamp}.json`;
             } else {
-                // Formato CSV con intestazione e delimitatore a virgola
-                const header = 'Data,Utenti Unici Totali,APK Android,PWA Standalone,Web Browser\r\n';
-                const rows = data.map(r => `${r.data},${r.utenti_unici_totali},${r.utenti_apk},${r.utenti_pwa},${r.utenti_web_browser}`).join('\r\n');
-                blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
+                // Separatore: ';' per Excel (standard locale italiano/europeo) oppure ',' per CSV standard
+                const separator = format === 'csv_comma' ? ',' : ';';
+                const header = ['Data', 'Utenti Unici Totali', 'APK Android', 'PWA Standalone', 'Web Browser'].join(separator) + '\r\n';
+                const rows = data.map(r => [
+                    r.data,
+                    r.utenti_unici_totali,
+                    r.utenti_apk,
+                    r.utenti_pwa,
+                    r.utenti_web_browser
+                ].join(separator)).join('\r\n');
+
+                // \uFEFF (BOM UTF-8) garantisce che Excel riconosca immediatamente il set di caratteri e le colonne
+                blob = new Blob(['\uFEFF' + header + rows], { type: 'text/csv;charset=utf-8;' });
                 filename = `quickcheck_telemetria_${timestamp}.csv`;
             }
 
