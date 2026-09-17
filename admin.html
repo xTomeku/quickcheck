@@ -593,11 +593,23 @@
 
                 <!-- 1. UTENTI ATTIVI QUICKCHECK (DAU SUPABASE) -->
                 <div style="margin-bottom: 2.5rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-                        <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                            <span>⚡</span> Utenti Attivi QuickCheck (DAU)
-                        </h3>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Ping all'avvio dell'app • Privacy 100% anonima</span>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+                        <div>
+                            <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 0.2rem;">
+                                <span>⚡</span> Utenti Attivi QuickCheck (DAU)
+                            </h3>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Ping all'avvio dell'app • Privacy 100% anonima</span>
+                        </div>
+                        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                            <button type="button" id="open-export-modal-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                Esporta Dati
+                            </button>
+                            <button type="button" id="open-delete-modal-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ff6b6b; border-color: rgba(255, 107, 107, 0.25);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                Elimina Dati
+                            </button>
+                        </div>
                     </div>
 
                     <!-- KPI Grid Utenti Attivi -->
@@ -633,7 +645,7 @@
                         <div class="kpi-card">
                             <div class="kpi-icon-wrap">🔥</div>
                             <div class="kpi-content">
-                                <span class="kpi-label">Accessi Ultimi 30 Giorni</span>
+                                <span id="kpi-users-range-label" class="kpi-label">Accessi Ultimi 30 Giorni</span>
                                 <h3 id="kpi-users-total30" class="kpi-value">0</h3>
                                 <span class="kpi-sub">Totale accessi unici</span>
                             </div>
@@ -642,15 +654,25 @@
 
                     <!-- Tabella Storico Giornaliero & Ripartizione Piattaforme -->
                     <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
                             <div>
                                 <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Storico Giornaliero per Piattaforma</h4>
                                 <span style="font-size: 0.8rem; color: var(--text-muted);">Ripartizione dettagliata tra Android APK, PWA installata e Web browser</span>
                             </div>
-                            <div style="display: flex; gap: 12px; font-size: 0.75rem;">
-                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span> APK</span>
-                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> PWA</span>
-                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span> Web</span>
+                            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                                <!-- Selettore Intervallo Temporale -->
+                                <div id="user-stats-range-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
+                                    <button type="button" class="user-range-btn" data-days="7" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">7G</button>
+                                    <button type="button" class="user-range-btn active" data-days="30" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); border: none; color: #111; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">30G</button>
+                                    <button type="button" class="user-range-btn" data-days="90" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">90G</button>
+                                    <button type="button" class="user-range-btn" data-days="365" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Tutto</button>
+                                </div>
+                                <!-- Legenda Piattaforme -->
+                                <div style="display: flex; gap: 12px; font-size: 0.75rem;">
+                                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span> APK</span>
+                                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> PWA</span>
+                                    <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span> Web</span>
+                                </div>
                             </div>
                         </div>
                         <div id="user-stats-history-list" style="overflow-x: auto;">
@@ -1036,6 +1058,101 @@
                 <button type="button" id="confirm-yes" class="btn btn-primary" style="flex: 1; border-color: #ff4d4d; background: rgba(255,77,77,0.1); color: #ff4d4d;">Elimina</button>
                 <button type="button" id="confirm-no" class="btn btn-secondary" style="flex: 1;">Annulla</button>
             </div>
+        </div>
+    </div>
+
+    
+    <!-- Modal Esportazione Dati Telemetria -->
+    <div id="export-stats-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2 style="color: var(--primary-gold); margin-bottom: 0.5rem; font-size: 1.4rem;">Esporta Statistiche Telemetria</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Scegli l'intervallo temporale e il formato per scaricare i dati.</p>
+            
+            <form id="export-stats-form">
+                <div class="form-group">
+                    <label for="export-range-type">Intervallo Temporale</label>
+                    <select id="export-range-type" class="form-control">
+                        <option value="7">Ultimi 7 giorni</option>
+                        <option value="30" selected>Ultimi 30 giorni</option>
+                        <option value="90">Ultimi 90 giorni</option>
+                        <option value="365">Ultimo anno (365 giorni)</option>
+                        <option value="all">Tutto lo storico</option>
+                        <option value="custom">Intervallo personalizzato...</option>
+                    </select>
+                </div>
+
+                <!-- Date personalizzate (visibili solo se 'custom') -->
+                <div id="export-custom-dates" class="hidden" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="export-date-from">Da Data</label>
+                        <input type="date" id="export-date-from" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="export-date-to">A Data</label>
+                        <input type="date" id="export-date-to" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="export-format-type">Formato File</label>
+                    <select id="export-format-type" class="form-control">
+                        <option value="csv">CSV (Excel, Google Fogli)</option>
+                        <option value="json">JSON (Sviluppatori / API)</option>
+                    </select>
+                </div>
+
+                <div class="actions" style="margin-top: 2rem; display: flex; gap: 10px;">
+                    <button type="submit" id="export-confirm-btn" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none; padding: 0.8rem;">Scarica File</button>
+                    <button type="button" id="close-export-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Eliminazione Dati Telemetria -->
+    <div id="delete-stats-modal" class="modal hidden">
+        <div class="modal-content" style="border-color: rgba(255, 107, 107, 0.3);">
+            <h2 style="color: #ff6b6b; margin-bottom: 0.5rem; font-size: 1.4rem; display: flex; align-items: center; gap: 8px;">
+                <span>🗑️</span> Elimina Dati Telemetria
+            </h2>
+            <div style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.25); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 1.5rem; color: #ffb4b4; font-size: 0.85rem; line-height: 1.4;">
+                <strong>Attenzione:</strong> L'operazione è definitiva e rimuoverà i record selezionati dal database Supabase.
+            </div>
+            
+            <form id="delete-stats-form">
+                <div class="form-group">
+                    <label for="delete-range-type">Cosa desideri eliminare?</label>
+                    <select id="delete-range-type" class="form-control">
+                        <option value="older_90">Record più vecchi di 90 giorni (Consigliato pulizia)</option>
+                        <option value="older_30">Record più vecchi di 30 giorni</option>
+                        <option value="custom">Intervallo di date specifico...</option>
+                        <option value="all">⚠️ Tutto lo storico completo</option>
+                    </select>
+                </div>
+
+                <!-- Date personalizzate (visibili solo se 'custom') -->
+                <div id="delete-custom-dates" class="hidden" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="delete-date-from">Da Data</label>
+                        <input type="date" id="delete-date-from" class="form-control">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="delete-date-to">A Data</label>
+                        <input type="date" id="delete-date-to" class="form-control">
+                    </div>
+                </div>
+
+                <!-- Conferma di sicurezza testuale se si sceglie 'all' -->
+                <div id="delete-all-warning" class="hidden" style="margin-bottom: 1.2rem;">
+                    <label for="delete-confirm-text" style="color: #ff6b6b; font-size: 0.85rem; display: block; margin-bottom: 0.4rem;">Per confermare l'eliminazione totale, digita <strong>ELIMINA</strong> qui sotto:</label>
+                    <input type="text" id="delete-confirm-text" class="form-control" placeholder="ELIMINA" autocomplete="off">
+                </div>
+
+                <div class="actions" style="margin-top: 2rem; display: flex; gap: 10px;">
+                    <button type="submit" id="delete-confirm-btn" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: #ff4d4d; border-color: #ff4d4d; color: white; font-weight: 700; padding: 0.8rem;">Elimina Record</button>
+                    <button type="button" id="close-delete-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                </div>
+            </form>
         </div>
     </div>
 

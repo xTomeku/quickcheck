@@ -81,6 +81,9 @@ const kpiUsersYesterdaySub = document.getElementById('kpi-users-yesterday-sub');
 const kpiUsersAvg7 = document.getElementById('kpi-users-avg7');
 const kpiUsersTotal30 = document.getElementById('kpi-users-total30');
 const userStatsHistoryList = document.getElementById('user-stats-history-list');
+const kpiUsersRangeLabel = document.getElementById('kpi-users-range-label');
+// Variabile di stato per l'intervallo di giorni selezionato (predefinito: 30)
+let currentStatsRangeDays = 30;
 
 // FAQ DOM
 const faqList = document.getElementById('faq-list');
@@ -1144,16 +1147,21 @@ if (refreshAnalyticsBtn) {
  * Interroga prioritariamente la vista aggregata 'v_utenti_unici_giornalieri'.
  * In caso di assenza della vista, esegue il fallback aggregando i record di 'app_accessi'.
  */
-async function fetchUserStats() {
+async function fetchUserStats(days = currentStatsRangeDays) {
     if (!userStatsHistoryList) return;
 
     try {
-        // Query alla vista aggregata SQL su Supabase
+        // Aggiorna l'etichetta del KPI in base ai giorni selezionati
+        if (kpiUsersRangeLabel) {
+            kpiUsersRangeLabel.textContent = days >= 365 ? 'Accessi Totali Storico' : `Accessi Ultimi ${days} Giorni`;
+        }
+
+        // Query alla vista aggregata SQL su Supabase con il limite richiesto
         let { data, error } = await _supabase
             .from('v_utenti_unici_giornalieri')
             .select('*')
             .order('data', { ascending: false })
-            .limit(30);
+            .limit(days);
 
         // Fallback resiliente: se la vista non è ancora presente, aggrega lato client da app_accessi
         if (error) {
@@ -1329,6 +1337,288 @@ function renderUserStats(records) {
             </tbody>
         </table>
     `;
+}
+
+
+// Gestione dei pulsanti del selettore di intervallo temporale (7G, 30G, 90G, Tutto)
+document.querySelectorAll('.user-range-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const days = parseInt(btn.dataset.days, 10);
+        if (!days) return;
+
+        currentStatsRangeDays = days;
+
+        // Aggiorna lo stile attivo dei bottoni
+        document.querySelectorAll('.user-range-btn').forEach(b => {
+            b.classList.remove('active');
+            b.style.background = 'transparent';
+            b.style.color = 'var(--text-muted)';
+            b.style.fontWeight = '600';
+        });
+
+        btn.classList.add('active');
+        btn.style.background = 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)';
+        btn.style.color = '#111';
+        btn.style.fontWeight = '700';
+
+        // Mostra stato di caricamento nella tabella e aggiorna i dati
+        if (userStatsHistoryList) {
+            userStatsHistoryList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento telemetria...</p>';
+        }
+        fetchUserStats(currentStatsRangeDays);
+    });
+});
+
+
+// ============================================================
+// GESTIONE ESPORTAZIONE ED ELIMINAZIONE TELEMETRIA
+// ============================================================
+
+// DOM Modale Esportazione
+const exportStatsModal = document.getElementById('export-stats-modal');
+const openExportModalBtn = document.getElementById('open-export-modal-btn');
+const closeExportModalBtn = document.getElementById('close-export-modal');
+const exportStatsForm = document.getElementById('export-stats-form');
+const exportRangeType = document.getElementById('export-range-type');
+const exportCustomDates = document.getElementById('export-custom-dates');
+const exportDateFrom = document.getElementById('export-date-from');
+const exportDateTo = document.getElementById('export-date-to');
+const exportFormatType = document.getElementById('export-format-type');
+const exportConfirmBtn = document.getElementById('export-confirm-btn');
+
+// Apertura / Chiusura Modal Esportazione
+if (openExportModalBtn && exportStatsModal) {
+    openExportModalBtn.addEventListener('click', () => {
+        exportStatsModal.classList.remove('hidden');
+    });
+}
+if (closeExportModalBtn && exportStatsModal) {
+    closeExportModalBtn.addEventListener('click', () => {
+        exportStatsModal.classList.add('hidden');
+    });
+}
+
+// Toggle date personalizzate esportazione
+if (exportRangeType && exportCustomDates) {
+    exportRangeType.addEventListener('change', () => {
+        if (exportRangeType.value === 'custom') {
+            exportCustomDates.classList.remove('hidden');
+        } else {
+            exportCustomDates.classList.add('hidden');
+        }
+    });
+}
+
+// Esecuzione Esportazione (CSV o JSON)
+if (exportStatsForm) {
+    exportStatsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (exportConfirmBtn) exportConfirmBtn.disabled = true;
+
+        try {
+            const range = exportRangeType.value;
+            const format = exportFormatType.value;
+
+            // Costruiamo la query per recuperare lo storico da Supabase
+            let query = _supabase.from('v_utenti_unici_giornalieri').select('*').order('data', { ascending: false });
+
+            const now = new Date();
+            const pad = n => String(n).padStart(2, '0');
+            const formatIso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+            if (range === 'custom') {
+                const from = exportDateFrom.value;
+                const to = exportDateTo.value;
+                if (!from || !to) {
+                    showToast('Seleziona entrambe le date per l\'intervallo', 'error');
+                    if (exportConfirmBtn) exportConfirmBtn.disabled = false;
+                    return;
+                }
+                query = query.gte('data', from).lte('data', to);
+            } else if (range !== 'all') {
+                const days = parseInt(range, 10);
+                const startDate = new Date();
+                startDate.setDate(startDate.getDate() - days);
+                query = query.gte('data', formatIso(startDate));
+            }
+
+            let { data, error } = await query;
+
+            // Fallback su app_accessi se la vista non è presente
+            if (error) {
+                console.warn('Fallback aggregazione client per export:', error.message);
+                let rawQuery = _supabase.from('app_accessi').select('uuid_utente, data, piattaforma');
+                if (range === 'custom') {
+                    rawQuery = rawQuery.gte('data', exportDateFrom.value).lte('data', exportDateTo.value);
+                } else if (range !== 'all') {
+                    const days = parseInt(range, 10);
+                    const startDate = new Date();
+                    startDate.setDate(startDate.getDate() - days);
+                    rawQuery = rawQuery.gte('data', formatIso(startDate));
+                }
+                const { data: raw, error: rawErr } = await rawQuery;
+                if (rawErr) throw rawErr;
+
+                const grouped = {};
+                (raw || []).forEach(row => {
+                    const d = row.data;
+                    if (!grouped[d]) grouped[d] = { data: d, all: new Set(), apk: new Set(), pwa: new Set(), web: new Set() };
+                    grouped[d].all.add(row.uuid_utente);
+                    if (row.piattaforma === 'android') grouped[d].apk.add(row.uuid_utente);
+                    else if (row.piattaforma === 'pwa') grouped[d].pwa.add(row.uuid_utente);
+                    else grouped[d].web.add(row.uuid_utente);
+                });
+                data = Object.keys(grouped).sort().reverse().map(d => ({
+                    data: d,
+                    utenti_unici_totali: grouped[d].all.size,
+                    utenti_apk: grouped[d].apk.size,
+                    utenti_pwa: grouped[d].pwa.size,
+                    utenti_web_browser: grouped[d].web.size
+                }));
+            }
+
+            if (!data || data.length === 0) {
+                showToast('Nessun dato trovato per l\'intervallo selezionato', 'error');
+                if (exportConfirmBtn) exportConfirmBtn.disabled = false;
+                return;
+            }
+
+            // Generazione file
+            let blob;
+            let filename;
+            const timestamp = formatIso(new Date());
+
+            if (format === 'json') {
+                blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8;' });
+                filename = `quickcheck_telemetria_${timestamp}.json`;
+            } else {
+                // Formato CSV con intestazione e delimitatore a virgola
+                const header = 'Data,Utenti Unici Totali,APK Android,PWA Standalone,Web Browser\r\n';
+                const rows = data.map(r => `${r.data},${r.utenti_unici_totali},${r.utenti_apk},${r.utenti_pwa},${r.utenti_web_browser}`).join('\r\n');
+                blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8;' });
+                filename = `quickcheck_telemetria_${timestamp}.csv`;
+            }
+
+            // Trigger download nel browser
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            exportStatsModal.classList.add('hidden');
+            showToast('Esportazione completata con successo!', 'success');
+        } catch (err) {
+            console.error('Errore export:', err);
+            showToast(`Errore durante l'esportazione: ${err.message}`, 'error');
+        } finally {
+            if (exportConfirmBtn) exportConfirmBtn.disabled = false;
+        }
+    });
+}
+
+// DOM Modale Eliminazione
+const deleteStatsModal = document.getElementById('delete-stats-modal');
+const openDeleteModalBtn = document.getElementById('open-delete-modal-btn');
+const closeDeleteModalBtn = document.getElementById('close-delete-modal');
+const deleteStatsForm = document.getElementById('delete-stats-form');
+const deleteRangeType = document.getElementById('delete-range-type');
+const deleteCustomDates = document.getElementById('delete-custom-dates');
+const deleteDateFrom = document.getElementById('delete-date-from');
+const deleteDateTo = document.getElementById('delete-date-to');
+const deleteAllWarning = document.getElementById('delete-all-warning');
+const deleteConfirmText = document.getElementById('delete-confirm-text');
+const deleteConfirmBtn = document.getElementById('delete-confirm-btn');
+
+// Apertura / Chiusura Modal Eliminazione
+if (openDeleteModalBtn && deleteStatsModal) {
+    openDeleteModalBtn.addEventListener('click', () => {
+        deleteStatsModal.classList.remove('hidden');
+    });
+}
+if (closeDeleteModalBtn && deleteStatsModal) {
+    closeDeleteModalBtn.addEventListener('click', () => {
+        deleteStatsModal.classList.add('hidden');
+    });
+}
+
+// Gestione visualizzazione campi dinamici modale eliminazione
+if (deleteRangeType) {
+    deleteRangeType.addEventListener('change', () => {
+        const val = deleteRangeType.value;
+        if (val === 'custom') {
+            if (deleteCustomDates) deleteCustomDates.classList.remove('hidden');
+            if (deleteAllWarning) deleteAllWarning.classList.add('hidden');
+        } else if (val === 'all') {
+            if (deleteCustomDates) deleteCustomDates.classList.add('hidden');
+            if (deleteAllWarning) deleteAllWarning.classList.remove('hidden');
+        } else {
+            if (deleteCustomDates) deleteCustomDates.classList.add('hidden');
+            if (deleteAllWarning) deleteAllWarning.classList.add('hidden');
+        }
+    });
+}
+
+// Esecuzione Eliminazione su Supabase
+if (deleteStatsForm) {
+    deleteStatsForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const type = deleteRangeType.value;
+
+        // Se è 'all', verifica che l'utente abbia digitato ELIMINA
+        if (type === 'all') {
+            if (deleteConfirmText.value.trim().toUpperCase() !== 'ELIMINA') {
+                showToast('Digita la parola ELIMINA per confermare', 'error');
+                return;
+            }
+        }
+
+        if (deleteConfirmBtn) deleteConfirmBtn.disabled = true;
+
+        try {
+            const pad = n => String(n).padStart(2, '0');
+            const formatIso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+            let deleteQuery = _supabase.from('app_accessi').delete();
+
+            if (type === 'older_90') {
+                const d = new Date();
+                d.setDate(d.getDate() - 90);
+                deleteQuery = deleteQuery.lt('data', formatIso(d));
+            } else if (type === 'older_30') {
+                const d = new Date();
+                d.setDate(d.getDate() - 30);
+                deleteQuery = deleteQuery.lt('data', formatIso(d));
+            } else if (type === 'custom') {
+                const from = deleteDateFrom.value;
+                const to = deleteDateTo.value;
+                if (!from || !to) {
+                    showToast('Seleziona entrambe le date per l\'intervallo di eliminazione', 'error');
+                    if (deleteConfirmBtn) deleteConfirmBtn.disabled = false;
+                    return;
+                }
+                deleteQuery = deleteQuery.gte('data', from).lte('data', to);
+            } else if (type === 'all') {
+                // Elimina tutti i record (in Supabase si specifica id != 0)
+                deleteQuery = deleteQuery.neq('id', 0);
+            }
+
+            const { error } = await deleteQuery;
+            if (error) throw error;
+
+            showToast('Dati eliminati con successo!', 'success');
+            deleteStatsModal.classList.add('hidden');
+            if (deleteConfirmText) deleteConfirmText.value = '';
+
+            // Ricarica la vista e i KPI con l'intervallo attivo
+            fetchUserStats(currentStatsRangeDays);
+        } catch (err) {
+            console.error('Errore durante l\'eliminazione:', err);
+            showToast(`Errore: ${err.message}. Verifica la policy DELETE su Supabase.`, 'error');
+        } finally {
+            if (deleteConfirmBtn) deleteConfirmBtn.disabled = false;
+        }
+    });
 }
 
 checkSession();
