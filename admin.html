@@ -58,6 +58,124 @@
             box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
         }
 
+        /* Patch Notes Editor */
+        .patch-notes-editor {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .patch-note-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: patchNoteSlideIn 0.25s ease-out;
+        }
+
+        @keyframes patchNoteSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .patch-note-row .drag-handle {
+            cursor: grab;
+            color: var(--text-muted);
+            font-size: 1rem;
+            user-select: none;
+            padding: 0 4px;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+            flex-shrink: 0;
+        }
+
+        .patch-note-row .drag-handle:hover {
+            opacity: 1;
+        }
+
+        .patch-note-row input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .patch-note-row input:focus {
+            outline: none;
+            border-color: rgba(212, 175, 55, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+
+        .patch-note-row input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-remove-note {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 77, 77, 0.3);
+            background: rgba(255, 77, 77, 0.08);
+            color: #ff4d4d;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            padding: 0;
+        }
+
+        .btn-remove-note:hover {
+            background: rgba(255, 77, 77, 0.2);
+            border-color: rgba(255, 77, 77, 0.5);
+            transform: scale(1.05);
+        }
+
+        .btn-add-note {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 0.7rem 1rem;
+            border-radius: 10px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.02);
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-note:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(212, 175, 55, 0.05);
+            color: var(--primary-gold);
+        }
+
+        .patch-notes-editor .sortable-ghost {
+            opacity: 0.4;
+            background: rgba(212, 175, 55, 0.05);
+            border-radius: 10px;
+        }
+
+        .patch-notes-empty {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            opacity: 0.6;
+        }
 
         .admin-header {
             display: flex;
@@ -917,8 +1035,12 @@
                     <input type="text" id="v-details" class="form-control" placeholder="Solo Android • 6.4 MB">
                 </div>
                 <div class="form-group">
-                    <label for="v-changes">Patch Notes (Una riga per ogni punto)</label>
-                    <textarea id="v-changes" class="form-control" placeholder="Aggiunta funzione X&#10;Fixato bug Y"></textarea>
+                    <label>Patch Notes</label>
+                    <div id="v-changes-list" class="patch-notes-editor"></div>
+                    <button type="button" id="add-patch-note-btn" class="btn-add-note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Aggiungi nota
+                    </button>
                 </div>
                 <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                     <input type="checkbox" id="v-latest" style="width: 20px; height: 20px;">

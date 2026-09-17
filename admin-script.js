@@ -332,11 +332,64 @@ async function fetchUpdates() {
     initSortable(updatesList, 'updates');
 }
 
+// ===== Patch Notes Editor Helpers =====
+function createPatchNoteRow(value = '') {
+    const row = document.createElement('div');
+    row.className = 'patch-note-row';
+    row.innerHTML = `
+        <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
+        <input type="text" class="patch-note-input" value="" placeholder="Scrivi una nota...">
+        <button type="button" class="btn-remove-note" title="Rimuovi">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    `;
+    // Set value after creation to avoid HTML injection
+    row.querySelector('.patch-note-input').value = value;
+    row.querySelector('.btn-remove-note').addEventListener('click', () => {
+        row.style.animation = 'patchNoteSlideIn 0.2s ease-out reverse';
+        setTimeout(() => row.remove(), 180);
+    });
+    return row;
+}
+
+function populatePatchNotes(changes = []) {
+    const list = document.getElementById('v-changes-list');
+    list.innerHTML = '';
+    if (changes.length === 0) {
+        // Add one empty row by default
+        list.appendChild(createPatchNoteRow());
+    } else {
+        changes.forEach(change => list.appendChild(createPatchNoteRow(change)));
+    }
+    // Init sortable on the list
+    if (window.Sortable) {
+        new Sortable(list, {
+            animation: 150,
+            handle: '.drag-handle',
+            ghostClass: 'sortable-ghost'
+        });
+    }
+}
+
+function getPatchNotesValues() {
+    const inputs = document.querySelectorAll('#v-changes-list .patch-note-input');
+    return Array.from(inputs).map(i => i.value.trim()).filter(v => v !== '');
+}
+
+// "Add note" button
+document.getElementById('add-patch-note-btn').addEventListener('click', () => {
+    const list = document.getElementById('v-changes-list');
+    const row = createPatchNoteRow();
+    list.appendChild(row);
+    row.querySelector('.patch-note-input').focus();
+});
+
 // CRUD Operations
 addUpdateBtn.addEventListener('click', () => {
     updateForm.reset();
     document.getElementById('update-id').value = '';
     document.getElementById('modal-title').textContent = 'Nuovo Aggiornamento';
+    populatePatchNotes([]);
     updateModal.classList.remove('hidden');
 });
 
@@ -353,7 +406,7 @@ function openEditModal(id, data) {
     document.getElementById('v-date').value = update.date;
     document.getElementById('v-url').value = update.download_url;
     document.getElementById('v-details').value = update.details || '';
-    document.getElementById('v-changes').value = update.changes.join('\n');
+    populatePatchNotes(update.changes || []);
     document.getElementById('v-latest').checked = update.is_latest;
     document.getElementById('v-visible').checked = update.is_visible !== false; // default true if undefined
     
@@ -368,7 +421,7 @@ updateForm.addEventListener('submit', async (e) => {
     const date = document.getElementById('v-date').value;
     const download_url = document.getElementById('v-url').value;
     const details = document.getElementById('v-details').value;
-    const changes = document.getElementById('v-changes').value.split('\n').filter(line => line.trim() !== '');
+    const changes = getPatchNotesValues();
     const is_latest = document.getElementById('v-latest').checked;
     const is_visible = document.getElementById('v-visible').checked;
 
