@@ -71,6 +71,17 @@ const kpiLatestVersionSub = document.getElementById('kpi-latest-version-sub');
 const kpiTotalReleases = document.getElementById('kpi-total-releases');
 const analyticsVersionsList = document.getElementById('analytics-versions-list');
 
+// Telemetria Utenti Supabase DOM
+const kpiUsersToday = document.getElementById('kpi-users-today');
+const kpiSubApk = document.getElementById('kpi-sub-apk');
+const kpiSubPwa = document.getElementById('kpi-sub-pwa');
+const kpiSubWeb = document.getElementById('kpi-sub-web');
+const kpiUsersYesterday = document.getElementById('kpi-users-yesterday');
+const kpiUsersYesterdaySub = document.getElementById('kpi-users-yesterday-sub');
+const kpiUsersAvg7 = document.getElementById('kpi-users-avg7');
+const kpiUsersTotal30 = document.getElementById('kpi-users-total30');
+const userStatsHistoryList = document.getElementById('user-stats-history-list');
+
 // FAQ DOM
 const faqList = document.getElementById('faq-list');
 const addFaqBtn = document.getElementById('add-faq-btn');
@@ -178,6 +189,7 @@ function showDashboard(user) {
     adminDashboard.classList.remove('hidden');
     userEmailDisplay.textContent = `Loggato come: ${user.email}`;
     fetchDownloadStats();
+    fetchUserStats();
     fetchUpdates();
     fetchCredits();
     fetchContacts();
@@ -207,6 +219,10 @@ tabBtns.forEach(btn => {
         
         // Mostra la sezione target
         targetSection.classList.remove('hidden');
+        if (targetId === 'analytics-section') {
+            fetchDownloadStats();
+            fetchUserStats();
+        }
     });
 });
 
@@ -1118,7 +1134,201 @@ function animateValue(el, target) {
 if (refreshAnalyticsBtn) {
     refreshAnalyticsBtn.addEventListener('click', () => {
         fetchDownloadStats(true);
+        fetchUserStats();
     });
+}
+
+// ===== Telemetria Anonima Utenti QuickCheck (Supabase) =====
+/**
+ * Recupera le statistiche di accesso giornaliero da Supabase.
+ * Interroga prioritariamente la vista aggregata 'v_utenti_unici_giornalieri'.
+ * In caso di assenza della vista, esegue il fallback aggregando i record di 'app_accessi'.
+ */
+async function fetchUserStats() {
+    if (!userStatsHistoryList) return;
+
+    try {
+        // Query alla vista aggregata SQL su Supabase
+        let { data, error } = await _supabase
+            .from('v_utenti_unici_giornalieri')
+            .select('*')
+            .order('data', { ascending: false })
+            .limit(30);
+
+        // Fallback resiliente: se la vista non è ancora presente, aggrega lato client da app_accessi
+        if (error) {
+            console.warn('v_utenti_unici_giornalieri non raggiungibile, fallback su app_accessi:', error.message);
+            const { data: raw, error: rawErr } = await _supabase
+                .from('app_accessi')
+                .select('uuid_utente, data, piattaforma');
+            
+            if (rawErr) throw rawErr;
+
+            const raggruppati = {};
+            (raw || []).forEach(row => {
+                const d = row.data;
+                if (!raggruppati[d]) {
+                    raggruppati[d] = {
+                        data: d,
+                        all: new Set(),
+                        apk: new Set(),
+                        pwa: new Set(),
+                        web: new Set()
+                    };
+                }
+                raggruppati[d].all.add(row.uuid_utente);
+                if (row.piattaforma === 'android') raggruppati[d].apk.add(row.uuid_utente);
+                else if (row.piattaforma === 'pwa') raggruppati[d].pwa.add(row.uuid_utente);
+                else raggruppati[d].web.add(row.uuid_utente);
+            });
+
+            data = Object.keys(raggruppati).sort().reverse().map(d => ({
+                data: d,
+                utenti_unici_totali: raggruppati[d].all.size,
+                utenti_apk: raggruppati[d].apk.size,
+                utenti_pwa: raggruppati[d].pwa.size,
+                utenti_web_browser: raggruppati[d].web.size
+            }));
+        }
+
+        renderUserStats(data || []);
+    } catch (err) {
+        console.error('Errore nel recupero telemetria utenti:', err);
+        if (userStatsHistoryList) {
+            userStatsHistoryList.innerHTML = `
+                <div style="text-align: center; padding: 2rem 0; color: #ff6b6b;">
+                    <p style="margin-bottom: 0.5rem; font-weight: 600;">Impossibile recuperare i dati da Supabase (${err.message})</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted);">Assicurati di aver eseguito lo script SQL per creare la tabella <code>app_accessi</code>.</p>
+                </div>
+            `;
+        }
+    }
+}
+
+/**
+ * Renderizza le card KPI e la tabella dello storico accessi giornaliero.
+ * Include badge colorati per le piattaforme (APK, PWA, Web) e mini-barra percentuale.
+ */
+function renderUserStats(records) {
+    if (!userStatsHistoryList) return;
+
+    // Determinazione date oggi e ieri nel formato YYYY-MM-DD
+    const now = new Date();
+    const pad = n => String(n).padStart(2, '0');
+    const oggiStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+    
+    const ieriDate = new Date();
+    ieriDate.setDate(ieriDate.getDate() - 1);
+    const ieriStr = `${ieriDate.getFullYear()}-${pad(ieriDate.getMonth() + 1)}-${pad(ieriDate.getDate())}`;
+
+    // Estrazione dati per oggi e ieri
+    const datiOggi = records.find(r => r.data === oggiStr) || { utenti_unici_totali: 0, utenti_apk: 0, utenti_pwa: 0, utenti_web_browser: 0 };
+    const datiIeri = records.find(r => r.data === ieriStr) || { utenti_unici_totali: 0, utenti_apk: 0, utenti_pwa: 0, utenti_web_browser: 0 };
+
+    // KPI 1: Utenti unici Oggi con breakdown per piattaforma
+    if (kpiUsersToday) animateValue(kpiUsersToday, Number(datiOggi.utenti_unici_totali) || 0);
+    if (kpiSubApk) kpiSubApk.textContent = datiOggi.utenti_apk || 0;
+    if (kpiSubPwa) kpiSubPwa.textContent = datiOggi.utenti_pwa || 0;
+    if (kpiSubWeb) kpiSubWeb.textContent = datiOggi.utenti_web_browser || 0;
+
+    // KPI 2: Ieri con differenziale rispetto a oggi
+    const totOggi = Number(datiOggi.utenti_unici_totali) || 0;
+    const totIeri = Number(datiIeri.utenti_unici_totali) || 0;
+    if (kpiUsersYesterday) animateValue(kpiUsersYesterday, totIeri);
+    if (kpiUsersYesterdaySub) {
+        if (totIeri > 0) {
+            const diff = totOggi - totIeri;
+            const sign = diff >= 0 ? '+' : '';
+            kpiUsersYesterdaySub.textContent = `Oggi: ${sign}${diff} rispetto a ieri`;
+            kpiUsersYesterdaySub.style.color = diff >= 0 ? '#4ade80' : '#f87171';
+        } else {
+            kpiUsersYesterdaySub.textContent = 'Nessun dato per ieri';
+            kpiUsersYesterdaySub.style.color = 'var(--text-muted)';
+        }
+    }
+
+    // KPI 3: Media mobile ultimi 7 giorni
+    const ultimi7 = records.slice(0, 7);
+    const media7 = ultimi7.length > 0 
+        ? Math.round(ultimi7.reduce((sum, r) => sum + Number(r.utenti_unici_totali || 0), 0) / ultimi7.length)
+        : 0;
+    if (kpiUsersAvg7) animateValue(kpiUsersAvg7, media7);
+
+    // KPI 4: Totale accessi registrati negli ultimi 30 giorni
+    const tot30 = records.reduce((sum, r) => sum + Number(r.utenti_unici_totali || 0), 0);
+    if (kpiUsersTotal30) animateValue(kpiUsersTotal30, tot30);
+
+    if (records.length === 0) {
+        userStatsHistoryList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Nessun dato di accesso registrato finora.</p>';
+        return;
+    }
+
+    // Costruzione righe tabella storico con badge e progress bar multicolore
+    const tableRows = records.map(r => {
+        const tot = Number(r.utenti_unici_totali) || 0;
+        const apk = Number(r.utenti_apk) || 0;
+        const pwa = Number(r.utenti_pwa) || 0;
+        const web = Number(r.utenti_web_browser) || 0;
+
+        const apkPct = tot > 0 ? Math.round((apk / tot) * 100) : 0;
+        const pwaPct = tot > 0 ? Math.round((pwa / tot) * 100) : 0;
+        const webPct = tot > 0 ? Math.max(0, 100 - apkPct - pwaPct) : 0;
+
+        let dataEtichetta = r.data;
+        if (r.data === oggiStr) dataEtichetta = 'Oggi (' + r.data + ')';
+        else if (r.data === ieriStr) dataEtichetta = 'Ieri (' + r.data + ')';
+
+        return `
+            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 12px 14px; font-weight: 600; color: #fff; white-space: nowrap;">
+                    ${dataEtichetta}
+                </td>
+                <td style="padding: 12px 14px; text-align: center;">
+                    <span style="font-weight: 800; color: var(--primary-gold); font-size: 1.05rem;">${tot}</span>
+                </td>
+                <td style="padding: 12px 14px; text-align: center;">
+                    <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.25);">
+                        📱 ${apk} <small style="opacity: 0.8">(${apkPct}%)</small>
+                    </span>
+                </td>
+                <td style="padding: 12px 14px; text-align: center;">
+                    <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25);">
+                        📲 ${pwa} <small style="opacity: 0.8">(${pwaPct}%)</small>
+                    </span>
+                </td>
+                <td style="padding: 12px 14px; text-align: center;">
+                    <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25);">
+                        🌐 ${web} <small style="opacity: 0.8">(${webPct}%)</small>
+                    </span>
+                </td>
+                <td style="padding: 12px 14px; min-width: 140px;">
+                    <div style="display: flex; height: 6px; width: 100%; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,0.05);">
+                        <div style="width: ${apkPct}%; background: #22c55e;" title="APK: ${apkPct}%"></div>
+                        <div style="width: ${pwaPct}%; background: #a855f7;" title="PWA: ${pwaPct}%"></div>
+                        <div style="width: ${webPct}%; background: #38bdf8;" title="Web: ${webPct}%"></div>
+                    </div>
+                </td>
+            </tr>
+        `;
+    }).join('');
+
+    userStatsHistoryList.innerHTML = `
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+            <thead>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.5px;">
+                    <th style="padding: 10px 14px;">Data</th>
+                    <th style="padding: 10px 14px; text-align: center;">Totale Unici</th>
+                    <th style="padding: 10px 14px; text-align: center;">APK Android</th>
+                    <th style="padding: 10px 14px; text-align: center;">PWA Standalone</th>
+                    <th style="padding: 10px 14px; text-align: center;">Web Browser</th>
+                    <th style="padding: 10px 14px;">Ripartizione</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${tableRows}
+            </tbody>
+        </table>
+    `;
 }
 
 checkSession();

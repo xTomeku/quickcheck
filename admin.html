@@ -574,71 +574,150 @@
                 <button class="tab-btn" data-tab="faq-admin-section">FAQ</button>
             </div>
 
-            <!-- Analytics / Statistiche Download Section -->
+                        <!-- Analytics / Statistiche Sezione Principale -->
             <div id="analytics-section" class="section-content">
+                <!-- Header Unificato Sezione Analytics -->
                 <div class="section-header">
                     <div>
-                        <h2>Statistiche Download</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Metriche e download in tempo reale sincronizzati da GitHub Releases</p>
+                        <h2>Dashboard Analytics & Metriche</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Monitoraggio utenti attivi in tempo reale (Supabase) e statistiche download (GitHub Releases)</p>
                     </div>
                     <div style="display: flex; gap: 0.8rem; align-items: center;">
                         <span id="analytics-last-sync" style="font-size: 0.8rem; color: var(--text-muted);"></span>
                         <button id="refresh-analytics-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
                             <svg id="refresh-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-                            Aggiorna
+                            Aggiorna Dati
                         </button>
                     </div>
                 </div>
 
-                <!-- KPI Grid -->
-                <div class="analytics-kpi-grid">
-                    <div class="kpi-card">
-                        <div class="kpi-icon-wrap">📥</div>
-                        <div class="kpi-content">
-                            <span class="kpi-label">Download Totali</span>
-                            <h3 id="kpi-total-downloads" class="kpi-value">0</h3>
-                            <span class="kpi-sub">Tutte le versioni</span>
+                <!-- 1. UTENTI ATTIVI QUICKCHECK (DAU SUPABASE) -->
+                <div style="margin-bottom: 2.5rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
+                        <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <span>⚡</span> Utenti Attivi QuickCheck (DAU)
+                        </h3>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Ping all'avvio dell'app • Privacy 100% anonima</span>
+                    </div>
+
+                    <!-- KPI Grid Utenti Attivi -->
+                    <div class="analytics-kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">👥</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Utenti Unici Oggi</span>
+                                <h3 id="kpi-users-today" class="kpi-value">0</h3>
+                                <div id="kpi-users-today-breakdown" class="kpi-sub" style="display: flex; gap: 8px; font-size: 0.75rem; flex-wrap: wrap; margin-top: 4px;">
+                                    <span style="color: #4ade80;">APK: <strong id="kpi-sub-apk">0</strong></span>
+                                    <span style="color: #c084fc;">PWA: <strong id="kpi-sub-pwa">0</strong></span>
+                                    <span style="color: #38bdf8;">Web: <strong id="kpi-sub-web">0</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">📅</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Utenti Unici Ieri</span>
+                                <h3 id="kpi-users-yesterday" class="kpi-value">0</h3>
+                                <span id="kpi-users-yesterday-sub" class="kpi-sub">Confronto con oggi</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">📈</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Media Ultimi 7 Giorni</span>
+                                <h3 id="kpi-users-avg7" class="kpi-value">0</h3>
+                                <span class="kpi-sub">Utenti / giorno</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">🔥</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Accessi Ultimi 30 Giorni</span>
+                                <h3 id="kpi-users-total30" class="kpi-value">0</h3>
+                                <span class="kpi-sub">Totale accessi unici</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icon-wrap">🏆</div>
-                        <div class="kpi-content">
-                            <span class="kpi-label">Versione Top</span>
-                            <h3 id="kpi-top-version" class="kpi-value">—</h3>
-                            <span id="kpi-top-version-sub" class="kpi-sub">0 download</span>
+
+                    <!-- Tabella Storico Giornaliero & Ripartizione Piattaforme -->
+                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.5rem;">
+                            <div>
+                                <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Storico Giornaliero per Piattaforma</h4>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">Ripartizione dettagliata tra Android APK, PWA installata e Web browser</span>
+                            </div>
+                            <div style="display: flex; gap: 12px; font-size: 0.75rem;">
+                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span> APK</span>
+                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> PWA</span>
+                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span> Web</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icon-wrap">🚀</div>
-                        <div class="kpi-content">
-                            <span class="kpi-label">Ultima Versione</span>
-                            <h3 id="kpi-latest-version" class="kpi-value">—</h3>
-                            <span id="kpi-latest-version-sub" class="kpi-sub">0 download</span>
-                        </div>
-                    </div>
-                    <div class="kpi-card">
-                        <div class="kpi-icon-wrap">📦</div>
-                        <div class="kpi-content">
-                            <span class="kpi-label">Release GitHub</span>
-                            <h3 id="kpi-total-releases" class="kpi-value">0</h3>
-                            <span class="kpi-sub">Versioni pubblicate</span>
+                        <div id="user-stats-history-list" style="overflow-x: auto;">
+                            <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento telemetria utenti...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Versions Breakdown Card -->
-                <div class="analytics-breakdown-card">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                        <h3 style="font-size: 1.15rem; color: var(--text-main); font-weight: 700;">Dettaglio Download per Versione</h3>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Dati aggregati per ciascun file APK</span>
+                <!-- 2. STATISTICHE DOWNLOAD GITHUB RELEASES -->
+                <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem;">
+                    <div style="margin-bottom: 1.2rem;">
+                        <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                            <span>📦</span> Download APK da GitHub Releases
+                        </h3>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">Contatore ufficiale dei download dei pacchetti APK</span>
                     </div>
-                    <div id="analytics-versions-list">
-                        <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento statistiche in corso...</p>
+
+                    <!-- KPI Grid Download -->
+                    <div class="analytics-kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">📥</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Download Totali</span>
+                                <h3 id="kpi-total-downloads" class="kpi-value">0</h3>
+                                <span class="kpi-sub">Tutte le versioni</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">🏆</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Versione Top</span>
+                                <h3 id="kpi-top-version" class="kpi-value">—</h3>
+                                <span id="kpi-top-version-sub" class="kpi-sub">0 download</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">🚀</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Ultima Versione</span>
+                                <h3 id="kpi-latest-version" class="kpi-value">—</h3>
+                                <span id="kpi-latest-version-sub" class="kpi-sub">0 download</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">📦</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Release GitHub</span>
+                                <h3 id="kpi-total-releases" class="kpi-value">0</h3>
+                                <span class="kpi-sub">Versioni pubblicate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Versions Breakdown Card -->
+                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
+                            <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700;">Dettaglio Download per Versione</h4>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Dati aggregati per ciascun file APK</span>
+                        </div>
+                        <div id="analytics-versions-list">
+                            <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento statistiche in corso...</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Features Section -->
+<!-- Features Section -->
             <div id="features-section" class="section-content hidden">
                 <div class="section-header">
                     <h2>Gestione Funzionalità</h2>
