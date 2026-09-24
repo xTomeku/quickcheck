@@ -743,7 +743,7 @@ async function loadBugs(_supabase) {
             'low': { label: 'Bassa', cls: 'severity-low' }
         };
 
-        const autoExpand = searchQuery.trim() !== '' || isAllExpanded;
+        const autoExpand = searchQuery.trim() !== '';
 
         container.innerHTML = filtered.map((b, index) => {
             const st = statusLabels[b.status] || { label: b.status, icon: '⚪', cls: 'status-open' };
@@ -820,7 +820,6 @@ async function loadBugs(_supabase) {
                 const nowExpanded = !wasExpanded;
                 card.classList.toggle('is-expanded', nowExpanded);
                 header.setAttribute('aria-expanded', nowExpanded ? 'true' : 'false');
-                updateToggleAllBtn();
             };
 
             header.addEventListener('click', () => {
@@ -835,52 +834,8 @@ async function loadBugs(_supabase) {
             });
         });
 
-        updateToggleAllBtn();
         initScrollReveal();
     };
-
-    // Toggle All Cards logic
-    let isAllExpanded = false;
-    const toggleAllBtn = document.getElementById('toggle-all-bugs-btn');
-    const toggleAllText = document.getElementById('toggle-all-text');
-
-    const updateToggleAllBtn = () => {
-        if (!toggleAllBtn) return;
-        const allCards = container.querySelectorAll('.bug-card');
-        if (allCards.length === 0) {
-            toggleAllBtn.style.display = 'none';
-            return;
-        }
-        toggleAllBtn.style.display = 'inline-flex';
-        const expandedCards = container.querySelectorAll('.bug-card.is-expanded');
-        const allAreExpanded = expandedCards.length > 0 && expandedCards.length === allCards.length;
-        isAllExpanded = allAreExpanded;
-        if (toggleAllText) {
-            toggleAllText.textContent = allAreExpanded ? 'Comprimi tutti' : 'Espandi tutti';
-        }
-        toggleAllBtn.classList.toggle('is-all-expanded', allAreExpanded);
-    };
-
-    if (toggleAllBtn) {
-        toggleAllBtn.addEventListener('click', () => {
-            const allCards = container.querySelectorAll('.bug-card');
-            const expandedCards = container.querySelectorAll('.bug-card.is-expanded');
-            const shouldExpand = expandedCards.length < allCards.length;
-
-            allCards.forEach(card => {
-                const header = card.querySelector('.bug-card-header');
-                if (shouldExpand) {
-                    card.classList.add('is-expanded');
-                    if (header) header.setAttribute('aria-expanded', 'true');
-                } else {
-                    card.classList.remove('is-expanded');
-                    if (header) header.setAttribute('aria-expanded', 'false');
-                }
-            });
-
-            updateToggleAllBtn();
-        });
-    }
 
     // Filter pill events
     const filterPills = document.querySelectorAll('.bug-filter-pill');
