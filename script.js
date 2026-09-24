@@ -761,11 +761,11 @@ async function loadBugs(_supabase) {
                                     ${st.label}
                                 </span>
                                 <span class="bug-badge ${sv.cls}">
-                                    Gravità ${sv.label}
+                                    <span class="badge-prefix-desktop">Gravità </span>${sv.label}
                                 </span>
                                 ${b.category ? `<span class="bug-badge category-pill">${b.category}</span>` : ''}
                             </div>
-                            ${dateText ? `<div class="bug-card-date">Segnalato il ${dateText}</div>` : ''}
+                            ${dateText ? `<div class="bug-card-date"><span class="badge-prefix-desktop">Segnalato il </span>${dateText}</div>` : ''}
                         </div>
 
                         <div class="bug-card-title-row">
