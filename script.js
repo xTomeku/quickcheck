@@ -725,6 +725,7 @@ async function loadBugs(_supabase) {
                     <p>${msg}</p>
                 </div>
             `;
+            if (toggleAllBtn) toggleAllBtn.style.display = 'none';
             initScrollReveal();
             return;
         }
@@ -742,60 +743,144 @@ async function loadBugs(_supabase) {
             'low': { label: 'Bassa', cls: 'severity-low' }
         };
 
+        const autoExpand = searchQuery.trim() !== '' || isAllExpanded;
+
         container.innerHTML = filtered.map((b, index) => {
             const st = statusLabels[b.status] || { label: b.status, icon: '⚪', cls: 'status-open' };
             const sv = severityLabels[b.severity] || { label: b.severity || 'Media', cls: 'severity-medium' };
             const dateText = formatBugDate(b.created_at);
+            const isExpanded = autoExpand;
 
             return `
-                <div class="bug-card ${st.cls} reveal delay-${(index % 5) + 1}">
-                    <div class="bug-card-top">
-                        <div class="bug-card-badges">
-                            <span class="bug-badge ${st.cls}">
-                                <span class="status-dot"></span>
-                                ${st.label}
-                            </span>
-                            <span class="bug-badge ${sv.cls}">
-                                Gravità ${sv.label}
-                            </span>
-                            ${b.category ? `<span class="bug-badge category-pill">${b.category}</span>` : ''}
+                <article class="bug-card ${st.cls} ${isExpanded ? 'is-expanded' : ''} reveal delay-${(index % 5) + 1}" data-bug-id="${b.id}">
+                    <div class="bug-card-header" role="button" tabindex="0" aria-expanded="${isExpanded ? 'true' : 'false'}" aria-controls="bug-collapse-${b.id}">
+                        <div class="bug-card-top">
+                            <div class="bug-card-badges">
+                                <span class="bug-badge ${st.cls}">
+                                    <span class="status-dot"></span>
+                                    ${st.label}
+                                </span>
+                                <span class="bug-badge ${sv.cls}">
+                                    Gravità ${sv.label}
+                                </span>
+                                ${b.category ? `<span class="bug-badge category-pill">${b.category}</span>` : ''}
+                            </div>
+                            ${dateText ? `<div class="bug-card-date">Segnalato il ${dateText}</div>` : ''}
                         </div>
-                        ${dateText ? `<div class="bug-card-date">Segnalato il ${dateText}</div>` : ''}
+
+                        <div class="bug-card-title-row">
+                            <h3 class="bug-card-title">${b.title}</h3>
+                            <button type="button" class="bug-card-toggle-btn" aria-label="Espandi o comprimi dettagli" tabindex="-1">
+                                <svg class="bug-chevron-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                            </button>
+                        </div>
                     </div>
 
-                    <h3 class="bug-card-title">${b.title}</h3>
-                    <p class="bug-card-desc">${b.description}</p>
+                    <div id="bug-collapse-${b.id}" class="bug-card-collapse" role="region">
+                        <div class="bug-card-collapse-inner">
+                            <p class="bug-card-desc">${b.description}</p>
 
-                    ${b.workaround ? `
-                        <div class="bug-workaround-box">
-                            <span class="bug-workaround-icon">💡</span>
-                            <div class="bug-workaround-content">
-                                <strong>Consiglio / Soluzione temporanea per gli utenti</strong>
-                                ${b.workaround}
+                            ${b.workaround ? `
+                                <div class="bug-workaround-box">
+                                    <span class="bug-workaround-icon">💡</span>
+                                    <div class="bug-workaround-content">
+                                        <strong>Consiglio / Soluzione temporanea per gli utenti</strong>
+                                        ${b.workaround}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <div class="bug-card-bottom">
+                                <div class="bug-card-meta">
+                                    ${b.affected_version ? `<span>Versione interessata: <strong style="color:var(--text-main);">${b.affected_version}</strong></span>` : ''}
+                                    ${b.status === 'resolved' && b.fixed_version ? `
+                                        <span class="bug-fixed-badge">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                                            Risolto in ${b.fixed_version}
+                                        </span>
+                                    ` : ''}
+                                </div>
+                                <div style="font-size:0.75rem; color:var(--text-muted);">
+                                    ID #${b.id}
+                                </div>
                             </div>
                         </div>
-                    ` : ''}
-
-                    <div class="bug-card-bottom">
-                        <div class="bug-card-meta">
-                            ${b.affected_version ? `<span>Versione interessata: <strong style="color:var(--text-main);">${b.affected_version}</strong></span>` : ''}
-                            ${b.status === 'resolved' && b.fixed_version ? `
-                                <span class="bug-fixed-badge">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                    Risolto in ${b.fixed_version}
-                                </span>
-                            ` : ''}
-                        </div>
-                        <div style="font-size:0.75rem; color:var(--text-muted);">
-                            ID #${b.id}
-                        </div>
                     </div>
-                </div>
+                </article>
             `;
         }).join('');
 
+        // Attach accordion click & keyboard listeners
+        const cardHeaders = container.querySelectorAll('.bug-card-header');
+        cardHeaders.forEach(header => {
+            const toggle = () => {
+                const card = header.closest('.bug-card');
+                if (!card) return;
+                const wasExpanded = card.classList.contains('is-expanded');
+                const nowExpanded = !wasExpanded;
+                card.classList.toggle('is-expanded', nowExpanded);
+                header.setAttribute('aria-expanded', nowExpanded ? 'true' : 'false');
+                updateToggleAllBtn();
+            };
+
+            header.addEventListener('click', () => {
+                toggle();
+            });
+
+            header.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                }
+            });
+        });
+
+        updateToggleAllBtn();
         initScrollReveal();
     };
+
+    // Toggle All Cards logic
+    let isAllExpanded = false;
+    const toggleAllBtn = document.getElementById('toggle-all-bugs-btn');
+    const toggleAllText = document.getElementById('toggle-all-text');
+
+    const updateToggleAllBtn = () => {
+        if (!toggleAllBtn) return;
+        const allCards = container.querySelectorAll('.bug-card');
+        if (allCards.length === 0) {
+            toggleAllBtn.style.display = 'none';
+            return;
+        }
+        toggleAllBtn.style.display = 'inline-flex';
+        const expandedCards = container.querySelectorAll('.bug-card.is-expanded');
+        const allAreExpanded = expandedCards.length > 0 && expandedCards.length === allCards.length;
+        isAllExpanded = allAreExpanded;
+        if (toggleAllText) {
+            toggleAllText.textContent = allAreExpanded ? 'Comprimi tutti' : 'Espandi tutti';
+        }
+        toggleAllBtn.classList.toggle('is-all-expanded', allAreExpanded);
+    };
+
+    if (toggleAllBtn) {
+        toggleAllBtn.addEventListener('click', () => {
+            const allCards = container.querySelectorAll('.bug-card');
+            const expandedCards = container.querySelectorAll('.bug-card.is-expanded');
+            const shouldExpand = expandedCards.length < allCards.length;
+
+            allCards.forEach(card => {
+                const header = card.querySelector('.bug-card-header');
+                if (shouldExpand) {
+                    card.classList.add('is-expanded');
+                    if (header) header.setAttribute('aria-expanded', 'true');
+                } else {
+                    card.classList.remove('is-expanded');
+                    if (header) header.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            updateToggleAllBtn();
+        });
+    }
 
     // Filter pill events
     const filterPills = document.querySelectorAll('.bug-filter-pill');
