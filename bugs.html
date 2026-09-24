@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Noti & Risolti - QuickCheck</title>
+    <meta name="description" content="Consulta lo stato dei bug noti, dei problemi segnalati e delle soluzioni rilasciate per QuickCheck, l'app degli studenti UniSalento.">
+    
+    <!-- Meta tag Open Graph per condivisione social -->
+    <meta property="og:site_name" content="QuickCheck">
+    <meta property="og:title" content="Bug Noti & Risolti - QuickCheck">
+    <meta property="og:description" content="Trasparenza e stato in tempo reale dei bug noti e risolti dell'app QuickCheck UniSalento.">
+    <meta property="og:image" content="https://xtomeku.github.io/quickcheck/assets/logo.png">
+    <meta property="og:url" content="https://xtomeku.github.io/quickcheck/bugs.html">
+    <meta property="og:type" content="website">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://xtomeku.github.io/quickcheck/bugs.html">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Bug Noti & Risolti - QuickCheck">
+    <meta name="twitter:description" content="Consulta lo stato dei problemi tecnici e dei fix per l'app QuickCheck.">
+    <meta name="twitter:image" content="https://xtomeku.github.io/quickcheck/assets/logo.png">
+
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
+    <link rel="shortcut icon" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
+
+    <link rel="stylesheet" href="style.css?v=3">
+    <script src="config.js"></script>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-main">
+            <button class="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="./" class="nav-brand">
+                <img src="assets/logo.png" alt="QuickCheck Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'2\'><path d=\'M9 11l3 3L22 4\'/><path d=\'M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11\'/></svg>'">
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="./">Home</a></li>
+                <li><a href="download.html">Download</a></li>
+                <li><a href="credits.html">Credits</a></li>
+                <li><a href="bugs.html" class="active">Bug Tracker</a></li>
+            </ul>
+            <a href="download.html" class="nav-cta">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Scarica QuickCheck
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="page-header" style="margin-bottom: 2rem;">
+            <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.25); padding: 4px 14px; border-radius: 20px; font-size: 0.8rem; color: var(--primary-gold); margin-bottom: 1rem; font-weight: 600;" class="reveal">
+                <span>⚡</span> Stato Sviluppo & Fix in Tempo Reale
+            </div>
+            <h1 class="reveal delay-1">Bug Noti & Risolti</h1>
+            <p class="reveal delay-2" style="max-width: 680px; margin: 0 auto;">
+                Trasparenza totale sullo stato di QuickCheck: monitora i problemi segnalati dagli studenti, le anomalie su cui stiamo lavorando e le correzioni già rilasciate.
+            </p>
+        </div>
+
+        <div class="bugs-container">
+            <!-- KPI Counters Grid -->
+            <div class="bugs-stats-grid reveal delay-2">
+                <div class="bug-stat-card">
+                    <div class="bug-stat-icon" style="color: #ff6b6b; background: rgba(255, 107, 107, 0.1);">🔴</div>
+                    <div class="bug-stat-info">
+                        <div class="stat-number" id="stat-open-bugs">0</div>
+                        <div class="stat-label">Bug Noti / Aperti</div>
+                    </div>
+                </div>
+                <div class="bug-stat-card">
+                    <div class="bug-stat-icon" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);">🟡</div>
+                    <div class="bug-stat-info">
+                        <div class="stat-number" id="stat-progress-bugs">0</div>
+                        <div class="stat-label">In Risoluzione</div>
+                    </div>
+                </div>
+                <div class="bug-stat-card">
+                    <div class="bug-stat-icon" style="color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢</div>
+                    <div class="bug-stat-info">
+                        <div class="stat-number" id="stat-resolved-bugs">0</div>
+                        <div class="stat-label">Problemi Risolti</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter and Search Bar -->
+            <div class="bugs-filter-bar reveal delay-3">
+                <div class="bugs-filter-pills" id="bugs-filter-pills">
+                    <button type="button" class="bug-filter-pill active" data-status="all">
+                        Tutti (<span id="pill-count-all">0</span>)
+                    </button>
+                    <button type="button" class="bug-filter-pill" data-status="open">
+                        <span class="status-dot" style="background: #ff6b6b; width: 6px; height: 6px; border-radius: 50%;"></span>
+                        Noti (<span id="pill-count-open">0</span>)
+                    </button>
+                    <button type="button" class="bug-filter-pill" data-status="in_progress">
+                        <span class="status-dot" style="background: #fbbf24; width: 6px; height: 6px; border-radius: 50%;"></span>
+                        In Corso (<span id="pill-count-progress">0</span>)
+                    </button>
+                    <button type="button" class="bug-filter-pill" data-status="resolved">
+                        <span class="status-dot" style="background: #4ade80; width: 6px; height: 6px; border-radius: 50%;"></span>
+                        Risolti (<span id="pill-count-resolved">0</span>)
+                    </button>
+                </div>
+                
+                <div class="bug-search-wrap">
+                    <span class="bug-search-icon">🔍</span>
+                    <input type="text" id="bug-search-input" class="bug-search-input" placeholder="Cerca bug o modulo..." autocomplete="off">
+                </div>
+            </div>
+
+            <!-- Dynamic List of Bugs -->
+            <div id="bugs-container" class="bugs-list">
+                <p style="text-align: center; color: var(--text-muted); padding: 3rem 0;">Caricamento stato bug da Supabase...</p>
+            </div>
+
+            <!-- Report Bug CTA Card -->
+            <div class="bug-report-cta reveal">
+                <h3>Hai riscontrato un problema non presente nell'elenco?</h3>
+                <p>La collaborazione degli studenti è fondamentale per rendere QuickCheck sempre più affidabile. Se trovi un errore o una schermata che non risponde, segnalacelo subito!</p>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
+                        <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                        Scrivici su Instagram
+                    </a>
+                    <a href="index.html#contacts-container" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
+                        ✉️ Altri Canali di Contatto
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/logo.png" alt="QuickCheck Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'2\'><path d=\'M9 11l3 3L22 4\'/><path d=\'M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11\'/></svg>'">
+                <span>QuickCheck</span>
+            </div>
+            <div class="footer-links">
+                <a href="./">Home</a>
+                <a href="download.html">Download</a>
+                <a href="credits.html">Credits</a>
+                <a href="bugs.html">Bug & Problemi</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 QuickCheck. Progetto studentesco indipendente.</p>
+            <p class="footer-disclaimer">App non ufficiale. Il logo di base e i relativi diritti appartengono all'Università del Salento.</p>
+        </div>
+    </footer>
+
+    <button id="back-to-top" aria-label="Torna in alto">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js?v=3"></script>
+</body>
+</html>

@@ -732,6 +732,7 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="analytics-section">Statistiche</button>
                 <button class="tab-btn" data-tab="updates-section">Aggiornamenti</button>
+                <button class="tab-btn" data-tab="bugs-admin-section">Bug & Problemi</button>
                 <button class="tab-btn" data-tab="features-section">Funzionalità</button>
                 <button class="tab-btn" data-tab="credits-section">Credits</button>
                 <button class="tab-btn" data-tab="contacts-section">Contatti</button>
@@ -1009,6 +1010,92 @@
                     <!-- Dynamic Content -->
                 </div>
             </div>
+
+            <!-- Bugs & Issues Admin Section -->
+            <div id="bugs-admin-section" class="section-content hidden">
+                <div class="section-header" style="flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h2>Gestione Bug Noti & Risolti</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Registra, monitora e pubblica lo stato delle segnalazioni e dei fix per QuickCheck.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+                        <a href="bugs.html" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+                            <span>↗</span> Apri Pagina Pubblica
+                        </a>
+                        <button id="add-bug-btn" class="btn btn-primary btn-sm">+ Nuovo Bug</button>
+                    </div>
+                </div>
+
+                <!-- KPI Contatori Rapidi Bug -->
+                <div class="analytics-kpi-grid" style="margin-bottom: 1.5rem;">
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap" style="color: #ff6b6b; background: rgba(255, 107, 107, 0.1);">🔴</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Bug Noti / Aperti</span>
+                            <h3 id="kpi-bugs-open" class="kpi-value">0</h3>
+                            <span class="kpi-sub" style="color: #ff6b6b;">In attesa di risoluzione</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);">🟡</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">In Lavorazione</span>
+                            <h3 id="kpi-bugs-progress" class="kpi-value">0</h3>
+                            <span class="kpi-sub" style="color: #fbbf24;">Fix in fase di sviluppo</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap" style="color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Bug Risolti</span>
+                            <h3 id="kpi-bugs-resolved" class="kpi-value">0</h3>
+                            <span class="kpi-sub" style="color: #4ade80;">Corretti e rilasciati</span>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon-wrap">📋</div>
+                        <div class="kpi-content">
+                            <span class="kpi-label">Totale Bug Nel DB</span>
+                            <h3 id="kpi-bugs-total" class="kpi-value">0</h3>
+                            <span class="kpi-sub" id="kpi-bugs-visible-count">0 visibili pubblicamente</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtri e Ricerca Admin -->
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap;">
+                    <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="admin-bug-filters">
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn active" data-filter="all">Tutti (<span id="admin-count-all">0</span>)</button>
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="open" style="border-color: rgba(255,107,107,0.3);">🔴 Noti / Aperti (<span id="admin-count-open">0</span>)</button>
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="in_progress" style="border-color: rgba(251,191,36,0.3);">🟡 In Corso (<span id="admin-count-progress">0</span>)</button>
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="resolved" style="border-color: rgba(74,222,128,0.3);">🟢 Risolti (<span id="admin-count-resolved">0</span>)</button>
+                    </div>
+                    <div style="position: relative; min-width: 240px; flex: 1; max-width: 320px;">
+                        <input type="text" id="admin-bug-search" class="form-control" placeholder="Cerca tra i bug..." style="padding: 0.55rem 1rem 0.55rem 2.2rem; font-size: 0.85rem;">
+                        <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 0.85rem; pointer-events: none;">🔍</span>
+                    </div>
+                </div>
+
+                <!-- Alert se tabella mancante con guida rapida copy SQL -->
+                <div id="bugs-table-missing-alert" class="hidden" style="background: rgba(234, 179, 8, 0.08); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 16px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <span style="font-size: 1.6rem;">⚠️</span>
+                        <div style="flex: 1;">
+                            <h4 style="color: #facc15; margin-bottom: 0.3rem;">Tabella 'bugs' non trovata su Supabase</h4>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.5;">
+                                Per abilitare il salvataggio dei bug, copia lo script SQL pronto ed eseguilo nell'SQL Editor di Supabase.
+                            </p>
+                            <button type="button" id="copy-bugs-sql-btn" class="btn btn-secondary btn-sm" style="color: #facc15; border-color: rgba(250, 204, 21, 0.4);">
+                                📋 Copia Query SQL per Supabase
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="bugs-list">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
         </section>
     </main>
 
@@ -1249,6 +1336,89 @@
                 <div class="actions" style="margin-top: 2rem;">
                     <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
                     <button type="button" id="close-faq-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bug Modal -->
+    <div id="bug-modal" class="modal hidden">
+        <div class="modal-content" style="max-width: 650px;">
+            <h2 id="bug-modal-title">Nuovo Bug</h2>
+            <form id="bug-form">
+                <input type="hidden" id="bug-id">
+
+                <div class="form-group">
+                    <label for="b-title">Titolo del Bug *</label>
+                    <input type="text" id="b-title" class="form-control" required placeholder="Es: Filtro aule non risponde al primo tap">
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label for="b-status">Stato del Bug *</label>
+                        <select id="b-status" class="form-control" style="background: #181818; color: white;">
+                            <option value="open">🔴 Noto / Aperto (Non risolto)</option>
+                            <option value="in_progress">🟡 In Lavorazione (In analisi / sviluppo)</option>
+                            <option value="resolved">🟢 Risolto (Corretto e rilasciato)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b-severity">Gravità / Priorità *</label>
+                        <select id="b-severity" class="form-control" style="background: #181818; color: white;">
+                            <option value="low">🔵 Bassa (Minore, testo o grafico)</option>
+                            <option value="medium" selected>🟡 Media (Funzionalità parziale con alternativa)</option>
+                            <option value="high">🟠 Alta (Funzione importante non funzionante)</option>
+                            <option value="critical">🔴 Critica (Crash, blocco o perdita dati)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                    <div class="form-group">
+                        <label for="b-category">Categoria / Modulo</label>
+                        <input type="text" id="b-category" class="form-control" placeholder="Es: App Android, Web App, Orari, Aule, Docenti" value="App Android">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b-affected-version">Versione Interessata</label>
+                        <input type="text" id="b-affected-version" class="form-control" placeholder="Es: v1.4.0 o Tutte">
+                    </div>
+                </div>
+
+                <div class="form-group" id="b-fixed-version-group">
+                    <label for="b-fixed-version">Risolto nella Versione (se applicabile)</label>
+                    <input type="text" id="b-fixed-version" class="form-control" placeholder="Es: v1.4.1 o In arrivo nel prossimo rilascio">
+                </div>
+
+                <div class="form-group">
+                    <label for="b-description">Descrizione del Problema *</label>
+                    <textarea id="b-description" class="form-control" rows="3" required placeholder="Spiega cosa accade, in quali condizioni o dispositivi si manifesta."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="b-workaround">Soluzione Temporanea / Workaround per gli studenti (opzionale)</label>
+                    <textarea id="b-workaround" class="form-control" rows="2" placeholder="Es: In attesa dell'update, selezionare l'aula tramite ricerca testuale o usare la Web App."></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center;">
+                    <div class="form-group">
+                        <label for="b-order">Ordine di Visualizzazione</label>
+                        <input type="number" id="b-order" class="form-control" value="0">
+                    </div>
+
+                    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); margin-top: 1rem;">
+                        <label for="b-visible" style="margin: 0; font-weight: 500; color: white; font-size: 0.85rem;">Visibile sul sito (Pubblico)</label>
+                        <label class="switch">
+                            <input type="checkbox" id="b-visible" checked>
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva Bug</button>
+                    <button type="button" id="close-bug-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
                 </div>
             </form>
         </div>
