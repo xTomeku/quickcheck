@@ -789,27 +789,75 @@ main {
 
 /* Regole per schermi piccoli / mobile */
 @media (max-width: 650px) {
+    main {
+        padding: 1rem 3.5%;
+    }
+
     .patch-header {
-        padding: 1.1rem 1.25rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-    }
-    .patch-header-right {
-        width: 100%;
+        padding: 1rem 1.15rem;
+        flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.65rem;
     }
+
+    .patch-header-right {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+    }
+
+    /* Su mobile eliminiamo il doppio padding e le card annidate per dare massimo respiro al testo */
     .patch-content {
-        padding: 1rem 1.25rem 1.25rem 1.25rem;
+        padding: 0;
     }
+
+    .patch-block-list {
+        gap: 0;
+    }
+
     .patch-block-item {
-        padding: 0.85rem 1rem;
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 0;
+        padding: 0.95rem 1.15rem;
     }
+
+    .patch-block-item:last-child {
+        border-bottom: none;
+    }
+
+    .patch-block-item:hover {
+        background: rgba(255, 255, 255, 0.03);
+        transform: none;
+        box-shadow: none;
+    }
+
     .patch-block-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.35rem;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        margin-bottom: 0.25rem;
     }
+
+    .patch-block-title {
+        font-size: 0.92rem;
+    }
+
+    .patch-block-desc {
+        font-size: 0.85rem;
+        line-height: 1.5;
+        padding-left: 0;
+    }
+
+    .patch-card-actions {
+        margin: 0;
+        padding: 1.15rem;
+    }
+
     .patch-info {
         gap: 0.5rem;
     }
