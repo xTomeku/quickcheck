@@ -387,6 +387,9 @@ async function loadDynamicUpdates(_supabase) {
 
     // Render Latest
     if (latestContainer) {
+        const latestChanges = Array.isArray(latest.changes) ? latest.changes : [];
+        const changesCount = latestChanges.length;
+
         latestContainer.innerHTML = `
             <div class="download-hero">
                 <a href="${latest.download_url}" class="btn btn-primary btn-lg">
@@ -400,13 +403,26 @@ async function loadDynamicUpdates(_supabase) {
                 <div class="patch-header no-toggle">
                     <div class="patch-info">
                         <span class="patch-version">${latest.version}</span>
-                        <span class="patch-date">${latest.date}</span>
+                        <span class="patch-pill-latest">
+                            <span class="patch-pill-dot"></span>
+                            Ultima Versione
+                        </span>
+                        <span class="patch-date">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            ${latest.date}
+                        </span>
+                    </div>
+                    <div class="patch-header-right">
+                        <span class="patch-count-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            ${changesCount} ${changesCount === 1 ? 'modifica' : 'modifiche'}
+                        </span>
                     </div>
                 </div>
                 <div class="patch-content">
-                    <ul class="patch-list">
-                        ${latest.changes.map(change => `<li>${formatChange(change)}</li>`).join('')}
-                    </ul>
+                    <div class="patch-block-list">
+                        ${latestChanges.map(change => renderPatchItem(change)).join('')}
+                    </div>
                 </div>
             </div>
         `;
@@ -418,26 +434,40 @@ async function loadDynamicUpdates(_supabase) {
         others.forEach((update, index) => {
             const card = document.createElement('div');
             card.className = 'card patch-card collapsed reveal';
+            const updateChanges = Array.isArray(update.changes) ? update.changes : [];
+            const changesCount = updateChanges.length;
+
             card.innerHTML = `
                 <div class="patch-header">
                     <div class="patch-info">
                         <span class="patch-version">${update.version}</span>
-                        <span class="patch-date">${update.date}</span>
+                        <span class="patch-date">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            ${update.date}
+                        </span>
                     </div>
-                    <span class="patch-toggle-icon">▼</span>
+                    <div class="patch-header-right">
+                        <span class="patch-count-badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            ${changesCount} ${changesCount === 1 ? 'modifica' : 'modifiche'}
+                        </span>
+                        <span class="patch-toggle-icon">▼</span>
+                    </div>
                 </div>
                 <div class="patch-content">
-                    <ul class="patch-list">
-                        ${update.changes.map(change => `<li>${formatChange(change)}</li>`).join('')}
-                    </ul>
-                    <a href="${update.download_url}" class="btn btn-secondary btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        Scarica ${update.version}
-                    </a>
+                    <div class="patch-block-list">
+                        ${updateChanges.map(change => renderPatchItem(change)).join('')}
+                    </div>
+                    <div class="patch-card-actions">
+                        <a href="${update.download_url}" class="btn btn-secondary btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                            Scarica ${update.version}
+                        </a>
+                    </div>
                 </div>
             `;
             
-            // Re-add accordion logic for new elements
+            // Accordion click per espandere/collassare la card
             card.querySelector('.patch-header').addEventListener('click', () => {
                 card.classList.toggle('collapsed');
             });
@@ -445,13 +475,129 @@ async function loadDynamicUpdates(_supabase) {
             timelineContainer.appendChild(card);
         });
     }
-    
-    // Refresh Observer for new elements
-    // initScrollReveal(); // Rimosso da qui perché ora è gestito centralmente in loadAllDynamicContent
+}
+
+/**
+ * Analizza e categorizza una singola voce di patchnote.
+ * Supporta categorie esplicite scelte dall'utente ([novita], [miglioramento], [fix], [feature], [improvement])
+ * con fallback sul riconoscimento semantico automatico delle parole chiave.
+ */
+function parsePatchChange(text) {
+    if (!text || typeof text !== 'string') {
+        return { title: '', desc: '', type: 'feature' };
+    }
+
+    let cleanText = text.trim();
+    let explicitType = null;
+
+    // Riconoscimento tag esplicito scelto dall'utente: es. [novita], [novità], [feature], [miglioramento], [improvement], [fix]
+    const tagMatch = cleanText.match(/^\[(novit[aà]|feature|miglioramento|improvement|fix)\]\s*/i);
+    if (tagMatch) {
+        const tag = tagMatch[1].toLowerCase();
+        if (tag === 'fix') {
+            explicitType = 'fix';
+        } else if (tag === 'miglioramento' || tag === 'improvement') {
+            explicitType = 'improvement';
+        } else {
+            explicitType = 'feature';
+        }
+        // Rimuove il tag esplicito dalla stringa in modo che non appaia nel titolo
+        cleanText = cleanText.substring(tagMatch[0].length).trim();
+    }
+
+    let title = '';
+    let desc = '';
+
+    // Estrazione Titolo e Descrizione se presente il delimitatore ':'
+    if (cleanText.includes(':')) {
+        const firstColon = cleanText.indexOf(':');
+        title = cleanText.substring(0, firstColon).trim();
+        desc = cleanText.substring(firstColon + 1).trim();
+    } else {
+        title = cleanText.trim();
+        desc = '';
+    }
+
+    // Se l'utente ha scelto esplicitamente il tipo usiamo quello; altrimenti fallback su parole chiave
+    let type = explicitType;
+    if (!type) {
+        const lower = cleanText.toLowerCase();
+
+        // Riconoscimento categoria con priorità: Fix > Miglioramento > Novità
+        const fixKeywords = ['fix', 'risolt', 'corrett', 'bug', 'crash', 'error', 'problem', 'fallit'];
+        const improvementKeywords = [
+            'ottimizz', 'migliorament', 'migliorat', 'prestazion', 'velocit',
+            'performance', 'caching', 'cache', 'alleggerit', 'ridott',
+            'stabilit', 'versioning', 'affidabilit', 'refactor', 'rifattorizz'
+        ];
+
+        if (fixKeywords.some(kw => lower.includes(kw))) {
+            type = 'fix';
+        } else if (improvementKeywords.some(kw => lower.includes(kw))) {
+            type = 'improvement';
+        } else {
+            type = 'feature';
+        }
+    }
+
+    // Pulizia del titolo per evitare ripetizioni grammaticali col badge (es: "Fix Dettagli..." -> "Dettagli...")
+    let cleanTitle = title;
+    if (/^(fix|bugfix)\s+/i.test(cleanTitle)) {
+        cleanTitle = cleanTitle.replace(/^(fix|bugfix)\s+/i, '');
+    } else if (/^(miglioramento|ottimizzazione)\s*[:-]\s*/i.test(cleanTitle)) {
+        cleanTitle = cleanTitle.replace(/^(miglioramento|ottimizzazione)\s*[:-]\s*/i, '');
+    }
+
+    if (cleanTitle.length > 0) {
+        cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
+    }
+
+    return { title: cleanTitle, desc, type };
+}
+
+/**
+ * Renderizza un elemento changelog trasformandolo in un blocco/card moderno
+ * dotato di micro-badge iconico, titolo in risalto e descrizione separata.
+ */
+function renderPatchItem(changeText) {
+    const { title, desc, type } = parsePatchChange(changeText);
+
+    let badgeLabel = 'Novità';
+    let badgeClass = 'patch-badge-feature';
+    let typeClass = 'type-feature';
+    // Icona scintilla/sparkle per novità
+    let iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
+
+    if (type === 'fix') {
+        badgeLabel = 'Fix';
+        badgeClass = 'patch-badge-fix';
+        typeClass = 'type-fix';
+        // Icona chiave inglese per bugfix
+        iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>`;
+    } else if (type === 'improvement') {
+        badgeLabel = 'Miglioramento';
+        badgeClass = 'patch-badge-improvement';
+        typeClass = 'type-improvement';
+        // Icona fulmine per miglioramenti e ottimizzazioni
+        iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`;
+    }
+
+    return `
+        <div class="patch-block-item ${typeClass}">
+            <div class="patch-block-header">
+                <span class="patch-badge ${badgeClass}">
+                    ${iconSvg}
+                    <span>${badgeLabel}</span>
+                </span>
+                <span class="patch-block-title">${title}</span>
+            </div>
+            ${desc ? `<p class="patch-block-desc">${desc}</p>` : ''}
+        </div>
+    `;
 }
 
 function formatChange(text) {
-    // Basic bolding for "Title:" parts
+    // Funzione legacy mantenuta per retrocompatibilità
     if (text.includes(':')) {
         const parts = text.split(':');
         return `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;

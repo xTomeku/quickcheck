@@ -508,89 +508,311 @@ main {
     transform: translate(3px, -3px) scale(1.1);
 }
 
-/* Patchnote Specific (Accordion) */
+/* ==========================================================================
+   Patchnotes Moderno a Blocchi (Stile Linear / Raycast)
+   ========================================================================== */
+
+#latest-update-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
 .timeline {
     max-width: 800px;
     margin: 0 auto;
 }
 
+/* Card Contenitore Patchnotes */
 .patch-card {
-    margin-bottom: 1.5rem;
-    padding: 0; /* Override default card padding */
+    margin-bottom: 2rem;
+    padding: 0;
     overflow: hidden;
+    height: auto;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--border-radius);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
 }
 
+.patch-card:hover {
+    transform: none; /* Previene scatti dell'intera card all'hover sugli elementi interni */
+}
+
+.patch-card.collapsed:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    transform: translateY(-2px);
+}
+
+.latest-card {
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.12);
+    margin-bottom: 3.5rem;
+}
+
+.latest-card:hover {
+    transform: none;
+    border-color: rgba(212, 175, 55, 0.65);
+    box-shadow: 0 14px 40px -10px rgba(0, 0, 0, 0.6), 0 0 35px rgba(212, 175, 55, 0.2);
+}
+
+/* Header della Release */
 .patch-header {
-    padding: 1.5rem 2rem;
-    cursor: pointer;
+    padding: 1.25rem 1.75rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: var(--transition);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     user-select: none;
+    transition: background 0.25s ease;
 }
 
 .patch-header.no-toggle {
     cursor: default;
 }
 
+.patch-header:not(.no-toggle) {
+    cursor: pointer;
+}
+
 .patch-header:not(.no-toggle):hover {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.04);
 }
 
 .patch-info {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .patch-version {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     background: var(--primary-gold);
     color: var(--primary-blue-dark);
-    padding: 0.3rem 1rem;
-    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
     font-weight: 800;
+    font-size: 0.92rem;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    white-space: nowrap;
+}
+
+/* Pill "Ultima Versione" con pallino dorato statico */
+.patch-pill-latest {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.25rem 0.65rem;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    border-radius: 999px;
+    color: var(--primary-gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.patch-pill-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--primary-gold);
+    box-shadow: 0 0 6px var(--primary-gold);
 }
 
 .patch-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.patch-date svg {
+    opacity: 0.75;
+}
+
+.patch-header-right {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    flex-shrink: 0;
+}
+
+.patch-count-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .patch-toggle-icon {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--primary-gold);
-    transition: transform 0.3s ease;
-}
-
-.patch-content {
-    max-height: 3000px; 
-    padding: 0 2rem 2rem 2rem;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 1;
-}
-
-/* Collapsed State */
-.patch-card.collapsed .patch-content {
-    max-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    opacity: 0;
-    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .patch-card.collapsed .patch-toggle-icon {
     transform: rotate(-90deg);
 }
 
-.patch-list {
-    padding-left: 1.5rem;
-    color: var(--text-muted);
+/* Area Contenuto Patchnotes */
+.patch-content {
+    max-height: 4000px;
+    padding: 1.5rem 1.75rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 1;
 }
 
-.patch-list li {
-    margin-bottom: 0.5rem;
+.patch-card.collapsed .patch-content {
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+/* Lista a blocchi delle modifiche */
+.patch-block-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Singolo blocco di modifica */
+.patch-block-item {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 0.95rem 1.25rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.patch-block-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Header del blocco (Badge + Titolo) */
+.patch-block-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem 0.85rem;
+    margin-bottom: 0.3rem;
+}
+
+/* Micro-badge categoria */
+.patch-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    line-height: 1.2;
+}
+
+.patch-badge svg {
+    width: 12px;
+    height: 12px;
+}
+
+.patch-badge-feature {
+    background: rgba(212, 175, 55, 0.12);
+    color: #F8D879;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.patch-badge-improvement {
+    background: rgba(16, 185, 129, 0.12);
+    color: #6EE7B7;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.patch-badge-fix {
+    background: rgba(245, 158, 11, 0.12);
+    color: #FCD34D;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.patch-block-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.4;
+    letter-spacing: -0.1px;
+}
+
+.patch-block-desc {
+    font-size: 0.88rem;
+    color: #a5a5a5;
+    line-height: 1.55;
+    margin-top: 0.25rem;
+    padding-left: 0.1rem;
+}
+
+/* Azioni per versioni precedenti */
+.patch-card-actions {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Regole per schermi piccoli / mobile */
+@media (max-width: 650px) {
+    .patch-header {
+        padding: 1.1rem 1.25rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+    .patch-header-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .patch-content {
+        padding: 1rem 1.25rem 1.25rem 1.25rem;
+    }
+    .patch-block-item {
+        padding: 0.85rem 1rem;
+    }
+    .patch-block-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.35rem;
+    }
+    .patch-info {
+        gap: 0.5rem;
+    }
 }
 
 /* Footer */
@@ -786,23 +1008,9 @@ main {
     }
 }
 
-.latest-card {
-    border: 1px solid var(--primary-gold);
-    box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-    margin-bottom: 3rem;
-}
-
 .download-hero {
     text-align: center;
     margin-bottom: 2rem;
-}
-
-.patch-header.no-toggle {
-    cursor: default;
-}
-
-.patch-header:not(.no-toggle):hover {
-    background: rgba(255, 255, 255, 0.03);
 }
 
 .footer-link {

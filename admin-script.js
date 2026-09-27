@@ -350,23 +350,85 @@ async function fetchUpdates() {
 }
 
 // ===== Patch Notes Editor Helpers =====
+
+/**
+ * Crea una riga nell'editor delle patch note dell'admin con selettore di badge (Novità, Miglioramento, Fix).
+ */
 function createPatchNoteRow(value = '') {
+    let rawText = typeof value === 'string' ? value.trim() : '';
+    let selectedType = 'feature';
+
+    // Riconosce tag espliciti già salvati (es. [novità], [miglioramento], [fix])
+    const tagMatch = rawText.match(/^\[(novit[aà]|feature|miglioramento|improvement|fix)\]\s*/i);
+    if (tagMatch) {
+        const tag = tagMatch[1].toLowerCase();
+        if (tag === 'fix') selectedType = 'fix';
+        else if (tag === 'miglioramento' || tag === 'improvement') selectedType = 'improvement';
+        else selectedType = 'feature';
+        rawText = rawText.substring(tagMatch[0].length).trim();
+    } else if (rawText) {
+        // Pre-selezione automatica di comodità se la nota non ha ancora un tag esplicito
+        const lower = rawText.toLowerCase();
+        const fixKeywords = ['fix', 'risolt', 'corrett', 'bug', 'crash', 'error', 'problem', 'fallit'];
+        const improvementKeywords = ['ottimizz', 'migliorament', 'migliorat', 'prestazion', 'velocit', 'performance', 'caching', 'cache', 'alleggerit', 'ridott', 'stabilit', 'versioning', 'affidabilit', 'refactor'];
+        if (fixKeywords.some(kw => lower.includes(kw))) {
+            selectedType = 'fix';
+        } else if (improvementKeywords.some(kw => lower.includes(kw))) {
+            selectedType = 'improvement';
+        }
+    }
+
     const row = document.createElement('div');
     row.className = 'patch-note-row';
     row.innerHTML = `
         <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
-        <input type="text" class="patch-note-input" value="" placeholder="Scrivi una nota...">
+        <select class="patch-note-type-select" title="Seleziona il badge per questa modifica">
+            <option value="feature">✨ Novità</option>
+            <option value="improvement">⚡ Miglioramento</option>
+            <option value="fix">🛠️ Fix</option>
+        </select>
+        <input type="text" class="patch-note-input" value="" placeholder="Titolo: Descrizione modifica...">
         <button type="button" class="btn-remove-note" title="Rimuovi">
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
     `;
-    // Set value after creation to avoid HTML injection
-    row.querySelector('.patch-note-input').value = value;
+
+    // Assegna il valore e aggiorna lo stile del selettore
+    const select = row.querySelector('.patch-note-type-select');
+    select.value = selectedType;
+    updateSelectBadgeStyle(select);
+
+    select.addEventListener('change', () => {
+        updateSelectBadgeStyle(select);
+    });
+
+    // Imposta il valore nel campo input evitando iniezioni HTML
+    row.querySelector('.patch-note-input').value = rawText;
+
     row.querySelector('.btn-remove-note').addEventListener('click', () => {
         row.style.animation = 'patchNoteSlideIn 0.2s ease-out reverse';
         setTimeout(() => row.remove(), 180);
     });
     return row;
+}
+
+/**
+ * Aggiorna il colore del bordo e del testo della select per riflettere il colore del badge scelto.
+ */
+function updateSelectBadgeStyle(select) {
+    if (select.value === 'fix') {
+        select.style.borderColor = 'rgba(245, 158, 11, 0.5)';
+        select.style.color = '#FBBF24';
+        select.style.background = 'rgba(245, 158, 11, 0.1)';
+    } else if (select.value === 'improvement') {
+        select.style.borderColor = 'rgba(16, 185, 129, 0.5)';
+        select.style.color = '#34D399';
+        select.style.background = 'rgba(16, 185, 129, 0.1)';
+    } else {
+        select.style.borderColor = 'rgba(212, 175, 55, 0.5)';
+        select.style.color = '#F5D77F';
+        select.style.background = 'rgba(212, 175, 55, 0.1)';
+    }
 }
 
 function populatePatchNotes(changes = []) {
@@ -388,9 +450,22 @@ function populatePatchNotes(changes = []) {
     }
 }
 
+/**
+ * Estrae i valori delle modifiche includendo il tag della categoria selezionata dall'utente [tag] Testo
+ */
 function getPatchNotesValues() {
-    const inputs = document.querySelectorAll('#v-changes-list .patch-note-input');
-    return Array.from(inputs).map(i => i.value.trim()).filter(v => v !== '');
+    const rows = document.querySelectorAll('#v-changes-list .patch-note-row');
+    const values = [];
+    rows.forEach(row => {
+        const input = row.querySelector('.patch-note-input');
+        const select = row.querySelector('.patch-note-type-select');
+        const text = input ? input.value.trim() : '';
+        if (text) {
+            const type = select ? select.value : 'feature';
+            values.push(`[${type}] ${text}`);
+        }
+    });
+    return values;
 }
 
 // "Add note" button
