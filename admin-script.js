@@ -246,6 +246,8 @@ tabBtns.forEach(btn => {
             fetchBugs();
         } else if (targetId === 'notifications-section') {
             fetchNotifications();
+            // Pre-carica l'elenco dei corsi per il menu a tendina
+            caricaCorsiUniSalento();
         }
     });
 });
@@ -2428,32 +2430,150 @@ const notificationsHistoryList = document.getElementById('notifications-history-
 const refreshNotificationsBtn = document.getElementById('refresh-notifications-btn');
 
 const targetTypeRadios = document.querySelectorAll('input[name="notif-target-type"]');
+const targetCourseContainer = document.getElementById('target-course-container');
+const targetCourseSelect = document.getElementById('notif-target-course');
 const targetValueContainer = document.getElementById('target-value-container');
 const targetValueLabel = document.getElementById('target-value-label');
 const targetValueInput = document.getElementById('notif-target-value');
+const materieDatalist = document.getElementById('materie-datalist');
 
 const scheduleTypeRadios = document.querySelectorAll('input[name="notif-schedule-type"]');
 const scheduleDatetimeContainer = document.getElementById('schedule-datetime-container');
 const scheduledAtInput = document.getElementById('notif-scheduled-at');
+
+// Cache in memoria dei corsi ed insegnamenti scaricati
+let _corsiUniSalento = null;
+
+// Scarica l'elenco dei corsi e relativi insegnamenti dal portale UniSalento tramite proxy Vercel
+async function caricaCorsiUniSalento() {
+    if (!targetCourseSelect) return;
+    if (_corsiUniSalento && _corsiUniSalento.length > 0) return;
+
+    try {
+        targetCourseSelect.innerHTML = '<option value="">Caricamento corsi in corso...</option>';
+
+        // 1. Rileva l'anno accademico corrente
+        let aa = '2026';
+        try {
+            const resAnni = await fetch('https://quick-check-unisalento.vercel.app/api-uni/PortaleStudenti/combo.php?sw=ec_&aa=1');
+            const textAnni = await resAnni.text();
+            const start = textAnni.indexOf('{');
+            const end = textAnni.lastIndexOf('}');
+            if (start !== -1 && end !== -1) {
+                const anniObj = JSON.parse(textAnni.substring(start, end + 1));
+                const chiavi = Object.keys(anniObj).sort((a, b) => b.localeCompare(a));
+                if (chiavi.length > 0) aa = chiavi[0];
+            }
+        } catch (e) {
+            console.warn('Fallback anno accademico:', aa);
+        }
+
+        // 2. Scarica il catalogo completo dei corsi
+        const resCorsi = await fetch(`https://quick-check-unisalento.vercel.app/api-uni/PortaleStudenti/combo.php?sw=ec_&aa=${aa}&page=corsi`);
+        const textCorsi = await resCorsi.text();
+        const match = textCorsi.match(/var\s+(?:elenco_corsi|lista_corsi|data)\s*=\s*(\[[\s\S]*?\]);\s*(?:var|$)/);
+        if (!match) throw new Error("Risposta corsi UniSalento non riconosciuta");
+
+        const rawList = JSON.parse(match[1]);
+
+        // 3. Estrazione corsi ed insegnamenti per autocomplete
+        _corsiUniSalento = rawList.map(c => {
+            const id = String(c.valore || '').trim();
+            const isMagistrale = String(c.tipo || '').toLowerCase().includes('magistrale');
+            const nome = String(c.label || '').trim() + (isMagistrale ? ' (MAGISTRALE)' : '');
+
+            const insegnamentiSet = new Set();
+            if (Array.isArray(c.elenco_anni)) {
+                c.elenco_anni.forEach(anno => {
+                    if (Array.isArray(anno.elenco_insegnamenti)) {
+                        anno.elenco_insegnamenti.forEach(ins => {
+                            const l = (ins.label || '').trim();
+                            if (l) insegnamentiSet.add(l.toUpperCase());
+                        });
+                    }
+                });
+            }
+
+            return {
+                id: id,
+                nome: nome,
+                insegnamenti: Array.from(insegnamentiSet).sort()
+            };
+        }).filter(c => c.id && c.nome);
+
+        _corsiUniSalento.sort((a, b) => a.nome.localeCompare(b.nome));
+
+        targetCourseSelect.innerHTML = '<option value="">-- Seleziona un Corso di Laurea --</option>';
+        _corsiUniSalento.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.id;
+            opt.textContent = `${c.nome} [${c.id}]`;
+            targetCourseSelect.appendChild(opt);
+        });
+    } catch (err) {
+        console.error('Errore caricamento corsi UniSalento:', err);
+        targetCourseSelect.innerHTML = '<option value="">Errore nel caricamento dei corsi (riprova)</option>';
+    }
+}
+
+// Aggiorna la lista di suggerimenti delle materie per il corso selezionato
+function aggiornaDatalistMaterie(courseId) {
+    if (!materieDatalist) return;
+    materieDatalist.innerHTML = '';
+    if (!courseId || !_corsiUniSalento) return;
+
+    const corso = _corsiUniSalento.find(c => c.id === courseId);
+    if (corso && corso.insegnamenti) {
+        corso.insegnamenti.forEach(m => {
+            const opt = document.createElement('option');
+            opt.value = m;
+            materieDatalist.appendChild(opt);
+        });
+    }
+}
+
+if (targetCourseSelect) {
+    targetCourseSelect.addEventListener('change', () => {
+        aggiornaDatalistMaterie(targetCourseSelect.value);
+    });
+}
 
 // 1. Toggle Selettore Destinatari
 targetTypeRadios.forEach(radio => {
     radio.addEventListener('change', (e) => {
         const val = e.target.value;
         if (val === 'tutti') {
+            if (targetCourseContainer) targetCourseContainer.classList.add('hidden');
             targetValueContainer.classList.add('hidden');
+            if (targetCourseSelect) targetCourseSelect.required = false;
             targetValueInput.required = false;
             targetValueInput.value = '';
         } else if (val === 'corso') {
-            targetValueContainer.classList.remove('hidden');
-            targetValueLabel.textContent = "ID Corso Unisalento (es. '2023_1014' o '1014'):";
-            targetValueInput.placeholder = "Es: 2023_1014";
-            targetValueInput.required = true;
+            if (targetCourseContainer) targetCourseContainer.classList.remove('hidden');
+            targetValueContainer.classList.add('hidden');
+            if (targetCourseSelect) targetCourseSelect.required = true;
+            targetValueInput.required = false;
+            targetValueInput.value = '';
+            caricaCorsiUniSalento();
         } else if (val === 'materia') {
+            if (targetCourseContainer) targetCourseContainer.classList.add('hidden');
             targetValueContainer.classList.remove('hidden');
-            targetValueLabel.textContent = "Nome della Materia (cerca nei piani di studio e nei Preferiti):";
-            targetValueInput.placeholder = "Es: Analisi Matematica 1 o Fisica";
+            if (targetCourseSelect) targetCourseSelect.required = false;
+            targetValueLabel.textContent = "Nome della Materia (invia a tutti gli studenti che la seguono, in qualsiasi corso):";
+            targetValueInput.placeholder = "Es: Analisi Matematica 1";
             targetValueInput.required = true;
+            if (materieDatalist) materieDatalist.innerHTML = '';
+        } else if (val === 'materia_corso') {
+            if (targetCourseContainer) targetCourseContainer.classList.remove('hidden');
+            targetValueContainer.classList.remove('hidden');
+            if (targetCourseSelect) targetCourseSelect.required = true;
+            targetValueLabel.textContent = "Nome della Materia per questo Corso (digita o seleziona dal menu):";
+            targetValueInput.placeholder = "Es: Analisi Matematica 1";
+            targetValueInput.required = true;
+            caricaCorsiUniSalento();
+            if (targetCourseSelect && targetCourseSelect.value) {
+                aggiornaDatalistMaterie(targetCourseSelect.value);
+            }
         }
     });
 });
@@ -2490,7 +2610,34 @@ if (pushForm) {
         const urlAzione = pushUrlInput.value.trim() || '/';
 
         const targetType = document.querySelector('input[name="notif-target-type"]:checked').value;
-        const targetValore = targetValueInput.value.trim() || null;
+        let targetValore = null;
+
+        if (targetType === 'corso') {
+            targetValore = targetCourseSelect ? targetCourseSelect.value : null;
+            if (!targetValore) {
+                alert('Seleziona un corso di laurea dal menu a tendina.');
+                return;
+            }
+        } else if (targetType === 'materia') {
+            targetValore = targetValueInput.value.trim().toUpperCase();
+            if (!targetValore) {
+                alert('Inserisci il nome della materia.');
+                return;
+            }
+        } else if (targetType === 'materia_corso') {
+            const courseId = targetCourseSelect ? targetCourseSelect.value : null;
+            const materiaName = targetValueInput.value.trim().toUpperCase();
+            if (!courseId) {
+                alert('Seleziona un corso di laurea dal menu a tendina.');
+                return;
+            }
+            if (!materiaName) {
+                alert('Inserisci o seleziona il nome della materia.');
+                return;
+            }
+            // Formato combinato idCorso|nomeMateria per il targeting atomico
+            targetValore = `${courseId}|${materiaName}`;
+        }
 
         const scheduleType = document.querySelector('input[name="notif-schedule-type"]:checked').value;
         let programmatoPer = null;
@@ -2502,9 +2649,21 @@ if (pushForm) {
             programmatoPer = new Date(scheduledAtInput.value).toISOString();
         }
 
+        let targetDescrizione = "TUTTI gli studenti";
+        if (targetType === 'corso') {
+            const opt = targetCourseSelect ? targetCourseSelect.options[targetCourseSelect.selectedIndex] : null;
+            targetDescrizione = `gli studenti del corso: ${opt ? opt.text : targetValore}`;
+        } else if (targetType === 'materia') {
+            targetDescrizione = `gli studenti che seguono la materia "${targetValore}"`;
+        } else if (targetType === 'materia_corso') {
+            const opt = targetCourseSelect ? targetCourseSelect.options[targetCourseSelect.selectedIndex] : null;
+            const materiaName = targetValueInput.value.trim().toUpperCase();
+            targetDescrizione = `gli studenti di "${materiaName}" nel corso: ${opt ? opt.text : targetValore}`;
+        }
+
         const confermaTesto = scheduleType === 'later'
-            ? `Sei sicuro di voler programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()}?`
-            : `Sei sicuro di voler INVIARE SUBITO questa notifica a ${targetType === 'tutti' ? 'TUTTI gli studenti' : targetValore}?`;
+            ? `Sei sicuro di voler programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()} a ${targetDescrizione}?`
+            : `Sei sicuro di voler INVIARE SUBITO questa notifica a ${targetDescrizione}?`;
 
         if (!confirm(confermaTesto)) return;
 
@@ -2553,9 +2712,12 @@ if (pushForm) {
             pushTitleInput.value = '';
             pushBodyInput.value = '';
             targetValueInput.value = '';
+            if (targetCourseSelect) targetCourseSelect.value = '';
+            if (materieDatalist) materieDatalist.innerHTML = '';
             scheduledAtInput.value = '';
             document.querySelector('input[name="notif-target-type"][value="tutti"]').checked = true;
             document.querySelector('input[name="notif-schedule-type"][value="now"]').checked = true;
+            if (targetCourseContainer) targetCourseContainer.classList.add('hidden');
             targetValueContainer.classList.add('hidden');
             scheduleDatetimeContainer.classList.add('hidden');
             pushSubmitBtn.textContent = "Invia Notifica";

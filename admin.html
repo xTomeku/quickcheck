@@ -1055,13 +1055,27 @@
                                 </label>
                                 <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
                                     <input type="radio" name="notif-target-type" value="materia">
-                                    Per Materia (anche nei Preferiti)
+                                    Per Materia Generica (tutti i corsi)
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                    <input type="radio" name="notif-target-type" value="materia_corso">
+                                    Per Materia di uno Specifico Corso
                                 </label>
                             </div>
 
+                            <!-- Menu a tendina corsi di laurea (caricato dinamicamente da UniSalento) -->
+                            <div id="target-course-container" class="hidden" style="margin-top: 0.6rem;">
+                                <label id="target-course-label" for="notif-target-course" style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Seleziona Corso di Laurea:</label>
+                                <select id="notif-target-course" class="form-control" style="background: #1e1e1e; margin-bottom: 0.6rem;">
+                                    <option value="">Caricamento corsi in corso...</option>
+                                </select>
+                            </div>
+
+                            <!-- Input per nome materia con datalist di autocompletamento -->
                             <div id="target-value-container" class="hidden" style="margin-top: 0.6rem;">
-                                <label id="target-value-label" for="notif-target-value" style="font-size: 0.85rem; color: var(--text-muted);"></label>
-                                <input type="text" id="notif-target-value" class="form-control" placeholder="">
+                                <label id="target-value-label" for="notif-target-value" style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;"></label>
+                                <input type="text" id="notif-target-value" list="materie-datalist" class="form-control" placeholder="">
+                                <datalist id="materie-datalist"></datalist>
                             </div>
                         </div>
 
