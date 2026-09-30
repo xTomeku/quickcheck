@@ -3076,7 +3076,7 @@ async function fetchNotifications() {
                         <h4 style="font-size: 1.05rem; color: white; margin-bottom: 0.3rem;">${escapeHtml(item.titolo)}</h4>
                         <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0.4rem; white-space: pre-wrap;">${escapeHtml(item.messaggio)}</p>
                         ${dataProgrammata ? `<div style="font-size: 0.8rem; color: #facc15;">📅 Programmato per: <strong>${dataProgrammata}</strong></div>` : ''}
-                        ${isInviato ? `<div style="font-size: 0.8rem; color: var(--text-muted);">📱 Dispositivi PWA raggiunti: <strong>${item.conteggio_pwa_inviati || 0}</strong></div>` : ''}
+                        ${isInviato ? `<div style="font-size: 0.8rem; color: var(--text-muted);">📱 Dispositivi raggiunti (PWA & APK): <strong>${item.conteggio_pwa_inviati || 0}</strong></div>` : ''}
                     </div>
                     <div style="display: flex; gap: 6px; align-items: center;">
                         ${isProgrammato ? `
