@@ -2444,7 +2444,7 @@ const scheduledAtInput = document.getElementById('notif-scheduled-at');
 // Cache in memoria dei corsi ed insegnamenti scaricati
 let _corsiUniSalento = null;
 
-// Scarica l'elenco dei corsi e relativi insegnamenti dal portale UniSalento tramite proxy Vercel
+// Scarica l'elenco dei corsi e relativi insegnamenti tramite la Edge Function Supabase (100% CORS-friendly)
 async function caricaCorsiUniSalento() {
     if (!targetCourseSelect) return;
     if (_corsiUniSalento && _corsiUniSalento.length > 0) return;
@@ -2452,57 +2452,26 @@ async function caricaCorsiUniSalento() {
     try {
         targetCourseSelect.innerHTML = '<option value="">Caricamento corsi in corso...</option>';
 
-        // 1. Rileva l'anno accademico corrente
-        let aa = '2026';
-        try {
-            const resAnni = await fetch('https://quick-check-unisalento.vercel.app/api-uni/PortaleStudenti/combo.php?sw=ec_&aa=1');
-            const textAnni = await resAnni.text();
-            const start = textAnni.indexOf('{');
-            const end = textAnni.lastIndexOf('}');
-            if (start !== -1 && end !== -1) {
-                const anniObj = JSON.parse(textAnni.substring(start, end + 1));
-                const chiavi = Object.keys(anniObj).sort((a, b) => b.localeCompare(a));
-                if (chiavi.length > 0) aa = chiavi[0];
+        // Recupera il token di sessione autenticata dell'amministratore
+        const { data: { session } } = await _supabase.auth.getSession();
+        const token = session ? session.access_token : window.SUPABASE_KEY;
+
+        // Chiama la Edge Function che recupera ed elabora i corsi server-side (senza blocchi CORS del browser)
+        const endpoint = `${window.SUPABASE_URL}/functions/v1/send-push?action=corsi`;
+        const res = await fetch(endpoint, {
+            headers: {
+                'apikey': window.SUPABASE_KEY,
+                'Authorization': `Bearer ${token}`
             }
-        } catch (e) {
-            console.warn('Fallback anno accademico:', aa);
-        }
+        });
 
-        // 2. Scarica il catalogo completo dei corsi
-        const resCorsi = await fetch(`https://quick-check-unisalento.vercel.app/api-uni/PortaleStudenti/combo.php?sw=ec_&aa=${aa}&page=corsi`);
-        const textCorsi = await resCorsi.text();
-        const match = textCorsi.match(/var\s+(?:elenco_corsi|lista_corsi|data)\s*=\s*(\[[\s\S]*?\]);\s*(?:var|$)/);
-        if (!match) throw new Error("Risposta corsi UniSalento non riconosciuta");
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        if (!data.corsi || !Array.isArray(data.corsi)) throw new Error("Dati corsi non validi");
 
-        const rawList = JSON.parse(match[1]);
+        _corsiUniSalento = data.corsi;
 
-        // 3. Estrazione corsi ed insegnamenti per autocomplete
-        _corsiUniSalento = rawList.map(c => {
-            const id = String(c.valore || '').trim();
-            const isMagistrale = String(c.tipo || '').toLowerCase().includes('magistrale');
-            const nome = String(c.label || '').trim() + (isMagistrale ? ' (MAGISTRALE)' : '');
-
-            const insegnamentiSet = new Set();
-            if (Array.isArray(c.elenco_anni)) {
-                c.elenco_anni.forEach(anno => {
-                    if (Array.isArray(anno.elenco_insegnamenti)) {
-                        anno.elenco_insegnamenti.forEach(ins => {
-                            const l = (ins.label || '').trim();
-                            if (l) insegnamentiSet.add(l.toUpperCase());
-                        });
-                    }
-                });
-            }
-
-            return {
-                id: id,
-                nome: nome,
-                insegnamenti: Array.from(insegnamentiSet).sort()
-            };
-        }).filter(c => c.id && c.nome);
-
-        _corsiUniSalento.sort((a, b) => a.nome.localeCompare(b.nome));
-
+        // Popola la tendina con i corsi ordinati alfabeticamente
         targetCourseSelect.innerHTML = '<option value="">-- Seleziona un Corso di Laurea --</option>';
         _corsiUniSalento.forEach(c => {
             const opt = document.createElement('option');
