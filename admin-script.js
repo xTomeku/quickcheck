@@ -2881,10 +2881,15 @@ if (pushForm) {
             targetDescrizione = `gli studenti di "${materiaName}" nel corso:\n"${courseDisplayName}"`;
         }
 
+        const platformType = document.querySelector('input[name="notif-platform"]:checked')?.value || 'tutti';
+        let platformDesc = "Tutte le piattaforme (PWA + APK)";
+        if (platformType === 'pwa') platformDesc = "Solo Web PWA";
+        else if (platformType === 'apk') platformDesc = "Solo APK Android";
+
         const isLater = scheduleType === 'later';
         const confermaTesto = isLater
-            ? `Vuoi programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()} a:\n${targetDescrizione}?`
-            : `Sei sicuro di voler INVIARE SUBITO questa notifica a:\n${targetDescrizione}?`;
+            ? `Vuoi programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()} a:\n${targetDescrizione}\n[Piattaforma: ${platformDesc}]?`
+            : `Sei sicuro di voler INVIARE SUBITO questa notifica a:\n${targetDescrizione}\n[Piattaforma: ${platformDesc}]?`;
 
         // Modale di conferma personalizzato (elimina il fastidioso popup nativo del browser)
         const confirmed = await customConfirm(confermaTesto, {
@@ -2933,6 +2938,7 @@ if (pushForm) {
                     tipo_canale: tipoCanale,
                     target_tipo: targetType,
                     target_valore: targetValore,
+                    target_dettagli: { piattaforma: platformType },
                     url_azione: urlAzione,
                     programmato_per: programmatoPer
                 }),
@@ -2960,9 +2966,15 @@ if (pushForm) {
                 showToast("Notifica programmata con successo!", "success");
             } else {
                 const inviati = resData.inviati !== undefined ? resData.inviati : 0;
-                pushSubmitStatus.textContent = `✅ Notifica inviata! Raggiunti: ${inviati} dispositivi PWA.`;
+                const invPwa = resData.inviati_pwa !== undefined ? resData.inviati_pwa : null;
+                const invApk = resData.inviati_apk !== undefined ? resData.inviati_apk : null;
+                let dett = '';
+                if (invPwa !== null && invApk !== null) {
+                    dett = ` (${invPwa} PWA, ${invApk} APK)`;
+                }
+                pushSubmitStatus.textContent = `✅ Notifica inviata! Raggiunti: ${inviati} dispositivi${dett}.`;
                 pushSubmitStatus.style.color = "#4ade80";
-                showToast(`Notifica inviata a ${inviati} dispositivi PWA!`, "success");
+                showToast(`Notifica inviata a ${inviati} dispositivi${dett}!`, "success");
             }
 
             // Reset completo del modulo
@@ -2975,6 +2987,9 @@ if (pushForm) {
 
             document.querySelector('input[name="notif-target-type"][value="tutti"]').checked = true;
             document.querySelector('input[name="notif-schedule-type"][value="now"]').checked = true;
+            const defPlat = document.querySelector('input[name="notif-platform"][value="tutti"]');
+            if (defPlat) defPlat.checked = true;
+
             if (targetCourseContainer) targetCourseContainer.classList.add('hidden');
             targetValueContainer.classList.add('hidden');
             scheduleDatetimeContainer.classList.add('hidden');
@@ -3017,14 +3032,22 @@ async function fetchNotifications() {
     if (!notificationsHistoryList) return;
 
     try {
-        // A. Conta dispositivi PWA attivi
-        const { count, error: countErr } = await _supabase
+        // A. Conta dispositivi attivi distinguendo PWA e APK
+        const { data: subs, error: subsErr } = await _supabase
             .from('push_subscriptions')
-            .select('*', { count: 'exact', head: true })
+            .select('endpoint, user_agent')
             .eq('attivo', true);
 
-        if (!countErr && pushSubscribersCount) {
-            pushSubscribersCount.textContent = count !== null ? count : '0';
+        if (!subsErr && subs) {
+            const tot = subs.length;
+            const apkCount = subs.filter(s => (s.endpoint && s.endpoint.startsWith('fcm:')) || s.user_agent === 'android_apk').length;
+            const pwaCount = tot - apkCount;
+
+            if (pushSubscribersCount) pushSubscribersCount.textContent = tot;
+            const pwaElem = document.getElementById('push-pwa-count');
+            const apkElem = document.getElementById('push-apk-count');
+            if (pwaElem) pwaElem.textContent = pwaCount;
+            if (apkElem) apkElem.textContent = apkCount;
         }
 
         // B. Carica storico avvisi
@@ -3061,17 +3084,26 @@ async function fetchNotifications() {
                 badgeHtml = `<span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">⏳ ${item.stato}</span>`;
             }
 
+            const plat = item.target_dettagli?.piattaforma;
+            let platBadge = '';
+            if (plat === 'pwa') {
+                platBadge = `<span style="font-size: 0.75rem; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.3);">🌐 Solo PWA</span>`;
+            } else if (plat === 'apk') {
+                platBadge = `<span style="font-size: 0.75rem; background: rgba(74, 222, 128, 0.15); color: #4ade80; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(74, 222, 128, 0.3);">🤖 Solo APK</span>`;
+            }
+
             const dataCreazione = new Date(item.created_at).toLocaleString();
             const dataProgrammata = item.programmato_per ? new Date(item.programmato_per).toLocaleString() : null;
 
             return `
                 <div style="background: rgba(25, 25, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.2rem; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 250px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem; flex-wrap: wrap;">
                             ${badgeHtml}
                             <span style="font-size: 0.78rem; color: var(--text-muted);">${dataCreazione}</span>
                             <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; color: #ddd;">Canale: ${item.tipo_canale || 'avvisi'}</span>
                             <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; color: #ddd;">Target: ${item.target_tipo || 'tutti'}${item.target_valore ? ' (' + item.target_valore + ')' : ''}</span>
+                            ${platBadge}
                         </div>
                         <h4 style="font-size: 1.05rem; color: white; margin-bottom: 0.3rem;">${escapeHtml(item.titolo)}</h4>
                         <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0.4rem; white-space: pre-wrap;">${escapeHtml(item.messaggio)}</p>

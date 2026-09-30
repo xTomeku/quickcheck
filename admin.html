@@ -1082,9 +1082,15 @@
                         <h2>Notifiche Web Push & Avvisi Sistema</h2>
                         <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Invia notifiche a PWA (iOS/Android/PC) e crea avvisi sincronizzati per l'APK nativo</p>
                     </div>
-                    <div style="display: flex; gap: 0.8rem; align-items: center;">
-                        <span id="push-subscribers-badge" class="badge" style="background: rgba(212, 175, 55, 0.15); color: var(--primary-gold); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(212, 175, 55, 0.3);">
-                            📱 Dispositivi PWA: <strong id="push-subscribers-count">...</strong>
+                    <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
+                        <span id="push-subscribers-badge" class="badge" title="Tutti i dispositivi registrati" style="background: rgba(212, 175, 55, 0.15); color: var(--primary-gold); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(212, 175, 55, 0.3); display: flex; align-items: center; gap: 6px;">
+                            <span>📱</span> Totale: <strong id="push-subscribers-count">...</strong>
+                        </span>
+                        <span id="push-pwa-badge" class="badge" title="Dispositivi Web PWA registrati" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; gap: 6px;">
+                            <span>🌐</span> PWA: <strong id="push-pwa-count">...</strong>
+                        </span>
+                        <span id="push-apk-badge" class="badge" title="Dispositivi Android APK registrati via Firebase" style="background: rgba(74, 222, 128, 0.15); color: #4ade80; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(74, 222, 128, 0.3); display: flex; align-items: center; gap: 6px;">
+                            <span>🤖</span> APK: <strong id="push-apk-count">...</strong>
                         </span>
                     </div>
                 </div>
@@ -1118,7 +1124,24 @@
 
                         <!-- Target Destinatari -->
                         <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
-                            <label style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">🎯 Destinatari della Notifica</label>
+                            <!-- Filtro Piattaforma Dispositivo -->
+                            <div style="display: flex; gap: 1.2rem; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap;">
+                                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">📱 Piattaforma:</span>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd; font-size: 0.85rem;">
+                                    <input type="radio" name="notif-platform" value="tutti" checked>
+                                    Tutte (PWA + APK)
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #38bdf8; font-size: 0.85rem;">
+                                    <input type="radio" name="notif-platform" value="pwa">
+                                    🌐 Solo Web PWA
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #4ade80; font-size: 0.85rem;">
+                                    <input type="radio" name="notif-platform" value="apk">
+                                    🤖 Solo APK Android
+                                </label>
+                            </div>
+
+                            <label style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">🎯 Filtro Studenti</label>
                             <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;">
                                 <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
                                     <input type="radio" name="notif-target-type" value="tutti" checked>
