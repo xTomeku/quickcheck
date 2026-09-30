@@ -27,7 +27,8 @@ const sections = {
     'legal-section': document.getElementById('legal-section'),
     'features-section': document.getElementById('features-section'),
     'faq-admin-section': document.getElementById('faq-admin-section'),
-    'bugs-admin-section': document.getElementById('bugs-admin-section')
+    'bugs-admin-section': document.getElementById('bugs-admin-section'),
+    'notifications-section': document.getElementById('notifications-section')
 };
 
 // Features DOM
@@ -214,6 +215,7 @@ function showDashboard(user) {
     fetchFeatures();
     fetchFAQ();
     fetchBugs();
+    fetchNotifications();
 }
 
 // Tab Switching
@@ -242,6 +244,8 @@ tabBtns.forEach(btn => {
             fetchUserStats();
         } else if (targetId === 'bugs-admin-section') {
             fetchBugs();
+        } else if (targetId === 'notifications-section') {
+            fetchNotifications();
         }
     });
 });
@@ -2406,6 +2410,299 @@ if (deleteStatsForm) {
             if (deleteConfirmBtn) deleteConfirmBtn.disabled = false;
         }
     });
+}
+
+// ==========================================
+// GESTIONE NOTIFICHE WEB PUSH & AVVISI
+// ==========================================
+
+const pushForm = document.getElementById('push-notification-form');
+const pushTitleInput = document.getElementById('notif-title');
+const pushBodyInput = document.getElementById('notif-body');
+const pushChannelSelect = document.getElementById('notif-channel');
+const pushUrlInput = document.getElementById('notif-url');
+const pushSubmitBtn = document.getElementById('push-submit-btn');
+const pushSubmitStatus = document.getElementById('push-submit-status');
+const pushSubscribersCount = document.getElementById('push-subscribers-count');
+const notificationsHistoryList = document.getElementById('notifications-history-list');
+const refreshNotificationsBtn = document.getElementById('refresh-notifications-btn');
+
+const targetTypeRadios = document.querySelectorAll('input[name="notif-target-type"]');
+const targetValueContainer = document.getElementById('target-value-container');
+const targetValueLabel = document.getElementById('target-value-label');
+const targetValueInput = document.getElementById('notif-target-value');
+
+const scheduleTypeRadios = document.querySelectorAll('input[name="notif-schedule-type"]');
+const scheduleDatetimeContainer = document.getElementById('schedule-datetime-container');
+const scheduledAtInput = document.getElementById('notif-scheduled-at');
+
+// 1. Toggle Selettore Destinatari
+targetTypeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'tutti') {
+            targetValueContainer.classList.add('hidden');
+            targetValueInput.required = false;
+            targetValueInput.value = '';
+        } else if (val === 'corso') {
+            targetValueContainer.classList.remove('hidden');
+            targetValueLabel.textContent = "ID Corso Unisalento (es. '2023_1014' o '1014'):";
+            targetValueInput.placeholder = "Es: 2023_1014";
+            targetValueInput.required = true;
+        } else if (val === 'materia') {
+            targetValueContainer.classList.remove('hidden');
+            targetValueLabel.textContent = "Nome della Materia (cerca nei piani di studio e nei Preferiti):";
+            targetValueInput.placeholder = "Es: Analisi Matematica 1 o Fisica";
+            targetValueInput.required = true;
+        }
+    });
+});
+
+// 2. Toggle Selettore Pianificazione (Subito vs Programmata)
+scheduleTypeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'later') {
+            scheduleDatetimeContainer.classList.remove('hidden');
+            scheduledAtInput.required = true;
+            // Imposta orario minimo a adesso + 2 minuti
+            const now = new Date();
+            now.setMinutes(now.getMinutes() + 2);
+            scheduledAtInput.min = now.toISOString().slice(0, 16);
+            if (pushSubmitBtn) pushSubmitBtn.textContent = "Programma Notifica";
+        } else {
+            scheduleDatetimeContainer.classList.add('hidden');
+            scheduledAtInput.required = false;
+            scheduledAtInput.value = '';
+            if (pushSubmitBtn) pushSubmitBtn.textContent = "Invia Notifica Adesso";
+        }
+    });
+});
+
+// 3. Invio Notifica tramite Supabase Edge Function
+if (pushForm) {
+    pushForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const titolo = pushTitleInput.value.trim();
+        const messaggio = pushBodyInput.value.trim();
+        const tipoCanale = pushChannelSelect.value;
+        const urlAzione = pushUrlInput.value.trim() || '/';
+
+        const targetType = document.querySelector('input[name="notif-target-type"]:checked').value;
+        const targetValore = targetValueInput.value.trim() || null;
+
+        const scheduleType = document.querySelector('input[name="notif-schedule-type"]:checked').value;
+        let programmatoPer = null;
+        if (scheduleType === 'later') {
+            if (!scheduledAtInput.value) {
+                alert('Seleziona una data e ora per la pianificazione.');
+                return;
+            }
+            programmatoPer = new Date(scheduledAtInput.value).toISOString();
+        }
+
+        const confermaTesto = scheduleType === 'later'
+            ? `Sei sicuro di voler programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()}?`
+            : `Sei sicuro di voler INVIARE SUBITO questa notifica a ${targetType === 'tutti' ? 'TUTTI gli studenti' : targetValore}?`;
+
+        if (!confirm(confermaTesto)) return;
+
+        pushSubmitBtn.disabled = true;
+        pushSubmitStatus.textContent = "Invio in corso...";
+        pushSubmitStatus.style.color = "var(--primary-gold)";
+
+        try {
+            const { data: { session } } = await _supabase.auth.getSession();
+            const token = session ? session.access_token : window.SUPABASE_KEY;
+
+            // Invocazione della Edge Function send-push su Supabase
+            const endpoint = `${window.SUPABASE_URL}/functions/v1/send-push`;
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                    'apikey': window.SUPABASE_KEY
+                },
+                body: JSON.stringify({
+                    titolo: titolo,
+                    messaggio: messaggio,
+                    tipo_canale: tipoCanale,
+                    target_tipo: targetType,
+                    target_valore: targetValore,
+                    url_azione: urlAzione,
+                    programmato_per: programmatoPer
+                })
+            });
+
+            const resData = await response.json();
+            if (!response.ok) {
+                throw new Error(resData.error || 'Errore durante la chiamata serverless');
+            }
+
+            if (resData.programmato) {
+                pushSubmitStatus.textContent = "✅ Notifica programmata con successo!";
+                pushSubmitStatus.style.color = "#4ade80";
+            } else {
+                pushSubmitStatus.textContent = `✅ Notifica inviata! Raggiunti: ${resData.inviati || 0} dispositivi PWA.`;
+                pushSubmitStatus.style.color = "#4ade80";
+            }
+
+            // Reset form
+            pushTitleInput.value = '';
+            pushBodyInput.value = '';
+            targetValueInput.value = '';
+            scheduledAtInput.value = '';
+            document.querySelector('input[name="notif-target-type"][value="tutti"]').checked = true;
+            document.querySelector('input[name="notif-schedule-type"][value="now"]').checked = true;
+            targetValueContainer.classList.add('hidden');
+            scheduleDatetimeContainer.classList.add('hidden');
+            pushSubmitBtn.textContent = "Invia Notifica";
+
+            // Ricarica lo storico
+            fetchNotifications();
+
+            setTimeout(() => {
+                pushSubmitStatus.textContent = '';
+            }, 6000);
+        } catch (err) {
+            console.error('Errore invio push:', err);
+            pushSubmitStatus.textContent = `❌ Errore: ${err.message}`;
+            pushSubmitStatus.style.color = "#ef4444";
+        } finally {
+            pushSubmitBtn.disabled = false;
+        }
+    });
+}
+
+// 4. Carica Contatore Sottoscrizioni e Storico Avvisi
+async function fetchNotifications() {
+    if (!notificationsHistoryList) return;
+
+    try {
+        // A. Conta dispositivi PWA attivi
+        const { count, error: countErr } = await _supabase
+            .from('push_subscriptions')
+            .select('*', { count: 'exact', head: true })
+            .eq('attivo', true);
+
+        if (!countErr && pushSubscribersCount) {
+            pushSubscribersCount.textContent = count !== null ? count : '0';
+        }
+
+        // B. Carica storico avvisi
+        const { data: avvisi, error: avvisiErr } = await _supabase
+            .from('avvisi_sistema')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(25);
+
+        if (avvisiErr) throw avvisiErr;
+
+        if (!avvisi || avvisi.length === 0) {
+            notificationsHistoryList.innerHTML = `
+                <div style="text-align: center; padding: 2rem; color: var(--text-muted); background: rgba(0,0,0,0.2); border-radius: 12px;">
+                    Nessuna notifica inviata o programmata al momento.
+                </div>
+            `;
+            return;
+        }
+
+        notificationsHistoryList.innerHTML = avvisi.map(item => {
+            const isProgrammato = item.stato === 'programmato';
+            const isInviato = item.stato === 'inviato';
+            const isAnnullato = item.stato === 'annullato';
+
+            let badgeHtml = '';
+            if (isProgrammato) {
+                badgeHtml = `<span style="background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">⏰ Programmato</span>`;
+            } else if (isInviato) {
+                badgeHtml = `<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">✅ Inviato</span>`;
+            } else if (isAnnullato) {
+                badgeHtml = `<span style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">🚫 Annullato</span>`;
+            } else {
+                badgeHtml = `<span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">⏳ ${item.stato}</span>`;
+            }
+
+            const dataCreazione = new Date(item.created_at).toLocaleString();
+            const dataProgrammata = item.programmato_per ? new Date(item.programmato_per).toLocaleString() : null;
+
+            return `
+                <div style="background: rgba(25, 25, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.2rem; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem;">
+                            ${badgeHtml}
+                            <span style="font-size: 0.78rem; color: var(--text-muted);">${dataCreazione}</span>
+                            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; color: #ddd;">Canale: ${item.tipo_canale || 'avvisi'}</span>
+                            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; color: #ddd;">Target: ${item.target_tipo || 'tutti'}${item.target_valore ? ' (' + item.target_valore + ')' : ''}</span>
+                        </div>
+                        <h4 style="font-size: 1.05rem; color: white; margin-bottom: 0.3rem;">${escapeHtml(item.titolo)}</h4>
+                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0.4rem; white-space: pre-wrap;">${escapeHtml(item.messaggio)}</p>
+                        ${dataProgrammata ? `<div style="font-size: 0.8rem; color: #facc15;">📅 Programmato per: <strong>${dataProgrammata}</strong></div>` : ''}
+                        ${isInviato ? `<div style="font-size: 0.8rem; color: var(--text-muted);">📱 Dispositivi PWA raggiunti: <strong>${item.conteggio_pwa_inviati || 0}</strong></div>` : ''}
+                    </div>
+                    <div style="display: flex; gap: 6px; align-items: center;">
+                        ${isProgrammato ? `
+                            <button onclick="annullaAvvisoProgrammato('${item.id}')" class="btn btn-secondary btn-sm" style="border-color: rgba(239, 68, 68, 0.4); color: #f87171; cursor: pointer;">
+                                Annulla Invio
+                            </button>
+                        ` : ''}
+                        <button onclick="eliminaAvviso('${item.id}')" class="btn btn-secondary btn-sm" style="opacity: 0.7; cursor: pointer;" title="Elimina dallo storico">
+                            🗑️
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    } catch (e) {
+        console.error('Errore caricamento storico notifiche:', e);
+        notificationsHistoryList.innerHTML = `<div style="color: #ef4444; padding: 1rem;">Errore caricamento storico: ${e.message}</div>`;
+    }
+}
+
+if (refreshNotificationsBtn) {
+    refreshNotificationsBtn.addEventListener('click', fetchNotifications);
+}
+
+// Funzione globale per annullare un avviso programmato
+window.annullaAvvisoProgrammato = async function (id) {
+    if (!confirm('Vuoi davvero annullare questo invio programmato? La notifica non verrà spedita.')) return;
+    try {
+        const { error } = await _supabase
+            .from('avvisi_sistema')
+            .update({ stato: 'annullato' })
+            .eq('id', id);
+
+        if (error) throw error;
+        showToast('Notifica programmata annullata!', 'success');
+        fetchNotifications();
+    } catch (err) {
+        console.error('Errore annullamento:', err);
+        showToast(`Errore: ${err.message}`, 'error');
+    }
+};
+
+// Funzione globale per eliminare un record dallo storico
+window.eliminaAvviso = async function (id) {
+    if (!confirm('Eliminare questo record dallo storico?')) return;
+    try {
+        const { error } = await _supabase
+            .from('avvisi_sistema')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+        fetchNotifications();
+    } catch (err) {
+        console.error('Errore eliminazione:', err);
+        showToast(`Errore: ${err.message}`, 'error');
+    }
+};
+
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 checkSession();

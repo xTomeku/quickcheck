@@ -768,6 +768,7 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="analytics-section">Statistiche</button>
                 <button class="tab-btn" data-tab="updates-section">Aggiornamenti</button>
+                <button class="tab-btn" data-tab="notifications-section">Notifiche & Avvisi</button>
                 <button class="tab-btn" data-tab="bugs-admin-section">Bug & Problemi</button>
                 <button class="tab-btn" data-tab="features-section">Funzionalità</button>
                 <button class="tab-btn" data-tab="credits-section">Credits</button>
@@ -996,6 +997,119 @@
                 </div>
                 <div id="updates-list">
                     <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="notifications-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Notifiche Web Push & Avvisi Sistema</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Invia notifiche a PWA (iOS/Android/PC) e crea avvisi sincronizzati per l'APK nativo</p>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; align-items: center;">
+                        <span id="push-subscribers-badge" class="badge" style="background: rgba(212, 175, 55, 0.15); color: var(--primary-gold); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(212, 175, 55, 0.3);">
+                            📱 Dispositivi PWA: <strong id="push-subscribers-count">...</strong>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card Form Invio Notifica -->
+                <div class="card" style="margin-bottom: 2rem; padding: 1.8rem; background: linear-gradient(145deg, rgba(30, 30, 30, 0.7), rgba(20, 20, 20, 0.9)); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px;">
+                    <h3 style="font-size: 1.15rem; color: var(--primary-gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                        <span>📢</span> Componi Nuovo Avviso / Push
+                    </h3>
+                    <form id="push-notification-form">
+                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="notif-title" style="font-weight: 600;">Titolo Notifica *</label>
+                                <input type="text" id="notif-title" class="form-control" required placeholder="Es: Allerta Meteo o Cambio Aula">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="notif-channel" style="font-weight: 600;">Canale</label>
+                                <select id="notif-channel" class="form-control" style="background: #1e1e1e;">
+                                    <option value="avvisi">📢 Avvisi Generali</option>
+                                    <option value="cambi_aula">🔄 Cambi Aula / Orario</option>
+                                    <option value="annullamenti">❌ Lezioni Annullate</option>
+                                    <option value="promemoria">⏰ Promemoria</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="notif-body" style="font-weight: 600;">Messaggio *</label>
+                            <textarea id="notif-body" class="form-control" rows="3" required placeholder="Inserisci il testo dettagliato della notifica che apparirà sul dispositivo degli studenti..."></textarea>
+                        </div>
+
+                        <!-- Target Destinatari -->
+                        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
+                            <label style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">🎯 Destinatari della Notifica</label>
+                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;">
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                    <input type="radio" name="notif-target-type" value="tutti" checked>
+                                    Tutti gli studenti (Broadcast)
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                    <input type="radio" name="notif-target-type" value="corso">
+                                    Per Corso di Laurea
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                    <input type="radio" name="notif-target-type" value="materia">
+                                    Per Materia (anche nei Preferiti)
+                                </label>
+                            </div>
+
+                            <div id="target-value-container" class="hidden" style="margin-top: 0.6rem;">
+                                <label id="target-value-label" for="notif-target-value" style="font-size: 0.85rem; color: var(--text-muted);"></label>
+                                <input type="text" id="notif-target-value" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+                        <!-- Pianificazione Temporale (Subito vs Programmata) -->
+                        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <label style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">⏰ Pianificazione Invio</label>
+                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;">
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                    <input type="radio" name="notif-schedule-type" value="now" checked>
+                                    Invia Subito (Realtime)
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                    <input type="radio" name="notif-schedule-type" value="later">
+                                    Programma per data/ora futura
+                                </label>
+                            </div>
+
+                            <div id="schedule-datetime-container" class="hidden" style="margin-top: 0.6rem;">
+                                <label for="notif-scheduled-at" style="font-size: 0.85rem; color: var(--text-muted);">Data e Ora di invio programmata:</label>
+                                <input type="datetime-local" id="notif-scheduled-at" class="form-control" style="max-width: 300px;">
+                            </div>
+                        </div>
+
+                        <!-- Azione al click (URL opzionale) -->
+                        <div class="form-group">
+                            <label for="notif-url" style="font-size: 0.85rem; color: var(--text-muted);">URL / Link da aprire al click (Opzionale, default: '/')</label>
+                            <input type="text" id="notif-url" class="form-control" placeholder="/" value="/">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div style="display: flex; gap: 1rem; align-items: center; justify-content: flex-end; margin-top: 1.5rem;">
+                            <span id="push-submit-status" style="font-size: 0.9rem; font-weight: 500;"></span>
+                            <button type="submit" id="push-submit-btn" class="btn btn-primary" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none; padding: 0.8rem 1.8rem; border-radius: 12px; cursor: pointer;">
+                                Invia Notifica
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Storico Avvisi e Notifiche Programmate -->
+                <div>
+                    <h3 style="font-size: 1.15rem; color: white; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                        <span>📋 Coda & Storico Notifiche</span>
+                        <button id="refresh-notifications-btn" class="btn btn-secondary btn-sm" style="cursor: pointer;">Aggiorna Elenco</button>
+                    </h3>
+                    <div id="notifications-history-list">
+                        <!-- Dynamic Content: Elenco notifiche programmate e inviate -->
+                    </div>
                 </div>
             </div>
 
