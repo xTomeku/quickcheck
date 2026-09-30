@@ -127,27 +127,72 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-function customConfirm(message) {
+// Modale di conferma personalizzato universale (sostituisce i confirm nativi del browser)
+function customConfirm(message, options = {}) {
     return new Promise((resolve) => {
         const modal = document.getElementById('custom-confirm');
+        const titleEl = document.getElementById('confirm-title');
         const msgEl = document.getElementById('confirm-message');
+        const iconEl = document.getElementById('confirm-icon');
         const btnYes = document.getElementById('confirm-yes');
         const btnNo = document.getElementById('confirm-no');
         
-        msgEl.textContent = message;
-        modal.classList.remove('hidden');
+        if (!modal) {
+            // Fallback di sicurezza in caso il DOM non sia pronto
+            resolve(window.confirm(message));
+            return;
+        }
+
+        // Opzioni con valori predefiniti intelligenti
+        const isDanger = options.isDanger !== undefined ? options.isDanger : true;
+        const title = options.title || (isDanger ? 'Richiesta di Conferma' : 'Conferma Operazione');
+        const confirmText = options.confirmText || (isDanger ? 'Elimina' : 'Conferma');
+        const cancelText = options.cancelText || 'Annulla';
+        const icon = options.icon || (isDanger ? '🗑️' : '🚀');
+
+        if (titleEl) titleEl.textContent = title;
+        if (msgEl) msgEl.textContent = message;
+        if (iconEl) iconEl.textContent = icon;
         
+        if (btnYes) {
+            btnYes.textContent = confirmText;
+            if (isDanger) {
+                btnYes.style.border = '1px solid #ff4d4d';
+                btnYes.style.background = 'rgba(255, 77, 77, 0.15)';
+                btnYes.style.color = '#ff4d4d';
+                btnYes.style.fontWeight = '600';
+            } else {
+                btnYes.style.border = 'none';
+                btnYes.style.background = 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)';
+                btnYes.style.color = '#111';
+                btnYes.style.fontWeight = '700';
+            }
+        }
+
+        if (btnNo) {
+            btnNo.textContent = cancelText;
+        }
+
+        modal.classList.remove('hidden');
+
+        // Pulizia listener dopo la scelta
         const cleanup = () => {
             modal.classList.add('hidden');
-            btnYes.removeEventListener('click', onYes);
-            btnNo.removeEventListener('click', onNo);
+            btnYes?.removeEventListener('click', onYes);
+            btnNo?.removeEventListener('click', onNo);
+            modal.removeEventListener('click', onBackdrop);
+            document.removeEventListener('keydown', onKey);
         };
-        
+
         const onYes = () => { cleanup(); resolve(true); };
         const onNo = () => { cleanup(); resolve(false); };
-        
-        btnYes.addEventListener('click', onYes);
-        btnNo.addEventListener('click', onNo);
+        const onBackdrop = (e) => { if (e.target === modal) { cleanup(); resolve(false); } };
+        const onKey = (e) => { if (e.key === 'Escape') { cleanup(); resolve(false); } };
+
+        btnYes?.addEventListener('click', onYes);
+        btnNo?.addEventListener('click', onNo);
+        modal.addEventListener('click', onBackdrop);
+        document.addEventListener('keydown', onKey);
     });
 }
 
@@ -2432,6 +2477,9 @@ const refreshNotificationsBtn = document.getElementById('refresh-notifications-b
 const targetTypeRadios = document.querySelectorAll('input[name="notif-target-type"]');
 const targetCourseContainer = document.getElementById('target-course-container');
 const targetCourseSelect = document.getElementById('notif-target-course');
+const courseSearchInput = document.getElementById('notif-target-course-search');
+const courseClearBtn = document.getElementById('notif-target-course-clear');
+const courseDropdown = document.getElementById('notif-course-dropdown');
 const targetValueContainer = document.getElementById('target-value-container');
 const targetValueLabel = document.getElementById('target-value-label');
 const targetValueInput = document.getElementById('notif-target-value');
@@ -2441,16 +2489,163 @@ const scheduleTypeRadios = document.querySelectorAll('input[name="notif-schedule
 const scheduleDatetimeContainer = document.getElementById('schedule-datetime-container');
 const scheduledAtInput = document.getElementById('notif-scheduled-at');
 
-// Cache in memoria dei corsi ed insegnamenti scaricati
+// Cache in memoria dei corsi ed insegnamenti scaricati da UniSalento
 let _corsiUniSalento = null;
+
+// Formatta una data locale in formato 'YYYY-MM-DDTHH:mm' compatibile con input datetime-local
+function formatLocalDateTime(date) {
+    const pad = (n) => String(n).padStart(2, '0');
+    const y = date.getFullYear();
+    const m = pad(date.getMonth() + 1);
+    const d = pad(date.getDate());
+    const h = pad(date.getHours());
+    const min = pad(date.getMinutes());
+    return `${y}-${m}-${d}T${h}:${min}`;
+}
+
+// Renderizza gli elementi del menu a tendina personalizzato dei corsi con filtro di ricerca
+function renderCourseDropdown(filterText = '') {
+    if (!courseDropdown) return;
+    const query = filterText.trim().toLowerCase();
+
+    if (!_corsiUniSalento || _corsiUniSalento.length === 0) {
+        courseDropdown.innerHTML = `<div class="course-dropdown-empty">Nessun corso disponibile al momento.</div>`;
+        return;
+    }
+
+    const filtered = _corsiUniSalento.filter(c => {
+        if (!query) return true;
+        const nomeMatch = c.nome && c.nome.toLowerCase().includes(query);
+        const idMatch = c.id && c.id.toLowerCase().includes(query);
+        return nomeMatch || idMatch;
+    });
+
+    if (filtered.length === 0) {
+        courseDropdown.innerHTML = `<div class="course-dropdown-empty">Nessun corso trovato per "<strong>${escapeHtml(query)}</strong>"</div>`;
+        return;
+    }
+
+    courseDropdown.innerHTML = filtered.map(c => {
+        const isSelected = targetCourseSelect && targetCourseSelect.value === c.id;
+        return `
+            <div class="course-dropdown-item ${isSelected ? 'selected' : ''}" data-id="${c.id}" data-nome="${escapeHtml(c.nome)}">
+                <span style="font-weight: 500;">${escapeHtml(c.nome)}</span>
+                <span class="course-badge">${escapeHtml(c.id)}</span>
+            </div>
+        `;
+    }).join('');
+
+    // Listener per la selezione di ogni singolo corso nel dropdown
+    courseDropdown.querySelectorAll('.course-dropdown-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const id = item.getAttribute('data-id');
+            const nome = item.getAttribute('data-nome');
+            selezionaCorso(id, nome);
+        });
+    });
+}
+
+// Seleziona un corso, aggiorna l'input di ricerca visibile e la select nativa
+function selezionaCorso(id, nome) {
+    if (!id) {
+        if (targetCourseSelect) targetCourseSelect.value = '';
+        if (courseSearchInput) courseSearchInput.value = '';
+        if (courseClearBtn) courseClearBtn.style.display = 'none';
+        if (courseDropdown) courseDropdown.classList.add('hidden');
+        aggiornaDatalistMaterie('');
+        return;
+    }
+
+    if (targetCourseSelect) {
+        targetCourseSelect.value = id;
+        targetCourseSelect.dispatchEvent(new Event('change'));
+    }
+    if (courseSearchInput) {
+        courseSearchInput.value = `${nome} [${id}]`;
+    }
+    if (courseClearBtn) {
+        courseClearBtn.style.display = 'block';
+    }
+    if (courseDropdown) {
+        courseDropdown.classList.add('hidden');
+    }
+    aggiornaDatalistMaterie(id);
+}
+
+// Inizializza gli eventi per la ricerca interattiva e digitazione nel campo corsi
+function initCourseSearchEvents() {
+    if (!courseSearchInput) return;
+
+    // Al click o focus sul campo di ricerca, apri la lista e mostra i corsi filtrati
+    courseSearchInput.addEventListener('focus', () => {
+        if (!_corsiUniSalento) {
+            caricaCorsiUniSalento().then(() => {
+                renderCourseDropdown(courseSearchInput.value);
+                courseDropdown?.classList.remove('hidden');
+            });
+        } else {
+            renderCourseDropdown(courseSearchInput.value);
+            courseDropdown?.classList.remove('hidden');
+        }
+    });
+
+    courseSearchInput.addEventListener('click', () => {
+        if (courseDropdown && courseDropdown.classList.contains('hidden')) {
+            renderCourseDropdown(courseSearchInput.value);
+            courseDropdown.classList.remove('hidden');
+        }
+    });
+
+    // Filtra in tempo reale mentre l'utente scrive
+    courseSearchInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        if (courseClearBtn) {
+            courseClearBtn.style.display = val ? 'block' : 'none';
+        }
+        if (!val) {
+            if (targetCourseSelect) targetCourseSelect.value = '';
+            aggiornaDatalistMaterie('');
+        }
+        renderCourseDropdown(val);
+        if (courseDropdown) courseDropdown.classList.remove('hidden');
+    });
+
+    // Pulsante per cancellare rapidamente la selezione
+    if (courseClearBtn) {
+        courseClearBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            selezionaCorso('', '');
+            courseSearchInput.focus();
+            renderCourseDropdown('');
+            if (courseDropdown) courseDropdown.classList.remove('hidden');
+        });
+    }
+
+    // Chiudi il menu se l'utente clicca fuori
+    document.addEventListener('click', (e) => {
+        if (!targetCourseContainer) return;
+        if (!targetCourseContainer.contains(e.target)) {
+            if (courseDropdown) courseDropdown.classList.add('hidden');
+        }
+    });
+}
+initCourseSearchEvents();
 
 // Scarica l'elenco dei corsi e relativi insegnamenti tramite la Edge Function Supabase (100% CORS-friendly)
 async function caricaCorsiUniSalento() {
-    if (!targetCourseSelect) return;
-    if (_corsiUniSalento && _corsiUniSalento.length > 0) return;
+    if (_corsiUniSalento && _corsiUniSalento.length > 0) {
+        renderCourseDropdown(courseSearchInput ? courseSearchInput.value : '');
+        return;
+    }
 
     try {
-        targetCourseSelect.innerHTML = '<option value="">Caricamento corsi in corso...</option>';
+        if (courseSearchInput) {
+            courseSearchInput.placeholder = "Caricamento corsi in corso...";
+        }
+        if (targetCourseSelect) {
+            targetCourseSelect.innerHTML = '<option value="">Caricamento corsi in corso...</option>';
+        }
 
         // Recupera il token di sessione autenticata dell'amministratore
         const { data: { session } } = await _supabase.auth.getSession();
@@ -2471,17 +2666,30 @@ async function caricaCorsiUniSalento() {
 
         _corsiUniSalento = data.corsi;
 
-        // Popola la tendina con i corsi ordinati alfabeticamente
-        targetCourseSelect.innerHTML = '<option value="">-- Seleziona un Corso di Laurea --</option>';
-        _corsiUniSalento.forEach(c => {
-            const opt = document.createElement('option');
-            opt.value = c.id;
-            opt.textContent = `${c.nome} [${c.id}]`;
-            targetCourseSelect.appendChild(opt);
-        });
+        // Popola la select interna con i corsi ordinati alfabeticamente
+        if (targetCourseSelect) {
+            targetCourseSelect.innerHTML = '<option value="">-- Seleziona un Corso di Laurea --</option>';
+            _corsiUniSalento.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c.id;
+                opt.textContent = `${c.nome} [${c.id}]`;
+                targetCourseSelect.appendChild(opt);
+            });
+        }
+
+        if (courseSearchInput) {
+            courseSearchInput.placeholder = "🔍 Digita per cercare il corso (es: Informatica, Diritto, LB48R)...";
+        }
+
+        renderCourseDropdown(courseSearchInput ? courseSearchInput.value : '');
     } catch (err) {
         console.error('Errore caricamento corsi UniSalento:', err);
-        targetCourseSelect.innerHTML = '<option value="">Errore nel caricamento dei corsi (riprova)</option>';
+        if (courseSearchInput) {
+            courseSearchInput.placeholder = "Errore nel caricamento corsi. Riprova.";
+        }
+        if (targetCourseSelect) {
+            targetCourseSelect.innerHTML = '<option value="">Errore nel caricamento dei corsi (riprova)</option>';
+        }
     }
 }
 
@@ -2517,6 +2725,7 @@ targetTypeRadios.forEach(radio => {
             if (targetCourseSelect) targetCourseSelect.required = false;
             targetValueInput.required = false;
             targetValueInput.value = '';
+            selezionaCorso('', '');
         } else if (val === 'corso') {
             if (targetCourseContainer) targetCourseContainer.classList.remove('hidden');
             targetValueContainer.classList.add('hidden');
@@ -2532,6 +2741,7 @@ targetTypeRadios.forEach(radio => {
             targetValueInput.placeholder = "Es: Analisi Matematica 1";
             targetValueInput.required = true;
             if (materieDatalist) materieDatalist.innerHTML = '';
+            selezionaCorso('', '');
         } else if (val === 'materia_corso') {
             if (targetCourseContainer) targetCourseContainer.classList.remove('hidden');
             targetValueContainer.classList.remove('hidden');
@@ -2554,10 +2764,18 @@ scheduleTypeRadios.forEach(radio => {
         if (val === 'later') {
             scheduleDatetimeContainer.classList.remove('hidden');
             scheduledAtInput.required = true;
-            // Imposta orario minimo a adesso + 2 minuti
+
+            // Calcola orario minimo e default in fuso orario locale
             const now = new Date();
-            now.setMinutes(now.getMinutes() + 2);
-            scheduledAtInput.min = now.toISOString().slice(0, 16);
+            scheduledAtInput.min = formatLocalDateTime(now);
+
+            // Se il campo è vuoto, imposta un default a +15 minuti arrotondato
+            if (!scheduledAtInput.value) {
+                const defaultDate = new Date(now.getTime() + 15 * 60 * 1000);
+                defaultDate.setMinutes(Math.ceil(defaultDate.getMinutes() / 5) * 5);
+                scheduledAtInput.value = formatLocalDateTime(defaultDate);
+            }
+
             if (pushSubmitBtn) pushSubmitBtn.textContent = "Programma Notifica";
         } else {
             scheduleDatetimeContainer.classList.add('hidden');
@@ -2568,7 +2786,20 @@ scheduleTypeRadios.forEach(radio => {
     });
 });
 
-// 3. Invio Notifica tramite Supabase Edge Function
+// Permette l'apertura diretta del calendario cliccando sul campo datetime
+if (scheduledAtInput) {
+    scheduledAtInput.addEventListener('click', () => {
+        if (typeof scheduledAtInput.showPicker === 'function') {
+            try {
+                scheduledAtInput.showPicker();
+            } catch (err) {
+                // Fallback trasparente per browser con restrizioni di focus
+            }
+        }
+    });
+}
+
+// 3. Invio Notifica tramite Supabase Edge Function con gestione robusta degli errori e timeout
 if (pushForm) {
     pushForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -2581,30 +2812,34 @@ if (pushForm) {
         const targetType = document.querySelector('input[name="notif-target-type"]:checked').value;
         let targetValore = null;
 
+        // Validazione dei campi target con Toast invece di alert nativo
         if (targetType === 'corso') {
             targetValore = targetCourseSelect ? targetCourseSelect.value : null;
             if (!targetValore) {
-                alert('Seleziona un corso di laurea dal menu a tendina.');
+                showToast('Seleziona un corso di laurea dalla lista o cercalo scrivendo.', 'error');
+                courseSearchInput?.focus();
                 return;
             }
         } else if (targetType === 'materia') {
             targetValore = targetValueInput.value.trim().toUpperCase();
             if (!targetValore) {
-                alert('Inserisci il nome della materia.');
+                showToast('Inserisci il nome della materia da raggiungere.', 'error');
+                targetValueInput?.focus();
                 return;
             }
         } else if (targetType === 'materia_corso') {
             const courseId = targetCourseSelect ? targetCourseSelect.value : null;
             const materiaName = targetValueInput.value.trim().toUpperCase();
             if (!courseId) {
-                alert('Seleziona un corso di laurea dal menu a tendina.');
+                showToast('Seleziona un corso di laurea dalla lista o cercalo scrivendo.', 'error');
+                courseSearchInput?.focus();
                 return;
             }
             if (!materiaName) {
-                alert('Inserisci o seleziona il nome della materia.');
+                showToast('Inserisci o seleziona il nome della materia per questo corso.', 'error');
+                targetValueInput?.focus();
                 return;
             }
-            // Formato combinato idCorso|nomeMateria per il targeting atomico
             targetValore = `${courseId}|${materiaName}`;
         }
 
@@ -2612,33 +2847,72 @@ if (pushForm) {
         let programmatoPer = null;
         if (scheduleType === 'later') {
             if (!scheduledAtInput.value) {
-                alert('Seleziona una data e ora per la pianificazione.');
+                showToast('Seleziona una data e ora valide per la pianificazione.', 'error');
+                scheduledAtInput?.focus();
                 return;
             }
-            programmatoPer = new Date(scheduledAtInput.value).toISOString();
+            const parsedDate = new Date(scheduledAtInput.value);
+            if (isNaN(parsedDate.getTime())) {
+                showToast('Data e ora non valide.', 'error');
+                return;
+            }
+            if (parsedDate.getTime() <= Date.now()) {
+                showToast('La data di pianificazione deve essere nel futuro.', 'error');
+                return;
+            }
+            programmatoPer = parsedDate.toISOString();
         }
 
-        let targetDescrizione = "TUTTI gli studenti";
+        // Costruzione etichetta del corso per la descrizione della notifica
+        let courseDisplayName = targetValore;
+        if (_corsiUniSalento && targetValore) {
+            const idToSearch = targetType === 'materia_corso' ? targetValore.split('|')[0] : targetValore;
+            const foundCourse = _corsiUniSalento.find(c => c.id === idToSearch);
+            if (foundCourse) courseDisplayName = `${foundCourse.nome} [${foundCourse.id}]`;
+        }
+
+        let targetDescrizione = "TUTTI gli studenti registrati";
         if (targetType === 'corso') {
-            const opt = targetCourseSelect ? targetCourseSelect.options[targetCourseSelect.selectedIndex] : null;
-            targetDescrizione = `gli studenti del corso: ${opt ? opt.text : targetValore}`;
+            targetDescrizione = `gli studenti del corso:\n"${courseDisplayName}"`;
         } else if (targetType === 'materia') {
-            targetDescrizione = `gli studenti che seguono la materia "${targetValore}"`;
+            targetDescrizione = `gli studenti che seguono la materia:\n"${targetValore}"`;
         } else if (targetType === 'materia_corso') {
-            const opt = targetCourseSelect ? targetCourseSelect.options[targetCourseSelect.selectedIndex] : null;
             const materiaName = targetValueInput.value.trim().toUpperCase();
-            targetDescrizione = `gli studenti di "${materiaName}" nel corso: ${opt ? opt.text : targetValore}`;
+            targetDescrizione = `gli studenti di "${materiaName}" nel corso:\n"${courseDisplayName}"`;
         }
 
-        const confermaTesto = scheduleType === 'later'
-            ? `Sei sicuro di voler programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()} a ${targetDescrizione}?`
-            : `Sei sicuro di voler INVIARE SUBITO questa notifica a ${targetDescrizione}?`;
+        const isLater = scheduleType === 'later';
+        const confermaTesto = isLater
+            ? `Vuoi programmare questa notifica per il ${new Date(programmatoPer).toLocaleString()} a:\n${targetDescrizione}?`
+            : `Sei sicuro di voler INVIARE SUBITO questa notifica a:\n${targetDescrizione}?`;
 
-        if (!confirm(confermaTesto)) return;
+        // Modale di conferma personalizzato (elimina il fastidioso popup nativo del browser)
+        const confirmed = await customConfirm(confermaTesto, {
+            title: isLater ? 'Pianificazione Notifica' : 'Invio Immediato Notifica',
+            confirmText: isLater ? 'Programma Notifica' : 'Invia Subito',
+            cancelText: 'Annulla',
+            icon: isLater ? '⏰' : '🚀',
+            isDanger: false
+        });
 
+        if (!confirmed) return;
+
+        // Disabilita pulsante e mostra stato di caricamento dinamico
         pushSubmitBtn.disabled = true;
-        pushSubmitStatus.textContent = "Invio in corso...";
+        pushSubmitBtn.style.opacity = '0.75';
+        pushSubmitBtn.style.cursor = 'not-allowed';
+        pushSubmitBtn.innerHTML = `
+            <span style="display: inline-flex; align-items: center; gap: 8px;">
+                <span class="spinning" style="display: inline-block;">⏳</span>
+                <span>${isLater ? 'Pianificazione in corso...' : 'Invio in corso...'}</span>
+            </span>
+        `;
+        pushSubmitStatus.textContent = isLater ? "Pianificazione avviso sul server..." : "Invio notifica in corso...";
         pushSubmitStatus.style.color = "var(--primary-gold)";
+
+        // Timeout di sicurezza (25s) tramite AbortController per evitare blocchi infiniti
+        const abortController = new AbortController();
+        const timeoutId = setTimeout(() => abortController.abort(), 25000);
 
         try {
             const { data: { session } } = await _supabase.auth.getSession();
@@ -2661,48 +2935,79 @@ if (pushForm) {
                     target_valore: targetValore,
                     url_azione: urlAzione,
                     programmato_per: programmatoPer
-                })
+                }),
+                signal: abortController.signal
             });
 
-            const resData = await response.json();
+            clearTimeout(timeoutId);
+
+            // Lettura sicura del body (gestisce sia JSON che risposte HTML/errore)
+            const responseText = await response.text();
+            let resData = {};
+            try {
+                resData = JSON.parse(responseText);
+            } catch (jsonErr) {
+                resData = { error: `Risposta non valida dal server (HTTP ${response.status})` };
+            }
+
             if (!response.ok) {
-                throw new Error(resData.error || 'Errore durante la chiamata serverless');
+                throw new Error(resData.error || `Errore chiamata server (HTTP ${response.status})`);
             }
 
             if (resData.programmato) {
                 pushSubmitStatus.textContent = "✅ Notifica programmata con successo!";
                 pushSubmitStatus.style.color = "#4ade80";
+                showToast("Notifica programmata con successo!", "success");
             } else {
-                pushSubmitStatus.textContent = `✅ Notifica inviata! Raggiunti: ${resData.inviati || 0} dispositivi PWA.`;
+                const inviati = resData.inviati !== undefined ? resData.inviati : 0;
+                pushSubmitStatus.textContent = `✅ Notifica inviata! Raggiunti: ${inviati} dispositivi PWA.`;
                 pushSubmitStatus.style.color = "#4ade80";
+                showToast(`Notifica inviata a ${inviati} dispositivi PWA!`, "success");
             }
 
-            // Reset form
+            // Reset completo del modulo
             pushTitleInput.value = '';
             pushBodyInput.value = '';
             targetValueInput.value = '';
-            if (targetCourseSelect) targetCourseSelect.value = '';
+            selezionaCorso('', '');
             if (materieDatalist) materieDatalist.innerHTML = '';
             scheduledAtInput.value = '';
+
             document.querySelector('input[name="notif-target-type"][value="tutti"]').checked = true;
             document.querySelector('input[name="notif-schedule-type"][value="now"]').checked = true;
             if (targetCourseContainer) targetCourseContainer.classList.add('hidden');
             targetValueContainer.classList.add('hidden');
             scheduleDatetimeContainer.classList.add('hidden');
-            pushSubmitBtn.textContent = "Invia Notifica";
 
-            // Ricarica lo storico
-            fetchNotifications();
+            // Ricarica lo storico notifiche in modo asincrono protetto
+            try {
+                await fetchNotifications();
+            } catch (hErr) {
+                console.warn('Errore aggiornamento storico notifiche:', hErr);
+            }
 
             setTimeout(() => {
                 pushSubmitStatus.textContent = '';
             }, 6000);
+
         } catch (err) {
+            clearTimeout(timeoutId);
             console.error('Errore invio push:', err);
-            pushSubmitStatus.textContent = `❌ Errore: ${err.message}`;
+            if (err.name === 'AbortError') {
+                pushSubmitStatus.textContent = "⚠️ Timeout: il server ha impiegato troppo tempo a rispondere. Verifica lo storico.";
+                showToast("Timeout: il server ha impiegato troppo tempo a rispondere.", "error");
+            } else {
+                pushSubmitStatus.textContent = `❌ Errore: ${err.message}`;
+                showToast(`Errore: ${err.message}`, "error");
+            }
             pushSubmitStatus.style.color = "#ef4444";
         } finally {
+            // Ripristino garantito al 100% dello stato del pulsante, prevenendo qualsiasi blocco della pagina
             pushSubmitBtn.disabled = false;
+            pushSubmitBtn.style.opacity = '1';
+            pushSubmitBtn.style.cursor = 'pointer';
+            const currentSched = document.querySelector('input[name="notif-schedule-type"]:checked')?.value;
+            pushSubmitBtn.textContent = currentSched === 'later' ? "Programma Notifica" : "Invia Notifica";
         }
     });
 }
@@ -2796,9 +3101,17 @@ if (refreshNotificationsBtn) {
     refreshNotificationsBtn.addEventListener('click', fetchNotifications);
 }
 
-// Funzione globale per annullare un avviso programmato
+// Funzione globale per annullare un avviso programmato con modale personalizzato
 window.annullaAvvisoProgrammato = async function (id) {
-    if (!confirm('Vuoi davvero annullare questo invio programmato? La notifica non verrà spedita.')) return;
+    const ok = await customConfirm('Vuoi davvero annullare questo invio programmato? La notifica non verrà spedita agli studenti.', {
+        title: 'Annulla Invio Programmato',
+        confirmText: 'Annulla Notifica',
+        cancelText: 'Chiudi',
+        icon: '🚫',
+        isDanger: true
+    });
+    if (!ok) return;
+
     try {
         const { error } = await _supabase
             .from('avvisi_sistema')
@@ -2814,9 +3127,17 @@ window.annullaAvvisoProgrammato = async function (id) {
     }
 };
 
-// Funzione globale per eliminare un record dallo storico
+// Funzione globale per eliminare un record dallo storico con modale personalizzato
 window.eliminaAvviso = async function (id) {
-    if (!confirm('Eliminare questo record dallo storico?')) return;
+    const ok = await customConfirm('Eliminare definitivamente questo record dallo storico delle notifiche?', {
+        title: 'Elimina Record Storico',
+        confirmText: 'Elimina Record',
+        cancelText: 'Annulla',
+        icon: '🗑️',
+        isDanger: true
+    });
+    if (!ok) return;
+
     try {
         const { error } = await _supabase
             .from('avvisi_sistema')
@@ -2824,6 +3145,7 @@ window.eliminaAvviso = async function (id) {
             .eq('id', id);
 
         if (error) throw error;
+        showToast('Record eliminato dallo storico!', 'success');
         fetchNotifications();
     } catch (err) {
         console.error('Errore eliminazione:', err);
