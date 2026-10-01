@@ -253,6 +253,7 @@ function showDashboard(user) {
     userEmailDisplay.textContent = `Loggato come: ${user.email}`;
     fetchDownloadStats();
     fetchUserStats();
+    fetchVersionRolloutStats();
     fetchUpdates();
     fetchCredits();
     fetchContacts();
@@ -287,6 +288,7 @@ tabBtns.forEach(btn => {
         if (targetId === 'analytics-section') {
             fetchDownloadStats();
             fetchUserStats();
+            fetchVersionRolloutStats();
         } else if (targetId === 'bugs-admin-section') {
             fetchBugs();
         } else if (targetId === 'notifications-section') {
@@ -1650,6 +1652,7 @@ if (refreshAnalyticsBtn) {
     refreshAnalyticsBtn.addEventListener('click', () => {
         fetchDownloadStats(true);
         fetchUserStats();
+        fetchVersionRolloutStats();
     });
 }
 
@@ -2195,7 +2198,365 @@ if (toggleDemoStatsBtn) {
             showToast('Dati reali Supabase ripristinati', 'success');
         }
         fetchUserStats(currentStatsRangeDays);
+        fetchVersionRolloutStats();
     });
+}
+
+// ============================================================
+// GESTIONE ADOZIONE VERSIONI & STATO ROLLOUT (SUPABASE)
+// ============================================================
+let currentRolloutRangeDays = 1; // 1 = Oggi, 7 = 7G, 30 = 30G
+let currentRolloutPlatform = 'all'; // 'all', 'android_apk', 'web_pwa'
+let rolloutControlsInitialized = false;
+
+// Palette cromatica armonica per le versioni nel grafico segmentato e nelle card
+const ROLLOUT_COLOR_PALETTE = [
+    { bg: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)', hex: '#34d399', badgeBg: 'rgba(16, 185, 129, 0.15)', badgeColor: '#34d399', border: 'rgba(16, 185, 129, 0.3)' }, // Verde (Corrente)
+    { bg: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)', hex: '#fbbf24', badgeBg: 'rgba(245, 158, 11, 0.15)', badgeColor: '#fbbf24', border: 'rgba(245, 158, 11, 0.3)' }, // Ambra
+    { bg: 'linear-gradient(90deg, #38bdf8 0%, #60a5fa 100%)', hex: '#38bdf8', badgeBg: 'rgba(56, 189, 248, 0.15)', badgeColor: '#38bdf8', border: 'rgba(56, 189, 248, 0.3)' }, // Azzurro
+    { bg: 'linear-gradient(90deg, #a855f7 0%, #c084fc 100%)', hex: '#c084fc', badgeBg: 'rgba(168, 85, 247, 0.15)', badgeColor: '#c084fc', border: 'rgba(168, 85, 247, 0.3)' }, // Viola
+    { bg: 'linear-gradient(90deg, #64748b 0%, #94a3b8 100%)', hex: '#94a3b8', badgeBg: 'rgba(100, 116, 139, 0.15)', badgeColor: '#94a3b8', border: 'rgba(100, 116, 139, 0.3)' }  // Grigio
+];
+
+function semverCompare(vA, vB) {
+    const clean = s => (s || '').replace(/^[^\d]*/, '').split('.').map(n => parseInt(n, 10) || 0);
+    const aParts = clean(vA);
+    const bParts = clean(vB);
+    for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+        const a = aParts[i] || 0;
+        const b = bParts[i] || 0;
+        if (a !== b) return b - a; // discendente (più recente prima)
+    }
+    return 0;
+}
+
+function generateDemoRolloutData() {
+    return [
+        {
+            version: 'v2.2.0',
+            isLatest: true,
+            total: 182,
+            pct: 74.3,
+            apk: 78,
+            pwa: 96,
+            web: 8
+        },
+        {
+            version: 'v2.1.0',
+            isLatest: false,
+            total: 48,
+            pct: 19.6,
+            apk: 44,
+            pwa: 4,
+            web: 0
+        },
+        {
+            version: 'v2.0.0',
+            isLatest: false,
+            total: 15,
+            pct: 6.1,
+            apk: 15,
+            pwa: 0,
+            web: 0
+        }
+    ];
+}
+
+function initRolloutControls() {
+    if (rolloutControlsInitialized) return;
+    rolloutControlsInitialized = true;
+
+    // Gestione bottoni intervallo Rollout (Oggi, 7G, 30G)
+    document.querySelectorAll('.rollout-range-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.rollout-range-btn').forEach(b => {
+                b.style.background = 'transparent';
+                b.style.color = 'var(--text-muted)';
+                b.style.fontWeight = '600';
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            btn.style.background = 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)';
+            btn.style.color = '#111';
+            btn.style.fontWeight = '700';
+
+            currentRolloutRangeDays = parseInt(btn.dataset.days, 10);
+            fetchVersionRolloutStats();
+        });
+    });
+
+    // Gestione bottoni filtro piattaforma Rollout (Tutte, APK, PWA)
+    document.querySelectorAll('.rollout-plat-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.rollout-plat-btn').forEach(b => {
+                b.style.background = 'transparent';
+                b.classList.remove('active');
+            });
+            btn.classList.add('active');
+            btn.style.background = 'rgba(255, 255, 255, 0.12)';
+
+            currentRolloutPlatform = btn.dataset.plat;
+            fetchVersionRolloutStats();
+        });
+    });
+}
+
+/**
+ * Recupera i dati di telemetria da 'app_accessi' per calcolare la diffusione delle versioni dell'app.
+ */
+async function fetchVersionRolloutStats() {
+    const listElem = document.getElementById('rollout-versions-breakdown-list');
+    if (!listElem) return;
+
+    initRolloutControls();
+
+    // Se in modalità Demo, genera dati simulati realistici
+    if (isDemoStatsMode) {
+        renderVersionRolloutStats(generateDemoRolloutData(), 245, 137, 100, 8);
+        return;
+    }
+
+    try {
+        const now = new Date();
+        const pad = n => String(n).padStart(2, '0');
+        const oggiStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+
+        // Costruzione query su app_accessi per recuperare la versione dei ping
+        let query = _supabase
+            .from('app_accessi')
+            .select('uuid_utente, data, piattaforma, app_version');
+
+        if (currentRolloutRangeDays === 1) {
+            query = query.eq('data', oggiStr);
+        } else {
+            const minDateObj = new Date();
+            minDateObj.setDate(minDateObj.getDate() - currentRolloutRangeDays);
+            const minDateStr = `${minDateObj.getFullYear()}-${pad(minDateObj.getMonth() + 1)}-${pad(minDateObj.getDate())}`;
+            query = query.gte('data', minDateStr);
+        }
+
+        const { data, error } = await query;
+        if (error) throw error;
+
+        // Mappiamo ciascun utente univoco al record più recente nel periodo selezionato
+        const latestUserAccess = new Map();
+        (data || []).forEach(row => {
+            const existing = latestUserAccess.get(row.uuid_utente);
+            if (!existing || row.data > existing.data) {
+                latestUserAccess.set(row.uuid_utente, row);
+            }
+        });
+
+        // Filtro per piattaforma (se selezionato 'android_apk' o 'web_pwa')
+        let filteredAccesses = Array.from(latestUserAccess.values());
+        if (currentRolloutPlatform === 'android_apk') {
+            filteredAccesses = filteredAccesses.filter(a => (a.piattaforma || '').toLowerCase() === 'android');
+        } else if (currentRolloutPlatform === 'web_pwa') {
+            filteredAccesses = filteredAccesses.filter(a => {
+                const p = (a.piattaforma || '').toLowerCase();
+                return p === 'pwa' || p === 'web';
+            });
+        }
+
+        const totalActiveUsers = filteredAccesses.length;
+        let totalApk = 0;
+        let totalPwa = 0;
+        let totalWeb = 0;
+
+        // Raggruppamento per versione
+        const versionMap = {};
+        filteredAccesses.forEach(a => {
+            const plat = (a.piattaforma || '').toLowerCase();
+            if (plat === 'android') totalApk++;
+            else if (plat === 'pwa') totalPwa++;
+            else totalWeb++;
+
+            let ver = a.app_version ? a.app_version.trim() : '< v2.0.0 (Legacy)';
+            if (!ver.startsWith('v') && !ver.startsWith('<')) ver = 'v' + ver;
+
+            if (!versionMap[ver]) {
+                versionMap[ver] = {
+                    version: ver,
+                    total: 0,
+                    apk: 0,
+                    pwa: 0,
+                    web: 0
+                };
+            }
+            versionMap[ver].total++;
+            if (plat === 'android') versionMap[ver].apk++;
+            else if (plat === 'pwa') versionMap[ver].pwa++;
+            else versionMap[ver].web++;
+        });
+
+        // Ordinamento semver decrescente (la versione più recente in testa)
+        const sorted = Object.values(versionMap).sort((a, b) => {
+            if (a.version.startsWith('<')) return 1;
+            if (b.version.startsWith('<')) return -1;
+            return semverCompare(a.version, b.version);
+        });
+
+        // Assegna il flag isLatest alla versione più alta
+        if (sorted.length > 0) {
+            sorted[0].isLatest = true;
+        }
+
+        // Calcolo percentuali
+        sorted.forEach(item => {
+            item.pct = totalActiveUsers > 0 ? Number(((item.total / totalActiveUsers) * 100).toFixed(1)) : 0;
+        });
+
+        renderVersionRolloutStats(sorted, totalActiveUsers, totalApk, totalPwa, totalWeb);
+
+    } catch (err) {
+        console.error('Errore nel recupero adozione versioni:', err);
+        listElem.innerHTML = `
+            <div style="text-align: center; padding: 1.5rem 0; color: #ff6b6b;">
+                <p style="font-size: 0.85rem;">Impossibile recuperare i dati delle versioni da Supabase (${err.message})</p>
+            </div>
+        `;
+    }
+}
+
+/**
+ * Renderizza le card KPI di rollout, la barra segmentata e l'elenco versioni
+ */
+function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, totalWeb) {
+    const kpiRolloutPct = document.getElementById('kpi-rollout-pct');
+    const kpiRolloutSub = document.getElementById('kpi-rollout-sub');
+    const kpiLatestVer = document.getElementById('kpi-latest-detected-ver');
+    const kpiLatestSub = document.getElementById('kpi-latest-detected-sub');
+    const kpiPwaAdoption = document.getElementById('kpi-pwa-adoption');
+    const kpiPwaSub = document.getElementById('kpi-pwa-adoption-sub');
+    const kpiApkAdoption = document.getElementById('kpi-apk-adoption');
+    const kpiApkSub = document.getElementById('kpi-apk-adoption-sub');
+    const stackedBar = document.getElementById('rollout-stacked-bar');
+    const stackedLegend = document.getElementById('rollout-stacked-legend');
+    const breakdownList = document.getElementById('rollout-versions-breakdown-list');
+    const lastUpdate = document.getElementById('rollout-last-update-time');
+
+    if (lastUpdate) {
+        const now = new Date();
+        lastUpdate.textContent = `Aggiornato alle ${now.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}`;
+    }
+
+    if (!versionList || versionList.length === 0 || totalUsers === 0) {
+        if (kpiRolloutPct) kpiRolloutPct.textContent = '0%';
+        if (kpiRolloutSub) kpiRolloutSub.textContent = 'Nessun utente attivo';
+        if (kpiLatestVer) kpiLatestVer.textContent = '—';
+        if (kpiPwaAdoption) kpiPwaAdoption.textContent = '0%';
+        if (kpiApkAdoption) kpiApkAdoption.textContent = '0%';
+        if (stackedBar) stackedBar.innerHTML = '';
+        if (stackedLegend) stackedLegend.innerHTML = '';
+        if (breakdownList) {
+            breakdownList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 1.5rem 0;">Nessun dato di accesso registrato per il periodo o piattaforma selezionata.</p>';
+        }
+        return;
+    }
+
+    const latest = versionList.find(v => v.isLatest) || versionList[0];
+    const adoptionPct = latest.pct;
+
+    // Aggiornamento KPI Rollout
+    if (kpiRolloutPct) {
+        kpiRolloutPct.textContent = `${adoptionPct}%`;
+        kpiRolloutPct.style.color = adoptionPct >= 70 ? '#4ade80' : (adoptionPct >= 40 ? '#fbbf24' : '#60a5fa');
+    }
+    if (kpiRolloutSub) {
+        kpiRolloutSub.textContent = `${latest.total} su ${totalUsers} studenti attivi`;
+    }
+    if (kpiLatestVer) {
+        kpiLatestVer.textContent = latest.version;
+    }
+    if (kpiLatestSub) {
+        kpiLatestSub.textContent = `${latest.total} utenti unici (${adoptionPct}%)`;
+    }
+
+    // PWA Adoption
+    const pwaTotal = totalPwa + totalWeb;
+    const pwaLatest = (latest.pwa || 0) + (latest.web || 0);
+    const pwaPct = pwaTotal > 0 ? Math.round((pwaLatest / pwaTotal) * 100) : 0;
+    if (kpiPwaAdoption) kpiPwaAdoption.textContent = `${pwaPct}%`;
+    if (kpiPwaSub) kpiPwaSub.textContent = `${pwaLatest} su ${pwaTotal} utenti Web/PWA`;
+
+    // APK Adoption
+    const apkTotal = totalApk;
+    const apkLatest = latest.apk || 0;
+    const apkPct = apkTotal > 0 ? Math.round((apkLatest / apkTotal) * 100) : 0;
+    if (kpiApkAdoption) kpiApkAdoption.textContent = `${apkPct}%`;
+    if (kpiApkSub) kpiApkSub.textContent = `${apkLatest} su ${apkTotal} utenti APK`;
+
+    // Render Barra Segmentata e Legenda
+    if (stackedBar && stackedLegend) {
+        stackedBar.innerHTML = '';
+        stackedLegend.innerHTML = '';
+
+        versionList.forEach((item, idx) => {
+            const color = ROLLOUT_COLOR_PALETTE[idx % ROLLOUT_COLOR_PALETTE.length];
+            const seg = document.createElement('div');
+            seg.style.width = `${item.pct}%`;
+            seg.style.background = color.bg;
+            seg.style.height = '100%';
+            seg.style.transition = 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            seg.title = `${item.version}: ${item.total} utenti (${item.pct}%)`;
+            stackedBar.appendChild(seg);
+
+            const legItem = document.createElement('span');
+            legItem.style.display = 'flex';
+            legItem.style.alignItems = 'center';
+            legItem.style.gap = '6px';
+            legItem.innerHTML = `<span style="width: 8px; height: 8px; border-radius: 50%; background: ${color.hex};"></span> <strong>${item.version}</strong>: ${item.pct}% (${item.total})`;
+            stackedLegend.appendChild(legItem);
+        });
+    }
+
+    // Render Elenco Dettagliato Card Versioni
+    if (breakdownList) {
+        breakdownList.innerHTML = '';
+        versionList.forEach((item, idx) => {
+            const color = ROLLOUT_COLOR_PALETTE[idx % ROLLOUT_COLOR_PALETTE.length];
+            const card = document.createElement('div');
+            card.style.background = 'rgba(255, 255, 255, 0.02)';
+            card.style.border = '1px solid rgba(255, 255, 255, 0.05)';
+            card.style.borderRadius = '12px';
+            card.style.padding = '1rem 1.2rem';
+            card.style.marginBottom = '0.8rem';
+            card.style.transition = 'all 0.25s ease';
+
+            const badgeHtml = item.isLatest
+                ? `<span style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700;">★ ULTIMA (ROLLOUT)</span>`
+                : (idx === 1 
+                    ? `<span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600;">PRECEDENTE</span>` 
+                    : '');
+
+            card.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.6rem;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-weight: 700; font-size: 1.05rem; color: white;">${item.version}</span>
+                        ${badgeHtml}
+                    </div>
+                    <div style="display: flex; align-items: baseline; gap: 6px;">
+                        <span style="font-size: 1.25rem; font-weight: 800; color: ${color.hex};">${item.total}</span>
+                        <span style="font-size: 0.8rem; color: var(--text-muted);">studenti (${item.pct}%)</span>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">
+                    <div style="display: flex; gap: 12px;">
+                        <span style="color: #4ade80;">🤖 APK: <strong>${item.apk}</strong></span>
+                        <span style="color: #c084fc;">🌐 PWA: <strong>${item.pwa}</strong></span>
+                        <span style="color: #38bdf8;">💻 Web: <strong>${item.web}</strong></span>
+                    </div>
+                    <span>Quota: ${item.pct}%</span>
+                </div>
+
+                <div style="height: 6px; width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden;">
+                    <div style="height: 100%; width: ${item.pct}%; background: ${color.bg}; border-radius: 4px; transition: width 0.8s ease;"></div>
+                </div>
+            `;
+            breakdownList.appendChild(card);
+        });
+    }
 }
 
 

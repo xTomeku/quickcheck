@@ -995,7 +995,95 @@
                     </div>
                 </div>
 
-                <!-- 2. STATISTICHE DOWNLOAD GITHUB RELEASES -->
+                <!-- 2. ADOZIONE VERSIONI & STATO ROLLOUT (SUPABASE) -->
+                <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-bottom: 2.5rem;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+                        <div>
+                            <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 0.2rem;">
+                                <span>🚀</span> Adozione Versioni & Stato Rollout
+                            </h3>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Percentuale di studenti attivi aggiornati alla versione più recente</span>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                            <!-- Filtro Intervallo Temporale Rollout -->
+                            <div id="rollout-range-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
+                                <button type="button" class="rollout-range-btn active" data-days="1" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); border: none; color: #111; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Oggi</button>
+                                <button type="button" class="rollout-range-btn" data-days="7" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">7G</button>
+                                <button type="button" class="rollout-range-btn" data-days="30" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">30G</button>
+                            </div>
+                            <!-- Filtro Piattaforma Rollout -->
+                            <div id="rollout-platform-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
+                                <button type="button" class="rollout-plat-btn active" data-plat="all" style="background: rgba(255,255,255,0.12); border: none; color: white; font-size: 0.75rem; font-weight: 700; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Tutte</button>
+                                <button type="button" class="rollout-plat-btn" data-plat="android_apk" style="background: transparent; border: none; color: #4ade80; font-size: 0.75rem; font-weight: 600; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">🤖 APK</button>
+                                <button type="button" class="rollout-plat-btn" data-plat="web_pwa" style="background: transparent; border: none; color: #c084fc; font-size: 0.75rem; font-weight: 600; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">🌐 PWA</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KPI Grid Rollout -->
+                    <div class="analytics-kpi-grid">
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap" style="color: #4ade80; background: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.2);">🎯</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Adozione Versione Corrente</span>
+                                <h3 id="kpi-rollout-pct" class="kpi-value" style="color: #4ade80;">0%</h3>
+                                <span id="kpi-rollout-sub" class="kpi-sub">0 su 0 utenti attivi</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap">✨</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Versione Rilevata Più Recente</span>
+                                <h3 id="kpi-latest-detected-ver" class="kpi-value">—</h3>
+                                <span id="kpi-latest-detected-sub" class="kpi-sub">Attiva in produzione</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.2);">🌐</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Adozione Web / PWA</span>
+                                <h3 id="kpi-pwa-adoption" class="kpi-value">0%</h3>
+                                <span id="kpi-pwa-adoption-sub" class="kpi-sub">Rollout Service Worker</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap" style="color: #4ade80; background: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.2);">🤖</div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Adozione Android APK</span>
+                                <h3 id="kpi-apk-adoption" class="kpi-value">0%</h3>
+                                <span id="kpi-apk-adoption-sub" class="kpi-sub">Installazioni native aggiornate</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Grafico & Dettaglio Versioni Attive -->
+                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                            <div>
+                                <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Distribuzione Versioni in Esecuzione</h4>
+                                <span style="font-size: 0.8rem; color: var(--text-muted);">Quote percentuali degli utenti attivi basate sui ping giornalieri</span>
+                            </div>
+                            <span id="rollout-last-update-time" style="font-size: 0.78rem; color: var(--text-muted);"></span>
+                        </div>
+
+                        <!-- Barra Segmentata Multicolore di Rollout -->
+                        <div style="margin-bottom: 1.5rem;">
+                            <div id="rollout-stacked-bar" style="height: 14px; width: 100%; background: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; display: flex;">
+                                <!-- Segmenti dinamici caricati via JS -->
+                            </div>
+                            <div id="rollout-stacked-legend" style="display: flex; gap: 15px; font-size: 0.75rem; margin-top: 8px; flex-wrap: wrap;">
+                                <!-- Legenda dinamica -->
+                            </div>
+                        </div>
+
+                        <!-- Elenco Dettagliato Versioni con Progress Bar -->
+                        <div id="rollout-versions-breakdown-list">
+                            <p style="text-align: center; color: var(--text-muted); padding: 1.5rem 0;">Caricamento adozione versioni...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. STATISTICHE DOWNLOAD GITHUB RELEASES -->
                 <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem;">
                     <div style="margin-bottom: 1.2rem;">
                         <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
