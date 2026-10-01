@@ -85,6 +85,25 @@
             <p style="text-align: center; padding: 2rem;">Caricamento ultimo aggiornamento...</p>
         </section>
 
+        <!-- Banner per Utenti iPhone / iPad / PC -->
+        <div class="download-ios-banner reveal">
+            <div class="download-ios-info">
+                <div class="download-ios-icon">🍏</div>
+                <div class="download-ios-text">
+                    <h3>Non hai un dispositivo Android?</h3>
+                    <p>Usa QuickCheck su <strong>iPhone, iPad e PC</strong> direttamente dal browser con supporto offline e notifiche push.</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button type="button" class="btn btn-secondary btn-sm" id="open-pwa-guide-btn">
+                    <span>📲</span> Guida Installazione iOS
+                </button>
+                <a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+                    <span>🚀</span> Apri Web App
+                </a>
+            </div>
+        </div>
+
         <div class="wavy-divider">
             <svg viewBox="0 0 1200 40" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 20 C 50 0, 50 40, 100 20 C 150 0, 150 40, 200 20 C 250 0, 250 40, 300 20 C 350 0, 350 40, 400 20 C 450 0, 450 40, 500 20 C 550 0, 550 40, 600 20 C 650 0, 650 40, 700 20 C 750 0, 750 40, 800 20 C 850 0, 850 40, 900 20 C 950 0, 950 40, 1000 20 C 1050 0, 1050 40, 1100 20 C 1150 0, 1150 40, 1200 20" stroke="rgba(255, 255, 255, 0.15)" stroke-width="3" fill="none" />
@@ -126,6 +145,93 @@
     <button id="back-to-top" aria-label="Torna in alto">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     </button>
+    <!-- Modal Installazione QuickCheck (Guida iOS Web App & Android APK) -->
+    <div id="pwa-install-modal" class="pwa-modal-overlay hidden" aria-hidden="true" role="dialog" aria-labelledby="pwa-modal-title">
+        <div class="pwa-modal-card">
+            <button class="pwa-modal-close" id="close-pwa-modal" aria-label="Chiudi modale">&times;</button>
+            <div class="pwa-modal-header">
+                <img src="assets/icona.png" alt="QuickCheck Icon" class="pwa-modal-icon" onerror="this.src='assets/logo.png'">
+                <div>
+                    <h3 id="pwa-modal-title">Come installare QuickCheck</h3>
+                    <p id="pwa-modal-subtitle">Guida rapida per avere l'orario sempre a portata di mano</p>
+                </div>
+            </div>
+
+            <!-- Tab Selettore Piattaforma -->
+            <div class="pwa-modal-tabs">
+                <button type="button" class="pwa-tab-btn active" id="pwa-tab-ios" data-target="pwa-steps-ios">
+                    <span>🍏</span> iPhone & iPad
+                </button>
+                <button type="button" class="pwa-tab-btn" id="pwa-tab-android" data-target="pwa-steps-android">
+                    <span>🤖</span> Android (APK)
+                </button>
+            </div>
+
+            <!-- Guida iOS (Web App Safari) -->
+            <div id="pwa-steps-ios" class="pwa-steps-container">
+                <div class="pwa-step-item">
+                    <div class="pwa-step-num">1</div>
+                    <div class="pwa-step-text">
+                        <h4>Apri la Web App in Safari</h4>
+                        <p>Visita <a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener">quick-check-unisalento.vercel.app</a> usando il browser <strong>Safari</strong> sul tuo iPhone o iPad.</p>
+                    </div>
+                </div>
+                <div class="pwa-step-item">
+                    <div class="pwa-step-num">2</div>
+                    <div class="pwa-step-text">
+                        <h4>Tocca il pulsante Condividi</h4>
+                        <p>Nella barra in basso su iPhone (o in alto su iPad), tocca il pulsante <strong>Condividi</strong> <span class="ios-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Condividi</span>.</p>
+                    </div>
+                </div>
+                <div class="pwa-step-item">
+                    <div class="pwa-step-num">3</div>
+                    <div class="pwa-step-text">
+                        <h4>Scegli "Aggiungi a Home"</h4>
+                        <p>Scorri il menu verso il basso e tocca <span class="ios-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Aggiungi a schermata Home</span>, poi premi <strong>Aggiungi</strong>.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Guida Android (Installazione APK) -->
+            <div id="pwa-steps-android" class="pwa-steps-container hidden">
+                <div class="pwa-step-item">
+                    <div class="pwa-step-num">1</div>
+                    <div class="pwa-step-text">
+                        <h4>Scarica il file APK</h4>
+                        <p>Tocca il pulsante <strong>"Scarica il file APK"</strong> qui sotto. Se il browser mostra l'avviso <em>"Il file potrebbe essere dannoso"</em>, tocca tranquillamente <strong>"Scarica comunque"</strong> (è il normale messaggio di Android per i download fuori dal Play Store).</p>
+                    </div>
+                </div>
+                <div class="pwa-step-item">
+                    <div class="pwa-step-num">2</div>
+                    <div class="pwa-step-text">
+                        <h4>Consenti l'origine sconosciuta</h4>
+                        <p>A fine download, tocca la notifica o apri il file <code>.apk</code>. Se appare la richiesta di sicurezza di Android, tocca <strong>"Impostazioni"</strong> e attiva l'opzione <strong>"Consenti da questa sorgente"</strong>.</p>
+                    </div>
+                </div>
+                <div class="pwa-step-item">
+                    <div class="pwa-step-num">3</div>
+                    <div class="pwa-step-text">
+                        <h4>Tocca "Installa" e avvia</h4>
+                        <p>Torna indietro, tocca <strong>"Installa"</strong> e infine <strong>"Apri"</strong>. QuickCheck è pronta con orario offline e notifiche lezioni!</p>
+                        <div class="pwa-subtip">
+                            💡 <em>Preferisci non installare l'APK? Puoi anche usare la <a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener">Web App</a> da qualsiasi browser senza occupare spazio sul telefono.</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pwa-modal-footer">
+                <a href="https://quick-check-unisalento.vercel.app/" id="pwa-modal-action-btn" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
+                    <span id="pwa-action-icon">🚀</span> <span id="pwa-action-text">Apri la Web App</span>
+                </a>
+                <button type="button" class="btn btn-secondary btn-block" id="dismiss-pwa-modal">
+                    Ho capito
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
+

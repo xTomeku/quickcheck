@@ -37,6 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Scroll Reveal Initialization
     initScrollReveal();
 
+    // Inizializzazione Prompt e Guida PWA (iOS / Android / PC)
+    initPwaInstallationFlow();
+
     // Back to Top logic
     const backToTopBtn = document.getElementById('back-to-top');
     if (backToTopBtn) {
@@ -383,6 +386,14 @@ async function loadDynamicUpdates(_supabase) {
     // Update Home Hero Button if exists
     if (heroBtn) {
         heroBtn.href = latest.download_url;
+    }
+
+    // Salva l'URL globale dell'APK per la modale di installazione
+    window.__latestApkUrl = latest.download_url;
+    const modalActionBtn = document.getElementById('pwa-modal-action-btn');
+    const tabAndroid = document.getElementById('pwa-tab-android');
+    if (modalActionBtn && tabAndroid && tabAndroid.classList.contains('active')) {
+        modalActionBtn.href = latest.download_url;
     }
 
     // Render Latest
@@ -1045,6 +1056,146 @@ async function loadBugs(_supabase) {
         }
     } catch (err) {
         console.error('Errore durante fetch bugs:', err);
+    }
+}
+
+// ============================================================
+// GESTIONE PROMPT & GUIDA DINAMICA INSTALLAZIONE PWA
+// ============================================================
+/**
+ * Rilevamento della piattaforma del visitatore e gestione interattiva dell'installazione PWA.
+ * - Su iOS (iPhone/iPad): adatta il pulsante Hero in "Installa su iPhone" e apre la guida passo-passo per Safari.
+ * - Su Android / PC: mantiene il download APK nativo e permette di consultare la guida PWA o aprire l'app.
+ */
+function initPwaInstallationFlow() {
+    const ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
+    // Rileva iPhone, iPad, iPod e anche iPadOS su MacIntel con touch abilitato
+    const isIos = /iphone|ipad|ipod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isAndroid = /android/.test(ua);
+
+    // DOM Elements Modale PWA / Installazione
+    const modal = document.getElementById('pwa-install-modal');
+    const closeBtn = document.getElementById('close-pwa-modal');
+    const dismissBtn = document.getElementById('dismiss-pwa-modal');
+    const tabIos = document.getElementById('pwa-tab-ios');
+    const tabAndroid = document.getElementById('pwa-tab-android');
+    const stepsIos = document.getElementById('pwa-steps-ios');
+    const stepsAndroid = document.getElementById('pwa-steps-android');
+    const actionBtn = document.getElementById('pwa-modal-action-btn');
+    const actionIcon = document.getElementById('pwa-action-icon');
+    const actionText = document.getElementById('pwa-action-text');
+
+    // DOM Elements Hero & Buttons
+    const heroDownloadBtn = document.getElementById('hero-download-btn');
+    const heroDownloadText = document.getElementById('hero-download-text');
+    const heroDownloadSubtitle = document.getElementById('hero-download-subtitle');
+    const heroDownloadIcon = document.getElementById('hero-download-icon');
+    const pwaGuideLinkText = document.getElementById('pwa-guide-link-text');
+    const openPwaGuideBtns = document.querySelectorAll('#open-pwa-guide-btn, .open-pwa-guide-trigger');
+
+    function openModal(defaultTab = 'ios') {
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        if (defaultTab === 'android') {
+            activateTab('android');
+        } else {
+            activateTab('ios');
+        }
+    }
+
+    function closeModal() {
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+    // Switch dinamico dei passaggi e del pulsante di azione primario della modale
+    function activateTab(platform) {
+        if (platform === 'ios') {
+            tabIos?.classList.add('active');
+            tabAndroid?.classList.remove('active');
+            stepsIos?.classList.remove('hidden');
+            stepsAndroid?.classList.add('hidden');
+
+            // Configura il pulsante per la Web App su Safari
+            if (actionBtn) {
+                actionBtn.href = 'https://quick-check-unisalento.vercel.app/';
+                actionBtn.target = '_blank';
+                actionBtn.rel = 'noopener noreferrer';
+            }
+            if (actionIcon) actionIcon.textContent = '🚀';
+            if (actionText) actionText.textContent = 'Apri la Web App';
+        } else {
+            tabAndroid?.classList.add('active');
+            tabIos?.classList.remove('active');
+            stepsAndroid?.classList.remove('hidden');
+            stepsIos?.classList.add('hidden');
+
+            // Configura il pulsante per il download del file APK
+            if (actionBtn) {
+                const apkUrl = window.__latestApkUrl || (heroDownloadBtn && heroDownloadBtn.href && heroDownloadBtn.href !== '#' ? heroDownloadBtn.href : 'download.html');
+                actionBtn.href = apkUrl;
+                if (apkUrl.endsWith('.apk')) {
+                    actionBtn.removeAttribute('target');
+                } else {
+                    actionBtn.target = '_self';
+                }
+            }
+            if (actionIcon) actionIcon.textContent = '📥';
+            if (actionText) actionText.textContent = 'Scarica il file APK';
+        }
+    }
+
+    // Listener chiusura modale
+    closeBtn?.addEventListener('click', closeModal);
+    dismissBtn?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
+    // Tab switching nella modale
+    tabIos?.addEventListener('click', () => activateTab('ios'));
+    tabAndroid?.addEventListener('click', () => activateTab('android'));
+
+    // Trigger apertura modale da pulsanti dedicati (landing e download page)
+    openPwaGuideBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(isIos ? 'ios' : 'android');
+        });
+    });
+
+    // Adattamento dinamico dei pulsanti Hero e dei suggerimenti in base al dispositivo
+    if (isIos && heroDownloadBtn) {
+        if (heroDownloadText) heroDownloadText.textContent = 'Aggiungi a Home iPhone';
+        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'iOS Safari • In 2 tap';
+        if (heroDownloadIcon) {
+            heroDownloadIcon.innerHTML = `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`;
+        }
+        // Su iPhone/iPad, intercetta il click e apre la guida per la Web App
+        heroDownloadBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal('ios');
+        });
+
+        // Adatta anche il testo del linkino secondario
+        if (pwaGuideLinkText) {
+            pwaGuideLinkText.textContent = '📱 Tocca qui per vedere come salvare QuickCheck su iPhone o iPad →';
+        }
+    } else if (isAndroid && pwaGuideLinkText) {
+        // Su Android, informa l'utente su come installare l'APK senza incertezze
+        pwaGuideLinkText.textContent = '❓ Prima volta che installi un file APK? Leggi la guida in 3 passi →';
+    } else if (pwaGuideLinkText) {
+        pwaGuideLinkText.textContent = '💡 Come installare QuickCheck su iPhone o Android? Clicca qui →';
     }
 }
 

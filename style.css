@@ -2534,3 +2534,305 @@ main {
     font-size: 0.9rem;
 }
 
+/* ============================================================
+   MODALE INSTALLAZIONE PWA (GUIDA DINAMICA IOS & ANDROID/PC)
+   ============================================================ */
+.pwa-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.2rem;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.pwa-modal-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.pwa-modal-card {
+    background: linear-gradient(145deg, rgba(22, 22, 26, 0.96), rgba(14, 14, 18, 0.98));
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 24px;
+    max-width: 520px;
+    width: 100%;
+    padding: 2rem 2.2rem;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65), 0 0 35px rgba(212, 175, 55, 0.08);
+    animation: pwaModalPop 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes pwaModalPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.92) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.pwa-modal-close {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.2rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pwa-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    transform: scale(1.05);
+}
+
+.pwa-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+    padding-right: 2rem;
+}
+
+.pwa-modal-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    flex-shrink: 0;
+}
+
+.pwa-modal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.2rem;
+    line-height: 1.2;
+}
+
+.pwa-modal-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.pwa-modal-tabs {
+    display: flex;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+    margin-bottom: 1.4rem;
+}
+
+.pwa-tab-btn {
+    flex: 1;
+    padding: 0.6rem 0.8rem;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.pwa-tab-btn.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--primary-gold);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    font-weight: 700;
+}
+
+.pwa-steps-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin-bottom: 1.8rem;
+}
+
+.pwa-steps-container.hidden {
+    display: none;
+}
+
+.pwa-step-item {
+    display: flex;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    align-items: flex-start;
+    transition: background 0.2s ease;
+}
+
+.pwa-step-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.pwa-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
+    color: #111;
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+
+.pwa-step-text {
+    flex: 1;
+}
+
+.pwa-step-text h4 {
+    font-size: 0.95rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.pwa-step-text p {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    line-height: 1.45;
+}
+
+.pwa-step-text a {
+    color: var(--primary-gold);
+    text-decoration: underline;
+}
+
+.ios-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 2px 7px;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    font-size: 0.78rem;
+    vertical-align: middle;
+}
+
+.pwa-step-text code {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-size: 0.85em;
+    color: var(--primary-gold);
+    font-family: inherit;
+}
+
+.pwa-subtip {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: rgba(212, 175, 55, 0.06);
+    border-left: 3px solid var(--primary-gold);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.pwa-subtip a {
+    color: var(--primary-gold);
+    font-weight: 600;
+}
+
+.pwa-modal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+}
+
+/* Card informativa per download.html */
+.download-ios-banner {
+    background: linear-gradient(145deg, rgba(30, 30, 35, 0.8), rgba(20, 20, 25, 0.95));
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    border-radius: 18px;
+    padding: 1.5rem 1.8rem;
+    margin: 2rem auto;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.download-ios-info {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex: 1;
+    min-width: 260px;
+}
+
+.download-ios-icon {
+    font-size: 2rem;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.download-ios-text h3 {
+    font-size: 1.1rem;
+    color: white;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+.download-ios-text p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+
