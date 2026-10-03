@@ -1310,6 +1310,19 @@
                             </div>
                         </div>
 
+                        <!-- Scadenza dell'avviso (Fase 6) -->
+                        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <label for="notif-scade-il" style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">⌛ Valido fino a</label>
+                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                                <input type="datetime-local" id="notif-scade-il" class="form-control" style="max-width: 320px; background: #1e1e1e;">
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="2h" style="cursor: pointer;">2 ore</button>
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="giorno" style="cursor: pointer;">Fine giornata</button>
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="settimana" style="cursor: pointer;">1 settimana</button>
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="nessuna" style="cursor: pointer; opacity: 0.75;">Svuota</button>
+                            </div>
+                            <small id="notif-scade-hint" style="display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">💡 Vuoto = scadenza istantanea: l'avviso arriva solo ai dispositivi raggiungibili al momento dell'invio. Con una scadenza, chi è offline lo riceve appena torna online, fino a quell'ora.</small>
+                        </div>
+
                         <!-- Azione al click (URL opzionale) -->
                         <div class="form-group">
                             <label for="notif-url" style="font-size: 0.85rem; color: var(--text-muted);">URL / Link da aprire al click (Opzionale, default: '/')</label>
