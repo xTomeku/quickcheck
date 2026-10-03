@@ -1187,15 +1187,16 @@ function initPwaInstallationFlow() {
             openModal('ios');
         });
 
-        // Adatta anche il testo del linkino secondario
+        // Adatta anche il testo del link secondario (senza emoji iniziali per non creare doppioni con l'icona SVG)
         if (pwaGuideLinkText) {
-            pwaGuideLinkText.textContent = '📱 Tocca qui per vedere come salvare QuickCheck su iPhone o iPad →';
+            pwaGuideLinkText.textContent = 'Tocca qui per vedere come salvare QuickCheck su iPhone o iPad →';
         }
     } else if (isAndroid && pwaGuideLinkText) {
-        // Su Android, informa l'utente su come installare l'APK senza incertezze
-        pwaGuideLinkText.textContent = '❓ Prima volta che installi un file APK? Leggi la guida in 3 passi →';
+        // Su Android, informa l'utente su come installare l'APK senza incertezze (senza emoji iniziale duplicata)
+        pwaGuideLinkText.textContent = 'Prima volta che installi un file APK? Leggi la guida in 3 passi →';
     } else if (pwaGuideLinkText) {
-        pwaGuideLinkText.textContent = '💡 Come installare QuickCheck su iPhone o Android? Clicca qui →';
+        // Testo desktop/fallback pulito con solo l'icona SVG dell'HTML
+        pwaGuideLinkText.textContent = 'Come installare QuickCheck su iPhone o Android? Clicca qui →';
     }
 }
 

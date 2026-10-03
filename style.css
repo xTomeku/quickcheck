@@ -2677,6 +2677,16 @@ main {
     font-weight: 700;
 }
 
+/* Icone vettoriali ufficiali tab modale installazione */
+.pwa-tab-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pwa-tab-btn:hover svg {
+    transform: scale(1.1);
+}
+
 .pwa-steps-container {
     display: flex;
     flex-direction: column;
