@@ -843,6 +843,7 @@
             <div class="tabs">
                 <button class="tab-btn active" data-tab="analytics-section">Statistiche</button>
                 <button class="tab-btn" data-tab="updates-section">Aggiornamenti</button>
+                <button class="tab-btn" data-tab="app-config-section">App &amp; Mappe</button>
                 <button class="tab-btn" data-tab="notifications-section">Notifiche & Avvisi</button>
                 <button class="tab-btn" data-tab="bugs-admin-section">Bug & Problemi</button>
                 <button class="tab-btn" data-tab="features-section">Funzionalità</button>
@@ -1155,11 +1156,58 @@
             <!-- Updates Section -->
             <div id="updates-section" class="section-content hidden">
                 <div class="section-header">
-                    <h2>Gestione Versioni</h2>
+                    <div><h2>Gestione Versioni</h2><p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">La riga segnata come "Ultima versione" &egrave; quella che l'APK propone come aggiornamento, con le sue patch note.</p></div>
                     <button id="add-update-btn" class="btn btn-primary btn-sm">+ Nuovo</button>
                 </div>
                 <div id="updates-list">
                     <!-- Dynamic Content -->
+                </div>
+            </div>
+
+            <!-- App & Mappe Section (config_app + bucket mappe, script SQL 07) -->
+            <div id="app-config-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>App &amp; Mappe</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Messaggio all'avvio (APK e PWA) e pubblicazione delle mappe. La versione proposta all'APK &egrave; quella segnata come "Ultima versione" nella scheda Aggiornamenti.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem; padding: 1.6rem; border-radius: 16px;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary-gold); margin-bottom: 1rem;">&#128172; Messaggio all'avvio</h3>
+                    <form id="config-messaggio-form">
+                        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; cursor: pointer;">
+                            <input type="checkbox" id="cfg-msg-attivo" style="width: 20px; height: 20px;">
+                            <span style="font-weight: 600;">Mostra il messaggio</span>
+                        </label>
+                        <div class="form-group">
+                            <label for="cfg-msg-titolo" style="font-weight: 600;">Titolo</label>
+                            <input type="text" id="cfg-msg-titolo" class="form-control" placeholder="Avviso">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-msg-testo" style="font-weight: 600;">Testo</label>
+                            <textarea id="cfg-msg-testo" class="form-control" rows="4" placeholder="Testo mostrato una sola volta a ogni utente"></textarea>
+                        </div>
+                        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; cursor: pointer;">
+                            <input type="checkbox" id="cfg-msg-vecchi" style="width: 20px; height: 20px;">
+                            <span>Solo a chi usava gi&agrave; l'app (i nuovi utenti non lo vedono)</span>
+                        </label>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Ogni utente vede un testo una sola volta: per rimostrarlo cambia il testo. Le app leggono la configurazione al massimo ogni 6 ore.</p>
+                        <button type="submit" class="btn btn-primary btn-sm">Salva messaggio</button>
+                    </form>
+                </div>
+
+                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary-gold); margin-bottom: 1rem;">&#128506;&#65039; Mappe</h3>
+                    <div id="cfg-mappe-stato" style="margin-bottom: 1.2rem; color: var(--text-muted);">Caricamento...</div>
+                    <div class="form-group">
+                        <label for="cfg-mappe-file" style="font-weight: 600;">Nuovo mappe.json</label>
+                        <input type="file" id="cfg-mappe-file" class="form-control" accept=".json,application/json">
+                    </div>
+                    <div id="cfg-mappe-anteprima" style="display: none; margin-bottom: 1rem; padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);"></div>
+                    <button type="button" id="cfg-mappe-pubblica" class="btn btn-primary btn-sm" disabled>Pubblica mappe</button>
+                    <h4 style="margin: 1.6rem 0 0.6rem; font-size: 0.95rem;">Versioni nel bucket</h4>
+                    <div id="cfg-mappe-elenco" style="color: var(--text-muted);">-</div>
                 </div>
             </div>
 

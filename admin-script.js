@@ -291,6 +291,8 @@ tabBtns.forEach(btn => {
             fetchVersionRolloutStats();
         } else if (targetId === 'bugs-admin-section') {
             fetchBugs();
+        } else if (targetId === 'app-config-section') {
+            fetchConfigApp();
         } else if (targetId === 'notifications-section') {
             fetchNotifications();
             // Pre-carica l'elenco dei corsi per il menu a tendina
@@ -3812,6 +3814,212 @@ window.modificaScadenzaAvviso = function (id) {
 function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// =====================================================================
+// App & Mappe: tabella config_app e bucket "mappe" (script SQL 07)
+// - Messaggio all'avvio: letto da APK e PWA (una volta per testo).
+// - Mappe: mappe.json viene reso compatto, firmato (SHA-256) e compresso (gzip)
+//   nel browser, caricato come mappe_v<N>.json.gz e registrato in config_app.
+//   Le app lo scaricano solo quando mappa_version sale.
+// =====================================================================
+const BUCKET_MAPPE = 'mappe';
+let _configApp = null;
+let _mappePronte = null;
+
+function _kb(byte) {
+    return byte >= 1024 ? `${(byte / 1024).toFixed(1)} KB` : `${byte} B`;
+}
+
+function _hex(buffer) {
+    return Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function _gzip(bytes) {
+    const stream = new Blob([bytes]).stream().pipeThrough(new CompressionStream('gzip'));
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+async function _gunzip(bytes) {
+    const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'));
+    return new Uint8Array(await new Response(stream).arrayBuffer());
+}
+
+async function fetchConfigApp() {
+    const stato = document.getElementById('cfg-mappe-stato');
+    const { data, error } = await _supabase.from('config_app').select('*').eq('id', 1).single();
+    if (error) {
+        stato.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 07 &egrave; stato applicato?</span>`;
+        return;
+    }
+    _configApp = data;
+    document.getElementById('cfg-msg-attivo').checked = !!data.messaggio_attivo;
+    document.getElementById('cfg-msg-titolo').value = data.titolo_messaggio || '';
+    document.getElementById('cfg-msg-testo').value = data.testo_messaggio || '';
+    document.getElementById('cfg-msg-vecchi').checked = !!data.solo_vecchi_utenti;
+
+    const quando = data.aggiornato_il ? new Date(data.aggiornato_il).toLocaleString('it-IT') : '-';
+    stato.innerHTML = data.mappa_path
+        ? `Versione pubblicata: <strong style="color:var(--primary-gold);">v${data.mappa_version}</strong> &middot; ${escapeHtml(data.mappa_path)} &middot; ${data.mappa_bytes ? _kb(data.mappa_bytes) : '-'} &middot; impronta ${escapeHtml((data.mappa_sha256 || '').slice(0, 12))}&hellip; &middot; aggiornata il ${quando}`
+        : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
+    elencaVersioniMappe();
+}
+
+document.getElementById('config-messaggio-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const payload = {
+        messaggio_attivo: document.getElementById('cfg-msg-attivo').checked,
+        titolo_messaggio: document.getElementById('cfg-msg-titolo').value.trim() || 'Avviso',
+        testo_messaggio: document.getElementById('cfg-msg-testo').value.trim(),
+        solo_vecchi_utenti: document.getElementById('cfg-msg-vecchi').checked,
+    };
+    if (payload.messaggio_attivo && !payload.testo_messaggio) {
+        showToast('Scrivi il testo del messaggio prima di attivarlo', 'error');
+        return;
+    }
+    const { error } = await _supabase.from('config_app').update(payload).eq('id', 1);
+    if (error) {
+        showToast('Errore nel salvataggio: ' + error.message, 'error');
+    } else {
+        showToast(payload.messaggio_attivo ? 'Messaggio salvato e attivo' : 'Messaggio salvato (spento)');
+        fetchConfigApp();
+    }
+});
+
+// Scelta del file: controlli, compressione e anteprima (niente viene caricato qui)
+document.getElementById('cfg-mappe-file')?.addEventListener('change', async (e) => {
+    const anteprima = document.getElementById('cfg-mappe-anteprima');
+    const pulsante = document.getElementById('cfg-mappe-pubblica');
+    _mappePronte = null;
+    pulsante.disabled = true;
+    anteprima.style.display = 'none';
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    try {
+        const testo = await file.text();
+        let dati;
+        try {
+            dati = JSON.parse(testo);
+        } catch (err) {
+            throw new Error('il file non è un JSON valido (' + err.message + ')');
+        }
+        for (const chiave of ['edifici', 'puntiInteresse', 'lineeBus']) {
+            if (!Array.isArray(dati[chiave])) throw new Error(`manca l'elenco "${chiave}"`);
+        }
+        if (dati.edifici.length === 0) throw new Error('l\'elenco "edifici" è vuoto');
+
+        const compatto = new TextEncoder().encode(JSON.stringify(dati));
+        const sha256 = _hex(await crypto.subtle.digest('SHA-256', compatto));
+        const gz = await _gzip(compatto);
+        const prossima = ((_configApp && _configApp.mappa_version) || 0) + 1;
+        _mappePronte = { gz, sha256, versione: prossima };
+
+        anteprima.innerHTML = `
+            <div style="font-weight:600; margin-bottom:0.5rem;">Pronto da pubblicare come <span style="color:var(--primary-gold);">v${prossima}</span></div>
+            <div>${dati.edifici.length} edifici &middot; ${dati.puntiInteresse.length} punti di interesse &middot; ${dati.lineeBus.length} linee bus</div>
+            <div style="color:var(--text-muted); font-size:0.85rem; margin-top:0.4rem;">Originale ${_kb(file.size)} &rarr; compatto ${_kb(compatto.byteLength)} &rarr; compresso <strong>${_kb(gz.byteLength)}</strong> &middot; impronta ${sha256.slice(0, 12)}&hellip;</div>`;
+        anteprima.style.display = 'block';
+        pulsante.disabled = false;
+    } catch (err) {
+        anteprima.innerHTML = `<span style="color:#f87171;">File non valido: ${escapeHtml(err.message)}</span>`;
+        anteprima.style.display = 'block';
+    }
+});
+
+async function _registraMappe(versione, path, sha256, byte) {
+    return _supabase.from('config_app').update({
+        mappa_version: versione,
+        mappa_path: path,
+        mappa_sha256: sha256,
+        mappa_bytes: byte,
+    }).eq('id', 1);
+}
+
+document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async () => {
+    if (!_mappePronte) return;
+    const { gz, sha256, versione } = _mappePronte;
+    const path = `mappe_v${versione}.json.gz`;
+    if (!confirm(`Pubblicare le mappe come v${versione}? Tutte le app le scaricheranno al prossimo controllo.`)) return;
+
+    const pulsante = document.getElementById('cfg-mappe-pubblica');
+    pulsante.disabled = true;
+    pulsante.textContent = 'Pubblicazione...';
+    try {
+        // 1. Caricamento del file: finché config_app non cambia nessuno lo scarica
+        const { error: errUpload } = await _supabase.storage.from(BUCKET_MAPPE).upload(
+            path,
+            new Blob([gz], { type: 'application/gzip' }),
+            { upsert: true, contentType: 'application/gzip', cacheControl: '31536000' }
+        );
+        if (errUpload) throw new Error('caricamento: ' + errUpload.message);
+
+        // 2. Registrazione: da qui le app iniziano a scaricarlo
+        const { error: errConfig } = await _registraMappe(versione, path, sha256, gz.byteLength);
+        if (errConfig) throw new Error('registrazione: ' + errConfig.message);
+
+        showToast(`Mappe pubblicate come v${versione}`);
+        document.getElementById('cfg-mappe-file').value = '';
+        document.getElementById('cfg-mappe-anteprima').style.display = 'none';
+        _mappePronte = null;
+        fetchConfigApp();
+    } catch (err) {
+        showToast('Errore nella pubblicazione (' + err.message + '): le app continuano a usare la versione precedente', 'error');
+        pulsante.disabled = false;
+    } finally {
+        pulsante.textContent = 'Pubblica mappe';
+    }
+});
+
+async function elencaVersioniMappe() {
+    const elenco = document.getElementById('cfg-mappe-elenco');
+    const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).list('', {
+        limit: 100,
+        sortBy: { column: 'created_at', order: 'desc' },
+    });
+    if (error) {
+        elenco.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}</span>`;
+        return;
+    }
+    const file = (data || []).filter(f => f.name && f.name.endsWith('.json.gz'));
+    if (file.length === 0) {
+        elenco.textContent = 'Nessun file pubblicato.';
+        return;
+    }
+    elenco.innerHTML = file.map(f => {
+        const attuale = _configApp && _configApp.mappa_path === f.name;
+        const quando = f.created_at ? new Date(f.created_at).toLocaleString('it-IT') : '';
+        const dim = f.metadata && f.metadata.size ? _kb(f.metadata.size) : '';
+        return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.06);">
+            <span style="flex:1; color:var(--text-main, inherit);">${escapeHtml(f.name)} <span style="color:var(--text-muted); font-size:0.8rem;">${dim} &middot; ${quando}</span></span>
+            ${attuale
+                ? '<span style="color:var(--primary-gold); font-size:0.8rem; font-weight:600;">in uso</span>'
+                : `<button type="button" class="btn btn-secondary btn-sm" data-ripristina="${escapeHtml(f.name)}">Ripristina</button>`}
+        </div>`;
+    }).join('');
+    elenco.querySelectorAll('[data-ripristina]').forEach(b =>
+        b.addEventListener('click', () => ripristinaMappe(b.dataset.ripristina)));
+}
+
+// Ripristina un file già caricato: nuova mappa_version (così le app lo riscaricano),
+// impronta ricalcolata dal file stesso.
+async function ripristinaMappe(nome) {
+    const versione = ((_configApp && _configApp.mappa_version) || 0) + 1;
+    if (!confirm(`Ripristinare ${nome}? Verrà pubblicato come v${versione}.`)) return;
+    try {
+        const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).download(nome);
+        if (error) throw new Error(error.message);
+        const gz = new Uint8Array(await data.arrayBuffer());
+        const json = await _gunzip(gz);
+        JSON.parse(new TextDecoder().decode(json)); // controllo che sia ancora leggibile
+        const sha256 = _hex(await crypto.subtle.digest('SHA-256', json));
+        const { error: errConfig } = await _registraMappe(versione, nome, sha256, gz.byteLength);
+        if (errConfig) throw new Error(errConfig.message);
+        showToast(`${nome} ripristinato come v${versione}`);
+        fetchConfigApp();
+    } catch (err) {
+        showToast('Errore nel ripristino: ' + err.message, 'error');
+    }
 }
 
 checkSession();
