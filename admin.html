@@ -844,6 +844,7 @@
                 <button class="tab-btn active" data-tab="analytics-section">Statistiche</button>
                 <button class="tab-btn" data-tab="updates-section">Aggiornamenti</button>
                 <button class="tab-btn" data-tab="app-config-section">App &amp; Mappe</button>
+                <button class="tab-btn" data-tab="simulatore-section">Simulatore</button>
                 <button class="tab-btn" data-tab="notifications-section">Notifiche & Avvisi</button>
                 <button class="tab-btn" data-tab="bugs-admin-section">Bug & Problemi</button>
                 <button class="tab-btn" data-tab="features-section">Funzionalità</button>
@@ -1241,6 +1242,37 @@
                         <button type="button" id="cfg-menu-anteprima-btn" class="btn btn-secondary btn-sm">Anteprima di oggi</button>
                         <button type="button" id="cfg-menu-pubblica" class="btn btn-primary btn-sm">Pubblica men&ugrave;</button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Simulatore del portale (script SQL 09) -->
+            <div id="simulatore-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Simulatore del portale</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Corso finto <strong>TEST</strong>: le modifiche qui sotto passano dagli stessi controlli del portale vero e arrivano <strong>solo ai dispositivi tester</strong> (PWA).</p>
+                    </div>
+                </div>
+                <div class="card" style="margin-bottom: 1.5rem; padding: 1.4rem; border-radius: 16px;">
+                    <ol style="margin: 0 0 1rem 1.2rem; color: var(--text-muted); font-size: 0.88rem; line-height: 1.7;">
+                        <li>Genera le lezioni di prova e lancia il <strong>controllo notturno</strong>: la prima volta fa solo da base, senza modifiche.</li>
+                        <li>Cambia aula, orario o giorno, annulla o rinumera qualche lezione qui sotto.</li>
+                        <li>Lancia di nuovo il controllo notturno (o il diurno, per oggi e i prossimi due giorni).</li>
+                        <li>Premi <strong>Invia notifiche</strong>: i tester ricevono le modifiche trovate.</li>
+                    </ol>
+                    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <button type="button" id="sim-genera" class="btn btn-secondary btn-sm">Genera lezioni di prova</button>
+                        <button type="button" id="sim-svuota" class="btn btn-secondary btn-sm">Svuota</button>
+                        <span style="flex: 1;"></span>
+                        <button type="button" class="btn btn-primary btn-sm" data-sim-funzione="orario-notte">Controllo notturno</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-sim-funzione="orario-controllo">Controllo diurno</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-sim-funzione="push-automatiche">Invia notifiche</button>
+                    </div>
+                    <pre id="sim-esito" style="display: none; margin-top: 1rem; padding: 0.8rem; border-radius: 10px; background: rgba(0,0,0,0.3); font-size: 0.78rem; white-space: pre-wrap; max-height: 220px; overflow: auto;"></pre>
+                </div>
+                <div class="card" style="padding: 1.4rem; border-radius: 16px;">
+                    <h3 style="font-size: 1.05rem; color: var(--primary-gold); margin-bottom: 0.8rem;">Lezioni del corso TEST</h3>
+                    <div id="sim-elenco" style="color: var(--text-muted);">Caricamento...</div>
                 </div>
             </div>
 

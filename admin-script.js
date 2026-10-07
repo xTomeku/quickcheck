@@ -293,6 +293,8 @@ tabBtns.forEach(btn => {
             fetchBugs();
         } else if (targetId === 'app-config-section') {
             fetchConfigApp();
+        } else if (targetId === 'simulatore-section') {
+            caricaSimulatore();
         } else if (targetId === 'notifications-section') {
             fetchNotifications();
             // Pre-carica l'elenco dei corsi per il menu a tendina
@@ -4194,5 +4196,143 @@ document.getElementById('cfg-menu-pubblica')?.addEventListener('click', async ()
         pulsante.disabled = false;
     }
 });
+
+// =====================================================================
+// Simulatore del portale (script SQL 09): lezioni del corso finto TEST in portale_test.
+// Le Edge Functions le leggono al posto del portale; le modifiche vanno solo ai tester.
+// =====================================================================
+const SIM_AULE = [
+    { aula: 'Aula Simulata 1 [Simulatore]', codice: 'SIM - 1' },
+    { aula: 'Aula Simulata 2 [Simulatore]', codice: 'SIM - 2' },
+    { aula: 'Aula Simulata 3 [Simulatore]', codice: 'SIM - 3' },
+];
+const SIM_GIORNI = ['dom', 'lun', 'mar', 'mer', 'gio', 'ven', 'sab'];
+
+function _simIso(d) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+function _simOra(minuti) {
+    return `${String(Math.floor(minuti / 60)).padStart(2, '0')}:${String(minuti % 60).padStart(2, '0')}`;
+}
+function _simMinuti(hhmm) {
+    const [h, m] = String(hhmm).split(':').map(Number);
+    return h * 60 + (m || 0);
+}
+
+async function caricaSimulatore() {
+    const elenco = document.getElementById('sim-elenco');
+    const { data, error } = await _supabase.from('portale_test').select('*')
+        .order('data').order('ora_inizio');
+    if (error) {
+        elenco.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 09 &egrave; stato applicato?</span>`;
+        return;
+    }
+    if (!data.length) {
+        elenco.textContent = 'Nessuna lezione: premi "Genera lezioni di prova".';
+        return;
+    }
+    elenco.innerHTML = `<div style="overflow-x:auto;"><table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
+        <thead><tr style="text-align:left; color:var(--text-muted);"><th>Giorno</th><th>Orario</th><th>Materia</th><th>Aula</th><th>Id</th><th></th></tr></thead>
+        <tbody>${data.map(r => {
+            const d = new Date(r.data + 'T00:00:00');
+            const stile = r.annullato ? 'text-decoration:line-through; opacity:0.6;' : '';
+            const id = escapeHtml(r.evento_id);
+            return `<tr style="border-top:1px solid rgba(255,255,255,0.06); ${stile}">
+                <td style="padding:6px 4px;">${SIM_GIORNI[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}</td>
+                <td>${escapeHtml(r.ora_inizio)}-${escapeHtml(r.ora_fine)}</td>
+                <td>${escapeHtml(r.insegnamento)}</td>
+                <td>${escapeHtml(r.codice_aula || '')}</td>
+                <td style="color:var(--text-muted); font-size:0.75rem;">${id}</td>
+                <td style="white-space:nowrap; text-align:right;">
+                    <button class="btn btn-secondary btn-sm" data-sim="aula" data-id="${id}" title="Aula successiva">Aula</button>
+                    <button class="btn btn-secondary btn-sm" data-sim="orario" data-id="${id}" title="Un'ora dopo">+1h</button>
+                    <button class="btn btn-secondary btn-sm" data-sim="giorno" data-id="${id}" title="Il giorno dopo">+1g</button>
+                    <button class="btn btn-secondary btn-sm" data-sim="annulla" data-id="${id}">${r.annullato ? 'Ripristina' : 'Annulla'}</button>
+                    <button class="btn btn-secondary btn-sm" data-sim="rinumera" data-id="${id}" title="Stessa lezione con un nuovo id (come fa a volte il portale)">Nuovo id</button>
+                </td></tr>`;
+        }).join('')}</tbody></table></div>`;
+    elenco.querySelectorAll('[data-sim]').forEach(b => b.addEventListener('click', () =>
+        modificaLezioneTest(b.dataset.sim, b.dataset.id, data.find(r => r.evento_id === b.dataset.id))));
+}
+
+async function modificaLezioneTest(azione, id, r) {
+    if (!r) return;
+    let errore = null;
+    const ora = new Date().toISOString();
+    if (azione === 'rinumera') {
+        const nuovo = { ...r, evento_id: `T${Date.now().toString(36)}`, aggiornato_il: ora };
+        ({ error: errore } = await _supabase.from('portale_test').insert(nuovo));
+        if (!errore) ({ error: errore } = await _supabase.from('portale_test').delete().eq('evento_id', id));
+    } else {
+        const modifica = { aggiornato_il: ora };
+        if (azione === 'aula') {
+            const i = SIM_AULE.findIndex(a => a.codice === r.codice_aula);
+            const a = SIM_AULE[(i + 1) % SIM_AULE.length];
+            modifica.aula = a.aula; modifica.codice_aula = a.codice;
+        } else if (azione === 'orario') {
+            modifica.ora_inizio = _simOra(Math.min(_simMinuti(r.ora_inizio) + 60, 22 * 60));
+            modifica.ora_fine = _simOra(Math.min(_simMinuti(r.ora_fine) + 60, 23 * 60));
+        } else if (azione === 'giorno') {
+            const d = new Date(r.data + 'T00:00:00'); d.setDate(d.getDate() + 1);
+            modifica.data = _simIso(d);
+        } else if (azione === 'annulla') {
+            modifica.annullato = !r.annullato;
+        }
+        ({ error: errore } = await _supabase.from('portale_test').update(modifica).eq('evento_id', id));
+    }
+    if (errore) showToast('Errore: ' + errore.message, 'error');
+    caricaSimulatore();
+}
+
+document.getElementById('sim-genera')?.addEventListener('click', async () => {
+    // Questa settimana e la prossima, dal lunedi' al venerdi': due lezioni al giorno
+    const oggi = new Date();
+    const lunedi = new Date(oggi.getFullYear(), oggi.getMonth(), oggi.getDate() - ((oggi.getDay() + 6) % 7));
+    const righe = [];
+    for (let s = 0; s < 2; s++) {
+        for (let g = 0; g < 5; g++) {
+            const d = new Date(lunedi); d.setDate(lunedi.getDate() + s * 7 + g);
+            const iso = _simIso(d);
+            righe.push(
+                { evento_id: `T${iso.replace(/-/g, '')}a`, data: iso, ora_inizio: '09:00', ora_fine: '11:00',
+                  insegnamento: 'ANALISI DI PROVA', docente: 'Docente Simulato', aula: SIM_AULE[0].aula, codice_aula: SIM_AULE[0].codice, annullato: false },
+                { evento_id: `T${iso.replace(/-/g, '')}b`, data: iso, ora_inizio: '15:00', ora_fine: '17:00',
+                  insegnamento: 'FISICA DI PROVA', docente: 'Docente Simulato', aula: SIM_AULE[1].aula, codice_aula: SIM_AULE[1].codice, annullato: false },
+            );
+        }
+    }
+    const { error } = await _supabase.from('portale_test').upsert(righe, { onConflict: 'evento_id' });
+    if (error) showToast('Errore: ' + error.message, 'error');
+    else showToast(`${righe.length} lezioni di prova pronte`);
+    caricaSimulatore();
+});
+
+document.getElementById('sim-svuota')?.addEventListener('click', async () => {
+    if (!confirm('Eliminare tutte le lezioni del corso TEST?')) return;
+    const { error } = await _supabase.from('portale_test').delete().neq('evento_id', '');
+    if (error) showToast('Errore: ' + error.message, 'error');
+    caricaSimulatore();
+});
+
+document.querySelectorAll('[data-sim-funzione]').forEach(b => b.addEventListener('click', async () => {
+    const funzione = b.dataset.simFunzione;
+    const esito = document.getElementById('sim-esito');
+    b.disabled = true;
+    esito.style.display = 'block';
+    esito.textContent = `${funzione}: in corso...`;
+    try {
+        const { data, error } = await _supabase.functions.invoke(funzione, { body: { solo_test: true } });
+        if (error) {
+            let dettaglio = error.message;
+            try { dettaglio += ' ' + JSON.stringify(await error.context.json()); } catch (_) { /* nessun corpo */ }
+            throw new Error(dettaglio);
+        }
+        esito.textContent = `${funzione}:\n${JSON.stringify(data, null, 2)}`;
+    } catch (err) {
+        esito.textContent = `${funzione}: errore\n${err.message}`;
+    } finally {
+        b.disabled = false;
+    }
+}));
 
 checkSession();
