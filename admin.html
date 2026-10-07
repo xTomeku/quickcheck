@@ -1192,7 +1192,7 @@
                             <input type="checkbox" id="cfg-msg-vecchi" style="width: 20px; height: 20px;">
                             <span>Solo a chi usava gi&agrave; l'app (i nuovi utenti non lo vedono)</span>
                         </label>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Ogni utente vede un testo una sola volta: per rimostrarlo cambia il testo. Le app leggono la configurazione al massimo ogni 6 ore.</p>
+                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Ogni utente vede un testo una sola volta: per rimostrarlo cambia il testo. Le app lo ricevono alla prima apertura dopo il salvataggio (al massimo 10 minuti di ritardo).</p>
                         <button type="submit" class="btn btn-primary btn-sm">Salva messaggio</button>
                     </form>
                 </div>
@@ -1208,6 +1208,39 @@
                     <button type="button" id="cfg-mappe-pubblica" class="btn btn-primary btn-sm" disabled>Pubblica mappe</button>
                     <h4 style="margin: 1.6rem 0 0.6rem; font-size: 0.95rem;">Versioni nel bucket</h4>
                     <div id="cfg-mappe-elenco" style="color: var(--text-muted);">-</div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem; padding: 1.6rem; border-radius: 16px;">
+                    <h3 style="font-size: 1.1rem; color: var(--primary-gold); margin-bottom: 0.4rem;">&#127869;&#65039; Men&ugrave; mensa</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Il JSON si ottiene dal PDF ADISU con <code>python scripts/menu_mensa_pdf.py menu.pdf</code>. Lo stesso men&ugrave; vale per tutte le mense.</p>
+                    <div id="cfg-menu-stato" style="margin-bottom: 1.2rem; color: var(--text-muted);">Caricamento...</div>
+                    <div class="form-group">
+                        <label for="cfg-menu-file" style="font-weight: 600;">Nuovo menu_mensa.json (facoltativo: senza file si modificano solo le date del men&ugrave; pubblicato)</label>
+                        <input type="file" id="cfg-menu-file" class="form-control" accept=".json,application/json">
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="cfg-menu-titolo" style="font-weight: 600;">Titolo</label>
+                            <input type="text" id="cfg-menu-titolo" class="form-control" placeholder="Men&ugrave; invernale">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="cfg-menu-dal" style="font-weight: 600;">Valido dal</label>
+                            <input type="date" id="cfg-menu-dal" class="form-control">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="cfg-menu-al" style="font-weight: 600;">Valido al</label>
+                            <input type="date" id="cfg-menu-al" class="form-control">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="cfg-menu-ciclo" style="font-weight: 600;">Luned&igrave; della 1&ordf; settimana</label>
+                            <input type="date" id="cfg-menu-ciclo" class="form-control">
+                        </div>
+                    </div>
+                    <div id="cfg-menu-anteprima" style="display: none; margin: 1rem 0; padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);"></div>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <button type="button" id="cfg-menu-anteprima-btn" class="btn btn-secondary btn-sm">Anteprima di oggi</button>
+                        <button type="button" id="cfg-menu-pubblica" class="btn btn-primary btn-sm">Pubblica men&ugrave;</button>
+                    </div>
                 </div>
             </div>
 

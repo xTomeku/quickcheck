@@ -3863,6 +3863,7 @@ async function fetchConfigApp() {
         ? `Versione pubblicata: <strong style="color:var(--primary-gold);">v${data.mappa_version}</strong> &middot; ${escapeHtml(data.mappa_path)} &middot; ${data.mappa_bytes ? _kb(data.mappa_bytes) : '-'} &middot; impronta ${escapeHtml((data.mappa_sha256 || '').slice(0, 12))}&hellip; &middot; aggiornata il ${quando}`
         : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
     elencaVersioniMappe();
+    caricaMenuPubblicato();
 }
 
 document.getElementById('config-messaggio-form')?.addEventListener('submit', async (e) => {
@@ -3981,7 +3982,7 @@ async function elencaVersioniMappe() {
         elenco.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}</span>`;
         return;
     }
-    const file = (data || []).filter(f => f.name && f.name.endsWith('.json.gz'));
+    const file = (data || []).filter(f => f.name && f.name.startsWith('mappe_') && f.name.endsWith('.json.gz'));
     if (file.length === 0) {
         elenco.textContent = 'Nessun file pubblicato.';
         return;
@@ -4021,5 +4022,177 @@ async function ripristinaMappe(nome) {
         showToast('Errore nel ripristino: ' + err.message, 'error');
     }
 }
+
+// ---------------------------------------------------------------------
+// Menu' mensa (script SQL 08): JSON da scripts/menu_mensa_pdf.py, date impostate qui,
+// pubblicato compresso come menu_mensa_v<N>.json.gz nel bucket "mappe".
+// ---------------------------------------------------------------------
+let _menuPubblicato = null;   // JSON del menu' attualmente pubblicato
+let _menuBozza = null;        // JSON scelto dal file (sostituisce quello pubblicato)
+
+function _isoOggi(d = new Date()) {
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+/** Settimana del ciclo (1..n) e giorno (1 = lunedi') per una data, come nell'app. */
+function settimanaMenu(menu, data) {
+    const c = new Date(menu.inizio_ciclo + 'T00:00:00');
+    const g = new Date(data.getFullYear(), data.getMonth(), data.getDate());
+    const giorno = ((g.getDay() + 6) % 7) + 1;
+    const lunedi = new Date(g); lunedi.setDate(g.getDate() - (giorno - 1));
+    const settimane = Math.round((lunedi - c) / (7 * 864e5));
+    const n = menu.settimane || 1;
+    return { settimana: ((settimane % n) + n) % n + 1, giorno };
+}
+
+function _validaMenu(dati) {
+    if (!dati || !Array.isArray(dati.menu) || dati.menu.length === 0) throw new Error('manca l\'elenco "menu"');
+    if (!dati.settimane) throw new Error('manca il numero di settimane');
+    for (const m of dati.menu) {
+        if (!m.settimana || !['pranzo', 'cena'].includes(m.pasto) || !Array.isArray(m.giorni) || m.giorni.length !== 7) {
+            throw new Error(`pagina non valida (settimana ${m.settimana}, ${m.pasto})`);
+        }
+    }
+}
+
+function _compilaDateMenu(dati) {
+    document.getElementById('cfg-menu-titolo').value = dati?.titolo || '';
+    document.getElementById('cfg-menu-dal').value = dati?.valido_dal || '';
+    document.getElementById('cfg-menu-al').value = dati?.valido_al || '';
+    document.getElementById('cfg-menu-ciclo').value = dati?.inizio_ciclo || '';
+}
+
+async function caricaMenuPubblicato() {
+    const stato = document.getElementById('cfg-menu-stato');
+    if (!stato || !_configApp) return;
+    _menuPubblicato = null;
+    if (!_configApp.menu_path) {
+        stato.textContent = 'Nessun menù pubblicato.';
+        if (!_menuBozza) _compilaDateMenu(null);
+        return;
+    }
+    try {
+        const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).download(_configApp.menu_path);
+        if (error) throw new Error(error.message);
+        const json = await _gunzip(new Uint8Array(await data.arrayBuffer()));
+        _menuPubblicato = JSON.parse(new TextDecoder().decode(json));
+        stato.innerHTML = `Pubblicato: <strong style="color:var(--primary-gold);">${escapeHtml(_menuPubblicato.titolo || 'Menù')}</strong> &middot; v${_configApp.menu_version} &middot; valido dal ${escapeHtml(_menuPubblicato.valido_dal || '?')} al ${escapeHtml(_menuPubblicato.valido_al || '?')} &middot; ${_menuPubblicato.settimane} settimane, 1&ordf; dal ${escapeHtml(_menuPubblicato.inizio_ciclo || '?')}`;
+        if (!_menuBozza) _compilaDateMenu(_menuPubblicato);
+    } catch (err) {
+        stato.innerHTML = `<span style="color:#f87171;">Impossibile leggere il menù pubblicato: ${escapeHtml(err.message)}</span>`;
+    }
+}
+
+document.getElementById('cfg-menu-file')?.addEventListener('change', async (e) => {
+    const anteprima = document.getElementById('cfg-menu-anteprima');
+    _menuBozza = null;
+    anteprima.style.display = 'none';
+    const file = e.target.files && e.target.files[0];
+    if (!file) { _compilaDateMenu(_menuPubblicato); return; }
+    try {
+        const dati = JSON.parse(await file.text());
+        _validaMenu(dati);
+        _menuBozza = dati;
+        // Date vuote nel file: si tengono quelle del menu' pubblicato
+        _compilaDateMenu({
+            titolo: dati.titolo || _menuPubblicato?.titolo,
+            valido_dal: dati.valido_dal || _menuPubblicato?.valido_dal,
+            valido_al: dati.valido_al || _menuPubblicato?.valido_al,
+            inizio_ciclo: dati.inizio_ciclo || _menuPubblicato?.inizio_ciclo,
+        });
+        mostraAnteprimaMenu();
+    } catch (err) {
+        anteprima.innerHTML = `<span style="color:#f87171;">File non valido: ${escapeHtml(err.message)}</span>`;
+        anteprima.style.display = 'block';
+    }
+});
+
+/** Menu' da pubblicare: il file scelto oppure quello pubblicato, con i campi del form. */
+function _menuDaForm() {
+    const base = _menuBozza || _menuPubblicato;
+    if (!base) throw new Error('scegli prima un file menu_mensa.json');
+    const dati = JSON.parse(JSON.stringify(base));
+    dati.titolo = document.getElementById('cfg-menu-titolo').value.trim() || dati.titolo || 'Menù';
+    dati.valido_dal = document.getElementById('cfg-menu-dal').value;
+    dati.valido_al = document.getElementById('cfg-menu-al').value;
+    dati.inizio_ciclo = document.getElementById('cfg-menu-ciclo').value;
+    if (!dati.valido_dal || !dati.valido_al) throw new Error('imposta il periodo di validità');
+    if (dati.valido_al < dati.valido_dal) throw new Error('"valido al" è prima di "valido dal"');
+    if (!dati.inizio_ciclo) throw new Error('imposta il lunedì della 1ª settimana');
+    if (new Date(dati.inizio_ciclo + 'T00:00:00').getDay() !== 1) throw new Error('la data della 1ª settimana deve essere un lunedì');
+    return dati;
+}
+
+function mostraAnteprimaMenu() {
+    const anteprima = document.getElementById('cfg-menu-anteprima');
+    try {
+        const dati = _menuDaForm();
+        const oggi = new Date();
+        const { settimana, giorno } = settimanaMenu(dati, oggi);
+        const nomi = ['Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato', 'Domenica'];
+        const piatti = dati.menu.reduce((t, m) => t + m.giorni.reduce((u, g) => u + ['primi', 'secondi', 'contorni', 'pizza'].reduce((v, c) => v + (g[c] || []).length, 0), 0), 0);
+        const inVigore = _isoOggi(oggi) >= dati.valido_dal && _isoOggi(oggi) <= dati.valido_al;
+        const elenco = (pasto) => {
+            const pagina = dati.menu.find(m => m.settimana === settimana && m.pasto === pasto);
+            const g = pagina && pagina.giorni[giorno - 1];
+            if (!g) return '<em>non presente</em>';
+            return ['primi', 'secondi', 'contorni', 'pizza']
+                .filter(c => (g[c] || []).length)
+                .map(c => `<div><strong>${c}</strong>: ${g[c].map(p => escapeHtml(p.nome)).join(' · ')}</div>`).join('');
+        };
+        anteprima.innerHTML = `
+            <div style="font-weight:600; margin-bottom:0.4rem;">${escapeHtml(dati.titolo)} &middot; ${dati.settimane} settimane &middot; ${piatti} piatti &middot; ${Object.keys(dati.allergeni || {}).length} allergeni</div>
+            <div style="margin-bottom:0.6rem; color:${inVigore ? 'var(--text-muted)' : '#f87171'};">Oggi (${nomi[giorno - 1]}) &egrave; la <strong>settimana ${settimana}</strong>${inVigore ? '' : ' &mdash; ma il menù oggi NON è in vigore'}. Controlla che coincida con il menù esposto in mensa.</div>
+            <div style="font-size:0.85rem; margin-bottom:0.5rem;"><span style="color:var(--primary-gold);">Pranzo</span>${elenco('pranzo')}</div>
+            <div style="font-size:0.85rem;"><span style="color:var(--primary-gold);">Cena</span>${elenco('cena')}</div>`;
+    } catch (err) {
+        anteprima.innerHTML = `<span style="color:#f87171;">${escapeHtml(err.message)}</span>`;
+    }
+    anteprima.style.display = 'block';
+}
+
+document.getElementById('cfg-menu-anteprima-btn')?.addEventListener('click', mostraAnteprimaMenu);
+['cfg-menu-dal', 'cfg-menu-al', 'cfg-menu-ciclo'].forEach(id =>
+    document.getElementById(id)?.addEventListener('change', () => {
+        if (_menuBozza || _menuPubblicato) mostraAnteprimaMenu();
+    }));
+
+document.getElementById('cfg-menu-pubblica')?.addEventListener('click', async () => {
+    let dati;
+    try {
+        dati = _menuDaForm();
+    } catch (err) {
+        showToast(err.message, 'error');
+        return;
+    }
+    const versione = ((_configApp && _configApp.menu_version) || 0) + 1;
+    const path = `menu_mensa_v${versione}.json.gz`;
+    if (!confirm(`Pubblicare "${dati.titolo}" (valido dal ${dati.valido_dal} al ${dati.valido_al}) come v${versione}?`)) return;
+
+    const pulsante = document.getElementById('cfg-menu-pubblica');
+    pulsante.disabled = true;
+    try {
+        const compatto = new TextEncoder().encode(JSON.stringify(dati));
+        const sha256 = _hex(await crypto.subtle.digest('SHA-256', compatto));
+        const gz = await _gzip(compatto);
+        const { error: errUpload } = await _supabase.storage.from(BUCKET_MAPPE).upload(
+            path, new Blob([gz], { type: 'application/gzip' }),
+            { upsert: true, contentType: 'application/gzip', cacheControl: '31536000' });
+        if (errUpload) throw new Error('caricamento: ' + errUpload.message);
+        const { error: errConfig } = await _supabase.from('config_app').update({
+            menu_version: versione, menu_path: path, menu_sha256: sha256, menu_bytes: gz.byteLength,
+        }).eq('id', 1);
+        if (errConfig) throw new Error('registrazione: ' + errConfig.message);
+        showToast(`Menù pubblicato come v${versione} (${_kb(gz.byteLength)})`);
+        _menuBozza = null;
+        document.getElementById('cfg-menu-file').value = '';
+        document.getElementById('cfg-menu-anteprima').style.display = 'none';
+        fetchConfigApp();
+    } catch (err) {
+        showToast('Errore nella pubblicazione del menù (' + err.message + ')', 'error');
+    } finally {
+        pulsante.disabled = false;
+    }
+});
 
 checkSession();
