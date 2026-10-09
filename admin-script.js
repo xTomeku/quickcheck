@@ -1736,9 +1736,9 @@ async function fetchUserStats(days = currentStatsRangeDays) {
         // Fallback resiliente: se la vista non è ancora presente, aggrega lato client da app_accessi
         if (error) {
             console.warn('v_utenti_unici_giornalieri non raggiungibile, fallback su app_accessi:', error.message);
-            const { data: raw, error: rawErr } = await _supabase
+            const { data: raw, error: rawErr } = await scaricaTutteLeRighe(() => _supabase
                 .from('app_accessi')
-                .select('uuid_utente, data, piattaforma');
+                .select('uuid_utente, data, piattaforma'));
             
             if (rawErr) throw rawErr;
 
@@ -2308,6 +2308,26 @@ function initRolloutControls() {
 /**
  * Recupera i dati di telemetria da 'app_accessi' per calcolare la diffusione delle versioni dell'app.
  */
+/**
+ * Supabase (PostgREST) restituisce al massimo 1000 righe per richiesta: con migliaia di
+ * accessi al giorno una sola query ne perdeva la maggior parte e i conteggi risultavano
+ * piu' bassi del reale. Qui si scaricano tutte le pagine da 1000 righe.
+ * [creaQuery] deve restituire ogni volta una query NUOVA (con gli stessi filtri).
+ */
+async function scaricaTutteLeRighe(creaQuery, dimensionePagina = 1000) {
+    const righe = [];
+    for (let da = 0; ; da += dimensionePagina) {
+        const { data, error } = await creaQuery()
+            .order('data', { ascending: true })
+            .order('uuid_utente', { ascending: true })
+            .range(da, da + dimensionePagina - 1);
+        if (error) return { data: null, error };
+        righe.push(...(data || []));
+        if (!data || data.length < dimensionePagina) break;
+    }
+    return { data: righe, error: null };
+}
+
 async function fetchVersionRolloutStats() {
     const listElem = document.getElementById('rollout-versions-breakdown-list');
     if (!listElem) return;
@@ -2325,21 +2345,18 @@ async function fetchVersionRolloutStats() {
         const pad = n => String(n).padStart(2, '0');
         const oggiStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 
-        // Costruzione query su app_accessi per recuperare la versione dei ping
-        let query = _supabase
-            .from('app_accessi')
-            .select('uuid_utente, data, piattaforma, app_version');
+        // Query su app_accessi per recuperare la versione dei ping (tutte le pagine, vedi scaricaTutteLeRighe)
+        const minDateObj = new Date();
+        minDateObj.setDate(minDateObj.getDate() - currentRolloutRangeDays);
+        const minDateStr = `${minDateObj.getFullYear()}-${pad(minDateObj.getMonth() + 1)}-${pad(minDateObj.getDate())}`;
+        const creaQuery = () => {
+            const q = _supabase
+                .from('app_accessi')
+                .select('uuid_utente, data, piattaforma, app_version');
+            return currentRolloutRangeDays === 1 ? q.eq('data', oggiStr) : q.gte('data', minDateStr);
+        };
 
-        if (currentRolloutRangeDays === 1) {
-            query = query.eq('data', oggiStr);
-        } else {
-            const minDateObj = new Date();
-            minDateObj.setDate(minDateObj.getDate() - currentRolloutRangeDays);
-            const minDateStr = `${minDateObj.getFullYear()}-${pad(minDateObj.getMonth() + 1)}-${pad(minDateObj.getDate())}`;
-            query = query.gte('data', minDateStr);
-        }
-
-        const { data, error } = await query;
+        const { data, error } = await scaricaTutteLeRighe(creaQuery);
         if (error) throw error;
 
         // Mappiamo ciascun utente univoco al record più recente nel periodo selezionato
@@ -2641,16 +2658,19 @@ if (exportStatsForm) {
             // Fallback su app_accessi se la vista non è presente
             if (error) {
                 console.warn('Fallback aggregazione client per export:', error.message);
-                let rawQuery = _supabase.from('app_accessi').select('uuid_utente, data, piattaforma');
-                if (range === 'custom') {
-                    rawQuery = rawQuery.gte('data', exportDateFrom.value).lte('data', exportDateTo.value);
-                } else if (range !== 'all') {
-                    const days = parseInt(range, 10);
-                    const startDate = new Date();
-                    startDate.setDate(startDate.getDate() - days);
-                    rawQuery = rawQuery.gte('data', formatIso(startDate));
-                }
-                const { data: raw, error: rawErr } = await rawQuery;
+                const creaRawQuery = () => {
+                    let rawQuery = _supabase.from('app_accessi').select('uuid_utente, data, piattaforma');
+                    if (range === 'custom') {
+                        rawQuery = rawQuery.gte('data', exportDateFrom.value).lte('data', exportDateTo.value);
+                    } else if (range !== 'all') {
+                        const days = parseInt(range, 10);
+                        const startDate = new Date();
+                        startDate.setDate(startDate.getDate() - days);
+                        rawQuery = rawQuery.gte('data', formatIso(startDate));
+                    }
+                    return rawQuery;
+                };
+                const { data: raw, error: rawErr } = await scaricaTutteLeRighe(creaRawQuery);
                 if (rawErr) throw rawErr;
 
                 const grouped = {};
