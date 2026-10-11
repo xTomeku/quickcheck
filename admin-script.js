@@ -3886,6 +3886,7 @@ async function fetchConfigApp() {
         : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
     elencaVersioniMappe();
     caricaMenuPubblicato();
+    caricaElencoNovita();
 }
 
 document.getElementById('config-messaggio-form')?.addEventListener('submit', async (e) => {
@@ -4356,3 +4357,246 @@ document.querySelectorAll('[data-sim-funzione]').forEach(b => b.addEventListener
 }));
 
 checkSession();
+
+// =====================================================================
+// Schermata Novità (tabella novita_app, script SQL 11)
+// Una riga per versione; "schede" è l'array mostrato dall'app: le schede
+// "principale" sono una pagina ciascuna, le "riepilogo" vanno nell'ultima.
+// =====================================================================
+// Stesse chiavi della mappa SchedaNovita.icone nell'app (lib/services/novita_service.dart)
+const NOVITA_ICONE = ['restaurant', 'menu_book', 'directions_bus', 'map', 'explore', 'place', 'notifications', 'campaign', 'alarm', 'event_busy', 'calendar_month', 'calendar_view_day', 'dashboard_customize', 'star', 'school', 'meeting_room', 'local_library', 'search', 'contacts', 'local_hospital', 'phonelink_setup', 'ios_share', 'widgets', 'settings', 'palette', 'dark_mode', 'language', 'wifi', 'speed', 'bolt', 'lock', 'build', 'auto_awesome', 'new_releases', 'celebration'];
+let _novSchede = [];
+let _novPagina = 0;
+
+function _novVersione() {
+    return document.getElementById('nov-versione').value.trim().replace(/^v/i, '');
+}
+
+function _novNuovaScheda(tipo) {
+    return { tipo, icona: tipo === 'riepilogo' ? 'build' : 'auto_awesome', titolo: '', testo: '', titolo_en: '', testo_en: '', etichette: [], etichette_en: [] };
+}
+
+function _novPagine() {
+    const principali = _novSchede.filter(s => s.tipo !== 'riepilogo');
+    const riepilogo = _novSchede.filter(s => s.tipo === 'riepilogo');
+    const pagine = principali.map(s => ({ tipo: 'principale', scheda: s }));
+    if (riepilogo.length) pagine.push({ tipo: 'riepilogo', voci: riepilogo });
+    return pagine;
+}
+
+async function caricaElencoNovita() {
+    const { data, error } = await _supabase.from('novita_app').select('versione, attiva, aggiornato_il').order('versione', { ascending: false });
+    const stato = document.getElementById('nov-stato');
+    if (error) {
+        stato.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 11 &egrave; stato applicato?</span>`;
+        return;
+    }
+    document.getElementById('nov-versioni').innerHTML = (data || []).map(r => `<option value="${escapeHtml(r.versione)}">`).join('');
+    stato.innerHTML = data && data.length
+        ? 'Versioni salvate: ' + data.map(r => `<strong style="color:${r.attiva ? 'var(--primary-gold)' : 'var(--text-muted)'};">${escapeHtml(r.versione)}</strong>${r.attiva ? '' : ' (spenta)'}`).join(' &middot; ')
+        : 'Nessuna versione salvata.';
+    // Al primo ingresso apre la versione più recente
+    if (!_novVersione() && data && data.length) {
+        document.getElementById('nov-versione').value = data[0].versione;
+        caricaNovita();
+    } else if (!_novVersione()) {
+        renderNovita();
+    }
+}
+
+async function caricaNovita() {
+    const versione = _novVersione();
+    if (!versione) return;
+    const { data, error } = await _supabase.from('novita_app').select('*').eq('versione', versione).maybeSingle();
+    if (error) { showToast('Errore: ' + error.message, 'error'); return; }
+    if (data) {
+        _novSchede = (Array.isArray(data.schede) ? data.schede : []).map(s => ({ ..._novNuovaScheda(s.tipo === 'riepilogo' ? 'riepilogo' : 'principale'), ...s }));
+        document.getElementById('nov-attiva').checked = !!data.attiva;
+        showToast(`Novità ${versione} caricate`);
+    } else {
+        _novSchede = [];
+        document.getElementById('nov-attiva').checked = true;
+        showToast(`Nessuna novità per la ${versione}: parti da zero`);
+    }
+    _novPagina = 0;
+    renderNovita();
+}
+
+function renderNovita() {
+    const box = document.getElementById('nov-schede');
+    if (!box) return;
+    if (!_novSchede.length) {
+        box.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nessuna scheda. Aggiungi una pagina o una voce del riepilogo.</p>';
+    } else {
+        const opzioni = (sel) => NOVITA_ICONE.map(n => `<option value="${n}" ${n === sel ? 'selected' : ''}>${n}</option>`).join('');
+        box.innerHTML = _novSchede.map((s, i) => {
+            const riep = s.tipo === 'riepilogo';
+            const campo = (k, etichetta, area) => area
+                ? `<div class="form-group"><label style="font-size:0.8rem;font-weight:600;">${etichetta}</label><textarea class="form-control" rows="2" data-i="${i}" data-k="${k}">${escapeHtml(s[k] || '')}</textarea></div>`
+                : `<div class="form-group"><label style="font-size:0.8rem;font-weight:600;">${etichetta}</label><input type="text" class="form-control" data-i="${i}" data-k="${k}" value="${escapeHtml(Array.isArray(s[k]) ? s[k].join(', ') : (s[k] || ''))}"></div>`;
+            return `<div class="nov-scheda">
+                <div class="nov-scheda-top">
+                    <span class="nov-tipo ${riep ? 'riep' : ''}">${riep ? 'Voce riepilogo' : 'Pagina'}</span>
+                    <span class="nov-icona-sel"><span class="nov-ms">${escapeHtml(s.icona)}</span><select class="form-control" data-i="${i}" data-k="icona">${opzioni(s.icona)}</select></span>
+                    <span class="nov-azioni">
+                        <button type="button" title="Su" data-azione="su" data-i="${i}" ${i === 0 ? 'disabled' : ''}>&uarr;</button>
+                        <button type="button" title="Gi&ugrave;" data-azione="giu" data-i="${i}" ${i === _novSchede.length - 1 ? 'disabled' : ''}>&darr;</button>
+                        <button type="button" title="Elimina" class="del" data-azione="elimina" data-i="${i}">&times;</button>
+                    </span>
+                </div>
+                ${campo('titolo', 'Titolo')}
+                ${campo('testo', riep ? 'Sottotitolo' : 'Testo', !riep)}
+                ${riep ? '' : campo('etichette', 'Etichette attorno all\'icona (max 3, separate da virgola)')}
+                <details>
+                    <summary>English${s.titolo_en ? '' : ' (vuoto: usa l\'italiano)'}</summary>
+                    ${campo('titolo_en', 'Title')}
+                    ${campo('testo_en', riep ? 'Subtitle' : 'Text', !riep)}
+                    ${riep ? '' : campo('etichette_en', 'Labels (max 3, comma separated)')}
+                </details>
+            </div>`;
+        }).join('');
+    }
+    renderAnteprimaNovita();
+}
+
+function renderAnteprimaNovita() {
+    const box = document.getElementById('nov-anteprima');
+    if (!box) return;
+    const inglese = document.getElementById('nov-inglese').checked;
+    const t = (s, k) => (inglese && (Array.isArray(s[k + '_en']) ? s[k + '_en'].length : s[k + '_en'])) ? s[k + '_en'] : s[k];
+    const pagine = _novPagine();
+    _novPagina = Math.max(0, Math.min(_novPagina, pagine.length - 1));
+    const ultima = _novPagina >= pagine.length - 1;
+    const versione = escapeHtml(_novVersione() || '?');
+    let corpo;
+    if (!pagine.length) {
+        corpo = '<div class="vuota">L\'anteprima compare qui.</div>';
+    } else {
+        const p = pagine[_novPagina];
+        if (p.tipo === 'principale') {
+            const s = p.scheda;
+            const pos = ['top:12px;left:-22px', 'bottom:16px;right:-26px', 'top:76px;right:-30px'];
+            const etichette = (t(s, 'etichette') || []).slice(0, 3);
+            corpo = `<div class="illu"><span class="nov-ms">${escapeHtml(s.icona)}</span>${etichette.map((e, i) => `<div class="chip" style="${pos[i]}">${escapeHtml(e)}</div>`).join('')}</div>
+                <div class="tit">${escapeHtml(t(s, 'titolo') || '(titolo)')}</div>
+                ${t(s, 'testo') ? `<div class="txt">${escapeHtml(t(s, 'testo'))}</div>` : ''}`;
+        } else {
+            corpo = `<div style="margin-bottom:auto;"><div class="riep-tit">${inglese ? 'And also…' : 'E inoltre…'}</div>${p.voci.map(v => `<div class="r"><div class="ic"><span class="nov-ms">${escapeHtml(v.icona)}</span></div><div><b>${escapeHtml(t(v, 'titolo') || '(titolo)')}</b>${t(v, 'testo') ? `<small>${escapeHtml(t(v, 'testo'))}</small>` : ''}</div></div>`).join('')}</div>`;
+        }
+    }
+    box.innerHTML = `<div class="nov-tel">
+        <div class="top"><span class="ver">${inglese ? 'NEW IN' : 'NOVITÀ'} ${versione}</span><span class="salta" style="visibility:${ultima ? 'hidden' : 'visible'}">${inglese ? 'Skip' : 'Salta'}</span></div>
+        <div class="pag">${corpo}</div>
+        ${pagine.length > 1 ? `<div class="dots">${pagine.map((_, i) => `<i class="${i === _novPagina ? 'on' : ''}" data-pagina="${i}"></i>`).join('')}</div>` : '<div style="height:14px"></div>'}
+        <div class="btn-nov" id="nov-btn-anteprima">${ultima ? (inglese ? 'Get started' : 'Inizia') : `${inglese ? 'Next' : 'Avanti'}<span class="nov-ms" style="font-size:18px">arrow_forward</span>`}</div>
+    </div>`;
+}
+
+// Modifica dei campi: aggiorna lo stato e solo l'anteprima (l'editor resta com'è, il cursore non salta)
+document.getElementById('nov-schede')?.addEventListener('input', (e) => {
+    const el = e.target;
+    const i = Number(el.dataset.i), k = el.dataset.k;
+    if (!k || !_novSchede[i]) return;
+    _novSchede[i][k] = k.startsWith('etichette')
+        ? el.value.split(',').map(x => x.trim()).filter(Boolean).slice(0, 3)
+        : el.value;
+    if (k === 'icona') el.parentElement.querySelector('.nov-ms').textContent = el.value;
+    // Mostra in anteprima la pagina della scheda che si sta modificando
+    const s = _novSchede[i];
+    const pagine = _novPagine();
+    const idx = s.tipo === 'riepilogo' ? pagine.length - 1 : pagine.findIndex(p => p.scheda === s);
+    if (idx >= 0) _novPagina = idx;
+    renderAnteprimaNovita();
+});
+document.getElementById('nov-schede')?.addEventListener('change', (e) => {
+    if (e.target.dataset.k === 'icona') e.target.dispatchEvent(new Event('input', { bubbles: true }));
+});
+document.getElementById('nov-schede')?.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-azione]');
+    if (!b) return;
+    const i = Number(b.dataset.i);
+    if (b.dataset.azione === 'elimina') {
+        _novSchede.splice(i, 1);
+    } else {
+        const j = b.dataset.azione === 'su' ? i - 1 : i + 1;
+        if (j < 0 || j >= _novSchede.length) return;
+        [_novSchede[i], _novSchede[j]] = [_novSchede[j], _novSchede[i]];
+    }
+    renderNovita();
+});
+document.getElementById('nov-aggiungi-pagina')?.addEventListener('click', () => {
+    // Le pagine vanno prima delle voci del riepilogo
+    const primoRiep = _novSchede.findIndex(s => s.tipo === 'riepilogo');
+    const pos = primoRiep < 0 ? _novSchede.length : primoRiep;
+    _novSchede.splice(pos, 0, _novNuovaScheda('principale'));
+    _novPagina = _novSchede.filter(s => s.tipo !== 'riepilogo').length - 1;
+    renderNovita();
+});
+document.getElementById('nov-aggiungi-voce')?.addEventListener('click', () => {
+    _novSchede.push(_novNuovaScheda('riepilogo'));
+    _novPagina = _novPagine().length - 1;
+    renderNovita();
+});
+document.getElementById('nov-carica')?.addEventListener('click', caricaNovita);
+document.getElementById('nov-versione')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); caricaNovita(); }
+});
+document.getElementById('nov-versione')?.addEventListener('input', renderAnteprimaNovita);
+document.getElementById('nov-inglese')?.addEventListener('change', renderAnteprimaNovita);
+document.getElementById('nov-prec')?.addEventListener('click', () => { _novPagina--; renderAnteprimaNovita(); });
+document.getElementById('nov-succ')?.addEventListener('click', () => { _novPagina++; renderAnteprimaNovita(); });
+document.getElementById('nov-anteprima')?.addEventListener('click', (e) => {
+    if (e.target.dataset.pagina !== undefined) { _novPagina = Number(e.target.dataset.pagina); renderAnteprimaNovita(); }
+    else if (e.target.closest('#nov-btn-anteprima')) {
+        _novPagina = _novPagina >= _novPagine().length - 1 ? 0 : _novPagina + 1;
+        renderAnteprimaNovita();
+    }
+});
+
+document.getElementById('nov-salva')?.addEventListener('click', async () => {
+    const versione = _novVersione();
+    if (!/^\d+\.\d+\.\d+$/.test(versione)) {
+        showToast('Scrivi la versione nel formato 2.2.0', 'error');
+        return;
+    }
+    const lista = (v) => (Array.isArray(v) ? v : []).map(x => String(x).trim()).filter(Boolean).slice(0, 3);
+    const schede = _novSchede.map(s => {
+        const pulita = { tipo: s.tipo === 'riepilogo' ? 'riepilogo' : 'principale', icona: s.icona };
+        for (const k of ['titolo', 'testo', 'titolo_en', 'testo_en']) {
+            const v = (s[k] || '').trim();
+            if (v) pulita[k] = v;
+        }
+        if (pulita.tipo === 'principale') {
+            if (lista(s.etichette).length) pulita.etichette = lista(s.etichette);
+            if (lista(s.etichette_en).length) pulita.etichette_en = lista(s.etichette_en);
+        }
+        return pulita;
+    });
+    if (schede.some(s => !s.titolo)) {
+        showToast('Ogni scheda deve avere un titolo', 'error');
+        return;
+    }
+    const attiva = document.getElementById('nov-attiva').checked;
+    const { error } = await _supabase.from('novita_app').upsert({ versione, attiva, schede }, { onConflict: 'versione' });
+    if (error) {
+        showToast('Errore nel salvataggio: ' + error.message, 'error');
+    } else {
+        showToast(attiva ? `Novità ${versione} salvate e attive` : `Novità ${versione} salvate (spente)`);
+        caricaElencoNovita();
+    }
+});
+
+document.getElementById('nov-elimina')?.addEventListener('click', async () => {
+    const versione = _novVersione();
+    if (!versione) return;
+    if (!confirm(`Eliminare le novità della ${versione}?`)) return;
+    const { error } = await _supabase.from('novita_app').delete().eq('versione', versione);
+    if (error) {
+        showToast('Errore: ' + error.message, 'error');
+    } else {
+        showToast(`Novità ${versione} eliminate`);
+        _novSchede = [];
+        renderNovita();
+        caricaElencoNovita();
+    }
+});
