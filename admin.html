@@ -12,6 +12,8 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
     <link rel="shortcut icon" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
     <link rel="stylesheet" href="style.css">
+    <!-- Stili del solo pannello (menu laterale e componenti): le pagine pubbliche non lo caricano -->
+    <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,1,0">
     <script src="config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -214,22 +216,6 @@
             opacity: 0.6;
         }
 
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-        }
-        
-        .admin-header h1 {
-            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.2rem;
-        }
-
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -239,51 +225,13 @@
             gap: 1rem;
         }
 
-        .admin-container .btn {
+        .admin-container .btn,
+        .admin-shell .btn {
             width: auto;
             min-width: auto;
             border-radius: 20px;
             text-transform: none;
             letter-spacing: normal;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 2rem;
-            margin-bottom: 2rem;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .tab-btn {
-            padding: 0.5rem 0.5rem;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid transparent;
-            border-radius: 0;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 1rem;
-            white-space: nowrap;
-        }
-
-        .tab-btn:hover {
-            color: white;
-        }
-
-        .tab-btn.active {
-            background: transparent;
-            color: var(--primary-gold);
-            border-bottom-color: var(--primary-gold);
-            font-weight: 600;
         }
 
         .hidden {
@@ -872,33 +820,76 @@
             </div>
         </section>
 
-        <!-- Admin Dashboard -->
-        <section id="admin-dashboard" class="admin-container hidden">
-            <div class="admin-header">
-                <div>
-                    <h1>Pannello Admin</h1>
-                    <p id="user-email-display" style="color: var(--text-muted); font-size: 0.9rem;"></p>
+        <!-- Admin Dashboard: menu laterale a gruppi + sezione aperta (indicata nell'indirizzo, es. admin.html#novita) -->
+        <section id="admin-dashboard" class="admin-shell hidden">
+            <aside id="admin-menu" class="admin-menu" aria-label="Sezioni del pannello">
+                <div class="admin-marchio">
+                    <div class="admin-marchio-logo"><span class="admin-ms">calendar_month</span></div>
+                    <div><b>QuickCheck</b><small>Pannello admin</small></div>
                 </div>
-                <button id="logout-btn" class="btn btn-secondary btn-sm">Esci</button>
-            </div>
 
-            <div class="tabs">
-                <button class="tab-btn active" data-tab="analytics-section">Statistiche</button>
-                <button class="tab-btn" data-tab="updates-section">Aggiornamenti</button>
-                <button class="tab-btn" data-tab="novita-section">Novit&agrave;</button>
-                <button class="tab-btn" data-tab="app-config-section">App &amp; Mappe</button>
-                <button class="tab-btn" data-tab="simulatore-section">Simulatore</button>
-                <button class="tab-btn" data-tab="notifications-section">Notifiche & Avvisi</button>
-                <button class="tab-btn" data-tab="bugs-admin-section">Bug & Problemi</button>
-                <button class="tab-btn" data-tab="features-section">Funzionalità</button>
-                <button class="tab-btn" data-tab="credits-section">Credits</button>
-                <button class="tab-btn" data-tab="contacts-section">Contatti</button>
-                <button class="tab-btn" data-tab="legal-section">Legale</button>
-                <button class="tab-btn" data-tab="faq-admin-section">FAQ</button>
+                <!-- data-sezione = chiave in SEZIONI_ADMIN (admin-script.js) e nome dopo # nell'indirizzo -->
+                <nav class="admin-voci">
+                    <a class="admin-voce" href="#panoramica" data-sezione="panoramica"><span class="admin-ms">space_dashboard</span><span class="admin-voce-testo">Panoramica</span></a>
+                    <a class="admin-voce" href="#statistiche" data-sezione="statistiche"><span class="admin-ms">monitoring</span><span class="admin-voce-testo">Statistiche</span></a>
+
+                    <div class="admin-gruppo">Rilascio</div>
+                    <a class="admin-voce" href="#versioni" data-sezione="versioni"><span class="admin-ms">new_releases</span><span class="admin-voce-testo">Versioni e patch note</span></a>
+                    <a class="admin-voce" href="#novita" data-sezione="novita"><span class="admin-ms">auto_awesome</span><span class="admin-voce-testo">Novit&agrave;</span></a>
+                    <a class="admin-voce" href="#messaggio" data-sezione="messaggio"><span class="admin-ms">campaign</span><span class="admin-voce-testo">Messaggio all'avvio</span></a>
+
+                    <div class="admin-gruppo">Dati dell'app</div>
+                    <a class="admin-voce" href="#mappe" data-sezione="mappe"><span class="admin-ms">map</span><span class="admin-voce-testo">Mappe</span></a>
+                    <a class="admin-voce" href="#menu" data-sezione="menu"><span class="admin-ms">restaurant</span><span class="admin-voce-testo">Men&ugrave; mensa</span></a>
+
+                    <div class="admin-gruppo">Notifiche</div>
+                    <a class="admin-voce" href="#notifiche" data-sezione="notifiche"><span class="admin-ms">notifications</span><span class="admin-voce-testo">Push e avvisi</span></a>
+                    <a class="admin-voce" href="#simulatore" data-sezione="simulatore"><span class="admin-ms">science</span><span class="admin-voce-testo">Simulatore</span></a>
+
+                    <div class="admin-gruppo">Supporto</div>
+                    <a class="admin-voce" href="#bug" data-sezione="bug"><span class="admin-ms">bug_report</span><span class="admin-voce-testo">Bug e problemi</span></a>
+
+                    <div class="admin-gruppo">Sito web</div>
+                    <a class="admin-voce" href="#funzionalita" data-sezione="funzionalita"><span class="admin-ms">star</span><span class="admin-voce-testo">Funzionalit&agrave;</span></a>
+                    <a class="admin-voce" href="#faq" data-sezione="faq"><span class="admin-ms">help</span><span class="admin-voce-testo">FAQ</span></a>
+                    <a class="admin-voce" href="#credits" data-sezione="credits"><span class="admin-ms">group</span><span class="admin-voce-testo">Credits</span></a>
+                    <a class="admin-voce" href="#contatti" data-sezione="contatti"><span class="admin-ms">link</span><span class="admin-voce-testo">Contatti</span></a>
+                    <a class="admin-voce" href="#legale" data-sezione="legale"><span class="admin-ms">gavel</span><span class="admin-voce-testo">Note legali</span></a>
+                </nav>
+
+                <!-- Utente collegato, link al sito (sostituisce la barra in alto) e uscita -->
+                <div class="admin-utente">
+                    <span class="admin-ms">account_circle</span>
+                    <span id="user-email-display" class="admin-utente-email"></span>
+                    <a href="./" class="admin-utente-azione" title="Apri il sito" aria-label="Apri il sito"><span class="admin-ms">public</span></a>
+                    <button type="button" id="logout-btn" class="admin-utente-azione" title="Esci" aria-label="Esci"><span class="admin-ms">logout</span></button>
+                </div>
+            </aside>
+
+            <!-- Velo scuro dietro il menu aperto su telefono: toccandolo il menu si chiude -->
+            <div id="admin-velo" class="admin-velo"></div>
+
+            <div class="admin-main">
+                <!-- Barra in alto su telefono (sotto i 900 px): apre il menu e mostra la sezione aperta -->
+                <header class="admin-barra-mobile">
+                    <button type="button" id="admin-menu-apri" class="admin-barra-btn" aria-label="Apri il menu" aria-controls="admin-menu" aria-expanded="false"><span class="admin-ms">menu</span></button>
+                    <b id="admin-barra-titolo">Panoramica</b>
+                </header>
+
+                <div class="admin-contenuto">
+
+            <!-- Panoramica: pagina iniziale (il contenuto arriva con la fase 2) -->
+            <div id="panoramica-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Panoramica</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Stato dell'app e checklist del prossimo rilascio.</p>
+                    </div>
+                </div>
             </div>
 
                         <!-- Analytics / Statistiche Sezione Principale -->
-            <div id="analytics-section" class="section-content">
+            <div id="analytics-section" class="section-content hidden">
                 <!-- Header Unificato Sezione Analytics -->
                 <div class="section-header">
                     <div>
@@ -1256,17 +1247,21 @@
                 </div>
             </div>
 
-            <!-- App & Mappe Section (config_app + bucket mappe, script SQL 07) -->
-            <div id="app-config-section" class="section-content hidden">
+            <!-- Le tre sezioni seguenti leggono la stessa riga di config_app (script SQL 07):
+                 fetchConfigApp(['messaggio' | 'mappe' | 'menu']) compila solo la parte richiesta. -->
+
+            <!-- Messaggio all'avvio (config_app) -->
+            <div id="messaggio-section" class="section-content hidden">
                 <div class="section-header">
                     <div>
-                        <h2>App &amp; Mappe</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Messaggio all'avvio (APK e PWA) e pubblicazione delle mappe. La versione proposta all'APK &egrave; quella segnata come "Ultima versione" nella scheda Aggiornamenti.</p>
+                        <h2>Messaggio all'avvio</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Finestra mostrata all'apertura dell'app (APK e PWA), una sola volta per ogni testo.</p>
                     </div>
                 </div>
 
-                <div class="card" style="margin-bottom: 2rem; padding: 1.6rem; border-radius: 16px;">
-                    <h3 style="font-size: 1.1rem; color: var(--primary-gold); margin-bottom: 1rem;">&#128172; Messaggio all'avvio</h3>
+                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
+                    <!-- Compare solo se config_app non si legge -->
+                    <div id="cfg-msg-stato" class="hidden" style="margin-bottom: 1rem;"></div>
                     <form id="config-messaggio-form">
                         <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; cursor: pointer;">
                             <input type="checkbox" id="cfg-msg-attivo" style="width: 20px; height: 20px;">
@@ -1288,9 +1283,18 @@
                         <button type="submit" class="btn btn-primary btn-sm">Salva messaggio</button>
                     </form>
                 </div>
+            </div>
+
+            <!-- Mappe (config_app + bucket mappe) -->
+            <div id="mappe-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Mappe</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Il file mappe.json viene reso compatto, firmato e compresso nel browser; le app lo scaricano solo quando la versione sale.</p>
+                    </div>
+                </div>
 
                 <div class="card" style="padding: 1.6rem; border-radius: 16px;">
-                    <h3 style="font-size: 1.1rem; color: var(--primary-gold); margin-bottom: 1rem;">&#128506;&#65039; Mappe</h3>
                     <div id="cfg-mappe-stato" style="margin-bottom: 1.2rem; color: var(--text-muted);">Caricamento...</div>
                     <div class="form-group">
                         <label for="cfg-mappe-file" style="font-weight: 600;">Nuovo mappe.json</label>
@@ -1301,10 +1305,18 @@
                     <h4 style="margin: 1.6rem 0 0.6rem; font-size: 0.95rem;">Versioni nel bucket</h4>
                     <div id="cfg-mappe-elenco" style="color: var(--text-muted);">-</div>
                 </div>
+            </div>
 
-                <div class="card" style="margin-top: 2rem; padding: 1.6rem; border-radius: 16px;">
-                    <h3 style="font-size: 1.1rem; color: var(--primary-gold); margin-bottom: 0.4rem;">&#127869;&#65039; Men&ugrave; mensa</h3>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">Il JSON si ottiene dal PDF ADISU con <code>python scripts/menu_mensa_pdf.py menu.pdf</code>. Lo stesso men&ugrave; vale per tutte le mense.</p>
+            <!-- Menù mensa (config_app + bucket mappe, script SQL 08) -->
+            <div id="menu-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Men&ugrave; mensa</h2>
+                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Il JSON si ottiene dal PDF ADISU con <code>python scripts/menu_mensa_pdf.py menu.pdf</code>. Lo stesso men&ugrave; vale per tutte le mense.</p>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
                     <div id="cfg-menu-stato" style="margin-bottom: 1.2rem; color: var(--text-muted);">Caricamento...</div>
                     <div class="form-group">
                         <label for="cfg-menu-file" style="font-weight: 600;">Nuovo menu_mensa.json (facoltativo: senza file si modificano solo le date del men&ugrave; pubblicato)</label>
@@ -1688,6 +1700,8 @@
                     <!-- Dynamic Content -->
                 </div>
             </div>
+                </div><!-- /.admin-contenuto -->
+            </div><!-- /.admin-main -->
         </section>
     </main>
 

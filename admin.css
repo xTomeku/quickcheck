@@ -1,0 +1,349 @@
+/* =====================================================================
+   Pannello admin: stili caricati solo da admin.html.
+   Le pagine pubbliche usano soltanto style.css e non cambiano aspetto.
+   Riferimento visivo: _redesign/mockup_pannello_admin.html
+   ===================================================================== */
+
+/* Colori del mockup (nomi diversi da quelli di style.css, che restano validi) */
+:root {
+    --bg: #0e0e0e;
+    --side: #151515;
+    --card: #1b1b1b;
+    --card2: #232323;
+    --bordo: #2c2c2c;
+    --txt: #f2f2f2;
+    --sub: #9b9b9b;
+    --oro: #D4AF37;
+    --verde: #4ade80;
+    --giallo: #facc15;
+    --rosso: #f87171;
+    --admin-menu-largo: 236px;
+}
+
+/* Icone Material Symbols (font già incluso in admin.html) */
+.admin-ms {
+    font-family: 'Material Symbols Rounded';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    display: inline-block;
+    font-size: 20px;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    user-select: none;
+}
+
+/* ---------------------------------------------------------------------
+   Dopo l'accesso: niente barra del sito in alto, il pannello occupa la pagina
+   (la schermata di accesso resta com'era)
+   --------------------------------------------------------------------- */
+body.admin-dentro {
+    background: var(--bg);
+}
+
+body.admin-dentro .navbar {
+    display: none;
+}
+
+body.admin-dentro main {
+    margin-top: 0;
+    padding: 0;
+}
+
+.admin-shell {
+    display: grid;
+    grid-template-columns: var(--admin-menu-largo) minmax(0, 1fr);
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+
+/* ---------------------------------------------------------------------
+   Menu laterale
+   --------------------------------------------------------------------- */
+.admin-menu {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    background: var(--side);
+    border-right: 1px solid var(--bordo);
+    padding: 18px 12px 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-marchio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 8px 18px;
+    line-height: 1.25;
+}
+
+.admin-marchio-logo {
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border-radius: 10px;
+    background: rgba(212, 175, 55, 0.15);
+    color: var(--oro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.admin-marchio b {
+    font-size: 15px;
+    color: var(--txt);
+}
+
+.admin-marchio small {
+    display: block;
+    color: var(--sub);
+    font-size: 11px;
+}
+
+.admin-voci {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.admin-gruppo {
+    font-size: 10.5px;
+    font-weight: 800;
+    color: #6f6f6f;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 14px 10px 6px;
+}
+
+.admin-voce {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: #cfcfcf;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.admin-voce .admin-ms {
+    font-size: 19px;
+    color: #8a8a8a;
+    transition: color 0.15s ease;
+}
+
+.admin-voce:hover {
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--txt);
+}
+
+.admin-voce:focus-visible {
+    outline: 2px solid rgba(212, 175, 55, 0.6);
+    outline-offset: -2px;
+}
+
+.admin-voce.attiva {
+    background: rgba(212, 175, 55, 0.12);
+    color: var(--oro);
+    font-weight: 700;
+}
+
+.admin-voce.attiva .admin-ms {
+    color: var(--oro);
+}
+
+.admin-voce-testo {
+    flex: 1;
+    min-width: 0;
+}
+
+/* Numero rosso (bug aperti) e pallino giallo (problema segnalato nella Panoramica) */
+.admin-voce-badge {
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.5;
+    background: rgba(248, 113, 113, 0.18);
+    color: var(--rosso);
+    padding: 0 7px;
+    border-radius: 7px;
+}
+
+.admin-voce-punto {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--giallo);
+}
+
+/* Utente collegato in fondo al menu */
+.admin-utente {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 4px 4px 10px;
+    border-top: 1px solid var(--bordo);
+    font-size: 12.5px;
+    color: var(--sub);
+}
+
+.admin-utente > .admin-ms {
+    flex: none;
+}
+
+.admin-utente-email {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.admin-utente-azione {
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 0;
+    background: transparent;
+    color: var(--sub);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.admin-utente-azione:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--txt);
+}
+
+.admin-utente-azione .admin-ms {
+    font-size: 19px;
+}
+
+/* ---------------------------------------------------------------------
+   Contenuto della sezione aperta
+   --------------------------------------------------------------------- */
+.admin-main {
+    min-width: 0;
+}
+
+.admin-contenuto {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 24px 28px 48px;
+}
+
+/* Su computer la barra del telefono e il velo non servono */
+.admin-barra-mobile,
+.admin-velo {
+    display: none;
+}
+
+/* ---------------------------------------------------------------------
+   Telefono e finestre strette (sotto i 900 px): menu a scomparsa
+   --------------------------------------------------------------------- */
+@media (max-width: 899.98px) {
+    .admin-shell {
+        display: block;
+    }
+
+    .admin-menu {
+        position: fixed;
+        z-index: 1600;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 272px;
+        max-width: 85vw;
+        height: auto;
+        transform: translateX(-100%);
+        visibility: hidden;
+        transition: transform 0.25s ease, visibility 0.25s;
+    }
+
+    body.admin-menu-aperto .admin-menu {
+        transform: none;
+        visibility: visible;
+        box-shadow: 12px 0 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .admin-velo {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1500;
+        background: rgba(0, 0, 0, 0.55);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s ease;
+    }
+
+    body.admin-menu-aperto .admin-velo {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    /* Con il menu aperto la pagina sotto non scorre */
+    body.admin-menu-aperto {
+        overflow: hidden;
+    }
+
+    .admin-barra-mobile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: sticky;
+        top: 0;
+        z-index: 1400;
+        padding: 10px 16px;
+        background: var(--bg);
+        border-bottom: 1px solid var(--bordo);
+    }
+
+    .admin-barra-mobile b {
+        font-size: 16px;
+        color: var(--txt);
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .admin-barra-btn {
+        flex: none;
+        width: 40px;
+        height: 40px;
+        margin-left: -8px;
+        border-radius: 10px;
+        border: 0;
+        background: transparent;
+        color: var(--txt);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .admin-barra-btn .admin-ms {
+        font-size: 24px;
+    }
+
+    .admin-contenuto {
+        padding: 16px 16px 40px;
+    }
+}

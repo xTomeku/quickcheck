@@ -16,20 +16,10 @@ const updateModal = document.getElementById('update-modal');
 const updateForm = document.getElementById('update-form');
 const closeModal = document.getElementById('close-modal');
 
-// Tabs
-const tabBtns = document.querySelectorAll('.tab-btn');
-const sections = {
-    'analytics-section': document.getElementById('analytics-section'),
-    'updates-section': document.getElementById('updates-section'),
-    'credits-section': document.getElementById('credits-section'),
-    'gallery-section': document.getElementById('gallery-section'),
-    'contacts-section': document.getElementById('contacts-section'),
-    'legal-section': document.getElementById('legal-section'),
-    'features-section': document.getElementById('features-section'),
-    'faq-admin-section': document.getElementById('faq-admin-section'),
-    'bugs-admin-section': document.getElementById('bugs-admin-section'),
-    'notifications-section': document.getElementById('notifications-section')
-};
+// Menu laterale (navigazione tra le sezioni)
+const adminMenuApri = document.getElementById('admin-menu-apri');
+const adminVelo = document.getElementById('admin-velo');
+const adminBarraTitolo = document.getElementById('admin-barra-titolo');
 
 // Features DOM
 const featuresList = document.getElementById('features-list');
@@ -198,7 +188,12 @@ function customConfirm(message, options = {}) {
 
 function initSortable(listElement, tableName) {
     if (!window.Sortable) return;
-    
+
+    // La lista viene ridisegnata a ogni caricamento: una sola istanza alla volta,
+    // altrimenti a ogni riapertura della sezione se ne aggiungerebbe un'altra
+    const precedente = Sortable.get && Sortable.get(listElement);
+    if (precedente) precedente.destroy();
+
     new Sortable(listElement, {
         animation: 150,
         handle: '.drag-handle',
@@ -250,7 +245,9 @@ async function checkSession() {
 function showDashboard(user) {
     loginSection.classList.add('hidden');
     adminDashboard.classList.remove('hidden');
-    userEmailDisplay.textContent = `Loggato come: ${user.email}`;
+    document.body.classList.add('admin-dentro');
+    userEmailDisplay.textContent = user.email;
+    userEmailDisplay.title = `Loggato come: ${user.email}`;
     fetchDownloadStats();
     fetchUserStats();
     fetchVersionRolloutStats();
@@ -262,52 +259,134 @@ function showDashboard(user) {
     fetchFAQ();
     fetchBugs();
     fetchNotifications();
+    // Apre la sezione scritta nell'indirizzo (admin.html#novita); senza # la Panoramica
+    apriSezione(sezioneDaIndirizzo());
 }
 
-// Tab Switching
-tabBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const targetId = btn.dataset.tab;
-        const targetSection = document.getElementById(targetId);
+// ===== Navigazione: menu laterale e sezione nell'indirizzo =====
+// Chiave = nome dopo # nell'indirizzo e data-sezione della voce del menu.
+// carica = cosa si ricarica a ogni apertura, come faceva il vecchio gestore delle schede;
+// null = dati già caricati all'accesso da showDashboard (e dopo ogni salvataggio).
+const SEZIONI_ADMIN = {
+    panoramica:   { id: 'panoramica-section',    titolo: 'Panoramica',            carica: null },
+    statistiche:  { id: 'analytics-section',     titolo: 'Statistiche',           carica: () => { fetchDownloadStats(); fetchUserStats(); fetchVersionRolloutStats(); } },
+    versioni:     { id: 'updates-section',       titolo: 'Versioni e patch note', carica: null },
+    novita:       { id: 'novita-section',        titolo: 'Novità',                carica: () => caricaElencoNovita() },
+    messaggio:    { id: 'messaggio-section',     titolo: "Messaggio all'avvio",   carica: () => fetchConfigApp(['messaggio']) },
+    mappe:        { id: 'mappe-section',         titolo: 'Mappe',                 carica: () => fetchConfigApp(['mappe']) },
+    menu:         { id: 'menu-section',          titolo: 'Menù mensa',            carica: () => fetchConfigApp(['menu']) },
+    // Pre-carica anche l'elenco dei corsi per il menu a tendina
+    notifiche:    { id: 'notifications-section', titolo: 'Push e avvisi',         carica: () => { fetchNotifications(); caricaCorsiUniSalento(); } },
+    simulatore:   { id: 'simulatore-section',    titolo: 'Simulatore',            carica: () => caricaSimulatore() },
+    bug:          { id: 'bugs-admin-section',    titolo: 'Bug e problemi',        carica: () => fetchBugs() },
+    funzionalita: { id: 'features-section',      titolo: 'Funzionalità',          carica: null },
+    faq:          { id: 'faq-admin-section',     titolo: 'FAQ',                   carica: null },
+    credits:      { id: 'credits-section',       titolo: 'Credits',               carica: null },
+    contatti:     { id: 'contacts-section',      titolo: 'Contatti',              carica: null },
+    legale:       { id: 'legal-section',         titolo: 'Note legali',           carica: null },
+};
+const SEZIONE_INIZIALE = 'panoramica';
+let sezioneAperta = null;
 
-        if (!targetSection) {
-            console.error(`Sezione non trovata: ${targetId}`);
-            return;
-        }
+function sezioneDaIndirizzo() {
+    const chiave = location.hash.replace(/^#/, '');
+    return Object.prototype.hasOwnProperty.call(SEZIONI_ADMIN, chiave) ? chiave : SEZIONE_INIZIALE;
+}
 
-        // Rimuove active da tutti i bottoni
-        tabBtns.forEach(b => b.classList.remove('active'));
-        // Aggiunge active a quello cliccato
-        btn.classList.add('active');
-        
-        // Nasconde tutte le sezioni che hanno la classe 'section-content' o che sono nel nostro oggetto
-        document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
-        
-        // Mostra la sezione target
-        targetSection.classList.remove('hidden');
-        if (targetId === 'analytics-section') {
-            fetchDownloadStats();
-            fetchUserStats();
-            fetchVersionRolloutStats();
-        } else if (targetId === 'bugs-admin-section') {
-            fetchBugs();
-        } else if (targetId === 'app-config-section') {
-            fetchConfigApp();
-        } else if (targetId === 'novita-section') {
-            caricaElencoNovita();
-        } else if (targetId === 'simulatore-section') {
-            caricaSimulatore();
-        } else if (targetId === 'notifications-section') {
-            fetchNotifications();
-            // Pre-carica l'elenco dei corsi per il menu a tendina
-            caricaCorsiUniSalento();
+// Mostra una sezione, evidenzia la sua voce e ne carica i dati
+function apriSezione(chiave) {
+    const sezione = SEZIONI_ADMIN[chiave];
+    const elemento = sezione && document.getElementById(sezione.id);
+    if (!elemento) {
+        console.error(`Sezione non trovata: ${chiave}`);
+        return;
+    }
+    document.querySelectorAll('.section-content').forEach(s => s.classList.add('hidden'));
+    elemento.classList.remove('hidden');
+    document.querySelectorAll('.admin-voce').forEach(v => {
+        const attiva = v.dataset.sezione === chiave;
+        v.classList.toggle('attiva', attiva);
+        if (attiva) v.setAttribute('aria-current', 'page');
+        else v.removeAttribute('aria-current');
+    });
+    if (adminBarraTitolo) adminBarraTitolo.textContent = sezione.titolo;
+    document.title = `${sezione.titolo} · Admin - QuickCheck`;
+    if (sezioneAperta !== chiave) window.scrollTo(0, 0);
+    sezioneAperta = chiave;
+    chiudiMenuMobile();
+    if (sezione.carica) sezione.carica();
+}
+
+// Avanti/indietro del browser e voci del menu (sono link #sezione)
+window.addEventListener('hashchange', () => {
+    if (!adminDashboard.classList.contains('hidden')) apriSezione(sezioneDaIndirizzo());
+});
+
+document.querySelectorAll('.admin-voce').forEach(voce => {
+    voce.addEventListener('click', (e) => {
+        if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return; // nuova scheda: lascia fare al browser
+        // Voce della sezione già aperta: l'indirizzo non cambia, quindi si ricarica qui
+        if (location.hash === voce.getAttribute('href')) {
+            e.preventDefault();
+            apriSezione(voce.dataset.sezione);
         }
     });
 });
 
+// Menu a scomparsa su telefono (sotto i 900 px, vedi admin.css)
+function apriMenuMobile() {
+    document.body.classList.add('admin-menu-aperto');
+    if (adminMenuApri) adminMenuApri.setAttribute('aria-expanded', 'true');
+}
+
+function chiudiMenuMobile() {
+    document.body.classList.remove('admin-menu-aperto');
+    if (adminMenuApri) adminMenuApri.setAttribute('aria-expanded', 'false');
+}
+
+adminMenuApri?.addEventListener('click', apriMenuMobile);
+adminVelo?.addEventListener('click', chiudiMenuMobile);
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.body.classList.contains('admin-menu-aperto')) chiudiMenuMobile();
+});
+
+// Numero o pallino accanto a una voce del menu (creato alla prima occorrenza)
+function _marcatoreVoce(chiave, classe) {
+    const voce = document.querySelector(`.admin-voce[data-sezione="${chiave}"]`);
+    if (!voce) return null;
+    let marcatore = voce.querySelector('.' + classe);
+    if (!marcatore) {
+        marcatore = document.createElement('span');
+        marcatore.className = `${classe} hidden`;
+        voce.appendChild(marcatore);
+    }
+    return marcatore;
+}
+
+// Numero rosso accanto a "Bug e problemi": bug con stato "open" (aggiornato da updateAdminBugKPIs)
+function aggiornaBadgeBug(aperti) {
+    const badge = _marcatoreVoce('bug', 'admin-voce-badge');
+    if (!badge) return;
+    badge.textContent = aperti > 99 ? '99+' : String(aperti);
+    badge.title = aperti === 1 ? '1 bug aperto' : `${aperti} bug aperti`;
+    badge.classList.toggle('hidden', !aperti);
+}
+
+// Pallino giallo accanto a una voce: problema segnalato nella Panoramica.
+// motivo = testo mostrato passandoci sopra; vuoto o null = nessun problema.
+function segnalaVoceMenu(chiave, motivo) {
+    const punto = _marcatoreVoce(chiave, 'admin-voce-punto');
+    if (!punto) return;
+    punto.title = motivo || '';
+    punto.setAttribute('aria-label', motivo || '');
+    punto.classList.toggle('hidden', !motivo);
+}
+
 function showLogin() {
     loginSection.classList.remove('hidden');
     adminDashboard.classList.add('hidden');
+    document.body.classList.remove('admin-dentro');
+    chiudiMenuMobile();
 }
 
 // Login Logic
@@ -1220,6 +1299,8 @@ function updateAdminBugKPIs() {
     if (countOpen) countOpen.textContent = openCount;
     if (countProg) countProg.textContent = progressCount;
     if (countRes) countRes.textContent = resolvedCount;
+
+    aggiornaBadgeBug(openCount);
 }
 
 function renderAdminBugs() {
@@ -3869,25 +3950,43 @@ async function _gunzip(bytes) {
     return new Uint8Array(await new Response(stream).arrayBuffer());
 }
 
-async function fetchConfigApp() {
+// Legge config_app una volta sola e compila le parti richieste, una per sezione del menu:
+// 'messaggio', 'mappe', 'menu'. Senza argomento le compila tutte.
+// Aprendo una sezione si aggiorna solo la sua parte: le modifiche non salvate nelle altre restano.
+async function fetchConfigApp(parti = ['messaggio', 'mappe', 'menu']) {
     const stato = document.getElementById('cfg-mappe-stato');
+    const statoMsg = document.getElementById('cfg-msg-stato');
+    const statoMenu = document.getElementById('cfg-menu-stato');
     const { data, error } = await _supabase.from('config_app').select('*').eq('id', 1).single();
     if (error) {
-        stato.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 07 &egrave; stato applicato?</span>`;
+        const avviso = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 07 &egrave; stato applicato?</span>`;
+        if (parti.includes('messaggio') && statoMsg) {
+            statoMsg.innerHTML = avviso;
+            statoMsg.classList.remove('hidden');
+        }
+        if (parti.includes('mappe') && stato) stato.innerHTML = avviso;
+        if (parti.includes('menu') && statoMenu) statoMenu.innerHTML = avviso;
         return;
     }
     _configApp = data;
-    document.getElementById('cfg-msg-attivo').checked = !!data.messaggio_attivo;
-    document.getElementById('cfg-msg-titolo').value = data.titolo_messaggio || '';
-    document.getElementById('cfg-msg-testo').value = data.testo_messaggio || '';
-    document.getElementById('cfg-msg-vecchi').checked = !!data.solo_vecchi_utenti;
 
-    const quando = data.aggiornato_il ? new Date(data.aggiornato_il).toLocaleString('it-IT') : '-';
-    stato.innerHTML = data.mappa_path
-        ? `Versione pubblicata: <strong style="color:var(--primary-gold);">v${data.mappa_version}</strong> &middot; ${escapeHtml(data.mappa_path)} &middot; ${data.mappa_bytes ? _kb(data.mappa_bytes) : '-'} &middot; impronta ${escapeHtml((data.mappa_sha256 || '').slice(0, 12))}&hellip; &middot; aggiornata il ${quando}`
-        : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
-    elencaVersioniMappe();
-    caricaMenuPubblicato();
+    if (parti.includes('messaggio')) {
+        if (statoMsg) statoMsg.classList.add('hidden');
+        document.getElementById('cfg-msg-attivo').checked = !!data.messaggio_attivo;
+        document.getElementById('cfg-msg-titolo').value = data.titolo_messaggio || '';
+        document.getElementById('cfg-msg-testo').value = data.testo_messaggio || '';
+        document.getElementById('cfg-msg-vecchi').checked = !!data.solo_vecchi_utenti;
+    }
+
+    if (parti.includes('mappe')) {
+        const quando = data.aggiornato_il ? new Date(data.aggiornato_il).toLocaleString('it-IT') : '-';
+        stato.innerHTML = data.mappa_path
+            ? `Versione pubblicata: <strong style="color:var(--primary-gold);">v${data.mappa_version}</strong> &middot; ${escapeHtml(data.mappa_path)} &middot; ${data.mappa_bytes ? _kb(data.mappa_bytes) : '-'} &middot; impronta ${escapeHtml((data.mappa_sha256 || '').slice(0, 12))}&hellip; &middot; aggiornata il ${quando}`
+            : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
+        elencaVersioniMappe();
+    }
+
+    if (parti.includes('menu')) caricaMenuPubblicato();
 }
 
 document.getElementById('config-messaggio-form')?.addEventListener('submit', async (e) => {
@@ -3907,7 +4006,7 @@ document.getElementById('config-messaggio-form')?.addEventListener('submit', asy
         showToast('Errore nel salvataggio: ' + error.message, 'error');
     } else {
         showToast(payload.messaggio_attivo ? 'Messaggio salvato e attivo' : 'Messaggio salvato (spento)');
-        fetchConfigApp();
+        fetchConfigApp(['messaggio']);
     }
 });
 
@@ -3987,7 +4086,7 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
         document.getElementById('cfg-mappe-file').value = '';
         document.getElementById('cfg-mappe-anteprima').style.display = 'none';
         _mappePronte = null;
-        fetchConfigApp();
+        fetchConfigApp(['mappe']);
     } catch (err) {
         showToast('Errore nella pubblicazione (' + err.message + '): le app continuano a usare la versione precedente', 'error');
         pulsante.disabled = false;
@@ -4041,7 +4140,7 @@ async function ripristinaMappe(nome) {
         const { error: errConfig } = await _registraMappe(versione, nome, sha256, gz.byteLength);
         if (errConfig) throw new Error(errConfig.message);
         showToast(`${nome} ripristinato come v${versione}`);
-        fetchConfigApp();
+        fetchConfigApp(['mappe']);
     } catch (err) {
         showToast('Errore nel ripristino: ' + err.message, 'error');
     }
@@ -4211,7 +4310,7 @@ document.getElementById('cfg-menu-pubblica')?.addEventListener('click', async ()
         _menuBozza = null;
         document.getElementById('cfg-menu-file').value = '';
         document.getElementById('cfg-menu-anteprima').style.display = 'none';
-        fetchConfigApp();
+        fetchConfigApp(['menu']);
     } catch (err) {
         showToast('Errore nella pubblicazione del menù (' + err.message + ')', 'error');
     } finally {
