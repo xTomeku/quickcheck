@@ -293,6 +293,8 @@ tabBtns.forEach(btn => {
             fetchBugs();
         } else if (targetId === 'app-config-section') {
             fetchConfigApp();
+        } else if (targetId === 'novita-section') {
+            caricaElencoNovita();
         } else if (targetId === 'simulatore-section') {
             caricaSimulatore();
         } else if (targetId === 'notifications-section') {
@@ -3886,7 +3888,6 @@ async function fetchConfigApp() {
         : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
     elencaVersioniMappe();
     caricaMenuPubblicato();
-    caricaElencoNovita();
 }
 
 document.getElementById('config-messaggio-form')?.addEventListener('submit', async (e) => {
