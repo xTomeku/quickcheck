@@ -874,16 +874,76 @@
                 <header class="admin-barra-mobile">
                     <button type="button" id="admin-menu-apri" class="admin-barra-btn" aria-label="Apri il menu" aria-controls="admin-menu" aria-expanded="false"><span class="admin-ms">menu</span></button>
                     <b id="admin-barra-titolo">Panoramica</b>
+                    <!-- Solo nella Panoramica: stesso effetto di "Aggiorna" -->
+                    <button type="button" id="admin-barra-aggiorna" class="admin-barra-btn admin-barra-dx hidden" aria-label="Aggiorna la panoramica"><span class="admin-ms">refresh</span></button>
                 </header>
 
                 <div class="admin-contenuto">
 
-            <!-- Panoramica: pagina iniziale (il contenuto arriva con la fase 2) -->
+            <!-- Panoramica: pagina iniziale. Ogni blocco si carica per conto suo (caricaPanoramica in admin-script.js)
+                 e ogni riquadro porta alla sezione corrispondente. -->
             <div id="panoramica-section" class="section-content hidden">
-                <div class="section-header">
+                <div class="admin-testa">
                     <div>
                         <h2>Panoramica</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Stato dell'app e checklist del prossimo rilascio.</p>
+                        <div id="pan-data" class="admin-testa-data">&nbsp;</div>
+                    </div>
+                    <div class="admin-testa-azioni">
+                        <button type="button" id="pan-aggiorna" class="admin-btn admin-solo-computer"><span class="admin-ms">refresh</span>Aggiorna</button>
+                        <button type="button" id="pan-prepara" class="admin-btn admin-btn-oro"><span class="admin-ms">rocket_launch</span>Prepara rilascio</button>
+                    </div>
+                </div>
+
+                <!-- Quattro numeri in alto -->
+                <div class="pan-kpi">
+                    <a class="pan-k" id="pan-k-oggi" href="#statistiche">
+                        <div class="pan-k-l"><span class="admin-ms">group</span>Utenti oggi</div>
+                        <div class="pan-k-corpo"></div>
+                    </a>
+                    <a class="pan-k" id="pan-k-7g" href="#statistiche">
+                        <div class="pan-k-l"><span class="admin-ms">calendar_month</span>Utenti ultimi 7 giorni</div>
+                        <div class="pan-k-corpo"></div>
+                    </a>
+                    <a class="pan-k" id="pan-k-versione" href="#statistiche">
+                        <div class="pan-k-l"><span class="admin-ms">system_update</span>Sull'ultima versione</div>
+                        <div class="pan-k-corpo"></div>
+                    </a>
+                    <a class="pan-k" id="pan-k-bug" href="#bug">
+                        <div class="pan-k-l"><span class="admin-ms">bug_report</span>Bug aperti</div>
+                        <div class="pan-k-corpo"></div>
+                    </a>
+                </div>
+
+                <div class="pan-griglia">
+                    <div class="pan-colonna">
+                        <section class="pan-card" aria-labelledby="pan-stato-titolo">
+                            <h3 id="pan-stato-titolo"><span class="admin-ms">health_and_safety</span>Stato dell'app</h3>
+                            <div class="pan-stato">
+                                <a class="pan-s" id="pan-s-mappe" href="#mappe"></a>
+                                <a class="pan-s" id="pan-s-menu" href="#menu"></a>
+                                <a class="pan-s" id="pan-s-messaggio" href="#messaggio"></a>
+                                <a class="pan-s" id="pan-s-novita" href="#novita"></a>
+                                <a class="pan-s" id="pan-s-push" href="#notifiche"></a>
+                                <a class="pan-s" id="pan-s-orari" href="#notifiche"></a>
+                            </div>
+                        </section>
+
+                        <section class="pan-card" aria-labelledby="pan-grafico-titolo">
+                            <h3 id="pan-grafico-titolo"><span class="admin-ms">bar_chart</span>Utenti negli ultimi 14 giorni<a class="pan-link" href="#statistiche">Statistiche &rsaquo;</a></h3>
+                            <a id="pan-grafico" class="pan-grafico" href="#statistiche"></a>
+                        </section>
+                    </div>
+
+                    <div class="pan-colonna">
+                        <section class="pan-card" id="pan-checklist-card" aria-labelledby="pan-checklist-titolo">
+                            <h3><span class="admin-ms">checklist</span><span id="pan-checklist-titolo">Rilascio</span><a class="pan-link" href="#versioni">Apri &rsaquo;</a></h3>
+                            <div id="pan-checklist"></div>
+                        </section>
+
+                        <section class="pan-card" aria-labelledby="pan-bug-titolo">
+                            <h3 id="pan-bug-titolo"><span class="admin-ms">bug_report</span>Ultimi bug<a class="pan-link" href="#bug">Tutti &rsaquo;</a></h3>
+                            <div id="pan-bug"></div>
+                        </section>
                     </div>
                 </div>
             </div>

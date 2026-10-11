@@ -254,6 +254,557 @@ body.admin-dentro main {
     display: none;
 }
 
+/* Testo solo per i lettori di schermo */
+.admin-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Icona che gira durante un caricamento */
+.admin-gira {
+    animation: admin-gira 0.8s linear infinite;
+}
+
+@keyframes admin-gira {
+    to { transform: rotate(360deg); }
+}
+
+/* ---------------------------------------------------------------------
+   Intestazione di pagina e pulsanti (mockup: .testa, .btn)
+   --------------------------------------------------------------------- */
+.admin-testa {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.admin-testa h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.admin-testa-data {
+    color: var(--sub);
+    font-size: 13px;
+}
+
+.admin-testa-azioni {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid var(--bordo);
+    background: var(--card2);
+    color: var(--txt);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-btn:hover {
+    background: #2a2a2a;
+    border-color: #3a3a3a;
+}
+
+.admin-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.admin-btn .admin-ms {
+    font-size: 18px;
+}
+
+.admin-btn-oro {
+    background: var(--oro);
+    border-color: var(--oro);
+    color: #161616;
+}
+
+.admin-btn-oro:hover {
+    background: #c9a42f;
+    border-color: #c9a42f;
+}
+
+/* ---------------------------------------------------------------------
+   Panoramica
+   --------------------------------------------------------------------- */
+.pan-kpi {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.pan-k {
+    display: block;
+    min-width: 0;
+    background: var(--card);
+    border: 1px solid var(--bordo);
+    border-radius: 14px;
+    padding: 14px 16px;
+    color: var(--txt);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+}
+
+/* I riquadri sono link: senza questo prenderebbero il colore dei link di style.css */
+.pan-k:hover,
+.pan-s:hover {
+    color: var(--txt);
+}
+
+.pan-k:hover {
+    border-color: rgba(212, 175, 55, 0.45);
+}
+
+.pan-k-l {
+    font-size: 12px;
+    color: var(--sub);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.pan-k-l .admin-ms {
+    font-size: 17px;
+    color: var(--oro);
+}
+
+.pan-k-v {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 6px 0 2px;
+}
+
+.pan-k-d {
+    font-size: 12px;
+    color: var(--sub);
+}
+
+.pan-su {
+    color: var(--verde);
+    font-weight: 700;
+}
+
+.pan-giu {
+    color: var(--rosso);
+    font-weight: 700;
+}
+
+.pan-barra {
+    height: 6px;
+    border-radius: 3px;
+    background: #2d2d2d;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.pan-barra i {
+    display: block;
+    height: 100%;
+    background: var(--oro);
+    border-radius: 3px;
+    transition: width 0.6s ease;
+}
+
+.pan-griglia {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.pan-colonna {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+}
+
+.pan-card {
+    background: var(--card);
+    border: 1px solid var(--bordo);
+    border-radius: 14px;
+    padding: 16px 18px;
+    scroll-margin-top: 76px;
+}
+
+.pan-card h3 {
+    margin: 0 0 12px;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--txt);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.pan-card h3 .admin-ms {
+    color: var(--oro);
+    font-size: 19px;
+}
+
+.pan-link {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--oro);
+    white-space: nowrap;
+}
+
+/* Riquadri dello stato dell'app: ok verde, att giallo, ko rosso, neu grigio, err lettura fallita */
+.pan-stato {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.pan-s {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    min-width: 0;
+    padding: 12px 13px;
+    border-radius: 12px;
+    background: var(--card2);
+    border: 1px solid var(--bordo);
+    color: var(--txt);
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+}
+
+.pan-s:hover {
+    border-color: #3d3d3d;
+}
+
+.pan-s-ic {
+    width: 32px;
+    height: 32px;
+    flex: none;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.07);
+    color: #bdbdbd;
+}
+
+.pan-s-ic .admin-ms {
+    font-size: 18px;
+}
+
+.pan-s-testi {
+    flex: 1;
+    min-width: 0;
+}
+
+.pan-s b {
+    display: block;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.pan-s small {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--sub);
+}
+
+.pan-s.ok .pan-s-ic { background: rgba(74, 222, 128, 0.13); color: var(--verde); }
+.pan-s.att .pan-s-ic { background: rgba(250, 204, 21, 0.13); color: var(--giallo); }
+.pan-s.ko .pan-s-ic,
+.pan-s.err .pan-s-ic { background: rgba(248, 113, 113, 0.14); color: var(--rosso); }
+.pan-s.att { border-color: rgba(250, 204, 21, 0.3); }
+.pan-s.ko { border-color: rgba(248, 113, 113, 0.35); }
+
+/* Grafico degli ultimi 14 giorni: barre semplici, oggi in oro */
+.pan-grafico {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+
+.pan-barre {
+    display: flex;
+    align-items: flex-end;
+    gap: 5px;
+    height: 70px;
+    margin-top: 4px;
+}
+
+.pan-barre i {
+    flex: 1;
+    min-height: 2px;
+    border-radius: 4px 4px 0 0;
+    background: rgba(212, 175, 55, 0.35);
+    transition: background 0.15s ease;
+}
+
+.pan-barre i.oggi {
+    background: var(--oro);
+}
+
+.pan-barre i.pan-sch {
+    height: 50%;
+    border-radius: 4px 4px 0 0;
+    background-size: 200% 100%;
+}
+
+.pan-grafico:hover .pan-barre i:not(.oggi):not(.pan-sch) {
+    background: rgba(212, 175, 55, 0.5);
+}
+
+.pan-giorni {
+    display: flex;
+    gap: 5px;
+    margin-top: 6px;
+}
+
+.pan-giorni span {
+    flex: 1;
+    text-align: center;
+    font-size: 10.5px;
+    color: #6f6f6f;
+}
+
+.pan-giorni span.oggi {
+    color: var(--oro);
+    font-weight: 700;
+}
+
+/* Checklist del rilascio */
+.pan-progresso {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    color: var(--sub);
+}
+
+.pan-progresso .pan-barra {
+    flex: 1;
+    margin: 0;
+}
+
+.pan-check {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.pan-check a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #262626;
+    font-size: 13px;
+    color: #d6d6d6;
+    text-decoration: none;
+}
+
+.pan-check li:last-child a {
+    border-bottom: 0;
+}
+
+.pan-check .admin-ms {
+    flex: none;
+    font-size: 20px;
+}
+
+.pan-check .fatto { color: var(--txt); }
+.pan-check .fatto .admin-ms { color: var(--verde); }
+.pan-check .manca .admin-ms { color: #5a5a5a; }
+.pan-check .ignoto .admin-ms { color: var(--giallo); }
+
+.pan-check-t {
+    flex: 1;
+    min-width: 0;
+}
+
+.pan-check a:hover .pan-check-t {
+    color: var(--txt);
+}
+
+.pan-check-sch {
+    padding: 9px 0;
+    border-bottom: 1px solid #262626;
+}
+
+.pan-azione {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--oro);
+    white-space: nowrap;
+}
+
+.pan-info {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--sub);
+    white-space: nowrap;
+}
+
+/* "Prepara rilascio": lampo attorno alla checklist */
+.pan-evidenzia {
+    animation: pan-lampo 1.6s ease;
+}
+
+@keyframes pan-lampo {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+    25% { box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.6); }
+}
+
+/* Ultimi bug */
+.pan-bug {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid #262626;
+    font-size: 13px;
+    color: var(--txt);
+    text-decoration: none;
+}
+
+.pan-bug:last-child {
+    border-bottom: 0;
+}
+
+.pan-bug:hover {
+    color: var(--txt);
+}
+
+.pan-bug:hover .pan-bug-t {
+    text-decoration: underline;
+    text-decoration-color: rgba(255, 255, 255, 0.3);
+}
+
+.pan-bug-t {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pan-tag {
+    flex: none;
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 6px;
+}
+
+.pan-tag.ap { background: rgba(248, 113, 113, 0.15); color: var(--rosso); }
+.pan-tag.lav { background: rgba(250, 204, 21, 0.14); color: var(--giallo); }
+
+.pan-q {
+    flex: none;
+    font-size: 12px;
+    color: var(--sub);
+    white-space: nowrap;
+}
+
+/* Stato vuoto ed errore dentro un blocco */
+.pan-vuoto {
+    padding: 6px 0;
+    font-size: 13px;
+    color: var(--sub);
+}
+
+.pan-errore {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--rosso);
+}
+
+.pan-errore .admin-ms {
+    flex: none;
+    font-size: 16px;
+}
+
+/* Scheletro di caricamento (anche al posto delle barre del grafico) */
+.pan-sch,
+.pan-barre i.pan-sch {
+    display: block;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #232323 25%, #2f2f2f 50%, #232323 75%);
+    background-size: 200% 100%;
+    animation: pan-luccica 1.2s ease-in-out infinite;
+}
+
+.pan-sch-v {
+    width: 55%;
+    height: 26px;
+    margin: 7px 0 6px;
+}
+
+.pan-sch-r {
+    width: 85%;
+    height: 11px;
+    margin: 4px 0;
+}
+
+.pan-sch-r.corta {
+    width: 50%;
+}
+
+@keyframes pan-luccica {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pan-sch,
+    .admin-gira,
+    .pan-evidenzia {
+        animation: none;
+    }
+}
+
+/* Finestre medie: la seconda colonna va sotto la prima */
+@media (max-width: 1180px) {
+    .pan-griglia {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 1060px) {
+    .pan-kpi {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 /* ---------------------------------------------------------------------
    Telefono e finestre strette (sotto i 900 px): menu a scomparsa
    --------------------------------------------------------------------- */
@@ -345,5 +896,39 @@ body.admin-dentro main {
 
     .admin-contenuto {
         padding: 16px 16px 40px;
+    }
+
+    /* Pulsante a destra nella barra (aggiorna la Panoramica) */
+    .admin-barra-dx {
+        margin-left: auto;
+        margin-right: -8px;
+    }
+
+    .admin-solo-computer {
+        display: none !important;
+    }
+
+    .admin-testa h2 {
+        font-size: 20px;
+    }
+
+    .pan-kpi {
+        gap: 10px;
+    }
+
+    .pan-k {
+        padding: 11px 12px;
+    }
+
+    .pan-k-v {
+        font-size: 21px;
+    }
+
+    .pan-stato {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .pan-card {
+        padding: 14px;
     }
 }

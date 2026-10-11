@@ -260,7 +260,11 @@ function showDashboard(user) {
     fetchBugs();
     fetchNotifications();
     // Apre la sezione scritta nell'indirizzo (admin.html#novita); senza # la Panoramica
-    apriSezione(sezioneDaIndirizzo());
+    const iniziale = sezioneDaIndirizzo();
+    apriSezione(iniziale);
+    // I pallini gialli del menu vengono dallo stato dell'app della Panoramica:
+    // si legge anche quando all'accesso si apre un'altra sezione
+    if (iniziale !== 'panoramica') aggiornaStatoPanoramica(0);
 }
 
 // ===== Navigazione: menu laterale e sezione nell'indirizzo =====
@@ -268,7 +272,7 @@ function showDashboard(user) {
 // carica = cosa si ricarica a ogni apertura, come faceva il vecchio gestore delle schede;
 // null = dati già caricati all'accesso da showDashboard (e dopo ogni salvataggio).
 const SEZIONI_ADMIN = {
-    panoramica:   { id: 'panoramica-section',    titolo: 'Panoramica',            carica: null },
+    panoramica:   { id: 'panoramica-section',    titolo: 'Panoramica',            carica: () => caricaPanoramica() },
     statistiche:  { id: 'analytics-section',     titolo: 'Statistiche',           carica: () => { fetchDownloadStats(); fetchUserStats(); fetchVersionRolloutStats(); } },
     versioni:     { id: 'updates-section',       titolo: 'Versioni e patch note', carica: null },
     novita:       { id: 'novita-section',        titolo: 'Novità',                carica: () => caricaElencoNovita() },
@@ -310,6 +314,7 @@ function apriSezione(chiave) {
         else v.removeAttribute('aria-current');
     });
     if (adminBarraTitolo) adminBarraTitolo.textContent = sezione.titolo;
+    document.getElementById('admin-barra-aggiorna')?.classList.toggle('hidden', chiave !== 'panoramica');
     document.title = `${sezione.titolo} · Admin - QuickCheck`;
     if (sezioneAperta !== chiave) window.scrollTo(0, 0);
     sezioneAperta = chiave;
@@ -674,6 +679,7 @@ updateForm.addEventListener('submit', async (e) => {
     } else {
         updateModal.classList.add('hidden');
         fetchUpdates();
+        aggiornaStatoPanoramica();
         showToast('Aggiornamento salvato!');
     }
 });
@@ -686,6 +692,7 @@ async function deleteUpdate(id) {
         showToast('Errore nell\'eliminazione: ' + error.message, 'error');
     } else {
         fetchUpdates();
+        aggiornaStatoPanoramica();
     }
 }
 
@@ -1783,9 +1790,65 @@ function generateDemoStats() {
 }
 
 /**
- * Recupera le statistiche di accesso giornaliero da Supabase (o genera dati demo se attiva la simulazione).
+ * Storico degli utenti unici giorno per giorno (dal più recente), per Statistiche e Panoramica.
  * Interroga prioritariamente la vista aggregata 'v_utenti_unici_giornalieri'.
  * In caso di assenza della vista, esegue il fallback aggregando i record di 'app_accessi'.
+ * Lancia l'errore se nessuna delle due fonti è leggibile.
+ */
+async function leggiStatisticheUtenti(days) {
+    // Query alla vista aggregata SQL su Supabase con il limite richiesto
+    let { data, error } = await _supabase
+        .from('v_utenti_unici_giornalieri')
+        .select('*')
+        .order('data', { ascending: false })
+        .limit(days);
+
+    // Fallback resiliente: se la vista non è ancora presente, aggrega lato client da app_accessi
+    if (error) {
+        console.warn('v_utenti_unici_giornalieri non raggiungibile, fallback su app_accessi:', error.message);
+        const { data: raw, error: rawErr } = await scaricaTutteLeRighe(() => _supabase
+            .from('app_accessi')
+            .select('uuid_utente, data, piattaforma'));
+
+        if (rawErr) throw rawErr;
+
+        const raggruppati = {};
+        (raw || []).forEach(row => {
+            const d = row.data;
+            if (!raggruppati[d]) {
+                raggruppati[d] = {
+                    data: d,
+                    all: new Set(),
+                    apk: new Set(),
+                    pwa: new Set(),
+                    web: new Set()
+                };
+            }
+            raggruppati[d].all.add(row.uuid_utente);
+            if (row.piattaforma === 'android') raggruppati[d].apk.add(row.uuid_utente);
+            else if (row.piattaforma === 'pwa') raggruppati[d].pwa.add(row.uuid_utente);
+            else raggruppati[d].web.add(row.uuid_utente);
+        });
+
+        data = Object.keys(raggruppati).sort().reverse().map(d => ({
+            data: d,
+            utenti_unici_totali: raggruppati[d].all.size,
+            utenti_apk: raggruppati[d].apk.size,
+            utenti_pwa: raggruppati[d].pwa.size,
+            utenti_web_browser: raggruppati[d].web.size
+        }));
+
+        if (days && days < 365) {
+            data = data.slice(0, days);
+        }
+    }
+
+    return data || [];
+}
+
+/**
+ * Recupera le statistiche di accesso giornaliero da Supabase (o genera dati demo se attiva la simulazione)
+ * e le mostra nella sezione Statistiche.
  */
 async function fetchUserStats(days = currentStatsRangeDays) {
     if (!userStatsHistoryList) return;
@@ -1809,54 +1872,7 @@ async function fetchUserStats(days = currentStatsRangeDays) {
             kpiUsersRangeLabel.textContent = days >= 365 ? 'Accessi Totali Storico' : `Accessi Ultimi ${days} Giorni`;
         }
 
-        // Query alla vista aggregata SQL su Supabase con il limite richiesto
-        let { data, error } = await _supabase
-            .from('v_utenti_unici_giornalieri')
-            .select('*')
-            .order('data', { ascending: false })
-            .limit(days);
-
-        // Fallback resiliente: se la vista non è ancora presente, aggrega lato client da app_accessi
-        if (error) {
-            console.warn('v_utenti_unici_giornalieri non raggiungibile, fallback su app_accessi:', error.message);
-            const { data: raw, error: rawErr } = await scaricaTutteLeRighe(() => _supabase
-                .from('app_accessi')
-                .select('uuid_utente, data, piattaforma'));
-            
-            if (rawErr) throw rawErr;
-
-            const raggruppati = {};
-            (raw || []).forEach(row => {
-                const d = row.data;
-                if (!raggruppati[d]) {
-                    raggruppati[d] = {
-                        data: d,
-                        all: new Set(),
-                        apk: new Set(),
-                        pwa: new Set(),
-                        web: new Set()
-                    };
-                }
-                raggruppati[d].all.add(row.uuid_utente);
-                if (row.piattaforma === 'android') raggruppati[d].apk.add(row.uuid_utente);
-                else if (row.piattaforma === 'pwa') raggruppati[d].pwa.add(row.uuid_utente);
-                else raggruppati[d].web.add(row.uuid_utente);
-            });
-
-            data = Object.keys(raggruppati).sort().reverse().map(d => ({
-                data: d,
-                utenti_unici_totali: raggruppati[d].all.size,
-                utenti_apk: raggruppati[d].apk.size,
-                utenti_pwa: raggruppati[d].pwa.size,
-                utenti_web_browser: raggruppati[d].web.size
-            }));
-
-            if (days && days < 365) {
-                data = data.slice(0, days);
-            }
-        }
-
-        renderUserStats(data || []);
+        renderUserStats(await leggiStatisticheUtenti(days));
     } catch (err) {
         console.error('Errore nel recupero telemetria utenti:', err);
         if (userStatsHistoryList) {
@@ -2428,89 +2444,13 @@ async function fetchVersionRolloutStats() {
         const pad = n => String(n).padStart(2, '0');
         const oggiStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 
-        // Query su app_accessi per recuperare la versione dei ping (tutte le pagine, vedi scaricaTutteLeRighe)
         const minDateObj = new Date();
         minDateObj.setDate(minDateObj.getDate() - currentRolloutRangeDays);
         const minDateStr = `${minDateObj.getFullYear()}-${pad(minDateObj.getMonth() + 1)}-${pad(minDateObj.getDate())}`;
-        const creaQuery = () => {
-            const q = _supabase
-                .from('app_accessi')
-                .select('uuid_utente, data, piattaforma, app_version');
-            return currentRolloutRangeDays === 1 ? q.eq('data', oggiStr) : q.gte('data', minDateStr);
-        };
+        const periodo = currentRolloutRangeDays === 1 ? { giorno: oggiStr } : { dal: minDateStr };
 
-        const { data, error } = await scaricaTutteLeRighe(creaQuery);
-        if (error) throw error;
-
-        // Mappiamo ciascun utente univoco al record più recente nel periodo selezionato
-        const latestUserAccess = new Map();
-        (data || []).forEach(row => {
-            const existing = latestUserAccess.get(row.uuid_utente);
-            if (!existing || row.data > existing.data) {
-                latestUserAccess.set(row.uuid_utente, row);
-            }
-        });
-
-        // Filtro per piattaforma (se selezionato 'android_apk' o 'web_pwa')
-        let filteredAccesses = Array.from(latestUserAccess.values());
-        if (currentRolloutPlatform === 'android_apk') {
-            filteredAccesses = filteredAccesses.filter(a => (a.piattaforma || '').toLowerCase() === 'android');
-        } else if (currentRolloutPlatform === 'web_pwa') {
-            filteredAccesses = filteredAccesses.filter(a => {
-                const p = (a.piattaforma || '').toLowerCase();
-                return p === 'pwa' || p === 'web';
-            });
-        }
-
-        const totalActiveUsers = filteredAccesses.length;
-        let totalApk = 0;
-        let totalPwa = 0;
-        let totalWeb = 0;
-
-        // Raggruppamento per versione
-        const versionMap = {};
-        filteredAccesses.forEach(a => {
-            const plat = (a.piattaforma || '').toLowerCase();
-            if (plat === 'android') totalApk++;
-            else if (plat === 'pwa') totalPwa++;
-            else totalWeb++;
-
-            let ver = a.app_version ? a.app_version.trim() : '< v2.0.0 (Legacy)';
-            if (!ver.startsWith('v') && !ver.startsWith('<')) ver = 'v' + ver;
-
-            if (!versionMap[ver]) {
-                versionMap[ver] = {
-                    version: ver,
-                    total: 0,
-                    apk: 0,
-                    pwa: 0,
-                    web: 0
-                };
-            }
-            versionMap[ver].total++;
-            if (plat === 'android') versionMap[ver].apk++;
-            else if (plat === 'pwa') versionMap[ver].pwa++;
-            else versionMap[ver].web++;
-        });
-
-        // Ordinamento semver decrescente (la versione più recente in testa)
-        const sorted = Object.values(versionMap).sort((a, b) => {
-            if (a.version.startsWith('<')) return 1;
-            if (b.version.startsWith('<')) return -1;
-            return semverCompare(a.version, b.version);
-        });
-
-        // Assegna il flag isLatest alla versione più alta
-        if (sorted.length > 0) {
-            sorted[0].isLatest = true;
-        }
-
-        // Calcolo percentuali
-        sorted.forEach(item => {
-            item.pct = totalActiveUsers > 0 ? Number(((item.total / totalActiveUsers) * 100).toFixed(1)) : 0;
-        });
-
-        renderVersionRolloutStats(sorted, totalActiveUsers, totalApk, totalPwa, totalWeb);
+        const r = await calcolaAdozioneVersioni(periodo, currentRolloutPlatform);
+        renderVersionRolloutStats(r.versioni, r.totale, r.apk, r.pwa, r.web);
 
     } catch (err) {
         console.error('Errore nel recupero adozione versioni:', err);
@@ -2520,6 +2460,95 @@ async function fetchVersionRolloutStats() {
             </div>
         `;
     }
+}
+
+/**
+ * Diffusione delle versioni (per Statistiche e Panoramica): ultimo accesso di ogni utente
+ * nel periodo, raggruppato per versione, con la più recente in testa (isLatest).
+ * periodo = { giorno: 'YYYY-MM-DD' } per un solo giorno, oppure { dal: 'YYYY-MM-DD' } (incluso) fino a oggi.
+ * piattaforma = 'all' | 'android_apk' | 'web_pwa'. Lancia l'errore se app_accessi non si legge.
+ */
+async function calcolaAdozioneVersioni(periodo, piattaforma = 'all') {
+    // Query su app_accessi per recuperare la versione dei ping (tutte le pagine, vedi scaricaTutteLeRighe)
+    const creaQuery = () => {
+        const q = _supabase
+            .from('app_accessi')
+            .select('uuid_utente, data, piattaforma, app_version');
+        return periodo.giorno ? q.eq('data', periodo.giorno) : q.gte('data', periodo.dal);
+    };
+
+    const { data, error } = await scaricaTutteLeRighe(creaQuery);
+    if (error) throw error;
+
+    // Mappiamo ciascun utente univoco al record più recente nel periodo selezionato
+    const latestUserAccess = new Map();
+    (data || []).forEach(row => {
+        const existing = latestUserAccess.get(row.uuid_utente);
+        if (!existing || row.data > existing.data) {
+            latestUserAccess.set(row.uuid_utente, row);
+        }
+    });
+
+    // Filtro per piattaforma (se selezionato 'android_apk' o 'web_pwa')
+    let filteredAccesses = Array.from(latestUserAccess.values());
+    if (piattaforma === 'android_apk') {
+        filteredAccesses = filteredAccesses.filter(a => (a.piattaforma || '').toLowerCase() === 'android');
+    } else if (piattaforma === 'web_pwa') {
+        filteredAccesses = filteredAccesses.filter(a => {
+            const p = (a.piattaforma || '').toLowerCase();
+            return p === 'pwa' || p === 'web';
+        });
+    }
+
+    const totalActiveUsers = filteredAccesses.length;
+    let totalApk = 0;
+    let totalPwa = 0;
+    let totalWeb = 0;
+
+    // Raggruppamento per versione
+    const versionMap = {};
+    filteredAccesses.forEach(a => {
+        const plat = (a.piattaforma || '').toLowerCase();
+        if (plat === 'android') totalApk++;
+        else if (plat === 'pwa') totalPwa++;
+        else totalWeb++;
+
+        let ver = a.app_version ? a.app_version.trim() : '< v2.0.0 (Legacy)';
+        if (!ver.startsWith('v') && !ver.startsWith('<')) ver = 'v' + ver;
+
+        if (!versionMap[ver]) {
+            versionMap[ver] = {
+                version: ver,
+                total: 0,
+                apk: 0,
+                pwa: 0,
+                web: 0
+            };
+        }
+        versionMap[ver].total++;
+        if (plat === 'android') versionMap[ver].apk++;
+        else if (plat === 'pwa') versionMap[ver].pwa++;
+        else versionMap[ver].web++;
+    });
+
+    // Ordinamento semver decrescente (la versione più recente in testa)
+    const sorted = Object.values(versionMap).sort((a, b) => {
+        if (a.version.startsWith('<')) return 1;
+        if (b.version.startsWith('<')) return -1;
+        return semverCompare(a.version, b.version);
+    });
+
+    // Assegna il flag isLatest alla versione più alta
+    if (sorted.length > 0) {
+        sorted[0].isLatest = true;
+    }
+
+    // Calcolo percentuali
+    sorted.forEach(item => {
+        item.pct = totalActiveUsers > 0 ? Number(((item.total / totalActiveUsers) * 100).toFixed(1)) : 0;
+    });
+
+    return { versioni: sorted, totale: totalActiveUsers, apk: totalApk, pwa: totalPwa, web: totalWeb };
 }
 
 /**
@@ -4007,6 +4036,7 @@ document.getElementById('config-messaggio-form')?.addEventListener('submit', asy
     } else {
         showToast(payload.messaggio_attivo ? 'Messaggio salvato e attivo' : 'Messaggio salvato (spento)');
         fetchConfigApp(['messaggio']);
+        aggiornaStatoPanoramica();
     }
 });
 
@@ -4087,6 +4117,7 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
         document.getElementById('cfg-mappe-anteprima').style.display = 'none';
         _mappePronte = null;
         fetchConfigApp(['mappe']);
+        aggiornaStatoPanoramica();
     } catch (err) {
         showToast('Errore nella pubblicazione (' + err.message + '): le app continuano a usare la versione precedente', 'error');
         pulsante.disabled = false;
@@ -4141,6 +4172,7 @@ async function ripristinaMappe(nome) {
         if (errConfig) throw new Error(errConfig.message);
         showToast(`${nome} ripristinato come v${versione}`);
         fetchConfigApp(['mappe']);
+        aggiornaStatoPanoramica();
     } catch (err) {
         showToast('Errore nel ripristino: ' + err.message, 'error');
     }
@@ -4185,6 +4217,15 @@ function _compilaDateMenu(dati) {
     document.getElementById('cfg-menu-ciclo').value = dati?.inizio_ciclo || '';
 }
 
+/** Scarica e decomprime il menù indicato da config_app.menu_path (null se non ce n'è uno). Usata anche dalla Panoramica. */
+async function leggiMenuPubblicato(config) {
+    if (!config || !config.menu_path) return null;
+    const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).download(config.menu_path);
+    if (error) throw new Error(error.message);
+    const json = await _gunzip(new Uint8Array(await data.arrayBuffer()));
+    return JSON.parse(new TextDecoder().decode(json));
+}
+
 async function caricaMenuPubblicato() {
     const stato = document.getElementById('cfg-menu-stato');
     if (!stato || !_configApp) return;
@@ -4195,10 +4236,7 @@ async function caricaMenuPubblicato() {
         return;
     }
     try {
-        const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).download(_configApp.menu_path);
-        if (error) throw new Error(error.message);
-        const json = await _gunzip(new Uint8Array(await data.arrayBuffer()));
-        _menuPubblicato = JSON.parse(new TextDecoder().decode(json));
+        _menuPubblicato = await leggiMenuPubblicato(_configApp);
         stato.innerHTML = `Pubblicato: <strong style="color:var(--primary-gold);">${escapeHtml(_menuPubblicato.titolo || 'Menù')}</strong> &middot; v${_configApp.menu_version} &middot; valido dal ${escapeHtml(_menuPubblicato.valido_dal || '?')} al ${escapeHtml(_menuPubblicato.valido_al || '?')} &middot; ${_menuPubblicato.settimane} settimane, 1&ordf; dal ${escapeHtml(_menuPubblicato.inizio_ciclo || '?')}`;
         if (!_menuBozza) _compilaDateMenu(_menuPubblicato);
     } catch (err) {
@@ -4311,6 +4349,7 @@ document.getElementById('cfg-menu-pubblica')?.addEventListener('click', async ()
         document.getElementById('cfg-menu-file').value = '';
         document.getElementById('cfg-menu-anteprima').style.display = 'none';
         fetchConfigApp(['menu']);
+        aggiornaStatoPanoramica();
     } catch (err) {
         showToast('Errore nella pubblicazione del menù (' + err.message + ')', 'error');
     } finally {
@@ -4683,6 +4722,7 @@ document.getElementById('nov-salva')?.addEventListener('click', async () => {
     } else {
         showToast(attiva ? `Novità ${versione} salvate e attive` : `Novità ${versione} salvate (spente)`);
         caricaElencoNovita();
+        aggiornaStatoPanoramica();
     }
 });
 
@@ -4698,5 +4738,485 @@ document.getElementById('nov-elimina')?.addEventListener('click', async () => {
         _novSchede = [];
         renderNovita();
         caricaElencoNovita();
+        aggiornaStatoPanoramica();
     }
+});
+
+// =====================================================================
+// Panoramica (pagina iniziale): quattro numeri, stato dell'app, utenti degli
+// ultimi 14 giorni, checklist del prossimo rilascio e ultimi bug.
+// Ogni blocco si carica per conto suo con uno scheletro; se una lettura fallisce,
+// l'errore compare solo nei blocchi che ne hanno bisogno.
+// I dati arrivano dalle stesse funzioni delle altre sezioni: leggiStatisticheUtenti,
+// calcolaAdozioneVersioni (con scaricaTutteLeRighe), leggiMenuPubblicato.
+// Due gruppi: "numeri" (in alto, grafico, bug) e "stato" (riquadri e checklist, che
+// accendono anche i pallini gialli del menu e si rileggono dopo i salvataggi).
+// =====================================================================
+
+// Ogni aggiornamento ha un numero: i risultati di uno superato da uno più recente si scartano
+const _panGenerazione = { numeri: 0, stato: 0 };
+let _panTimerStato = null;
+
+const PAN_INIZIALI_GIORNI = ['D', 'L', 'M', 'M', 'G', 'V', 'S'];
+
+// Riquadri di stato: nome, icona e sezione del menu a cui portano (per i pallini gialli)
+const PAN_RIQUADRI = {
+    mappe:     { nome: 'Mappe',               icona: 'map',                  sezione: 'mappe' },
+    menu:      { nome: 'Menù mensa',          icona: 'restaurant',           sezione: 'menu' },
+    messaggio: { nome: "Messaggio all'avvio", icona: 'campaign',             sezione: 'messaggio' },
+    novita:    { nome: 'Novità',              icona: 'auto_awesome',         sezione: 'novita' },
+    push:      { nome: 'Push inviate oggi',   icona: 'notifications_active', sezione: 'notifiche' },
+    orari:     { nome: 'Controllo orari',     icona: 'sync',                 sezione: 'notifiche' },
+};
+
+const _panVersione = v => String(v || '').trim().replace(/^v/i, '');
+const _panNumero = n => Number(n || 0).toLocaleString('it-IT');
+const _panPercento = (parte, totale) => (totale > 0 ? Math.round((parte / totale) * 100) : null);
+
+// Data ISO di oggi spostata di [scarto] giorni
+function _panGiorno(scarto) {
+    const d = new Date();
+    d.setDate(d.getDate() + scarto);
+    return _isoOggi(d);
+}
+
+// Giorni da una data ISO a un'altra (negativo se b viene prima di a)
+function _panGiorniTra(a, b) {
+    return Math.round((new Date(b + 'T00:00:00') - new Date(a + 'T00:00:00')) / 864e5);
+}
+
+function _panDataLunga(iso) {
+    return new Date(iso + 'T00:00:00').toLocaleDateString('it-IT', { day: 'numeric', month: 'long' });
+}
+
+// "adesso", "5 minuti fa", "2 ore fa" (meno di 24 ore), poi a giorni di calendario:
+// "ieri", "3 giorni fa"; oltre un mese la data
+function tempoTrascorso(quando) {
+    const d = new Date(quando);
+    const minuti = Math.floor((Date.now() - d.getTime()) / 60000);
+    if (minuti < 1) return 'adesso';
+    if (minuti < 60) return minuti === 1 ? '1 minuto fa' : `${minuti} minuti fa`;
+    const ore = Math.floor(minuti / 60);
+    if (ore < 24) return ore === 1 ? '1 ora fa' : `${ore} ore fa`;
+    const giorni = _panGiorniTra(_isoOggi(d), _isoOggi());
+    if (giorni <= 1) return 'ieri';
+    if (giorni < 30) return `${giorni} giorni fa`;
+    return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// Versione più recente in updates (anche se non ancora segnata come ultima)
+function _panPiuRecente(versioni) {
+    return [...versioni].sort((a, b) =>
+        semverCompare(a.version, b.version) || String(b.created_at || '').localeCompare(String(a.created_at || '')))[0] || null;
+}
+
+/**
+ * Push automatiche di oggi: tabelle invii_automatici (una riga per modifica d'orario e
+ * dispositivo, scritta prima dell'invio: esito resta vuoto) e promemoria_inviati (esito
+ * "ok" o "errore"). Senza una policy di lettura per gli utenti autenticati PostgREST
+ * risponde "permission denied": in quel caso { disponibile: false }.
+ */
+async function leggiPushOggi() {
+    const mezzanotte = new Date();
+    mezzanotte.setHours(0, 0, 0, 0);
+    const da = mezzanotte.toISOString();
+    const conta = (tabella, colonna) => _supabase.from(tabella).select(colonna, { count: 'exact', head: true }).gte('inviato_il', da);
+    const risposte = await Promise.all([
+        conta('invii_automatici', 'modifica_id'),
+        conta('promemoria_inviati', 'evento_id'),
+        conta('promemoria_inviati', 'evento_id').eq('esito', 'errore'),
+        _supabase.from('invii_automatici').select('inviato_il, esito').order('inviato_il', { ascending: false }).limit(1),
+    ]);
+    const conErrore = risposte.filter(r => r.error);
+    if (conErrore.length) {
+        // Le richieste di solo conteggio non hanno corpo: il permesso negato si riconosce dallo stato HTTP
+        const negato = conErrore.some(r => r.status === 401 || r.status === 403 || r.error.code === '42501' || /permission denied/i.test(r.error.message || ''));
+        if (negato) return { disponibile: false };
+        throw new Error(conErrore.map(r => r.error.message).find(Boolean) || 'lettura non riuscita');
+    }
+    const [modifiche, promemoria, errori, ultimo] = risposte;
+    return {
+        disponibile: true,
+        modifiche: modifiche.count || 0,
+        promemoria: promemoria.count || 0,
+        erroriPromemoria: errori.count || 0,
+        ultimo: (ultimo.data || [])[0] || null,
+    };
+}
+
+// Letture usate da più blocchi: ognuna parte una volta sola per aggiornamento, e solo se serve
+function _panLetture() {
+    const fatte = {};
+    const una = (nome, leggi) => () => (fatte[nome] = fatte[nome] || leggi());
+    const righe = async (query) => {
+        const { data, error } = await query;
+        if (error) throw new Error(error.message || 'lettura non riuscita');
+        return data;
+    };
+    const l = {
+        utenti: una('utenti', () => leggiStatisticheUtenti(14)),
+        adozione: una('adozione', () => calcolaAdozioneVersioni({ dal: _panGiorno(-6) }, 'all')),
+        versioni: una('versioni', () => righe(_supabase.from('updates').select('version, changes, download_url, is_latest, created_at'))),
+        config: una('config', () => righe(_supabase.from('config_app').select('*').eq('id', 1).single())),
+        novita: una('novita', () => righe(_supabase.from('novita_app').select('versione, attiva, schede'))),
+        bug: una('bug', () => righe(_supabase.from('bugs').select('id, title, status, created_at').order('created_at', { ascending: false }))),
+        push: una('push', () => leggiPushOggi()),
+    };
+    l.menu = una('menu', () => l.config().then(c => leggiMenuPubblicato(c)));
+    return l;
+}
+
+const _panScheletroRiga = (classe = '') => `<span class="pan-sch pan-sch-r ${classe}"></span>`;
+const PAN_SCHELETRO_KPI = '<span class="pan-sch pan-sch-v"></span>' + _panScheletroRiga('corta');
+
+function _panErrore(err) {
+    const testo = err && err.message ? err.message : String(err);
+    return `<div class="pan-errore"><span class="admin-ms">error</span><span>Non disponibile: ${escapeHtml(testo)}</span></div>`;
+}
+
+const _panKpiHtml = (valore, dettaglio, barra = null) =>
+    `<div class="pan-k-v">${valore}</div><div class="pan-k-d">${dettaglio}</div>` +
+    (barra === null ? '' : `<div class="pan-barra"><i style="width:${barra}%"></i></div>`);
+
+/**
+ * Carica un blocco: scheletro subito, poi il contenuto oppure l'errore, solo lì.
+ * lavoro() restituisce l'HTML, oppure { html, poi } con poi() eseguita dopo averlo scritto.
+ */
+async function _panBlocco(el, gruppo, gen, scheletro, lavoro, erroreHtml = _panErrore) {
+    if (!el) return;
+    el.setAttribute('aria-busy', 'true');
+    el.innerHTML = scheletro;
+    try {
+        const r = await lavoro();
+        if (gen !== _panGenerazione[gruppo]) return;
+        el.innerHTML = typeof r === 'string' ? r : r.html;
+        if (r && r.poi) r.poi();
+    } catch (err) {
+        if (gen !== _panGenerazione[gruppo]) return;
+        console.error('Panoramica:', err);
+        el.innerHTML = erroreHtml(err);
+    } finally {
+        if (gen === _panGenerazione[gruppo]) el.removeAttribute('aria-busy');
+    }
+}
+
+// --- Gruppo "numeri": quattro numeri in alto, grafico dei 14 giorni, ultimi bug ---
+function _panCaricaNumeri(l) {
+    const gen = ++_panGenerazione.numeri;
+    const corpo = id => document.querySelector(`#${id} .pan-k-corpo`);
+    const erroreKpi = err => '<div class="pan-k-v">—</div>' + _panErrore(err);
+
+    return Promise.all([
+        // 1. Utenti oggi e differenza con ieri
+        _panBlocco(corpo('pan-k-oggi'), 'numeri', gen, PAN_SCHELETRO_KPI, async () => {
+            const record = await l.utenti();
+            const valore = giorno => Number((record.find(r => r.data === giorno) || {}).utenti_unici_totali) || 0;
+            const oggi = valore(_panGiorno(0));
+            const ieri = valore(_panGiorno(-1));
+            let dettaglio = 'nessun dato per ieri';
+            if (ieri > 0) {
+                const diff = Math.round(((oggi - ieri) / ieri) * 100);
+                if (diff > 0) dettaglio = `<span class="pan-su"><span aria-hidden="true">▲</span><span class="admin-sr">più</span> ${diff}%</span> rispetto a ieri`;
+                else if (diff < 0) dettaglio = `<span class="pan-giu"><span aria-hidden="true">▼</span><span class="admin-sr">meno</span> ${-diff}%</span> rispetto a ieri`;
+                else dettaglio = 'come ieri';
+            }
+            return _panKpiHtml(_panNumero(oggi), dettaglio);
+        }, erroreKpi),
+
+        // 2. Utenti diversi negli ultimi 7 giorni (oggi compreso) e media giornaliera
+        _panBlocco(corpo('pan-k-7g'), 'numeri', gen, PAN_SCHELETRO_KPI, async () => {
+            const a = await l.adozione();
+            let media = 'media non disponibile';
+            try {
+                const finestra = (await l.utenti()).filter(r => r.data >= _panGiorno(-6));
+                if (finestra.length) {
+                    const somma = finestra.reduce((s, r) => s + (Number(r.utenti_unici_totali) || 0), 0);
+                    media = `media ${_panNumero(Math.round(somma / finestra.length))} al giorno`;
+                }
+            } catch (_) { /* il numero principale resta valido anche senza la media */ }
+            return _panKpiHtml(_panNumero(a.totale), media);
+        }, erroreKpi),
+
+        // 3. Utenti degli ultimi 7 giorni sulla versione segnata come ultima in updates
+        _panBlocco(corpo('pan-k-versione'), 'numeri', gen, PAN_SCHELETRO_KPI, async () => {
+            const [a, versioni] = await Promise.all([l.adozione(), l.versioni()]);
+            const ultima = versioni.find(v => v.is_latest);
+            if (!ultima) return _panKpiHtml('—', 'nessuna versione segnata come ultima');
+            const nome = _panVersione(ultima.version);
+            const voce = a.versioni.find(v => _panVersione(v.version) === nome) || { total: 0, apk: 0, pwa: 0, web: 0 };
+            const pct = _panPercento(voce.total, a.totale);
+            // Come in Statistiche: "PWA" comprende anche il sito aperto nel browser
+            const pwa = _panPercento((voce.pwa || 0) + (voce.web || 0), a.pwa + a.web);
+            const apk = _panPercento(voce.apk || 0, a.apk);
+            const fmt = p => (p === null ? '–' : `${p}%`);
+            return _panKpiHtml(pct === null ? '—' : `${pct}%`,
+                `v${escapeHtml(nome)} · <span title="PWA e sito nel browser">PWA ${fmt(pwa)}</span> · APK ${fmt(apk)}`, pct || 0);
+        }, erroreKpi),
+
+        // 4. Bug aperti, in lavorazione e risolti
+        _panBlocco(corpo('pan-k-bug'), 'numeri', gen, PAN_SCHELETRO_KPI, async () => {
+            const bug = await l.bug();
+            const conta = stato => bug.filter(b => b.status === stato).length;
+            return _panKpiHtml(_panNumero(conta('open')), `${_panNumero(conta('in_progress'))} in lavorazione · ${_panNumero(conta('resolved'))} risolti`);
+        }, erroreKpi),
+
+        // Grafico: utenti unici al giorno negli ultimi 14 giorni, oggi in oro
+        _panBlocco(document.getElementById('pan-grafico'), 'numeri', gen,
+            `<div class="pan-barre">${'<i class="pan-sch"></i>'.repeat(14)}</div>`, async () => {
+                const perGiorno = new Map((await l.utenti()).map(r => [r.data, Number(r.utenti_unici_totali) || 0]));
+                const giorni = Array.from({ length: 14 }, (_, i) => _panGiorno(i - 13));
+                const valori = giorni.map(g => perGiorno.get(g) || 0);
+                if (!valori.some(Boolean)) return '<div class="pan-vuoto">Nessun accesso registrato negli ultimi 14 giorni.</div>';
+                const massimo = Math.max(...valori);
+                const barre = giorni.map((g, i) => {
+                    const etichetta = new Date(g + 'T00:00:00').toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' });
+                    const altezza = Math.max(2, Math.round((valori[i] / massimo) * 100));
+                    return `<i class="${i === 13 ? 'oggi' : ''}" style="height:${altezza}%" title="${etichetta}: ${_panNumero(valori[i])} utenti"></i>`;
+                }).join('');
+                const iniziali = giorni.map((g, i) =>
+                    `<span class="${i === 13 ? 'oggi' : ''}">${PAN_INIZIALI_GIORNI[new Date(g + 'T00:00:00').getDay()]}</span>`).join('');
+                const descrizione = `Utenti unici al giorno negli ultimi 14 giorni: oggi ${_panNumero(valori[13])}, massimo ${_panNumero(massimo)}`;
+                return `<div class="pan-barre" role="img" aria-label="${descrizione}">${barre}</div><div class="pan-giorni" aria-hidden="true">${iniziali}</div>`;
+            }),
+
+        // Ultimi 3 bug non risolti, dal più recente
+        _panBlocco(document.getElementById('pan-bug'), 'numeri', gen,
+            `<div class="pan-bug">${_panScheletroRiga()}</div>`.repeat(3), async () => {
+                const aperti = (await l.bug()).filter(b => b.status !== 'resolved').slice(0, 3);
+                if (!aperti.length) return '<div class="pan-vuoto">Nessun bug da risolvere.</div>';
+                const etichette = { open: ['ap', 'APERTO'], in_progress: ['lav', 'IN CORSO'] };
+                return aperti.map(b => {
+                    const [classe, testo] = etichette[b.status] || ['ap', String(b.status || '').toUpperCase()];
+                    return `<a class="pan-bug" href="#bug"><span class="pan-tag ${classe}">${escapeHtml(testo)}</span><span class="pan-bug-t">${escapeHtml(b.title)}</span><span class="pan-q">${b.created_at ? tempoTrascorso(b.created_at) : ''}</span></a>`;
+                }).join('');
+            }),
+    ]);
+}
+
+// --- Gruppo "stato": riquadri dello stato dell'app, checklist e pallini del menu ---
+
+// Contenuto di ogni riquadro: { tono: ok|att|ko|neu, titolo, testo (HTML già sicuro), motivo (per il pallino) }
+function _panLavoriStato(l) {
+    const oggi = _isoOggi();
+    return {
+        mappe: async () => {
+            const c = await l.config();
+            const versione = escapeHtml(String(c.mappa_version ?? '-'));
+            if (!(c.mappa_path || '').trim()) return { tono: 'neu', titolo: 'Mappe: nessun file pubblicato', testo: `Le app usano le mappe incluse (v${versione})` };
+            const dettagli = [c.mappa_bytes ? _kb(c.mappa_bytes) : '', c.aggiornato_il ? `aggiornata ${tempoTrascorso(c.aggiornato_il)}` : ''];
+            return { tono: 'ok', titolo: `Mappe v${versione} pubblicate`, testo: dettagli.filter(Boolean).join(' · ') };
+        },
+        menu: async () => {
+            const m = await l.menu();
+            if (!m) return { tono: 'ko', titolo: 'Menù mensa non pubblicato', testo: 'Pubblicalo dalla sezione Menù mensa', motivo: 'Menù mensa non pubblicato' };
+            const nome = escapeHtml(m.titolo || 'Menù');
+            if (!m.valido_al) return { tono: 'ko', titolo: 'Menù mensa senza data di scadenza', testo: nome, motivo: 'Menù mensa senza date di validità' };
+            const fine = _panDataLunga(m.valido_al);
+            const restano = _panGiorniTra(oggi, m.valido_al);
+            if (restano < 0) return { tono: 'ko', titolo: 'Menù mensa scaduto', testo: `${nome}, valido fino al ${fine}`, motivo: `Menù mensa scaduto il ${fine}` };
+            if (m.valido_dal && m.valido_dal > oggi) {
+                return { tono: 'att', titolo: `Menù mensa in vigore dal ${_panDataLunga(m.valido_dal)}`, testo: `${nome}, oggi non è ancora valido`, motivo: 'Il menù pubblicato oggi non è ancora in vigore' };
+            }
+            if (restano <= 7) {
+                const quando = restano === 0 ? 'scade oggi' : (restano === 1 ? 'scade domani' : `scade tra ${restano} giorni`);
+                return { tono: 'att', titolo: `Menù mensa: ${quando}`, testo: `${nome}, valido fino al ${fine}`, motivo: `Menù mensa: ${quando}` };
+            }
+            return { tono: 'ok', titolo: `Menù mensa valido fino al ${fine}`, testo: nome };
+        },
+        messaggio: async () => {
+            const c = await l.config();
+            const titolo = (c.titolo_messaggio || '').trim();
+            if (c.messaggio_attivo) {
+                const dettagli = [titolo ? `"${escapeHtml(titolo)}"` : '', c.solo_vecchi_utenti ? "solo a chi usava già l'app" : ''];
+                return { tono: 'ok', titolo: "Messaggio all'avvio acceso", testo: dettagli.filter(Boolean).join(' · ') };
+            }
+            return { tono: 'neu', titolo: "Messaggio all'avvio spento", testo: titolo ? `Ultimo: "${escapeHtml(titolo)}"` : '' };
+        },
+        novita: async () => {
+            const [versioni, novita] = await Promise.all([l.versioni(), l.novita()]);
+            const ultima = versioni.find(v => v.is_latest);
+            if (!ultima) return { tono: 'neu', titolo: 'Novità: nessuna versione segnata come ultima', testo: 'Si controlla la versione "Ultima" di Versioni e patch note' };
+            const nome = _panVersione(ultima.version);
+            const n = novita.find(r => _panVersione(r.versione) === nome);
+            const schede = n && Array.isArray(n.schede) ? n.schede.length : 0;
+            const v = escapeHtml(nome);
+            if (!n) return { tono: 'ko', titolo: `Novità ${v} mancanti`, testo: 'Chi aggiorna a questa versione non vede la schermata delle novità', motivo: `Novità ${nome} mancanti` };
+            if (!n.attiva) return { tono: 'ko', titolo: `Novità ${v} spente`, testo: 'Vanno attivate dalla sezione Novità', motivo: `Novità ${nome} spente` };
+            if (!schede) return { tono: 'ko', titolo: `Novità ${v} senza schede`, testo: 'Aggiungi almeno una pagina', motivo: `Novità ${nome} senza schede` };
+            return { tono: 'ok', titolo: `Novità ${v} attive`, testo: `${schede} ${schede === 1 ? 'scheda' : 'schede'}` };
+        },
+        push: async () => {
+            const p = await l.push();
+            if (!p.disponibile) {
+                return { tono: 'neu', icona: 'notifications_off', titolo: 'Push inviate oggi: non disponibile', testo: 'Il pannello non ha il permesso di leggere invii_automatici e promemoria_inviati' };
+            }
+            const totale = p.modifiche + p.promemoria;
+            const testo = `${_panNumero(p.modifiche)} per modifiche d'orario · ${_panNumero(p.promemoria)} promemoria` +
+                (p.erroriPromemoria ? ` · ${_panNumero(p.erroriPromemoria)} non consegnati` : '');
+            if (p.erroriPromemoria) {
+                return { tono: 'att', titolo: `Push: ${_panNumero(totale)} inviate oggi`, testo, motivo: `${p.erroriPromemoria} promemoria non consegnati oggi` };
+            }
+            return { tono: totale ? 'ok' : 'neu', titolo: totale ? `Push: ${_panNumero(totale)} inviate oggi` : 'Push: nessuna inviata oggi', testo };
+        },
+        orari: async () => {
+            const p = await l.push();
+            if (!p.disponibile) return { tono: 'neu', icona: 'sync_disabled', titolo: 'Controllo orari: non disponibile', testo: 'Serve il permesso di leggere invii_automatici' };
+            if (!p.ultimo) return { tono: 'neu', titolo: 'Controllo orari', testo: 'Nessun avviso di modifica inviato finora' };
+            const d = new Date(p.ultimo.inviato_il);
+            const quando = `${d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' })} alle ${d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}`;
+            // invii_automatici registra gli avvisi inviati, non le esecuzioni del controllo
+            return { tono: 'ok', titolo: 'Controllo orari', testo: `Ultimo avviso di modifica: ${quando} (${tempoTrascorso(d)})` };
+        },
+    };
+}
+
+// Disegna un riquadro di stato (scheletro, contenuto o errore) e restituisce il risultato
+async function _panRiquadro(chiave, gen, lavoro) {
+    const el = document.getElementById('pan-s-' + chiave);
+    const info = PAN_RIQUADRI[chiave];
+    if (!el) return null;
+    const disegna = (tono, icona, titolo, testo) => {
+        el.className = `pan-s ${tono}`;
+        el.innerHTML = `<div class="pan-s-ic"><span class="admin-ms">${icona}</span></div>` +
+            `<div class="pan-s-testi"><b>${titolo}</b>${testo ? `<small>${testo}</small>` : ''}</div>`;
+    };
+    el.className = 'pan-s';
+    el.setAttribute('aria-busy', 'true');
+    el.innerHTML = `<div class="pan-s-ic pan-sch"></div><div class="pan-s-testi">${_panScheletroRiga()}${_panScheletroRiga('corta')}</div>`;
+    try {
+        const r = await lavoro();
+        if (gen !== _panGenerazione.stato) return null;
+        disegna(r.tono, r.icona || info.icona, r.titolo, r.testo);
+        return r;
+    } catch (err) {
+        if (gen !== _panGenerazione.stato) return null;
+        console.error(`Panoramica (${info.nome}):`, err);
+        disegna('err', 'error', `${info.nome}: errore di lettura`, escapeHtml(err && err.message ? err.message : String(err)));
+        return null;
+    } finally {
+        if (gen === _panGenerazione.stato) el.removeAttribute('aria-busy');
+    }
+}
+
+// Checklist del rilascio: versione più recente in updates, ogni voce si spunta da sola.
+// I link d'azione aprono soltanto la sezione giusta: non modificano nulla.
+async function _panChecklist(l) {
+    const versione = _panPiuRecente(await l.versioni());
+    const titolo = document.getElementById('pan-checklist-titolo');
+    if (!versione) {
+        return { html: '<div class="pan-vuoto">Nessuna versione in Versioni e patch note.</div>', poi: () => { titolo.textContent = 'Rilascio'; } };
+    }
+    const nome = _panVersione(versione.version);
+    const oggi = _isoOggi();
+    const [config, menu, novita] = await Promise.allSettled([l.config(), l.menu(), l.novita()]);
+    // Voce con lettura non riuscita: "non verificabile", senza toccare le altre
+    const dalla = (risposta, voce) => (risposta.status === 'fulfilled' ? voce(risposta.value) : { ignoto: risposta.reason });
+    const note = (Array.isArray(versione.changes) ? versione.changes : []).filter(c => String(c).trim());
+
+    const voci = [
+        { fatto: note.length > 0, testo: `Versione ${nome} con patch note`, info: note.length ? `${note.length} ${note.length === 1 ? 'voce' : 'voci'}` : '', azione: 'Aggiungi', sezione: 'versioni' },
+        { testo: 'Mappe pubblicate', sezione: 'mappe', azione: 'Pubblica', ...dalla(config, c => ({
+            fatto: !!(c.mappa_path || '').trim(),
+            testo: (c.mappa_path || '').trim() ? `Mappe pubblicate (v${c.mappa_version})` : 'Mappe pubblicate',
+        })) },
+        { testo: 'Menù mensa valido oggi', sezione: 'menu', azione: 'Pubblica', ...dalla(menu, m => {
+            const valido = !!m && !!m.valido_dal && !!m.valido_al && m.valido_dal <= oggi && oggi <= m.valido_al;
+            return { fatto: valido, info: valido ? `fino al ${_panDataLunga(m.valido_al)}` : '' };
+        }) },
+        { testo: `Novità ${nome} attive`, sezione: 'novita', ...dalla(novita, righe => {
+            const n = righe.find(r => _panVersione(r.versione) === nome);
+            const schede = n && Array.isArray(n.schede) ? n.schede.length : 0;
+            return {
+                fatto: !!n && !!n.attiva && schede > 0,
+                info: schede ? `${schede} ${schede === 1 ? 'scheda' : 'schede'}` : '',
+                azione: !n ? 'Crea' : (!n.attiva ? 'Attiva' : 'Completa'),
+            };
+        }) },
+        { fatto: !!String(versione.download_url || '').trim(), testo: "Link dell'APK inserito", azione: 'Aggiungi', sezione: 'versioni' },
+        { fatto: !!versione.is_latest, testo: 'Segnata come "Ultima versione"', azione: 'Segna', sezione: 'versioni' },
+    ];
+
+    const fatte = voci.filter(v => v.fatto).length;
+    const righe = voci.map(v => {
+        const stato = v.ignoto ? 'ignoto' : (v.fatto ? 'fatto' : 'manca');
+        const icona = { ignoto: 'help', fatto: 'check_circle', manca: 'radio_button_unchecked' }[stato];
+        const lettore = { ignoto: 'Non verificabile: ', fatto: 'Fatto: ', manca: 'Da fare: ' }[stato];
+        let destra = '';
+        if (v.ignoto) destra = `<span class="pan-info" title="${escapeHtml(v.ignoto.message || String(v.ignoto))}">non verificabile</span>`;
+        else if (v.fatto) destra = v.info ? `<span class="pan-info">${escapeHtml(v.info)}</span>` : '';
+        else destra = `<span class="pan-azione">${v.azione}</span>`;
+        return `<li><a class="${stato}" href="#${v.sezione}"><span class="admin-ms" aria-hidden="true">${icona}</span>` +
+            `<span class="pan-check-t"><span class="admin-sr">${lettore}</span>${escapeHtml(v.testo)}</span>${destra}</a></li>`;
+    }).join('');
+
+    return {
+        html: `<div class="pan-progresso"><span>${fatte} di ${voci.length}</span><div class="pan-barra"><i style="width:${Math.round((fatte / voci.length) * 100)}%"></i></div></div><ul class="pan-check">${righe}</ul>`,
+        poi: () => { titolo.textContent = `Rilascio ${nome}`; },
+    };
+}
+
+function _panCaricaStato(l) {
+    const gen = ++_panGenerazione.stato;
+    const lavori = _panLavoriStato(l);
+    const chiavi = Object.keys(PAN_RIQUADRI);
+    const riquadri = Promise.all(chiavi.map(k => _panRiquadro(k, gen, lavori[k]))).then(risultati => {
+        if (gen !== _panGenerazione.stato) return;
+        // Pallino giallo accanto alla voce del menu per ogni riquadro giallo o rosso
+        const problemi = {};
+        risultati.forEach((r, i) => {
+            const sezione = PAN_RIQUADRI[chiavi[i]].sezione;
+            if (r && (r.tono === 'att' || r.tono === 'ko') && !problemi[sezione]) problemi[sezione] = r.motivo || r.titolo;
+        });
+        new Set(chiavi.map(k => PAN_RIQUADRI[k].sezione)).forEach(sezione => segnalaVoceMenu(sezione, problemi[sezione] || null));
+    });
+    const checklist = _panBlocco(document.getElementById('pan-checklist'), 'stato', gen,
+        `<div class="pan-progresso">${_panScheletroRiga('corta')}</div>` + `<div class="pan-check-sch">${_panScheletroRiga()}</div>`.repeat(6),
+        () => _panChecklist(l));
+    return Promise.all([riquadri, checklist]);
+}
+
+// Ricarica tutta la Panoramica (apertura della sezione e pulsante "Aggiorna")
+function caricaPanoramica() {
+    const l = _panLetture();
+    const pulsante = document.getElementById('pan-aggiorna');
+    const icone = ['pan-aggiorna', 'admin-barra-aggiorna'].map(id => document.querySelector(`#${id} .admin-ms`)).filter(Boolean);
+    const data = document.getElementById('pan-data');
+    const oggi = new Date().toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+    const giorno = oggi.charAt(0).toUpperCase() + oggi.slice(1);
+    if (data) data.textContent = `${giorno} · aggiornamento in corso…`;
+    if (pulsante) pulsante.disabled = true;
+    icone.forEach(i => i.classList.add('admin-gira'));
+
+    const numeri = _panCaricaNumeri(l);
+    const gen = _panGenerazione.numeri;
+    return Promise.all([numeri, _panCaricaStato(l)]).finally(() => {
+        if (gen !== _panGenerazione.numeri) return;
+        if (pulsante) pulsante.disabled = false;
+        icone.forEach(i => i.classList.remove('admin-gira'));
+        const ora = new Date().toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+        if (data) data.textContent = `${giorno} · aggiornata alle ${ora}`;
+    });
+}
+
+// Rilegge solo lo stato dell'app (riquadri, checklist, pallini) dopo un salvataggio in
+// un'altra sezione, così i pallini gialli non restano accesi su problemi già risolti.
+function aggiornaStatoPanoramica(ritardo = 400) {
+    clearTimeout(_panTimerStato);
+    _panTimerStato = setTimeout(() => {
+        if (!adminDashboard.classList.contains('hidden')) _panCaricaStato(_panLetture());
+    }, ritardo);
+}
+
+document.getElementById('pan-aggiorna')?.addEventListener('click', caricaPanoramica);
+document.getElementById('admin-barra-aggiorna')?.addEventListener('click', caricaPanoramica);
+
+// "Prepara rilascio": porta alla checklist e la mette in evidenza
+document.getElementById('pan-prepara')?.addEventListener('click', () => {
+    const card = document.getElementById('pan-checklist-card');
+    if (!card) return;
+    const ridotto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    card.scrollIntoView({ behavior: ridotto ? 'auto' : 'smooth', block: 'start' });
+    card.classList.remove('pan-evidenzia');
+    void card.offsetWidth; // riavvia l'animazione se il pulsante viene premuto di nuovo
+    card.classList.add('pan-evidenzia');
 });
