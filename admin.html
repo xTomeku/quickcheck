@@ -1177,21 +1177,12 @@
             <form id="feature-form">
                 <input type="hidden" id="feature-id">
                 <div class="form-group">
-                    <label for="f-icon">Icona (nome di un'icona Material dall'elenco, es: restaurant, oppure un'emoji)</label>
-                    <input type="text" id="f-icon" class="form-control" placeholder="Es: calendar_month" list="f-icon-elenco" autocomplete="off">
-                    <!-- Stessi nomi di ICONE_FUNZIONI in script.js (il sito carica solo queste icone) -->
-                    <datalist id="f-icon-elenco">
-                        <option value="calendar_month"><option value="dashboard_customize"><option value="notifications_active">
-                        <option value="map"><option value="directions_bus"><option value="restaurant"><option value="meeting_room">
-                        <option value="local_library"><option value="contacts"><option value="widgets"><option value="search">
-                        <option value="school"><option value="star"><option value="explore"><option value="place">
-                        <option value="menu_book"><option value="notifications"><option value="campaign"><option value="alarm">
-                        <option value="event_busy"><option value="calendar_view_day"><option value="local_hospital">
-                        <option value="phonelink_setup"><option value="ios_share"><option value="settings"><option value="palette">
-                        <option value="dark_mode"><option value="language"><option value="wifi"><option value="speed">
-                        <option value="bolt"><option value="lock"><option value="build"><option value="auto_awesome">
-                        <option value="new_releases"><option value="celebration">
-                    </datalist>
+                    <!-- Valore salvato in features.icon: nome dell'icona Material scelta nella griglia oppure l'emoji
+                         scritta sotto. Griglia compilata da admin-js/sito.js (ICONE_FUNZIONI_PANNELLO). -->
+                    <label id="f-icon-etichetta">Icona</label>
+                    <input type="hidden" id="f-icon">
+                    <div id="f-icon-griglia" class="icone-griglia" role="radiogroup" aria-labelledby="f-icon-etichetta"></div>
+                    <input type="text" id="f-icon-emoji" class="form-control icone-emoji" placeholder="…oppure scrivi un'emoji (es. 🎓)" autocomplete="off" aria-label="Emoji al posto dell'icona">
                 </div>
                 <div class="form-group">
                     <label for="f-title">Titolo</label>

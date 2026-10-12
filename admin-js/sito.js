@@ -90,7 +90,7 @@ async function fetchCredits() {
         btn.addEventListener('click', () => deleteCredit(btn.dataset.id));
     });
 
-    initSortable(creditsList, 'credits');
+    initSortable(creditsList, 'credits', fetchCredits);
 }
 
 function openCreditEditModal(id, data) {
@@ -208,7 +208,7 @@ async function fetchContacts() {
         btn.addEventListener('click', () => deleteContact(btn.dataset.id));
     });
 
-    initSortable(contactsList, 'contacts');
+    initSortable(contactsList, 'contacts', fetchContacts);
 }
 
 function openContactEditModal(id, data) {
@@ -324,7 +324,7 @@ async function fetchLegal() {
         btn.addEventListener('click', () => deleteLegal(btn.dataset.id));
     });
 
-    initSortable(legalList, 'legal');
+    initSortable(legalList, 'legal', fetchLegal);
 }
 
 function openLegalEditModal(id, data) {
@@ -436,7 +436,57 @@ async function fetchFeatures() {
         btn.addEventListener('click', () => deleteFeature(btn.dataset.id));
     });
 
-    initSortable(featuresList, 'features');
+    initSortable(featuresList, 'features', fetchFeatures);
+}
+
+// Icone selezionabili per le funzionalità del sito, con il nome in italiano.
+// Devono essere le stesse di ICONE_FUNZIONI in script.js (il sito carica solo quelle).
+const ICONE_FUNZIONI_PANNELLO = [
+    ['calendar_month', 'Calendario'], ['calendar_view_day', 'Giornata'], ['dashboard_customize', 'Personalizza'],
+    ['notifications_active', 'Notifiche'], ['notifications', 'Campanella'], ['alarm', 'Sveglia'],
+    ['event_busy', 'Lezione annullata'], ['campaign', 'Annuncio'], ['map', 'Mappa'], ['place', 'Luogo'],
+    ['explore', 'Esplora'], ['directions_bus', 'Autobus'], ['restaurant', 'Mensa'], ['meeting_room', 'Aula'],
+    ['school', 'Università'], ['local_library', 'Biblioteca'], ['menu_book', 'Libro'], ['contacts', 'Rubrica'],
+    ['search', 'Cerca'], ['star', 'Preferiti'], ['widgets', 'Widget'], ['local_hospital', 'Sanità'],
+    ['phonelink_setup', 'Configurazione'], ['ios_share', 'Condividi'], ['settings', 'Impostazioni'],
+    ['palette', 'Colori'], ['dark_mode', 'Tema scuro'], ['language', 'Lingua'], ['wifi', 'Wi-Fi'],
+    ['speed', 'Velocità'], ['bolt', 'Fulmine'], ['lock', 'Privacy'], ['build', 'Correzioni'],
+    ['auto_awesome', 'Novità'], ['new_releases', 'Nuovo'], ['celebration', 'Festa'],
+];
+
+const fIcona = document.getElementById('f-icon');
+const fIconaGriglia = document.getElementById('f-icon-griglia');
+const fIconaEmoji = document.getElementById('f-icon-emoji');
+
+if (fIconaGriglia) {
+    fIconaGriglia.innerHTML = ICONE_FUNZIONI_PANNELLO.map(([nome, etichetta]) =>
+        `<button type="button" class="icone-scelta" role="radio" aria-checked="false" data-icona="${nome}" title="${etichetta} (${nome})">` +
+        `<span class="admin-ms">${nome}</span><small>${etichetta}</small></button>`).join('');
+    fIconaGriglia.addEventListener('click', (e) => {
+        const b = e.target.closest('.icone-scelta');
+        if (!b) return;
+        fIcona.value = b.dataset.icona;
+        fIconaEmoji.value = '';
+        mostraIconaFunzione();
+    });
+    fIconaEmoji.addEventListener('input', () => {
+        fIcona.value = fIconaEmoji.value.trim();
+        mostraIconaFunzione();
+    });
+}
+
+// Allinea griglia e campo emoji al valore di f-icon (all'apertura della finestra e dopo una scelta)
+function mostraIconaFunzione() {
+    if (!fIconaGriglia) return;
+    const valore = fIcona.value.trim();
+    const daGriglia = ICONE_FUNZIONI_PANNELLO.some(([nome]) => nome === valore);
+    fIconaGriglia.querySelectorAll('.icone-scelta').forEach(b => {
+        const scelta = b.dataset.icona === valore;
+        b.classList.toggle('scelta', scelta);
+        b.setAttribute('aria-checked', scelta ? 'true' : 'false');
+    });
+    if (!daGriglia && document.activeElement !== fIconaEmoji) fIconaEmoji.value = valore;
+    if (daGriglia) fIconaEmoji.value = '';
 }
 
 function openFeatureEditModal(id, data) {
@@ -445,6 +495,7 @@ function openFeatureEditModal(id, data) {
 
     document.getElementById('feature-id').value = feature.id;
     document.getElementById('f-icon').value = feature.icon;
+    mostraIconaFunzione();
     document.getElementById('f-title').value = feature.title;
     document.getElementById('f-description').value = feature.description;
     document.getElementById('f-order').value = feature.order_index;
@@ -457,6 +508,9 @@ function openFeatureEditModal(id, data) {
 addFeatureBtn.addEventListener('click', () => {
     featureForm.reset();
     document.getElementById('feature-id').value = '';
+    // I campi nascosti non si svuotano con reset(): nuova scheda senza icona scelta
+    document.getElementById('f-icon').value = '';
+    mostraIconaFunzione();
     document.getElementById('feature-modal-title').textContent = 'Nuova Funzionalità';
     featureModal.classList.remove('hidden');
 });
@@ -521,7 +575,7 @@ async function fetchFAQ() {
         faqList.appendChild(el);
     });
 
-    initSortable(faqList, 'faq');
+    initSortable(faqList, 'faq', fetchFAQ);
 }
 
 addFaqBtn.addEventListener('click', () => {

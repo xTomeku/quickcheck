@@ -112,7 +112,21 @@ function customConfirm(message, options = {}) {
     });
 }
 
-function initSortable(listElement, tableName) {
+// Id della riga di un elenco: data-id del pulsante Modifica, oppure l'argomento di onclick="editX(...)".
+// Resta una stringa: credits, contatti, note legali e funzionalità hanno id uuid (prima parseInt li
+// rendeva NaN o un numero sbagliato e l'ordine non si salvava), FAQ e bug id numerici.
+function _idRigaElenco(riga) {
+    const btn = riga.querySelector('.actions button[data-id], .actions button[onclick^="edit"]');
+    if (!btn) return null;
+    if (btn.dataset.id) return btn.dataset.id;
+    const m = (btn.getAttribute('onclick') || '').match(/\(\s*['"]?([^'")\s]+)['"]?\s*\)/);
+    return m ? m[1] : null;
+}
+
+// Riordino trascinando la maniglia ⋮⋮: salva order_index (0, 1, 2...) nell'ordine nuovo.
+// ricarica = funzione che rilegge l'elenco: dopo il salvataggio (così il campo "Ordine" delle
+// finestre è aggiornato) e dopo un errore (l'elenco torna all'ordine salvato).
+function initSortable(listElement, tableName, ricarica) {
     if (!window.Sortable) return;
 
     // La lista viene ridisegnata a ogni caricamento: una sola istanza alla volta,
@@ -126,34 +140,26 @@ function initSortable(listElement, tableName) {
         ghostClass: 'sortable-ghost',
         onEnd: async function (evt) {
             if (evt.oldIndex === evt.newIndex) return;
-            
-            // Get all items in new order
-            const items = Array.from(listElement.children);
-            const updates = items.map((item, index) => {
-                const editBtn = item.querySelector('.actions button[data-id], .actions button[onclick^="edit"]');
-                let id;
-                if (editBtn.dataset.id) id = editBtn.dataset.id;
-                else {
-                    // Extract ID from onclick="editFunc(ID)"
-                    const match = editBtn.getAttribute('onclick').match(/\d+/);
-                    id = match ? match[0] : null;
-                }
-                return { id: parseInt(id), order_index: index };
-            }).filter(item => item.id);
 
-            // Send sequential updates to Supabase
+            const righe = Array.from(listElement.children)
+                .map((riga, index) => ({ id: _idRigaElenco(riga), order_index: index }))
+                .filter(r => r.id);
+            if (!righe.length) {
+                showToast('Ordine non salvato: righe senza id', 'error');
+                return;
+            }
+
             try {
-                for (const item of updates) {
-                    const { error } = await _supabase.from(tableName)
-                        .update({ order_index: item.order_index })
-                        .eq('id', item.id);
-                    if (error) throw error;
-                }
+                const esiti = await Promise.all(righe.map(r =>
+                    _supabase.from(tableName).update({ order_index: r.order_index }).eq('id', r.id)));
+                const errore = esiti.find(e => e.error);
+                if (errore) throw errore.error;
                 showToast('Ordine aggiornato con successo');
             } catch (err) {
-                showToast('Errore nel salvataggio dell\'ordine', 'error');
+                showToast('Errore nel salvataggio dell\'ordine: ' + (err.message || err), 'error');
                 console.error(err);
             }
+            if (typeof ricarica === 'function') ricarica();
         }
     });
 }

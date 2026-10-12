@@ -44,7 +44,8 @@ async function fetchBugs() {
         adminAllBugs = data || [];
         updateAdminBugKPIs();
         renderAdminBugs();
-        initSortable(bugsList, 'bugs');
+        initSortable(bugsList, 'bugs', fetchBugs);
+        aggiornaRiordinoBug();
     } catch (err) {
         console.error('Eccezione in fetchBugs:', err);
         bugsList.innerHTML = `<p class="admin-errore">Eccezione: ${err.message}</p>`;
@@ -168,6 +169,17 @@ function renderAdminBugs() {
         `;
         bugsList.appendChild(el);
     });
+    aggiornaRiordinoBug();
+}
+
+// Riordino solo con "Tutti" e senza ricerca: con un filtro si numererebbero solo le righe visibili
+// e il loro order_index si mischierebbe con quello dei bug nascosti
+function aggiornaRiordinoBug() {
+    if (!bugsList) return;
+    const ordinabile = adminBugFilter === 'all' && !adminBugSearchQuery.trim();
+    const sortable = window.Sortable && Sortable.get && Sortable.get(bugsList);
+    if (sortable) sortable.option('disabled', !ordinabile);
+    bugsList.classList.toggle('senza-riordino', !ordinabile);
 }
 
 // Bug Admin Filters & Search

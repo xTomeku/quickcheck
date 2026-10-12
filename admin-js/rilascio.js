@@ -48,7 +48,6 @@ async function fetchUpdates() {
         item.className = 'update-item';
         item.innerHTML = `
             <div class="update-item-info">
-                <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>
                     ${update.version} 
                     ${update.is_latest ? '<span class="badge-latest">ULTIMA</span>' : ''}
@@ -73,7 +72,8 @@ async function fetchUpdates() {
         btn.addEventListener('click', () => deleteUpdate(btn.dataset.id));
     });
 
-    initSortable(updatesList, 'updates');
+    // Niente riordino: le versioni si ordinano da sole (prima le pubblicate, poi per numero di versione)
+    // e la tabella updates non ha la colonna order_index
 }
 
 // ===== Patch Notes Editor Helpers =====
