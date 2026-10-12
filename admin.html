@@ -12,780 +12,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
     <link rel="shortcut icon" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
     <link rel="stylesheet" href="style.css">
-    <!-- Stili del solo pannello (menu laterale e componenti): le pagine pubbliche non lo caricano -->
+    <!-- Stili del solo pannello (componenti, menu laterale, sezioni): le pagine pubbliche non lo caricano -->
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,1,0">
     <script src="config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .admin-container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-        }
-        
-        .login-card {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 2.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            color: white;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: rgba(212, 175, 55, 0.6);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
-        }
-
-        /* Patch Notes Editor */
-        .patch-notes-editor {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-
-        .patch-note-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: patchNoteSlideIn 0.25s ease-out;
-        }
-
-        @keyframes patchNoteSlideIn {
-            from { opacity: 0; transform: translateY(-8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .patch-note-row .drag-handle {
-            cursor: grab;
-            color: var(--text-muted);
-            font-size: 1rem;
-            user-select: none;
-            padding: 0 4px;
-            opacity: 0.5;
-            transition: opacity 0.2s;
-            flex-shrink: 0;
-        }
-
-        .patch-note-row .drag-handle:hover {
-            opacity: 1;
-        }
-
-        .patch-note-type-select {
-            padding: 0.72rem 0.8rem;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 10px;
-            color: #F5D77F;
-            font-family: inherit;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            flex-shrink: 0;
-            transition: all 0.25s ease;
-            outline: none;
-        }
-
-        .patch-note-type-select:focus {
-            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
-        }
-
-        .patch-note-type-select option {
-            background: #181818;
-            color: white;
-            font-weight: 600;
-        }
-
-        .patch-note-row input {
-            flex: 1;
-            padding: 0.75rem 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            color: white;
-            font-family: inherit;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-        }
-
-        .patch-note-row input:focus {
-            outline: none;
-            border-color: rgba(212, 175, 55, 0.6);
-            background: rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
-        }
-
-        .patch-note-row input::placeholder {
-            color: rgba(255, 255, 255, 0.2);
-        }
-
-        @media (max-width: 600px) {
-            .patch-note-row {
-                flex-wrap: wrap;
-            }
-            .patch-note-row input {
-                order: 3;
-                width: 100%;
-                flex: 1 1 100%;
-            }
-        }
-
-        .btn-remove-note {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 77, 77, 0.3);
-            background: rgba(255, 77, 77, 0.08);
-            color: #ff4d4d;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-            padding: 0;
-        }
-
-        .btn-remove-note:hover {
-            background: rgba(255, 77, 77, 0.2);
-            border-color: rgba(255, 77, 77, 0.5);
-            transform: scale(1.05);
-        }
-
-        .btn-add-note {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 0.7rem 1rem;
-            border-radius: 10px;
-            border: 1px dashed rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--text-muted);
-            font-family: inherit;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-add-note:hover {
-            border-color: rgba(212, 175, 55, 0.4);
-            background: rgba(212, 175, 55, 0.05);
-            color: var(--primary-gold);
-        }
-
-        .patch-notes-editor .sortable-ghost {
-            opacity: 0.4;
-            background: rgba(212, 175, 55, 0.05);
-            border-radius: 10px;
-        }
-
-        .patch-notes-empty {
-            text-align: center;
-            padding: 1.5rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            border: 1px dashed rgba(255, 255, 255, 0.08);
-            border-radius: 10px;
-            opacity: 0.6;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .admin-container .btn,
-        .admin-shell .btn {
-            width: auto;
-            min-width: auto;
-            border-radius: 20px;
-            text-transform: none;
-            letter-spacing: normal;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .update-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            background: linear-gradient(145deg, rgba(30, 30, 30, 0.6), rgba(20, 20, 20, 0.8));
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 16px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .update-item:hover {
-            border-color: rgba(212, 175, 55, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .drag-handle {
-            cursor: grab;
-            color: rgba(255,255,255,0.2);
-            margin-right: 15px;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            transition: color 0.3s;
-        }
-        
-        .update-item:hover .drag-handle {
-            color: var(--primary-gold);
-        }
-
-        .drag-handle:active {
-            cursor: grabbing;
-        }
-
-        .update-item.sortable-ghost {
-            opacity: 0.4;
-            background: rgba(212, 175, 55, 0.1);
-        }
-
-        .update-item-info h3 {
-            margin-bottom: 0.2rem;
-            color: var(--primary-gold);
-        }
-
-        .update-item-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .actions {
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-        }
-
-        .modal-content {
-            background: linear-gradient(145deg, rgba(30, 30, 30, 0.95), rgba(15, 15, 15, 0.98));
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 2.5rem;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        .modal-content::-webkit-scrollbar {
-            width: 8px;
-        }
-        .modal-content::-webkit-scrollbar-thumb {
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-        }
-
-        /* Toggle Switch CSS */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 28px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: .4s;
-            border-radius: 34px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider {
-            background-color: var(--primary-gold);
-            border-color: var(--primary-gold);
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(22px);
-            background-color: #111;
-        }
-
-        textarea.form-control {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-            .badge-latest {
-                background: var(--primary-gold);
-                color: var(--primary-blue-dark);
-                padding: 2px 8px;
-                border-radius: 4px;
-                font-size: 0.7rem;
-                font-weight: 800;
-                margin-left: 10px;
-            }
-
-            .badge-draft {
-                background: rgba(255, 255, 255, 0.1);
-                color: var(--text-muted);
-                border: 1px solid var(--glass-border);
-                padding: 2px 8px;
-                border-radius: 4px;
-                font-size: 0.7rem;
-                font-weight: 600;
-                margin-left: 10px;
-            }
-
-        /* Toast Notifications */
-        #toast-container {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 9999;
-        }
-
-        .toast {
-            background: rgba(30, 30, 30, 0.9);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            color: #fff;
-            padding: 1rem 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transform: translateX(120%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.success { border-left: 4px solid #4caf50; }
-        .toast.error { border-left: 4px solid #f44336; }
-
-        /* Analytics Dashboard Styles */
-        .analytics-kpi-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
-        .kpi-card {
-            background: linear-gradient(145deg, rgba(30, 30, 30, 0.7), rgba(20, 20, 20, 0.9));
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 16px;
-            padding: 1.25rem 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .kpi-card:hover {
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-        }
-
-        .kpi-icon-wrap {
-            font-size: 1.8rem;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 14px;
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            flex-shrink: 0;
-        }
-
-        .kpi-content {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-
-        .kpi-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.2rem;
-        }
-
-        .kpi-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--text-main);
-            line-height: 1.1;
-            margin-bottom: 0.2rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .kpi-sub {
-            font-size: 0.75rem;
-            color: var(--primary-gold);
-            font-weight: 500;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .analytics-breakdown-card {
-            background: linear-gradient(145deg, rgba(25, 25, 25, 0.7), rgba(18, 18, 18, 0.9));
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 1.8rem;
-            margin-bottom: 2rem;
-        }
-
-        .version-stat-item {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            border-radius: 14px;
-            padding: 1.2rem 1.4rem;
-            margin-bottom: 1rem;
-            transition: all 0.25s ease;
-        }
-
-        .version-stat-item:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: rgba(212, 175, 55, 0.25);
-        }
-
-        .version-stat-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .version-stat-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.6rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .version-stat-title {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-weight: 700;
-            font-size: 1.05rem;
-            color: white;
-            flex-wrap: wrap;
-        }
-
-        .version-stat-count {
-            display: flex;
-            align-items: baseline;
-            gap: 0.4rem;
-        }
-
-        .version-stat-number {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: var(--primary-gold);
-        }
-
-        .version-stat-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 0.6rem;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .version-progress-container {
-            height: 8px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.06);
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .version-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #D4AF37 0%, #FFD700 100%);
-            border-radius: 6px;
-            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .badge-gh {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.2s ease;
-        }
-
-        .badge-gh:hover {
-            color: var(--primary-gold);
-            border-color: rgba(212, 175, 55, 0.3);
-            background: rgba(212, 175, 55, 0.05);
-        }
-
-        .spinning {
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Chart & Platform Toggle Pills */
-        .chart-toggle-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.76rem;
-            font-weight: 600;
-            cursor: pointer;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-muted);
-            transition: all 0.25s ease;
-            user-select: none;
-        }
-
-        .chart-toggle-btn:hover {
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .chart-toggle-btn.active {
-            color: #fff;
-            border-color: var(--btn-color);
-            background: var(--btn-glow);
-            box-shadow: 0 0 12px var(--btn-glow);
-        }
-
-        .chart-toggle-btn .toggle-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-        }
-
-        .chart-toggle-btn:not(.active) .toggle-dot {
-            opacity: 0.3;
-            transform: scale(0.8);
-        }
-
-        .chart-toggle-btn:not(.active) {
-            opacity: 0.4;
-            text-decoration: line-through;
-        }
-
-        /* Menu a tendina personalizzato per ricerca corsi di laurea */
-        .course-dropdown-menu {
-            position: absolute;
-            top: calc(100% + 6px);
-            left: 0;
-            right: 0;
-            max-height: 280px;
-            overflow-y: auto;
-            background: #181818;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
-            z-index: 1500;
-            padding: 6px;
-        }
-
-        .course-dropdown-item {
-            padding: 0.7rem 0.9rem;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: all 0.15s ease;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.88rem;
-            color: #ddd;
-            margin-bottom: 2px;
-        }
-
-        .course-dropdown-item:hover, .course-dropdown-item.selected {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--primary-gold);
-        }
-
-        .course-dropdown-item .course-badge {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 2px 7px;
-            border-radius: 6px;
-            white-space: nowrap;
-        }
-
-        .course-dropdown-item:hover .course-badge {
-            background: rgba(212, 175, 55, 0.25);
-            color: var(--primary-gold);
-        }
-
-        .course-dropdown-empty {
-            padding: 1.2rem;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        /* Stile calendario per input data/ora pianificazione */
-        input[type="datetime-local"] {
-            color-scheme: dark;
-            cursor: pointer;
-        }
-
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-            filter: invert(1);
-            cursor: pointer;
-            opacity: 0.85;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-
-        input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
-            opacity: 1;
-            transform: scale(1.15);
-        }
-
-        /* Schermata Novita' (editor + anteprima) */
-        .nov-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 1.5rem; align-items: start; }
-        @media (max-width: 900px) { .nov-layout { grid-template-columns: 1fr; } }
-        .nov-ms { font-family: 'Material Symbols Rounded'; font-weight: normal; font-style: normal; line-height: 1; display: inline-block; font-size: 20px; }
-        .nov-scheda { border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1rem; margin-bottom: 0.8rem; background: rgba(255,255,255,0.03); }
-        .nov-scheda-top { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem; flex-wrap: wrap; }
-        .nov-tipo { font-size: 0.75rem; font-weight: 800; padding: 3px 8px; border-radius: 6px; background: rgba(212,175,55,0.15); color: var(--primary-gold); text-transform: uppercase; letter-spacing: .4px; }
-        .nov-tipo.riep { background: rgba(255,255,255,0.08); color: var(--text-muted); }
-        .nov-icona-sel { display: flex; align-items: center; gap: 6px; }
-        .nov-icona-sel .nov-ms { color: var(--primary-gold); }
-        .nov-icona-sel select { width: auto; padding: 4px 8px; }
-        .nov-azioni { margin-left: auto; display: flex; gap: 4px; }
-        .nov-azioni button { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: var(--text-main); border-radius: 8px; width: 30px; height: 30px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .nov-azioni button:disabled { opacity: .3; cursor: default; }
-        .nov-azioni button.del:hover { background: rgba(248,113,113,0.2); }
-        .nov-scheda .form-group { margin-bottom: 0.6rem; }
-        .nov-scheda details summary { cursor: pointer; color: var(--text-muted); font-size: 0.85rem; margin: 0.2rem 0 0.6rem; }
-        .nov-anteprima-box { position: sticky; top: 1rem; }
-        .nov-tel { background: #121212; border-radius: 28px; border: 1px solid #2a2a2a; height: 580px; display: flex; flex-direction: column; padding: 14px 18px 18px; color: #ececec; overflow: hidden; }
-        .nov-tel .top { display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 800; }
-        .nov-tel .ver { color: #D4A62A; background: rgba(212,166,42,.14); padding: 4px 9px; border-radius: 8px; }
-        .nov-tel .salta { color: #9a9a9a; }
-        .nov-tel .pag { flex: 1; overflow-y: auto; display: flex; flex-direction: column; justify-content: center; }
-        .nov-tel .illu { margin: 0 auto 24px; width: 170px; height: 170px; border-radius: 40px; position: relative; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 30% 25%, rgba(212,166,42,.35), rgba(212,166,42,.08) 70%); flex: none; }
-        .nov-tel .illu > .nov-ms { font-size: 76px; color: #D4A62A; }
-        .nov-tel .chip { position: absolute; background: #262626; border: 1px solid #333; border-radius: 10px; padding: 5px 8px; font-size: 11px; font-weight: 800; white-space: nowrap; max-width: 140px; overflow: hidden; text-overflow: ellipsis; box-shadow: 0 4px 12px rgba(0,0,0,.35); }
-        .nov-tel .tit { font-size: 21px; font-weight: 900; text-align: center; line-height: 1.2; }
-        .nov-tel .txt { font-size: 13.5px; color: #9a9a9a; text-align: center; line-height: 1.5; margin-top: 8px; }
-        .nov-tel .riep-tit { font-size: 21px; font-weight: 900; margin: 6px 0 10px; }
-        .nov-tel .r { display: flex; gap: 11px; align-items: center; padding: 6px 0; }
-        .nov-tel .r .ic { width: 32px; height: 32px; border-radius: 10px; background: rgba(212,166,42,.14); display: flex; align-items: center; justify-content: center; flex: none; }
-        .nov-tel .r .ic .nov-ms { font-size: 18px; color: #D4A62A; }
-        .nov-tel .r b { font-size: 13px; display: block; }
-        .nov-tel .r small { font-size: 11.5px; color: #9a9a9a; }
-        .nov-tel .dots { display: flex; justify-content: center; gap: 6px; margin: 10px 0 14px; }
-        .nov-tel .dots i { width: 7px; height: 7px; border-radius: 4px; background: #444; cursor: pointer; }
-        .nov-tel .dots i.on { width: 20px; background: #D4A62A; }
-        .nov-tel .btn-nov { height: 46px; border-radius: 14px; background: #D4A62A; color: #1a1a1a; font-weight: 900; font-size: 14.5px; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; user-select: none; }
-        .nov-tel .vuota { color: #9a9a9a; text-align: center; font-size: 13px; }
-        .nov-controlli { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; }
-    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -804,7 +37,7 @@
         <!-- Login Form -->
         <section id="login-section" class="admin-container">
             <div class="card login-card">
-                <h2 style="text-align: center; margin-bottom: 2rem;">Accedi</h2>
+                <h2 class="login-titolo">Accedi</h2>
                 <form id="login-form">
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -815,7 +48,7 @@
                         <input type="password" id="password" class="form-control" required placeholder="Inserisci la password">
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Entra</button>
-                    <p id="login-error" style="color: #ff4d4d; font-size: 0.8rem; margin-top: 1rem; text-align: center; display: none;">Credenziali errate</p>
+                    <p id="login-error" class="login-errore hidden">Credenziali errate</p>
                 </form>
             </div>
         </section>
@@ -828,28 +61,28 @@
                     <div><b>QuickCheck</b><small>Pannello admin</small></div>
                 </div>
 
-                <!-- data-sezione = chiave in SEZIONI_ADMIN (admin-script.js) e nome dopo # nell'indirizzo -->
+                <!-- data-sezione = chiave in SEZIONI_ADMIN (admin-js/comune.js) e nome dopo # nell'indirizzo -->
                 <nav class="admin-voci">
                     <a class="admin-voce" href="#panoramica" data-sezione="panoramica"><span class="admin-ms">space_dashboard</span><span class="admin-voce-testo">Panoramica</span></a>
                     <a class="admin-voce" href="#statistiche" data-sezione="statistiche"><span class="admin-ms">monitoring</span><span class="admin-voce-testo">Statistiche</span></a>
 
-                    <div class="admin-gruppo">Rilascio</div>
+                    <div class="admin-gruppo-menu">Rilascio</div>
                     <a class="admin-voce" href="#versioni" data-sezione="versioni"><span class="admin-ms">new_releases</span><span class="admin-voce-testo">Versioni e patch note</span></a>
                     <a class="admin-voce" href="#novita" data-sezione="novita"><span class="admin-ms">auto_awesome</span><span class="admin-voce-testo">Novit&agrave;</span></a>
                     <a class="admin-voce" href="#messaggio" data-sezione="messaggio"><span class="admin-ms">campaign</span><span class="admin-voce-testo">Messaggio all'avvio</span></a>
 
-                    <div class="admin-gruppo">Dati dell'app</div>
+                    <div class="admin-gruppo-menu">Dati dell'app</div>
                     <a class="admin-voce" href="#mappe" data-sezione="mappe"><span class="admin-ms">map</span><span class="admin-voce-testo">Mappe</span></a>
                     <a class="admin-voce" href="#menu" data-sezione="menu"><span class="admin-ms">restaurant</span><span class="admin-voce-testo">Men&ugrave; mensa</span></a>
 
-                    <div class="admin-gruppo">Notifiche</div>
+                    <div class="admin-gruppo-menu">Notifiche</div>
                     <a class="admin-voce" href="#notifiche" data-sezione="notifiche"><span class="admin-ms">notifications</span><span class="admin-voce-testo">Push e avvisi</span></a>
                     <a class="admin-voce" href="#simulatore" data-sezione="simulatore"><span class="admin-ms">science</span><span class="admin-voce-testo">Simulatore</span></a>
 
-                    <div class="admin-gruppo">Supporto</div>
+                    <div class="admin-gruppo-menu">Supporto</div>
                     <a class="admin-voce" href="#bug" data-sezione="bug"><span class="admin-ms">bug_report</span><span class="admin-voce-testo">Bug e problemi</span></a>
 
-                    <div class="admin-gruppo">Sito web</div>
+                    <div class="admin-gruppo-menu">Sito web</div>
                     <a class="admin-voce" href="#funzionalita" data-sezione="funzionalita"><span class="admin-ms">star</span><span class="admin-voce-testo">Funzionalit&agrave;</span></a>
                     <a class="admin-voce" href="#faq" data-sezione="faq"><span class="admin-ms">help</span><span class="admin-voce-testo">FAQ</span></a>
                     <a class="admin-voce" href="#credits" data-sezione="credits"><span class="admin-ms">group</span><span class="admin-voce-testo">Credits</span></a>
@@ -880,17 +113,17 @@
 
                 <div class="admin-contenuto">
 
-            <!-- Panoramica: pagina iniziale. Ogni blocco si carica per conto suo (caricaPanoramica in admin-script.js)
+            <!-- Panoramica: pagina iniziale. Ogni blocco si carica per conto suo (caricaPanoramica in admin-js/panoramica.js)
                  e ogni riquadro porta alla sezione corrispondente. -->
             <div id="panoramica-section" class="section-content hidden">
-                <div class="admin-testa">
+                <div class="section-header">
                     <div>
                         <h2>Panoramica</h2>
                         <div id="pan-data" class="admin-testa-data">&nbsp;</div>
                     </div>
-                    <div class="admin-testa-azioni">
-                        <button type="button" id="pan-aggiorna" class="admin-btn admin-solo-computer"><span class="admin-ms">refresh</span>Aggiorna</button>
-                        <button type="button" id="pan-prepara" class="admin-btn admin-btn-oro"><span class="admin-ms">rocket_launch</span>Prepara rilascio</button>
+                    <div class="admin-azioni">
+                        <button type="button" id="pan-aggiorna" class="btn btn-secondary admin-solo-computer"><span class="admin-ms">refresh</span>Aggiorna</button>
+                        <button type="button" id="pan-prepara" class="btn btn-primary"><span class="admin-ms">rocket_launch</span>Prepara rilascio</button>
                     </div>
                 </div>
 
@@ -948,43 +181,40 @@
                 </div>
             </div>
 
-                        <!-- Analytics / Statistiche Sezione Principale -->
+            <!-- Statistiche: utenti attivi, adozione delle versioni, download da GitHub -->
             <div id="analytics-section" class="section-content hidden">
-                <!-- Header Unificato Sezione Analytics -->
                 <div class="section-header">
                     <div>
                         <h2>Dashboard Analytics & Metriche</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Monitoraggio utenti attivi in tempo reale (Supabase) e statistiche download (GitHub Releases)</p>
+                        <p class="admin-sottotitolo">Monitoraggio utenti attivi in tempo reale (Supabase) e statistiche download (GitHub Releases)</p>
                     </div>
-                    <div style="display: flex; gap: 0.8rem; align-items: center;">
-                        <span id="analytics-last-sync" style="font-size: 0.8rem; color: var(--text-muted);"></span>
-                        <button id="refresh-analytics-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                            <svg id="refresh-icon" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                    <div class="admin-azioni">
+                        <span id="analytics-last-sync" class="admin-testo-sub admin-piccolo"></span>
+                        <button id="refresh-analytics-btn" class="btn btn-secondary btn-sm">
+                            <span id="refresh-icon" class="admin-ms">refresh</span>
                             Aggiorna Dati
                         </button>
                     </div>
                 </div>
 
                 <!-- 1. UTENTI ATTIVI QUICKCHECK (DAU SUPABASE) -->
-                <div style="margin-bottom: 2.5rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+                <div class="admin-blocco">
+                    <div class="admin-blocco-testa">
                         <div>
-                            <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 0.2rem;">
-                                <span>⚡</span> Utenti Attivi QuickCheck (DAU)
-                            </h3>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">Ping all'avvio dell'app • Privacy 100% anonima</span>
+                            <h3 class="admin-blocco-titolo"><span class="admin-ms">bolt</span>Utenti Attivi QuickCheck (DAU)</h3>
+                            <span class="admin-sottotitolo">Ping all'avvio dell'app • Privacy 100% anonima</span>
                         </div>
-                        <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-                            <button type="button" id="toggle-demo-stats-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #c084fc; border-color: rgba(168, 85, 247, 0.35); background: rgba(168, 85, 247, 0.08);">
-                                <span>🧪</span>
+                        <div class="admin-azioni">
+                            <button type="button" id="toggle-demo-stats-btn" class="btn btn-secondary btn-sm admin-demo">
+                                <span class="admin-ms">science</span>
                                 <span id="demo-btn-text">Simula Dati Demo</span>
                             </button>
-                            <button type="button" id="open-export-modal-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <button type="button" id="open-export-modal-btn" class="btn btn-secondary btn-sm">
+                                <span class="admin-ms">download</span>
                                 Esporta Dati
                             </button>
-                            <button type="button" id="open-delete-modal-btn" class="btn btn-secondary btn-sm" style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ff6b6b; border-color: rgba(255, 107, 107, 0.25);">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                            <button type="button" id="open-delete-modal-btn" class="btn btn-secondary btn-sm admin-pericolo">
+                                <span class="admin-ms">delete</span>
                                 Elimina Dati
                             </button>
                         </div>
@@ -993,19 +223,19 @@
                     <!-- KPI Grid Utenti Attivi -->
                     <div class="analytics-kpi-grid">
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">👥</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">group</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Utenti Unici Oggi</span>
                                 <h3 id="kpi-users-today" class="kpi-value">0</h3>
-                                <div id="kpi-users-today-breakdown" class="kpi-sub" style="display: flex; gap: 8px; font-size: 0.75rem; flex-wrap: wrap; margin-top: 4px;">
-                                    <span style="color: #4ade80;">APK: <strong id="kpi-sub-apk">0</strong></span>
-                                    <span style="color: #c084fc;">PWA: <strong id="kpi-sub-pwa">0</strong></span>
-                                    <span style="color: #38bdf8;">Web: <strong id="kpi-sub-web">0</strong></span>
+                                <div id="kpi-users-today-breakdown" class="kpi-sub kpi-piattaforme">
+                                    <span class="admin-apk">APK: <strong id="kpi-sub-apk">0</strong></span>
+                                    <span class="admin-pwa">PWA: <strong id="kpi-sub-pwa">0</strong></span>
+                                    <span class="admin-web">Web: <strong id="kpi-sub-web">0</strong></span>
                                 </div>
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">📅</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">calendar_today</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Utenti Unici Ieri</span>
                                 <h3 id="kpi-users-yesterday" class="kpi-value">0</h3>
@@ -1013,7 +243,7 @@
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">📈</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">trending_up</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Media Ultimi 7 Giorni</span>
                                 <h3 id="kpi-users-avg7" class="kpi-value">0</h3>
@@ -1021,7 +251,7 @@
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">🔥</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">local_fire_department</span></div>
                             <div class="kpi-content">
                                 <span id="kpi-users-range-label" class="kpi-label">Accessi Ultimi 30 Giorni</span>
                                 <h3 id="kpi-users-total30" class="kpi-value">0</h3>
@@ -1031,119 +261,127 @@
                     </div>
 
                     <!-- Grafico Interattivo Andamento Accessi -->
-                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div class="analytics-breakdown-card">
+                        <div class="analytics-card-testa">
                             <div>
-                                <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Andamento Temporale Accessi</h4>
-                                <span style="font-size: 0.8rem; color: var(--text-muted);">Clicca sulle piattaforme per mostrare o nascondere le linee nel grafico</span>
+                                <h4 class="analytics-card-titolo">Andamento Temporale Accessi</h4>
+                                <span class="admin-sottotitolo">Clicca sulle piattaforme per mostrare o nascondere le linee nel grafico</span>
                             </div>
-                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                            <div class="admin-azioni">
                                 <!-- Selettore Intervallo Temporale -->
-                                <div id="user-stats-range-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
-                                    <button type="button" class="user-range-btn" data-days="7" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">7G</button>
-                                    <button type="button" class="user-range-btn active" data-days="30" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); border: none; color: #111; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">30G</button>
-                                    <button type="button" class="user-range-btn" data-days="90" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">90G</button>
-                                    <button type="button" class="user-range-btn" data-days="365" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Tutto</button>
+                                <div id="user-stats-range-selector" class="admin-segmenti">
+                                    <button type="button" class="user-range-btn" data-days="7">7G</button>
+                                    <button type="button" class="user-range-btn active" data-days="30">30G</button>
+                                    <button type="button" class="user-range-btn" data-days="90">90G</button>
+                                    <button type="button" class="user-range-btn" data-days="365">Tutto</button>
                                 </div>
-                                <!-- Toggle Filtri Piattaforma Linee Grafico -->
-                                <div id="chart-platform-toggles" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center;">
-                                    <button type="button" class="chart-toggle-btn active" data-dataset="0" style="--btn-color: #FFD700; --btn-glow: rgba(255, 215, 0, 0.18);">
-                                        <span class="toggle-dot" style="background: #FFD700;"></span>
+                                <!-- Toggle Filtri Piattaforma Linee Grafico (colori in admin.css) -->
+                                <div id="chart-platform-toggles" class="admin-riga">
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="0">
+                                        <span class="toggle-dot"></span>
                                         <span>Totale</span>
                                     </button>
-                                    <button type="button" class="chart-toggle-btn active" data-dataset="1" style="--btn-color: #22c55e; --btn-glow: rgba(34, 197, 94, 0.18);">
-                                        <span class="toggle-dot" style="background: #22c55e;"></span>
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="1">
+                                        <span class="toggle-dot"></span>
                                         <span>APK</span>
                                     </button>
-                                    <button type="button" class="chart-toggle-btn active" data-dataset="2" style="--btn-color: #a855f7; --btn-glow: rgba(168, 85, 247, 0.18);">
-                                        <span class="toggle-dot" style="background: #a855f7;"></span>
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="2">
+                                        <span class="toggle-dot"></span>
                                         <span>PWA</span>
                                     </button>
-                                    <button type="button" class="chart-toggle-btn active" data-dataset="3" style="--btn-color: #38bdf8; --btn-glow: rgba(56, 189, 248, 0.18);">
-                                        <span class="toggle-dot" style="background: #38bdf8;"></span>
+                                    <button type="button" class="chart-toggle-btn active" data-dataset="3">
+                                        <span class="toggle-dot"></span>
                                         <span>Web</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div style="position: relative; height: 320px; width: 100%;">
+                        <div class="analytics-grafico">
                             <canvas id="user-stats-chart"></canvas>
                         </div>
                     </div>
 
                     <!-- Tabella Storico Giornaliero & Ripartizione Piattaforme -->
-                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                    <div class="analytics-breakdown-card">
+                        <div class="analytics-card-testa">
                             <div>
-                                <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Storico Giornaliero per Piattaforma</h4>
-                                <span style="font-size: 0.8rem; color: var(--text-muted);">Ripartizione dettagliata tra Android APK, PWA installata e Web browser</span>
+                                <h4 class="analytics-card-titolo">Storico Giornaliero per Piattaforma</h4>
+                                <span class="admin-sottotitolo">Ripartizione dettagliata tra Android APK, PWA installata e Web browser</span>
                             </div>
                             <!-- Legenda Piattaforme -->
-                            <div style="display: flex; gap: 12px; font-size: 0.75rem;">
-                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></span> APK</span>
-                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7;"></span> PWA</span>
-                                <span style="display: flex; align-items: center; gap: 5px;"><span style="width: 8px; height: 8px; border-radius: 50%; background: #38bdf8;"></span> Web</span>
+                            <div class="admin-legenda">
+                                <span><span class="admin-pallino apk"></span> APK</span>
+                                <span><span class="admin-pallino pwa"></span> PWA</span>
+                                <span><span class="admin-pallino web"></span> Web</span>
                             </div>
                         </div>
-                        <div id="user-stats-history-list" style="overflow-x: auto;">
-                            <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento telemetria utenti...</p>
+                        <div id="user-stats-history-list" class="admin-tabella-scorre">
+                            <p class="admin-caricamento">Caricamento telemetria utenti...</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 2. ADOZIONE VERSIONI & STATO ROLLOUT (SUPABASE) -->
-                <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-bottom: 2.5rem;">
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.8rem;">
+                <div class="admin-blocco">
+                    <div class="admin-blocco-testa">
                         <div>
-                            <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px; margin-bottom: 0.2rem;">
-                                <span>🚀</span> Adozione Versioni & Stato Rollout
-                            </h3>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">Percentuale di studenti attivi aggiornati alla versione più recente</span>
+                            <h3 class="admin-blocco-titolo"><span class="admin-ms">rocket_launch</span>Adozione Versioni & Stato Rollout</h3>
+                            <span class="admin-sottotitolo">Percentuale di studenti attivi aggiornati alla versione più recente</span>
                         </div>
-                        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                        <div class="admin-azioni">
                             <!-- Filtro Intervallo Temporale Rollout -->
-                            <div id="rollout-range-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
-                                <button type="button" class="rollout-range-btn active" data-days="1" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); border: none; color: #111; font-size: 0.75rem; font-weight: 700; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Oggi</button>
-                                <button type="button" class="rollout-range-btn" data-days="7" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">7G</button>
-                                <button type="button" class="rollout-range-btn" data-days="30" style="background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; padding: 5px 11px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">30G</button>
+                            <div id="rollout-range-selector" class="admin-segmenti">
+                                <button type="button" class="rollout-range-btn active" data-days="1">Oggi</button>
+                                <button type="button" class="rollout-range-btn" data-days="7">7G</button>
+                                <button type="button" class="rollout-range-btn" data-days="30">30G</button>
                             </div>
                             <!-- Filtro Piattaforma Rollout -->
-                            <div id="rollout-platform-selector" style="display: flex; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 3px; gap: 2px;">
-                                <button type="button" class="rollout-plat-btn active" data-plat="all" style="background: rgba(255,255,255,0.12); border: none; color: white; font-size: 0.75rem; font-weight: 700; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">Tutte</button>
-                                <button type="button" class="rollout-plat-btn" data-plat="android_apk" style="background: transparent; border: none; color: #4ade80; font-size: 0.75rem; font-weight: 600; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">🤖 APK</button>
-                                <button type="button" class="rollout-plat-btn" data-plat="web_pwa" style="background: transparent; border: none; color: #c084fc; font-size: 0.75rem; font-weight: 600; padding: 5px 10px; border-radius: 7px; cursor: pointer; transition: all 0.2s;">🌐 PWA</button>
+                            <div id="rollout-platform-selector" class="admin-segmenti neutro">
+                                <button type="button" class="rollout-plat-btn active" data-plat="all">Tutte</button>
+                                <button type="button" class="rollout-plat-btn admin-apk" data-plat="android_apk">🤖 APK</button>
+                                <button type="button" class="rollout-plat-btn admin-pwa" data-plat="pwa">📲 PWA</button>
+                                <button type="button" class="rollout-plat-btn admin-web" data-plat="web">🌐 Web</button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- KPI Grid Rollout -->
-                    <div class="analytics-kpi-grid">
+                    <!-- KPI Grid Rollout: due riquadri sulle versioni, poi PWA, Web e APK (admin.css) -->
+                    <div class="analytics-kpi-grid admin-kpi-adozione">
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap" style="color: #4ade80; background: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.2);">🎯</div>
+                            <div class="kpi-icon-wrap verde"><span class="admin-ms">track_changes</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Adozione Versione Corrente</span>
-                                <h3 id="kpi-rollout-pct" class="kpi-value" style="color: #4ade80;">0%</h3>
+                                <h3 id="kpi-rollout-pct" class="kpi-value verde">0%</h3>
                                 <span id="kpi-rollout-sub" class="kpi-sub">0 su 0 utenti attivi</span>
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">✨</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">auto_awesome</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Versione Rilevata Più Recente</span>
                                 <h3 id="kpi-latest-detected-ver" class="kpi-value">—</h3>
                                 <span id="kpi-latest-detected-sub" class="kpi-sub">Attiva in produzione</span>
                             </div>
                         </div>
+                        <!-- PWA installata e sito nel browser separati (prima un solo riquadro "Web / PWA") -->
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap" style="color: #38bdf8; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.2);">🌐</div>
+                            <div class="kpi-icon-wrap viola"><span class="admin-ms">install_mobile</span></div>
                             <div class="kpi-content">
-                                <span class="kpi-label">Adozione Web / PWA</span>
+                                <span class="kpi-label">Adozione PWA</span>
                                 <h3 id="kpi-pwa-adoption" class="kpi-value">0%</h3>
-                                <span id="kpi-pwa-adoption-sub" class="kpi-sub">Rollout Service Worker</span>
+                                <span id="kpi-pwa-adoption-sub" class="kpi-sub">App installata dal sito</span>
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap" style="color: #4ade80; background: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.2);">🤖</div>
+                            <div class="kpi-icon-wrap blu"><span class="admin-ms">language</span></div>
+                            <div class="kpi-content">
+                                <span class="kpi-label">Adozione Web</span>
+                                <h3 id="kpi-web-adoption" class="kpi-value">0%</h3>
+                                <span id="kpi-web-adoption-sub" class="kpi-sub">Sito aperto nel browser</span>
+                            </div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-icon-wrap verde"><span class="admin-ms">android</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Adozione Android APK</span>
                                 <h3 id="kpi-apk-adoption" class="kpi-value">0%</h3>
@@ -1153,45 +391,41 @@
                     </div>
 
                     <!-- Card Grafico & Dettaglio Versioni Attive -->
-                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; flex-wrap: wrap; gap: 0.8rem;">
+                    <div class="analytics-breakdown-card">
+                        <div class="analytics-card-testa">
                             <div>
-                                <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700; margin-bottom: 0.2rem;">Distribuzione Versioni in Esecuzione</h4>
-                                <span style="font-size: 0.8rem; color: var(--text-muted);">Quote percentuali degli utenti attivi basate sui ping giornalieri</span>
+                                <h4 class="analytics-card-titolo">Distribuzione Versioni in Esecuzione</h4>
+                                <span class="admin-sottotitolo">Quote percentuali degli utenti attivi basate sui ping giornalieri</span>
                             </div>
-                            <span id="rollout-last-update-time" style="font-size: 0.78rem; color: var(--text-muted);"></span>
+                            <span id="rollout-last-update-time" class="admin-testo-sub admin-piccolo"></span>
                         </div>
 
-                        <!-- Barra Segmentata Multicolore di Rollout -->
-                        <div style="margin-bottom: 1.5rem;">
-                            <div id="rollout-stacked-bar" style="height: 14px; width: 100%; background: rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; display: flex;">
-                                <!-- Segmenti dinamici caricati via JS -->
-                            </div>
-                            <div id="rollout-stacked-legend" style="display: flex; gap: 15px; font-size: 0.75rem; margin-top: 8px; flex-wrap: wrap;">
-                                <!-- Legenda dinamica -->
-                            </div>
+                        <!-- Barra Segmentata Multicolore di Rollout (segmenti e legenda da JS) -->
+                        <div class="rollout-riepilogo">
+                            <div id="rollout-stacked-bar" class="rollout-barra"></div>
+                            <div id="rollout-stacked-legend" class="rollout-legenda"></div>
                         </div>
 
                         <!-- Elenco Dettagliato Versioni con Progress Bar -->
                         <div id="rollout-versions-breakdown-list">
-                            <p style="text-align: center; color: var(--text-muted); padding: 1.5rem 0;">Caricamento adozione versioni...</p>
+                            <p class="admin-caricamento">Caricamento adozione versioni...</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. STATISTICHE DOWNLOAD GITHUB RELEASES -->
-                <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem;">
-                    <div style="margin-bottom: 1.2rem;">
-                        <h3 style="font-size: 1.15rem; color: var(--primary-gold); font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                            <span>📦</span> Download APK da GitHub Releases
-                        </h3>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">Contatore ufficiale dei download dei pacchetti APK</span>
+                <div class="admin-blocco">
+                    <div class="admin-blocco-testa">
+                        <div>
+                            <h3 class="admin-blocco-titolo"><span class="admin-ms">inventory_2</span>Download APK da GitHub Releases</h3>
+                            <span class="admin-sottotitolo">Contatore ufficiale dei download dei pacchetti APK</span>
+                        </div>
                     </div>
 
                     <!-- KPI Grid Download -->
                     <div class="analytics-kpi-grid">
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">📥</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">download</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Download Totali</span>
                                 <h3 id="kpi-total-downloads" class="kpi-value">0</h3>
@@ -1199,7 +433,7 @@
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">🏆</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">emoji_events</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Versione Top</span>
                                 <h3 id="kpi-top-version" class="kpi-value">—</h3>
@@ -1207,7 +441,7 @@
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">🚀</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">rocket_launch</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Ultima Versione</span>
                                 <h3 id="kpi-latest-version" class="kpi-value">—</h3>
@@ -1215,7 +449,7 @@
                             </div>
                         </div>
                         <div class="kpi-card">
-                            <div class="kpi-icon-wrap">📦</div>
+                            <div class="kpi-icon-wrap"><span class="admin-ms">inventory_2</span></div>
                             <div class="kpi-content">
                                 <span class="kpi-label">Release GitHub</span>
                                 <h3 id="kpi-total-releases" class="kpi-value">0</h3>
@@ -1225,13 +459,13 @@
                     </div>
 
                     <!-- Versions Breakdown Card -->
-                    <div class="analytics-breakdown-card" style="margin-top: 1.5rem;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
-                            <h4 style="font-size: 1.05rem; color: var(--text-main); font-weight: 700;">Dettaglio Download per Versione</h4>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">Dati aggregati per ciascun file APK</span>
+                    <div class="analytics-breakdown-card">
+                        <div class="analytics-card-testa">
+                            <h4 class="analytics-card-titolo">Dettaglio Download per Versione</h4>
+                            <span class="admin-sottotitolo">Dati aggregati per ciascun file APK</span>
                         </div>
                         <div id="analytics-versions-list">
-                            <p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento statistiche in corso...</p>
+                            <p class="admin-caricamento">Caricamento statistiche in corso...</p>
                         </div>
                     </div>
                 </div>
@@ -1251,7 +485,7 @@
             <!-- Updates Section -->
             <div id="updates-section" class="section-content hidden">
                 <div class="section-header">
-                    <div><h2>Gestione Versioni</h2><p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">La riga segnata come "Ultima versione" &egrave; quella che l'APK propone come aggiornamento, con le sue patch note.</p></div>
+                    <div><h2>Gestione Versioni</h2><p class="admin-sottotitolo">La riga segnata come "Ultima versione" &egrave; quella che l'APK propone come aggiornamento, con le sue patch note.</p></div>
                     <button id="add-update-btn" class="btn btn-primary btn-sm">+ Nuovo</button>
                 </div>
                 <div id="updates-list">
@@ -1264,40 +498,40 @@
                 <div class="section-header">
                     <div>
                         <h2>Novit&agrave;</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Compare una sola volta, al primo avvio dopo l'aggiornamento alla versione indicata (APK e PWA; chi installa da zero non la vede). Ogni <strong>pagina</strong> occupa una schermata; le <strong>voci del riepilogo</strong> finiscono tutte nell'ultima. <strong>Pubblicala prima del rilascio</strong>: chi apre la nuova versione quando non ci sono schede non le vedr&agrave; pi&ugrave;.</p>
+                        <p class="admin-sottotitolo">Compare una sola volta, al primo avvio dopo l'aggiornamento alla versione indicata (APK e PWA; chi installa da zero non la vede). Ogni <strong>pagina</strong> occupa una schermata; le <strong>voci del riepilogo</strong> finiscono tutte nell'ultima. <strong>Pubblicala prima del rilascio</strong>: chi apre la nuova versione quando non ci sono schede non le vedr&agrave; pi&ugrave;.</p>
                     </div>
                 </div>
-                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
-                    <div style="display: flex; gap: 0.8rem; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1rem;">
-                        <div class="form-group" style="margin-bottom: 0; min-width: 160px;">
-                            <label for="nov-versione" style="font-weight: 600;">Versione</label>
+                <div class="admin-riquadro">
+                    <div class="nov-campi">
+                        <div class="form-group">
+                            <label for="nov-versione">Versione</label>
                             <input type="text" id="nov-versione" class="form-control" placeholder="2.2.0" list="nov-versioni" autocomplete="off">
                             <datalist id="nov-versioni"></datalist>
                         </div>
                         <button type="button" id="nov-carica" class="btn btn-secondary btn-sm">Carica</button>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; margin-bottom: 0.5rem;">
-                            <input type="checkbox" id="nov-attiva" style="width: 18px; height: 18px;" checked>
-                            <span style="font-weight: 600;">Attiva</span>
+                        <label class="admin-scelta">
+                            <input type="checkbox" id="nov-attiva" checked>
+                            <span class="admin-forte">Attiva</span>
                         </label>
                     </div>
-                    <div id="nov-stato" style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">-</div>
+                    <div id="nov-stato" class="nov-stato">-</div>
                     <div class="nov-layout">
                         <div>
                             <div id="nov-schede"></div>
-                            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.4rem;">
+                            <div class="admin-azioni nov-pulsanti">
                                 <button type="button" id="nov-aggiungi-pagina" class="btn btn-secondary btn-sm">+ Pagina</button>
                                 <button type="button" id="nov-aggiungi-voce" class="btn btn-secondary btn-sm">+ Voce del riepilogo</button>
                             </div>
-                            <div style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.4rem;">
+                            <div class="admin-azioni nov-pulsanti salva">
                                 <button type="button" id="nov-salva" class="btn btn-primary btn-sm">Salva novit&agrave;</button>
-                                <button type="button" id="nov-elimina" class="btn btn-secondary btn-sm" style="color: #f87171;">Elimina versione</button>
+                                <button type="button" id="nov-elimina" class="btn btn-secondary btn-sm admin-pericolo">Elimina versione</button>
                             </div>
                         </div>
                         <div class="nov-anteprima-box">
                             <div id="nov-anteprima"></div>
                             <div class="nov-controlli">
                                 <button type="button" id="nov-prec" class="btn btn-secondary btn-sm">&lsaquo;</button>
-                                <label style="display: flex; align-items: center; gap: 6px; font-size: 0.85rem; cursor: pointer;">
+                                <label class="admin-scelta">
                                     <input type="checkbox" id="nov-inglese"> English
                                 </label>
                                 <button type="button" id="nov-succ" class="btn btn-secondary btn-sm">&rsaquo;</button>
@@ -1315,31 +549,31 @@
                 <div class="section-header">
                     <div>
                         <h2>Messaggio all'avvio</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Finestra mostrata all'apertura dell'app (APK e PWA), una sola volta per ogni testo.</p>
+                        <p class="admin-sottotitolo">Finestra mostrata all'apertura dell'app (APK e PWA), una sola volta per ogni testo.</p>
                     </div>
                 </div>
 
-                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
+                <div class="admin-riquadro">
                     <!-- Compare solo se config_app non si legge -->
-                    <div id="cfg-msg-stato" class="hidden" style="margin-bottom: 1rem;"></div>
+                    <div id="cfg-msg-stato" class="hidden cfg-stato"></div>
                     <form id="config-messaggio-form">
-                        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; cursor: pointer;">
-                            <input type="checkbox" id="cfg-msg-attivo" style="width: 20px; height: 20px;">
-                            <span style="font-weight: 600;">Mostra il messaggio</span>
+                        <label class="admin-scelta admin-spazio-sotto">
+                            <input type="checkbox" id="cfg-msg-attivo">
+                            <span class="admin-forte">Mostra il messaggio</span>
                         </label>
                         <div class="form-group">
-                            <label for="cfg-msg-titolo" style="font-weight: 600;">Titolo</label>
+                            <label for="cfg-msg-titolo">Titolo</label>
                             <input type="text" id="cfg-msg-titolo" class="form-control" placeholder="Avviso">
                         </div>
                         <div class="form-group">
-                            <label for="cfg-msg-testo" style="font-weight: 600;">Testo</label>
+                            <label for="cfg-msg-testo">Testo</label>
                             <textarea id="cfg-msg-testo" class="form-control" rows="4" placeholder="Testo mostrato una sola volta a ogni utente"></textarea>
                         </div>
-                        <label style="display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; cursor: pointer;">
-                            <input type="checkbox" id="cfg-msg-vecchi" style="width: 20px; height: 20px;">
+                        <label class="admin-scelta admin-spazio-sotto">
+                            <input type="checkbox" id="cfg-msg-vecchi">
                             <span>Solo a chi usava gi&agrave; l'app (i nuovi utenti non lo vedono)</span>
                         </label>
-                        <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Ogni utente vede un testo una sola volta: per rimostrarlo cambia il testo. Le app lo ricevono alla prima apertura dopo il salvataggio (al massimo 10 minuti di ritardo).</p>
+                        <p class="admin-aiuto admin-spazio-sotto">Ogni utente vede un testo una sola volta: per rimostrarlo cambia il testo. Le app lo ricevono alla prima apertura dopo il salvataggio (al massimo 10 minuti di ritardo).</p>
                         <button type="submit" class="btn btn-primary btn-sm">Salva messaggio</button>
                     </form>
                 </div>
@@ -1350,20 +584,21 @@
                 <div class="section-header">
                     <div>
                         <h2>Mappe</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Il file mappe.json viene reso compatto, firmato e compresso nel browser; le app lo scaricano solo quando la versione sale.</p>
+                        <p class="admin-sottotitolo">Il file mappe.json viene reso compatto, firmato e compresso nel browser; le app lo scaricano solo quando la versione sale.</p>
                     </div>
                 </div>
 
-                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
-                    <div id="cfg-mappe-stato" style="margin-bottom: 1.2rem; color: var(--text-muted);">Caricamento...</div>
+                <div class="admin-riquadro">
+                    <div id="cfg-mappe-stato" class="cfg-stato">Caricamento...</div>
                     <div class="form-group">
-                        <label for="cfg-mappe-file" style="font-weight: 600;">Nuovo mappe.json</label>
+                        <label for="cfg-mappe-file">Nuovo mappe.json</label>
                         <input type="file" id="cfg-mappe-file" class="form-control" accept=".json,application/json">
                     </div>
-                    <div id="cfg-mappe-anteprima" style="display: none; margin-bottom: 1rem; padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);"></div>
+                    <!-- Mostrata da JS quando si sceglie un file -->
+                    <div id="cfg-mappe-anteprima" class="admin-anteprima hidden"></div>
                     <button type="button" id="cfg-mappe-pubblica" class="btn btn-primary btn-sm" disabled>Pubblica mappe</button>
-                    <h4 style="margin: 1.6rem 0 0.6rem; font-size: 0.95rem;">Versioni nel bucket</h4>
-                    <div id="cfg-mappe-elenco" style="color: var(--text-muted);">-</div>
+                    <h4 class="admin-elenco-titolo">Versioni nel bucket</h4>
+                    <div id="cfg-mappe-elenco" class="admin-testo-sub">-</div>
                 </div>
             </div>
 
@@ -1372,36 +607,37 @@
                 <div class="section-header">
                     <div>
                         <h2>Men&ugrave; mensa</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Il JSON si ottiene dal PDF ADISU con <code>python scripts/menu_mensa_pdf.py menu.pdf</code>. Lo stesso men&ugrave; vale per tutte le mense.</p>
+                        <p class="admin-sottotitolo">Il JSON si ottiene dal PDF ADISU con <code>python scripts/menu_mensa_pdf.py menu.pdf</code>. Lo stesso men&ugrave; vale per tutte le mense.</p>
                     </div>
                 </div>
 
-                <div class="card" style="padding: 1.6rem; border-radius: 16px;">
-                    <div id="cfg-menu-stato" style="margin-bottom: 1.2rem; color: var(--text-muted);">Caricamento...</div>
+                <div class="admin-riquadro">
+                    <div id="cfg-menu-stato" class="cfg-stato">Caricamento...</div>
                     <div class="form-group">
-                        <label for="cfg-menu-file" style="font-weight: 600;">Nuovo menu_mensa.json (facoltativo: senza file si modificano solo le date del men&ugrave; pubblicato)</label>
+                        <label for="cfg-menu-file">Nuovo menu_mensa.json (facoltativo: senza file si modificano solo le date del men&ugrave; pubblicato)</label>
                         <input type="file" id="cfg-menu-file" class="form-control" accept=".json,application/json">
                     </div>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label for="cfg-menu-titolo" style="font-weight: 600;">Titolo</label>
+                    <div class="admin-griglia-campi stretta">
+                        <div class="form-group">
+                            <label for="cfg-menu-titolo">Titolo</label>
                             <input type="text" id="cfg-menu-titolo" class="form-control" placeholder="Men&ugrave; invernale">
                         </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label for="cfg-menu-dal" style="font-weight: 600;">Valido dal</label>
+                        <div class="form-group">
+                            <label for="cfg-menu-dal">Valido dal</label>
                             <input type="date" id="cfg-menu-dal" class="form-control">
                         </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label for="cfg-menu-al" style="font-weight: 600;">Valido al</label>
+                        <div class="form-group">
+                            <label for="cfg-menu-al">Valido al</label>
                             <input type="date" id="cfg-menu-al" class="form-control">
                         </div>
-                        <div class="form-group" style="margin-bottom: 0;">
-                            <label for="cfg-menu-ciclo" style="font-weight: 600;">Luned&igrave; della 1&ordf; settimana</label>
+                        <div class="form-group">
+                            <label for="cfg-menu-ciclo">Luned&igrave; della 1&ordf; settimana</label>
                             <input type="date" id="cfg-menu-ciclo" class="form-control">
                         </div>
                     </div>
-                    <div id="cfg-menu-anteprima" style="display: none; margin: 1rem 0; padding: 1rem; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);"></div>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                    <!-- Mostrata da JS con l'anteprima del menù di oggi -->
+                    <div id="cfg-menu-anteprima" class="admin-anteprima hidden"></div>
+                    <div class="admin-azioni admin-spazio-sopra">
                         <button type="button" id="cfg-menu-anteprima-btn" class="btn btn-secondary btn-sm">Anteprima di oggi</button>
                         <button type="button" id="cfg-menu-pubblica" class="btn btn-primary btn-sm">Pubblica men&ugrave;</button>
                     </div>
@@ -1413,29 +649,30 @@
                 <div class="section-header">
                     <div>
                         <h2>Simulatore del portale</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Corso finto <strong>TEST</strong>: le modifiche qui sotto passano dagli stessi controlli del portale vero e arrivano <strong>solo ai dispositivi tester</strong> (PWA).</p>
+                        <p class="admin-sottotitolo">Corso finto <strong>TEST</strong>: le modifiche qui sotto passano dagli stessi controlli del portale vero e arrivano <strong>solo ai dispositivi tester</strong> (PWA).</p>
                     </div>
                 </div>
-                <div class="card" style="margin-bottom: 1.5rem; padding: 1.4rem; border-radius: 16px;">
-                    <ol style="margin: 0 0 1rem 1.2rem; color: var(--text-muted); font-size: 0.88rem; line-height: 1.7;">
+                <div class="admin-riquadro">
+                    <ol class="admin-passi">
                         <li>Genera le lezioni di prova e lancia il <strong>controllo notturno</strong>: la prima volta fa solo da base, senza modifiche.</li>
                         <li>Cambia aula, orario o giorno, annulla o rinumera qualche lezione qui sotto.</li>
                         <li>Lancia di nuovo il controllo notturno (o il diurno, per oggi e i prossimi due giorni).</li>
                         <li>Premi <strong>Invia notifiche</strong>: i tester ricevono le modifiche trovate.</li>
                     </ol>
-                    <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                    <div class="admin-azioni">
                         <button type="button" id="sim-genera" class="btn btn-secondary btn-sm">Genera lezioni di prova</button>
-                        <button type="button" id="sim-svuota" class="btn btn-secondary btn-sm">Svuota</button>
-                        <span style="flex: 1;"></span>
+                        <button type="button" id="sim-svuota" class="btn btn-secondary btn-sm admin-pericolo">Svuota</button>
+                        <span class="admin-riempi"></span>
                         <button type="button" class="btn btn-primary btn-sm" data-sim-funzione="orario-notte">Controllo notturno</button>
                         <button type="button" class="btn btn-primary btn-sm" data-sim-funzione="orario-controllo">Controllo diurno</button>
                         <button type="button" class="btn btn-primary btn-sm" data-sim-funzione="push-automatiche">Invia notifiche</button>
                     </div>
-                    <pre id="sim-esito" style="display: none; margin-top: 1rem; padding: 0.8rem; border-radius: 10px; background: rgba(0,0,0,0.3); font-size: 0.78rem; white-space: pre-wrap; max-height: 220px; overflow: auto;"></pre>
+                    <!-- Mostrato da JS con la risposta della funzione -->
+                    <pre id="sim-esito" class="admin-esito hidden"></pre>
                 </div>
-                <div class="card" style="padding: 1.4rem; border-radius: 16px;">
-                    <h3 style="font-size: 1.05rem; color: var(--primary-gold); margin-bottom: 0.8rem;">Lezioni del corso TEST</h3>
-                    <div id="sim-elenco" style="color: var(--text-muted);">Caricamento...</div>
+                <div class="admin-riquadro">
+                    <h3 class="admin-riquadro-titolo"><span class="admin-ms">event_note</span>Lezioni del corso TEST</h3>
+                    <div id="sim-elenco" class="admin-testo-sub">Caricamento...</div>
                 </div>
             </div>
 
@@ -1444,35 +681,33 @@
                 <div class="section-header">
                     <div>
                         <h2>Notifiche Web Push & Avvisi Sistema</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Invia notifiche a PWA (iOS/Android/PC) e crea avvisi sincronizzati per l'APK nativo</p>
+                        <p class="admin-sottotitolo">Invia notifiche a PWA (iOS/Android/PC) e crea avvisi sincronizzati per l'APK nativo</p>
                     </div>
-                    <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-                        <span id="push-subscribers-badge" class="badge" title="Tutti i dispositivi registrati" style="background: rgba(212, 175, 55, 0.15); color: var(--primary-gold); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(212, 175, 55, 0.3); display: flex; align-items: center; gap: 6px;">
-                            <span>📱</span> Totale: <strong id="push-subscribers-count">...</strong>
+                    <div class="admin-azioni">
+                        <span id="push-subscribers-badge" class="admin-contatore oro" title="Tutti i dispositivi registrati">
+                            <span class="admin-ms">devices</span> Totale: <strong id="push-subscribers-count">...</strong>
                         </span>
-                        <span id="push-pwa-badge" class="badge" title="Dispositivi Web PWA registrati" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(56, 189, 248, 0.3); display: flex; align-items: center; gap: 6px;">
-                            <span>🌐</span> PWA: <strong id="push-pwa-count">...</strong>
+                        <span id="push-pwa-badge" class="admin-contatore web" title="Dispositivi Web PWA registrati">
+                            <span class="admin-ms">language</span> PWA: <strong id="push-pwa-count">...</strong>
                         </span>
-                        <span id="push-apk-badge" class="badge" title="Dispositivi Android APK registrati via Firebase" style="background: rgba(74, 222, 128, 0.15); color: #4ade80; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(74, 222, 128, 0.3); display: flex; align-items: center; gap: 6px;">
-                            <span>🤖</span> APK: <strong id="push-apk-count">...</strong>
+                        <span id="push-apk-badge" class="admin-contatore apk" title="Dispositivi Android APK registrati via Firebase">
+                            <span class="admin-ms">android</span> APK: <strong id="push-apk-count">...</strong>
                         </span>
                     </div>
                 </div>
 
                 <!-- Card Form Invio Notifica -->
-                <div class="card" style="margin-bottom: 2rem; padding: 1.8rem; background: linear-gradient(145deg, rgba(30, 30, 30, 0.7), rgba(20, 20, 20, 0.9)); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 16px;">
-                    <h3 style="font-size: 1.15rem; color: var(--primary-gold); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;">
-                        <span>📢</span> Componi Nuovo Avviso / Push
-                    </h3>
+                <div class="admin-riquadro notif-composizione">
+                    <h3 class="admin-riquadro-titolo"><span class="admin-ms">campaign</span>Componi Nuovo Avviso / Push</h3>
                     <form id="push-notification-form">
-                        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label for="notif-title" style="font-weight: 600;">Titolo Notifica *</label>
+                        <div class="admin-griglia-notifica">
+                            <div class="form-group">
+                                <label for="notif-title">Titolo Notifica *</label>
                                 <input type="text" id="notif-title" class="form-control" required placeholder="Es: Allerta Meteo o Cambio Aula">
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
-                                <label for="notif-channel" style="font-weight: 600;">Canale</label>
-                                <select id="notif-channel" class="form-control" style="background: #1e1e1e;">
+                            <div class="form-group">
+                                <label for="notif-channel">Canale</label>
+                                <select id="notif-channel" class="form-control">
                                     <option value="avvisi">📢 Avvisi Generali</option>
                                     <option value="cambi_aula">🔄 Cambi Aula / Orario</option>
                                     <option value="annullamenti">❌ Lezioni Annullate</option>
@@ -1482,66 +717,66 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="notif-body" style="font-weight: 600;">Messaggio *</label>
+                            <label for="notif-body">Messaggio *</label>
                             <textarea id="notif-body" class="form-control" rows="3" required placeholder="Inserisci il testo dettagliato della notifica che apparirà sul dispositivo degli studenti..."></textarea>
                         </div>
 
                         <!-- Target Destinatari -->
-                        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1rem;">
+                        <div class="admin-gruppo">
                             <!-- Filtro Piattaforma Dispositivo -->
-                            <div style="display: flex; gap: 1.2rem; align-items: center; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.06); flex-wrap: wrap;">
-                                <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">📱 Piattaforma:</span>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd; font-size: 0.85rem;">
+                            <div class="admin-scelte piccole admin-gruppo-separato">
+                                <span class="admin-testo-sub admin-forte-sub">📱 Piattaforma:</span>
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-platform" value="tutti" checked>
                                     Tutte (PWA + APK)
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #38bdf8; font-size: 0.85rem;">
+                                <label class="admin-scelta admin-web">
                                     <input type="radio" name="notif-platform" value="pwa">
                                     🌐 Solo Web PWA
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #4ade80; font-size: 0.85rem;">
+                                <label class="admin-scelta admin-apk">
                                     <input type="radio" name="notif-platform" value="apk">
                                     🤖 Solo APK Android
                                 </label>
                             </div>
 
-                            <label style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">🎯 Filtro Studenti</label>
-                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;">
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                            <span class="admin-gruppo-titolo">🎯 Filtro Studenti</span>
+                            <div class="admin-scelte">
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-target-type" value="tutti" checked>
                                     Tutti gli studenti (Broadcast)
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-target-type" value="corso">
                                     Per Corso di Laurea
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-target-type" value="materia">
                                     Per Materia Generica (tutti i corsi)
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-target-type" value="materia_corso">
                                     Per Materia di uno Specifico Corso
                                 </label>
                             </div>
 
                             <!-- Menu a tendina corsi di laurea con ricerca testuale -->
-                            <div id="target-course-container" class="hidden" style="margin-top: 0.6rem; position: relative;">
-                                <label id="target-course-label" for="notif-target-course-search" style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Seleziona Corso di Laurea (puoi scrivere per cercare):</label>
-                                <div style="position: relative;">
-                                    <input 
-                                        type="text" 
-                                        id="notif-target-course-search" 
-                                        class="form-control" 
-                                        placeholder="🔍 Digita per cercare il corso (es: Informatica, Diritto, LB48R)..." 
+                            <div id="target-course-container" class="hidden notif-campo-extra">
+                                <label id="target-course-label" for="notif-target-course-search" class="admin-etichetta-piccola">Seleziona Corso di Laurea (puoi scrivere per cercare):</label>
+                                <div class="admin-ricerca-corso">
+                                    <input
+                                        type="text"
+                                        id="notif-target-course-search"
+                                        class="form-control"
+                                        placeholder="🔍 Digita per cercare il corso (es: Informatica, Diritto, LB48R)..."
                                         autocomplete="off"
-                                        style="background: #1e1e1e; padding-right: 2.8rem; cursor: pointer;"
                                     >
-                                    <button 
-                                        type="button" 
-                                        id="notif-target-course-clear" 
+                                    <!-- Mostrato da JS quando c'è un corso scelto -->
+                                    <button
+                                        type="button"
+                                        id="notif-target-course-clear"
+                                        class="admin-ricerca-pulisci hidden"
                                         title="Reimposta selezione corso"
-                                        style="display: none; position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #888; font-size: 1.1rem; cursor: pointer; padding: 4px;"
                                     >✕</button>
 
                                     <!-- Dropdown personalizzato per risultati filtrati -->
@@ -1549,66 +784,66 @@
                                 </div>
 
                                 <!-- Select nativo nascosto per garantire compatibilità -->
-                                <select id="notif-target-course" style="display: none;">
+                                <select id="notif-target-course" class="hidden">
                                     <option value="">Caricamento corsi in corso...</option>
                                 </select>
                             </div>
 
                             <!-- Input per nome materia con datalist di autocompletamento -->
-                            <div id="target-value-container" class="hidden" style="margin-top: 0.6rem;">
-                                <label id="target-value-label" for="notif-target-value" style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.3rem;"></label>
+                            <div id="target-value-container" class="hidden notif-campo-extra">
+                                <label id="target-value-label" for="notif-target-value" class="admin-etichetta-piccola"></label>
                                 <input type="text" id="notif-target-value" list="materie-datalist" class="form-control" placeholder="">
                                 <datalist id="materie-datalist"></datalist>
                             </div>
                         </div>
 
                         <!-- Pianificazione Temporale (Subito vs Programmata) -->
-                        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                            <label style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">⏰ Pianificazione Invio</label>
-                            <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 0.8rem;">
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                        <div class="admin-gruppo">
+                            <span class="admin-gruppo-titolo">⏰ Pianificazione Invio</span>
+                            <div class="admin-scelte">
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-schedule-type" value="now" checked>
                                     Invia Subito (Realtime)
                                 </label>
-                                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: #ddd;">
+                                <label class="admin-scelta">
                                     <input type="radio" name="notif-schedule-type" value="later">
                                     Programma per data/ora futura
                                 </label>
                             </div>
 
-                            <div id="schedule-datetime-container" class="hidden" style="margin-top: 0.6rem;">
-                                <label for="notif-scheduled-at" style="font-size: 0.85rem; color: var(--text-muted); display: block; margin-bottom: 0.4rem;">Data e Ora di invio programmata:</label>
-                                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                                    <input type="datetime-local" id="notif-scheduled-at" class="form-control" style="max-width: 320px; background: #1e1e1e;">
-                                    <span style="font-size: 0.8rem; color: var(--text-muted);">🕒 Fuso orario locale</span>
+                            <div id="schedule-datetime-container" class="hidden notif-campo-extra">
+                                <label for="notif-scheduled-at" class="admin-etichetta-piccola">Data e Ora di invio programmata:</label>
+                                <div class="admin-riga">
+                                    <input type="datetime-local" id="notif-scheduled-at" class="form-control form-control-corto">
+                                    <span class="admin-testo-sub admin-piccolo">🕒 Fuso orario locale</span>
                                 </div>
-                                <small style="display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">💡 Clicca sul campo o sull'icona per aprire il calendario e scegliere la data.</small>
+                                <small class="admin-aiuto">💡 Clicca sul campo o sull'icona per aprire il calendario e scegliere la data.</small>
                             </div>
                         </div>
 
                         <!-- Scadenza dell'avviso (Fase 6) -->
-                        <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
-                            <label for="notif-scade-il" style="font-weight: 600; color: white; display: block; margin-bottom: 0.6rem;">⌛ Valido fino a</label>
-                            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                <input type="datetime-local" id="notif-scade-il" class="form-control" style="max-width: 320px; background: #1e1e1e;">
-                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="2h" style="cursor: pointer;">2 ore</button>
-                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="giorno" style="cursor: pointer;">Fine giornata</button>
-                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="settimana" style="cursor: pointer;">1 settimana</button>
-                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="nessuna" style="cursor: pointer; opacity: 0.75;">Svuota</button>
+                        <div class="admin-gruppo">
+                            <label for="notif-scade-il" class="admin-gruppo-titolo">⌛ Valido fino a</label>
+                            <div class="admin-riga">
+                                <input type="datetime-local" id="notif-scade-il" class="form-control form-control-corto">
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="2h">2 ore</button>
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="giorno">Fine giornata</button>
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida" data-scadenza="settimana">1 settimana</button>
+                                <button type="button" class="btn btn-secondary btn-sm scadenza-rapida admin-discreto" data-scadenza="nessuna">Svuota</button>
                             </div>
-                            <small id="notif-scade-hint" style="display: block; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px;">💡 Vuoto = scadenza istantanea: l'avviso arriva solo ai dispositivi raggiungibili al momento dell'invio. Con una scadenza, chi è offline lo riceve appena torna online, fino a quell'ora.</small>
+                            <small id="notif-scade-hint" class="admin-aiuto">💡 Vuoto = scadenza istantanea: l'avviso arriva solo ai dispositivi raggiungibili al momento dell'invio. Con una scadenza, chi è offline lo riceve appena torna online, fino a quell'ora.</small>
                         </div>
 
                         <!-- Azione al click (URL opzionale) -->
                         <div class="form-group">
-                            <label for="notif-url" style="font-size: 0.85rem; color: var(--text-muted);">URL / Link da aprire al click (Opzionale, default: '/')</label>
+                            <label for="notif-url">URL / Link da aprire al click (Opzionale, default: '/')</label>
                             <input type="text" id="notif-url" class="form-control" placeholder="/" value="/">
                         </div>
 
                         <!-- Submit Button -->
-                        <div style="display: flex; gap: 1rem; align-items: center; justify-content: flex-end; margin-top: 1.5rem;">
-                            <span id="push-submit-status" style="font-size: 0.9rem; font-weight: 500;"></span>
-                            <button type="submit" id="push-submit-btn" class="btn btn-primary" style="background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none; padding: 0.8rem 1.8rem; border-radius: 12px; cursor: pointer;">
+                        <div class="admin-invio">
+                            <span id="push-submit-status"></span>
+                            <button type="submit" id="push-submit-btn" class="btn btn-primary admin-btn-grande">
                                 Invia Notifica
                             </button>
                         </div>
@@ -1617,9 +852,9 @@
 
                 <!-- Storico Avvisi e Notifiche Programmate -->
                 <div>
-                    <h3 style="font-size: 1.15rem; color: white; margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between;">
-                        <span>📋 Coda & Storico Notifiche</span>
-                        <button id="refresh-notifications-btn" class="btn btn-secondary btn-sm" style="cursor: pointer;">Aggiorna Elenco</button>
+                    <h3 class="storico-titolo">
+                        <span class="admin-riga"><span class="admin-ms admin-oro">history</span>Coda & Storico Notifiche</span>
+                        <button id="refresh-notifications-btn" class="btn btn-secondary btn-sm">Aggiorna Elenco</button>
                     </h3>
                     <div id="notifications-history-list">
                         <!-- Dynamic Content: Elenco notifiche programmate e inviate -->
@@ -1655,7 +890,7 @@
                 <div class="section-header">
                     <div>
                         <h2>Gestione Note Legali</h2>
-                        <p style="color: var(--text-muted); font-size: 0.8rem;">Usa le categorie "Termini di Servizio" o "Informativa sulla Privacy"</p>
+                        <p class="admin-sottotitolo">Usa le categorie "Termini di Servizio" o "Informativa sulla Privacy"</p>
                     </div>
                     <button id="add-legal-btn" class="btn btn-primary btn-sm">+ Nuova Nota</button>
                 </div>
@@ -1677,47 +912,47 @@
 
             <!-- Bugs & Issues Admin Section -->
             <div id="bugs-admin-section" class="section-content hidden">
-                <div class="section-header" style="flex-wrap: wrap; gap: 1rem;">
+                <div class="section-header">
                     <div>
                         <h2>Gestione Bug Noti & Risolti</h2>
-                        <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.2rem;">Registra, monitora e pubblica lo stato delle segnalazioni e dei fix per QuickCheck.</p>
+                        <p class="admin-sottotitolo">Registra, monitora e pubblica lo stato delle segnalazioni e dei fix per QuickCheck.</p>
                     </div>
-                    <div style="display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;">
-                        <a href="bugs.html" target="_blank" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
-                            <span>↗</span> Apri Pagina Pubblica
+                    <div class="admin-azioni">
+                        <a href="bugs.html" target="_blank" class="btn btn-secondary btn-sm">
+                            <span class="admin-ms">open_in_new</span> Apri Pagina Pubblica
                         </a>
                         <button id="add-bug-btn" class="btn btn-primary btn-sm">+ Nuovo Bug</button>
                     </div>
                 </div>
 
                 <!-- KPI Contatori Rapidi Bug -->
-                <div class="analytics-kpi-grid" style="margin-bottom: 1.5rem;">
+                <div class="analytics-kpi-grid compatta">
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap" style="color: #ff6b6b; background: rgba(255, 107, 107, 0.1);">🔴</div>
+                        <div class="kpi-icon-wrap rosso"><span class="admin-ms">error</span></div>
                         <div class="kpi-content">
                             <span class="kpi-label">Bug Noti / Aperti</span>
                             <h3 id="kpi-bugs-open" class="kpi-value">0</h3>
-                            <span class="kpi-sub" style="color: #ff6b6b;">In attesa di risoluzione</span>
+                            <span class="kpi-sub rosso">In attesa di risoluzione</span>
                         </div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap" style="color: #fbbf24; background: rgba(251, 191, 36, 0.1);">🟡</div>
+                        <div class="kpi-icon-wrap giallo"><span class="admin-ms">construction</span></div>
                         <div class="kpi-content">
                             <span class="kpi-label">In Lavorazione</span>
                             <h3 id="kpi-bugs-progress" class="kpi-value">0</h3>
-                            <span class="kpi-sub" style="color: #fbbf24;">Fix in fase di sviluppo</span>
+                            <span class="kpi-sub giallo">Fix in fase di sviluppo</span>
                         </div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap" style="color: #4ade80; background: rgba(74, 222, 128, 0.1);">🟢</div>
+                        <div class="kpi-icon-wrap verde"><span class="admin-ms">check_circle</span></div>
                         <div class="kpi-content">
                             <span class="kpi-label">Bug Risolti</span>
                             <h3 id="kpi-bugs-resolved" class="kpi-value">0</h3>
-                            <span class="kpi-sub" style="color: #4ade80;">Corretti e rilasciati</span>
+                            <span class="kpi-sub verde">Corretti e rilasciati</span>
                         </div>
                     </div>
                     <div class="kpi-card">
-                        <div class="kpi-icon-wrap">📋</div>
+                        <div class="kpi-icon-wrap"><span class="admin-ms">list_alt</span></div>
                         <div class="kpi-content">
                             <span class="kpi-label">Totale Bug Nel DB</span>
                             <h3 id="kpi-bugs-total" class="kpi-value">0</h3>
@@ -1726,33 +961,31 @@
                     </div>
                 </div>
 
-                <!-- Filtri e Ricerca Admin -->
-                <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap;">
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="admin-bug-filters">
+                <!-- Filtri e Ricerca Admin (bordo dei filtri per stato in admin.css) -->
+                <div class="admin-riga admin-riga-spazio bug-filtri">
+                    <div class="admin-riga" id="admin-bug-filters">
                         <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn active" data-filter="all">Tutti (<span id="admin-count-all">0</span>)</button>
-                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="open" style="border-color: rgba(255,107,107,0.3);">🔴 Noti / Aperti (<span id="admin-count-open">0</span>)</button>
-                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="in_progress" style="border-color: rgba(251,191,36,0.3);">🟡 In Corso (<span id="admin-count-progress">0</span>)</button>
-                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="resolved" style="border-color: rgba(74,222,128,0.3);">🟢 Risolti (<span id="admin-count-resolved">0</span>)</button>
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="open">🔴 Noti / Aperti (<span id="admin-count-open">0</span>)</button>
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="in_progress">🟡 In Corso (<span id="admin-count-progress">0</span>)</button>
+                        <button type="button" class="btn btn-secondary btn-sm admin-bug-filter-btn" data-filter="resolved">🟢 Risolti (<span id="admin-count-resolved">0</span>)</button>
                     </div>
-                    <div style="position: relative; min-width: 240px; flex: 1; max-width: 320px;">
-                        <input type="text" id="admin-bug-search" class="form-control" placeholder="Cerca tra i bug..." style="padding: 0.55rem 1rem 0.55rem 2.2rem; font-size: 0.85rem;">
-                        <span style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 0.85rem; pointer-events: none;">🔍</span>
+                    <div class="admin-cerca">
+                        <input type="text" id="admin-bug-search" class="form-control" placeholder="Cerca tra i bug...">
+                        <span class="admin-ms">search</span>
                     </div>
                 </div>
 
                 <!-- Alert se tabella mancante con guida rapida copy SQL -->
-                <div id="bugs-table-missing-alert" class="hidden" style="background: rgba(234, 179, 8, 0.08); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 16px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;">
-                    <div style="display: flex; align-items: flex-start; gap: 12px;">
-                        <span style="font-size: 1.6rem;">⚠️</span>
-                        <div style="flex: 1;">
-                            <h4 style="color: #facc15; margin-bottom: 0.3rem;">Tabella 'bugs' non trovata su Supabase</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.8rem; line-height: 1.5;">
-                                Per abilitare il salvataggio dei bug, copia lo script SQL pronto ed eseguilo nell'SQL Editor di Supabase.
-                            </p>
-                            <button type="button" id="copy-bugs-sql-btn" class="btn btn-secondary btn-sm" style="color: #facc15; border-color: rgba(250, 204, 21, 0.4);">
-                                📋 Copia Query SQL per Supabase
-                            </button>
-                        </div>
+                <div id="bugs-table-missing-alert" class="hidden admin-avviso att">
+                    <span class="admin-ms">warning</span>
+                    <div class="admin-riempi">
+                        <h4>Tabella 'bugs' non trovata su Supabase</h4>
+                        <p>
+                            Per abilitare il salvataggio dei bug, copia lo script SQL pronto ed eseguilo nell'SQL Editor di Supabase.
+                        </p>
+                        <button type="button" id="copy-bugs-sql-btn" class="btn btn-secondary btn-sm">
+                            <span class="admin-ms">content_copy</span> Copia Query SQL per Supabase
+                        </button>
                     </div>
                 </div>
 
@@ -1768,7 +1001,7 @@
     <!-- Update Modal -->
     <div id="update-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 id="modal-title" style="margin-bottom: 1.5rem;">Aggiungi Aggiornamento</h2>
+            <h2 id="modal-title">Aggiungi Aggiornamento</h2>
             <form id="update-form">
                 <input type="hidden" id="update-id">
                 <div class="form-group">
@@ -1791,24 +1024,24 @@
                     <label>Patch Notes</label>
                     <div id="v-changes-list" class="patch-notes-editor"></div>
                     <button type="button" id="add-patch-note-btn" class="btn-add-note">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        <span class="admin-ms">add</span>
                         Aggiungi nota
                     </button>
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                    <input type="checkbox" id="v-latest" style="width: 20px; height: 20px;">
-                    <label for="v-latest" style="margin: 0;">Imposta come Ultima Versione (In evidenza)</label>
+                <div class="form-group admin-scelta">
+                    <input type="checkbox" id="v-latest">
+                    <label for="v-latest">Imposta come Ultima Versione (In evidenza)</label>
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <label for="v-visible" style="margin: 0; font-weight: 500; color: white;">Visibile sul sito (Pubblica)</label>
+                <div class="form-group admin-interruttore">
+                    <label for="v-visible">Visibile sul sito (Pubblica)</label>
                     <label class="switch">
                         <input type="checkbox" id="v-visible" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
-                    <button type="button" id="close-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                    <button type="button" id="close-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -1840,16 +1073,16 @@
                     <label for="c-order">Ordine di visualizzazione</label>
                     <input type="number" id="c-order" class="form-control" value="0">
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <label for="c-visible" style="margin: 0; font-weight: 500; color: white;">Visibile sul sito (Pubblica)</label>
+                <div class="form-group admin-interruttore">
+                    <label for="c-visible">Visibile sul sito (Pubblica)</label>
                     <label class="switch">
                         <input type="checkbox" id="c-visible" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
-                    <button type="button" id="close-credit-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                    <button type="button" id="close-credit-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -1881,16 +1114,16 @@
                     <label for="co-order">Ordine</label>
                     <input type="number" id="co-order" class="form-control" value="0">
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <label for="co-visible" style="margin: 0; font-weight: 500; color: white;">Visibile sul sito (Pubblica)</label>
+                <div class="form-group admin-interruttore">
+                    <label for="co-visible">Visibile sul sito (Pubblica)</label>
                     <label class="switch">
                         <input type="checkbox" id="co-visible" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
-                    <button type="button" id="close-contact-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                    <button type="button" id="close-contact-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -1921,16 +1154,16 @@
                     <label for="l-order">Ordine di visualizzazione</label>
                     <input type="number" id="l-order" class="form-control" value="0">
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <label for="l-visible" style="margin: 0; font-weight: 500; color: white;">Visibile sul sito (Pubblica)</label>
+                <div class="form-group admin-interruttore">
+                    <label for="l-visible">Visibile sul sito (Pubblica)</label>
                     <label class="switch">
                         <input type="checkbox" id="l-visible" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
-                    <button type="button" id="close-legal-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                    <button type="button" id="close-legal-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -1959,16 +1192,16 @@
                     <label for="f-order">Ordine</label>
                     <input type="number" id="f-order" class="form-control" value="0">
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <label for="f-visible" style="margin: 0; font-weight: 500; color: white;">Visibile sul sito (Pubblica)</label>
+                <div class="form-group admin-interruttore">
+                    <label for="f-visible">Visibile sul sito (Pubblica)</label>
                     <label class="switch">
                         <input type="checkbox" id="f-visible" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
-                    <button type="button" id="close-feature-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                    <button type="button" id="close-feature-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -1992,16 +1225,16 @@
                     <label for="fq-order">Ordine</label>
                     <input type="number" id="fq-order" class="form-control" value="0">
                 </div>
-                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-                    <label for="fq-visible" style="margin: 0; font-weight: 500; color: white;">Visibile sul sito (Pubblica)</label>
+                <div class="form-group admin-interruttore">
+                    <label for="fq-visible">Visibile sul sito (Pubblica)</label>
                     <label class="switch">
                         <input type="checkbox" id="fq-visible" checked>
                         <span class="slider"></span>
                     </label>
                 </div>
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva</button>
-                    <button type="button" id="close-faq-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva</button>
+                    <button type="button" id="close-faq-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -2009,7 +1242,7 @@
 
     <!-- Bug Modal -->
     <div id="bug-modal" class="modal hidden">
-        <div class="modal-content" style="max-width: 650px;">
+        <div class="modal-content larga">
             <h2 id="bug-modal-title">Nuovo Bug</h2>
             <form id="bug-form">
                 <input type="hidden" id="bug-id">
@@ -2019,10 +1252,10 @@
                     <input type="text" id="b-title" class="form-control" required placeholder="Es: Filtro aule non risponde al primo tap">
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="admin-griglia-campi">
                     <div class="form-group">
                         <label for="b-status">Stato del Bug *</label>
-                        <select id="b-status" class="form-control" style="background: #181818; color: white;">
+                        <select id="b-status" class="form-control">
                             <option value="open">🔴 Noto / Aperto (Non risolto)</option>
                             <option value="in_progress">🟡 In Lavorazione (In analisi / sviluppo)</option>
                             <option value="resolved">🟢 Risolto (Corretto e rilasciato)</option>
@@ -2031,7 +1264,7 @@
 
                     <div class="form-group">
                         <label for="b-severity">Gravità / Priorità *</label>
-                        <select id="b-severity" class="form-control" style="background: #181818; color: white;">
+                        <select id="b-severity" class="form-control">
                             <option value="low">🔵 Bassa (Minore, testo o grafico)</option>
                             <option value="medium" selected>🟡 Media (Funzionalità parziale con alternativa)</option>
                             <option value="high">🟠 Alta (Funzione importante non funzionante)</option>
@@ -2040,7 +1273,7 @@
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="admin-griglia-campi">
                     <div class="form-group">
                         <label for="b-category">Categoria / Modulo</label>
                         <input type="text" id="b-category" class="form-control" placeholder="Es: App Android, Web App, Orari, Aule, Docenti" value="App Android">
@@ -2067,14 +1300,14 @@
                     <textarea id="b-workaround" class="form-control" rows="2" placeholder="Es: In attesa dell'update, selezionare l'aula tramite ricerca testuale o usare la Web App."></textarea>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-items: center;">
+                <div class="admin-griglia-campi bug-ordine-visibile">
                     <div class="form-group">
                         <label for="b-order">Ordine di Visualizzazione</label>
                         <input type="number" id="b-order" class="form-control" value="0">
                     </div>
 
-                    <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; background: rgba(0,0,0,0.2); padding: 0.8rem 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); margin-top: 1rem;">
-                        <label for="b-visible" style="margin: 0; font-weight: 500; color: white; font-size: 0.85rem;">Visibile sul sito (Pubblico)</label>
+                    <div class="form-group admin-interruttore">
+                        <label for="b-visible">Visibile sul sito (Pubblico)</label>
                         <label class="switch">
                             <input type="checkbox" id="b-visible" checked>
                             <span class="slider"></span>
@@ -2082,34 +1315,36 @@
                     </div>
                 </div>
 
-                <div class="actions" style="margin-top: 2rem;">
-                    <button type="submit" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none;">Salva Bug</button>
-                    <button type="button" id="close-bug-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; background: transparent; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" class="btn btn-primary">Salva Bug</button>
+                    <button type="button" id="close-bug-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Custom Confirm Modal -->
-    <div id="custom-confirm" class="modal hidden" style="z-index: 3000;">
-        <div class="modal-content" style="max-width: 450px; text-align: center; border: 1px solid rgba(212, 175, 55, 0.25); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);">
-            <div id="confirm-icon" style="font-size: 2.6rem; margin-bottom: 0.8rem;">⚠️</div>
-            <h2 id="confirm-title" style="color: var(--primary-gold); margin-bottom: 0.8rem; font-size: 1.35rem;">Conferma</h2>
-            <p id="confirm-message" style="color: #ddd; margin-bottom: 1.8rem; font-size: 0.95rem; line-height: 1.5; white-space: pre-line; word-break: break-word;">Sei sicuro?</p>
-            <div class="actions" style="display: flex; gap: 12px; justify-content: center;">
-                <button type="button" id="confirm-no" class="btn btn-secondary" style="flex: 1; border-radius: 12px; padding: 0.75rem;">Annulla</button>
-                <button type="button" id="confirm-yes" class="btn btn-primary" style="flex: 1; border-radius: 12px; padding: 0.75rem;">Conferma</button>
+    <!-- Finestra di conferma del pannello (customConfirm): sostituisce confirm(), alert() e prompt().
+         #confirm-testo compare solo quando c'è un testo da copiare (es. lo script SQL dei bug). -->
+    <div id="custom-confirm" class="modal hidden">
+        <div class="modal-content stretta" role="dialog" aria-labelledby="confirm-title">
+            <div id="confirm-icon">⚠️</div>
+            <h2 id="confirm-title">Conferma</h2>
+            <p id="confirm-message">Sei sicuro?</p>
+            <textarea id="confirm-testo" class="form-control hidden" readonly></textarea>
+            <div class="admin-azioni-modale">
+                <button type="button" id="confirm-no" class="btn btn-secondary">Annulla</button>
+                <button type="button" id="confirm-yes" class="btn btn-primary">Conferma</button>
             </div>
         </div>
     </div>
 
-    
+
     <!-- Modal Esportazione Dati Telemetria -->
     <div id="export-stats-modal" class="modal hidden">
         <div class="modal-content">
-            <h2 style="color: var(--primary-gold); margin-bottom: 0.5rem; font-size: 1.4rem;">Esporta Statistiche Telemetria</h2>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">Scegli l'intervallo temporale e il formato per scaricare i dati.</p>
-            
+            <h2 class="con-sottotitolo oro">Esporta Statistiche Telemetria</h2>
+            <p class="modal-sottotitolo">Scegli l'intervallo temporale e il formato per scaricare i dati.</p>
+
             <form id="export-stats-form">
                 <div class="form-group">
                     <label for="export-range-type">Intervallo Temporale</label>
@@ -2124,12 +1359,12 @@
                 </div>
 
                 <!-- Date personalizzate (visibili solo se 'custom') -->
-                <div id="export-custom-dates" class="hidden" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem;">
-                    <div class="form-group" style="margin-bottom: 0;">
+                <div id="export-custom-dates" class="hidden admin-date-coppia">
+                    <div class="form-group">
                         <label for="export-date-from">Da Data</label>
                         <input type="date" id="export-date-from" class="form-control">
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-group">
                         <label for="export-date-to">A Data</label>
                         <input type="date" id="export-date-to" class="form-control">
                     </div>
@@ -2144,9 +1379,9 @@
                     </select>
                 </div>
 
-                <div class="actions" style="margin-top: 2rem; display: flex; gap: 10px;">
-                    <button type="submit" id="export-confirm-btn" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: linear-gradient(135deg, #FFD700 0%, #D4AF37 100%); color: #111; font-weight: 700; border: none; padding: 0.8rem;">Scarica File</button>
-                    <button type="button" id="close-export-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" id="export-confirm-btn" class="btn btn-primary">Scarica File</button>
+                    <button type="button" id="close-export-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -2154,14 +1389,15 @@
 
     <!-- Modal Eliminazione Dati Telemetria -->
     <div id="delete-stats-modal" class="modal hidden">
-        <div class="modal-content" style="border-color: rgba(255, 107, 107, 0.3);">
-            <h2 style="color: #ff6b6b; margin-bottom: 0.5rem; font-size: 1.4rem; display: flex; align-items: center; gap: 8px;">
+        <div class="modal-content pericolo">
+            <h2 class="con-sottotitolo rosso">
                 <span>🗑️</span> Elimina Dati Telemetria
             </h2>
-            <div style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.25); border-radius: 10px; padding: 0.8rem 1rem; margin-bottom: 1.5rem; color: #ffb4b4; font-size: 0.85rem; line-height: 1.4;">
-                <strong>Attenzione:</strong> L'operazione è definitiva e rimuoverà i record selezionati dal database Supabase.
+            <div class="admin-avviso ko admin-avviso-modale">
+                <span class="admin-ms">warning</span>
+                <div><strong>Attenzione:</strong> L'operazione è definitiva e rimuoverà i record selezionati dal database Supabase.</div>
             </div>
-            
+
             <form id="delete-stats-form">
                 <div class="form-group">
                     <label for="delete-range-type">Cosa desideri eliminare?</label>
@@ -2174,26 +1410,26 @@
                 </div>
 
                 <!-- Date personalizzate (visibili solo se 'custom') -->
-                <div id="delete-custom-dates" class="hidden" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1.2rem;">
-                    <div class="form-group" style="margin-bottom: 0;">
+                <div id="delete-custom-dates" class="hidden admin-date-coppia">
+                    <div class="form-group">
                         <label for="delete-date-from">Da Data</label>
                         <input type="date" id="delete-date-from" class="form-control">
                     </div>
-                    <div class="form-group" style="margin-bottom: 0;">
+                    <div class="form-group">
                         <label for="delete-date-to">A Data</label>
                         <input type="date" id="delete-date-to" class="form-control">
                     </div>
                 </div>
 
                 <!-- Conferma di sicurezza testuale se si sceglie 'all' -->
-                <div id="delete-all-warning" class="hidden" style="margin-bottom: 1.2rem;">
-                    <label for="delete-confirm-text" style="color: #ff6b6b; font-size: 0.85rem; display: block; margin-bottom: 0.4rem;">Per confermare l'eliminazione totale, digita <strong>ELIMINA</strong> qui sotto:</label>
+                <div id="delete-all-warning" class="hidden form-group">
+                    <label for="delete-confirm-text" class="admin-etichetta-rossa">Per confermare l'eliminazione totale, digita <strong>ELIMINA</strong> qui sotto:</label>
                     <input type="text" id="delete-confirm-text" class="form-control" placeholder="ELIMINA" autocomplete="off">
                 </div>
 
-                <div class="actions" style="margin-top: 2rem; display: flex; gap: 10px;">
-                    <button type="submit" id="delete-confirm-btn" class="btn btn-primary" style="flex: 2; border-radius: 12px; background: #ff4d4d; border-color: #ff4d4d; color: white; font-weight: 700; padding: 0.8rem;">Elimina Record</button>
-                    <button type="button" id="close-delete-modal" class="btn btn-secondary" style="flex: 1; border-radius: 12px; border-color: rgba(255,255,255,0.2);">Annulla</button>
+                <div class="admin-azioni-modale">
+                    <button type="submit" id="delete-confirm-btn" class="btn btn-primary admin-pericolo">Elimina Record</button>
+                    <button type="button" id="close-delete-modal" class="btn btn-secondary">Annulla</button>
                 </div>
             </form>
         </div>
@@ -2202,6 +1438,16 @@
     <!-- Toast Container -->
     <div id="toast-container"></div>
 
-    <script src="admin-script.js"></script>
+    <!-- Codice del pannello, un file per area. L'ordine conta: comune.js per primo
+         (client Supabase, conferma, navigazione), avvio.js per ultimo (controlla la sessione). -->
+    <script src="admin-js/comune.js"></script>
+    <script src="admin-js/panoramica.js"></script>
+    <script src="admin-js/statistiche.js"></script>
+    <script src="admin-js/rilascio.js"></script>
+    <script src="admin-js/dati-app.js"></script>
+    <script src="admin-js/notifiche.js"></script>
+    <script src="admin-js/bug.js"></script>
+    <script src="admin-js/sito.js"></script>
+    <script src="admin-js/avvio.js"></script>
 </body>
 </html>

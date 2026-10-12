@@ -102,7 +102,7 @@ function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     toast.innerHTML = `
-        <span style="font-size: 1.2rem;">${type === 'success' ? '✓' : '⚠'}</span>
+        <span class="toast-icona">${type === 'success' ? '✓' : '⚠'}</span>
         <span>${message}</span>
     `;
     container.appendChild(toast);
@@ -117,16 +117,20 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// Modale di conferma personalizzato universale (sostituisce i confirm nativi del browser)
+// Modale di conferma personalizzato universale (sostituisce confirm, alert e prompt del browser).
+// Opzioni: title, confirmText, cancelText, icon, isDanger (predefinito true: pulsante rosso),
+// testo = testo da copiare mostrato in un riquadro già selezionato (al posto di prompt),
+// soloChiudi = un solo pulsante (al posto di alert). Restituisce una Promise: true = confermato.
 function customConfirm(message, options = {}) {
     return new Promise((resolve) => {
         const modal = document.getElementById('custom-confirm');
         const titleEl = document.getElementById('confirm-title');
         const msgEl = document.getElementById('confirm-message');
         const iconEl = document.getElementById('confirm-icon');
+        const testoEl = document.getElementById('confirm-testo');
         const btnYes = document.getElementById('confirm-yes');
         const btnNo = document.getElementById('confirm-no');
-        
+
         if (!modal) {
             // Fallback di sicurezza in caso il DOM non sia pronto
             resolve(window.confirm(message));
@@ -139,31 +143,31 @@ function customConfirm(message, options = {}) {
         const confirmText = options.confirmText || (isDanger ? 'Elimina' : 'Conferma');
         const cancelText = options.cancelText || 'Annulla';
         const icon = options.icon || (isDanger ? '🗑️' : '🚀');
+        const conTesto = typeof options.testo === 'string';
 
         if (titleEl) titleEl.textContent = title;
         if (msgEl) msgEl.textContent = message;
         if (iconEl) iconEl.textContent = icon;
-        
+        if (testoEl) {
+            testoEl.value = conTesto ? options.testo : '';
+            testoEl.classList.toggle('hidden', !conTesto);
+        }
+
         if (btnYes) {
             btnYes.textContent = confirmText;
-            if (isDanger) {
-                btnYes.style.border = '1px solid #ff4d4d';
-                btnYes.style.background = 'rgba(255, 77, 77, 0.15)';
-                btnYes.style.color = '#ff4d4d';
-                btnYes.style.fontWeight = '600';
-            } else {
-                btnYes.style.border = 'none';
-                btnYes.style.background = 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)';
-                btnYes.style.color = '#111';
-                btnYes.style.fontWeight = '700';
-            }
+            btnYes.classList.toggle('admin-pericolo', isDanger);
         }
 
         if (btnNo) {
             btnNo.textContent = cancelText;
+            btnNo.classList.toggle('hidden', !!options.soloChiudi);
         }
 
         modal.classList.remove('hidden');
+        // Con un testo da copiare lo si seleziona subito; per le operazioni pericolose
+        // il fuoco va su Annulla, così Invio non conferma per sbaglio
+        if (conTesto && testoEl) { testoEl.focus(); testoEl.select(); }
+        else (isDanger && !options.soloChiudi ? btnNo : btnYes)?.focus();
 
         // Pulizia listener dopo la scelta
         const cleanup = () => {
@@ -322,20 +326,82 @@ function apriSezione(chiave) {
     if (sezione.carica) sezione.carica();
 }
 
-// Avanti/indietro del browser e voci del menu (sono link #sezione)
-window.addEventListener('hashchange', () => {
-    if (!adminDashboard.classList.contains('hidden')) apriSezione(sezioneDaIndirizzo());
+// Avanti/indietro del browser e indirizzo scritto a mano.
+// Con modifiche non salvate si torna subito all'indirizzo della sezione aperta finché l'utente non sceglie.
+window.addEventListener('hashchange', async () => {
+    if (adminDashboard.classList.contains('hidden')) return;
+    const chiave = sezioneDaIndirizzo();
+    if (chiave !== sezioneAperta && _modificheNonSalvate.has(sezioneAperta)) {
+        history.replaceState(null, '', '#' + sezioneAperta);
+        if (!(await confermaUscitaSezione())) return;
+        history.replaceState(null, '', '#' + chiave);
+    }
+    apriSezione(chiave);
 });
 
-document.querySelectorAll('.admin-voce').forEach(voce => {
-    voce.addEventListener('click', (e) => {
-        if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return; // nuova scheda: lascia fare al browser
-        // Voce della sezione già aperta: l'indirizzo non cambia, quindi si ricarica qui
-        if (location.hash === voce.getAttribute('href')) {
-            e.preventDefault();
-            apriSezione(voce.dataset.sezione);
-        }
-    });
+// Link a una sezione (#chiave): voci del menu e riquadri della Panoramica.
+// Il cambio di indirizzo lo fa il pannello (pushState, niente hashchange), dopo l'eventuale conferma.
+// Il link della sezione già aperta la ricarica.
+document.addEventListener('click', async (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link || adminDashboard.classList.contains('hidden')) return;
+    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return; // nuova scheda: lascia fare al browser
+    const chiave = link.getAttribute('href').slice(1);
+    if (!Object.prototype.hasOwnProperty.call(SEZIONI_ADMIN, chiave)) return;
+    e.preventDefault();
+    if (!(await confermaUscitaSezione())) return;
+    if (location.hash !== '#' + chiave) history.pushState(null, '', '#' + chiave);
+    apriSezione(chiave);
+});
+
+// ===== Modifiche non salvate =====
+// Novità, versione aperta nella finestra, messaggio all'avvio e menù: chi cambia sezione,
+// ricarica la sezione, esce o chiude la pagina con modifiche non salvate riceve un avviso.
+// Il segno si mette quando cambia un campo e si toglie al salvataggio o quando i dati si ricaricano.
+const _modificheNonSalvate = new Set(); // chiavi di SEZIONI_ADMIN
+let _confermaUscita = null;
+let _novDaRicaricare = false;
+
+function segnaModifiche(sezione) { _modificheNonSalvate.add(sezione); }
+function azzeraModifiche(sezione) { _modificheNonSalvate.delete(sezione); }
+
+// "Continua senza salvare": le modifiche si scartano davvero, così tornando nella sezione si vede
+// quello che è salvato
+function scartaModifiche(sezione) {
+    azzeraModifiche(sezione);
+    if (sezione === 'versioni') updateModal.classList.add('hidden');
+    if (sezione === 'menu') {
+        _menuBozza = null;
+        const file = document.getElementById('cfg-menu-file');
+        if (file) file.value = '';
+        document.getElementById('cfg-menu-anteprima')?.classList.add('hidden');
+    }
+    if (sezione === 'novita') _novDaRicaricare = true;
+}
+
+// true se si può lasciare (o ricaricare) la sezione aperta. Una sola domanda alla volta.
+function confermaUscitaSezione() {
+    const sezione = sezioneAperta;
+    if (!sezione || !_modificheNonSalvate.has(sezione)) return Promise.resolve(true);
+    if (!_confermaUscita) {
+        _confermaUscita = customConfirm(`Ci sono modifiche non salvate in "${SEZIONI_ADMIN[sezione].titolo}": se continui andranno perse.`, {
+            title: 'Modifiche non salvate',
+            confirmText: 'Continua senza salvare',
+            cancelText: 'Resta qui',
+            icon: '✏️'
+        }).then(ok => {
+            if (ok) scartaModifiche(sezione);
+            return ok;
+        }).finally(() => { _confermaUscita = null; });
+    }
+    return _confermaUscita;
+}
+
+// Chiusura o ricarica della pagina: il browser mostra il suo avviso
+window.addEventListener('beforeunload', (e) => {
+    if (!_modificheNonSalvate.size) return;
+    e.preventDefault();
+    e.returnValue = '';
 });
 
 // Menu a scomparsa su telefono (sotto i 900 px, vedi admin.css)
@@ -407,7 +473,7 @@ loginForm.addEventListener('submit', async (e) => {
         });
 
         if (error) {
-            loginError.style.display = 'block';
+            loginError.classList.remove('hidden');
             loginError.textContent = "Errore Accesso: " + error.message;
         } else {
             showDashboard(data.user);
@@ -419,20 +485,21 @@ loginForm.addEventListener('submit', async (e) => {
 
 // Logout Logic
 logoutBtn.addEventListener('click', async () => {
+    if (!(await confermaUscitaSezione())) return;
     await _supabase.auth.signOut();
     showLogin();
 });
 
 // Fetch Updates
 async function fetchUpdates() {
-    updatesList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento...</p>';
+    updatesList.innerHTML = '<p class="admin-caricamento">Caricamento...</p>';
     
     let { data, error } = await _supabase
         .from('updates')
         .select('*');
 
     if (error) {
-        updatesList.innerHTML = `<p style="color: red;">Errore: ${error.message}</p>`;
+        updatesList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`;
         return;
     }
 
@@ -455,7 +522,7 @@ async function fetchUpdates() {
     });
 
     if (data.length === 0) {
-        updatesList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun aggiornamento trovato.</p>';
+        updatesList.innerHTML = '<p class="admin-vuoto">Nessun aggiornamento trovato.</p>';
         return;
     }
 
@@ -473,8 +540,8 @@ async function fetchUpdates() {
                 <p>${update.date} • ${update.details || 'Nessun dettaglio'}</p>
             </div>
             <div class="actions">
-                <button class="btn btn-secondary btn-sm edit-btn" data-id="${update.id}" style="margin-top:0">Modifica</button>
-                <button class="btn btn-secondary btn-sm delete-btn" data-id="${update.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+                <button class="btn btn-secondary btn-sm edit-btn" data-id="${update.id}">Modifica</button>
+                <button class="btn btn-secondary btn-sm admin-pericolo delete-btn" data-id="${update.id}">Elimina</button>
             </div>
         `;
         updatesList.appendChild(item);
@@ -549,7 +616,7 @@ function createPatchNoteRow(value = '') {
     row.querySelector('.patch-note-input').value = rawText;
 
     row.querySelector('.btn-remove-note').addEventListener('click', () => {
-        row.style.animation = 'patchNoteSlideIn 0.2s ease-out reverse';
+        row.classList.add('uscita');
         setTimeout(() => row.remove(), 180);
     });
     return row;
@@ -559,19 +626,8 @@ function createPatchNoteRow(value = '') {
  * Aggiorna il colore del bordo e del testo della select per riflettere il colore del badge scelto.
  */
 function updateSelectBadgeStyle(select) {
-    if (select.value === 'fix') {
-        select.style.borderColor = 'rgba(245, 158, 11, 0.5)';
-        select.style.color = '#FBBF24';
-        select.style.background = 'rgba(245, 158, 11, 0.1)';
-    } else if (select.value === 'improvement') {
-        select.style.borderColor = 'rgba(16, 185, 129, 0.5)';
-        select.style.color = '#34D399';
-        select.style.background = 'rgba(16, 185, 129, 0.1)';
-    } else {
-        select.style.borderColor = 'rgba(212, 175, 55, 0.5)';
-        select.style.color = '#F5D77F';
-        select.style.background = 'rgba(212, 175, 55, 0.1)';
-    }
+    select.classList.toggle('tipo-fix', select.value === 'fix');
+    select.classList.toggle('tipo-improvement', select.value === 'improvement');
 }
 
 function populatePatchNotes(changes = []) {
@@ -588,7 +644,8 @@ function populatePatchNotes(changes = []) {
         new Sortable(list, {
             animation: 150,
             handle: '.drag-handle',
-            ghostClass: 'sortable-ghost'
+            ghostClass: 'sortable-ghost',
+            onEnd: () => segnaModifiche('versioni')
         });
     }
 }
@@ -617,6 +674,13 @@ document.getElementById('add-patch-note-btn').addEventListener('click', () => {
     const row = createPatchNoteRow();
     list.appendChild(row);
     row.querySelector('.patch-note-input').focus();
+    segnaModifiche('versioni');
+});
+
+// Modifiche non salvate nella finestra della versione (campi, tipo e testo delle note, note rimosse)
+['input', 'change'].forEach(tipo => updateForm.addEventListener(tipo, () => segnaModifiche('versioni')));
+document.getElementById('v-changes-list').addEventListener('click', (e) => {
+    if (e.target.closest('.btn-remove-note')) segnaModifiche('versioni');
 });
 
 // CRUD Operations
@@ -625,11 +689,14 @@ addUpdateBtn.addEventListener('click', () => {
     document.getElementById('update-id').value = '';
     document.getElementById('modal-title').textContent = 'Nuovo Aggiornamento';
     populatePatchNotes([]);
+    azzeraModifiche('versioni');
     updateModal.classList.remove('hidden');
 });
 
+// Annulla: le modifiche si scartano di proposito
 closeModal.addEventListener('click', () => {
     updateModal.classList.add('hidden');
+    azzeraModifiche('versioni');
 });
 
 function openEditModal(id, data) {
@@ -646,6 +713,7 @@ function openEditModal(id, data) {
     document.getElementById('v-visible').checked = update.is_visible !== false; // default true if undefined
     
     document.getElementById('modal-title').textContent = 'Modifica Aggiornamento';
+    azzeraModifiche('versioni');
     updateModal.classList.remove('hidden');
 }
 
@@ -678,6 +746,7 @@ updateForm.addEventListener('submit', async (e) => {
         showToast('Errore nel salvataggio: ' + result.error.message, 'error');
     } else {
         updateModal.classList.add('hidden');
+        azzeraModifiche('versioni');
         fetchUpdates();
         aggiornaStatoPanoramica();
         showToast('Aggiornamento salvato!');
@@ -698,7 +767,7 @@ async function deleteUpdate(id) {
 
 // Credits Logic
 async function fetchCredits() {
-    creditsList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento credits...</p>';
+    creditsList.innerHTML = '<p class="admin-caricamento">Caricamento credits...</p>';
     
     const { data, error } = await _supabase
         .from('credits')
@@ -706,7 +775,7 @@ async function fetchCredits() {
         .order('order_index', { ascending: true });
 
     if (error) {
-        creditsList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
+        creditsList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`;
         return;
     }
 
@@ -718,7 +787,7 @@ async function fetchCredits() {
 
     creditsList.innerHTML = '';
     if (data.length === 0) {
-        creditsList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna scheda creata.</p>';
+        creditsList.innerHTML = '<p class="admin-vuoto">Nessuna scheda creata.</p>';
     }
 
     data.forEach(credit => {
@@ -729,15 +798,15 @@ async function fetchCredits() {
                 <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
                 <h3>
                     ${credit.title} 
-                    <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${credit.category}</span>
-                    ${credit.url ? `<a href="${credit.url}" target="_blank" style="color: var(--primary-gold); font-size: 0.8rem; margin-left: 8px; text-decoration: none;" title="${credit.url}">🔗 Link</a>` : ''}
+                    <span class="update-item-etichetta">${credit.category}</span>
+                    ${credit.url ? `<a href="${credit.url}" target="_blank" class="update-item-link" title="${credit.url}">🔗 Link</a>` : ''}
                     ${!credit.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}
                 </h3>
                 <p>${credit.description.substring(0, 100)}${credit.description.length > 100 ? '...' : ''}</p>
             </div>
             <div class="actions">
-                <button class="btn btn-secondary btn-sm edit-credit-btn" data-id="${credit.id}" style="margin-top:0">Modifica</button>
-                <button class="btn btn-secondary btn-sm delete-credit-btn" data-id="${credit.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+                <button class="btn btn-secondary btn-sm edit-credit-btn" data-id="${credit.id}">Modifica</button>
+                <button class="btn btn-secondary btn-sm admin-pericolo delete-credit-btn" data-id="${credit.id}">Elimina</button>
             </div>
         `;
         creditsList.appendChild(item);
@@ -821,7 +890,7 @@ async function deleteCredit(id) {
 
 // Contacts Logic
 async function fetchContacts() {
-    contactsList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento contatti...</p>';
+    contactsList.innerHTML = '<p class="admin-caricamento">Caricamento contatti...</p>';
     
     const { data, error } = await _supabase
         .from('contacts')
@@ -829,7 +898,7 @@ async function fetchContacts() {
         .order('order_index', { ascending: true });
 
     if (error) {
-        contactsList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
+        contactsList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`;
         return;
     }
 
@@ -841,7 +910,7 @@ async function fetchContacts() {
 
     contactsList.innerHTML = '';
     if (data.length === 0) {
-        contactsList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun contatto creato.</p>';
+        contactsList.innerHTML = '<p class="admin-vuoto">Nessun contatto creato.</p>';
     }
 
     data.forEach(contact => {
@@ -854,8 +923,8 @@ async function fetchContacts() {
                 <p>${contact.value}</p>
             </div>
             <div class="actions">
-                <button class="btn btn-secondary btn-sm edit-contact-btn" data-id="${contact.id}" style="margin-top:0">Modifica</button>
-                <button class="btn btn-secondary btn-sm delete-contact-btn" data-id="${contact.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+                <button class="btn btn-secondary btn-sm edit-contact-btn" data-id="${contact.id}">Modifica</button>
+                <button class="btn btn-secondary btn-sm admin-pericolo delete-contact-btn" data-id="${contact.id}">Elimina</button>
             </div>
         `;
         contactsList.appendChild(item);
@@ -934,7 +1003,7 @@ async function deleteContact(id) {
 
 // Legal Logic
 async function fetchLegal() {
-    legalList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento note legali...</p>';
+    legalList.innerHTML = '<p class="admin-caricamento">Caricamento note legali...</p>';
     
     const { data, error } = await _supabase
         .from('legal')
@@ -943,7 +1012,7 @@ async function fetchLegal() {
         .order('order_index', { ascending: true });
 
     if (error) {
-        legalList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
+        legalList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`;
         return;
     }
 
@@ -957,7 +1026,7 @@ async function fetchLegal() {
 
     legalList.innerHTML = '';
     if (data.length === 0) {
-        legalList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna nota legale creata.</p>';
+        legalList.innerHTML = '<p class="admin-vuoto">Nessuna nota legale creata.</p>';
     }
 
     data.forEach(note => {
@@ -966,12 +1035,12 @@ async function fetchLegal() {
         item.innerHTML = `
             <div class="update-item-info">
                 <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
-                <h3>${note.title} <span style="font-size: 0.8rem; color: var(--primary-gold); margin-left: 10px;">${note.category}</span> ${!note.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
+                <h3>${note.title} <span class="update-item-etichetta">${note.category}</span> ${!note.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${note.description.substring(0, 100)}${note.description.length > 100 ? '...' : ''}</p>
             </div>
             <div class="actions">
-                <button class="btn btn-secondary btn-sm edit-legal-btn" data-id="${note.id}" style="margin-top:0">Modifica</button>
-                <button class="btn btn-secondary btn-sm delete-legal-btn" data-id="${note.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+                <button class="btn btn-secondary btn-sm edit-legal-btn" data-id="${note.id}">Modifica</button>
+                <button class="btn btn-secondary btn-sm admin-pericolo delete-legal-btn" data-id="${note.id}">Elimina</button>
             </div>
         `;
         legalList.appendChild(item);
@@ -1049,7 +1118,7 @@ async function deleteLegal(id) {
 
 // Features Logic
 async function fetchFeatures() {
-    featuresList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Caricamento funzionalità...</p>';
+    featuresList.innerHTML = '<p class="admin-caricamento">Caricamento funzionalità...</p>';
     
     const { data, error } = await _supabase
         .from('features')
@@ -1057,7 +1126,7 @@ async function fetchFeatures() {
         .order('order_index', { ascending: true });
 
     if (error) {
-        featuresList.innerHTML = `<p style="color: #ff4d4d;">Errore: ${error.message}</p>`;
+        featuresList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`;
         return;
     }
 
@@ -1069,7 +1138,7 @@ async function fetchFeatures() {
 
     featuresList.innerHTML = '';
     if (data.length === 0) {
-        featuresList.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessuna funzionalità creata.</p>';
+        featuresList.innerHTML = '<p class="admin-vuoto">Nessuna funzionalità creata.</p>';
     }
 
     data.forEach(feature => {
@@ -1082,8 +1151,8 @@ async function fetchFeatures() {
                 <p>${feature.description}</p>
             </div>
             <div class="actions">
-                <button class="btn btn-secondary btn-sm edit-feature-btn" data-id="${feature.id}" style="margin-top:0">Modifica</button>
-                <button class="btn btn-secondary btn-sm delete-feature-btn" data-id="${feature.id}" style="margin-top:0; border-color: #ff4d4d; color: #ff4d4d;">Elimina</button>
+                <button class="btn btn-secondary btn-sm edit-feature-btn" data-id="${feature.id}">Modifica</button>
+                <button class="btn btn-secondary btn-sm admin-pericolo delete-feature-btn" data-id="${feature.id}">Elimina</button>
             </div>
         `;
         featuresList.appendChild(item);
@@ -1161,8 +1230,8 @@ async function deleteFeature(id) {
 // ===== FAQ CRUD =====
 async function fetchFAQ() {
     const { data, error } = await _supabase.from('faq').select('*').order('order_index', { ascending: true });
-    if (error) { faqList.innerHTML = `<p style="color:red;">Errore: ${error.message}</p>`; return; }
-    if (!data || data.length === 0) { faqList.innerHTML = '<p style="color:var(--text-muted);">Nessuna FAQ presente.</p>'; return; }
+    if (error) { faqList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`; return; }
+    if (!data || data.length === 0) { faqList.innerHTML = '<p class="admin-vuoto">Nessuna FAQ presente.</p>'; return; }
 
     faqList.innerHTML = '';
     data.forEach(item => {
@@ -1176,7 +1245,7 @@ async function fetchFAQ() {
             </div>
             <div class="actions">
                 <button class="btn btn-secondary btn-sm" onclick="editFaq(${item.id})">Modifica</button>
-                <button class="btn btn-secondary btn-sm" onclick="deleteFaq(${item.id})" style="color:#ff4d4d;">Elimina</button>
+                <button class="btn btn-secondary btn-sm admin-pericolo" onclick="deleteFaq(${item.id})">Elimina</button>
             </div>
         `;
         faqList.appendChild(el);
@@ -1257,13 +1326,13 @@ async function fetchBugs() {
             if (error.code === 'PGRST205' || (error.message && error.message.includes('not find the table'))) {
                 if (bugsTableMissingAlert) bugsTableMissingAlert.classList.remove('hidden');
                 bugsList.innerHTML = `
-                    <div style="text-align: center; padding: 2.5rem; color: var(--text-muted); background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px dashed rgba(255,255,255,0.1);">
-                        <p style="font-size: 1.1rem; color: #facc15; margin-bottom: 0.5rem;">⚠️ Tabella 'bugs' non trovata in Supabase</p>
-                        <p style="font-size: 0.85rem;">Clicca sul pulsante in alto per copiare la query SQL ed eseguirla in Supabase per attivarla in 1 minuto.</p>
+                    <div class="admin-vuoto">
+                        <p class="admin-vuoto-titolo admin-giallo">⚠️ Tabella 'bugs' non trovata in Supabase</p>
+                        <p class="admin-piccolo">Clicca sul pulsante in alto per copiare la query SQL ed eseguirla in Supabase per attivarla in 1 minuto.</p>
                     </div>
                 `;
             } else {
-                bugsList.innerHTML = `<p style="color:#ff6b6b; padding:1.5rem;">Errore: ${error.message}</p>`;
+                bugsList.innerHTML = `<p class="admin-errore">Errore: ${error.message}</p>`;
             }
             return;
         }
@@ -1275,7 +1344,7 @@ async function fetchBugs() {
         initSortable(bugsList, 'bugs');
     } catch (err) {
         console.error('Eccezione in fetchBugs:', err);
-        bugsList.innerHTML = `<p style="color:#ff6b6b; padding:1.5rem;">Eccezione: ${err.message}</p>`;
+        bugsList.innerHTML = `<p class="admin-errore">Eccezione: ${err.message}</p>`;
     }
 }
 
@@ -1332,9 +1401,9 @@ function renderAdminBugs() {
 
     if (filtered.length === 0) {
         bugsList.innerHTML = `
-            <div style="text-align: center; padding: 3rem 1.5rem; color: var(--text-muted); background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px dashed rgba(255,255,255,0.08);">
-                <p style="font-size: 1.5rem; margin-bottom: 0.5rem;">${adminAllBugs.length === 0 ? '✨' : '🔍'}</p>
-                <p style="font-size: 0.95rem;">${adminAllBugs.length === 0 ? 'Nessun bug registrato. Clicca "+ Nuovo Bug" per aggiungere il primo!' : 'Nessun bug trovato con i filtri correnti.'}</p>
+            <div class="admin-vuoto">
+                <p class="admin-vuoto-icona">${adminAllBugs.length === 0 ? '✨' : '🔍'}</p>
+                <p>${adminAllBugs.length === 0 ? 'Nessun bug registrato. Clicca "+ Nuovo Bug" per aggiungere il primo!' : 'Nessun bug trovato con i filtri correnti.'}</p>
             </div>
         `;
         return;
@@ -1364,7 +1433,7 @@ function renderAdminBugs() {
         el.innerHTML = `
             <div class="update-item-info">
                 <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
-                <div style="display: flex; gap: 6px; align-items: center; margin-bottom: 6px; flex-wrap: wrap;">
+                <div class="bug-etichette">
                     <span class="bug-badge ${st.cls}">
                         <span class="status-dot"></span>
                         ${st.label}
@@ -1373,24 +1442,24 @@ function renderAdminBugs() {
                         ${sv.label}
                     </span>
                     ${item.category ? `<span class="bug-badge category-pill">${item.category}</span>` : ''}
-                    ${item.affected_version ? `<span style="font-size: 0.75rem; color: var(--text-muted); background: rgba(255,255,255,0.05); padding: 2px 7px; border-radius: 6px;">Ver: ${item.affected_version}</span>` : ''}
-                    ${item.fixed_version ? `<span class="bug-fixed-badge" style="font-size: 0.72rem; padding: 2px 7px;">✓ Fix: ${item.fixed_version}</span>` : ''}
+                    ${item.affected_version ? `<span class="bug-versione">Ver: ${item.affected_version}</span>` : ''}
+                    ${item.fixed_version ? `<span class="bug-fixed-badge">✓ Fix: ${item.fixed_version}</span>` : ''}
                     ${!item.is_visible ? '<span class="badge-draft">BOZZA / NASCOSTO</span>' : ''}
                 </div>
-                <h3 style="margin-bottom: 4px; font-size: 1.05rem;">${item.title}</h3>
-                <p style="margin-bottom: 6px; font-size: 0.88rem; color: var(--text-muted);">${item.description.substring(0, 110)}${item.description.length > 110 ? '...' : ''}</p>
-                ${item.workaround ? `<p style="font-size: 0.8rem; color: #f3e5ab; margin: 0;">💡 <em>Workaround: ${item.workaround.substring(0, 90)}${item.workaround.length > 90 ? '...' : ''}</em></p>` : ''}
+                <h3 class="bug-titolo">${item.title}</h3>
+                <p class="bug-descrizione">${item.description.substring(0, 110)}${item.description.length > 110 ? '...' : ''}</p>
+                ${item.workaround ? `<p class="bug-workaround">💡 <em>Workaround: ${item.workaround.substring(0, 90)}${item.workaround.length > 90 ? '...' : ''}</em></p>` : ''}
             </div>
-            <div class="actions" style="display: flex; flex-direction: column; gap: 6px; align-items: flex-end; justify-content: center;">
-                <div style="display: flex; gap: 6px;">
+            <div class="actions bug-azioni">
+                <div class="actions">
                     <button class="btn btn-secondary btn-sm" onclick="editBug(${item.id})" data-id="${item.id}">Modifica</button>
-                    <button class="btn btn-secondary btn-sm" onclick="deleteBug(${item.id})" style="color: #ff4d4d;">Elimina</button>
+                    <button class="btn btn-secondary btn-sm admin-pericolo" onclick="deleteBug(${item.id})">Elimina</button>
                 </div>
-                <div style="display: flex; gap: 4px; align-items: center;">
-                    <span style="font-size: 0.7rem; color: var(--text-muted); margin-right: 2px;">Stato:</span>
-                    <button class="btn btn-secondary btn-sm" style="font-size: 0.7rem; padding: 2px 6px; ${item.status === 'open' ? 'border-color: #ff6b6b; background: rgba(255,107,107,0.15);' : 'opacity: 0.6;'}" title="Imposta come Noto / Aperto" onclick="quickSetBugStatus(${item.id}, 'open')">🔴</button>
-                    <button class="btn btn-secondary btn-sm" style="font-size: 0.7rem; padding: 2px 6px; ${item.status === 'in_progress' ? 'border-color: #fbbf24; background: rgba(251,191,36,0.15);' : 'opacity: 0.6;'}" title="Imposta come In Lavorazione" onclick="quickSetBugStatus(${item.id}, 'in_progress')">🟡</button>
-                    <button class="btn btn-secondary btn-sm" style="font-size: 0.7rem; padding: 2px 6px; ${item.status === 'resolved' ? 'border-color: #4ade80; background: rgba(74,222,128,0.15);' : 'opacity: 0.6;'}" title="Imposta come Risolto" onclick="quickSetBugStatus(${item.id}, 'resolved')">🟢</button>
+                <div class="bug-stato-rapido">
+                    <span class="bug-stato-etichetta">Stato:</span>
+                    <button class="btn btn-secondary btn-sm open${item.status === 'open' ? ' attivo' : ''}" title="Imposta come Noto / Aperto" onclick="quickSetBugStatus(${item.id}, 'open')">🔴</button>
+                    <button class="btn btn-secondary btn-sm in_progress${item.status === 'in_progress' ? ' attivo' : ''}" title="Imposta come In Lavorazione" onclick="quickSetBugStatus(${item.id}, 'in_progress')">🟡</button>
+                    <button class="btn btn-secondary btn-sm resolved${item.status === 'resolved' ? ' attivo' : ''}" title="Imposta come Risolto" onclick="quickSetBugStatus(${item.id}, 'resolved')">🟢</button>
                 </div>
             </div>
         `;
@@ -1439,14 +1508,21 @@ CREATE POLICY "Gestione bug per utenti autenticati" ON public.bugs FOR ALL TO au
 GRANT SELECT ON public.bugs TO anon, authenticated;
 GRANT ALL ON public.bugs TO authenticated;`;
 
+        // Se gli appunti non sono disponibili, lo script compare già selezionato nella finestra del pannello
+        const copiaAMano = () => customConfirm('Copia manualmente lo script SQL:', {
+            title: 'Script SQL della tabella bugs',
+            testo: sql,
+            icon: '📋',
+            confirmText: 'Chiudi',
+            isDanger: false,
+            soloChiudi: true
+        });
         if (navigator.clipboard && navigator.clipboard.writeText) {
             navigator.clipboard.writeText(sql).then(() => {
                 showToast('Script SQL copiato negli appunti!');
-            }).catch(() => {
-                prompt('Copia manualmente lo script SQL:', sql);
-            });
+            }).catch(copiaAMano);
         } else {
-            prompt('Copia manualmente lo script SQL:', sql);
+            copiaAMano();
         }
     });
 }
@@ -1632,7 +1708,7 @@ async function fetchDownloadStats(isManualRefresh = false) {
 
         // Render Breakdown List
         if (releaseStats.length === 0) {
-            analyticsVersionsList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Nessuna release trovata su GitHub.</p>';
+            analyticsVersionsList.innerHTML = '<p class="admin-vuoto">Nessuna release trovata su GitHub.</p>';
             return;
         }
 
@@ -1655,12 +1731,12 @@ async function fetchDownloadStats(isManualRefresh = false) {
                     <div class="version-stat-title">
                         <span>${rel.tag}</span>
                         ${isLatest ? '<span class="badge-latest">ULTIMA</span>' : ''}
-                        ${isTop ? '<span style="background: rgba(212,175,55,0.2); color: var(--primary-gold); border: 1px solid rgba(212,175,55,0.4); padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700;">★ PIÙ SCARICATA</span>' : ''}
-                        ${rel.name && rel.name !== rel.tag ? `<span style="font-size: 0.85rem; font-weight: 400; color: var(--text-muted);">— ${rel.name}</span>` : ''}
+                        ${isTop ? '<span class="admin-stato oro">★ PIÙ SCARICATA</span>' : ''}
+                        ${rel.name && rel.name !== rel.tag ? `<span class="version-stat-nome">— ${rel.name}</span>` : ''}
                     </div>
                     <div class="version-stat-count">
                         <span class="version-stat-number">${rel.downloads.toLocaleString('it-IT')}</span>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">download (${pct}%)</span>
+                        <span class="admin-testo-sub admin-piccolo">download (${pct}%)</span>
                     </div>
                 </div>
 
@@ -1714,8 +1790,8 @@ async function fetchDownloadStats(isManualRefresh = false) {
         console.error('Errore fetch GitHub Releases:', err);
         if (!cached) {
             analyticsVersionsList.innerHTML = `
-                <div style="text-align: center; padding: 2rem 0;">
-                    <p style="color: #ff4d4d; margin-bottom: 1rem;">Impossibile recuperare i dati da GitHub Releases (${err.message}).</p>
+                <div class="admin-errore admin-centro">
+                    <p class="admin-spazio-sotto">Impossibile recuperare i dati da GitHub Releases (${err.message}).</p>
                     <button class="btn btn-secondary btn-sm" onclick="fetchDownloadStats(true)">Riprova</button>
                 </div>
             `;
@@ -1877,9 +1953,9 @@ async function fetchUserStats(days = currentStatsRangeDays) {
         console.error('Errore nel recupero telemetria utenti:', err);
         if (userStatsHistoryList) {
             userStatsHistoryList.innerHTML = `
-                <div style="text-align: center; padding: 2rem 0; color: #ff6b6b;">
-                    <p style="margin-bottom: 0.5rem; font-weight: 600;">Impossibile recuperare i dati da Supabase (${err.message})</p>
-                    <p style="font-size: 0.8rem; color: var(--text-muted);">Assicurati di aver eseguito lo script SQL per creare la tabella <code>app_accessi</code>.</p>
+                <div class="admin-errore admin-centro">
+                    <p class="admin-errore-titolo">Impossibile recuperare i dati da Supabase (${err.message})</p>
+                    <p class="admin-testo-sub admin-piccolo">Assicurati di aver eseguito lo script SQL per creare la tabella <code>app_accessi</code>.</p>
                 </div>
             `;
         }
@@ -2154,10 +2230,12 @@ function renderUserStats(records) {
             const diff = totOggi - totIeri;
             const sign = diff >= 0 ? '+' : '';
             kpiUsersYesterdaySub.textContent = `Oggi: ${sign}${diff} rispetto a ieri`;
-            kpiUsersYesterdaySub.style.color = diff >= 0 ? '#4ade80' : '#f87171';
+            kpiUsersYesterdaySub.classList.remove('neutro', 'verde', 'rosso');
+            kpiUsersYesterdaySub.classList.add(diff >= 0 ? 'verde' : 'rosso');
         } else {
             kpiUsersYesterdaySub.textContent = 'Nessun dato per ieri';
-            kpiUsersYesterdaySub.style.color = 'var(--text-muted)';
+            kpiUsersYesterdaySub.classList.remove('verde', 'rosso');
+            kpiUsersYesterdaySub.classList.add('neutro');
         }
     }
 
@@ -2173,7 +2251,7 @@ function renderUserStats(records) {
     if (kpiUsersTotal30) animateValue(kpiUsersTotal30, tot30);
 
     if (records.length === 0) {
-        userStatsHistoryList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Nessun dato di accesso registrato finora.</p>';
+        userStatsHistoryList.innerHTML = '<p class="admin-vuoto">Nessun dato di accesso registrato finora.</p>';
         return;
     }
 
@@ -2193,33 +2271,33 @@ function renderUserStats(records) {
         else if (r.data === ieriStr) dataEtichetta = 'Ieri (' + r.data + ')';
 
         return `
-            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
-                <td style="padding: 12px 14px; font-weight: 600; color: #fff; white-space: nowrap;">
+            <tr>
+                <td class="admin-tabella-data">
                     ${dataEtichetta}
                 </td>
-                <td style="padding: 12px 14px; text-align: center;">
-                    <span style="font-weight: 800; color: var(--primary-gold); font-size: 1.05rem;">${tot}</span>
+                <td class="centro">
+                    <span class="admin-tabella-totale">${tot}</span>
                 </td>
-                <td style="padding: 12px 14px; text-align: center;">
-                    <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: rgba(34, 197, 94, 0.12); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.25);">
-                        📱 ${apk} <small style="opacity: 0.8">(${apkPct}%)</small>
+                <td class="centro">
+                    <span class="admin-pill apk">
+                        📱 ${apk} <small>(${apkPct}%)</small>
                     </span>
                 </td>
-                <td style="padding: 12px 14px; text-align: center;">
-                    <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: rgba(168, 85, 247, 0.12); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.25);">
-                        📲 ${pwa} <small style="opacity: 0.8">(${pwaPct}%)</small>
+                <td class="centro">
+                    <span class="admin-pill pwa">
+                        📲 ${pwa} <small>(${pwaPct}%)</small>
                     </span>
                 </td>
-                <td style="padding: 12px 14px; text-align: center;">
-                    <span style="display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; background: rgba(56, 189, 248, 0.12); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.25);">
-                        🌐 ${web} <small style="opacity: 0.8">(${webPct}%)</small>
+                <td class="centro">
+                    <span class="admin-pill web">
+                        🌐 ${web} <small>(${webPct}%)</small>
                     </span>
                 </td>
-                <td style="padding: 12px 14px; min-width: 140px;">
-                    <div style="display: flex; height: 6px; width: 100%; border-radius: 3px; overflow: hidden; background: rgba(255,255,255,0.05);">
-                        <div style="width: ${apkPct}%; background: #22c55e;" title="APK: ${apkPct}%"></div>
-                        <div style="width: ${pwaPct}%; background: #a855f7;" title="PWA: ${pwaPct}%"></div>
-                        <div style="width: ${webPct}%; background: #38bdf8;" title="Web: ${webPct}%"></div>
+                <td>
+                    <div class="admin-ripartizione">
+                        <div class="apk" style="width: ${apkPct}%;" title="APK: ${apkPct}%"></div>
+                        <div class="pwa" style="width: ${pwaPct}%;" title="PWA: ${pwaPct}%"></div>
+                        <div class="web" style="width: ${webPct}%;" title="Web: ${webPct}%"></div>
                     </div>
                 </td>
             </tr>
@@ -2227,15 +2305,15 @@ function renderUserStats(records) {
     }).join('');
 
     userStatsHistoryList.innerHTML = `
-        <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem; text-align: left;">
+        <table class="admin-tabella">
             <thead>
-                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.5px;">
-                    <th style="padding: 10px 14px;">Data</th>
-                    <th style="padding: 10px 14px; text-align: center;">Totale Unici</th>
-                    <th style="padding: 10px 14px; text-align: center;">APK Android</th>
-                    <th style="padding: 10px 14px; text-align: center;">PWA Standalone</th>
-                    <th style="padding: 10px 14px; text-align: center;">Web Browser</th>
-                    <th style="padding: 10px 14px;">Ripartizione</th>
+                <tr>
+                    <th>Data</th>
+                    <th class="centro">Totale Unici</th>
+                    <th class="centro">APK Android</th>
+                    <th class="centro">PWA Standalone</th>
+                    <th class="centro">Web Browser</th>
+                    <th>Ripartizione</th>
                 </tr>
             </thead>
             <tbody>
@@ -2254,22 +2332,13 @@ document.querySelectorAll('.user-range-btn').forEach(btn => {
 
         currentStatsRangeDays = days;
 
-        // Aggiorna lo stile attivo dei bottoni
-        document.querySelectorAll('.user-range-btn').forEach(b => {
-            b.classList.remove('active');
-            b.style.background = 'transparent';
-            b.style.color = 'var(--text-muted)';
-            b.style.fontWeight = '600';
-        });
-
+        // Segmento scelto (aspetto in admin.css, .admin-segmenti button.active)
+        document.querySelectorAll('.user-range-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        btn.style.background = 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)';
-        btn.style.color = '#111';
-        btn.style.fontWeight = '700';
 
         // Mostra stato di caricamento nella tabella e aggiorna i dati
         if (userStatsHistoryList) {
-            userStatsHistoryList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 2rem 0;">Caricamento telemetria...</p>';
+            userStatsHistoryList.innerHTML = '<p class="admin-caricamento">Caricamento telemetria...</p>';
         }
         fetchUserStats(currentStatsRangeDays);
     });
@@ -2281,22 +2350,18 @@ const demoBtnText = document.getElementById('demo-btn-text');
 
 if (toggleDemoStatsBtn) {
     if (isDemoStatsMode) {
-        toggleDemoStatsBtn.style.background = 'rgba(168, 85, 247, 0.25)';
-        toggleDemoStatsBtn.style.borderColor = '#c084fc';
+        toggleDemoStatsBtn.classList.add('attivo');
         if (demoBtnText) demoBtnText.textContent = 'Disattiva Demo';
     }
 
     toggleDemoStatsBtn.addEventListener('click', () => {
         isDemoStatsMode = !isDemoStatsMode;
+        toggleDemoStatsBtn.classList.toggle('attivo', isDemoStatsMode);
 
         if (isDemoStatsMode) {
-            toggleDemoStatsBtn.style.background = 'rgba(168, 85, 247, 0.25)';
-            toggleDemoStatsBtn.style.borderColor = '#c084fc';
             if (demoBtnText) demoBtnText.textContent = 'Disattiva Demo';
             showToast('Modalità Demo attivata: dati simulati negli ultimi 30 giorni', 'success');
         } else {
-            toggleDemoStatsBtn.style.background = 'rgba(168, 85, 247, 0.08)';
-            toggleDemoStatsBtn.style.borderColor = 'rgba(168, 85, 247, 0.35)';
             if (demoBtnText) demoBtnText.textContent = 'Simula Dati Demo';
             showToast('Dati reali Supabase ripristinati', 'success');
         }
@@ -2309,7 +2374,7 @@ if (toggleDemoStatsBtn) {
 // GESTIONE ADOZIONE VERSIONI & STATO ROLLOUT (SUPABASE)
 // ============================================================
 let currentRolloutRangeDays = 1; // 1 = Oggi, 7 = 7G, 30 = 30G
-let currentRolloutPlatform = 'all'; // 'all', 'android_apk', 'web_pwa'
+let currentRolloutPlatform = 'all'; // 'all', 'android_apk', 'pwa', 'web'
 let rolloutControlsInitialized = false;
 
 // Palette cromatica armonica per le versioni nel grafico segmentato e nelle card
@@ -2372,16 +2437,8 @@ function initRolloutControls() {
     // Gestione bottoni intervallo Rollout (Oggi, 7G, 30G)
     document.querySelectorAll('.rollout-range-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.rollout-range-btn').forEach(b => {
-                b.style.background = 'transparent';
-                b.style.color = 'var(--text-muted)';
-                b.style.fontWeight = '600';
-                b.classList.remove('active');
-            });
+            document.querySelectorAll('.rollout-range-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            btn.style.background = 'linear-gradient(135deg, #FFD700 0%, #D4AF37 100%)';
-            btn.style.color = '#111';
-            btn.style.fontWeight = '700';
 
             currentRolloutRangeDays = parseInt(btn.dataset.days, 10);
             fetchVersionRolloutStats();
@@ -2391,12 +2448,8 @@ function initRolloutControls() {
     // Gestione bottoni filtro piattaforma Rollout (Tutte, APK, PWA)
     document.querySelectorAll('.rollout-plat-btn').forEach(btn => {
         btn.addEventListener('click', () => {
-            document.querySelectorAll('.rollout-plat-btn').forEach(b => {
-                b.style.background = 'transparent';
-                b.classList.remove('active');
-            });
+            document.querySelectorAll('.rollout-plat-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            btn.style.background = 'rgba(255, 255, 255, 0.12)';
 
             currentRolloutPlatform = btn.dataset.plat;
             fetchVersionRolloutStats();
@@ -2444,8 +2497,9 @@ async function fetchVersionRolloutStats() {
         const pad = n => String(n).padStart(2, '0');
         const oggiStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
 
+        // "7G" = oggi e i 6 giorni prima (prima si partiva da oggi - 7: 8 giorni)
         const minDateObj = new Date();
-        minDateObj.setDate(minDateObj.getDate() - currentRolloutRangeDays);
+        minDateObj.setDate(minDateObj.getDate() - (currentRolloutRangeDays - 1));
         const minDateStr = `${minDateObj.getFullYear()}-${pad(minDateObj.getMonth() + 1)}-${pad(minDateObj.getDate())}`;
         const periodo = currentRolloutRangeDays === 1 ? { giorno: oggiStr } : { dal: minDateStr };
 
@@ -2455,8 +2509,8 @@ async function fetchVersionRolloutStats() {
     } catch (err) {
         console.error('Errore nel recupero adozione versioni:', err);
         listElem.innerHTML = `
-            <div style="text-align: center; padding: 1.5rem 0; color: #ff6b6b;">
-                <p style="font-size: 0.85rem;">Impossibile recuperare i dati delle versioni da Supabase (${err.message})</p>
+            <div class="admin-errore admin-centro">
+                <p class="admin-piccolo">Impossibile recuperare i dati delle versioni da Supabase (${err.message})</p>
             </div>
         `;
     }
@@ -2466,7 +2520,8 @@ async function fetchVersionRolloutStats() {
  * Diffusione delle versioni (per Statistiche e Panoramica): ultimo accesso di ogni utente
  * nel periodo, raggruppato per versione, con la più recente in testa (isLatest).
  * periodo = { giorno: 'YYYY-MM-DD' } per un solo giorno, oppure { dal: 'YYYY-MM-DD' } (incluso) fino a oggi.
- * piattaforma = 'all' | 'android_apk' | 'web_pwa'. Lancia l'errore se app_accessi non si legge.
+ * piattaforma = 'all' | 'android_apk' | 'pwa' | 'web' (web = tutto ciò che non è APK né PWA, come nei conteggi).
+ * Lancia l'errore se app_accessi non si legge.
  */
 async function calcolaAdozioneVersioni(periodo, piattaforma = 'all') {
     // Query su app_accessi per recuperare la versione dei ping (tutte le pagine, vedi scaricaTutteLeRighe)
@@ -2489,15 +2544,15 @@ async function calcolaAdozioneVersioni(periodo, piattaforma = 'all') {
         }
     });
 
-    // Filtro per piattaforma (se selezionato 'android_apk' o 'web_pwa')
+    // Filtro per piattaforma (se selezionato 'android_apk', 'pwa' o 'web')
     let filteredAccesses = Array.from(latestUserAccess.values());
+    const piattaformaDi = a => (a.piattaforma || '').toLowerCase();
     if (piattaforma === 'android_apk') {
-        filteredAccesses = filteredAccesses.filter(a => (a.piattaforma || '').toLowerCase() === 'android');
-    } else if (piattaforma === 'web_pwa') {
-        filteredAccesses = filteredAccesses.filter(a => {
-            const p = (a.piattaforma || '').toLowerCase();
-            return p === 'pwa' || p === 'web';
-        });
+        filteredAccesses = filteredAccesses.filter(a => piattaformaDi(a) === 'android');
+    } else if (piattaforma === 'pwa') {
+        filteredAccesses = filteredAccesses.filter(a => piattaformaDi(a) === 'pwa');
+    } else if (piattaforma === 'web') {
+        filteredAccesses = filteredAccesses.filter(a => !['android', 'pwa'].includes(piattaformaDi(a)));
     }
 
     const totalActiveUsers = filteredAccesses.length;
@@ -2561,6 +2616,8 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
     const kpiLatestSub = document.getElementById('kpi-latest-detected-sub');
     const kpiPwaAdoption = document.getElementById('kpi-pwa-adoption');
     const kpiPwaSub = document.getElementById('kpi-pwa-adoption-sub');
+    const kpiWebAdoption = document.getElementById('kpi-web-adoption');
+    const kpiWebSub = document.getElementById('kpi-web-adoption-sub');
     const kpiApkAdoption = document.getElementById('kpi-apk-adoption');
     const kpiApkSub = document.getElementById('kpi-apk-adoption-sub');
     const stackedBar = document.getElementById('rollout-stacked-bar');
@@ -2578,11 +2635,12 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
         if (kpiRolloutSub) kpiRolloutSub.textContent = 'Nessun utente attivo';
         if (kpiLatestVer) kpiLatestVer.textContent = '—';
         if (kpiPwaAdoption) kpiPwaAdoption.textContent = '0%';
+        if (kpiWebAdoption) kpiWebAdoption.textContent = '0%';
         if (kpiApkAdoption) kpiApkAdoption.textContent = '0%';
         if (stackedBar) stackedBar.innerHTML = '';
         if (stackedLegend) stackedLegend.innerHTML = '';
         if (breakdownList) {
-            breakdownList.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 1.5rem 0;">Nessun dato di accesso registrato per il periodo o piattaforma selezionata.</p>';
+            breakdownList.innerHTML = '<p class="admin-vuoto">Nessun dato di accesso registrato per il periodo o piattaforma selezionata.</p>';
         }
         return;
     }
@@ -2593,7 +2651,8 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
     // Aggiornamento KPI Rollout
     if (kpiRolloutPct) {
         kpiRolloutPct.textContent = `${adoptionPct}%`;
-        kpiRolloutPct.style.color = adoptionPct >= 70 ? '#4ade80' : (adoptionPct >= 40 ? '#fbbf24' : '#60a5fa');
+        kpiRolloutPct.classList.remove('verde', 'giallo', 'blu');
+        kpiRolloutPct.classList.add(adoptionPct >= 70 ? 'verde' : (adoptionPct >= 40 ? 'giallo' : 'blu'));
     }
     if (kpiRolloutSub) {
         kpiRolloutSub.textContent = `${latest.total} su ${totalUsers} studenti attivi`;
@@ -2605,12 +2664,16 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
         kpiLatestSub.textContent = `${latest.total} utenti unici (${adoptionPct}%)`;
     }
 
-    // PWA Adoption
-    const pwaTotal = totalPwa + totalWeb;
-    const pwaLatest = (latest.pwa || 0) + (latest.web || 0);
-    const pwaPct = pwaTotal > 0 ? Math.round((pwaLatest / pwaTotal) * 100) : 0;
+    // Adozione PWA installata e sito nel browser, separate (prima erano sommate in "Web / PWA")
+    const pwaLatest = latest.pwa || 0;
+    const pwaPct = totalPwa > 0 ? Math.round((pwaLatest / totalPwa) * 100) : 0;
     if (kpiPwaAdoption) kpiPwaAdoption.textContent = `${pwaPct}%`;
-    if (kpiPwaSub) kpiPwaSub.textContent = `${pwaLatest} su ${pwaTotal} utenti Web/PWA`;
+    if (kpiPwaSub) kpiPwaSub.textContent = `${pwaLatest} su ${totalPwa} utenti PWA`;
+
+    const webLatest = latest.web || 0;
+    const webPct = totalWeb > 0 ? Math.round((webLatest / totalWeb) * 100) : 0;
+    if (kpiWebAdoption) kpiWebAdoption.textContent = `${webPct}%`;
+    if (kpiWebSub) kpiWebSub.textContent = `${webLatest} su ${totalWeb} utenti Web`;
 
     // APK Adoption
     const apkTotal = totalApk;
@@ -2629,16 +2692,11 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
             const seg = document.createElement('div');
             seg.style.width = `${item.pct}%`;
             seg.style.background = color.bg;
-            seg.style.height = '100%';
-            seg.style.transition = 'width 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
             seg.title = `${item.version}: ${item.total} utenti (${item.pct}%)`;
             stackedBar.appendChild(seg);
 
             const legItem = document.createElement('span');
-            legItem.style.display = 'flex';
-            legItem.style.alignItems = 'center';
-            legItem.style.gap = '6px';
-            legItem.innerHTML = `<span style="width: 8px; height: 8px; border-radius: 50%; background: ${color.hex};"></span> <strong>${item.version}</strong>: ${item.pct}% (${item.total})`;
+            legItem.innerHTML = `<span class="admin-pallino" style="background: ${color.hex};"></span> <strong>${item.version}</strong>: ${item.pct}% (${item.total})`;
             stackedLegend.appendChild(legItem);
         });
     }
@@ -2649,42 +2707,37 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
         versionList.forEach((item, idx) => {
             const color = ROLLOUT_COLOR_PALETTE[idx % ROLLOUT_COLOR_PALETTE.length];
             const card = document.createElement('div');
-            card.style.background = 'rgba(255, 255, 255, 0.02)';
-            card.style.border = '1px solid rgba(255, 255, 255, 0.05)';
-            card.style.borderRadius = '12px';
-            card.style.padding = '1rem 1.2rem';
-            card.style.marginBottom = '0.8rem';
-            card.style.transition = 'all 0.25s ease';
+            card.className = 'rollout-scheda';
 
             const badgeHtml = item.isLatest
-                ? `<span style="background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 700;">★ ULTIMA (ROLLOUT)</span>`
+                ? `<span class="admin-stato ok">★ ULTIMA (ROLLOUT)</span>`
                 : (idx === 1 
-                    ? `<span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 8px; border-radius: 6px; font-size: 0.72rem; font-weight: 600;">PRECEDENTE</span>` 
+                    ? `<span class="admin-stato att">PRECEDENTE</span>` 
                     : '');
 
             card.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.6rem;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-weight: 700; font-size: 1.05rem; color: white;">${item.version}</span>
+                <div class="rollout-scheda-testa">
+                    <div class="admin-riga">
+                        <span class="rollout-scheda-versione">${item.version}</span>
                         ${badgeHtml}
                     </div>
-                    <div style="display: flex; align-items: baseline; gap: 6px;">
-                        <span style="font-size: 1.25rem; font-weight: 800; color: ${color.hex};">${item.total}</span>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">studenti (${item.pct}%)</span>
+                    <div class="version-stat-count">
+                        <span class="rollout-scheda-numero" style="color: ${color.hex};">${item.total}</span>
+                        <span class="admin-testo-sub admin-piccolo">studenti (${item.pct}%)</span>
                     </div>
                 </div>
 
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">
-                    <div style="display: flex; gap: 12px;">
-                        <span style="color: #4ade80;">🤖 APK: <strong>${item.apk}</strong></span>
-                        <span style="color: #c084fc;">🌐 PWA: <strong>${item.pwa}</strong></span>
-                        <span style="color: #38bdf8;">💻 Web: <strong>${item.web}</strong></span>
+                <div class="rollout-scheda-meta">
+                    <div class="rollout-piattaforme">
+                        <span class="admin-apk">🤖 APK: <strong>${item.apk}</strong></span>
+                        <span class="admin-pwa">📲 PWA: <strong>${item.pwa}</strong></span>
+                        <span class="admin-web">🌐 Web: <strong>${item.web}</strong></span>
                     </div>
                     <span>Quota: ${item.pct}%</span>
                 </div>
 
-                <div style="height: 6px; width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden;">
-                    <div style="height: 100%; width: ${item.pct}%; background: ${color.bg}; border-radius: 4px; transition: width 0.8s ease;"></div>
+                <div class="version-progress-container sottile">
+                    <div class="version-progress-bar" style="width: ${item.pct}%; background: ${color.bg};"></div>
                 </div>
             `;
             breakdownList.appendChild(card);
@@ -2759,9 +2812,10 @@ if (exportStatsForm) {
                 }
                 query = query.gte('data', from).lte('data', to);
             } else if (range !== 'all') {
+                // "Ultimi 7 giorni" = oggi e i 6 giorni prima
                 const days = parseInt(range, 10);
                 const startDate = new Date();
-                startDate.setDate(startDate.getDate() - days);
+                startDate.setDate(startDate.getDate() - (days - 1));
                 query = query.gte('data', formatIso(startDate));
             }
 
@@ -2777,7 +2831,7 @@ if (exportStatsForm) {
                     } else if (range !== 'all') {
                         const days = parseInt(range, 10);
                         const startDate = new Date();
-                        startDate.setDate(startDate.getDate() - days);
+                        startDate.setDate(startDate.getDate() - (days - 1));
                         rawQuery = rawQuery.gte('data', formatIso(startDate));
                     }
                     return rawQuery;
@@ -3026,7 +3080,7 @@ function renderCourseDropdown(filterText = '') {
         const isSelected = targetCourseSelect && targetCourseSelect.value === c.id;
         return `
             <div class="course-dropdown-item ${isSelected ? 'selected' : ''}" data-id="${c.id}" data-nome="${escapeHtml(c.nome)}">
-                <span style="font-weight: 500;">${escapeHtml(c.nome)}</span>
+                <span class="course-dropdown-nome">${escapeHtml(c.nome)}</span>
                 <span class="course-badge">${escapeHtml(c.id)}</span>
             </div>
         `;
@@ -3048,7 +3102,7 @@ function selezionaCorso(id, nome) {
     if (!id) {
         if (targetCourseSelect) targetCourseSelect.value = '';
         if (courseSearchInput) courseSearchInput.value = '';
-        if (courseClearBtn) courseClearBtn.style.display = 'none';
+        if (courseClearBtn) courseClearBtn.classList.add('hidden');
         if (courseDropdown) courseDropdown.classList.add('hidden');
         aggiornaDatalistMaterie('');
         return;
@@ -3062,7 +3116,7 @@ function selezionaCorso(id, nome) {
         courseSearchInput.value = `${nome} [${id}]`;
     }
     if (courseClearBtn) {
-        courseClearBtn.style.display = 'block';
+        courseClearBtn.classList.remove('hidden');
     }
     if (courseDropdown) {
         courseDropdown.classList.add('hidden');
@@ -3098,7 +3152,7 @@ function initCourseSearchEvents() {
     courseSearchInput.addEventListener('input', (e) => {
         const val = e.target.value;
         if (courseClearBtn) {
-            courseClearBtn.style.display = val ? 'block' : 'none';
+            courseClearBtn.classList.toggle('hidden', !val);
         }
         if (!val) {
             if (targetCourseSelect) targetCourseSelect.value = '';
@@ -3516,16 +3570,14 @@ if (pushForm) {
 
         // Disabilita pulsante e mostra stato di caricamento dinamico
         pushSubmitBtn.disabled = true;
-        pushSubmitBtn.style.opacity = '0.75';
-        pushSubmitBtn.style.cursor = 'not-allowed';
         pushSubmitBtn.innerHTML = `
-            <span style="display: inline-flex; align-items: center; gap: 8px;">
-                <span class="spinning" style="display: inline-block;">⏳</span>
+            <span class="admin-riga">
+                <span class="spinning">⏳</span>
                 <span>${isLater ? 'Pianificazione in corso...' : 'Invio in corso...'}</span>
             </span>
         `;
         pushSubmitStatus.textContent = isLater ? "Pianificazione avviso sul server..." : "Invio notifica in corso...";
-        pushSubmitStatus.style.color = "var(--primary-gold)";
+        pushSubmitStatus.className = 'in-corso';
 
         // Timeout di sicurezza (25s) tramite AbortController per evitare blocchi infiniti
         const abortController = new AbortController();
@@ -3575,7 +3627,7 @@ if (pushForm) {
 
             if (resData.programmato) {
                 pushSubmitStatus.textContent = "✅ Notifica programmata con successo!";
-                pushSubmitStatus.style.color = "#4ade80";
+                pushSubmitStatus.className = 'riuscito';
                 showToast("Notifica programmata con successo!", "success");
             } else {
                 const inviati = resData.inviati !== undefined ? resData.inviati : 0;
@@ -3586,7 +3638,7 @@ if (pushForm) {
                     dett = ` (${invPwa} PWA, ${invApk} APK)`;
                 }
                 pushSubmitStatus.textContent = `✅ Notifica inviata! Raggiunti: ${inviati} dispositivi${dett}.`;
-                pushSubmitStatus.style.color = "#4ade80";
+                pushSubmitStatus.className = 'riuscito';
                 showToast(`Notifica inviata a ${inviati} dispositivi${dett}!`, "success");
             }
 
@@ -3629,12 +3681,10 @@ if (pushForm) {
                 pushSubmitStatus.textContent = `❌ Errore: ${err.message}`;
                 showToast(`Errore: ${err.message}`, "error");
             }
-            pushSubmitStatus.style.color = "#ef4444";
+            pushSubmitStatus.className = 'fallito';
         } finally {
             // Ripristino garantito al 100% dello stato del pulsante, prevenendo qualsiasi blocco della pagina
             pushSubmitBtn.disabled = false;
-            pushSubmitBtn.style.opacity = '1';
-            pushSubmitBtn.style.cursor = 'pointer';
             const currentSched = document.querySelector('input[name="notif-schedule-type"]:checked')?.value;
             pushSubmitBtn.textContent = currentSched === 'later' ? "Programma Notifica" : "Invia Notifica";
         }
@@ -3677,7 +3727,7 @@ async function fetchNotifications() {
 
         if (!avvisi || avvisi.length === 0) {
             notificationsHistoryList.innerHTML = `
-                <div style="text-align: center; padding: 2rem; color: var(--text-muted); background: rgba(0,0,0,0.2); border-radius: 12px;">
+                <div class="admin-vuoto">
                     Nessuna notifica inviata o programmata al momento.
                 </div>
             `;
@@ -3698,59 +3748,59 @@ async function fetchNotifications() {
 
             let badgeHtml = '';
             if (isProgrammato) {
-                badgeHtml = `<span style="background: rgba(234, 179, 8, 0.2); color: #facc15; border: 1px solid rgba(234, 179, 8, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">⏰ Programmato</span>`;
+                badgeHtml = `<span class="admin-stato att">⏰ Programmato</span>`;
             } else if (isInviato) {
-                badgeHtml = `<span style="background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">✅ Inviato</span>`;
+                badgeHtml = `<span class="admin-stato ok">✅ Inviato</span>`;
             } else if (isScadutoNonInviato) {
-                badgeHtml = `<span style="background: rgba(148, 163, 184, 0.2); color: #cbd5e1; border: 1px solid rgba(148, 163, 184, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">⌛ Non inviato (scaduto)</span>`;
+                badgeHtml = `<span class="admin-stato">⌛ Non inviato (scaduto)</span>`;
             } else if (isAnnullato) {
-                badgeHtml = `<span style="background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">🚫 Annullato</span>`;
+                badgeHtml = `<span class="admin-stato ko">🚫 Annullato</span>`;
             } else {
-                badgeHtml = `<span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">⏳ ${item.stato}</span>`;
+                badgeHtml = `<span class="admin-stato info">⏳ ${item.stato}</span>`;
             }
 
             const plat = item.target_dettagli?.piattaforma;
             let platBadge = '';
             if (plat === 'pwa') {
-                platBadge = `<span style="font-size: 0.75rem; background: rgba(56, 189, 248, 0.15); color: #38bdf8; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(56, 189, 248, 0.3);">🌐 Solo PWA</span>`;
+                platBadge = `<span class="admin-stato web">🌐 Solo PWA</span>`;
             } else if (plat === 'apk') {
-                platBadge = `<span style="font-size: 0.75rem; background: rgba(74, 222, 128, 0.15); color: #4ade80; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(74, 222, 128, 0.3);">🤖 Solo APK</span>`;
+                platBadge = `<span class="admin-stato apk">🤖 Solo APK</span>`;
             }
 
             const dataCreazione = new Date(item.created_at).toLocaleString();
             const dataProgrammata = item.programmato_per ? new Date(item.programmato_per).toLocaleString() : null;
 
             return `
-                <div style="background: rgba(25, 25, 25, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 1.2rem; margin-bottom: 0.8rem; display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 0.4rem; flex-wrap: wrap;">
+                <div class="avviso-storico">
+                    <div class="avviso-storico-testo">
+                        <div class="avviso-storico-etichette">
                             ${badgeHtml}
-                            <span style="font-size: 0.78rem; color: var(--text-muted);">${dataCreazione}</span>
-                            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; color: #ddd;">Canale: ${item.tipo_canale || 'avvisi'}</span>
-                            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 6px; color: #ddd;">Target: ${item.target_tipo || 'tutti'}${item.target_valore ? ' (' + item.target_valore + ')' : ''}</span>
+                            <span class="admin-testo-sub admin-piccolo">${dataCreazione}</span>
+                            <span class="admin-stato">Canale: ${item.tipo_canale || 'avvisi'}</span>
+                            <span class="admin-stato">Target: ${item.target_tipo || 'tutti'}${item.target_valore ? ' (' + item.target_valore + ')' : ''}</span>
                             ${platBadge}
-                            ${validitaTerminata ? `<span style="font-size: 0.75rem; background: rgba(148, 163, 184, 0.15); color: #cbd5e1; padding: 2px 6px; border-radius: 6px; border: 1px solid rgba(148, 163, 184, 0.3);">⌛ Scaduto</span>` : ''}
+                            ${validitaTerminata ? `<span class="admin-stato">⌛ Scaduto</span>` : ''}
                         </div>
-                        <h4 style="font-size: 1.05rem; color: white; margin-bottom: 0.3rem;">${escapeHtml(item.titolo)}</h4>
-                        <p style="font-size: 0.9rem; color: #bbb; margin-bottom: 0.4rem; white-space: pre-wrap;">${escapeHtml(item.messaggio)}</p>
-                        ${dataProgrammata ? `<div style="font-size: 0.8rem; color: #facc15;">📅 Programmato per: <strong>${dataProgrammata}</strong></div>` : ''}
+                        <h4 class="avviso-storico-titolo">${escapeHtml(item.titolo)}</h4>
+                        <p class="avviso-storico-messaggio">${escapeHtml(item.messaggio)}</p>
+                        ${dataProgrammata ? `<div class="avviso-storico-riga programmato">📅 Programmato per: <strong>${dataProgrammata}</strong></div>` : ''}
                         ${!isAnnullato ? (scadenza
-                            ? `<div style="font-size: 0.8rem; color: var(--text-muted);">⌛ Valido fino a: <strong>${scadenza.toLocaleString()}</strong></div>`
-                            : `<div style="font-size: 0.8rem; color: var(--text-muted);">⌛ Scadenza istantanea (solo dispositivi raggiungibili all'invio)</div>`) : ''}
-                        ${isInviato ? `<div style="font-size: 0.8rem; color: var(--text-muted);">📱 Dispositivi raggiunti (PWA & APK): <strong>${item.conteggio_pwa_inviati || 0}</strong></div>` : ''}
+                            ? `<div class="avviso-storico-riga">⌛ Valido fino a: <strong>${scadenza.toLocaleString()}</strong></div>`
+                            : `<div class="avviso-storico-riga">⌛ Scadenza istantanea (solo dispositivi raggiungibili all'invio)</div>`) : ''}
+                        ${isInviato ? `<div class="avviso-storico-riga">📱 Dispositivi raggiunti (PWA & APK): <strong>${item.conteggio_pwa_inviati || 0}</strong></div>` : ''}
                     </div>
-                    <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                    <div class="actions">
                         ${modificabile ? `
-                            <button onclick="modificaScadenzaAvviso('${item.id}')" class="btn btn-secondary btn-sm" style="cursor: pointer;" title="Modifica scadenza">
+                            <button onclick="modificaScadenzaAvviso('${item.id}')" class="btn btn-secondary btn-sm" title="Modifica scadenza">
                                 ⌛ Modifica scadenza
                             </button>
                         ` : ''}
                         ${isProgrammato ? `
-                            <button onclick="annullaAvvisoProgrammato('${item.id}')" class="btn btn-secondary btn-sm" style="border-color: rgba(239, 68, 68, 0.4); color: #f87171; cursor: pointer;">
+                            <button onclick="annullaAvvisoProgrammato('${item.id}')" class="btn btn-secondary btn-sm admin-pericolo">
                                 Annulla Invio
                             </button>
                         ` : ''}
-                        <button onclick="eliminaAvviso('${item.id}')" class="btn btn-secondary btn-sm" style="opacity: 0.7; cursor: pointer;" title="Elimina dallo storico">
+                        <button onclick="eliminaAvviso('${item.id}')" class="btn btn-secondary btn-sm admin-discreto" title="Elimina dallo storico">
                             🗑️
                         </button>
                     </div>
@@ -3759,7 +3809,7 @@ async function fetchNotifications() {
         }).join('');
     } catch (e) {
         console.error('Errore caricamento storico notifiche:', e);
-        notificationsHistoryList.innerHTML = `<div style="color: #ef4444; padding: 1rem;">Errore caricamento storico: ${e.message}</div>`;
+        notificationsHistoryList.innerHTML = `<div class="admin-errore">Errore caricamento storico: ${e.message}</div>`;
     }
 }
 
@@ -3844,22 +3894,26 @@ window.modificaScadenzaAvviso = function (id) {
 
     const overlay = document.createElement('div');
     overlay.id = 'modale-scadenza-avviso';
-    overlay.style.cssText = 'position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; z-index: 10000; padding: 16px;';
+    overlay.className = 'modal modale-scadenza';
     overlay.innerHTML = `
-        <div style="background: #1a1a1a; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 1.5rem; width: 100%; max-width: 440px;">
-            <h3 style="color: white; margin-bottom: 0.4rem;">⌛ Modifica scadenza</h3>
-            <p style="font-size: 0.85rem; color: #bbb; margin-bottom: 0.4rem;"><strong>${escapeHtml(avviso.titolo)}</strong></p>
-            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">${spiegazione}</p>
+        <div class="modal-content stretta">
+            <h2 class="con-sottotitolo">⌛ Modifica scadenza</h2>
+            <p class="modale-scadenza-avviso"><strong>${escapeHtml(avviso.titolo)}</strong></p>
+            <p class="modal-sottotitolo">${spiegazione}</p>
             ${isProgrammato ? `
-                <label for="mod-programmato" style="font-weight: 600; color: white; display: block; margin-bottom: 0.4rem;">📅 Orario di invio</label>
-                <input type="datetime-local" id="mod-programmato" class="form-control" style="width: 100%; background: #1e1e1e; margin-bottom: 1rem;" value="${valoreProgrammato}" min="${formatLocalDateTime(adesso)}">
+                <div class="form-group">
+                    <label for="mod-programmato">📅 Orario di invio</label>
+                    <input type="datetime-local" id="mod-programmato" class="form-control" value="${valoreProgrammato}" min="${formatLocalDateTime(adesso)}">
+                </div>
             ` : ''}
-            <label for="mod-scade-il" style="font-weight: 600; color: white; display: block; margin-bottom: 0.4rem;">⌛ Valido fino a</label>
-            <input type="datetime-local" id="mod-scade-il" class="form-control" style="width: 100%; background: #1e1e1e;" value="${valoreScadenza}" min="${formatLocalDateTime(adesso)}">
-            <small style="display: block; font-size: 0.75rem; color: var(--text-muted); margin-top: 6px;">Vuoto = scadenza istantanea.</small>
-            <div style="display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.2rem;">
-                <button type="button" id="mod-annulla" class="btn btn-secondary btn-sm" style="cursor: pointer;">Chiudi</button>
-                <button type="button" id="mod-salva" class="btn btn-primary btn-sm" style="cursor: pointer;">Salva</button>
+            <div class="form-group">
+                <label for="mod-scade-il">⌛ Valido fino a</label>
+                <input type="datetime-local" id="mod-scade-il" class="form-control" value="${valoreScadenza}" min="${formatLocalDateTime(adesso)}">
+                <small class="admin-aiuto">Vuoto = scadenza istantanea.</small>
+            </div>
+            <div class="admin-azioni-modale">
+                <button type="button" id="mod-annulla" class="btn btn-secondary">Chiudi</button>
+                <button type="button" id="mod-salva" class="btn btn-primary">Salva</button>
             </div>
         </div>
     `;
@@ -3988,7 +4042,7 @@ async function fetchConfigApp(parti = ['messaggio', 'mappe', 'menu']) {
     const statoMenu = document.getElementById('cfg-menu-stato');
     const { data, error } = await _supabase.from('config_app').select('*').eq('id', 1).single();
     if (error) {
-        const avviso = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 07 &egrave; stato applicato?</span>`;
+        const avviso = `<span class="admin-errore">Errore: ${escapeHtml(error.message)}. Lo script SQL 07 &egrave; stato applicato?</span>`;
         if (parti.includes('messaggio') && statoMsg) {
             statoMsg.innerHTML = avviso;
             statoMsg.classList.remove('hidden');
@@ -4005,18 +4059,23 @@ async function fetchConfigApp(parti = ['messaggio', 'mappe', 'menu']) {
         document.getElementById('cfg-msg-titolo').value = data.titolo_messaggio || '';
         document.getElementById('cfg-msg-testo').value = data.testo_messaggio || '';
         document.getElementById('cfg-msg-vecchi').checked = !!data.solo_vecchi_utenti;
+        azzeraModifiche('messaggio');
     }
 
     if (parti.includes('mappe')) {
-        const quando = data.aggiornato_il ? new Date(data.aggiornato_il).toLocaleString('it-IT') : '-';
+        // La data è quella del file nel bucket (la scrive elencaVersioniMappe): aggiornato_il
+        // cambia con qualunque salvataggio di config_app, anche del messaggio o del menù
         stato.innerHTML = data.mappa_path
-            ? `Versione pubblicata: <strong style="color:var(--primary-gold);">v${data.mappa_version}</strong> &middot; ${escapeHtml(data.mappa_path)} &middot; ${data.mappa_bytes ? _kb(data.mappa_bytes) : '-'} &middot; impronta ${escapeHtml((data.mappa_sha256 || '').slice(0, 12))}&hellip; &middot; aggiornata il ${quando}`
+            ? `Versione pubblicata: <strong class="admin-oro">v${data.mappa_version}</strong> &middot; ${escapeHtml(data.mappa_path)} &middot; ${data.mappa_bytes ? _kb(data.mappa_bytes) : '-'} &middot; impronta ${escapeHtml((data.mappa_sha256 || '').slice(0, 12))}&hellip;<span id="cfg-mappe-data"></span>`
             : `Versione attuale: <strong>v${data.mappa_version}</strong> &middot; nessun file su Supabase (le app usano le mappe incluse o GitHub)`;
         elencaVersioniMappe();
     }
 
     if (parti.includes('menu')) caricaMenuPubblicato();
 }
+
+['input', 'change'].forEach(tipo =>
+    document.getElementById('config-messaggio-form')?.addEventListener(tipo, () => segnaModifiche('messaggio')));
 
 document.getElementById('config-messaggio-form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -4035,6 +4094,7 @@ document.getElementById('config-messaggio-form')?.addEventListener('submit', asy
         showToast('Errore nel salvataggio: ' + error.message, 'error');
     } else {
         showToast(payload.messaggio_attivo ? 'Messaggio salvato e attivo' : 'Messaggio salvato (spento)');
+        azzeraModifiche('messaggio');
         fetchConfigApp(['messaggio']);
         aggiornaStatoPanoramica();
     }
@@ -4046,7 +4106,7 @@ document.getElementById('cfg-mappe-file')?.addEventListener('change', async (e) 
     const pulsante = document.getElementById('cfg-mappe-pubblica');
     _mappePronte = null;
     pulsante.disabled = true;
-    anteprima.style.display = 'none';
+    anteprima.classList.add('hidden');
     const file = e.target.files && e.target.files[0];
     if (!file) return;
 
@@ -4070,14 +4130,14 @@ document.getElementById('cfg-mappe-file')?.addEventListener('change', async (e) 
         _mappePronte = { gz, sha256, versione: prossima };
 
         anteprima.innerHTML = `
-            <div style="font-weight:600; margin-bottom:0.5rem;">Pronto da pubblicare come <span style="color:var(--primary-gold);">v${prossima}</span></div>
+            <div class="admin-anteprima-titolo">Pronto da pubblicare come <span class="admin-oro">v${prossima}</span></div>
             <div>${dati.edifici.length} edifici &middot; ${dati.puntiInteresse.length} punti di interesse &middot; ${dati.lineeBus.length} linee bus</div>
-            <div style="color:var(--text-muted); font-size:0.85rem; margin-top:0.4rem;">Originale ${_kb(file.size)} &rarr; compatto ${_kb(compatto.byteLength)} &rarr; compresso <strong>${_kb(gz.byteLength)}</strong> &middot; impronta ${sha256.slice(0, 12)}&hellip;</div>`;
-        anteprima.style.display = 'block';
+            <div class="admin-anteprima-nota">Originale ${_kb(file.size)} &rarr; compatto ${_kb(compatto.byteLength)} &rarr; compresso <strong>${_kb(gz.byteLength)}</strong> &middot; impronta ${sha256.slice(0, 12)}&hellip;</div>`;
+        anteprima.classList.remove('hidden');
         pulsante.disabled = false;
     } catch (err) {
-        anteprima.innerHTML = `<span style="color:#f87171;">File non valido: ${escapeHtml(err.message)}</span>`;
-        anteprima.style.display = 'block';
+        anteprima.innerHTML = `<span class="admin-errore">File non valido: ${escapeHtml(err.message)}</span>`;
+        anteprima.classList.remove('hidden');
     }
 });
 
@@ -4094,7 +4154,9 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
     if (!_mappePronte) return;
     const { gz, sha256, versione } = _mappePronte;
     const path = `mappe_v${versione}.json.gz`;
-    if (!confirm(`Pubblicare le mappe come v${versione}? Tutte le app le scaricheranno al prossimo controllo.`)) return;
+    if (!(await customConfirm(`Pubblicare le mappe come v${versione}? Tutte le app le scaricheranno al prossimo controllo.`, {
+        title: 'Pubblica mappe', confirmText: 'Pubblica', icon: '🗺️', isDanger: false
+    }))) return;
 
     const pulsante = document.getElementById('cfg-mappe-pubblica');
     pulsante.disabled = true;
@@ -4114,7 +4176,7 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
 
         showToast(`Mappe pubblicate come v${versione}`);
         document.getElementById('cfg-mappe-file').value = '';
-        document.getElementById('cfg-mappe-anteprima').style.display = 'none';
+        document.getElementById('cfg-mappe-anteprima').classList.add('hidden');
         _mappePronte = null;
         fetchConfigApp(['mappe']);
         aggiornaStatoPanoramica();
@@ -4126,17 +4188,29 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
     }
 });
 
-async function elencaVersioniMappe() {
-    const elenco = document.getElementById('cfg-mappe-elenco');
+/** File mappe_v<N>.json.gz del bucket, dal più recente. Usata anche dalla Panoramica. */
+async function leggiFileMappe() {
     const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).list('', {
         limit: 100,
         sortBy: { column: 'created_at', order: 'desc' },
     });
-    if (error) {
-        elenco.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}</span>`;
+    if (error) throw new Error(error.message);
+    return (data || []).filter(f => f.name && f.name.startsWith('mappe_') && f.name.endsWith('.json.gz'));
+}
+
+async function elencaVersioniMappe() {
+    const elenco = document.getElementById('cfg-mappe-elenco');
+    let file;
+    try {
+        file = await leggiFileMappe();
+    } catch (err) {
+        elenco.innerHTML = `<span class="admin-errore">Errore: ${escapeHtml(err.message)}</span>`;
         return;
     }
-    const file = (data || []).filter(f => f.name && f.name.startsWith('mappe_') && f.name.endsWith('.json.gz'));
+    // Data di caricamento del file in uso nella riga "Versione pubblicata" (vedi fetchConfigApp)
+    const inUso = file.find(f => _configApp && _configApp.mappa_path === f.name);
+    const dataFile = document.getElementById('cfg-mappe-data');
+    if (dataFile) dataFile.innerHTML = inUso && inUso.created_at ? ` &middot; file caricato il ${new Date(inUso.created_at).toLocaleString('it-IT')}` : '';
     if (file.length === 0) {
         elenco.textContent = 'Nessun file pubblicato.';
         return;
@@ -4145,10 +4219,10 @@ async function elencaVersioniMappe() {
         const attuale = _configApp && _configApp.mappa_path === f.name;
         const quando = f.created_at ? new Date(f.created_at).toLocaleString('it-IT') : '';
         const dim = f.metadata && f.metadata.size ? _kb(f.metadata.size) : '';
-        return `<div style="display:flex; align-items:center; gap:0.8rem; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.06);">
-            <span style="flex:1; color:var(--text-main, inherit);">${escapeHtml(f.name)} <span style="color:var(--text-muted); font-size:0.8rem;">${dim} &middot; ${quando}</span></span>
+        return `<div class="admin-elenco-riga">
+            <span class="admin-riempi admin-elenco-nome">${escapeHtml(f.name)} <span class="admin-testo-sub admin-piccolo">${dim} &middot; ${quando}</span></span>
             ${attuale
-                ? '<span style="color:var(--primary-gold); font-size:0.8rem; font-weight:600;">in uso</span>'
+                ? '<span class="admin-stato oro">in uso</span>'
                 : `<button type="button" class="btn btn-secondary btn-sm" data-ripristina="${escapeHtml(f.name)}">Ripristina</button>`}
         </div>`;
     }).join('');
@@ -4160,7 +4234,9 @@ async function elencaVersioniMappe() {
 // impronta ricalcolata dal file stesso.
 async function ripristinaMappe(nome) {
     const versione = ((_configApp && _configApp.mappa_version) || 0) + 1;
-    if (!confirm(`Ripristinare ${nome}? Verrà pubblicato come v${versione}.`)) return;
+    if (!(await customConfirm(`Ripristinare ${nome}? Verrà pubblicato come v${versione}.`, {
+        title: 'Ripristina mappe', confirmText: 'Ripristina', icon: '🗺️', isDanger: false
+    }))) return;
     try {
         const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).download(nome);
         if (error) throw new Error(error.message);
@@ -4232,28 +4308,30 @@ async function caricaMenuPubblicato() {
     _menuPubblicato = null;
     if (!_configApp.menu_path) {
         stato.textContent = 'Nessun menù pubblicato.';
-        if (!_menuBozza) _compilaDateMenu(null);
+        // Senza un file scelto i campi tornano quelli pubblicati: niente da salvare
+        if (!_menuBozza) { _compilaDateMenu(null); azzeraModifiche('menu'); }
         return;
     }
     try {
         _menuPubblicato = await leggiMenuPubblicato(_configApp);
-        stato.innerHTML = `Pubblicato: <strong style="color:var(--primary-gold);">${escapeHtml(_menuPubblicato.titolo || 'Menù')}</strong> &middot; v${_configApp.menu_version} &middot; valido dal ${escapeHtml(_menuPubblicato.valido_dal || '?')} al ${escapeHtml(_menuPubblicato.valido_al || '?')} &middot; ${_menuPubblicato.settimane} settimane, 1&ordf; dal ${escapeHtml(_menuPubblicato.inizio_ciclo || '?')}`;
-        if (!_menuBozza) _compilaDateMenu(_menuPubblicato);
+        stato.innerHTML = `Pubblicato: <strong class="admin-oro">${escapeHtml(_menuPubblicato.titolo || 'Menù')}</strong> &middot; v${_configApp.menu_version} &middot; valido dal ${escapeHtml(_menuPubblicato.valido_dal || '?')} al ${escapeHtml(_menuPubblicato.valido_al || '?')} &middot; ${_menuPubblicato.settimane} settimane, 1&ordf; dal ${escapeHtml(_menuPubblicato.inizio_ciclo || '?')}`;
+        if (!_menuBozza) { _compilaDateMenu(_menuPubblicato); azzeraModifiche('menu'); }
     } catch (err) {
-        stato.innerHTML = `<span style="color:#f87171;">Impossibile leggere il menù pubblicato: ${escapeHtml(err.message)}</span>`;
+        stato.innerHTML = `<span class="admin-errore">Impossibile leggere il menù pubblicato: ${escapeHtml(err.message)}</span>`;
     }
 }
 
 document.getElementById('cfg-menu-file')?.addEventListener('change', async (e) => {
     const anteprima = document.getElementById('cfg-menu-anteprima');
     _menuBozza = null;
-    anteprima.style.display = 'none';
+    anteprima.classList.add('hidden');
     const file = e.target.files && e.target.files[0];
-    if (!file) { _compilaDateMenu(_menuPubblicato); return; }
+    if (!file) { _compilaDateMenu(_menuPubblicato); azzeraModifiche('menu'); return; }
     try {
         const dati = JSON.parse(await file.text());
         _validaMenu(dati);
         _menuBozza = dati;
+        segnaModifiche('menu');
         // Date vuote nel file: si tengono quelle del menu' pubblicato
         _compilaDateMenu({
             titolo: dati.titolo || _menuPubblicato?.titolo,
@@ -4263,10 +4341,14 @@ document.getElementById('cfg-menu-file')?.addEventListener('change', async (e) =
         });
         mostraAnteprimaMenu();
     } catch (err) {
-        anteprima.innerHTML = `<span style="color:#f87171;">File non valido: ${escapeHtml(err.message)}</span>`;
-        anteprima.style.display = 'block';
+        anteprima.innerHTML = `<span class="admin-errore">File non valido: ${escapeHtml(err.message)}</span>`;
+        anteprima.classList.remove('hidden');
     }
 });
+
+// Titolo e date cambiati a mano (anche senza file) sono modifiche da pubblicare
+['cfg-menu-titolo', 'cfg-menu-dal', 'cfg-menu-al', 'cfg-menu-ciclo'].forEach(id =>
+    ['input', 'change'].forEach(tipo => document.getElementById(id)?.addEventListener(tipo, () => segnaModifiche('menu'))));
 
 /** Menu' da pubblicare: il file scelto oppure quello pubblicato, con i campi del form. */
 function _menuDaForm() {
@@ -4302,14 +4384,14 @@ function mostraAnteprimaMenu() {
                 .map(c => `<div><strong>${c}</strong>: ${g[c].map(p => escapeHtml(p.nome)).join(' · ')}</div>`).join('');
         };
         anteprima.innerHTML = `
-            <div style="font-weight:600; margin-bottom:0.4rem;">${escapeHtml(dati.titolo)} &middot; ${dati.settimane} settimane &middot; ${piatti} piatti &middot; ${Object.keys(dati.allergeni || {}).length} allergeni</div>
-            <div style="margin-bottom:0.6rem; color:${inVigore ? 'var(--text-muted)' : '#f87171'};">Oggi (${nomi[giorno - 1]}) &egrave; la <strong>settimana ${settimana}</strong>${inVigore ? '' : ' &mdash; ma il menù oggi NON è in vigore'}. Controlla che coincida con il menù esposto in mensa.</div>
-            <div style="font-size:0.85rem; margin-bottom:0.5rem;"><span style="color:var(--primary-gold);">Pranzo</span>${elenco('pranzo')}</div>
-            <div style="font-size:0.85rem;"><span style="color:var(--primary-gold);">Cena</span>${elenco('cena')}</div>`;
+            <div class="admin-anteprima-titolo">${escapeHtml(dati.titolo)} &middot; ${dati.settimane} settimane &middot; ${piatti} piatti &middot; ${Object.keys(dati.allergeni || {}).length} allergeni</div>
+            <div class="menu-anteprima-oggi ${inVigore ? 'admin-testo-sub' : 'admin-rosso'}">Oggi (${nomi[giorno - 1]}) &egrave; la <strong>settimana ${settimana}</strong>${inVigore ? '' : ' &mdash; ma il menù oggi NON è in vigore'}. Controlla che coincida con il menù esposto in mensa.</div>
+            <div class="menu-anteprima-pasto"><span class="admin-oro">Pranzo</span>${elenco('pranzo')}</div>
+            <div class="menu-anteprima-pasto"><span class="admin-oro">Cena</span>${elenco('cena')}</div>`;
     } catch (err) {
-        anteprima.innerHTML = `<span style="color:#f87171;">${escapeHtml(err.message)}</span>`;
+        anteprima.innerHTML = `<span class="admin-errore">${escapeHtml(err.message)}</span>`;
     }
-    anteprima.style.display = 'block';
+    anteprima.classList.remove('hidden');
 }
 
 document.getElementById('cfg-menu-anteprima-btn')?.addEventListener('click', mostraAnteprimaMenu);
@@ -4328,7 +4410,9 @@ document.getElementById('cfg-menu-pubblica')?.addEventListener('click', async ()
     }
     const versione = ((_configApp && _configApp.menu_version) || 0) + 1;
     const path = `menu_mensa_v${versione}.json.gz`;
-    if (!confirm(`Pubblicare "${dati.titolo}" (valido dal ${dati.valido_dal} al ${dati.valido_al}) come v${versione}?`)) return;
+    if (!(await customConfirm(`Pubblicare "${dati.titolo}" (valido dal ${dati.valido_dal} al ${dati.valido_al}) come v${versione}?`, {
+        title: 'Pubblica menù', confirmText: 'Pubblica', icon: '🍽️', isDanger: false
+    }))) return;
 
     const pulsante = document.getElementById('cfg-menu-pubblica');
     pulsante.disabled = true;
@@ -4346,8 +4430,9 @@ document.getElementById('cfg-menu-pubblica')?.addEventListener('click', async ()
         if (errConfig) throw new Error('registrazione: ' + errConfig.message);
         showToast(`Menù pubblicato come v${versione} (${_kb(gz.byteLength)})`);
         _menuBozza = null;
+        azzeraModifiche('menu');
         document.getElementById('cfg-menu-file').value = '';
-        document.getElementById('cfg-menu-anteprima').style.display = 'none';
+        document.getElementById('cfg-menu-anteprima').classList.add('hidden');
         fetchConfigApp(['menu']);
         aggiornaStatoPanoramica();
     } catch (err) {
@@ -4384,26 +4469,25 @@ async function caricaSimulatore() {
     const { data, error } = await _supabase.from('portale_test').select('*')
         .order('data').order('ora_inizio');
     if (error) {
-        elenco.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 09 &egrave; stato applicato?</span>`;
+        elenco.innerHTML = `<span class="admin-errore">Errore: ${escapeHtml(error.message)}. Lo script SQL 09 &egrave; stato applicato?</span>`;
         return;
     }
     if (!data.length) {
         elenco.textContent = 'Nessuna lezione: premi "Genera lezioni di prova".';
         return;
     }
-    elenco.innerHTML = `<div style="overflow-x:auto;"><table style="width:100%; border-collapse:collapse; font-size:0.85rem;">
-        <thead><tr style="text-align:left; color:var(--text-muted);"><th>Giorno</th><th>Orario</th><th>Materia</th><th>Aula</th><th>Id</th><th></th></tr></thead>
+    elenco.innerHTML = `<div class="admin-tabella-scorre"><table class="admin-tabella compatta">
+        <thead><tr><th>Giorno</th><th>Orario</th><th>Materia</th><th>Aula</th><th>Id</th><th></th></tr></thead>
         <tbody>${data.map(r => {
             const d = new Date(r.data + 'T00:00:00');
-            const stile = r.annullato ? 'text-decoration:line-through; opacity:0.6;' : '';
             const id = escapeHtml(r.evento_id);
-            return `<tr style="border-top:1px solid rgba(255,255,255,0.06); ${stile}">
-                <td style="padding:6px 4px;">${SIM_GIORNI[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}</td>
+            return `<tr class="${r.annullato ? 'annullata' : ''}">
+                <td>${SIM_GIORNI[d.getDay()]} ${d.getDate()}/${d.getMonth() + 1}</td>
                 <td>${escapeHtml(r.ora_inizio)}-${escapeHtml(r.ora_fine)}</td>
                 <td>${escapeHtml(r.insegnamento)}</td>
                 <td>${escapeHtml(r.codice_aula || '')}</td>
-                <td style="color:var(--text-muted); font-size:0.75rem;">${id}</td>
-                <td style="white-space:nowrap; text-align:right;">
+                <td class="admin-testo-sub sim-id">${id}</td>
+                <td class="destra">
                     <button class="btn btn-secondary btn-sm" data-sim="aula" data-id="${id}" title="Aula successiva">Aula</button>
                     <button class="btn btn-secondary btn-sm" data-sim="orario" data-id="${id}" title="Un'ora dopo">+1h</button>
                     <button class="btn btn-secondary btn-sm" data-sim="giorno" data-id="${id}" title="Il giorno dopo">+1g</button>
@@ -4468,7 +4552,7 @@ document.getElementById('sim-genera')?.addEventListener('click', async () => {
 });
 
 document.getElementById('sim-svuota')?.addEventListener('click', async () => {
-    if (!confirm('Eliminare tutte le lezioni del corso TEST?')) return;
+    if (!(await customConfirm('Eliminare tutte le lezioni del corso TEST?', { title: 'Svuota il simulatore', confirmText: 'Svuota' }))) return;
     const { error } = await _supabase.from('portale_test').delete().neq('evento_id', '');
     if (error) showToast('Errore: ' + error.message, 'error');
     caricaSimulatore();
@@ -4478,7 +4562,7 @@ document.querySelectorAll('[data-sim-funzione]').forEach(b => b.addEventListener
     const funzione = b.dataset.simFunzione;
     const esito = document.getElementById('sim-esito');
     b.disabled = true;
-    esito.style.display = 'block';
+    esito.classList.remove('hidden');
     esito.textContent = `${funzione}: in corso...`;
     try {
         const { data, error } = await _supabase.functions.invoke(funzione, { body: { solo_test: true } });
@@ -4527,23 +4611,27 @@ async function caricaElencoNovita() {
     const { data, error } = await _supabase.from('novita_app').select('versione, attiva, aggiornato_il').order('versione', { ascending: false });
     const stato = document.getElementById('nov-stato');
     if (error) {
-        stato.innerHTML = `<span style="color:#f87171;">Errore: ${escapeHtml(error.message)}. Lo script SQL 11 &egrave; stato applicato?</span>`;
+        stato.innerHTML = `<span class="admin-errore">Errore: ${escapeHtml(error.message)}. Lo script SQL 11 &egrave; stato applicato?</span>`;
         return;
     }
     document.getElementById('nov-versioni').innerHTML = (data || []).map(r => `<option value="${escapeHtml(r.versione)}">`).join('');
     stato.innerHTML = data && data.length
-        ? 'Versioni salvate: ' + data.map(r => `<strong style="color:${r.attiva ? 'var(--primary-gold)' : 'var(--text-muted)'};">${escapeHtml(r.versione)}</strong>${r.attiva ? '' : ' (spenta)'}`).join(' &middot; ')
+        ? 'Versioni salvate: ' + data.map(r => `<strong class="${r.attiva ? 'admin-oro' : 'admin-testo-sub'}">${escapeHtml(r.versione)}</strong>${r.attiva ? '' : ' (spenta)'}`).join(' &middot; ')
         : 'Nessuna versione salvata.';
     // Al primo ingresso apre la versione più recente
     if (!_novVersione() && data && data.length) {
         document.getElementById('nov-versione').value = data[0].versione;
-        caricaNovita();
+        caricaNovita({ avviso: false });
     } else if (!_novVersione()) {
         renderNovita();
+    } else if (_novDaRicaricare) {
+        // Usciti senza salvare: si riparte da quello che è salvato
+        caricaNovita({ avviso: false });
     }
 }
 
-async function caricaNovita() {
+// avviso = messaggio "Novità … caricate": solo quando si preme "Carica", non nei caricamenti automatici
+async function caricaNovita({ avviso = true } = {}) {
     const versione = _novVersione();
     if (!versione) return;
     const { data, error } = await _supabase.from('novita_app').select('*').eq('versione', versione).maybeSingle();
@@ -4551,13 +4639,15 @@ async function caricaNovita() {
     if (data) {
         _novSchede = (Array.isArray(data.schede) ? data.schede : []).map(s => ({ ..._novNuovaScheda(s.tipo === 'riepilogo' ? 'riepilogo' : 'principale'), ...s }));
         document.getElementById('nov-attiva').checked = !!data.attiva;
-        showToast(`Novità ${versione} caricate`);
+        if (avviso) showToast(`Novità ${versione} caricate`);
     } else {
         _novSchede = [];
         document.getElementById('nov-attiva').checked = true;
-        showToast(`Nessuna novità per la ${versione}: parti da zero`);
+        if (avviso) showToast(`Nessuna novità per la ${versione}: parti da zero`);
     }
     _novPagina = 0;
+    _novDaRicaricare = false;
+    azzeraModifiche('novita');
     renderNovita();
 }
 
@@ -4565,14 +4655,14 @@ function renderNovita() {
     const box = document.getElementById('nov-schede');
     if (!box) return;
     if (!_novSchede.length) {
-        box.innerHTML = '<p style="color: var(--text-muted); font-size: 0.9rem;">Nessuna scheda. Aggiungi una pagina o una voce del riepilogo.</p>';
+        box.innerHTML = '<p class="admin-vuoto">Nessuna scheda. Aggiungi una pagina o una voce del riepilogo.</p>';
     } else {
         const opzioni = (sel) => NOVITA_ICONE.map(n => `<option value="${n}" ${n === sel ? 'selected' : ''}>${n}</option>`).join('');
         box.innerHTML = _novSchede.map((s, i) => {
             const riep = s.tipo === 'riepilogo';
             const campo = (k, etichetta, area) => area
-                ? `<div class="form-group"><label style="font-size:0.8rem;font-weight:600;">${etichetta}</label><textarea class="form-control" rows="2" data-i="${i}" data-k="${k}">${escapeHtml(s[k] || '')}</textarea></div>`
-                : `<div class="form-group"><label style="font-size:0.8rem;font-weight:600;">${etichetta}</label><input type="text" class="form-control" data-i="${i}" data-k="${k}" value="${escapeHtml(Array.isArray(s[k]) ? s[k].join(', ') : (s[k] || ''))}"></div>`;
+                ? `<div class="form-group"><label>${etichetta}</label><textarea class="form-control" rows="2" data-i="${i}" data-k="${k}">${escapeHtml(s[k] || '')}</textarea></div>`
+                : `<div class="form-group"><label>${etichetta}</label><input type="text" class="form-control" data-i="${i}" data-k="${k}" value="${escapeHtml(Array.isArray(s[k]) ? s[k].join(', ') : (s[k] || ''))}"></div>`;
             return `<div class="nov-scheda">
                 <div class="nov-scheda-top">
                     <span class="nov-tipo ${riep ? 'riep' : ''}">${riep ? 'Voce riepilogo' : 'Pagina'}</span>
@@ -4614,20 +4704,19 @@ function renderAnteprimaNovita() {
         const p = pagine[_novPagina];
         if (p.tipo === 'principale') {
             const s = p.scheda;
-            const pos = ['top:12px;left:-22px', 'bottom:16px;right:-26px', 'top:76px;right:-30px'];
             const etichette = (t(s, 'etichette') || []).slice(0, 3);
-            corpo = `<div class="illu"><span class="nov-ms">${escapeHtml(s.icona)}</span>${etichette.map((e, i) => `<div class="chip" style="${pos[i]}">${escapeHtml(e)}</div>`).join('')}</div>
+            corpo = `<div class="illu"><span class="nov-ms">${escapeHtml(s.icona)}</span>${etichette.map((e, i) => `<div class="chip pos-${i}">${escapeHtml(e)}</div>`).join('')}</div>
                 <div class="tit">${escapeHtml(t(s, 'titolo') || '(titolo)')}</div>
                 ${t(s, 'testo') ? `<div class="txt">${escapeHtml(t(s, 'testo'))}</div>` : ''}`;
         } else {
-            corpo = `<div style="margin-bottom:auto;"><div class="riep-tit">${inglese ? 'And also…' : 'E inoltre…'}</div>${p.voci.map(v => `<div class="r"><div class="ic"><span class="nov-ms">${escapeHtml(v.icona)}</span></div><div><b>${escapeHtml(t(v, 'titolo') || '(titolo)')}</b>${t(v, 'testo') ? `<small>${escapeHtml(t(v, 'testo'))}</small>` : ''}</div></div>`).join('')}</div>`;
+            corpo = `<div class="riep"><div class="riep-tit">${inglese ? 'And also…' : 'E inoltre…'}</div>${p.voci.map(v => `<div class="r"><div class="ic"><span class="nov-ms">${escapeHtml(v.icona)}</span></div><div><b>${escapeHtml(t(v, 'titolo') || '(titolo)')}</b>${t(v, 'testo') ? `<small>${escapeHtml(t(v, 'testo'))}</small>` : ''}</div></div>`).join('')}</div>`;
         }
     }
     box.innerHTML = `<div class="nov-tel">
-        <div class="top"><span class="ver">${inglese ? 'NEW IN' : 'NOVITÀ'} ${versione}</span><span class="salta" style="visibility:${ultima ? 'hidden' : 'visible'}">${inglese ? 'Skip' : 'Salta'}</span></div>
+        <div class="top"><span class="ver">${inglese ? 'NEW IN' : 'NOVITÀ'} ${versione}</span><span class="salta${ultima ? ' nascosto' : ''}">${inglese ? 'Skip' : 'Salta'}</span></div>
         <div class="pag">${corpo}</div>
-        ${pagine.length > 1 ? `<div class="dots">${pagine.map((_, i) => `<i class="${i === _novPagina ? 'on' : ''}" data-pagina="${i}"></i>`).join('')}</div>` : '<div style="height:14px"></div>'}
-        <div class="btn-nov" id="nov-btn-anteprima">${ultima ? (inglese ? 'Get started' : 'Inizia') : `${inglese ? 'Next' : 'Avanti'}<span class="nov-ms" style="font-size:18px">arrow_forward</span>`}</div>
+        ${pagine.length > 1 ? `<div class="dots">${pagine.map((_, i) => `<i class="${i === _novPagina ? 'on' : ''}" data-pagina="${i}"></i>`).join('')}</div>` : '<div class="dots-vuoto"></div>'}
+        <div class="btn-nov" id="nov-btn-anteprima">${ultima ? (inglese ? 'Get started' : 'Inizia') : `${inglese ? 'Next' : 'Avanti'}<span class="nov-ms">arrow_forward</span>`}</div>
     </div>`;
 }
 
@@ -4676,9 +4765,26 @@ document.getElementById('nov-aggiungi-voce')?.addEventListener('click', () => {
     _novPagina = _novPagine().length - 1;
     renderNovita();
 });
-document.getElementById('nov-carica')?.addEventListener('click', caricaNovita);
+// Modifiche non salvate: campi e icone delle schede, "Attiva", schede aggiunte, spostate o eliminate
+// (la versione scritta e la lingua dell'anteprima non contano)
+['input', 'change'].forEach(tipo => document.getElementById('nov-schede')?.addEventListener(tipo, () => segnaModifiche('novita')));
+document.getElementById('nov-schede')?.addEventListener('click', (e) => {
+    if (e.target.closest('button[data-azione]')) segnaModifiche('novita');
+});
+document.getElementById('nov-attiva')?.addEventListener('change', () => segnaModifiche('novita'));
+['nov-aggiungi-pagina', 'nov-aggiungi-voce'].forEach(id =>
+    document.getElementById(id)?.addEventListener('click', () => segnaModifiche('novita')));
+
+// "Carica" sostituisce le schede nell'editor: prima chiede, se ci sono modifiche non salvate
+async function caricaNovitaChiedendo() {
+    if (_modificheNonSalvate.has('novita') && !(await customConfirm(`Caricare le novità della ${_novVersione()}? Le modifiche non salvate andranno perse.`, {
+        title: 'Modifiche non salvate', confirmText: 'Carica', cancelText: 'Resta qui', icon: '✏️'
+    }))) return;
+    caricaNovita();
+}
+document.getElementById('nov-carica')?.addEventListener('click', caricaNovitaChiedendo);
 document.getElementById('nov-versione')?.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') { e.preventDefault(); caricaNovita(); }
+    if (e.key === 'Enter') { e.preventDefault(); caricaNovitaChiedendo(); }
 });
 document.getElementById('nov-versione')?.addEventListener('input', renderAnteprimaNovita);
 document.getElementById('nov-inglese')?.addEventListener('change', renderAnteprimaNovita);
@@ -4721,6 +4827,7 @@ document.getElementById('nov-salva')?.addEventListener('click', async () => {
         showToast('Errore nel salvataggio: ' + error.message, 'error');
     } else {
         showToast(attiva ? `Novità ${versione} salvate e attive` : `Novità ${versione} salvate (spente)`);
+        azzeraModifiche('novita');
         caricaElencoNovita();
         aggiornaStatoPanoramica();
     }
@@ -4729,13 +4836,14 @@ document.getElementById('nov-salva')?.addEventListener('click', async () => {
 document.getElementById('nov-elimina')?.addEventListener('click', async () => {
     const versione = _novVersione();
     if (!versione) return;
-    if (!confirm(`Eliminare le novità della ${versione}?`)) return;
+    if (!(await customConfirm(`Eliminare le novità della ${versione}?`, { title: 'Elimina novità' }))) return;
     const { error } = await _supabase.from('novita_app').delete().eq('versione', versione);
     if (error) {
         showToast('Errore: ' + error.message, 'error');
     } else {
         showToast(`Novità ${versione} eliminate`);
         _novSchede = [];
+        azzeraModifiche('novita');
         renderNovita();
         caricaElencoNovita();
         aggiornaStatoPanoramica();
@@ -4810,11 +4918,21 @@ function _panPiuRecente(versioni) {
         semverCompare(a.version, b.version) || String(b.created_at || '').localeCompare(String(a.created_at || '')))[0] || null;
 }
 
+// Risposta di Supabase che indica una tabella non leggibile dal pannello (permessi mancanti o
+// tabella non ancora creata), da mostrare come "non disponibile" e non come un guasto.
+// Le richieste di solo conteggio non hanno corpo: lì conta lo stato HTTP.
+function _panNonLeggibile(r) {
+    const e = r.error || {};
+    return [401, 403, 404].includes(r.status) || ['42501', '42P01', 'PGRST205'].includes(e.code) ||
+        /permission denied|could not find the table|does not exist/i.test(e.message || '');
+}
+
 /**
  * Push automatiche di oggi: tabelle invii_automatici (una riga per modifica d'orario e
- * dispositivo, scritta prima dell'invio: esito resta vuoto) e promemoria_inviati (esito
- * "ok" o "errore"). Senza una policy di lettura per gli utenti autenticati PostgREST
- * risponde "permission denied": in quel caso { disponibile: false }.
+ * dispositivo; esito "ok", "errore" o "rimuovi" solo dopo la modifica a push-automatiche
+ * descritta in _redesign/edge_functions_registro.md, prima restava vuoto) e promemoria_inviati
+ * (esito "ok", "errore", "rimuovi" o "scaduto"). Senza una policy di lettura per gli utenti
+ * autenticati PostgREST risponde "permission denied": in quel caso { disponibile: false }.
  */
 async function leggiPushOggi() {
     const mezzanotte = new Date();
@@ -4826,22 +4944,36 @@ async function leggiPushOggi() {
         conta('promemoria_inviati', 'evento_id'),
         conta('promemoria_inviati', 'evento_id').eq('esito', 'errore'),
         _supabase.from('invii_automatici').select('inviato_il, esito').order('inviato_il', { ascending: false }).limit(1),
+        conta('invii_automatici', 'modifica_id').eq('esito', 'errore'),
     ]);
     const conErrore = risposte.filter(r => r.error);
     if (conErrore.length) {
-        // Le richieste di solo conteggio non hanno corpo: il permesso negato si riconosce dallo stato HTTP
-        const negato = conErrore.some(r => r.status === 401 || r.status === 403 || r.error.code === '42501' || /permission denied/i.test(r.error.message || ''));
-        if (negato) return { disponibile: false };
+        if (conErrore.some(_panNonLeggibile)) return { disponibile: false };
         throw new Error(conErrore.map(r => r.error.message).find(Boolean) || 'lettura non riuscita');
     }
-    const [modifiche, promemoria, errori, ultimo] = risposte;
+    const [modifiche, promemoria, errori, ultimo, erroriModifiche] = risposte;
     return {
         disponibile: true,
         modifiche: modifiche.count || 0,
         promemoria: promemoria.count || 0,
         erroriPromemoria: errori.count || 0,
+        erroriModifiche: erroriModifiche.count || 0,
         ultimo: (ultimo.data || [])[0] || null,
     };
+}
+
+/**
+ * Ultimo giro delle funzioni automatiche (tabella ultime_esecuzioni, una riga per funzione:
+ * orario-notte, orario-controllo, push-automatiche, promemoria). La tabella e la scrittura dalle
+ * Edge Functions sono descritte in _redesign/: finché mancano, { disponibile: false }.
+ */
+async function leggiUltimeEsecuzioni() {
+    const r = await _supabase.from('ultime_esecuzioni').select('funzione, ultima_il, esito, durata_ms, dettaglio, ultimo_errore_il, ultimo_errore');
+    if (r.error) {
+        if (_panNonLeggibile(r)) return { disponibile: false };
+        throw new Error(r.error.message || 'lettura non riuscita');
+    }
+    return { disponibile: true, perFunzione: Object.fromEntries((r.data || []).map(e => [e.funzione, e])) };
 }
 
 // Letture usate da più blocchi: ognuna parte una volta sola per aggiornamento, e solo se serve
@@ -4861,6 +4993,8 @@ function _panLetture() {
         novita: una('novita', () => righe(_supabase.from('novita_app').select('versione, attiva, schede'))),
         bug: una('bug', () => righe(_supabase.from('bugs').select('id, title, status, created_at').order('created_at', { ascending: false }))),
         push: una('push', () => leggiPushOggi()),
+        esecuzioni: una('esecuzioni', () => leggiUltimeEsecuzioni()),
+        fileMappe: una('fileMappe', () => leggiFileMappe()),
     };
     l.menu = una('menu', () => l.config().then(c => leggiMenuPubblicato(c)));
     return l;
@@ -4945,12 +5079,13 @@ function _panCaricaNumeri(l) {
             const nome = _panVersione(ultima.version);
             const voce = a.versioni.find(v => _panVersione(v.version) === nome) || { total: 0, apk: 0, pwa: 0, web: 0 };
             const pct = _panPercento(voce.total, a.totale);
-            // Come in Statistiche: "PWA" comprende anche il sito aperto nel browser
-            const pwa = _panPercento((voce.pwa || 0) + (voce.web || 0), a.pwa + a.web);
+            // Tre gruppi separati come in Statistiche: PWA installata, sito nel browser, APK
+            const pwa = _panPercento(voce.pwa || 0, a.pwa);
+            const web = _panPercento(voce.web || 0, a.web);
             const apk = _panPercento(voce.apk || 0, a.apk);
             const fmt = p => (p === null ? '–' : `${p}%`);
             return _panKpiHtml(pct === null ? '—' : `${pct}%`,
-                `v${escapeHtml(nome)} · <span title="PWA e sito nel browser">PWA ${fmt(pwa)}</span> · APK ${fmt(apk)}`, pct || 0);
+                `v${escapeHtml(nome)} · PWA ${fmt(pwa)} · web ${fmt(web)} · APK ${fmt(apk)}`, pct || 0);
         }, erroreKpi),
 
         // 4. Bug aperti, in lavorazione e risolti
@@ -5003,7 +5138,14 @@ function _panLavoriStato(l) {
             const c = await l.config();
             const versione = escapeHtml(String(c.mappa_version ?? '-'));
             if (!(c.mappa_path || '').trim()) return { tono: 'neu', titolo: 'Mappe: nessun file pubblicato', testo: `Le app usano le mappe incluse (v${versione})` };
-            const dettagli = [c.mappa_bytes ? _kb(c.mappa_bytes) : '', c.aggiornato_il ? `aggiornata ${tempoTrascorso(c.aggiornato_il)}` : ''];
+            // Data del file nel bucket (aggiornato_il cambia con ogni salvataggio di config_app);
+            // se il bucket non risponde il riquadro resta valido, solo senza data
+            let caricato = '';
+            try {
+                const file = (await l.fileMappe()).find(f => f.name === c.mappa_path);
+                if (file && file.created_at) caricato = `file caricato ${tempoTrascorso(file.created_at)}`;
+            } catch (_) { /* senza data */ }
+            const dettagli = [c.mappa_bytes ? _kb(c.mappa_bytes) : '', caricato];
             return { tono: 'ok', titolo: `Mappe v${versione} pubblicate`, testo: dettagli.filter(Boolean).join(' · ') };
         },
         menu: async () => {
@@ -5040,34 +5182,74 @@ function _panLavoriStato(l) {
             const n = novita.find(r => _panVersione(r.versione) === nome);
             const schede = n && Array.isArray(n.schede) ? n.schede.length : 0;
             const v = escapeHtml(nome);
-            if (!n) return { tono: 'ko', titolo: `Novità ${v} mancanti`, testo: 'Chi aggiorna a questa versione non vede la schermata delle novità', motivo: `Novità ${nome} mancanti` };
-            if (!n.attiva) return { tono: 'ko', titolo: `Novità ${v} spente`, testo: 'Vanno attivate dalla sezione Novità', motivo: `Novità ${nome} spente` };
-            if (!schede) return { tono: 'ko', titolo: `Novità ${v} senza schede`, testo: 'Aggiungi almeno una pagina', motivo: `Novità ${nome} senza schede` };
-            return { tono: 'ok', titolo: `Novità ${v} attive`, testo: `${schede} ${schede === 1 ? 'scheda' : 'schede'}` };
+            // Il riquadro guarda la versione in uso; quella in preparazione è nella checklist
+            const recente = _panVersione((_panPiuRecente(versioni) || {}).version);
+            const dettagli = testo => ['Versione in uso', testo, recente && recente !== nome ? `la ${escapeHtml(recente)} è nella checklist` : '']
+                .filter(Boolean).join(' · ');
+            if (!n) return { tono: 'ko', titolo: `Novità ${v} mancanti`, testo: dettagli('chi aggiorna non vede la schermata delle novità'), motivo: `Novità ${nome} mancanti` };
+            if (!n.attiva) return { tono: 'ko', titolo: `Novità ${v} spente`, testo: dettagli('vanno attivate dalla sezione Novità'), motivo: `Novità ${nome} spente` };
+            if (!schede) return { tono: 'ko', titolo: `Novità ${v} senza schede`, testo: dettagli('aggiungi almeno una pagina'), motivo: `Novità ${nome} senza schede` };
+            return { tono: 'ok', titolo: `Novità ${v} attive`, testo: dettagli(`${schede} ${schede === 1 ? 'scheda' : 'schede'}`) };
         },
         push: async () => {
-            const p = await l.push();
+            // Il registro delle esecuzioni è facoltativo: se non si legge, il riquadro usa solo i conteggi
+            const [p, es] = await Promise.all([l.push(), l.esecuzioni().catch(() => ({ disponibile: false }))]);
+            const giro = es.disponibile && ['push-automatiche', 'promemoria'].map(f => es.perFunzione[f]).find(e => e && e.esito === 'errore');
+            const avvisoGiro = giro ? `ultimo giro di ${giro.funzione} non riuscito: ${escapeHtml(giro.ultimo_errore || 'errore')}` : '';
             if (!p.disponibile) {
+                if (giro) return { tono: 'att', titolo: 'Push: ultimo giro non riuscito', testo: avvisoGiro, motivo: `Ultimo giro di ${giro.funzione} non riuscito` };
                 return { tono: 'neu', icona: 'notifications_off', titolo: 'Push inviate oggi: non disponibile', testo: 'Il pannello non ha il permesso di leggere invii_automatici e promemoria_inviati' };
             }
             const totale = p.modifiche + p.promemoria;
-            const testo = `${_panNumero(p.modifiche)} per modifiche d'orario · ${_panNumero(p.promemoria)} promemoria` +
-                (p.erroriPromemoria ? ` · ${_panNumero(p.erroriPromemoria)} non consegnati` : '');
-            if (p.erroriPromemoria) {
-                return { tono: 'att', titolo: `Push: ${_panNumero(totale)} inviate oggi`, testo, motivo: `${p.erroriPromemoria} promemoria non consegnati oggi` };
-            }
-            return { tono: totale ? 'ok' : 'neu', titolo: totale ? `Push: ${_panNumero(totale)} inviate oggi` : 'Push: nessuna inviata oggi', testo };
+            const nonConsegnati = p.erroriPromemoria + p.erroriModifiche;
+            const testo = [
+                `${_panNumero(p.modifiche)} per modifiche d'orario · ${_panNumero(p.promemoria)} promemoria`,
+                nonConsegnati ? `${_panNumero(nonConsegnati)} ${nonConsegnati === 1 ? 'non consegnata' : 'non consegnate'}` : '',
+                avvisoGiro,
+            ].filter(Boolean).join(' · ');
+            const titolo = totale ? `Push: ${_panNumero(totale)} inviate oggi` : 'Push: nessuna inviata oggi';
+            if (giro) return { tono: 'att', titolo, testo, motivo: `Ultimo giro di ${giro.funzione} non riuscito` };
+            if (nonConsegnati) return { tono: 'att', titolo, testo, motivo: `${nonConsegnati} notifiche non consegnate oggi` };
+            return { tono: totale ? 'ok' : 'neu', titolo, testo };
         },
         orari: async () => {
+            // 1. Registro delle esecuzioni (ultime_esecuzioni): ultimo giro vero di notte e di giorno
+            const es = await l.esecuzioni().catch(() => ({ disponibile: false }));
+            const notte = es.disponibile && es.perFunzione['orario-notte'];
+            const giorno = es.disponibile && es.perFunzione['orario-controllo'];
+            if (notte || giorno) {
+                const descrivi = (e, nome) => (e ? `${nome} ${_panQuando(e.ultima_il)}` : `${nome}: mai`);
+                const inErrore = [giorno, notte].find(e => e && e.esito === 'errore');
+                if (inErrore) {
+                    const quale = inErrore === giorno ? 'diurno' : 'notturno';
+                    return { tono: 'ko', titolo: `Controllo ${quale} non riuscito`, testo: `${_panQuando(inErrore.ultima_il)}: ${escapeHtml(inErrore.ultimo_errore || 'errore')}`, motivo: `Ultimo controllo ${quale} degli orari non riuscito` };
+                }
+                const oreDa = e => (e ? (Date.now() - new Date(e.ultima_il).getTime()) / 36e5 : Infinity);
+                // Il notturno gira ogni notte; il diurno solo dal lunedì al venerdì
+                if (oreDa(notte) > 36) {
+                    return { tono: 'att', titolo: 'Controllo notturno fermo', testo: notte ? `Ultimo giro ${_panQuando(notte.ultima_il)}` : 'Non ha mai girato', motivo: 'Il controllo notturno degli orari non gira da più di 36 ore' };
+                }
+                if (oreDa(giorno) > 96) {
+                    return { tono: 'att', titolo: 'Controllo diurno fermo', testo: giorno ? `Ultimo giro ${_panQuando(giorno.ultima_il)}` : 'Non ha mai girato', motivo: 'Il controllo diurno degli orari non gira da più di 4 giorni' };
+                }
+                return { tono: 'ok', titolo: 'Controllo orari attivo', testo: `${descrivi(giorno, 'Giorno')} · ${descrivi(notte, 'notte')} · nessun errore` };
+            }
+            // 2. Senza registro: l'ultimo avviso inviato (invii_automatici), non l'ultima esecuzione
             const p = await l.push();
-            if (!p.disponibile) return { tono: 'neu', icona: 'sync_disabled', titolo: 'Controllo orari: non disponibile', testo: 'Serve il permesso di leggere invii_automatici' };
+            if (!p.disponibile) return { tono: 'neu', icona: 'sync_disabled', titolo: 'Controllo orari: non disponibile', testo: 'Il pannello non può leggere ultime_esecuzioni né invii_automatici' };
             if (!p.ultimo) return { tono: 'neu', titolo: 'Controllo orari', testo: 'Nessun avviso di modifica inviato finora' };
-            const d = new Date(p.ultimo.inviato_il);
-            const quando = `${d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' })} alle ${d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}`;
-            // invii_automatici registra gli avvisi inviati, non le esecuzioni del controllo
-            return { tono: 'ok', titolo: 'Controllo orari', testo: `Ultimo avviso di modifica: ${quando} (${tempoTrascorso(d)})` };
+            return { tono: 'ok', titolo: 'Controllo orari', testo: `Ultimo avviso di modifica: ${_panQuando(p.ultimo.inviato_il)} (${tempoTrascorso(p.ultimo.inviato_il)})` };
         },
     };
+}
+
+// "oggi alle 13:00", "ieri alle 19:05", "ven 9 ott alle 19:00"
+function _panQuando(quando) {
+    const d = new Date(quando);
+    const ora = d.toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+    const giorni = _panGiorniTra(_isoOggi(d), _isoOggi());
+    const giorno = giorni === 0 ? 'oggi' : (giorni === 1 ? 'ieri' : d.toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' }));
+    return `${giorno} alle ${ora}`;
 }
 
 // Disegna un riquadro di stato (scheletro, contenuto o errore) e restituisce il risultato
