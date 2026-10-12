@@ -613,9 +613,78 @@ function formatChange(text) {
 }
 
 
+// Icone Material caricate da index.html (parametro icon_names del font): le stesse delle Novità
+// nel pannello, più notifications_active. Un nome fuori elenco non avrebbe il disegno.
+const ICONE_FUNZIONI = new Set(['alarm', 'auto_awesome', 'bolt', 'build', 'calendar_month', 'calendar_view_day', 'campaign',
+    'celebration', 'contacts', 'dark_mode', 'dashboard_customize', 'directions_bus', 'event_busy', 'explore', 'ios_share',
+    'language', 'local_hospital', 'local_library', 'lock', 'map', 'meeting_room', 'menu_book', 'new_releases', 'notifications',
+    'notifications_active', 'palette', 'phonelink_setup', 'place', 'restaurant', 'school', 'search', 'settings', 'speed',
+    'star', 'widgets', 'wifi']);
+
+// Emoji già salvate nella tabella features -> icona Material equivalente
+const EMOJI_FUNZIONI = {
+    '📅': 'calendar_month', '🗓️': 'calendar_month', '⭐': 'star', '🏫': 'meeting_room', '📇': 'contacts',
+    '📖': 'local_library', '📚': 'local_library', '🗺️': 'map', '🗺': 'map', '🍽️': 'restaurant', '🍴': 'restaurant',
+    '🚌': 'directions_bus', '🔔': 'notifications_active', '📱': 'widgets', '🔍': 'search', '⚙️': 'settings',
+};
+
+// Il campo "icon" può contenere il nome di un'icona Material (es. "restaurant") o un'emoji:
+// le emoji conosciute diventano l'icona Material, le altre restano come sono.
+function iconaFunzione(valore) {
+    const v = String(valore || '').trim();
+    const nome = ICONE_FUNZIONI.has(v) ? v : EMOJI_FUNZIONI[v];
+    return nome
+        ? `<span class="funzione-ms" aria-hidden="true">${nome}</span>`
+        : `<span class="funzione-emoji" aria-hidden="true">${v}</span>`;
+}
+
+// Telefono (fino a 560 px): due schede per riga con solo icona e titolo; un tocco apre il testo
+const MQ_FUNZIONI_TELEFONO = window.matchMedia('(max-width: 560px)');
+
+function preparaToccoFunzioni(container) {
+    if (container.dataset.tocco) return;
+    container.dataset.tocco = '1';
+    const aggiornaRuoli = () => {
+        container.querySelectorAll('.funzione').forEach(card => {
+            if (MQ_FUNZIONI_TELEFONO.matches) {
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('aria-expanded', card.classList.contains('aperta') ? 'true' : 'false');
+            } else {
+                card.classList.remove('aperta');
+                ['role', 'tabindex', 'aria-expanded'].forEach(a => card.removeAttribute(a));
+            }
+        });
+    };
+    const apri = (card) => {
+        const aperta = !card.classList.contains('aperta');
+        container.querySelectorAll('.funzione.aperta').forEach(c => {
+            c.classList.remove('aperta');
+            c.setAttribute('aria-expanded', 'false');
+        });
+        card.classList.toggle('aperta', aperta);
+        card.setAttribute('aria-expanded', aperta ? 'true' : 'false');
+    };
+    container.addEventListener('click', (e) => {
+        const card = e.target.closest('.funzione');
+        if (card && MQ_FUNZIONI_TELEFONO.matches) apri(card);
+    });
+    container.addEventListener('keydown', (e) => {
+        const card = e.target.closest('.funzione');
+        if (!card || !MQ_FUNZIONI_TELEFONO.matches || (e.key !== 'Enter' && e.key !== ' ')) return;
+        e.preventDefault();
+        apri(card);
+    });
+    MQ_FUNZIONI_TELEFONO.addEventListener('change', aggiornaRuoli);
+    // Le schede vengono ridisegnate (cache, poi dati freschi): i ruoli si rimettono ogni volta
+    new MutationObserver(aggiornaRuoli).observe(container, { childList: true });
+    aggiornaRuoli();
+}
+
 async function loadFeatures(_supabase) {
     const container = document.getElementById('features-grid');
     if (!container) return;
+    preparaToccoFunzioni(container);
 
     const cacheKey = 'qc_cache_features';
     const cached = localStorage.getItem(cacheKey);
@@ -629,10 +698,10 @@ async function loadFeatures(_supabase) {
         container.innerHTML = '';
         data.forEach((item, index) => {
             const card = document.createElement('div');
-            card.className = `card reveal delay-${(index % 6) + 1}`;
-            
+            card.className = `card funzione reveal delay-${(index % 6) + 1}`;
+
             card.innerHTML = `
-                <div class="card-icon">${item.icon}</div>
+                <div class="card-icon">${iconaFunzione(item.icon)}</div>
                 <h3>${item.title}</h3>
                 <p>${item.description}</p>
             `;

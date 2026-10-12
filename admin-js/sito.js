@@ -417,7 +417,7 @@ async function fetchFeatures() {
         item.innerHTML = `
             <div class="update-item-info">
                 <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
-                <h3>${feature.icon} ${feature.title} ${!feature.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
+                <h3>${/^[a-z_]+$/.test(feature.icon || '') ? `<span class="admin-ms">${feature.icon}</span>` : feature.icon} ${feature.title} ${!feature.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${feature.description}</p>
             </div>
             <div class="actions">
