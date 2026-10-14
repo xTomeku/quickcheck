@@ -77,6 +77,7 @@
 
                     <div class="admin-gruppo-menu">Notifiche</div>
                     <a class="admin-voce" href="#notifiche" data-sezione="notifiche"><span class="admin-ms">notifications</span><span class="admin-voce-testo">Push e avvisi</span></a>
+                    <a class="admin-voce" href="#modifiche" data-sezione="modifiche"><span class="admin-ms">edit_calendar</span><span class="admin-voce-testo">Modifiche orario</span></a>
                     <a class="admin-voce" href="#simulatore" data-sezione="simulatore"><span class="admin-ms">science</span><span class="admin-voce-testo">Simulatore</span></a>
 
                     <div class="admin-gruppo-menu">Supporto</div>
@@ -171,6 +172,12 @@
                         <section class="pan-card" id="pan-checklist-card" aria-labelledby="pan-checklist-titolo">
                             <h3><span class="admin-ms">checklist</span><span id="pan-checklist-titolo">Rilascio</span><a class="pan-link" href="#versioni">Apri &rsaquo;</a></h3>
                             <div id="pan-checklist"></div>
+                        </section>
+
+                        <!-- Modifiche all'orario sospette (caricaSospettePanoramica): giallo se una è ancora attiva -->
+                        <section class="pan-card" id="pan-sospette-card" aria-labelledby="pan-sospette-titolo">
+                            <h3><span class="admin-ms">help</span><span id="pan-sospette-titolo">Modifiche sospette</span><span id="pan-sospette-conta" class="pan-sosp-conta hidden"></span><a class="pan-link" href="#modifiche">Tutte &rsaquo;</a></h3>
+                            <div id="pan-sospette"></div>
                         </section>
 
                         <section class="pan-card" aria-labelledby="pan-bug-titolo">
@@ -696,6 +703,29 @@
                     </div>
                 </div>
 
+                <!-- Iscrizioni per corso di studio (admin-js/iscrizioni.js): un corso si apre e mostra gli anni -->
+                <div id="isc-riquadro" class="admin-riquadro">
+                    <h3 class="admin-riquadro-titolo"><span class="admin-ms">school</span>Iscrizioni per corso di studio<span id="isc-riepilogo" class="isc-riepilogo"></span></h3>
+                    <div class="mod-filtri">
+                        <label class="mod-cerca"><span class="admin-ms">search</span><input type="search" id="isc-cerca" class="form-control" placeholder="Cerca un corso" aria-label="Cerca un corso" autocomplete="off"></label>
+                        <div class="admin-segmenti" role="group" aria-label="Piattaforma">
+                            <button type="button" data-piattaforma="tutte" class="active" aria-pressed="true">Tutte</button>
+                            <button type="button" data-piattaforma="pwa" aria-pressed="false">PWA</button>
+                            <button type="button" data-piattaforma="apk" aria-pressed="false">APK</button>
+                        </div>
+                        <div class="admin-segmenti" role="group" aria-label="Ordine">
+                            <button type="button" data-ordine="numero" class="active" aria-pressed="true">Più iscritti</button>
+                            <button type="button" data-ordine="az" aria-pressed="false">A-Z</button>
+                        </div>
+                    </div>
+                    <div id="isc-elenco" class="isc-elenco"></div>
+                    <div class="admin-legenda isc-legenda">
+                        <span><span class="admin-pallino pwa"></span>PWA</span>
+                        <span><span class="admin-pallino apk"></span>APK Android</span>
+                        <span class="admin-testo-sub">Iscrizioni attive. La barra è lunga in proporzione al corso con più iscritti.</span>
+                    </div>
+                </div>
+
                 <!-- Card Form Invio Notifica -->
                 <div class="admin-riquadro notif-composizione">
                     <h3 class="admin-riquadro-titolo"><span class="admin-ms">campaign</span>Componi Nuovo Avviso / Push</h3>
@@ -860,6 +890,38 @@
                         <!-- Dynamic Content: Elenco notifiche programmate e inviate -->
                     </div>
                 </div>
+            </div>
+
+            <!-- Modifiche all'orario trovate dai controlli automatici (admin-js/modifiche.js).
+                 Permessi e colonna controllata_il: _redesign/sql/pannello_modifiche_iscrizioni.sql -->
+            <div id="modifiche-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Modifiche all'orario</h2>
+                        <p class="admin-sottotitolo">Cambi aula, cambi orario, spostamenti e annullamenti trovati dal controllo notturno (orario dei corsi) e da quello diurno (aule). Una modifica <strong>attiva</strong> arriva a chi si iscrive fino alla fine della lezione: se la elimini, smette.</p>
+                    </div>
+                    <div class="admin-azioni">
+                        <button type="button" id="mod-aggiorna" class="btn btn-secondary btn-sm"><span class="admin-ms">refresh</span>Aggiorna</button>
+                    </div>
+                </div>
+                <div id="mod-kpi" class="mod-kpi"></div>
+                <div id="mod-avviso"></div>
+                <div class="mod-filtri">
+                    <div id="mod-filtro" class="admin-segmenti" role="group" aria-label="Stato delle modifiche"></div>
+                    <select id="mod-tipo" class="form-control mod-tipo" aria-label="Tipo di modifica">
+                        <option value="">Tutti i tipi</option>
+                        <option value="cambio_aula">Cambio aula</option>
+                        <option value="cambio_orario">Cambio orario</option>
+                        <option value="spostamento">Spostamento</option>
+                        <option value="annullamento">Annullamento</option>
+                    </select>
+                    <label class="mod-cerca"><span class="admin-ms">search</span><input type="search" id="mod-cerca" class="form-control" placeholder="Materia o corso" aria-label="Cerca per materia o corso" autocomplete="off"></label>
+                    <span class="admin-riempi"></span>
+                    <label class="mod-spunta"><input type="checkbox" id="mod-test">Corso TEST</label>
+                </div>
+                <div id="mod-selezione"></div>
+                <div id="mod-elenco" class="mod-elenco"></div>
+                <p class="mod-piede">Le modifiche restano qui fino a 14 giorni dopo la lezione, poi le toglie la pulizia notturna. Il controllo notturno elimina da solo quelle smentite dall'orario. <strong>Sospetta</strong> = prima e dopo uguali, oppure uno spostamento che resta nello stesso giorno.</p>
             </div>
 
             <!-- Credits Section -->
@@ -1450,6 +1512,8 @@
     <script src="admin-js/rilascio.js"></script>
     <script src="admin-js/dati-app.js"></script>
     <script src="admin-js/notifiche.js"></script>
+    <script src="admin-js/modifiche.js"></script>
+    <script src="admin-js/iscrizioni.js"></script>
     <script src="admin-js/bug.js"></script>
     <script src="admin-js/sito.js"></script>
     <script src="admin-js/avvio.js"></script>

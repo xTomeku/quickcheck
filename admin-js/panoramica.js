@@ -2,7 +2,7 @@
 
 // =====================================================================
 // Panoramica (pagina iniziale): quattro numeri, stato dell'app, utenti degli
-// ultimi 14 giorni, checklist del prossimo rilascio e ultimi bug.
+// ultimi 14 giorni, checklist del prossimo rilascio, modifiche sospette e ultimi bug.
 // Ogni blocco si carica per conto suo con uno scheletro; se una lettura fallisce,
 // l'errore compare solo nei blocchi che ne hanno bisogno.
 // I dati arrivano dalle stesse funzioni delle altre sezioni: leggiStatisticheUtenti,
@@ -12,7 +12,7 @@
 // =====================================================================
 
 // Ogni aggiornamento ha un numero: i risultati di uno superato da uno più recente si scartano
-const _panGenerazione = { numeri: 0, stato: 0 };
+const _panGenerazione = { numeri: 0, stato: 0, sospette: 0 };
 let _panTimerStato = null;
 
 const PAN_INIZIALI_GIORNI = ['D', 'L', 'M', 'M', 'G', 'V', 'S'];
@@ -487,6 +487,60 @@ async function _panChecklist(l) {
     };
 }
 
+// --- Modifiche sospette (admin-js/modifiche.js): riquadro a sé, si rilegge anche dopo un segno
+// o un'eliminazione fatti qui o nella sezione Modifiche orario ---
+const PAN_SOSPETTE_MAX = 4;
+let _panSospette = [];
+
+function caricaSospettePanoramica() {
+    const gen = ++_panGenerazione.sospette;
+    const card = document.getElementById('pan-sospette-card');
+    const conta = document.getElementById('pan-sospette-conta');
+    const aggiornaTesta = (n, attive) => {
+        card?.classList.toggle('pan-allerta', attive > 0);
+        if (conta) {
+            conta.textContent = String(n);
+            conta.classList.toggle('hidden', !n);
+        }
+        segnalaVoceMenu('modifiche', attive ? `${attive === 1 ? 'Una modifica sospetta è ancora attiva' : `${attive} modifiche sospette sono ancora attive`}: arriva${attive === 1 ? '' : 'no'} a chi si iscrive` : null);
+    };
+    return _panBlocco(document.getElementById('pan-sospette'), 'sospette', gen,
+        `<div class="pan-bug">${_panScheletroRiga()}</div>`.repeat(2), async () => {
+            // Prima le attive (arrivano ancora a chi si iscrive), poi le più recenti; il corso TEST no
+            const lista = (await leggiModificheOrario()).filter(m => !modificaDiTest(m) && modificaSospetta(m))
+                .sort((a, b) => modificaAttiva(b) - modificaAttiva(a));
+            const attive = lista.filter(modificaAttiva).length;
+            _panSospette = lista;
+            const poi = () => aggiornaTesta(lista.length, attive);
+            if (!lista.length) return { html: '<div class="pan-vuoto pan-sosp-ok"><span class="admin-ms">check_circle</span>Nessuna modifica sospetta.</div>', poi };
+            const righe = lista.slice(0, PAN_SOSPETTE_MAX).map(m => {
+                const tipo = MOD_TIPI[m.tipo] || { nome: m.tipo, stato: '' };
+                const materia = escapeHtml(nomeLeggibile(m.insegnamento));
+                return `<div class="pan-sosp">
+                    <span class="pan-sosp-t"><b title="${materia}">${materia}</b><small><span class="pan-tag ${tipo.stato}">${escapeHtml(tipo.nome)}</span> ${_modGiorno((m.dopo || m.prima || {}).data)} · ${modificaAttiva(m) ? '<span class="pan-sosp-attiva">attiva</span>' : 'scaduta'} · ${escapeHtml(motivoSospetto(m))}</small></span>
+                    <button type="button" class="btn btn-secondary btn-sm mod-solo-icona mod-ok" data-pan-azione="non-sospetta" data-id="${m.id}" title="Non sospetta" aria-label="Segna ${materia} come non sospetta"><span class="admin-ms">check</span></button>
+                    <button type="button" class="btn btn-secondary btn-sm mod-solo-icona admin-pericolo" data-pan-azione="elimina" data-id="${m.id}" title="Elimina" aria-label="Elimina la modifica di ${materia}"><span class="admin-ms">delete</span></button>
+                </div>`;
+            }).join('');
+            const nota = attive
+                ? `<div class="pan-sosp-allerta"><span class="admin-ms">warning</span><span>${attive === 1 ? 'Una è ancora attiva e arriva' : `${attive} sono ancora attive e arrivano`} a chi si iscrive.</span></div>`
+                : '<p class="pan-sosp-nota">Tutte scadute: nessuno le riceve più.</p>';
+            const altre = lista.length > PAN_SOSPETTE_MAX ? `<a class="pan-sosp-altre" href="#modifiche">e altre ${lista.length - PAN_SOSPETTE_MAX} &rsaquo;</a>` : '';
+            return { html: nota + righe + altre, poi };
+        }, err => {
+            aggiornaTesta(0, 0);
+            return _panErrore(_panNonLeggibile({ error: err }) ? new Error('esegui lo script _redesign/sql/pannello_modifiche_iscrizioni.sql') : err);
+        });
+}
+
+document.getElementById('pan-sospette')?.addEventListener('click', (e) => {
+    const pulsante = e.target.closest('[data-pan-azione]');
+    const m = pulsante && _panSospette.find(x => x.id === Number(pulsante.dataset.id));
+    if (!m) return;
+    if (pulsante.dataset.panAzione === 'non-sospetta') segnaNonSospette([m]);
+    else eliminaModificheOrario([m]);
+});
+
 function _panCaricaStato(l) {
     const gen = ++_panGenerazione.stato;
     const lavori = _panLavoriStato(l);
@@ -504,7 +558,7 @@ function _panCaricaStato(l) {
     const checklist = _panBlocco(document.getElementById('pan-checklist'), 'stato', gen,
         `<div class="pan-progresso">${_panScheletroRiga('corta')}</div>` + `<div class="pan-check-sch">${_panScheletroRiga()}</div>`.repeat(6),
         () => _panChecklist(l));
-    return Promise.all([riquadri, checklist]);
+    return Promise.all([riquadri, checklist, caricaSospettePanoramica()]);
 }
 
 // Ricarica tutta la Panoramica (apertura della sezione e pulsante "Aggiorna")

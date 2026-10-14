@@ -19,7 +19,8 @@ const adminVelo = document.getElementById('admin-velo');
 const adminBarraTitolo = document.getElementById('admin-barra-titolo');
 
 // ===== UTILS: Toast, Confirm, Drag&Drop =====
-function showToast(message, type = 'success') {
+// azione (facoltativa) = { etichetta, fai }: pulsante nel messaggio (es. "Annulla"), che resta 6 secondi
+function showToast(message, type = 'success', azione = null) {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -27,16 +28,25 @@ function showToast(message, type = 'success') {
         <span class="toast-icona">${type === 'success' ? '✓' : '⚠'}</span>
         <span>${message}</span>
     `;
-    container.appendChild(toast);
-    
-    // Trigger animation
-    setTimeout(() => toast.classList.add('show'), 10);
-    
-    // Remove after 3s
-    setTimeout(() => {
+    const chiudi = () => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
-    }, 3000);
+    };
+    if (azione) {
+        const pulsante = document.createElement('button');
+        pulsante.type = 'button';
+        pulsante.className = 'toast-azione';
+        pulsante.textContent = azione.etichetta;
+        pulsante.addEventListener('click', () => { chiudi(); azione.fai(); }, { once: true });
+        toast.appendChild(pulsante);
+    }
+    container.appendChild(toast);
+
+    // Trigger animation
+    setTimeout(() => toast.classList.add('show'), 10);
+
+    // Remove after 3s (6s con un pulsante)
+    setTimeout(chiudi, azione ? 6000 : 3000);
 }
 
 // Modale di conferma personalizzato universale (sostituisce confirm, alert e prompt del browser).
@@ -212,7 +222,8 @@ const SEZIONI_ADMIN = {
     mappe:        { id: 'mappe-section',         titolo: 'Mappe',                 carica: () => fetchConfigApp(['mappe']) },
     menu:         { id: 'menu-section',          titolo: 'Menù mensa',            carica: () => fetchConfigApp(['menu']) },
     // Pre-carica anche l'elenco dei corsi per il menu a tendina
-    notifiche:    { id: 'notifications-section', titolo: 'Push e avvisi',         carica: () => { fetchNotifications(); caricaCorsiUniSalento(); } },
+    notifiche:    { id: 'notifications-section', titolo: 'Push e avvisi',         carica: () => { fetchNotifications(); caricaCorsiUniSalento(); caricaIscrizioniCorsi(); } },
+    modifiche:    { id: 'modifiche-section',     titolo: 'Modifiche orario',      carica: () => caricaModifiche() },
     simulatore:   { id: 'simulatore-section',    titolo: 'Simulatore',            carica: () => caricaSimulatore() },
     bug:          { id: 'bugs-admin-section',    titolo: 'Bug e problemi',        carica: () => fetchBugs() },
     funzionalita: { id: 'features-section',      titolo: 'Funzionalità',          carica: null },

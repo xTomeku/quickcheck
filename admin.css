@@ -2235,6 +2235,332 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
 .nov-controlli { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; }
 .nov-controlli .admin-scelta { font-size: 0.85rem; }
 
+/* Pulsante dentro un messaggio a comparsa (es. "Annulla" dopo "Non sospetta") */
+.toast-azione {
+    margin-left: 6px;
+    padding: 4px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--oro);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.toast-azione:hover {
+    background: rgba(212, 175, 55, 0.12);
+}
+
+/* Modifiche orario (admin-js/modifiche.js) e Iscrizioni per corso (admin-js/iscrizioni.js) */
+.admin-stato.viola { background: rgba(192, 132, 252, 0.13); color: var(--viola); border-color: rgba(192, 132, 252, 0.3); }
+.admin-stato .admin-ms { font-size: 14px; }
+.admin-stato.mod-controllata { background: rgba(255, 255, 255, 0.05); color: #a3a3a3; border-color: var(--bordo); }
+
+.mod-kpi {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.mod-k {
+    background: var(--card);
+    border: 1px solid var(--bordo);
+    border-radius: 14px;
+    padding: 12px 14px;
+    min-width: 0;
+}
+
+.mod-k-l {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--sub);
+}
+
+.mod-k-l .admin-ms { font-size: 17px; color: var(--oro); }
+.mod-k-v { font-size: 24px; font-weight: 800; margin: 6px 0 2px; }
+.mod-k-d { font-size: 11.5px; line-height: 1.35; color: var(--sub); }
+.mod-k.att { border-color: rgba(250, 204, 21, 0.3); }
+.mod-k.att .mod-k-l .admin-ms,
+.mod-k.att .mod-k-v { color: var(--giallo); }
+
+.mod-avviso { align-items: center; margin-bottom: 16px; }
+.mod-avviso-testo { flex: 1; min-width: 0; }
+.mod-avviso-testo p { margin-bottom: 0; }
+
+.mod-filtri {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.mod-filtri .form-control {
+    height: 36px;
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 13px;
+}
+
+.mod-tipo { width: auto; }
+
+.mod-cerca {
+    position: relative;
+    flex: 1;
+    min-width: 180px;
+    max-width: 320px;
+}
+
+.mod-cerca .admin-ms {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #6f6f6f;
+    pointer-events: none;
+}
+
+.mod-filtri .mod-cerca .form-control { padding-left: 34px; }
+
+.mod-spunta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: var(--txt2);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.mod-spunta input,
+.mod-spunta-scheda input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--oro);
+    cursor: pointer;
+}
+
+.mod-n { margin-left: 4px; opacity: 0.7; font-weight: 700; }
+
+.mod-selezione {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    background: rgba(248, 113, 113, 0.06);
+    border: 1px solid rgba(248, 113, 113, 0.3);
+    font-size: 13px;
+}
+
+.mod-selezione > .admin-ms { color: var(--rosso); }
+
+.mod-elenco {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mod-scheda {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: start;
+    background: var(--card);
+    border: 1px solid var(--bordo);
+    border-radius: 14px;
+    padding: 13px 14px;
+}
+
+.mod-scheda.sospetta { border-color: rgba(250, 204, 21, 0.35); }
+.mod-scheda.scaduta .mod-corpo { opacity: 0.72; }
+.mod-scheda.scelta { border-color: rgba(248, 113, 113, 0.5); background: rgba(248, 113, 113, 0.04); }
+.mod-spunta-scheda { padding-top: 3px; }
+.mod-corpo { min-width: 0; }
+
+.mod-testa {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.mod-materia { font-size: 14px; font-weight: 700; }
+.mod-corso { margin: 3px 0 9px; font-size: 12.5px; color: var(--sub); }
+
+.mod-codice {
+    margin-left: 6px;
+    padding: 0 5px;
+    border: 1px solid var(--bordo);
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #7d7d7d;
+}
+
+.mod-diff {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 10px;
+    padding: 8px 11px;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid var(--riga);
+    font-size: 12.5px;
+}
+
+.mod-et {
+    padding-top: 2px;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #7d7d7d;
+}
+
+.mod-prima { color: var(--sub); }
+.mod-prima .mod-cambia { text-decoration: line-through; text-decoration-color: rgba(248, 113, 113, 0.7); }
+.mod-dopo .mod-cambia { color: var(--oro); font-weight: 700; }
+.mod-annullata { color: var(--rosso); font-weight: 700; }
+.mod-sep { margin: 0 4px; color: #555; }
+
+.mod-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin-top: 9px;
+    font-size: 12px;
+    color: var(--sub);
+}
+
+.mod-meta > span { display: inline-flex; align-items: center; gap: 5px; }
+.mod-meta .admin-ms { font-size: 16px; color: #7d7d7d; }
+.mod-meta .mod-avviso-riga,
+.mod-meta .mod-avviso-riga .admin-ms { color: var(--giallo); }
+
+.mod-azioni { display: flex; gap: 6px; }
+.admin-shell .btn.mod-solo-icona { width: 32px; padding: 0; }
+.mod-solo-telefono { display: none; }
+.admin-shell .btn.mod-ok { background: rgba(74, 222, 128, 0.07); border-color: rgba(74, 222, 128, 0.35); color: var(--verde); }
+.admin-shell .btn.mod-ok:hover { background: rgba(74, 222, 128, 0.14); border-color: rgba(74, 222, 128, 0.55); }
+
+.mod-invii {
+    margin-top: 10px;
+    padding-top: 9px;
+    border-top: 1px dashed var(--riga);
+    font-size: 12px;
+}
+
+.mod-invii table { width: 100%; border-collapse: collapse; }
+
+.mod-invii th {
+    padding: 4px 6px;
+    border-bottom: 1px solid var(--riga);
+    text-align: left;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #7d7d7d;
+}
+
+.mod-invii td { padding: 5px 6px; border-bottom: 1px solid var(--riga); color: var(--txt2); }
+.mod-invii tr:last-child td { border-bottom: 0; }
+.mod-invii p { margin: 7px 0 0; line-height: 1.45; color: var(--sub); }
+.mod-piede { margin-top: 14px; font-size: 12px; line-height: 1.5; color: var(--sub); }
+
+/* Iscrizioni per corso: corso -> anni -> percorsi */
+.isc-riepilogo { margin-left: auto; font-size: 12.5px; font-weight: 500; color: var(--sub); }
+.isc-elenco { border: 1px solid var(--bordo); border-radius: 12px; overflow: hidden; }
+.isc-corso + .isc-corso { border-top: 1px solid var(--riga); }
+
+.isc-testa,
+.isc-anno,
+.isc-percorso {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 120px 52px 22px;
+    gap: 14px;
+    align-items: center;
+}
+
+.isc-testa {
+    width: 100%;
+    padding: 11px 14px;
+    border: 0;
+    background: transparent;
+    color: var(--txt);
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+button.isc-testa:hover { background: rgba(255, 255, 255, 0.025); }
+.isc-corso.aperto > .isc-testa { background: rgba(212, 175, 55, 0.06); }
+.isc-senza .isc-testa { cursor: default; }
+.isc-senza .isc-nome { color: var(--sub); font-weight: 600; }
+.isc-nome { min-width: 0; font-size: 13.5px; font-weight: 700; }
+
+.isc-nome small {
+    display: block;
+    margin-top: 2px;
+    overflow: hidden;
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--sub);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.isc-quota { display: flex; height: 6px; border-radius: 3px; background: #2a2a2a; overflow: hidden; }
+.isc-quota i { display: block; height: 100%; }
+.isc-quota i.pwa { background: var(--pwa); }
+.isc-quota i.apk { background: var(--apk); }
+.isc-totale { text-align: right; font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.isc-freccia { font-size: 22px; color: var(--sub); transition: transform 0.15s ease; }
+.isc-corso.aperto .isc-freccia { transform: rotate(90deg); color: var(--oro); }
+.isc-anni { padding: 2px 14px 10px 30px; background: rgba(0, 0, 0, 0.18); }
+.isc-anno { padding: 8px 0; border-bottom: 1px solid var(--riga); font-size: 13px; }
+.isc-anni > .isc-anno:last-child,
+.isc-anni > .isc-percorsi:last-child { border-bottom: 0; }
+.isc-anno .isc-t { font-weight: 600; }
+.isc-anno .isc-t small { display: block; margin-top: 2px; font-size: 11.5px; font-weight: 500; color: var(--sub); }
+.isc-n { text-align: right; font-weight: 800; font-variant-numeric: tabular-nums; }
+.isc-percorsi { padding-bottom: 4px; border-bottom: 1px solid var(--riga); }
+.isc-percorso { padding: 4px 0 4px 14px; font-size: 12.5px; color: var(--txt2); }
+.isc-percorso .isc-t { display: flex; align-items: center; gap: 6px; }
+.isc-percorso .isc-t::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: #555; }
+.isc-percorso .isc-n { font-weight: 700; color: var(--txt2); }
+.isc-nota { display: flex; align-items: flex-start; gap: 6px; padding: 6px 0 2px; font-size: 11.5px; color: var(--sub); }
+.isc-nota .admin-ms { font-size: 15px; color: #7d7d7d; }
+
+.isc-altri {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px;
+    border: 0;
+    border-top: 1px solid var(--riga);
+    background: rgba(255, 255, 255, 0.02);
+    color: var(--oro);
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.isc-legenda { margin-top: 10px; }
+
 /* ---------------------------------------------------------------------
    5. Menu laterale e struttura della pagina
    --------------------------------------------------------------------- */
@@ -2893,6 +3219,69 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
     to { background-position: -200% 0; }
 }
 
+/* Modifiche sospette: giallo se almeno una è ancora attiva (arriva a chi si iscrive) */
+.pan-card.pan-allerta { border-color: rgba(250, 204, 21, 0.4); }
+
+.pan-sosp-conta {
+    padding: 1px 7px;
+    border-radius: 7px;
+    background: rgba(250, 204, 21, 0.15);
+    color: var(--giallo);
+    font-size: 11px;
+    font-weight: 800;
+}
+
+.pan-tag.info { background: rgba(56, 189, 248, 0.13); color: var(--blu); }
+.pan-tag.att { background: rgba(250, 204, 21, 0.13); color: var(--giallo); }
+.pan-tag.viola { background: rgba(192, 132, 252, 0.13); color: var(--viola); }
+.pan-tag.ko { background: rgba(248, 113, 113, 0.14); color: var(--rosso); }
+.pan-tag.ok { background: rgba(74, 222, 128, 0.13); color: var(--verde); }
+
+.pan-sosp-allerta {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: rgba(250, 204, 21, 0.07);
+    border: 1px solid rgba(250, 204, 21, 0.3);
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: #fde68a;
+}
+
+.pan-sosp-allerta .admin-ms { font-size: 18px; color: var(--giallo); }
+.pan-sosp-nota { margin: -4px 0 4px; font-size: 12px; line-height: 1.45; color: var(--sub); }
+
+.pan-sosp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--riga);
+}
+
+.pan-sosp:last-of-type { border-bottom: 0; }
+.pan-sosp-t { flex: 1; min-width: 0; }
+
+.pan-sosp-t b,
+.pan-sosp-t small {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pan-sosp-t b { font-size: 13px; }
+.pan-sosp-t small { margin-top: 3px; font-size: 11.5px; color: var(--sub); }
+.pan-sosp-t .pan-tag { margin-right: 2px; padding: 1px 6px; font-size: 10px; }
+.pan-sosp-attiva { color: var(--giallo); font-weight: 700; }
+.pan-sosp .btn { flex: none; }
+.pan-sosp-ok { display: flex; align-items: center; gap: 8px; }
+.pan-sosp-ok .admin-ms { color: var(--verde); }
+.pan-sosp-altre { display: block; padding-top: 8px; font-size: 12px; font-weight: 600; color: var(--oro); }
+
 @media (prefers-reduced-motion: reduce) {
     .pan-sch,
     .admin-gira,
@@ -3071,11 +3460,79 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover {
     .pan-card {
         padding: 14px;
     }
+
+    /* Modifiche orario: due numeri per riga */
+    .mod-kpi {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
 }
 
 @media (max-width: 600px) {
     .patch-note-row {
         flex-wrap: wrap;
+    }
+
+    /* Modifiche orario: ricerca su una riga sua, pulsanti sotto la scheda */
+    .mod-cerca {
+        max-width: none;
+        flex-basis: 100%;
+    }
+
+    .mod-scheda {
+        grid-template-columns: auto minmax(0, 1fr);
+        padding: 12px;
+    }
+
+    .mod-azioni {
+        grid-column: 1 / -1;
+        justify-content: flex-end;
+        padding-top: 9px;
+        border-top: 1px solid var(--riga);
+    }
+
+    .admin-shell .btn.mod-solo-icona[data-azione="invii"] {
+        width: auto;
+        padding: 0 11px;
+    }
+
+    .mod-solo-telefono {
+        display: inline;
+    }
+
+    .mod-avviso {
+        flex-wrap: wrap;
+    }
+
+    .mod-avviso-testo {
+        flex-basis: calc(100% - 40px);
+    }
+
+    .mod-avviso > .btn {
+        margin-left: 38px;
+    }
+
+    /* Iscrizioni per corso: senza barre, numero e freccia a destra */
+    .isc-testa,
+    .isc-anno,
+    .isc-percorso {
+        grid-template-columns: minmax(0, 1fr) 40px 20px;
+        gap: 10px;
+    }
+
+    .isc-testa .isc-quota,
+    .isc-anno .isc-quota,
+    .isc-testa .isc-vuoto,
+    .isc-percorso .isc-vuoto {
+        display: none;
+    }
+
+    .isc-testa {
+        padding: 11px 12px;
+    }
+
+    .isc-anni {
+        padding: 2px 12px 8px 20px;
     }
 
     .patch-note-row input {
