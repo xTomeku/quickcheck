@@ -214,6 +214,60 @@ function _modDopoCambio() {
 }
 
 // =====================================================================
+// Controllo forzato: orario-notte su tutti i percorsi, poi push-automatiche
+// (script SQL 12 di QuickCheck). Il giro forzato non sposta quello della notte.
+// =====================================================================
+async function _modInvoca(funzione, body) {
+    const { data, error } = await _supabase.functions.invoke(funzione, { body });
+    if (error) {
+        let dettaglio = error.message;
+        try { dettaglio += ' ' + JSON.stringify(await error.context.json()); } catch (_) { /* nessun corpo */ }
+        throw new Error(dettaglio);
+    }
+    return data;
+}
+
+async function controllaAdesso() {
+    const ok = await customConfirm([
+        "Scarica adesso dal portale l'orario di questa settimana e della prossima per tutti i percorsi seguiti, come il controllo notturno.",
+        '',
+        '• Ci vogliono alcuni minuti: tieni aperta questa pagina.',
+        '• Le modifiche trovate partono subito, anche fuori dalla fascia 7:30-21:00.',
+        '• Il controllo di stanotte si fa comunque.',
+    ].join('\n'), { title: 'Controllare l\'orario adesso?', confirmText: 'Controlla e invia', icon: '🔄' });
+    if (!ok) return;
+
+    const tasto = _modEl('mod-controlla');
+    const testo = tasto.innerHTML;
+    tasto.disabled = true;
+    const dal = new Date().toISOString();
+    const tot = { elaborate: 0, modifiche: 0, smentite: 0, errori: 0 };
+    try {
+        // Ogni chiamata lavora al massimo ~2 minuti: si richiama finché non resta niente
+        for (let giro = 0; giro < 20; giro++) {
+            tasto.innerHTML = `<span class="admin-ms admin-gira">sync</span>Controllo… ${tot.elaborate} percorsi`;
+            const r = await _modInvoca('orario-notte', { forza_dal: dal, limite: 50 });
+            for (const k of Object.keys(tot)) tot[k] += r[k] || 0;
+            if (!r.da_fare) break;
+            if (r.errori >= 3 && r.errori === r.elaborate) throw new Error('il portale non risponde');
+        }
+        tasto.innerHTML = '<span class="admin-ms admin-gira">sync</span>Invio notifiche…';
+        const p = await _modInvoca('push-automatiche', { forza: true });
+        const invio = p.saltato ? `notifiche non inviate (${p.saltato})`
+            : `${p.inviati || 0} ${p.inviati === 1 ? 'notifica inviata' : 'notifiche inviate'}${p.errori ? `, ${p.errori} non consegnate` : ''}`;
+        showToast(`${tot.elaborate} percorsi controllati · ${tot.modifiche} ${tot.modifiche === 1 ? 'modifica nuova' : 'modifiche nuove'}` +
+            `${tot.smentite ? ` · ${tot.smentite} smentite` : ''}${tot.errori ? ` · ${tot.errori} in errore` : ''} · ${escapeHtml(invio)}`,
+            tot.errori || p.saltato ? 'error' : 'success');
+    } catch (err) {
+        showToast(`Controllo interrotto dopo ${tot.elaborate} percorsi: ${escapeHtml(err.message || String(err))}`, 'error');
+    } finally {
+        tasto.disabled = false;
+        tasto.innerHTML = testo;
+        _modDopoCambio();
+    }
+}
+
+// =====================================================================
 // Sezione "Modifiche orario"
 // =====================================================================
 const _mod = {
@@ -427,4 +481,5 @@ function disegnaModifiche() {
 
     _modEl('mod-cerca')?.addEventListener('input', (e) => { _mod.cerca = e.target.value; if (_mod.caricata) disegnaModifiche(); });
     _modEl('mod-aggiorna')?.addEventListener('click', caricaModifiche);
+    _modEl('mod-controlla')?.addEventListener('click', controllaAdesso);
 })();
