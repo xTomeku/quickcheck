@@ -116,6 +116,18 @@
     color: inherit;
 }
 
+/* Logo Apple della scheda iPhone, stessa misura e colore delle icone */
+.scarica-schede .scarica-mela {
+    width: 21px;
+    height: 21px;
+    fill: currentColor;
+    flex: none;
+}
+
+.scarica-schede button[aria-selected="true"] .scarica-mela {
+    fill: var(--primary-gold);
+}
+
 .scarica-schede button:hover {
     color: #fff;
 }
