@@ -1,0 +1,297 @@
+/* =====================================================================
+   Credits (credits.html): titoli di coda centrati, ruolo delle persone in evidenza,
+   tecnologie come etichette, ringraziamento finale. Caricato solo da credits.html.
+   ===================================================================== */
+
+.credits {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.credits > section {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+/* Pulsanti della pagina: testo normale, come nella home */
+.credits .btn {
+    width: auto;
+    height: 48px;
+    padding: 0 20px;
+    gap: 8px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.2;
+}
+
+.credits .btn .funzione-ms {
+    font-size: 21px;
+    color: inherit;
+}
+
+.credits .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    backdrop-filter: none;
+}
+
+.credits .separatore {
+    width: min(520px, 90%);
+    margin: 0 auto;
+}
+
+/* ---------- Apertura ---------- */
+.credits-apertura {
+    position: relative;
+    isolation: isolate;
+    text-align: center;
+    padding-top: 4rem;
+}
+
+.credits-apertura::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    left: 50%;
+    top: -60px;
+    width: min(760px, 100%);
+    height: 420px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse, rgba(212, 175, 55, 0.11), transparent 65%);
+    pointer-events: none;
+}
+
+.credits-apertura h1 {
+    font-size: clamp(2.2rem, 6vw, 3.25rem);
+    line-height: 1.05;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin-bottom: 14px;
+}
+
+.credits-lead {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+/* ---------- Elenco: un blocco per categoria ---------- */
+.credits-elenco {
+    text-align: center;
+    padding-top: 1.5rem;
+}
+
+.credits-stato {
+    color: var(--text-muted);
+    padding: 2rem 0;
+}
+
+.credits-blocco {
+    padding: 44px 0;
+}
+
+/* Ruolo delle persone: etichetta incorniciata con icona */
+.credits-ruolo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px 8px 10px;
+    margin-bottom: 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(212, 175, 55, 0.45);
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--primary-gold);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+}
+
+.credits-ruolo .funzione-ms {
+    font-size: 18px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--primary-gold);
+    color: #161616;
+}
+
+.credits-persona + .credits-persona {
+    margin-top: 32px;
+}
+
+.credits-nome {
+    display: block;
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    color: #fff;
+    transition: color 0.2s ease;
+}
+
+a.credits-nome:hover {
+    color: var(--primary-gold);
+}
+
+.credits-descr {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 480px;
+    margin: 10px auto 0;
+}
+
+.credits-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 16px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #fff;
+    transition: border-color 0.2s ease;
+}
+
+.credits-link:hover {
+    border-color: rgba(212, 175, 55, 0.6);
+    color: #fff;
+}
+
+.credits-link svg {
+    width: 15px;
+    height: 15px;
+    fill: currentColor;
+}
+
+.credits-link .funzione-ms {
+    font-size: 16px;
+    color: inherit;
+}
+
+/* Tecnologie: etichette con icona, la descrizione al passaggio del mouse */
+.credits-blocco .sezione-etichetta {
+    margin-bottom: 18px;
+}
+
+.credits-tecnologie {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.credits-tecnologie > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px 10px 10px;
+    border-radius: 14px;
+    background: #171717;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.credits-tecnologie .funzione-ms {
+    font-size: 20px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+/* ---------- Ringraziamento ---------- */
+.credits-fine {
+    padding-top: 2rem;
+    padding-bottom: 5.5rem;
+}
+
+.credits-grazie {
+    text-align: center;
+    padding: 40px 32px;
+    border-radius: 26px;
+    border: 1px solid rgba(212, 175, 55, 0.28);
+    background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.12), transparent 60%), #161616;
+}
+
+.credits-cuore {
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.credits-grazie h2 {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.credits-grazie p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 22px;
+}
+
+.credits-azioni {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ---------- Telefono ---------- */
+@media (max-width: 700px) {
+    .credits > section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .credits-apertura {
+        padding-top: 2.5rem;
+    }
+
+    .credits-lead {
+        font-size: 15.5px;
+    }
+
+    .credits-blocco {
+        padding: 34px 0;
+    }
+
+    .credits-grazie {
+        padding: 30px 20px;
+    }
+
+    .credits-azioni {
+        flex-direction: column;
+    }
+
+    .credits .btn {
+        width: 100%;
+    }
+
+    .credits-fine {
+        padding-bottom: 3.5rem;
+    }
+}

@@ -272,78 +272,79 @@ async function loadContacts(_supabase) {
     }
 }
 
+// Icona del logo di Instagram per i link dei Credits (il font delle icone non ha i loghi)
+const SVG_INSTAGRAM = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z"/></svg>';
+
 async function loadCredits(_supabase) {
     const container = document.getElementById('credits-container');
     const cacheKey = 'qc_cache_credits';
     const cached = localStorage.getItem(cacheKey);
 
+    // Testi del pannello: spazi invisibili e spazi ai bordi tolti; categorie con la sola iniziale maiuscola
+    const pulito = (s) => String(s || '').replace(/\u200B/g, '').trim();
+    const categoria = (c) => {
+        const t = pulito(c).toLowerCase() || 'generale';
+        return t.charAt(0).toUpperCase() + t.slice(1);
+    };
+    // Icone scelte dal nome: del ruolo (categoria) e della tecnologia
+    const iconaRuolo = (r) => /svilupp/i.test(r) ? 'code' : /distribu|promoz|diffus/i.test(r) ? 'campaign'
+        : /design|grafic/i.test(r) ? 'palette' : /test|prov/i.test(r) ? 'bug_report' : 'star';
+    const iconaTecnologia = (t) => /flutter/i.test(t) ? 'phone_android' : /dart/i.test(t) ? 'data_object'
+        : /html|css|js/i.test(t) ? 'language' : 'code';
+    const link = (url) => /instagram\.com/i.test(url) ? `${SVG_INSTAGRAM}Instagram`
+        : /github\.com/i.test(url) ? '<span class="funzione-ms" aria-hidden="true">code</span>GitHub'
+        : '<span class="funzione-ms" aria-hidden="true">open_in_new</span>Visita il sito';
+
     const renderData = (data) => {
         if (!data || data.length === 0) {
-            container.innerHTML = '<p style="text-align: center; color: var(--text-muted);">Nessun riconoscimento presente.</p>';
+            container.innerHTML = '<p class="credits-stato">Nessun riconoscimento presente.</p>';
             return;
         }
 
-        const grouped = data.reduce((acc, item) => {
-            const cat = item.category || 'Generale';
-            if (!acc[cat]) acc[cat] = [];
-            acc[cat].push(item);
-            return acc;
-        }, {});
+        const gruppi = [];
+        data.forEach(item => {
+            const nome = categoria(item.category);
+            let g = gruppi.find(x => x.nome === nome);
+            if (!g) gruppi.push(g = { nome, voci: [] });
+            g.voci.push(item);
+        });
 
-        container.innerHTML = '';
-        
-        for (const category in grouped) {
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'credit-category';
-            
-            let contentHtml = `<h2>${category}</h2>`;
-            
-            if (category.toLowerCase().includes('legale') || category.toLowerCase().includes('note')) {
-                grouped[category].forEach(item => {
-                    contentHtml += `<p style="color: var(--text-muted); max-width: 600px; margin: 0 auto; text-align: center;">${item.description}</p>`;
-                });
-            } else {
-                contentHtml += `<div class="credits-grid">`;
-                grouped[category].forEach((item, index) => {
-                    const hasUrl = item.url && item.url.trim() !== '';
-                    if (hasUrl) {
-                        contentHtml += `
-                            <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="card credit-card-link reveal delay-${(index % 6) + 1}">
-                                <svg class="credit-link-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                <h3>${item.title}</h3>
-                                <p>${item.description}</p>
-                            </a>
-                        `;
-                    } else {
-                        contentHtml += `
-                            <div class="card reveal delay-${(index % 6) + 1}">
-                                <h3>${item.title}</h3>
-                                <p>${item.description}</p>
-                            </div>
-                        `;
-                    }
-                });
-                contentHtml += `</div>`;
+        container.innerHTML = gruppi.map(g => {
+            if (/tecnolog/i.test(g.nome)) {
+                return `
+                    <div class="credits-blocco reveal">
+                        <span class="sezione-etichetta">Fatto con</span>
+                        <div class="credits-tecnologie">
+                            ${g.voci.map(v => `<span title="${pulito(v.description).replace(/"/g, '&quot;')}"><span class="funzione-ms" aria-hidden="true">${iconaTecnologia(v.title)}</span>${pulito(v.title)}</span>`).join('')}
+                        </div>
+                    </div>`;
             }
-            
-            categoryDiv.innerHTML = contentHtml;
-            container.appendChild(categoryDiv);
-        }
+            if (/legale|note/i.test(g.nome)) {
+                return `
+                    <div class="credits-blocco reveal">
+                        <span class="sezione-etichetta">${g.nome}</span>
+                        ${g.voci.map(v => `<p class="credits-descr">${pulito(v.description)}</p>`).join('')}
+                    </div>`;
+            }
+            return `
+                <div class="credits-blocco reveal">
+                    <span class="credits-ruolo"><span class="funzione-ms" aria-hidden="true">${iconaRuolo(g.nome)}</span>${g.nome}</span>
+                    ${g.voci.map(v => {
+                        const url = pulito(v.url);
+                        return `
+                            <div class="credits-persona">
+                                ${url ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="credits-nome">${pulito(v.title)}</a>` : `<span class="credits-nome">${pulito(v.title)}</span>`}
+                                ${v.description ? `<p class="credits-descr">${pulito(v.description)}</p>` : ''}
+                                ${url ? `<a href="${url}" target="_blank" rel="noopener noreferrer" class="credits-link">${link(url)}</a>` : ''}
+                            </div>`;
+                    }).join('')}
+                </div>`;
+        }).join('<div class="separatore" aria-hidden="true"><span></span></div>');
         initScrollReveal();
     };
 
     if (cached) {
         try { renderData(JSON.parse(cached)); } catch(e) {}
-    } else {
-        container.innerHTML = `
-            <div class="skeleton-wrapper" style="margin-top: 3rem;">
-                ${Array(3).fill('<div class="skeleton-card"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>').join('')}
-            </div>
-        `;
     }
 
     const { data, error } = await _supabase
@@ -353,7 +354,7 @@ async function loadCredits(_supabase) {
         .order('order_index', { ascending: true });
 
     if (error) {
-        if (!cached) container.innerHTML = `<p style="color: #ff4d4d;">Errore caricamento credits.</p>`;
+        if (!cached) container.innerHTML = '<p class="credits-stato">Non riesco a caricare i riconoscimenti: riprova tra qualche minuto.</p>';
         return;
     }
 
