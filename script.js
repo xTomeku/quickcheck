@@ -939,256 +939,113 @@ async function loadFAQ(_supabase) {
 async function loadBugs(_supabase) {
     const container = document.getElementById('bugs-container');
     if (!container) return;
+    const stato = document.getElementById('problemi-stato');
 
     const cacheKey = 'qc_cache_bugs';
     const cached = localStorage.getItem(cacheKey);
 
-    let allBugs = [];
-    let currentFilter = 'all';
-    let searchQuery = '';
+    const GRAVITA = { critical: 'critica', high: 'alta', medium: 'media', low: 'bassa' };
+    const GRUPPI = [
+        { stato: 'open', nome: 'Aperti', descr: 'Problemi confermati che non sono ancora stati sistemati.' },
+        { stato: 'in_progress', nome: 'In risoluzione', descr: 'Ci sto lavorando: la correzione arriva con il prossimo aggiornamento.' },
+        { stato: 'resolved', nome: 'Risolti', descr: '' },
+    ];
+    const data = (d) => d ? new Date(d).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
+    // Testi del pannello: spazi invisibili tolti e "ios" scritto giusto (es. categoria "Web App ios")
+    const pulito = (s) => String(s || '').replace(/\u200B/g, '').replace(/\bios\b/gi, 'iOS').trim();
 
-    const statOpen = document.getElementById('stat-open-bugs');
-    const statProgress = document.getElementById('stat-progress-bugs');
-    const statResolved = document.getElementById('stat-resolved-bugs');
-
-    const pillAll = document.getElementById('pill-count-all');
-    const pillOpen = document.getElementById('pill-count-open');
-    const pillProgress = document.getElementById('pill-count-progress');
-    const pillResolved = document.getElementById('pill-count-resolved');
-
-    const updateStats = (data) => {
-        const openCount = data.filter(b => b.status === 'open').length;
-        const progressCount = data.filter(b => b.status === 'in_progress').length;
-        const resolvedCount = data.filter(b => b.status === 'resolved').length;
-
-        if (statOpen) statOpen.textContent = openCount;
-        if (statProgress) statProgress.textContent = progressCount;
-        if (statResolved) statResolved.textContent = resolvedCount;
-
-        if (pillAll) pillAll.textContent = data.length;
-        if (pillOpen) pillOpen.textContent = openCount;
-        if (pillProgress) pillProgress.textContent = progressCount;
-        if (pillResolved) pillResolved.textContent = resolvedCount;
-    };
-
-    const formatBugDate = (dateStr) => {
-        if (!dateStr) return '';
-        try {
-            const d = new Date(dateStr);
-            return d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' });
-        } catch (e) {
-            return dateStr;
-        }
-    };
-
-    const renderBugs = () => {
-        let filtered = allBugs;
-
-        if (currentFilter !== 'all') {
-            filtered = filtered.filter(b => b.status === currentFilter);
-        }
-
-        if (searchQuery.trim() !== '') {
-            const q = searchQuery.toLowerCase().trim();
-            filtered = filtered.filter(b => 
-                (b.title && b.title.toLowerCase().includes(q)) ||
-                (b.description && b.description.toLowerCase().includes(q)) ||
-                (b.category && b.category.toLowerCase().includes(q)) ||
-                (b.affected_version && b.affected_version.toLowerCase().includes(q)) ||
-                (b.fixed_version && b.fixed_version.toLowerCase().includes(q))
-            );
-        }
-
-        if (filtered.length === 0) {
-            let msg = 'Nessun bug corrisponde ai filtri selezionati.';
-            if (allBugs.length === 0) {
-                msg = 'Tutti i sistemi sono pienamente operativi. Nessuna anomalia aperta o segnalata!';
-            }
-            container.innerHTML = `
-                <div class="bugs-empty reveal">
-                    <span class="bugs-empty-icon">${allBugs.length === 0 ? '🎉' : '🔍'}</span>
-                    <h3>${allBugs.length === 0 ? 'Nessun bug aperto' : 'Nessun risultato'}</h3>
-                    <p>${msg}</p>
+    const voce = (b) => {
+        const risolto = b.status === 'resolved';
+        const gravita = GRAVITA[b.severity] || 'media';
+        const quando = risolto
+            ? (b.resolved_at ? `<span><span class="funzione-ms problemi-ok" aria-hidden="true">check_circle</span>Risolto il ${data(b.resolved_at)}</span>` : '')
+            : `<span><span class="funzione-ms" aria-hidden="true">schedule</span>Segnalato il ${data(b.created_at)}</span>`;
+        const consiglio = pulito(b.workaround);
+        return `
+            <details${risolto ? '' : ' open'}>
+                <summary>
+                    <h3>${pulito(b.title)}</h3>
+                    <div class="problemi-meta">
+                        ${quando}
+                        ${b.category ? `<span>${pulito(b.category)}</span>` : ''}
+                        ${risolto ? '' : `<span class="problemi-gravita gravita-${gravita}">Gravità ${gravita}</span>`}
+                    </div>
+                    <span class="funzione-ms problemi-freccia" aria-hidden="true">expand_more</span>
+                </summary>
+                <div class="problemi-dentro">
+                    ${b.description ? `<p>${pulito(b.description)}</p>` : ''}
+                    ${consiglio && !risolto ? `
+                        <div class="problemi-consiglio">
+                            <span class="funzione-ms" aria-hidden="true">lightbulb</span>
+                            <div><b>Nel frattempo</b><span>${consiglio}</span></div>
+                        </div>` : ''}
+                    <div class="problemi-versioni">
+                        ${b.affected_version ? `<span>Versione interessata <b>${pulito(b.affected_version)}</b></span>` : ''}
+                        ${risolto && b.fixed_version ? `<span class="problemi-risolto"><span class="funzione-ms" aria-hidden="true">check</span>Risolto nella ${pulito(b.fixed_version)}</span>` : ''}
+                    </div>
                 </div>
-            `;
-            if (toggleAllBtn) toggleAllBtn.style.display = 'none';
-            initScrollReveal();
-            return;
+            </details>`;
+    };
+
+    const render = (bugs) => {
+        const conta = (s) => bugs.filter(b => b.status === s).length;
+        const aperti = conta('open'), inCorso = conta('in_progress'), risolti = conta('resolved');
+        const daSistemare = aperti + inCorso;
+        const ultima = bugs.map(b => b.resolved_at).filter(Boolean).sort().pop();
+
+        if (stato) {
+            stato.classList.toggle('attenzione', daSistemare > 0);
+            stato.innerHTML = (daSistemare
+                ? `<span class="funzione-ms" aria-hidden="true">construction</span>
+                   <div><b>${daSistemare === 1 ? 'Un problema' : `${daSistemare} problemi`} da sistemare</b>
+                   <span>Qui sotto trovi cosa succede e, quando c'è, come aggirarlo.</span></div>`
+                : `<span class="funzione-ms" aria-hidden="true">verified</span>
+                   <div><b>Nessun problema aperto</b>
+                   <span>${ultima ? `L'ultima correzione è del ${data(ultima)}.` : 'Tutto funziona come dovrebbe.'}</span></div>`)
+                + `<div class="problemi-numeri">
+                       <div><strong>${aperti}</strong><small>aperti</small></div>
+                       <div><strong>${inCorso}</strong><small>in corso</small></div>
+                       <div><strong>${risolti}</strong><small>risolti</small></div>
+                   </div>`;
         }
 
-        const statusLabels = {
-            'open': { label: 'Noto / Aperto', icon: '🔴', cls: 'status-open' },
-            'in_progress': { label: 'In Risoluzione', icon: '🟡', cls: 'status-in_progress' },
-            'resolved': { label: 'Risolto', icon: '🟢', cls: 'status-resolved' }
-        };
-
-        const severityLabels = {
-            'critical': { label: 'Critica', cls: 'severity-critical' },
-            'high': { label: 'Alta', cls: 'severity-high' },
-            'medium': { label: 'Media', cls: 'severity-medium' },
-            'low': { label: 'Bassa', cls: 'severity-low' }
-        };
-
-        const autoExpand = searchQuery.trim() !== '';
-
-        container.innerHTML = filtered.map((b, index) => {
-            const st = statusLabels[b.status] || { label: b.status, icon: '⚪', cls: 'status-open' };
-            const sv = severityLabels[b.severity] || { label: b.severity || 'Media', cls: 'severity-medium' };
-            const dateText = formatBugDate(b.created_at);
-            const isExpanded = autoExpand;
-
+        container.innerHTML = GRUPPI.map(g => {
+            const voci = bugs.filter(b => b.status === g.stato);
+            if (voci.length === 0) return '';
             return `
-                <article class="bug-card ${st.cls} ${isExpanded ? 'is-expanded' : ''} reveal delay-${(index % 5) + 1}" data-bug-id="${b.id}">
-                    <div class="bug-card-header" role="button" tabindex="0" aria-expanded="${isExpanded ? 'true' : 'false'}" aria-controls="bug-collapse-${b.id}">
-                        <div class="bug-card-top">
-                            <div class="bug-card-badges">
-                                <span class="bug-badge ${st.cls}">
-                                    <span class="status-dot"></span>
-                                    ${st.label}
-                                </span>
-                                <span class="bug-badge ${sv.cls}">
-                                    <span class="badge-prefix-desktop">Gravità </span>${sv.label}
-                                </span>
-                                ${b.category ? `<span class="bug-badge category-pill">${b.category}</span>` : ''}
-                            </div>
-                            ${dateText ? `<div class="bug-card-date"><span class="badge-prefix-desktop">Segnalato il </span>${dateText}</div>` : ''}
-                        </div>
-
-                        <div class="bug-card-title-row">
-                            <h3 class="bug-card-title">${b.title}</h3>
-                            <button type="button" class="bug-card-toggle-btn" aria-label="Espandi o comprimi dettagli" tabindex="-1">
-                                <svg class="bug-chevron-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="bug-collapse-${b.id}" class="bug-card-collapse" role="region">
-                        <div class="bug-card-collapse-inner">
-                            <p class="bug-card-desc">${b.description}</p>
-
-                            ${b.workaround ? `
-                                <div class="bug-workaround-box">
-                                    <span class="bug-workaround-icon">💡</span>
-                                    <div class="bug-workaround-content">
-                                        <strong>Consiglio / Soluzione temporanea per gli utenti</strong>
-                                        ${b.workaround}
-                                    </div>
-                                </div>
-                            ` : ''}
-
-                            <div class="bug-card-bottom">
-                                <div class="bug-card-meta">
-                                    ${b.affected_version ? `<span>Versione interessata: <strong style="color:var(--text-main);">${b.affected_version}</strong></span>` : ''}
-                                    ${b.status === 'resolved' && b.fixed_version ? `
-                                        <span class="bug-fixed-badge">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                                            Risolto in ${b.fixed_version}
-                                        </span>
-                                    ` : ''}
-                                </div>
-                                <div style="font-size:0.75rem; color:var(--text-muted);">
-                                    ID #${b.id}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            `;
+                <div class="problemi-gruppo gruppo-${g.stato} reveal">
+                    <h2><span class="problemi-pallino" aria-hidden="true"></span>${g.nome}<small>${voci.length}</small></h2>
+                    ${g.descr ? `<p class="problemi-descr">${g.descr}</p>` : ''}
+                    <div class="problemi-elenco">${voci.map(voce).join('')}</div>
+                </div>`;
         }).join('');
-
-        // Attach accordion click & keyboard listeners
-        const cardHeaders = container.querySelectorAll('.bug-card-header');
-        cardHeaders.forEach(header => {
-            const toggle = () => {
-                const card = header.closest('.bug-card');
-                if (!card) return;
-                const wasExpanded = card.classList.contains('is-expanded');
-                const nowExpanded = !wasExpanded;
-                card.classList.toggle('is-expanded', nowExpanded);
-                header.setAttribute('aria-expanded', nowExpanded ? 'true' : 'false');
-            };
-
-            header.addEventListener('click', () => {
-                toggle();
-            });
-
-            header.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    toggle();
-                }
-            });
-        });
-
         initScrollReveal();
     };
 
-    // Filter pill events
-    const filterPills = document.querySelectorAll('.bug-filter-pill');
-    filterPills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            filterPills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            currentFilter = pill.dataset.status;
-            renderBugs();
-        });
-    });
-
-    // Search input event
-    const searchInput = document.getElementById('bug-search-input');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            searchQuery = e.target.value;
-            renderBugs();
-        });
-    }
-
     if (cached) {
-        try {
-            allBugs = JSON.parse(cached);
-            updateStats(allBugs);
-            renderBugs();
-        } catch(e) {}
-    } else {
-        container.innerHTML = `
-            <div class="skeleton-wrapper" style="flex-direction: column; gap: 1rem;">
-                ${Array(3).fill('<div class="skeleton" style="height: 120px; border-radius: 16px; width: 100%;"></div>').join('')}
-            </div>
-        `;
+        try { render(JSON.parse(cached)); } catch(e) {}
     }
 
-    try {
-        const { data, error } = await _supabase
-            .from('bugs')
-            .select('*')
-            .eq('is_visible', true)
-            .order('order_index', { ascending: true })
-            .order('created_at', { ascending: false });
+    const { data: bugs, error } = await _supabase
+        .from('bugs')
+        .select('*')
+        .eq('is_visible', true)
+        .order('order_index', { ascending: true })
+        .order('created_at', { ascending: false });
 
-        if (error) {
-            console.warn('Tabella bugs non disponibile su Supabase o errore:', error.message);
-            if (!cached) {
-                container.innerHTML = `
-                    <div class="bugs-empty reveal">
-                        <span class="bugs-empty-icon">🛡️</span>
-                        <h3>Nessun problema segnalato</h3>
-                        <p>Tutti i servizi e le funzionalità di QuickCheck sono attualmente operativi al 100%.</p>
-                    </div>
-                `;
-                initScrollReveal();
-            }
-            return;
+    if (error) {
+        console.warn('Problemi noti non disponibili:', error.message);
+        if (!cached && stato) {
+            stato.innerHTML = `<span class="funzione-ms" aria-hidden="true">sync</span>
+                <div><b>Elenco non disponibile</b><span>Non riesco a caricarlo adesso: riprova tra qualche minuto.</span></div>`;
         }
+        return;
+    }
 
-        allBugs = data || [];
-        updateStats(allBugs);
-        const freshString = JSON.stringify(allBugs);
-        if (freshString !== cached) {
-            localStorage.setItem(cacheKey, freshString);
-            renderBugs();
-        }
-    } catch (err) {
-        console.error('Errore durante fetch bugs:', err);
+    const fresco = JSON.stringify(bugs || []);
+    if (fresco !== cached) {
+        localStorage.setItem(cacheKey, fresco);
+        render(bugs || []);
     }
 }
 
