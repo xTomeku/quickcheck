@@ -42,11 +42,26 @@
             margin-top: 3rem;
             text-align: center;
         }
+        /* Titolo di categoria: più piccolo del titolo di pagina, con linee oro ai lati */
         .credit-category h2 {
-            color: var(--primary-gold);
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            color: rgba(212, 175, 55, 0.85);
+            margin-bottom: 1.4rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
         }
+        .credit-category h2::before,
+        .credit-category h2::after {
+            content: '';
+            flex: 0 1 90px;
+            height: 1px;
+        }
+        .credit-category h2::before { background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5)); }
+        .credit-category h2::after { background: linear-gradient(90deg, rgba(212, 175, 55, 0.5), transparent); }
     </style>
 </head>
 <body>
@@ -74,6 +89,7 @@
     <!-- Main Content -->
     <main>
         <div class="page-header">
+            <span class="sezione-etichetta reveal">QuickCheck</span>
             <h1 class="reveal">Riconoscimenti</h1>
             <p class="reveal delay-1">Le persone e i progetti che hanno reso possibile QuickCheck.</p>
         </div>

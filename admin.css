@@ -846,6 +846,136 @@ div.admin-errore {
     margin-top: 0.5rem;
 }
 
+/* Editor dei punti di interesse (sezione Mappe) */
+.poi-barra {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.8rem;
+}
+
+.poi-barra #poi-cerca { flex: 1 1 220px; }
+.poi-barra #poi-filtro-tipo { flex: 0 1 180px; }
+
+.poi-barra .btn .admin-ms,
+.poi-azioni .btn .admin-ms,
+.poi-form .btn .admin-ms {
+    font-size: 18px;
+    vertical-align: -4px;
+}
+
+.poi-griglia {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(220px, 2fr);
+    gap: 0.8rem;
+}
+
+.poi-mappa {
+    height: 440px;
+    border-radius: 12px;
+    border: 1px solid var(--bordo);
+    background: var(--campo);
+    z-index: 0; /* sotto menu e finestre del pannello */
+}
+
+.poi-elenco {
+    height: 440px;
+    overflow-y: auto;
+    border: 1px solid var(--bordo);
+    border-radius: 12px;
+    padding: 4px;
+}
+
+.poi-riga {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.5rem 0.6rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--txt2);
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+.poi-riga:hover { background: rgba(255, 255, 255, 0.04); }
+.poi-riga.attiva { background: rgba(212, 175, 55, 0.15); }
+
+.poi-riga .admin-riempi {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.poi-riga .admin-piccolo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.poi-riga-nome { color: var(--txt); font-weight: 600; }
+
+.poi-pallino {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    margin-top: 5px;
+    border-radius: 50%;
+    background: var(--colore);
+    border: 1px solid rgba(0, 0, 0, 0.6);
+}
+
+/* Aula senza posizione sulla mappa: solo il contorno */
+.poi-pallino.vuoto {
+    background: transparent;
+    border: 1.5px solid var(--colore);
+}
+
+.poi-elenco-vuoto { padding: 0.6rem; }
+
+/* Campi del solo modo punti di interesse o del solo modo aule */
+#poi-editor[data-modo="poi"] .solo-aule,
+#poi-editor[data-modo="aule"] .solo-poi {
+    display: none;
+}
+
+.poi-barra #poi-edificio { flex: 1 1 240px; }
+
+.poi-form { margin: 0.8rem 0 0; }
+
+.poi-errore { border-color: var(--rosso) !important; }
+
+/* Segnaposto trascinabile del punto selezionato */
+.poi-segnaposto { background: none; border: 0; }
+
+.poi-segnaposto span {
+    display: block;
+    width: 26px;
+    height: 26px;
+    border: 3px solid #fff;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    cursor: grab;
+}
+
+.poi-file { margin-top: 1.4rem; }
+
+.poi-azioni {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 899.98px) {
+    .poi-griglia { grid-template-columns: 1fr; }
+    .poi-mappa { height: 340px; }
+    .poi-elenco { height: 260px; }
+}
+
 /* Esito di una chiamata (simulatore) */
 .admin-esito {
     margin-top: 1rem;

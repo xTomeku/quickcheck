@@ -294,7 +294,7 @@ document.addEventListener('click', async (e) => {
 });
 
 // ===== Modifiche non salvate =====
-// Novità, versione aperta nella finestra, messaggio all'avvio e menù: chi cambia sezione,
+// Novità, versione aperta nella finestra, messaggio all'avvio, mappe e menù: chi cambia sezione,
 // ricarica la sezione, esce o chiude la pagina con modifiche non salvate riceve un avviso.
 // Il segno si mette quando cambia un campo e si toglie al salvataggio o quando i dati si ricaricano.
 const _modificheNonSalvate = new Set(); // chiavi di SEZIONI_ADMIN
@@ -316,6 +316,7 @@ function scartaModifiche(sezione) {
         document.getElementById('cfg-menu-anteprima')?.classList.add('hidden');
     }
     if (sezione === 'novita') _novDaRicaricare = true;
+    if (sezione === 'mappe') _mappeDati = null; // riaprendo la sezione si riparte dalla versione pubblicata
 }
 
 // true se si può lasciare (o ricaricare) la sezione aperta. Una sola domanda alla volta.
