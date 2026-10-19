@@ -1,0 +1,683 @@
+/* =====================================================================
+   Home (index.html): apertura centrata, tre passi, funzionalità in evidenza
+   alternate + elenco "E inoltre", FAQ su due colonne, fascia dell'aiuto.
+   Caricato solo dalla home, dopo style.css: le altre pagine non cambiano.
+   ===================================================================== */
+
+.home {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.home > section {
+    max-width: 1120px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.home .separatore {
+    margin: 5.5rem auto;
+}
+
+/* Pulsanti della home: testo normale, larghezza del contenuto */
+.home .btn {
+    width: auto;
+    height: 48px;
+    padding: 0 20px;
+    gap: 8px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    text-transform: none;
+    letter-spacing: normal;
+    line-height: 1.2;
+}
+
+.home .btn .funzione-ms {
+    font-size: 21px;
+    color: inherit;
+}
+
+.home .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    backdrop-filter: none;
+}
+
+.home .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: #fff;
+}
+
+/* Titoli e intestazioni delle sezioni */
+.home-testa {
+    margin-bottom: 0;
+}
+
+.home-testa .sezione-etichetta,
+.home .home-inoltre {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+.home-testa.centro,
+.home-testa.centro .sezione-etichetta {
+    text-align: center;
+}
+
+.home-titolo {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: #fff;
+    max-width: 640px;
+}
+
+.home-testa.centro .home-titolo {
+    margin: 0 auto;
+}
+
+.home-titolo.piccolo {
+    font-size: clamp(1.4rem, 3vw, 1.75rem);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+}
+
+.home-testa-testo {
+    color: var(--text-muted);
+    font-size: 15.5px;
+    line-height: 1.55;
+    margin-top: 14px;
+}
+
+/* ---------- Apertura ---------- */
+.home-hero {
+    position: relative;
+    isolation: isolate;
+    text-align: center;
+    padding-top: 5rem;
+    padding-bottom: 0.5rem;
+}
+
+.home-hero::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: min(900px, 120vw);
+    height: 560px;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0.04) 42%, transparent 70%);
+}
+
+.home-hero-icona {
+    width: 92px;
+    height: 92px;
+    border-radius: 24px;
+    margin-bottom: 26px;
+    box-shadow: 0 20px 50px rgba(212, 175, 55, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.home-hero h1 {
+    font-size: clamp(2.3rem, 6.5vw, 4rem);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: #fff;
+    max-width: 860px;
+    margin: 0 auto 20px;
+}
+
+.home-hero h1 em {
+    font-style: normal;
+    color: var(--primary-gold);
+}
+
+.home-lead {
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 560px;
+    margin: 0 auto 32px;
+}
+
+.home-azioni {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.home-dettagli {
+    font-size: 13.5px;
+    color: #7d7d7d;
+}
+
+.home-dettagli button {
+    font: inherit;
+    font-weight: 600;
+    color: var(--primary-gold);
+    background: none;
+    border: 0;
+    padding: 4px 2px;
+    cursor: pointer;
+}
+
+.home-dettagli button:hover {
+    color: var(--primary-gold-hover);
+}
+
+.home-dettagli [hidden] {
+    display: none;
+}
+
+/* Capsula con download e ultima versione */
+.capsula {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 44px;
+    padding: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.capsula-voce {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    white-space: nowrap;
+    color: var(--text-muted);
+}
+
+.capsula-voce[hidden] {
+    display: none;
+}
+
+a.capsula-voce:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: #e8dcb4;
+}
+
+.capsula b {
+    color: #fff;
+    font-weight: 800;
+}
+
+.capsula .funzione-ms {
+    font-size: 19px;
+}
+
+.capsula .capsula-freccia {
+    font-size: 18px;
+    color: #7d7d7d;
+    margin-left: -2px;
+}
+
+.capsula-sep {
+    width: 1px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.capsula-sep[hidden] {
+    display: none;
+}
+
+.home-autore {
+    margin-top: 18px;
+    font-size: 13px;
+    color: #7d7d7d;
+}
+
+/* ---------- Tre passi: linea con le icone ---------- */
+.linea-passi {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: 40px;
+    position: relative;
+    text-align: center;
+}
+
+.linea-passi::before {
+    content: '';
+    position: absolute;
+    top: 31px;
+    left: 16.6%;
+    right: 16.6%;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.15));
+}
+
+.linea-passi .cerchio {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #141414;
+    border: 2px solid rgba(212, 175, 55, 0.6);
+}
+
+.linea-passi .cerchio .funzione-ms {
+    font-size: 28px;
+}
+
+.linea-passi h3 {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.linea-passi p {
+    font-size: 14.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 260px;
+    margin: 0 auto;
+}
+
+/* ---------- Funzionalità in evidenza: righe alternate ---------- */
+.evidenza {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+    margin-top: 64px;
+}
+
+.evidenza.inversa .visivo {
+    order: 2;
+}
+
+.visivo {
+    position: relative;
+    aspect-ratio: 5 / 4;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle at 50% 45%, rgba(212, 175, 55, 0.16), transparent 62%), #171717;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.visivo .visivo-icona {
+    font-size: 120px;
+}
+
+.visivo-chip {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 13px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #e8e8e8;
+    background: #232323;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.visivo-chip .funzione-ms {
+    font-size: 17px;
+}
+
+.visivo-chip.alto { top: 18%; }
+.visivo-chip.basso { bottom: 16%; }
+.visivo-chip.sinistra { left: 8%; }
+.visivo-chip.destra { right: 8%; }
+
+.evidenza h3 {
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+}
+
+.evidenza p {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+}
+
+.evidenza ul {
+    list-style: none;
+    display: grid;
+    gap: 10px;
+    padding: 0;
+}
+
+.evidenza li {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: 15px;
+    color: #d6d6d6;
+}
+
+.evidenza li .funzione-ms {
+    font-size: 20px;
+}
+
+/* ---------- "E inoltre": elenco leggero a tre colonne (dal pannello) ---------- */
+.home .home-inoltre {
+    display: block;
+    margin-top: 96px;
+}
+
+.home .home-inoltre[hidden] {
+    display: none;
+}
+
+.altre {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px 48px;
+    margin-top: 32px;
+}
+
+.altra {
+    display: flex;
+    gap: 16px;
+}
+
+.altra .funzione-ms,
+.altra .funzione-emoji {
+    font-size: 26px;
+    flex: none;
+    margin-top: 1px;
+}
+
+.altra h3 {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.altra p {
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.altre-stato {
+    grid-column: 1 / -1;
+    color: var(--text-muted);
+    font-size: 14.5px;
+}
+
+/* ---------- Domande frequenti: titolo a sinistra, domande a destra ---------- */
+.home .faq-section {
+    padding-top: 0;
+    padding-bottom: 0;
+    text-align: left;
+}
+
+.home .faq-section::before {
+    display: none;
+}
+
+.faq-griglia {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 64px;
+}
+
+.home .faq-container {
+    max-width: none;
+    margin: 0;
+}
+
+/* Righe separate da linee al posto dei riquadri */
+.home .faq-item {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0;
+    margin: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.home .faq-item:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.home .faq-item.open,
+.home .faq-item:hover {
+    border-color: rgba(255, 255, 255, 0.08);
+}
+
+.home .faq-question {
+    padding: 20px 4px;
+}
+
+.home .faq-question:hover {
+    background: none;
+}
+
+.home .faq-question-text {
+    font-size: 16px;
+    color: #fff;
+}
+
+.home .faq-toggle {
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.home .faq-answer-inner {
+    padding: 0 4px 20px;
+    font-size: 15px;
+    max-width: 620px;
+}
+
+/* ---------- Aiuto ---------- */
+/* ultima sezione: stacco dal footer uguale a quello dei separatori */
+.home > .home-aiuto {
+    padding-bottom: 5.5rem;
+}
+
+.aiuto-fascia {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.aiuto-fascia p {
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+.aiuto-azioni,
+.aiuto-contatti {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* ---------- Tablet e telefono ---------- */
+@media (max-width: 900px) {
+    .evidenza {
+        gap: 40px;
+    }
+
+    .altre {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .faq-griglia {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 700px) {
+    .home > section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .home .separatore {
+        margin: 3.5rem auto;
+    }
+
+    .home > .home-aiuto {
+        padding-bottom: 3.5rem;
+    }
+
+    .home .btn {
+        font-size: 15px;
+        padding: 0 16px;
+        white-space: nowrap;
+    }
+
+    .home-hero {
+        padding-top: 2.5rem;
+    }
+
+    .home-hero-icona {
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .home-lead {
+        font-size: 16.5px;
+        margin-bottom: 24px;
+    }
+
+    .home-azioni {
+        flex-direction: column;
+    }
+
+    .home-azioni .btn {
+        width: 100%;
+    }
+
+    .capsula {
+        flex-direction: column;
+        border-radius: 18px;
+        gap: 2px;
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .capsula-voce {
+        justify-content: center;
+        width: 100%;
+        padding: 9px 12px;
+    }
+
+    .capsula-sep {
+        width: 70%;
+        height: 1px;
+    }
+
+    .linea-passi {
+        grid-template-columns: 1fr;
+        gap: 26px;
+        text-align: left;
+    }
+
+    .linea-passi::before {
+        top: 32px;
+        bottom: 32px;
+        left: 31px;
+        right: auto;
+        width: 2px;
+        height: auto;
+        background: linear-gradient(180deg, rgba(212, 175, 55, 0.6), rgba(212, 175, 55, 0.15));
+    }
+
+    .linea-passi > div {
+        display: grid;
+        grid-template-columns: 64px 1fr;
+        gap: 0 16px;
+    }
+
+    .linea-passi .cerchio {
+        margin: 0;
+        grid-row: span 2;
+    }
+
+    .linea-passi h3 {
+        margin-top: 10px;
+    }
+
+    .linea-passi p {
+        margin: 0;
+        max-width: none;
+    }
+
+    .home-testa.centro,
+    .home-testa.centro .sezione-etichetta {
+        text-align: left;
+    }
+
+    .evidenza {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        margin-top: 44px;
+    }
+
+    .evidenza.inversa .visivo {
+        order: 0;
+    }
+
+    .visivo {
+        aspect-ratio: 16 / 10;
+        border-radius: 22px;
+    }
+
+    .visivo .visivo-icona {
+        font-size: 84px;
+    }
+
+    .evidenza p {
+        font-size: 15.5px;
+    }
+
+    .home .home-inoltre {
+        margin-top: 64px;
+    }
+
+    .altre {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .aiuto-azioni,
+    .aiuto-contatti,
+    .aiuto-azioni .btn {
+        width: 100%;
+    }
+
+    .aiuto-azioni,
+    .aiuto-contatti {
+        flex-direction: column;
+    }
+}

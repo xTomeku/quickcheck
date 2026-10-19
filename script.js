@@ -202,6 +202,16 @@ async function loadPrivacy(_supabase) {
     container.appendChild(wrapper);
 }
 
+// Icona Material per un contatto: dall'emoji del pannello o, se manca, dal tipo di indirizzo
+const EMOJI_CONTATTI = {
+    '📧': 'mail', '✉️': 'mail', '📩': 'mail', '💻': 'code', '🐙': 'code', '📢': 'campaign',
+    '💬': 'chat', '📱': 'smartphone', '📸': 'photo_camera', '✈️': 'send', '🌐': 'public', '🔗': 'link',
+};
+function iconaContatto(icona, url) {
+    const nome = EMOJI_CONTATTI[String(icona || '').trim()] || (String(url).startsWith('mailto:') ? 'mail' : 'link');
+    return `<span class="funzione-ms" aria-hidden="true">${nome}</span>`;
+}
+
 async function loadContacts(_supabase) {
     const container = document.getElementById('contacts-container');
     const cacheKey = 'qc_cache_contacts';
@@ -212,31 +222,25 @@ async function loadContacts(_supabase) {
             container.innerHTML = '';
             return;
         }
+        // Un pulsante per contatto nella fascia "Hai un'idea o un problema?": il primo in oro.
+        // Il testo è l'etichetta del pannello, il recapito compare passandoci sopra.
         container.innerHTML = '';
         data.forEach((item, index) => {
-            const card = document.createElement('a');
-            card.href = item.url;
-            card.className = `contact-card reveal delay-${(index % 6) + 1}`;
-            if (item.url.startsWith('http')) card.target = '_blank';
-            
-            card.innerHTML = `
-                <span class="contact-icon">${item.icon}</span>
-                <h3>${item.label}</h3>
-                <p>${item.value}</p>
-            `;
-            container.appendChild(card);
+            const btn = document.createElement('a');
+            btn.href = item.url;
+            btn.className = `btn ${index === 0 ? 'btn-primary' : 'btn-secondary'}`;
+            btn.title = item.value || '';
+            if (item.url.startsWith('http')) {
+                btn.target = '_blank';
+                btn.rel = 'noopener noreferrer';
+            }
+            btn.innerHTML = `${iconaContatto(item.icon, item.url)}<span>${item.label}</span>`;
+            container.appendChild(btn);
         });
-        initScrollReveal();
     };
 
     if (cached) {
         try { renderData(JSON.parse(cached)); } catch(e) {}
-    } else {
-        container.innerHTML = `
-            <div class="skeleton-wrapper">
-                ${Array(3).fill('<div class="skeleton-card"><div class="skeleton skeleton-icon"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div></div>').join('')}
-            </div>
-        `;
     }
 
     const { data, error } = await _supabase
@@ -248,7 +252,8 @@ async function loadContacts(_supabase) {
     if (error) {
         console.error('Errore Supabase:', error);
         // Senza contatti la sezione di aiuto resterebbe vuota: offri comunque una strada
-        if (!cached) container.innerHTML = '<p style="color: var(--text-muted);">Non riesco a caricare i contatti in questo momento. Riprova tra qualche minuto, oppure controlla se il tuo problema è già tra i <a href="bugs.html">problemi noti</a>.</p>';
+        // Senza contatti dal pannello resta comunque l'email, accanto a "Problemi noti"
+        if (!cached) container.innerHTML = '<a class="btn btn-primary" href="mailto:stefano.sciurba@studenti.unisalento.it"><span class="funzione-ms" aria-hidden="true">mail</span><span>Scrivimi una email</span></a>';
         return;
     }
 
@@ -644,86 +649,95 @@ function iconaFunzione(valore) {
         : `<span class="funzione-emoji" aria-hidden="true">${v}</span>`;
 }
 
-// Telefono (fino a 560 px): due schede per riga con solo icona e titolo; un tocco apre il testo
-const MQ_FUNZIONI_TELEFONO = window.matchMedia('(max-width: 560px)');
+// Icone delle etichette sul riquadro delle funzionalità in evidenza: quelle delle funzionalità più
+// alcune solo per le etichette. Anche queste devono essere nel parametro icon_names di index.html.
+const ICONE_ETICHETTE = new Set([...ICONE_FUNZIONI, 'schedule', 'wifi_off', 'lunch_dining', 'no_food', 'departure_board',
+    'check_circle', 'download']);
 
-function preparaToccoFunzioni(container) {
-    if (container.dataset.tocco) return;
-    container.dataset.tocco = '1';
-    const aggiornaRuoli = () => {
-        container.querySelectorAll('.funzione').forEach(card => {
-            if (MQ_FUNZIONI_TELEFONO.matches) {
-                card.setAttribute('role', 'button');
-                card.setAttribute('tabindex', '0');
-                card.setAttribute('aria-expanded', card.classList.contains('aperta') ? 'true' : 'false');
-            } else {
-                card.classList.remove('aperta');
-                ['role', 'tabindex', 'aria-expanded'].forEach(a => card.removeAttribute(a));
-            }
-        });
-    };
-    const apri = (card) => {
-        const aperta = !card.classList.contains('aperta');
-        container.querySelectorAll('.funzione.aperta').forEach(c => {
-            c.classList.remove('aperta');
-            c.setAttribute('aria-expanded', 'false');
-        });
-        card.classList.toggle('aperta', aperta);
-        card.setAttribute('aria-expanded', aperta ? 'true' : 'false');
-    };
-    container.addEventListener('click', (e) => {
-        const card = e.target.closest('.funzione');
-        if (card && MQ_FUNZIONI_TELEFONO.matches) apri(card);
-    });
-    container.addEventListener('keydown', (e) => {
-        const card = e.target.closest('.funzione');
-        if (!card || !MQ_FUNZIONI_TELEFONO.matches || (e.key !== 'Enter' && e.key !== ' ')) return;
-        e.preventDefault();
-        apri(card);
-    });
-    MQ_FUNZIONI_TELEFONO.addEventListener('change', aggiornaRuoli);
-    // Le schede vengono ridisegnate (cache, poi dati freschi): i ruoli si rimettono ogni volta
-    new MutationObserver(aggiornaRuoli).observe(container, { childList: true });
-    aggiornaRuoli();
+// Prima della colonna in_evidenza (vedi _redesign/sql/funzioni_in_evidenza.sql) le righe in evidenza erano
+// solo scritte in index.html: con i dati vecchi restano quelle e da "E inoltre" si tolgono queste icone
+const FUNZIONI_IN_EVIDENZA = new Set(['calendar_month', 'restaurant', 'map', 'directions_bus']);
+
+// Riga grande con l'illustrazione: icona della funzionalità al centro e fino a due etichette agli angoli,
+// alternate a destra e a sinistra come nel contenuto di partenza di index.html
+function rigaInEvidenza(item, index) {
+    const inversa = index % 2 === 1;
+    const posizioni = inversa ? ['alto destra', 'basso sinistra'] : ['alto sinistra', 'basso destra'];
+    const v = String(item.icon || '').trim();
+    const nome = ICONE_FUNZIONI.has(v) ? v : EMOJI_FUNZIONI[v];
+    const iconaGrande = nome
+        ? `<span class="funzione-ms visivo-icona">${nome}</span>`
+        : `<span class="funzione-emoji visivo-icona">${v}</span>`;
+    const etichette = (Array.isArray(item.etichette) ? item.etichette : [])
+        .filter(e => e && String(e.testo || '').trim())
+        .slice(0, 2)
+        .map((e, i) => {
+            const icona = ICONE_ETICHETTE.has(e.icona) ? `<span class="funzione-ms">${e.icona}</span>` : '';
+            return `<span class="visivo-chip ${posizioni[i]}">${icona}${e.testo}</span>`;
+        }).join('');
+    const punti = (Array.isArray(item.punti) ? item.punti : []).filter(p => String(p || '').trim());
+
+    const riga = document.createElement('div');
+    riga.className = inversa ? 'evidenza inversa' : 'evidenza';
+    riga.innerHTML = `
+        <div class="visivo reveal" aria-hidden="true">${iconaGrande}${etichette}</div>
+        <div class="reveal delay-1">
+            <h3>${item.title}</h3>
+            <p>${item.description}</p>
+            ${punti.length ? `<ul>${punti.map(p => `<li><span class="funzione-ms" aria-hidden="true">check_circle</span>${p}</li>`).join('')}</ul>` : ''}
+        </div>
+    `;
+    return riga;
 }
 
 async function loadFeatures(_supabase) {
     const container = document.getElementById('features-grid');
     if (!container) return;
-    preparaToccoFunzioni(container);
+    const evidenza = document.getElementById('funzioni-evidenza');
 
     const cacheKey = 'qc_cache_features';
     const cached = localStorage.getItem(cacheKey);
 
     const renderData = (data) => {
-        if (!data || data.length === 0) {
-            container.innerHTML = '<p style="color: var(--text-muted);">Nessuna funzionalità configurata.</p>';
-            return;
+        const righe = data || [];
+        // La colonna c'è se almeno una riga la riporta (select('*') restituisce tutte le colonne)
+        const conColonna = righe.some(item => 'in_evidenza' in item);
+        let altre;
+        if (conColonna) {
+            const inEvidenza = righe.filter(item => item.in_evidenza);
+            altre = righe.filter(item => !item.in_evidenza);
+            if (evidenza) {
+                evidenza.innerHTML = '';
+                inEvidenza.forEach((item, index) => evidenza.appendChild(rigaInEvidenza(item, index)));
+                evidenza.hidden = inEvidenza.length === 0;
+            }
+        } else {
+            altre = righe.filter(item => {
+                const v = String(item.icon || '').trim();
+                return !FUNZIONI_IN_EVIDENZA.has(ICONE_FUNZIONI.has(v) ? v : EMOJI_FUNZIONI[v]);
+            });
         }
 
+        const etichetta = container.previousElementSibling;
+        if (etichetta && etichetta.classList.contains('home-inoltre')) etichetta.hidden = altre.length === 0;
         container.innerHTML = '';
-        data.forEach((item, index) => {
-            const card = document.createElement('div');
-            card.className = `card funzione reveal delay-${(index % 6) + 1}`;
-
-            card.innerHTML = `
-                <div class="card-icon">${iconaFunzione(item.icon)}</div>
-                <h3>${item.title}</h3>
-                <p>${item.description}</p>
+        altre.forEach((item, index) => {
+            const voce = document.createElement('div');
+            voce.className = `altra reveal delay-${(index % 3) + 1}`;
+            voce.innerHTML = `
+                ${iconaFunzione(item.icon)}
+                <div>
+                    <h3>${item.title}</h3>
+                    <p>${item.description}</p>
+                </div>
             `;
-            container.appendChild(card);
+            container.appendChild(voce);
         });
         initScrollReveal();
     };
 
     if (cached) {
         try { renderData(JSON.parse(cached)); } catch(e) {}
-    } else {
-        container.innerHTML = `
-            <div class="skeleton-wrapper">
-                ${Array(3).fill('<div class="skeleton-card"><div class="skeleton skeleton-icon"></div><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div></div>').join('')}
-            </div>
-        `;
     }
 
     const { data, error } = await _supabase
@@ -734,7 +748,7 @@ async function loadFeatures(_supabase) {
 
     if (error) {
         console.error('Errore caricamento features:', error);
-        if (!cached) container.innerHTML = '<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Non riesco a caricare l&rsquo;elenco delle funzionalità. Ricarica la pagina o riprova tra qualche minuto.</p>';
+        if (!cached) container.innerHTML = '<p class="altre-stato">Non riesco a caricare l&rsquo;elenco delle funzionalità. Ricarica la pagina o riprova tra qualche minuto.</p>';
         return;
     }
 
@@ -793,6 +807,10 @@ async function loadStats(_supabase) {
                     totalDownloads += asset.download_count || 0;
                 });
             });
+            // Peso dell'APK dell'ultima versione accanto ai requisiti, sotto i pulsanti
+            const apk = releases[0] && (releases[0].assets || []).find(a => /\.apk$/i.test(a.name));
+            const pesoEl = document.getElementById('hero-apk-peso');
+            if (apk && apk.size && pesoEl) pesoEl.textContent = ` · ${Math.round(apk.size / 1048576)} MB`;
             downloadsEl.dataset.target = totalDownloads;
             localStorage.setItem('qc_cache_downloads', String(totalDownloads));
             if (totalDownloads !== cachedDownloads) animateCounter(downloadsEl, totalDownloads);
@@ -802,22 +820,30 @@ async function loadStats(_supabase) {
         hideDownloads();
     }
 
-    // 2. Last update date (from Supabase updates)
+    // 2. Ultima versione e data (tabella updates): quella segnata "Ultima" nel pannello,
+    //    altrimenti la più recente pubblicata
+    const versionEl = document.getElementById('stat-version');
+    const mostraVersione = (u) => {
+        if (!u) return;
+        updatedEl.textContent = u.date || '—';
+        if (versionEl && u.version) versionEl.textContent = String(u.version).replace(/^v/i, '');
+    };
     const cachedUpdates = localStorage.getItem('qc_cache_updates');
     if (cachedUpdates) {
         try {
             const updates = JSON.parse(cachedUpdates);
-            if (updates.length > 0) updatedEl.textContent = updates[0].date || '—';
+            if (updates.length > 0) mostraVersione(updates[0]);
         } catch(e) {}
     }
     const { data: updateData } = await _supabase
         .from('updates')
-        .select('date')
+        .select('version, date')
         .eq('is_visible', true)
+        .order('is_latest', { ascending: false })
         .order('created_at', { ascending: false })
         .limit(1);
     if (updateData && updateData.length > 0) {
-        updatedEl.textContent = updateData[0].date;
+        mostraVersione(updateData[0]);
         localStorage.setItem('qc_cache_updates', JSON.stringify(updateData));
     }
 }
@@ -1304,9 +1330,12 @@ function initPwaInstallationFlow() {
         });
     });
 
-    // Adattamento della hero: un solo pulsante principale in base al dispositivo,
-    // l'altra piattaforma e la guida restano come link discreti sotto
+    // Adattamento dell'apertura in base al dispositivo: pulsante principale (oro) e secondario.
+    // Android: APK + Web App · iPhone/iPad: guida "Aggiungi a Home" + Web App · PC: Web App + APK.
+    // Le icone sono nomi Material (font caricato da index.html).
     const heroAltLink = document.getElementById('hero-alt-link');
+    const heroAltText = document.getElementById('hero-alt-text');
+    const heroAltIcon = document.getElementById('hero-alt-icon');
     const heroAltSep = document.getElementById('hero-alt-sep');
     const guideBtn = document.getElementById('open-pwa-guide-btn');
     const WEBAPP_URL = 'https://quick-check-unisalento.vercel.app/';
@@ -1315,31 +1344,28 @@ function initPwaInstallationFlow() {
         // iPhone/iPad: il pulsante principale apre direttamente la guida "Aggiungi a Home"
         heroDownloadBtn.removeAttribute('data-apk-link');
         if (heroDownloadText) heroDownloadText.textContent = 'Aggiungi a Home';
-        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'iPhone e iPad · In 2 tap da Safari';
-        if (heroDownloadIcon) {
-            heroDownloadIcon.innerHTML = `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`;
-        }
+        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'iPhone e iPad · in due tocchi da Safari';
+        if (heroDownloadIcon) heroDownloadIcon.textContent = 'add_to_home_screen';
         heroDownloadBtn.addEventListener('click', (e) => {
             e.preventDefault();
             openModal('ios');
         });
-        // La guida coincide col pulsante principale: resta solo il link alla Web App
-        if (heroAltLink) heroAltLink.textContent = 'apri subito la Web App';
+        // La guida coincide col pulsante principale: resta solo il pulsante della Web App
+        if (heroAltText) heroAltText.textContent = 'Apri la Web App';
         guideBtn?.setAttribute('hidden', '');
         heroAltSep?.setAttribute('hidden', '');
     } else if (isAndroid) {
         if (pwaGuideLinkText) pwaGuideLinkText.textContent = 'Prima volta con un APK?';
     } else if (heroDownloadBtn) {
-        // PC: la Web App diventa l'azione principale, l'APK passa nel link discreto
+        // PC: la Web App diventa l'azione principale, l'APK passa nel pulsante secondario
         heroDownloadBtn.removeAttribute('data-apk-link');
         heroDownloadBtn.href = WEBAPP_URL;
         if (heroDownloadText) heroDownloadText.textContent = 'Apri la Web App';
-        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'Dal browser · Nessuna installazione';
-        if (heroDownloadIcon) {
-            heroDownloadIcon.innerHTML = `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`;
-        }
+        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'Dal browser, senza installare nulla';
+        if (heroDownloadIcon) heroDownloadIcon.textContent = 'language';
         if (heroAltLink) {
-            heroAltLink.textContent = "scarica l'APK per Android";
+            if (heroAltText) heroAltText.textContent = "Scarica l'APK per Android";
+            if (heroAltIcon) heroAltIcon.textContent = 'download';
             heroAltLink.href = window.__latestApkUrl || 'download.html';
             heroAltLink.setAttribute('data-apk-link', '');
         }

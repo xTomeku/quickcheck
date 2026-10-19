@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuickCheck - L'App per Studenti UniSalento</title>
-    <meta name="description" content="QuickCheck è l'app per gli studenti dell'Università del Salento. Consulta orari delle lezioni, aule e docenti in modo semplice e veloce.">
+    <title>QuickCheck · Orari, aule e mensa per UniSalento</title>
+    <meta name="description" content="L'app gratuita per gli studenti dell'Università del Salento: orari delle lezioni, aule libere, mensa, mappa con gli autobus e rubrica dei docenti.">
     
     <!-- Meta tag Open Graph per condivisione social -->
     <meta property="og:site_name" content="QuickCheck">
-    <meta property="og:title" content="QuickCheck - L'App per Studenti UniSalento">
-    <meta property="og:description" content="Consulta orari delle lezioni, aule e docenti UniSalento direttamente dal tuo telefono con QuickCheck.">
+    <meta property="og:title" content="QuickCheck · Orari, aule e mensa per UniSalento">
+    <meta property="og:description" content="Orari delle lezioni, aule libere, mensa, autobus e rubrica dell'Università del Salento, in un'unica app gratuita.">
     <meta property="og:image" content="https://xtomeku.github.io/quickcheck/assets/logo.png">
     <meta property="og:url" content="https://xtomeku.github.io/quickcheck/">
     <meta property="og:type" content="website">
@@ -19,8 +19,8 @@
 
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="QuickCheck - L'App per Studenti UniSalento">
-    <meta name="twitter:description" content="Consulta orari, aule e docenti UniSalento sul tuo smartphone.">
+    <meta name="twitter:title" content="QuickCheck · Orari, aule e mensa per UniSalento">
+    <meta name="twitter:description" content="Orari, aule, mensa e autobus dell'Università del Salento sul tuo telefono.">
     <meta name="twitter:image" content="https://xtomeku.github.io/quickcheck/assets/logo.png">
 
     <!-- Favicon & Touch Icons per Google Search & Browser -->
@@ -41,8 +41,9 @@
 
     <!-- Icone Material delle funzionalità: solo i nomi elencati (devono essere in ordine alfabetico,
          stessi nomi di ICONE_FUNZIONI in script.js) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=alarm,auto_awesome,bolt,build,calendar_month,calendar_view_day,campaign,celebration,check_circle,contacts,dark_mode,dashboard_customize,directions_bus,download,event_busy,explore,ios_share,language,local_hospital,local_library,lock,map,meeting_room,menu_book,new_releases,notifications,notifications_active,palette,phonelink_setup,place,restaurant,school,search,settings,speed,star,widgets,wifi&display=block">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=add_to_home_screen,alarm,auto_awesome,bolt,bug_report,build,calendar_month,calendar_view_day,campaign,celebration,chat,check,check_circle,chevron_right,code,contacts,dark_mode,dashboard_customize,departure_board,directions_bus,download,event_busy,explore,ios_share,language,link,local_hospital,local_library,lock,lunch_dining,mail,map,meeting_room,menu_book,new_releases,no_food,notifications,notifications_active,palette,phonelink_setup,photo_camera,place,public,restaurant,schedule,school,search,send,settings,smartphone,speed,star,widgets,wifi,wifi_off&display=block">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="home.css">
     <script src="config.js"></script>
 </head>
 <body>
@@ -57,6 +58,7 @@
             </button>
             <a href="./" class="nav-brand">
                 <img src="assets/logo.png" alt="QuickCheck Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'2\'><path d=\'M9 11l3 3L22 4\'/><path d=\'M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11\'/></svg>'">
+                <span class="nav-nome">QuickCheck</span>
             </a>
             <ul class="nav-links" id="nav-links">
                 <li><a href="./" class="active">Home</a></li>
@@ -64,136 +66,191 @@
                 <li><a href="credits.html">Credits</a></li>
                 <li><a href="bugs.html">Problemi noti</a></li>
             </ul>
+            <a href="download.html" class="nav-cta">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Scarica
+            </a>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <img src="assets/logo.png" alt="QuickCheck App Icon" class="hero-logo reveal" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 24 24\' fill=\'%23001A33\' stroke=\'%23D4AF37\' stroke-width=\'1\'><rect x=\'2\' y=\'2\' width=\'20\' height=\'20\' rx=\'5\' ry=\'5\'/><path d=\'M8 12l3 3 5-5\'/></svg>'">
-            <h2 class="hero-app-name reveal delay-1">QuickCheck</h2>
-            <h1 class="reveal delay-2">Il tuo percorso accademico, a portata di tap.</h1>
-            <p class="hero-lead reveal delay-3">Orari, aule e rubrica dell'Università del Salento, in un'unica app.</p>
-            
-            <div class="hero-cta reveal delay-4">
-                <a href="download.html" id="hero-download-btn" class="btn btn-primary" data-apk-link> <!-- link dinamico: APK, Web App o guida in base al dispositivo -->
-                    <svg id="hero-download-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    <span id="hero-download-text">Scarica APK</span>
-                </a>
-                <span class="platform-subtitle" id="hero-download-subtitle">Android · Gratis</span>
-            </div>
+    <main class="home">
+        <!-- Apertura: centrata. Il pulsante principale e quello secondario cambiano in base al
+             dispositivo (initPwaInstallationFlow in script.js): APK su Android, "Aggiungi a Home"
+             su iPhone, Web App su computer -->
+        <section class="home-hero">
+            <img src="assets/logo.png" alt="Icona di QuickCheck" class="home-hero-icona reveal" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 24 24\' fill=\'%23001A33\' stroke=\'%23D4AF37\' stroke-width=\'1\'><rect x=\'2\' y=\'2\' width=\'20\' height=\'20\' rx=\'5\' ry=\'5\'/><path d=\'M8 12l3 3 5-5\'/></svg>'">
+            <span class="sezione-etichetta reveal">Per gli studenti UniSalento</span>
+            <h1 class="reveal delay-1">Il tuo percorso accademico, <em>a portata di tap.</em></h1>
+            <p class="home-lead reveal delay-2">Orari, aule, mensa e rubrica dell'Università del Salento, in un'unica app. Gratis e senza registrazione.</p>
 
-            <!-- Alternative discrete: l'altra piattaforma e la guida all'installazione -->
-            <p class="hero-alt reveal delay-4">
-                <span class="hero-alt-option">oppure <a href="https://quick-check-unisalento.vercel.app/" id="hero-alt-link">usa la Web App</a></span>
+            <div class="home-azioni reveal delay-3">
+                <a href="download.html" id="hero-download-btn" class="btn btn-primary" data-apk-link> <!-- link dinamico: APK, Web App o guida in base al dispositivo -->
+                    <span class="funzione-ms" id="hero-download-icon" aria-hidden="true">download</span>
+                    <span id="hero-download-text">Scarica l'APK per Android</span>
+                </a>
+                <a href="https://quick-check-unisalento.vercel.app/" id="hero-alt-link" class="btn btn-secondary">
+                    <span class="funzione-ms" id="hero-alt-icon" aria-hidden="true">language</span>
+                    <span id="hero-alt-text">Usa la Web App</span>
+                </a>
+            </div>
+            <p class="home-dettagli reveal delay-3">
+                <span id="hero-download-subtitle">Android 7.0 o successivo<span id="hero-apk-peso"></span> · su iPhone e PC dal browser</span>
                 <span class="hero-alt-sep" id="hero-alt-sep" aria-hidden="true">·</span>
                 <button type="button" id="open-pwa-guide-btn"><span id="pwa-guide-link-text">Come si installa?</span></button>
             </p>
 
-            <p class="hero-creator reveal delay-4">
-                Progetto studentesco indipendente di
-                <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer" class="hero-creator-link" aria-label="Stefano Sciurba su Instagram">Stefano Sciurba</a>
+            <!-- Download (GitHub) e ultima versione (tabella updates): loadStats in script.js -->
+            <div class="capsula reveal delay-4">
+                <span class="capsula-voce stat-item">
+                    <span class="funzione-ms" aria-hidden="true">download</span>
+                    <span><b class="stat-number" id="stat-downloads" data-target="0">—</b> download</span>
+                </span>
+                <i class="capsula-sep stat-divider" aria-hidden="true"></i>
+                <a href="download.html" class="capsula-voce">
+                    <span class="funzione-ms" aria-hidden="true">new_releases</span>
+                    <span>Versione <b id="stat-version">—</b> · <span id="stat-updated">—</span></span>
+                    <span class="funzione-ms capsula-freccia" aria-hidden="true">chevron_right</span>
+                </a>
+            </div>
+            <p class="home-autore reveal delay-4">
+                Un progetto indipendente di
+                <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer" class="hero-creator-link" aria-label="Stefano Sciurba su Instagram">Stefano Sciurba</a>, studente UniSalento
             </p>
         </section>
 
-        <!-- Stats Bar -->
-        <section class="stats-bar reveal">
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                </div>
-                <div class="stat-content">
-                    <span class="stat-number" id="stat-downloads" data-target="0">—</span>
-                    <span class="stat-label">Download</span>
-                </div>
-            </div>
-            <div class="stat-divider"></div>
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                </div>
-                <div class="stat-content">
-                    <span class="stat-number" id="stat-updated">—</span>
-                    <span class="stat-label">Ultimo aggiornamento</span>
-                </div>
-            </div>
-        </section>
+        <div class="separatore" aria-hidden="true"><span></span></div>
 
-        <!-- How It Works -->
-        <section class="how-it-works">
-            <span class="sezione-etichetta reveal">In tre passi</span>
-            <h2 class="section-title reveal">Come Funziona</h2>
-            <div class="steps-grid">
-                <div class="step-card reveal delay-1">
-                    <span class="step-number">1</span>
-                    <div class="step-icon" aria-hidden="true"><span class="funzione-ms">download</span></div>
+        <!-- Tre passi -->
+        <section class="home-sezione home-passi">
+            <div class="home-testa centro">
+                <span class="sezione-etichetta reveal">In tre passi</span>
+                <h2 class="home-titolo reveal">Pronta in un minuto.</h2>
+            </div>
+            <div class="linea-passi">
+                <div class="reveal delay-1">
+                    <div class="cerchio" aria-hidden="true"><span class="funzione-ms">download</span></div>
                     <h3>Scarica</h3>
-                    <p>Installa l'APK sul tuo dispositivo Android o accedi alla Web App da qualsiasi browser.</p>
+                    <p>Installa l'APK su Android, oppure apri la Web App dal browser.</p>
                 </div>
-                <div class="step-connector reveal delay-2"></div>
-                <div class="step-card reveal delay-2">
-                    <span class="step-number">2</span>
-                    <div class="step-icon" aria-hidden="true"><span class="funzione-ms">school</span></div>
-                    <h3>Seleziona il tuo corso</h3>
-                    <p>Scegli il tuo corso di laurea e l'anno accademico per personalizzare la tua esperienza.</p>
+                <div class="reveal delay-2">
+                    <div class="cerchio" aria-hidden="true"><span class="funzione-ms">school</span></div>
+                    <h3>Scegli il tuo corso</h3>
+                    <p>Corso di laurea e anno, senza account. Oppure salta e usa subito mappa e mensa.</p>
                 </div>
-                <div class="step-connector reveal delay-3"></div>
-                <div class="step-card reveal delay-3">
-                    <span class="step-number">3</span>
-                    <div class="step-icon" aria-hidden="true"><span class="funzione-ms">check_circle</span></div>
+                <div class="reveal delay-3">
+                    <div class="cerchio" aria-hidden="true"><span class="funzione-ms">check</span></div>
                     <h3>Sei pronto</h3>
-                    <p>Consulta orari, cerca aule e sfoglia la rubrica docenti all'istante.</p>
+                    <p>Orari, aule libere, mensa e rubrica, sempre aggiornati.</p>
                 </div>
             </div>
         </section>
 
         <div class="separatore" aria-hidden="true"><span></span></div>
 
-        <!-- Features Grid -->
-        <section class="features">
-            <span class="sezione-etichetta reveal">Funzionalità</span>
-            <h2 class="section-title reveal">Cosa offre QuickCheck</h2>
-            <div class="grid" id="features-grid">
+        <!-- Funzionalità (tabella features). Quelle segnate "In evidenza" nel pannello diventano le righe
+             alternate con l'illustrazione, le altre vanno in "E inoltre" (loadFeatures in script.js).
+             Le tre righe qui sotto sono il contenuto di partenza, sostituito appena arrivano i dati -->
+        <section class="home-sezione home-funzioni">
+            <div class="home-testa">
+                <span class="sezione-etichetta reveal">Funzionalità</span>
+                <h2 class="home-titolo reveal">Quello che ti serve in università, in un posto solo.</h2>
+            </div>
+
+            <div id="funzioni-evidenza">
+                <div class="evidenza">
+                    <div class="visivo reveal" aria-hidden="true">
+                        <span class="funzione-ms visivo-icona">calendar_month</span>
+                        <span class="visivo-chip alto sinistra"><span class="funzione-ms">schedule</span>11:00 · Aula M2</span>
+                        <span class="visivo-chip basso destra"><span class="funzione-ms">wifi_off</span>Anche offline</span>
+                    </div>
+                    <div class="reveal delay-1">
+                        <h3>L'orario, sempre aggiornato</h3>
+                        <p>L'orario del tuo corso arriva dal portale dell'Ateneo, con aule e note dei docenti, e lo puoi comporre con le materie che segui davvero.</p>
+                        <ul>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Anche esami a scelta o di altri corsi</li>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Avvisi se una lezione cambia aula o salta</li>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Widget con le lezioni di oggi (Android)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="evidenza inversa">
+                    <div class="visivo reveal" aria-hidden="true">
+                        <span class="funzione-ms visivo-icona">restaurant</span>
+                        <span class="visivo-chip alto destra"><span class="funzione-ms">lunch_dining</span>Pranzo · Cena</span>
+                        <span class="visivo-chip basso sinistra"><span class="funzione-ms">no_food</span>Allergeni da evitare</span>
+                    </div>
+                    <div class="reveal delay-1">
+                        <h3>Cosa si mangia in mensa</h3>
+                        <p>Il menù ADISU del giorno e della settimana, con i piatti che contengono i tuoi allergeni segnalati in rosso.</p>
+                        <ul>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Primi, secondi, contorni e pizza</li>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Quali mense sono aperte adesso</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="evidenza">
+                    <div class="visivo reveal" aria-hidden="true">
+                        <span class="funzione-ms visivo-icona">directions_bus</span>
+                        <span class="visivo-chip alto sinistra"><span class="funzione-ms">map</span>Tutti i campus</span>
+                        <span class="visivo-chip basso destra"><span class="funzione-ms">departure_board</span>Prossimo passaggio</span>
+                    </div>
+                    <div class="reveal delay-1">
+                        <h3>Mappa e autobus</h3>
+                        <p>Edifici, aule e servizi di tutti i campus, con le linee SGM: fermate, percorsi e il prossimo passaggio.</p>
+                        <ul>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Aule libere per studiare, in ogni edificio</li>
+                            <li><span class="funzione-ms" aria-hidden="true">check_circle</span>Indicazioni a piedi con un tocco</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <span class="sezione-etichetta home-inoltre reveal">E inoltre</span>
+            <div class="altre" id="features-grid">
                 <!-- Dynamic Content -->
-                <p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Caricamento funzionalità…</p>
+                <p class="altre-stato">Caricamento funzionalità…</p>
             </div>
         </section>
 
+        <div class="separatore" aria-hidden="true"><span></span></div>
 
+        <!-- Domande frequenti (tabella faq) -->
+        <section class="home-sezione faq-section">
+            <div class="faq-griglia">
+                <div class="home-testa">
+                    <span class="sezione-etichetta reveal">Dubbi</span>
+                    <h2 class="home-titolo reveal">Domande frequenti</h2>
+                    <p class="home-testa-testo reveal">Non trovi la risposta? Scrivimi dalla sezione qui sotto.</p>
+                </div>
+                <div class="faq-container" id="faq-container">
+                    <!-- Dynamic Content from Supabase -->
+                    <p class="altre-stato">Caricamento domande…</p>
+                </div>
+            </div>
+        </section>
 
+        <div class="separatore" aria-hidden="true"><span></span></div>
+
+        <!-- Aiuto: i contatti arrivano dal pannello (tabella contacts) come pulsanti -->
+        <section class="home-sezione home-aiuto">
+            <div class="aiuto-fascia">
+                <div>
+                    <h2 class="home-titolo piccolo">Hai un'idea o un problema?</h2>
+                    <p>Scrivimi, oppure controlla prima i problemi già noti.</p>
+                </div>
+                <div class="aiuto-azioni">
+                    <div class="aiuto-contatti" id="contacts-container"></div>
+                    <a href="bugs.html" class="btn btn-secondary">
+                        <span class="funzione-ms" aria-hidden="true">bug_report</span>
+                        Problemi noti
+                    </a>
+                </div>
+            </div>
+        </section>
     </main>
-
-    <div class="separatore" aria-hidden="true"><span></span></div>
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <span class="sezione-etichetta reveal">Dubbi</span>
-        <h2 class="section-title reveal">Domande Frequenti</h2>
-        <div class="faq-container" id="faq-container">
-            <!-- Dynamic Content from Supabase -->
-            <p style="color: var(--text-muted); text-align: center;">Caricamento domande…</p>
-        </div>
-    </section>
-
-    <div class="separatore" aria-hidden="true"><span></span></div>
-
-    <!-- Contacts Section -->
-    <section class="contacts-section">
-        <span class="sezione-etichetta reveal">Contatti</span>
-        <h2 class="section-title reveal">Hai bisogno di aiuto?</h2>
-        <p style="color: var(--text-muted);">Scrivimi per un suggerimento o per segnalare un problema.</p>
-        
-        <div class="contacts-grid" id="contacts-container">
-            <!-- Dynamic Content -->
-            <p style="color: var(--text-muted);">Caricamento contatti…</p>
-        </div>
-        <div style="margin-top: 1.8rem; text-align: center;" class="reveal">
-            <a href="bugs.html" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
-                Vedi i problemi noti e quelli già risolti
-            </a>
-        </div>
-    </section>
 
     <!-- Footer -->
     <footer class="site-footer">
@@ -207,7 +264,7 @@
                 <a href="download.html">Download</a>
                 <a href="credits.html">Credits</a>
                 <a href="bugs.html">Problemi noti</a>
-                <a href="privacy.html">Privacy Policy</a>
+                <a href="privacy.html">Privacy</a>
             </div>
         </div>
         <div class="footer-bottom">

@@ -1509,6 +1509,45 @@ div.admin-errore {
     color: var(--oro);
 }
 
+/* Campi delle funzionalità in evidenza (punti elenco ed etichette sul riquadro) */
+.evidenza-campi {
+    padding: 14px 14px 2px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.evidenza-nota {
+    font-size: 0.85rem;
+    color: var(--sub);
+    margin: 0 0 12px;
+}
+
+.etichetta-riga {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 0.9fr) minmax(0, 1.4fr);
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.etichetta-anteprima {
+    font-size: 22px;
+    color: var(--oro);
+    text-align: center;
+}
+
+@media (max-width: 520px) {
+    .etichetta-riga {
+        grid-template-columns: 28px minmax(0, 1fr);
+    }
+
+    .etichetta-riga input {
+        grid-column: 1 / -1;
+    }
+}
+
 /* Coppia di date "Da" / "A" (esporta ed elimina statistiche) */
 .admin-date-coppia {
     display: grid;

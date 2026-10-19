@@ -417,7 +417,7 @@ async function fetchFeatures() {
         item.innerHTML = `
             <div class="update-item-info">
                 <div class="drag-handle" title="Trascina per riordinare">⋮⋮</div>
-                <h3>${/^[a-z_]+$/.test(feature.icon || '') ? `<span class="admin-ms">${feature.icon}</span>` : feature.icon} ${feature.title} ${!feature.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
+                <h3>${/^[a-z_]+$/.test(feature.icon || '') ? `<span class="admin-ms">${feature.icon}</span>` : feature.icon} ${feature.title} ${feature.in_evidenza ? '<span class="update-item-etichetta">IN EVIDENZA</span>' : ''} ${!feature.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}</h3>
                 <p>${feature.description}</p>
             </div>
             <div class="actions">
@@ -489,6 +489,65 @@ function mostraIconaFunzione() {
     if (daGriglia) fIconaEmoji.value = '';
 }
 
+// Icone delle etichette sul riquadro in evidenza. Devono essere in ICONE_ETICHETTE di script.js
+// (le stesse del font caricato da index.html)
+const ICONE_ETICHETTE_PANNELLO = [
+    ['', 'Nessuna icona'], ['schedule', 'Orologio'], ['wifi_off', 'Offline'], ['lunch_dining', 'Panino'],
+    ['no_food', 'Allergeni'], ['departure_board', 'Partenze'], ['check_circle', 'Spunta'], ['download', 'Scarica'],
+    ...ICONE_FUNZIONI_PANNELLO,
+];
+
+const fEvidenza = document.getElementById('f-evidenza');
+const fEvidenzaCampi = document.getElementById('f-evidenza-campi');
+const fPunti = document.getElementById('f-punti');
+const fEtichette = [1, 2].map(n => ({
+    icona: document.getElementById(`f-etichetta${n}-icona`),
+    testo: document.getElementById(`f-etichetta${n}-testo`),
+}));
+
+if (fEvidenza) {
+    fEtichette.forEach(({ icona }) => {
+        icona.innerHTML = ICONE_ETICHETTE_PANNELLO.map(([nome, etichetta]) =>
+            `<option value="${nome}">${etichetta}</option>`).join('');
+        icona.addEventListener('change', mostraCampiEvidenza);
+    });
+    fEvidenza.addEventListener('change', mostraCampiEvidenza);
+}
+
+// Mostra i campi solo per le funzionalità in evidenza e aggiorna l'anteprima delle icone delle etichette
+function mostraCampiEvidenza() {
+    if (!fEvidenza) return;
+    fEvidenzaCampi.hidden = !fEvidenza.checked;
+    fEtichette.forEach(({ icona }) => {
+        icona.previousElementSibling.textContent = icona.value;
+    });
+}
+
+function compilaCampiEvidenza(feature) {
+    if (!fEvidenza) return;
+    fEvidenza.checked = !!feature.in_evidenza;
+    fPunti.value = (feature.punti || []).join('\n');
+    const etichette = Array.isArray(feature.etichette) ? feature.etichette : [];
+    fEtichette.forEach(({ icona, testo }, i) => {
+        const e = etichette[i] || {};
+        icona.value = ICONE_ETICHETTE_PANNELLO.some(([nome]) => nome === e.icona) ? e.icona : '';
+        testo.value = e.testo || '';
+    });
+    mostraCampiEvidenza();
+}
+
+// Colonne in_evidenza, punti, etichette (_redesign/sql/funzioni_in_evidenza.sql). Una funzionalità non in
+// evidenza tiene punti ed etichette, così rimettendola in evidenza non si riscrivono
+function datiEvidenza() {
+    return {
+        in_evidenza: fEvidenza.checked,
+        punti: fPunti.value.split('\n').map(p => p.trim()).filter(Boolean),
+        etichette: fEtichette
+            .map(({ icona, testo }) => ({ icona: icona.value, testo: testo.value.trim() }))
+            .filter(e => e.testo),
+    };
+}
+
 function openFeatureEditModal(id, data) {
     const feature = data.find(f => f.id === id);
     if (!feature) return;
@@ -500,6 +559,7 @@ function openFeatureEditModal(id, data) {
     document.getElementById('f-description').value = feature.description;
     document.getElementById('f-order').value = feature.order_index;
     document.getElementById('f-visible').checked = feature.is_visible !== false;
+    compilaCampiEvidenza(feature);
     
     document.getElementById('feature-modal-title').textContent = 'Modifica Funzionalità';
     featureModal.classList.remove('hidden');
@@ -511,6 +571,7 @@ addFeatureBtn.addEventListener('click', () => {
     // I campi nascosti non si svuotano con reset(): nuova scheda senza icona scelta
     document.getElementById('f-icon').value = '';
     mostraIconaFunzione();
+    compilaCampiEvidenza({});
     document.getElementById('feature-modal-title').textContent = 'Nuova Funzionalità';
     featureModal.classList.remove('hidden');
 });
@@ -526,7 +587,7 @@ featureForm.addEventListener('submit', async (e) => {
     const order_index = parseInt(document.getElementById('f-order').value) || 0;
     const is_visible = document.getElementById('f-visible').checked;
 
-    const payload = { icon, title, description, order_index, is_visible };
+    const payload = { icon, title, description, order_index, is_visible, ...datiEvidenza() };
 
     let result;
     if (id) {
