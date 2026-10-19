@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
                                document.getElementById('features-grid') ||
                                document.getElementById('privacy-container') ||
                                document.getElementById('faq-container') ||
-                               document.getElementById('bugs-container');
+                               document.getElementById('bugs-container') ||
+                               document.getElementById('footer-versione');
 
     if (window.supabase && hasDynamicElements) {
         const supabaseClient = window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_KEY);
@@ -121,6 +122,10 @@ async function loadAllDynamicContent(_supabase) {
     // Stats Bar (uses GitHub API + data already loaded)
     if (document.getElementById('stat-downloads')) {
         promises.push(loadStats(_supabase));
+    }
+
+    if (document.getElementById('footer-versione')) {
+        promises.push(loadFooterVersion(_supabase));
     }
 
     await Promise.all(promises);
@@ -826,32 +831,60 @@ async function loadStats(_supabase) {
         hideDownloads();
     }
 
-    // 2. Ultima versione e data (tabella updates): quella segnata "Ultima" nel pannello,
-    //    altrimenti la più recente pubblicata
+    // 2. Ultima versione e data
     const versionEl = document.getElementById('stat-version');
     const mostraVersione = (u) => {
         if (!u) return;
         updatedEl.textContent = u.date || '—';
         if (versionEl && u.version) versionEl.textContent = String(u.version).replace(/^v/i, '');
     };
-    const cachedUpdates = localStorage.getItem('qc_cache_updates');
-    if (cachedUpdates) {
-        try {
-            const updates = JSON.parse(cachedUpdates);
-            if (updates.length > 0) mostraVersione(updates[0]);
-        } catch(e) {}
+    mostraVersione(versioneInCache());
+    mostraVersione(await ultimaVersione(_supabase));
+}
+
+// Ultima versione (tabella updates): quella segnata "Ultima" nel pannello, altrimenti la più recente
+// pubblicata. Una sola richiesta per pagina, condivisa da capsula della home e footer
+let richiestaUltimaVersione = null;
+
+function versioneInCache() {
+    try {
+        const updates = JSON.parse(localStorage.getItem('qc_cache_updates'));
+        return Array.isArray(updates) && updates.length > 0 ? updates[0] : null;
+    } catch(e) {
+        return null;
     }
-    const { data: updateData } = await _supabase
-        .from('updates')
-        .select('version, date')
-        .eq('is_visible', true)
-        .order('is_latest', { ascending: false })
-        .order('created_at', { ascending: false })
-        .limit(1);
-    if (updateData && updateData.length > 0) {
-        mostraVersione(updateData[0]);
-        localStorage.setItem('qc_cache_updates', JSON.stringify(updateData));
+}
+
+function ultimaVersione(_supabase) {
+    if (!richiestaUltimaVersione) {
+        richiestaUltimaVersione = _supabase
+            .from('updates')
+            .select('version, date')
+            .eq('is_visible', true)
+            .order('is_latest', { ascending: false })
+            .order('created_at', { ascending: false })
+            .limit(1)
+            .then(({ data }) => {
+                if (!data || data.length === 0) return null;
+                localStorage.setItem('qc_cache_updates', JSON.stringify(data));
+                return data[0];
+            }, () => null);
     }
+    return richiestaUltimaVersione;
+}
+
+// Versione e data nel footer di tutte le pagine; senza dati la capsula resta nascosta
+async function loadFooterVersion(_supabase) {
+    const capsula = document.getElementById('footer-versione');
+    if (!capsula) return;
+    const mostra = (u) => {
+        if (!u || !u.version) return;
+        document.getElementById('footer-versione-numero').textContent = String(u.version).replace(/^v/i, '');
+        document.getElementById('footer-versione-data').textContent = u.date ? ` · ${u.date}` : '';
+        capsula.hidden = false;
+    };
+    mostra(versioneInCache());
+    mostra(await ultimaVersione(_supabase));
 }
 
 // ===== FAQ (Dynamic from Supabase) =====
@@ -1328,13 +1361,17 @@ function initPwaInstallationFlow() {
     tabIos?.addEventListener('click', () => activateTab('ios'));
     tabAndroid?.addEventListener('click', () => activateTab('android'));
 
-    // Trigger apertura modale da pulsanti dedicati (landing e download page)
-    openPwaGuideBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal(isIos ? 'ios' : 'android');
+    // Trigger apertura modale da pulsanti dedicati (landing e download page). Sulle pagine senza guida
+    // il link "Come si installa" del footer porta a download.html#guida, che la apre al caricamento
+    if (modal) {
+        openPwaGuideBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal(isIos ? 'ios' : 'android');
+            });
         });
-    });
+        if (location.hash === '#guida') openModal(isIos ? 'ios' : 'android');
+    }
 
     // Adattamento dell'apertura in base al dispositivo: pulsante principale (oro) e secondario.
     // Android: APK + Web App · iPhone/iPad: guida "Aggiungi a Home" + Web App · PC: Web App + APK.

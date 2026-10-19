@@ -41,7 +41,7 @@
 
     <!-- Icone Material delle funzionalità: solo i nomi elencati (devono essere in ordine alfabetico,
          stessi nomi di ICONE_FUNZIONI in script.js) -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=accessible,account_balance,add_to_home_screen,alarm,apartment,assignment,auto_awesome,badge,bolt,bookmark,bug_report,build,calculate,calendar_month,calendar_view_day,campaign,celebration,chat,check,check_circle,chevron_right,cloud_off,code,computer,contacts,dark_mode,dashboard_customize,departure_board,directions_bike,directions_bus,directions_walk,download,edit_note,emoji_events,event,event_available,event_busy,explore,favorite,fitness_center,forum,groups,help,history,history_edu,info,insights,ios_share,language,link,local_cafe,local_hospital,local_library,local_parking,lock,lunch_dining,mail,map,meeting_room,menu_book,new_releases,newspaper,no_food,notifications,notifications_active,palette,person,phone_android,phonelink_setup,photo_camera,place,print,public,qr_code,quiz,restaurant,schedule,school,science,search,send,settings,smartphone,speed,star,sticky_note_2,sync,timer,today,touch_app,train,translate,tune,update,verified,widgets,wifi,wifi_off&display=block">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=accessible,account_balance,add_to_home_screen,alarm,android,apartment,assignment,auto_awesome,badge,bolt,bookmark,bug_report,build,calculate,calendar_month,calendar_view_day,campaign,celebration,chat,check,check_circle,chevron_right,cloud_off,code,computer,contacts,dark_mode,dashboard_customize,departure_board,directions_bike,directions_bus,directions_walk,download,edit_note,emoji_events,event,event_available,event_busy,explore,favorite,fitness_center,forum,groups,help,history,history_edu,info,insights,ios_share,language,link,local_cafe,local_hospital,local_library,local_parking,lock,lunch_dining,mail,map,meeting_room,menu_book,new_releases,newspaper,no_food,notifications,notifications_active,palette,person,phone_android,phonelink_setup,photo_camera,place,print,public,qr_code,quiz,restaurant,schedule,school,science,search,send,settings,smartphone,speed,star,sticky_note_2,sync,timer,today,touch_app,train,translate,tune,update,verified,widgets,wifi,wifi_off&display=block">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="home.css">
     <script src="config.js"></script>
@@ -253,22 +253,47 @@
     </main>
 
     <!-- Footer -->
+    <!-- Footer: presentazione con l'ultima versione (loadFooterVersion in script.js) e tre colonne di link.
+         "Come si installa" apre la guida sulle pagine che la hanno (home e Download), altrimenti porta a Download -->
     <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="assets/logo.png" alt="QuickCheck Logo" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'32\' height=\'32\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%23D4AF37\' stroke-width=\'2\'><path d=\'M9 11l3 3L22 4\'/><path d=\'M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11\'/></svg>'">
-                <span>QuickCheck</span>
+        <div class="footer-griglia">
+            <div class="footer-presentazione">
+                <a href="./" class="footer-logo">
+                    <img src="assets/logo.png" alt="" onerror="this.src='assets/icona.png'">
+                    <span>QuickCheck</span>
+                </a>
+                <p>Orari, aule, mensa e rubrica dell'Università del Salento, in un'unica app.</p>
+                <a href="download.html" class="footer-versione" id="footer-versione" hidden>
+                    <span class="funzione-ms" aria-hidden="true">new_releases</span>
+                    <span>Versione <b id="footer-versione-numero"></b><span id="footer-versione-data"></span></span>
+                </a>
             </div>
-            <div class="footer-links">
-                <a href="./">Home</a>
-                <a href="download.html">Download</a>
-                <a href="credits.html">Credits</a>
-                <a href="bugs.html">Problemi noti</a>
-                <a href="privacy.html">Privacy</a>
-            </div>
+            <nav class="footer-colonna" aria-label="Scarica">
+                <h2>Scarica</h2>
+                <ul>
+                    <li><a href="download.html" data-apk-link><span class="funzione-ms" aria-hidden="true">android</span>APK per Android</a></li>
+                    <li><a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener noreferrer"><span class="funzione-ms" aria-hidden="true">language</span>Web App</a></li>
+                    <li><a href="download.html#guida" class="open-pwa-guide-trigger"><span class="funzione-ms" aria-hidden="true">help</span>Come si installa</a></li>
+                </ul>
+            </nav>
+            <nav class="footer-colonna" aria-label="Progetto">
+                <h2>Progetto</h2>
+                <ul>
+                    <li><a href="bugs.html"><span class="funzione-ms" aria-hidden="true">bug_report</span>Problemi noti</a></li>
+                    <li><a href="credits.html"><span class="funzione-ms" aria-hidden="true">favorite</span>Credits</a></li>
+                    <li><a href="privacy.html"><span class="funzione-ms" aria-hidden="true">lock</span>Privacy</a></li>
+                </ul>
+            </nav>
+            <nav class="footer-colonna" aria-label="Contatti">
+                <h2>Contatti</h2>
+                <ul>
+                    <li><a href="mailto:stefano.sciurba@studenti.unisalento.it"><span class="funzione-ms" aria-hidden="true">mail</span>Email</a></li>
+                    <li><a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z"/></svg>Instagram</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 QuickCheck. Progetto studentesco indipendente.</p>
+            <p>&copy; 2026 QuickCheck · Un progetto di <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer">Stefano Sciurba</a></p>
             <p class="footer-disclaimer">App non ufficiale. Il logo di base e i relativi diritti appartengono all'Università del Salento.</p>
         </div>
     </footer>
