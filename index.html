@@ -50,7 +50,7 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-main">
-            <button class="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+            <button class="hamburger" aria-label="Apri il menu" aria-expanded="false" aria-controls="nav-links">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -62,12 +62,8 @@
                 <li><a href="./" class="active">Home</a></li>
                 <li><a href="download.html">Download</a></li>
                 <li><a href="credits.html">Credits</a></li>
-                <li><a href="bugs.html">Bug Tracker</a></li>
+                <li><a href="bugs.html">Problemi noti</a></li>
             </ul>
-            <a href="download.html" class="nav-cta">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Scarica QuickCheck
-            </a>
         </div>
     </nav>
 
@@ -78,44 +74,27 @@
             <img src="assets/logo.png" alt="QuickCheck App Icon" class="hero-logo reveal" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'150\' height=\'150\' viewBox=\'0 0 24 24\' fill=\'%23001A33\' stroke=\'%23D4AF37\' stroke-width=\'1\'><rect x=\'2\' y=\'2\' width=\'20\' height=\'20\' rx=\'5\' ry=\'5\'/><path d=\'M8 12l3 3 5-5\'/></svg>'">
             <h2 class="hero-app-name reveal delay-1">QuickCheck</h2>
             <h1 class="reveal delay-2">Il tuo percorso accademico, a portata di tap.</h1>
-            <p class="reveal delay-3">Progettata per gli studenti dell'Università del Salento. Visualizza e organizza i tuoi orari, ricerca le aule e consulta la rubrica del personale d'Ateneo in un'unica interfaccia elegante e intuitiva.</p>
+            <p class="hero-lead reveal delay-3">Orari, aule e rubrica dell'Università del Salento, in un'unica app.</p>
             
-            <div class="btn-group reveal delay-4">
-                <div class="btn-wrapper" id="hero-apk-wrapper">
-                    <a href="#" id="hero-download-btn" class="btn btn-primary btn-block"> <!-- link dinamico -->
-                        <svg id="hero-download-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        <span id="hero-download-text">Scarica APK</span>
-                    </a>
-                    <span class="platform-subtitle" id="hero-download-subtitle">Android</span>
-                </div>
-                <div class="btn-wrapper" id="hero-webapp-wrapper">
-                    <a href="https://quick-check-unisalento.vercel.app/" id="hero-webapp-btn" class="btn btn-secondary btn-block"> <!-- link webapp -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                        <span id="hero-webapp-text">Vai alla Web App</span>
-                    </a>
-                    <span class="platform-subtitle" id="hero-webapp-subtitle">iOS, Android e PC</span>
-                </div>
-            </div>
-            <!-- Link informativo rapido per installazione PWA -->
-            <div id="pwa-install-banner-link" class="reveal delay-4" style="margin-top: 1rem; text-align: center;">
-                <button type="button" id="open-pwa-guide-btn" style="background: transparent; border: none; color: var(--primary-gold); font-size: 0.85rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; text-decoration: underline; text-underline-offset: 4px; padding: 4px 8px; border-radius: 8px; transition: opacity 0.2s;">
-                    <!-- Singola icona informativa SVG pulita -->
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    <span id="pwa-guide-link-text">Usi iPhone o PC? Scopri come installare QuickCheck in 2 tap →</span>
-                </button>
+            <div class="hero-cta reveal delay-4">
+                <a href="download.html" id="hero-download-btn" class="btn btn-primary" data-apk-link> <!-- link dinamico: APK, Web App o guida in base al dispositivo -->
+                    <svg id="hero-download-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    <span id="hero-download-text">Scarica APK</span>
+                </a>
+                <span class="platform-subtitle" id="hero-download-subtitle">Android · Gratis</span>
             </div>
 
-            <div class="hero-creator reveal delay-4">
-                <span class="hero-creator-text">by</span>
-                <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer" class="hero-creator-link" aria-label="Profilo Instagram di Stefano Sciurba">
-                    <svg class="instagram-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                    </svg>
-                    <span>Stefano Sciurba</span>
-                </a>
-            </div>
+            <!-- Alternative discrete: l'altra piattaforma e la guida all'installazione -->
+            <p class="hero-alt reveal delay-4">
+                <span class="hero-alt-option">oppure <a href="https://quick-check-unisalento.vercel.app/" id="hero-alt-link">usa la Web App</a></span>
+                <span class="hero-alt-sep" id="hero-alt-sep" aria-hidden="true">·</span>
+                <button type="button" id="open-pwa-guide-btn"><span id="pwa-guide-link-text">Come si installa?</span></button>
+            </p>
+
+            <p class="hero-creator reveal delay-4">
+                Progetto studentesco indipendente di
+                <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer" class="hero-creator-link" aria-label="Stefano Sciurba su Instagram">Stefano Sciurba</a>
+            </p>
         </section>
 
         <!-- Stats Bar -->
@@ -179,7 +158,7 @@
             <h2 class="section-title reveal">Cosa offre QuickCheck</h2>
             <div class="grid" id="features-grid">
                 <!-- Dynamic Content -->
-                <p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Caricamento funzionalità...</p>
+                <p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Caricamento funzionalità…</p>
             </div>
         </section>
 
@@ -198,7 +177,7 @@
         <h2 class="section-title reveal">Domande Frequenti</h2>
         <div class="faq-container" id="faq-container">
             <!-- Dynamic Content from Supabase -->
-            <p style="color: var(--text-muted); text-align: center;">Caricamento FAQ...</p>
+            <p style="color: var(--text-muted); text-align: center;">Caricamento domande…</p>
         </div>
     </section>
 
@@ -211,15 +190,15 @@
     <!-- Contacts Section -->
     <section class="contacts-section">
         <h2 class="section-title reveal">Hai bisogno di aiuto?</h2>
-        <p style="color: var(--text-muted);">Siamo a tua disposizione per suggerimenti o segnalazioni bug</p>
+        <p style="color: var(--text-muted);">Scrivimi per un suggerimento o per segnalare un problema.</p>
         
         <div class="contacts-grid" id="contacts-container">
             <!-- Dynamic Content -->
-            <p style="color: var(--text-muted);">Caricamento contatti...</p>
+            <p style="color: var(--text-muted);">Caricamento contatti…</p>
         </div>
         <div style="margin-top: 1.8rem; text-align: center;" class="reveal">
             <a href="bugs.html" class="btn btn-secondary btn-sm" style="display: inline-flex; align-items: center; gap: 8px;">
-                <span>🛡️</span> Consulta l'elenco dei Bug Noti & Risolti →
+                Vedi i problemi noti e quelli già risolti
             </a>
         </div>
     </section>
@@ -235,7 +214,7 @@
                 <a href="./">Home</a>
                 <a href="download.html">Download</a>
                 <a href="credits.html">Credits</a>
-                <a href="bugs.html">Bug & Problemi</a>
+                <a href="bugs.html">Problemi noti</a>
                 <a href="privacy.html">Privacy Policy</a>
             </div>
         </div>
@@ -248,9 +227,9 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     </button>
     <!-- Modal Installazione QuickCheck (Guida iOS Web App & Android APK) -->
-    <div id="pwa-install-modal" class="pwa-modal-overlay hidden" aria-hidden="true" role="dialog" aria-labelledby="pwa-modal-title">
+    <div id="pwa-install-modal" class="pwa-modal-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwa-modal-title">
         <div class="pwa-modal-card">
-            <button class="pwa-modal-close" id="close-pwa-modal" aria-label="Chiudi modale">&times;</button>
+            <button class="pwa-modal-close" id="close-pwa-modal" aria-label="Chiudi la guida">&times;</button>
             <div class="pwa-modal-header">
                 <img src="assets/icona.png" alt="QuickCheck Icon" class="pwa-modal-icon" onerror="this.src='assets/logo.png'">
                 <div>
@@ -306,7 +285,7 @@
                     <div class="pwa-step-num">1</div>
                     <div class="pwa-step-text">
                         <h4>Scarica il file APK</h4>
-                        <p>Tocca il pulsante <strong>"Scarica il file APK"</strong> qui sotto. Se il browser mostra l'avviso <em>"Il file potrebbe essere dannoso"</em>, tocca tranquillamente <strong>"Scarica comunque"</strong> (è il normale messaggio di Android per i download fuori dal Play Store).</p>
+                        <p>Tocca <strong>"Scarica il file APK"</strong> in fondo a questa guida. Se il browser mostra l'avviso <em>"Il file potrebbe essere dannoso"</em>, tocca tranquillamente <strong>"Scarica comunque"</strong> (è il normale messaggio di Android per i download fuori dal Play Store).</p>
                     </div>
                 </div>
                 <div class="pwa-step-item">
@@ -339,7 +318,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
     <script src="script.js"></script>
 </body>
 </html>

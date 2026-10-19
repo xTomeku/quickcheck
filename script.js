@@ -64,6 +64,11 @@ function initScrollReveal() {
         rootMargin: "0px 0px -20px 0px"
     };
 
+    if (!('IntersectionObserver' in window)) {
+        reveals.forEach(el => el.classList.add('active'));
+        return;
+    }
+
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -242,7 +247,8 @@ async function loadContacts(_supabase) {
 
     if (error) {
         console.error('Errore Supabase:', error);
-        if (!cached) container.innerHTML = '';
+        // Senza contatti la sezione di aiuto resterebbe vuota: offri comunque una strada
+        if (!cached) container.innerHTML = '<p style="color: var(--text-muted);">Non riesco a caricare i contatti in questo momento. Riprova tra qualche minuto, oppure controlla se il tuo problema è già tra i <a href="bugs.html">problemi noti</a>.</p>';
         return;
     }
 
@@ -348,7 +354,6 @@ async function loadCredits(_supabase) {
 async function loadDynamicUpdates(_supabase) {
     const latestContainer = document.getElementById('latest-update-container');
     const timelineContainer = document.getElementById('timeline-container');
-    const heroBtn = document.getElementById('hero-download-btn');
 
     let { data, error } = await _supabase
         .from('updates')
@@ -384,9 +389,10 @@ async function loadDynamicUpdates(_supabase) {
     const others = data.filter(u => u.id !== latest.id);
 
     // Update Home Hero Button if exists
-    if (heroBtn) {
-        heroBtn.href = latest.download_url;
-    }
+    // Aggiorna tutti i link APK della pagina (pulsante hero o link alternativo, in base al dispositivo)
+    document.querySelectorAll('[data-apk-link]').forEach(link => {
+        link.href = latest.download_url;
+    });
 
     // Salva l'URL globale dell'APK per la modale di installazione
     window.__latestApkUrl = latest.download_url;
@@ -728,7 +734,7 @@ async function loadFeatures(_supabase) {
 
     if (error) {
         console.error('Errore caricamento features:', error);
-        if (!cached) container.innerHTML = '<p style="color: red;">Errore nel caricamento delle funzionalità.</p>';
+        if (!cached) container.innerHTML = '<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Non riesco a caricare l&rsquo;elenco delle funzionalità. Ricarica la pagina o riprova tra qualche minuto.</p>';
         return;
     }
 
@@ -744,23 +750,41 @@ async function loadStats(_supabase) {
     const downloadsEl = document.getElementById('stat-downloads');
     const updatedEl = document.getElementById('stat-updated');
 
+    // Separatore delle migliaia sempre presente (it-IT non lo mette sotto 10.000: "4554" diventa "4.554")
+    const formatCount = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
     // Count-up animation helper
     function animateCounter(el, target) {
         if (target <= 0) { el.textContent = '0'; return; }
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            el.textContent = formatCount(target);
+            return;
+        }
         const duration = 1500;
         const start = performance.now();
         const step = (now) => {
             const progress = Math.min((now - start) / duration, 1);
             const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-            el.textContent = Math.floor(eased * target).toLocaleString('it-IT');
+            el.textContent = formatCount(Math.floor(eased * target));
             if (progress < 1) requestAnimationFrame(step);
         };
         requestAnimationFrame(step);
     }
 
-    // 1. Downloads from GitHub API
+    // 1. Downloads from GitHub API (l'API pubblica ha un limite di richieste orarie:
+    //    se fallisce si mostra l'ultimo valore salvato, altrimenti si nasconde la statistica)
+    const cachedDownloads = parseInt(localStorage.getItem('qc_cache_downloads') || '', 10);
+    if (cachedDownloads > 0) downloadsEl.textContent = formatCount(cachedDownloads);
+    const hideDownloads = () => {
+        if (cachedDownloads > 0) return;
+        const item = downloadsEl.closest('.stat-item');
+        if (item) item.hidden = true;
+        const divider = item && item.nextElementSibling;
+        if (divider && divider.classList.contains('stat-divider')) divider.hidden = true;
+    };
     try {
         const res = await fetch('https://api.github.com/repos/xTomeku/Quick_Check_Unisalento/releases');
+        if (!res.ok) hideDownloads();
         if (res.ok) {
             const releases = await res.json();
             let totalDownloads = 0;
@@ -770,10 +794,12 @@ async function loadStats(_supabase) {
                 });
             });
             downloadsEl.dataset.target = totalDownloads;
-            animateCounter(downloadsEl, totalDownloads);
+            localStorage.setItem('qc_cache_downloads', String(totalDownloads));
+            if (totalDownloads !== cachedDownloads) animateCounter(downloadsEl, totalDownloads);
         }
     } catch (e) {
         console.warn('Impossibile caricare stats download da GitHub:', e);
+        hideDownloads();
     }
 
     // 2. Last update date (from Supabase updates)
@@ -817,21 +843,29 @@ async function loadFAQ(_supabase) {
             const faqItem = document.createElement('div');
             faqItem.className = `faq-item reveal delay-${(index % 6) + 1}`;
             faqItem.innerHTML = `
-                <div class="faq-question">
-                    <h3>${item.question}</h3>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
+                <h3 class="faq-heading">
+                    <button type="button" class="faq-question" id="faq-q-${index}" aria-expanded="false" aria-controls="faq-a-${index}">
+                        <span class="faq-question-text">${item.question}</span>
+                        <span class="faq-toggle" aria-hidden="true">+</span>
+                    </button>
+                </h3>
+                <div class="faq-answer" id="faq-a-${index}" role="region" aria-labelledby="faq-q-${index}">
                     <div class="faq-answer-inner">${item.answer}</div>
                 </div>
             `;
-            // Accordion toggle
+            // Accordion: un solo elemento aperto alla volta; l'altezza segue la risposta reale
+            const setOpen = (el, open) => {
+                const answer = el.querySelector('.faq-answer');
+                el.classList.toggle('open', open);
+                el.querySelector('.faq-question').setAttribute('aria-expanded', String(open));
+                answer.style.maxHeight = open ? answer.scrollHeight + 'px' : '';
+            };
             faqItem.querySelector('.faq-question').addEventListener('click', () => {
-                // Close other open items
+                const willOpen = !faqItem.classList.contains('open');
                 container.querySelectorAll('.faq-item.open').forEach(openItem => {
-                    if (openItem !== faqItem) openItem.classList.remove('open');
+                    if (openItem !== faqItem) setOpen(openItem, false);
                 });
-                faqItem.classList.toggle('open');
+                setOpen(faqItem, willOpen);
             });
             container.appendChild(faqItem);
         });
@@ -1162,11 +1196,17 @@ function initPwaInstallationFlow() {
     const pwaGuideLinkText = document.getElementById('pwa-guide-link-text');
     const openPwaGuideBtns = document.querySelectorAll('#open-pwa-guide-btn, .open-pwa-guide-trigger');
 
+    let lastFocused = null;
+
     function openModal(defaultTab = 'ios') {
         if (!modal) return;
+        lastFocused = document.activeElement;
         modal.classList.remove('hidden');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
+        // Porta il focus dentro la guida, così tastiera e screen reader ci entrano subito
+        // (breve attesa: i figli della modale hanno una transizione che li tiene invisibili per un istante)
+        setTimeout(() => closeBtn?.focus(), 60);
 
         if (defaultTab === 'android') {
             activateTab('android');
@@ -1180,6 +1220,9 @@ function initPwaInstallationFlow() {
         modal.classList.add('hidden');
         modal.setAttribute('aria-hidden', 'true');
         document.body.style.overflow = '';
+        // Restituisce il focus al pulsante che aveva aperto la guida
+        if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+        lastFocused = null;
     }
 
     // Switch dinamico dei passaggi e del pulsante di azione primario della modale
@@ -1206,7 +1249,8 @@ function initPwaInstallationFlow() {
 
             // Configura il pulsante per il download del file APK
             if (actionBtn) {
-                const apkUrl = window.__latestApkUrl || (heroDownloadBtn && heroDownloadBtn.href && heroDownloadBtn.href !== '#' ? heroDownloadBtn.href : 'download.html');
+                const apkLink = document.querySelector('[data-apk-link]');
+                const apkUrl = window.__latestApkUrl || (apkLink && apkLink.href.endsWith('.apk') ? apkLink.href : 'download.html');
                 actionBtn.href = apkUrl;
                 if (apkUrl.endsWith('.apk')) {
                     actionBtn.removeAttribute('target');
@@ -1226,8 +1270,25 @@ function initPwaInstallationFlow() {
         if (e.target === modal) closeModal();
     });
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+        if (!modal || modal.classList.contains('hidden')) return;
+        if (e.key === 'Escape') {
             closeModal();
+            return;
+        }
+        // Tab resta dentro la guida finché è aperta
+        if (e.key === 'Tab') {
+            const focusables = [...modal.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+                .filter(el => el.offsetParent !== null);
+            if (focusables.length === 0) return;
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
         }
     });
 
@@ -1243,29 +1304,45 @@ function initPwaInstallationFlow() {
         });
     });
 
-    // Adattamento dinamico dei pulsanti Hero e dei suggerimenti in base al dispositivo
+    // Adattamento della hero: un solo pulsante principale in base al dispositivo,
+    // l'altra piattaforma e la guida restano come link discreti sotto
+    const heroAltLink = document.getElementById('hero-alt-link');
+    const heroAltSep = document.getElementById('hero-alt-sep');
+    const guideBtn = document.getElementById('open-pwa-guide-btn');
+    const WEBAPP_URL = 'https://quick-check-unisalento.vercel.app/';
+
     if (isIos && heroDownloadBtn) {
-        if (heroDownloadText) heroDownloadText.textContent = 'Aggiungi a Home iPhone';
-        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'iOS Safari • In 2 tap';
+        // iPhone/iPad: il pulsante principale apre direttamente la guida "Aggiungi a Home"
+        heroDownloadBtn.removeAttribute('data-apk-link');
+        if (heroDownloadText) heroDownloadText.textContent = 'Aggiungi a Home';
+        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'iPhone e iPad · In 2 tap da Safari';
         if (heroDownloadIcon) {
             heroDownloadIcon.innerHTML = `<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>`;
         }
-        // Su iPhone/iPad, intercetta il click e apre la guida per la Web App
         heroDownloadBtn.addEventListener('click', (e) => {
             e.preventDefault();
             openModal('ios');
         });
-
-        // Adatta anche il testo del link secondario (senza emoji iniziali per non creare doppioni con l'icona SVG)
-        if (pwaGuideLinkText) {
-            pwaGuideLinkText.textContent = 'Tocca qui per vedere come salvare QuickCheck su iPhone o iPad →';
+        // La guida coincide col pulsante principale: resta solo il link alla Web App
+        if (heroAltLink) heroAltLink.textContent = 'apri subito la Web App';
+        guideBtn?.setAttribute('hidden', '');
+        heroAltSep?.setAttribute('hidden', '');
+    } else if (isAndroid) {
+        if (pwaGuideLinkText) pwaGuideLinkText.textContent = 'Prima volta con un APK?';
+    } else if (heroDownloadBtn) {
+        // PC: la Web App diventa l'azione principale, l'APK passa nel link discreto
+        heroDownloadBtn.removeAttribute('data-apk-link');
+        heroDownloadBtn.href = WEBAPP_URL;
+        if (heroDownloadText) heroDownloadText.textContent = 'Apri la Web App';
+        if (heroDownloadSubtitle) heroDownloadSubtitle.textContent = 'Dal browser · Nessuna installazione';
+        if (heroDownloadIcon) {
+            heroDownloadIcon.innerHTML = `<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>`;
         }
-    } else if (isAndroid && pwaGuideLinkText) {
-        // Su Android, informa l'utente su come installare l'APK senza incertezze (senza emoji iniziale duplicata)
-        pwaGuideLinkText.textContent = 'Prima volta che installi un file APK? Leggi la guida in 3 passi →';
-    } else if (pwaGuideLinkText) {
-        // Testo desktop/fallback pulito con solo l'icona SVG dell'HTML
-        pwaGuideLinkText.textContent = 'Come installare QuickCheck su iPhone o Android? Clicca qui →';
+        if (heroAltLink) {
+            heroAltLink.textContent = "scarica l'APK per Android";
+            heroAltLink.href = window.__latestApkUrl || 'download.html';
+            heroAltLink.setAttribute('data-apk-link', '');
+        }
     }
 }
 

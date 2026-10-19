@@ -1,3 +1,7 @@
+// Segnala che JavaScript è attivo: solo così gli elementi .reveal partono nascosti
+// per l'animazione di comparsa. Senza JS restano visibili.
+document.documentElement.classList.add('js');
+
 // Ottimizzazione URL: Rimuove .html dalla barra degli indirizzi
 // (tiene ?parametri e #sezione: il pannello admin apre la sezione indicata dopo #)
 if (location.pathname.endsWith('.html')) {
