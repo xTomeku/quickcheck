@@ -452,6 +452,18 @@ const ICONE_FUNZIONI_PANNELLO = [
     ['palette', 'Colori'], ['dark_mode', 'Tema scuro'], ['language', 'Lingua'], ['wifi', 'Wi-Fi'],
     ['speed', 'Velocità'], ['bolt', 'Fulmine'], ['lock', 'Privacy'], ['build', 'Correzioni'],
     ['auto_awesome', 'Novità'], ['new_releases', 'Nuovo'], ['celebration', 'Festa'],
+    ['event', 'Evento'], ['today', 'Oggi'], ['event_available', 'Confermata'], ['update', 'Aggiornamento'],
+    ['history', 'Cronologia'], ['timer', 'Timer'], ['edit_note', 'Appunti'], ['sticky_note_2', 'Nota'],
+    ['assignment', 'Compiti'], ['quiz', 'Quiz'], ['history_edu', 'Esami'],
+    ['science', 'Laboratorio'], ['calculate', 'Calcolatrice'], ['insights', 'Andamento'], ['groups', 'Gruppi'],
+    ['person', 'Profilo'], ['badge', 'Tessera'], ['account_balance', 'Ateneo'], ['apartment', 'Edificio'],
+    ['directions_walk', 'A piedi'], ['directions_bike', 'Bici'], ['train', 'Treno'], ['local_parking', 'Parcheggio'],
+    ['local_cafe', 'Bar'], ['fitness_center', 'Palestra'], ['accessible', 'Accessibilità'], ['translate', 'Traduzione'],
+    ['computer', 'Computer'], ['phone_android', 'Telefono'], ['print', 'Stampa'], ['mail', 'Email'],
+    ['forum', 'Forum'], ['newspaper', 'Notizie'], ['cloud_off', 'Senza rete'], ['sync', 'Sincronizza'],
+    ['qr_code', 'QR'], ['touch_app', 'Tocco'], ['favorite', 'Cuore'], ['bookmark', 'Segnalibro'],
+    ['tune', 'Filtri'], ['verified', 'Verificato'], ['info', 'Info'], ['help', 'Aiuto'],
+    ['emoji_events', 'Trofeo'],
 ];
 
 const fIcona = document.getElementById('f-icon');

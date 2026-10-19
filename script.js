@@ -624,13 +624,19 @@ function formatChange(text) {
 }
 
 
-// Icone Material caricate da index.html (parametro icon_names del font): le stesse delle Novità
-// nel pannello, più notifications_active. Un nome fuori elenco non avrebbe il disegno.
-const ICONE_FUNZIONI = new Set(['alarm', 'auto_awesome', 'bolt', 'build', 'calendar_month', 'calendar_view_day', 'campaign',
-    'celebration', 'contacts', 'dark_mode', 'dashboard_customize', 'directions_bus', 'event_busy', 'explore', 'ios_share',
-    'language', 'local_hospital', 'local_library', 'lock', 'map', 'meeting_room', 'menu_book', 'new_releases', 'notifications',
-    'notifications_active', 'palette', 'phonelink_setup', 'place', 'restaurant', 'school', 'search', 'settings', 'speed',
-    'star', 'widgets', 'wifi']);
+// Icone Material caricate da index.html (parametro icon_names del font): le stesse della griglia delle
+// funzionalità nel pannello (ICONE_FUNZIONI_PANNELLO in admin-js/sito.js). Un nome fuori elenco non avrebbe il disegno.
+const ICONE_FUNZIONI = new Set([
+    'accessible', 'account_balance', 'alarm', 'apartment', 'assignment', 'auto_awesome', 'badge', 'bolt', 'bookmark',
+    'build', 'calculate', 'calendar_month', 'calendar_view_day', 'campaign', 'celebration', 'cloud_off', 'computer',
+    'contacts', 'dark_mode', 'dashboard_customize', 'directions_bike', 'directions_bus', 'directions_walk',
+    'edit_note', 'emoji_events', 'event', 'event_available', 'event_busy', 'explore', 'favorite', 'fitness_center',
+    'forum', 'groups', 'help', 'history', 'history_edu', 'info', 'insights', 'ios_share', 'language',
+    'local_cafe', 'local_hospital', 'local_library', 'local_parking', 'lock', 'mail', 'map', 'meeting_room',
+    'menu_book', 'new_releases', 'newspaper', 'notifications', 'notifications_active', 'palette', 'person',
+    'phone_android', 'phonelink_setup', 'place', 'print', 'qr_code', 'quiz', 'restaurant', 'school', 'science',
+    'search', 'settings', 'speed', 'star', 'sticky_note_2', 'sync', 'timer', 'today', 'touch_app', 'train',
+    'translate', 'tune', 'update', 'verified', 'widgets', 'wifi']);
 
 // Emoji già salvate nella tabella features -> icona Material equivalente
 const EMOJI_FUNZIONI = {
