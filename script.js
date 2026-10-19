@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inizializzazione Prompt e Guida PWA (iOS / Android / PC)
     initPwaInstallationFlow();
 
+    // Pagina Download: scheda del dispositivo in uso
+    initSchedeDownload();
+
     // Back to Top logic
     const backToTopBtn = document.getElementById('back-to-top');
     if (backToTopBtn) {
@@ -412,91 +415,102 @@ async function loadDynamicUpdates(_supabase) {
         modalActionBtn.href = latest.download_url;
     }
 
-    // Render Latest
+    // Pagina Download: versione accanto a "gratis, senza registrazione…" e peso dell'APK
+    const lead = document.getElementById('scarica-lead');
+    if (lead && latest.version) lead.textContent = `Versione ${latest.version.trim()} · gratis, senza registrazione e senza pubblicità`;
+    if (document.getElementById('scarica-peso')) caricaPesoApk();
+
+    // Ultima versione: modifiche divise per tipo
     if (latestContainer) {
-        const latestChanges = Array.isArray(latest.changes) ? latest.changes : [];
-        const changesCount = latestChanges.length;
-
-        latestContainer.innerHTML = `
-            <div class="download-hero">
-                <a href="${latest.download_url}" class="btn btn-primary btn-lg">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                    Scarica l'ultima versione (${latest.version})
-                </a>
-                <p class="platform-subtitle" style="margin-top: 0.5rem; text-align: center;">${latest.details || ''}</p>
-            </div>
-
-            <div class="card patch-card latest-card reveal">
-                <div class="patch-header no-toggle">
-                    <div class="patch-info">
-                        <span class="patch-version">${latest.version}</span>
-                        <span class="patch-date">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            ${latest.date}
-                        </span>
-                    </div>
-                    <div class="patch-header-right">
-                        <span class="patch-count-badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                            ${changesCount} ${changesCount === 1 ? 'modifica' : 'modifiche'}
-                        </span>
-                    </div>
-                </div>
-                <div class="patch-content">
-                    <div class="patch-block-list">
-                        ${latestChanges.map(change => renderPatchItem(change)).join('')}
-                    </div>
-                </div>
-            </div>
-        `;
+        const modifiche = (Array.isArray(latest.changes) ? latest.changes : []).map(parsePatchChange);
+        const titolo = document.getElementById('novita-titolo');
+        if (titolo) titolo.textContent = `Cosa c'è di nuovo nella ${latest.version.trim()}`;
+        const meta = document.getElementById('novita-meta');
+        if (meta) {
+            document.getElementById('novita-data').textContent = dataLeggibile(latest.date);
+            document.getElementById('novita-conta').innerHTML = `<b>${modifiche.length}</b>&nbsp;${modifiche.length === 1 ? 'modifica' : 'modifiche'}`;
+            meta.hidden = false;
+        }
+        latestContainer.innerHTML = modifiche.length
+            ? TIPI_MODIFICA.map(tipo => bloccoModifiche(tipo, modifiche.filter(m => m.type === tipo.tipo))).join('')
+            : '<p class="scarica-stato">Nessuna modifica descritta per questa versione.</p>';
+        latestContainer.querySelectorAll('.novita-altre').forEach(btn => btn.addEventListener('click', () => {
+            btn.closest('.novita-blocco').querySelectorAll('.novita-voci li[hidden]').forEach(li => { li.hidden = false; });
+            btn.remove();
+        }));
     }
 
-    // Render Timeline
+    // Versioni precedenti: una riga per versione che si apre con un tocco
     if (timelineContainer) {
-        timelineContainer.innerHTML = '';
-        others.forEach((update, index) => {
-            const card = document.createElement('div');
-            card.className = 'card patch-card collapsed reveal';
-            const updateChanges = Array.isArray(update.changes) ? update.changes : [];
-            const changesCount = updateChanges.length;
+        timelineContainer.innerHTML = others.length ? others.map(update => {
+            const modifiche = (Array.isArray(update.changes) ? update.changes : []).map(parsePatchChange);
+            const versione = update.version.trim();
+            return `
+                <details>
+                    <summary>
+                        <span class="storico-numero">${versione}</span>
+                        <span class="storico-data">${dataLeggibile(update.date)}</span>
+                        <span class="storico-conta">${modifiche.length} ${modifiche.length === 1 ? 'modifica' : 'modifiche'}</span>
+                        <span class="funzione-ms" aria-hidden="true">expand_more</span>
+                    </summary>
+                    <div class="storico-dentro">
+                        <ul>${modifiche.map(m => `<li>${m.title && m.desc ? `<b>${m.title}.</b> ${m.desc}` : `<b>${m.title || m.desc}</b>`}</li>`).join('')}</ul>
+                        ${update.download_url ? `<a href="${update.download_url}"><span class="funzione-ms" aria-hidden="true">download</span>Scarica l'APK della ${versione}</a>` : ''}
+                    </div>
+                </details>`;
+        }).join('') : '<p class="scarica-stato">Nessuna versione precedente.</p>';
+    }
+}
 
-            card.innerHTML = `
-                <div class="patch-header">
-                    <div class="patch-info">
-                        <span class="patch-version">${update.version}</span>
-                        <span class="patch-date">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
-                            ${update.date}
-                        </span>
-                    </div>
-                    <div class="patch-header-right">
-                        <span class="patch-count-badge">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                            ${changesCount} ${changesCount === 1 ? 'modifica' : 'modifiche'}
-                        </span>
-                        <span class="patch-toggle-icon">▼</span>
-                    </div>
-                </div>
-                <div class="patch-content">
-                    <div class="patch-block-list">
-                        ${updateChanges.map(change => renderPatchItem(change)).join('')}
-                    </div>
-                    <div class="patch-card-actions">
-                        <a href="${update.download_url}" class="btn btn-secondary btn-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                            Scarica ${update.version}
-                        </a>
-                    </div>
-                </div>
-            `;
-            
-            // Accordion click per espandere/collassare la card
-            card.querySelector('.patch-header').addEventListener('click', () => {
-                card.classList.toggle('collapsed');
-            });
-            
-            timelineContainer.appendChild(card);
-        });
+// Tipi di modifica nell'ordine in cui compaiono. Nei miglioramenti e nelle correzioni si vedono le prime
+// tre voci, le altre dietro "Mostra altre"
+const TIPI_MODIFICA = [
+    { tipo: 'feature', nome: 'Novità', icona: 'auto_awesome', visibili: Infinity },
+    { tipo: 'improvement', nome: 'Miglioramenti', icona: 'trending_up', visibili: 3 },
+    { tipo: 'fix', nome: 'Correzioni', icona: 'build', visibili: 3 },
+];
+
+function bloccoModifiche({ tipo, nome, icona, visibili }, voci) {
+    if (voci.length === 0) return '';
+    const nascoste = Math.max(0, voci.length - visibili);
+    return `
+        <div class="novita-blocco tipo-${tipo}">
+            <div class="novita-tipo">
+                <span class="funzione-ms" aria-hidden="true">${icona}</span>
+                <div><b>${nome}</b><small>${voci.length} ${voci.length === 1 ? 'modifica' : 'modifiche'}</small></div>
+            </div>
+            <div>
+                <ul class="novita-voci">
+                    ${voci.map((v, n) => `<li${n >= visibili ? ' hidden' : ''}>${v.title ? `<h3>${v.title}</h3>` : ''}${v.desc ? `<p>${v.desc}</p>` : ''}</li>`).join('')}
+                </ul>
+                ${nascoste ? `<button type="button" class="novita-altre">Mostra altre ${nascoste}<span class="funzione-ms" aria-hidden="true">expand_more</span></button>` : ''}
+            </div>
+        </div>`;
+}
+
+// Date scritte nel pannello come "09 Marzo 2026": giorno senza zero davanti e mese con la minuscola
+function dataLeggibile(data) {
+    return String(data || '').trim()
+        .replace(/^0(\d)/, '$1')
+        .replace(/\b(Gennaio|Febbraio|Marzo|Aprile|Maggio|Giugno|Luglio|Agosto|Settembre|Ottobre|Novembre|Dicembre)\b/g, m => m.toLowerCase());
+}
+
+// Peso dell'APK dell'ultima release su GitHub (pagina Download); l'ultimo valore resta in memoria
+async function caricaPesoApk() {
+    const el = document.getElementById('scarica-peso');
+    const mostra = (mb) => { if (mb > 0) el.textContent = ` · ${mb} MB`; };
+    mostra(parseInt(localStorage.getItem('qc_cache_apk_mb') || '', 10));
+    try {
+        const res = await fetch('https://api.github.com/repos/xTomeku/Quick_Check_Unisalento/releases/latest');
+        if (!res.ok) return;
+        const release = await res.json();
+        const apk = (release.assets || []).find(a => /\.apk$/i.test(a.name));
+        if (!apk || !apk.size) return;
+        const mb = Math.round(apk.size / 1048576);
+        localStorage.setItem('qc_cache_apk_mb', String(mb));
+        mostra(mb);
+    } catch (e) {
+        console.warn('Peso APK non disponibile:', e);
     }
 }
 
@@ -571,63 +585,14 @@ function parsePatchChange(text) {
         cleanTitle = cleanTitle.replace(/^(miglioramento|ottimizzazione)\s*[:-]\s*/i, '');
     }
 
-    if (cleanTitle.length > 0) {
-        cleanTitle = cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1);
-    }
-
-    return { title: cleanTitle, desc, type };
+    return { title: testoModifica(cleanTitle), desc: testoModifica(desc).replace(/[.\s]+$/, ''), type };
 }
 
-/**
- * Renderizza un elemento changelog trasformandolo in un blocco/card moderno
- * dotato di micro-badge iconico, titolo in risalto e descrizione separata.
- */
-function renderPatchItem(changeText) {
-    const { title, desc, type } = parsePatchChange(changeText);
-
-    let badgeLabel = 'Novità';
-    let badgeClass = 'patch-badge-feature';
-    let typeClass = 'type-feature';
-    // Icona scintilla/sparkle per novità
-    let iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>`;
-
-    if (type === 'fix') {
-        badgeLabel = 'Fix';
-        badgeClass = 'patch-badge-fix';
-        typeClass = 'type-fix';
-        // Icona chiave inglese per bugfix
-        iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>`;
-    } else if (type === 'improvement') {
-        badgeLabel = 'Miglioramento';
-        badgeClass = 'patch-badge-improvement';
-        typeClass = 'type-improvement';
-        // Icona fulmine per miglioramenti e ottimizzazioni
-        iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>`;
-    }
-
-    return `
-        <div class="patch-block-item ${typeClass}">
-            <div class="patch-block-header">
-                <span class="patch-badge ${badgeClass}">
-                    ${iconSvg}
-                    <span>${badgeLabel}</span>
-                </span>
-                <span class="patch-block-title">${title}</span>
-            </div>
-            ${desc ? `<p class="patch-block-desc">${desc}</p>` : ''}
-        </div>
-    `;
+// Pulizia dei testi delle modifiche scritti nel pannello: spazi doppi, "IOS", maiuscola iniziale
+function testoModifica(testo) {
+    const t = String(testo || '').replace(/\s{2,}/g, ' ').replace(/\bIOS\b/g, 'iOS').trim();
+    return t.charAt(0).toUpperCase() + t.slice(1);
 }
-
-function formatChange(text) {
-    // Funzione legacy mantenuta per retrocompatibilità
-    if (text.includes(':')) {
-        const parts = text.split(':');
-        return `<strong>${parts[0]}:</strong>${parts.slice(1).join(':')}`;
-    }
-    return text;
-}
-
 
 // Icone Material caricate da index.html (parametro icon_names del font): le stesse della griglia delle
 // funzionalità nel pannello (ICONE_FUNZIONI_PANNELLO in admin-js/sito.js). Un nome fuori elenco non avrebbe il disegno.
@@ -835,7 +800,7 @@ async function loadStats(_supabase) {
     const versionEl = document.getElementById('stat-version');
     const mostraVersione = (u) => {
         if (!u) return;
-        updatedEl.textContent = u.date || '—';
+        updatedEl.textContent = dataLeggibile(u.date) || '—';
         if (versionEl && u.version) versionEl.textContent = String(u.version).replace(/^v/i, '');
     };
     mostraVersione(versioneInCache());
@@ -880,7 +845,7 @@ async function loadFooterVersion(_supabase) {
     const mostra = (u) => {
         if (!u || !u.version) return;
         document.getElementById('footer-versione-numero').textContent = String(u.version).replace(/^v/i, '');
-        document.getElementById('footer-versione-data').textContent = u.date ? ` · ${u.date}` : '';
+        document.getElementById('footer-versione-data').textContent = u.date ? ` · ${dataLeggibile(u.date)}` : '';
         capsula.hidden = false;
     };
     mostra(versioneInCache());
@@ -1235,11 +1200,49 @@ async function loadBugs(_supabase) {
  * - Su iOS (iPhone/iPad): adatta il pulsante Hero in "Installa su iPhone" e apre la guida passo-passo per Safari.
  * - Su Android / PC: mantiene il download APK nativo e permette di consultare la guida PWA o aprire l'app.
  */
-function initPwaInstallationFlow() {
+// 'iphone' (anche iPad e iPadOS, che si presenta come MacIntel con il touch), 'android' o 'computer'
+function rilevaDispositivo() {
     const ua = (navigator.userAgent || navigator.vendor || window.opera || '').toLowerCase();
-    // Rileva iPhone, iPad, iPod e anche iPadOS su MacIntel con touch abilitato
-    const isIos = /iphone|ipad|ipod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-    const isAndroid = /android/.test(ua);
+    if (/iphone|ipad|ipod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'iphone';
+    if (/android/.test(ua)) return 'android';
+    return 'computer';
+}
+
+// Pagina Download: selettore Android / iPhone e iPad / Computer con un riquadro per ciascuno.
+// Parte dal dispositivo in uso, oppure da #android, #iphone o #computer nell'indirizzo
+function initSchedeDownload() {
+    const schede = [...document.querySelectorAll('[data-scheda]')];
+    if (schede.length === 0) return;
+
+    const mostra = (scelta, conFocus) => {
+        schede.forEach(scheda => {
+            const attiva = scheda.dataset.scheda === scelta;
+            scheda.setAttribute('aria-selected', attiva ? 'true' : 'false');
+            scheda.tabIndex = attiva ? 0 : -1;
+            document.getElementById(scheda.getAttribute('aria-controls')).hidden = !attiva;
+            if (attiva && conFocus) scheda.focus();
+        });
+    };
+
+    schede.forEach((scheda, i) => {
+        scheda.addEventListener('click', () => mostra(scheda.dataset.scheda));
+        // Frecce sinistra/destra tra le schede, come nei selettori a schede
+        scheda.addEventListener('keydown', (e) => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            const vicina = schede[(i + (e.key === 'ArrowRight' ? 1 : schede.length - 1)) % schede.length];
+            mostra(vicina.dataset.scheda, true);
+        });
+    });
+
+    const dallIndirizzo = location.hash.slice(1);
+    mostra(schede.some(s => s.dataset.scheda === dallIndirizzo) ? dallIndirizzo : rilevaDispositivo());
+}
+
+function initPwaInstallationFlow() {
+    const dispositivo = rilevaDispositivo();
+    const isIos = dispositivo === 'iphone';
+    const isAndroid = dispositivo === 'android';
 
     // DOM Elements Modale PWA / Installazione
     const modal = document.getElementById('pwa-install-modal');

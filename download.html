@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scarica QuickCheck - Download APK per Android</title>
-    <meta name="description" content="Scarica l'ultima versione dell'app QuickCheck per Android. Consulta orari, aule e docenti dell'Università del Salento direttamente sul tuo telefono.">
+    <title>Scarica QuickCheck · Android, iPhone e computer</title>
+    <meta name="description" content="Scarica QuickCheck: l'APK per Android o la Web App per iPhone e computer. Orari, aule, mensa e rubrica dell'Università del Salento, gratis e senza registrazione.">
     
     <!-- Meta tag Open Graph per condivisione social -->
     <meta property="og:site_name" content="QuickCheck">
@@ -45,8 +45,9 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=android,bug_report,favorite,help,language,lock,mail,new_releases&display=block">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=android,auto_awesome,bug_report,build,calendar_month,computer,download,expand_more,favorite,format_list_bulleted,help,language,lock,mail,new_releases,phone_iphone,trending_up&display=block">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="download.css">
     <script src="config.js"></script>
 </head>
 <body>
@@ -69,10 +70,6 @@
                 <li><a href="credits.html">Credits</a></li>
                 <li><a href="bugs.html">Problemi noti</a></li>
             </ul>
-            <a href="download.html" class="nav-cta">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                Scarica
-            </a>
         </div>
     </nav>
 
@@ -80,50 +77,103 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0"></script>
 
     <!-- Main Content -->
-    <main>
-        <div class="page-header">
-            <span class="sezione-etichetta reveal">QuickCheck</span>
-            <h1 class="reveal">Download</h1>
-            <p class="reveal delay-1">Scarica QuickCheck, l'app per consultare gli orari universitari.</p>
-        </div>
+    <main class="scarica">
+        <!-- Apertura: si sceglie il dispositivo (initSchedeDownload in script.js lo imposta su quello in uso,
+             o su #android / #iphone / #computer nell'indirizzo) e sotto compaiono pulsante e passaggi -->
+        <section class="scarica-apertura">
+            <img src="assets/logo.png" alt="Icona di QuickCheck" class="scarica-icona reveal" onerror="this.src='assets/icona.png'">
+            <h1 class="reveal">Scarica QuickCheck</h1>
+            <p class="scarica-lead reveal delay-1" id="scarica-lead">Gratis, senza registrazione e senza pubblicità</p>
 
-        <!-- Container per l'Ultimo Aggiornamento -->
-        <section id="latest-update-container">
-            <p style="text-align: center; padding: 2rem;">Caricamento ultimo aggiornamento...</p>
-        </section>
-
-        <!-- Banner per Utenti iPhone / iPad / PC -->
-        <div class="download-ios-banner reveal">
-            <div class="download-ios-info">
-                <div class="download-ios-icon">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="var(--primary-gold)" aria-hidden="true">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.87-.93.04-2.02.63-2.67 1.39-.56.65-.96 1.7-0.84 2.72 1.04.08 2.06-.52 2.59-1.24z"/>
-                    </svg>
-                </div>
-                <div class="download-ios-text">
-                    <h3>Non hai un dispositivo Android?</h3>
-                    <p>Usa QuickCheck su <strong>iPhone, iPad e PC</strong> direttamente dal browser con supporto offline e notifiche push.</p>
-                </div>
-            </div>
-            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <button type="button" class="btn btn-secondary btn-sm" id="open-pwa-guide-btn">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 4px;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                    <span>Guida Installazione iOS</span>
+            <div class="scarica-schede reveal delay-2" role="tablist" aria-label="Scegli il dispositivo">
+                <button type="button" role="tab" id="scheda-android" data-scheda="android" aria-controls="pannello-android" aria-selected="true">
+                    <span class="funzione-ms" aria-hidden="true">android</span>Android
                 </button>
-                <a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
-                    <span>🚀</span> Apri Web App
-                </a>
+                <button type="button" role="tab" id="scheda-iphone" data-scheda="iphone" aria-controls="pannello-iphone" aria-selected="false" tabindex="-1">
+                    <span class="funzione-ms" aria-hidden="true">phone_iphone</span>iPhone e iPad
+                </button>
+                <button type="button" role="tab" id="scheda-computer" data-scheda="computer" aria-controls="pannello-computer" aria-selected="false" tabindex="-1">
+                    <span class="funzione-ms" aria-hidden="true">computer</span>Computer
+                </button>
             </div>
-        </div>
+
+            <div class="scarica-pannello reveal delay-3" role="tabpanel" id="pannello-android" aria-labelledby="scheda-android">
+                <div>
+                    <h2>App per Android</h2>
+                    <p class="scarica-sotto">L'app completa, con widget e notifiche.</p>
+                    <!-- link dinamico: loadDynamicUpdates mette l'APK dell'ultima versione -->
+                    <a href="https://github.com/xTomeku/Quick_Check_Unisalento/releases/latest" class="btn btn-primary" data-apk-link>
+                        <span class="funzione-ms" aria-hidden="true">download</span>Scarica l'APK
+                    </a>
+                    <p class="scarica-dettagli">Android 7.0 o successivo<span id="scarica-peso"></span></p>
+                </div>
+                <ol class="scarica-passi">
+                    <li><span><b>Scarica l'APK</b>Il file arriva nei download del telefono.</span></li>
+                    <li><span><b>Apri il file</b>Se il telefono lo chiede, consenti l'installazione da questa fonte.</span></li>
+                    <li><span><b>Scegli il tuo corso</b>Corso e anno, oppure salta e usa subito mappa e mensa.</span></li>
+                </ol>
+            </div>
+
+            <div class="scarica-pannello" role="tabpanel" id="pannello-iphone" aria-labelledby="scheda-iphone" hidden>
+                <div>
+                    <h2>Web App per iPhone e iPad</h2>
+                    <p class="scarica-sotto">Si aggiunge alla schermata Home e si apre come un'app, anche offline.</p>
+                    <a href="https://quick-check-unisalento.vercel.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        <span class="funzione-ms" aria-hidden="true">language</span>Apri in Safari
+                    </a>
+                    <p class="scarica-dettagli">Stesse funzioni dell'app, tranne il widget</p>
+                </div>
+                <ol class="scarica-passi">
+                    <li><span><b>Apri la Web App in Safari</b>Con il pulsante dorato.</span></li>
+                    <li><span><b>Tocca Condividi</b>Poi scegli "Aggiungi alla schermata Home".</span></li>
+                    <li><span><b>Aprila dall'icona</b>Da quel momento si apre come le altre app.</span></li>
+                </ol>
+            </div>
+
+            <div class="scarica-pannello" role="tabpanel" id="pannello-computer" aria-labelledby="scheda-computer" hidden>
+                <div>
+                    <h2>Web App dal browser</h2>
+                    <p class="scarica-sotto">Funziona in Chrome, Edge, Firefox e Safari, senza installare nulla.</p>
+                    <a href="https://quick-check-unisalento.vercel.app/" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                        <span class="funzione-ms" aria-hidden="true">language</span>Apri la Web App
+                    </a>
+                    <p class="scarica-dettagli">Hai un telefono Android? <a href="https://github.com/xTomeku/Quick_Check_Unisalento/releases/latest" data-apk-link>Scarica l'APK</a></p>
+                </div>
+                <ol class="scarica-passi">
+                    <li><span><b>Apri la Web App</b>Si apre in una nuova scheda del browser.</span></li>
+                    <li><span><b>Scegli il tuo corso</b>Corso e anno, senza account.</span></li>
+                    <li><span><b>Se vuoi, installala</b>Chrome ed Edge mostrano l'icona di installazione nella barra degli indirizzi.</span></li>
+                </ol>
+            </div>
+        </section>
 
         <div class="separatore" aria-hidden="true"><span></span></div>
 
-        <!-- Container per la Timeline Versioni Precedenti -->
-        <section class="timeline">
+        <!-- Ultima versione (tabella updates): modifiche divise in Novità / Miglioramenti / Correzioni -->
+        <section class="scarica-sezione" id="novita">
+            <div class="scarica-testa">
+                <div>
+                    <span class="sezione-etichetta">Ultima versione</span>
+                    <h2 class="scarica-titolo" id="novita-titolo">Cosa c'è di nuovo</h2>
+                </div>
+                <div class="scarica-meta" id="novita-meta" hidden>
+                    <span class="scarica-pillola"><span class="funzione-ms" aria-hidden="true">calendar_month</span><span id="novita-data"></span></span>
+                    <span class="scarica-pillola"><span class="funzione-ms" aria-hidden="true">format_list_bulleted</span><span id="novita-conta"></span></span>
+                </div>
+            </div>
+            <div id="latest-update-container">
+                <p class="scarica-stato">Caricamento novità…</p>
+            </div>
+        </section>
+
+        <div class="separatore" aria-hidden="true"><span></span></div>
+
+        <!-- Versioni precedenti: una riga per versione, si apre con un tocco -->
+        <section class="scarica-sezione">
             <span class="sezione-etichetta">Storico</span>
-            <h2 class="section-title" style="font-size: 1.8rem; margin-bottom: 3rem;">Versioni Precedenti</h2>
-            <div id="timeline-container">
-                <p style="text-align: center; padding: 2rem;">Caricamento cronologia...</p>
+            <h2 class="scarica-titolo">Versioni precedenti</h2>
+            <div class="scarica-storico" id="timeline-container">
+                <p class="scarica-stato">Caricamento versioni…</p>
             </div>
         </section>
     </main>
@@ -179,98 +229,6 @@
     <button id="back-to-top" aria-label="Torna in alto">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
     </button>
-    <!-- Modal Installazione QuickCheck (Guida iOS Web App & Android APK) -->
-    <div id="pwa-install-modal" class="pwa-modal-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="pwa-modal-title">
-        <div class="pwa-modal-card">
-            <button class="pwa-modal-close" id="close-pwa-modal" aria-label="Chiudi la guida">&times;</button>
-            <div class="pwa-modal-header">
-                <img src="assets/icona.png" alt="QuickCheck Icon" class="pwa-modal-icon" onerror="this.src='assets/logo.png'">
-                <div>
-                    <h3 id="pwa-modal-title">Come installare QuickCheck</h3>
-                    <p id="pwa-modal-subtitle">Guida rapida per avere l'orario sempre a portata di mano</p>
-                </div>
-            </div>
-
-            <!-- Tab Selettore Piattaforma con Icone Vettoriali Ufficiali -->
-            <div class="pwa-modal-tabs">
-                <button type="button" class="pwa-tab-btn active" id="pwa-tab-ios" data-target="pwa-steps-ios">
-                    <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.61-.75 1.04-1.8 0.92-2.87-.93.04-2.02.63-2.67 1.39-.56.65-.96 1.7-0.84 2.72 1.04.08 2.06-.52 2.59-1.24z"/>
-                    </svg>
-                    <span>iPhone & iPad</span>
-                </button>
-                <button type="button" class="pwa-tab-btn" id="pwa-tab-android" data-target="pwa-steps-android">
-                    <svg class="tab-icon" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.551 0 .9993.4482.9993.9993.0001.5511-.4483.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4482.9993.9993 0 .5511-.4482.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.4116 13.8533 8.082 12 8.082c-1.8534 0-3.5902.3296-5.1368.8677L4.8409 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3432-4.1021-2.6889-7.5743-6.1185-9.4396"/>
-                    </svg>
-                    <span>Android (APK)</span>
-                </button>
-            </div>
-
-            <!-- Guida iOS (Web App Safari) -->
-            <div id="pwa-steps-ios" class="pwa-steps-container">
-                <div class="pwa-step-item">
-                    <div class="pwa-step-num">1</div>
-                    <div class="pwa-step-text">
-                        <h4>Apri la Web App in Safari</h4>
-                        <p>Visita <a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener">quick-check-unisalento.vercel.app</a> usando il browser <strong>Safari</strong> sul tuo iPhone o iPad.</p>
-                    </div>
-                </div>
-                <div class="pwa-step-item">
-                    <div class="pwa-step-num">2</div>
-                    <div class="pwa-step-text">
-                        <h4>Tocca il pulsante Condividi</h4>
-                        <p>Nella barra in basso su iPhone (o in alto su iPad), tocca il pulsante <strong>Condividi</strong> <span class="ios-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> Condividi</span>.</p>
-                    </div>
-                </div>
-                <div class="pwa-step-item">
-                    <div class="pwa-step-num">3</div>
-                    <div class="pwa-step-text">
-                        <h4>Scegli "Aggiungi a Home"</h4>
-                        <p>Scorri il menu verso il basso e tocca <span class="ios-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Aggiungi a schermata Home</span>, poi premi <strong>Aggiungi</strong>.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Guida Android (Installazione APK) -->
-            <div id="pwa-steps-android" class="pwa-steps-container hidden">
-                <div class="pwa-step-item">
-                    <div class="pwa-step-num">1</div>
-                    <div class="pwa-step-text">
-                        <h4>Scarica il file APK</h4>
-                        <p>Tocca <strong>"Scarica il file APK"</strong> in fondo a questa guida. Se il browser mostra l'avviso <em>"Il file potrebbe essere dannoso"</em>, tocca tranquillamente <strong>"Scarica comunque"</strong> (è il normale messaggio di Android per i download fuori dal Play Store).</p>
-                    </div>
-                </div>
-                <div class="pwa-step-item">
-                    <div class="pwa-step-num">2</div>
-                    <div class="pwa-step-text">
-                        <h4>Consenti l'origine sconosciuta</h4>
-                        <p>A fine download, tocca la notifica o apri il file <code>.apk</code>. Se appare la richiesta di sicurezza di Android, tocca <strong>"Impostazioni"</strong> e attiva l'opzione <strong>"Consenti da questa sorgente"</strong>.</p>
-                    </div>
-                </div>
-                <div class="pwa-step-item">
-                    <div class="pwa-step-num">3</div>
-                    <div class="pwa-step-text">
-                        <h4>Tocca "Installa" e avvia</h4>
-                        <p>Torna indietro, tocca <strong>"Installa"</strong> e infine <strong>"Apri"</strong>. QuickCheck è pronta con orario offline e notifiche lezioni!</p>
-                        <div class="pwa-subtip">
-                            💡 <em>Preferisci non installare l'APK? Puoi anche usare la <a href="https://quick-check-unisalento.vercel.app/" target="_blank" rel="noopener">Web App</a> da qualsiasi browser senza occupare spazio sul telefono.</em>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pwa-modal-footer">
-                <a href="https://quick-check-unisalento.vercel.app/" id="pwa-modal-action-btn" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">
-                    <span id="pwa-action-icon">🚀</span> <span id="pwa-action-text">Apri la Web App</span>
-                </a>
-                <button type="button" class="btn btn-secondary btn-block" id="dismiss-pwa-modal">
-                    Ho capito
-                </button>
-            </div>
-        </div>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
