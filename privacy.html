@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informativa sulla Privacy - QuickCheck</title>
-    <meta name="description" content="Leggi l'Informativa sulla Privacy di QuickCheck per capire come trattiamo i dati personali nel rispetto del GDPR.">
+    <title>Privacy · QuickCheck</title>
+    <meta name="description" content="Come QuickCheck tratta i tuoi dati: nessun account, nessuna pubblicità, preferenze salvate solo sul telefono.">
     
     <!-- Meta tag Open Graph per condivisione social -->
     <meta property="og:site_name" content="QuickCheck">
@@ -28,8 +28,9 @@
     <link rel="apple-touch-icon" sizes="180x180" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
     <link rel="shortcut icon" href="https://xtomeku.github.io/quickcheck/assets/icona.png">
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=android,bug_report,favorite,help,language,lock,mail,new_releases&display=block">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,1,0&icon_names=add,android,block,bug_report,cloud,description,favorite,help,key,language,location_on,lock,mail,new_releases,notifications,person_off,smartphone,update,volunteer_activism&display=block">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="privacy.css">
     <script src="config.js"></script>
 </head>
 <body>
@@ -60,17 +61,52 @@
     </nav>
 
     <!-- Main Content -->
-    <main>
-        <div class="page-header">
-            <span class="sezione-etichetta reveal">QuickCheck</span>
-            <h1 class="reveal">Informativa sulla Privacy</h1>
-            <p class="reveal delay-1">Scopri come raccogliamo e gestiamo i tuoi dati su QuickCheck.</p>
-        </div>
+    <main class="privacy">
+        <section class="privacy-apertura">
+            <span class="sezione-etichetta reveal">Privacy</span>
+            <h1 class="reveal">Informativa sulla privacy</h1>
+            <p class="privacy-lead reveal delay-1">Come QuickCheck tratta i tuoi dati, in parole semplici.</p>
+            <p class="privacy-aggiornata reveal delay-1" id="privacy-aggiornata" hidden>
+                <span class="funzione-ms" aria-hidden="true">update</span><span></span>
+            </p>
 
-        <!-- Privacy Section -->
-        <section class="legal-section" id="privacy-container" style="margin-top: 0;">
-            <!-- Dynamic Content -->
-            <p style="text-align: center; color: var(--text-muted);">Caricamento informativa...</p>
+            <!-- In breve: riassunto scritto qui, da tenere allineato al testo del pannello (tabella legal) -->
+            <div class="privacy-breve reveal delay-2">
+                <div>
+                    <span class="funzione-ms" aria-hidden="true">person_off</span>
+                    <b>Nessun account</b>
+                    <span>Non ti chiede nome, email, telefono o matricola.</span>
+                </div>
+                <div>
+                    <span class="funzione-ms" aria-hidden="true">smartphone</span>
+                    <b>I dati restano sul telefono</b>
+                    <span>Corso, preferiti, note e impostazioni sono salvati solo sul tuo dispositivo.</span>
+                </div>
+                <div>
+                    <span class="funzione-ms" aria-hidden="true">block</span>
+                    <b>Niente pubblicità</b>
+                    <span>Nessun annuncio, nessun tracker pubblicitario, nessuna profilazione.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sezioni dell'informativa (tabella legal, categoria "Informativa sulla Privacy"): una riga
+             con icona per sezione, si apre con un tocco (loadPrivacy in script.js) -->
+        <section class="privacy-sezioni">
+            <button type="button" class="privacy-tutte" id="privacy-tutte" hidden>Apri tutte</button>
+            <div id="privacy-container">
+                <p class="privacy-stato">Caricamento informativa…</p>
+            </div>
+
+            <div class="privacy-domande">
+                <div>
+                    <b>Domande sui tuoi dati?</b>
+                    <span>Scrivimi: rispondo a ogni richiesta.</span>
+                </div>
+                <a href="mailto:stefano.sciurba@studenti.unisalento.it?subject=Domanda%20sulla%20privacy%20di%20QuickCheck" class="btn btn-primary">
+                    <span class="funzione-ms" aria-hidden="true">mail</span>Scrivimi
+                </a>
+            </div>
         </section>
     </main>
 

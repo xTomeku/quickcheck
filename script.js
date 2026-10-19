@@ -177,6 +177,7 @@ async function loadLegal(_supabase) {
 
 async function loadPrivacy(_supabase) {
     const container = document.getElementById('privacy-container');
+    const apriTutte = document.getElementById('privacy-tutte');
     const { data, error } = await _supabase
         .from('legal')
         .select('*')
@@ -184,30 +185,55 @@ async function loadPrivacy(_supabase) {
         .eq('category', 'Informativa sulla Privacy')
         .order('order_index', { ascending: true });
 
-    if (error || !data || data.length === 0) return;
+    if (error || !data || data.length === 0) {
+        container.innerHTML = '<p class="privacy-stato">Non riesco a caricare l&rsquo;informativa adesso: riprova tra qualche minuto.</p>';
+        return;
+    }
 
-    container.innerHTML = '';
-    
-    const wrapper = document.createElement('div');
-    wrapper.style.display = 'flex';
-    wrapper.style.flexDirection = 'column';
-    wrapper.style.gap = '1.5rem';
-    wrapper.style.maxWidth = '800px';
-    wrapper.style.margin = '0 auto';
-    
-    data.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = `card reveal delay-${(index % 6) + 1}`;
-        card.style.textAlign = 'left';
-        
-        card.innerHTML = `
-            <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px;">${item.title}</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;">${item.description}</p>
-        `;
-        wrapper.appendChild(card);
-    });
-    
-    container.appendChild(wrapper);
+    // Titoli del pannello come "1. RACCOLTA DATI LOCALE E PRIVACY:": numero e due punti tolti, solo l'iniziale maiuscola
+    const titolo = (s) => {
+        const t = String(s || '').replace(/^\s*\d+[.)]\s*/, '').replace(/[:.\s]+$/, '').toLowerCase();
+        return t.charAt(0).toUpperCase() + t.slice(1);
+    };
+    // Icona della sezione scelta dal titolo; una sezione nuova con un titolo diverso usa il foglio
+    const icona = (t) => /raccolta|dati locale/i.test(t) ? 'smartphone' : /servizi esterni|comunicazione/i.test(t) ? 'cloud'
+        : /notifiche/i.test(t) ? 'notifications' : /profilazione|ads|pubblicit/i.test(t) ? 'block'
+        : /posizione/i.test(t) ? 'location_on' : /autorizzazion|permess/i.test(t) ? 'key'
+        : /donazion/i.test(t) ? 'volunteer_activism' : /modifiche/i.test(t) ? 'update'
+        : /contatt/i.test(t) ? 'mail' : 'description';
+
+    container.innerHTML = data.map((item, i) => `
+        <details class="privacy-voce"${i === 0 ? ' open' : ''}>
+            <summary>
+                <span class="funzione-ms privacy-icona" aria-hidden="true">${icona(item.title)}</span>
+                <h2>${titolo(item.title)}</h2>
+                <span class="funzione-ms privacy-piu" aria-hidden="true">add</span>
+            </summary>
+            <p>${String(item.description || '').replace(/\u200B/g, '').trim()}</p>
+        </details>`).join('');
+
+    // "Apri tutte" / "Chiudi tutte", aggiornato anche quando si apre o chiude una voce a mano
+    if (apriTutte) {
+        const voci = [...container.querySelectorAll('details')];
+        const aggiorna = () => { apriTutte.textContent = voci.every(d => d.open) ? 'Chiudi tutte' : 'Apri tutte'; };
+        apriTutte.onclick = () => {
+            const apri = voci.some(d => !d.open);
+            voci.forEach(d => { d.open = apri; });
+            aggiorna();
+        };
+        voci.forEach(d => d.addEventListener('toggle', aggiorna));
+        apriTutte.hidden = false;
+        aggiorna();
+    }
+
+    // Data dell'ultima voce aggiunta o modificata nel pannello
+    const ultima = data.map(item => item.updated_at || item.created_at).filter(Boolean).sort().pop();
+    const aggiornata = document.getElementById('privacy-aggiornata');
+    if (ultima && aggiornata) {
+        aggiornata.lastElementChild.textContent = 'Ultimo aggiornamento: ' +
+            new Date(ultima).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+        aggiornata.hidden = false;
+    }
 }
 
 // Icona Material per un contatto: dall'emoji del pannello o, se manca, dal tipo di indirizzo
