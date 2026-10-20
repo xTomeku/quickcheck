@@ -316,7 +316,10 @@ function scartaModifiche(sezione) {
         document.getElementById('cfg-menu-anteprima')?.classList.add('hidden');
     }
     if (sezione === 'novita') _novDaRicaricare = true;
-    if (sezione === 'mappe') _mappeDati = null; // riaprendo la sezione si riparte dalla versione pubblicata
+    if (sezione === 'mappe') { // riaprendo la sezione si riparte dalla bozza salvata (o dalla versione pubblicata)
+        _mappeDati = null;
+        cancellaCopiaLocaleMappe();
+    }
 }
 
 // true se si può lasciare (o ricaricare) la sezione aperta. Una sola domanda alla volta.

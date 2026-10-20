@@ -98,18 +98,28 @@ document.getElementById('config-messaggio-form')?.addEventListener('submit', asy
 });
 
 // ---------------------------------------------------------------------
-// Editor delle mappe: si parte dal JSON pubblicato (o da un file scelto), si modificano
-// punti di interesse e aule degli edifici e si pubblica il risultato come nuova versione.
+// Editor delle mappe: si parte dalla bozza salvata, dal JSON pubblicato o da un file scelto,
+// si modificano punti di interesse, aule ed edifici e si pubblica il risultato come nuova versione.
 // Nel JSON le coordinate sono [lng, lat] (come il perimetro degli edifici).
 // - Punto di interesse: { id, nome, descrizione, tipo, coordinate: [lng, lat] }
 // - Aula (in edifici[].aule): { id, nome, roomCode, piano, capienza, coordinata: [lng, lat] | null,
 //   coordinate: [coordinata] | [] } più i campi di stato che l'app riempie con l'orario.
+// - Edificio: { id, nome, descrizione, codiceSede, centro: {lat, lng}, zoomIniziale, perimetro,
+//   piani: [interi], aule, icona }. Qui si modificano tutti i campi tranne id e perimetro.
+//
+// Bozza: il JSON in modifica si salva nel bucket come bozza_mappe.json.gz insieme alla versione
+// da cui parte. config_app non la indica mai, quindi le app non la scaricano: si salva quante volte
+// si vuole (anche da più dispositivi) e si pubblica una volta sola. Le modifiche non ancora salvate
+// nella bozza restano anche in una copia in questo browser (localStorage), per pagine chiuse o ricaricate.
 // ---------------------------------------------------------------------
+const BOZZA_MAPPE = 'bozza_mappe.json.gz';
+const CHIAVE_COPIA_MAPPE = 'qc_admin_mappe_copia';
 let _mappeDati = null;          // JSON in modifica (intero: edifici, puntiInteresse, lineeBus)
-let _mappeOrigine = '';         // da dove viene: "v4 pubblicata" o il nome del file
-let _poiPubblicati = new Map(); // id -> punto (JSON) della versione pubblicata, per il riepilogo
-let _aulePubblicate = new Map(); // "edificio/aula" -> aula (JSON) della versione pubblicata
-let _modoEditor = 'poi';        // 'poi' | 'aule'
+let _mappeOrigine = '';         // da dove viene: "v4 pubblicata", "bozza del ..." o il nome del file
+let _mappeBase = 0;             // versione pubblicata da cui partono le modifiche
+let _bozzaMappe = null;         // { base_version, salvata_il, salvata_da } della bozza su Supabase, o null
+let _pubblicati = _indiceMappe(null); // la versione pubblicata, per il riepilogo delle differenze
+let _modoEditor = 'poi';        // 'poi' | 'aule' | 'edifici'
 let _edificioSel = 0;           // indice in _mappeDati.edifici (modo aule)
 let _poiSel = -1;               // indice dell'elemento selezionato nell'elenco del modo attuale
 let _poiMappa = null;
@@ -123,7 +133,9 @@ const COLORI_POI = {
 };
 const COLORE_AULA = '#D4AF37';
 const _colorePoi = (tipo) => COLORI_POI[tipo] || '#9b9b9b';
-const _coloreElemento = (el) => _modoEditor === 'aule' ? COLORE_AULA : _colorePoi(el.tipo);
+const _coloreElemento = (el) => _modoEditor === 'poi' ? _colorePoi(el.tipo) : COLORE_AULA;
+const _nomePiano = (n) => n === 0 ? 'Piano terra (0)' : `Piano ${n}`;
+const _dataBreve = (iso) => new Date(iso).toLocaleString('it-IT', { dateStyle: 'short', timeStyle: 'short' });
 
 // Campi che l'app sovrascrive con l'orario: per le aule nuove si mettono i valori "sconosciuti"
 const AULA_STATO_INIZIALE = {
@@ -139,6 +151,18 @@ function _validaMappe(dati) {
         if (!Array.isArray(dati[chiave])) throw new Error(`manca l'elenco "${chiave}"`);
     }
     if (dati.edifici.length === 0) throw new Error('l\'elenco "edifici" è vuoto');
+    const idsEdifici = new Set();
+    dati.edifici.forEach((e, i) => {
+        const chi = e.nome ? `"${e.nome}"` : `n. ${i + 1}`;
+        if (!e.id) throw new Error(`l'edificio ${chi} non ha un id`);
+        if (idsEdifici.has(e.id)) throw new Error(`l'id "${e.id}" è usato da più edifici`);
+        idsEdifici.add(e.id);
+        if (!e.nome) throw new Error(`l'edificio "${e.id}" non ha un nome`);
+        if (!Array.isArray(e.piani) || e.piani.length === 0 || !e.piani.every(Number.isInteger)) throw new Error(`l'edificio ${chi} non ha un elenco di piani valido`);
+        if (new Set(e.piani).size !== e.piani.length) throw new Error(`l'edificio ${chi} ha piani ripetuti`);
+        if (!e.centro || !_coordValide([e.centro.lng, e.centro.lat])) throw new Error(`l'edificio ${chi} ha un centro non valido`);
+        if (e.zoomIniziale != null && !Number.isFinite(e.zoomIniziale)) throw new Error(`l'edificio ${chi} ha uno zoom non valido`);
+    });
     const ids = new Set();
     dati.puntiInteresse.forEach((p, i) => {
         const chi = p.nome ? `"${p.nome}"` : `n. ${i + 1}`;
@@ -159,6 +183,7 @@ function _validaMappe(dati) {
             if (!a.nome) throw new Error(`l'aula "${a.id}" (${e.nome || e.id}) non ha un nome`);
             if (!a.roomCode) throw new Error(`l'aula ${chi} non ha il codice aula`);
             if (!Number.isInteger(a.piano)) throw new Error(`l'aula ${chi} non ha un piano valido`);
+            if (!e.piani.includes(a.piano)) throw new Error(`l'aula ${chi} è al piano ${a.piano}, che non è tra i piani dell'edificio`);
             if (!Number.isInteger(a.capienza) || a.capienza < 0) throw new Error(`l'aula ${chi} ha una capienza non valida`);
             if (a.coordinata != null && !_coordValide(a.coordinata)) throw new Error(`l'aula ${chi} ha coordinate non valide`);
         });
@@ -174,65 +199,182 @@ async function leggiMappePubblicate(config) {
     return JSON.parse(new TextDecoder().decode(json));
 }
 
-// All'apertura della sezione: con modifiche non salvate si tiene la bozza,
-// altrimenti si riparte dalla versione pubblicata
+/** Bozza salvata nel bucket: { base_version, salvata_il, salvata_da, dati } oppure null se non c'è. */
+async function leggiBozzaMappe() {
+    const { data: elenco, error: errElenco } = await _supabase.storage.from(BUCKET_MAPPE).list('', { search: BOZZA_MAPPE });
+    if (errElenco) throw new Error(errElenco.message);
+    if (!(elenco || []).some(f => f.name === BOZZA_MAPPE)) return null;
+    const { data, error } = await _supabase.storage.from(BUCKET_MAPPE).download(BOZZA_MAPPE);
+    if (error) throw new Error(error.message);
+    const bozza = JSON.parse(new TextDecoder().decode(await _gunzip(new Uint8Array(await data.arrayBuffer()))));
+    if (!bozza || !bozza.dati) throw new Error('la bozza non contiene le mappe');
+    return bozza;
+}
+
+// ----- Copia in questo browser delle modifiche non ancora salvate nella bozza -----
+let _timerCopiaMappe = null;
+
+function _scriviCopiaLocale() {
+    clearTimeout(_timerCopiaMappe);
+    if (!_mappeDati || !_modificheNonSalvate.has('mappe')) return;
+    try {
+        localStorage.setItem(CHIAVE_COPIA_MAPPE, JSON.stringify({
+            base_version: _mappeBase, origine: _mappeOrigine, ora: new Date().toISOString(), dati: _mappeDati,
+        }));
+    } catch (_) { /* spazio pieno o storage bloccato: resta solo la pagina aperta */ }
+}
+
+function _leggiCopiaLocale() {
+    try {
+        const copia = JSON.parse(localStorage.getItem(CHIAVE_COPIA_MAPPE));
+        return copia && copia.dati ? copia : null;
+    } catch (_) {
+        return null;
+    }
+}
+
+/** Usata anche da scartaModifiche (comune.js). */
+function cancellaCopiaLocaleMappe() {
+    clearTimeout(_timerCopiaMappe);
+    try { localStorage.removeItem(CHIAVE_COPIA_MAPPE); } catch (_) { /* niente da fare */ }
+}
+
+// La pagina può chiudersi prima che scatti il timer
+window.addEventListener('pagehide', _scriviCopiaLocale);
+
+function _usaMappe(dati, base, origine) {
+    _mappeDati = dati;
+    _mappeBase = base;
+    _mappeOrigine = origine;
+    _poiSel = -1;
+    if (_edificioSel >= dati.edifici.length) _edificioSel = 0;
+}
+
+// All'apertura della sezione: con modifiche non salvate si tiene quello che c'è,
+// altrimenti si riparte dalla bozza salvata o, se non c'è, dalla versione pubblicata.
+// Se in questo browser sono rimaste modifiche non salvate si chiede se recuperarle.
 async function caricaEditorMappe() {
     if (_modificheNonSalvate.has('mappe') && _mappeDati) { _disegnaEditorMappe(); return; }
+    const versione = (_configApp && _configApp.mappa_version) || 0;
     _mappeDati = null;
-    _poiPubblicati = new Map();
-    _aulePubblicate = new Map();
+    _bozzaMappe = null;
+    _mappeBase = versione;
+    let pubblicate = null, bozza = null;
     try {
-        const dati = await leggiMappePubblicate(_configApp);
-        if (dati) {
-            _mappeDati = dati;
-            _mappeOrigine = `v${_configApp.mappa_version} pubblicata`;
-            dati.puntiInteresse.forEach(p => _poiPubblicati.set(p.id, JSON.stringify(p)));
-            dati.edifici.forEach(e => (e.aule || []).forEach(a => _aulePubblicate.set(`${e.id}/${a.id}`, JSON.stringify(a))));
-        }
+        pubblicate = await leggiMappePubblicate(_configApp);
     } catch (err) {
         showToast('Impossibile leggere le mappe pubblicate: ' + err.message, 'error');
     }
-    _poiSel = -1;
-    if (_mappeDati && _edificioSel >= _mappeDati.edifici.length) _edificioSel = 0;
+    try {
+        bozza = await leggiBozzaMappe();
+    } catch (err) {
+        showToast('Impossibile leggere la bozza salvata: ' + err.message, 'error');
+    }
+    _pubblicati = _indiceMappe(pubblicate);
+    if (bozza) {
+        _bozzaMappe = { base_version: bozza.base_version || 0, salvata_il: bozza.salvata_il, salvata_da: bozza.salvata_da || '' };
+        _usaMappe(bozza.dati, _bozzaMappe.base_version, `bozza del ${_dataBreve(bozza.salvata_il)}`);
+    } else if (pubblicate) {
+        _usaMappe(pubblicate, versione, `v${versione} pubblicata`);
+    }
     azzeraModifiche('mappe');
+
+    const copia = _leggiCopiaLocale();
+    if (copia && _mappeDati && JSON.stringify(copia.dati) === JSON.stringify(_mappeDati)) {
+        cancellaCopiaLocaleMappe();
+    } else if (copia) {
+        const piuRecente = _bozzaMappe && _bozzaMappe.salvata_il > copia.ora
+            ? ` Attenzione: la bozza su Supabase (${_dataBreve(_bozzaMappe.salvata_il)}) è più recente.` : '';
+        const recupera = await customConfirm(`In questo browser ci sono modifiche alle mappe non salvate nella bozza (${_dataBreve(copia.ora)}). Recuperarle?${piuRecente}`, {
+            title: 'Modifiche non salvate', confirmText: 'Recupera', cancelText: 'Scarta', icon: '🗺️', isDanger: false
+        });
+        if (recupera) {
+            _usaMappe(copia.dati, copia.base_version || versione, copia.origine || 'copia locale');
+            segnaModifiche('mappe');
+        } else {
+            cancellaCopiaLocaleMappe();
+        }
+    }
     _disegnaEditorMappe();
     _inquadraPoi();
 }
 
 function _modificaMappe() {
     segnaModifiche('mappe');
+    clearTimeout(_timerCopiaMappe);
+    _timerCopiaMappe = setTimeout(_scriviCopiaLocale, 400);
     _aggiornaAnteprimaMappe();
 }
 
-// Aggiunti, modificati ed eliminati rispetto alla versione pubblicata
-function _contaDifferenze(attuali, pubblicati) {
-    const chiavi = new Set(attuali.keys());
-    let aggiunti = 0, cambiati = 0;
-    attuali.forEach((json, chiave) => {
-        if (!pubblicati.has(chiave)) aggiunti++;
-        else if (pubblicati.get(chiave) !== json) cambiati++;
+/** Punti, aule ed edifici (senza aule) per chiave, con il JSON per il confronto e il nome da mostrare. */
+function _indiceMappe(dati) {
+    const indice = { punti: new Map(), aule: new Map(), edifici: new Map() };
+    if (!dati) return indice;
+    dati.puntiInteresse.forEach(p => indice.punti.set(p.id, { json: JSON.stringify(p), nome: p.nome || p.id }));
+    dati.edifici.forEach(e => {
+        const { aule, ...resto } = e;
+        indice.edifici.set(e.id, { json: JSON.stringify(resto), nome: e.nome || e.id });
+        (aule || []).forEach(a => indice.aule.set(`${e.id}/${a.id}`, { json: JSON.stringify(a), nome: `${a.nome || a.id} (${e.nome || e.id})` }));
     });
-    const eliminati = [...pubblicati.keys()].filter(k => !chiavi.has(k)).length;
-    return `${aggiunti} aggiunti &middot; ${cambiati} modificati &middot; ${eliminati} eliminati`;
+    return indice;
+}
+
+// Nomi degli aggiunti, modificati ed eliminati rispetto alla versione pubblicata
+function _differenze(attuali, pubblicati) {
+    const diff = { aggiunti: [], modificati: [], eliminati: [] };
+    attuali.forEach((el, chiave) => {
+        const prima = pubblicati.get(chiave);
+        if (!prima) diff.aggiunti.push(el.nome);
+        else if (prima.json !== el.json) diff.modificati.push(el.nome);
+    });
+    pubblicati.forEach((el, chiave) => { if (!attuali.has(chiave)) diff.eliminati.push(el.nome); });
+    return diff;
+}
+
+function _disegnaAvvisoBozza() {
+    const avviso = document.getElementById('cfg-mappe-bozza');
+    if (!_bozzaMappe) { avviso.classList.add('hidden'); return; }
+    const pubblicata = (_configApp && _configApp.mappa_version) || 0;
+    const superata = _bozzaMappe.base_version !== pubblicata;
+    avviso.innerHTML = `
+        <span class="admin-ms">draft</span>
+        <div class="admin-riempi">
+            <strong>Bozza salvata</strong> il ${escapeHtml(_dataBreve(_bozzaMappe.salvata_il))}${_bozzaMappe.salvata_da ? ` da ${escapeHtml(_bozzaMappe.salvata_da)}` : ''}, partendo dalla v${_bozzaMappe.base_version}. Le app non la vedono finch&eacute; non la pubblichi.
+            ${superata ? `<div class="admin-errore">Dopo la bozza &egrave; stata pubblicata la v${pubblicata}: pubblicando la bozza, quello che &egrave; cambiato nella v${pubblicata} e non &egrave; nella bozza andr&agrave; perso.</div>` : ''}
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" data-azione="scarta-bozza"><span class="admin-ms">delete</span> Scarta bozza</button>`;
+    avviso.classList.remove('hidden');
 }
 
 function _aggiornaAnteprimaMappe() {
     const anteprima = document.getElementById('cfg-mappe-anteprima');
     const modificato = _modificheNonSalvate.has('mappe') && !!_mappeDati;
-    document.getElementById('cfg-mappe-pubblica').disabled = !modificato;
+    const daPubblicare = !!_mappeDati && (modificato || !!_bozzaMappe);
+    document.getElementById('cfg-mappe-pubblica').disabled = !daPubblicare;
+    document.getElementById('cfg-mappe-salva-bozza').disabled = !modificato;
     document.getElementById('cfg-mappe-annulla').disabled = !modificato;
     document.getElementById('cfg-mappe-scarica').disabled = !_mappeDati;
-    if (!modificato) { anteprima.classList.add('hidden'); return; }
+    _disegnaAvvisoBozza();
+    if (!daPubblicare) { anteprima.classList.add('hidden'); return; }
 
-    const punti = new Map(_mappeDati.puntiInteresse.map(p => [p.id, JSON.stringify(p)]));
-    const aule = new Map();
-    _mappeDati.edifici.forEach(e => (e.aule || []).forEach(a => aule.set(`${e.id}/${a.id}`, JSON.stringify(a))));
+    const attuali = _indiceMappe(_mappeDati);
     const prossima = ((_configApp && _configApp.mappa_version) || 0) + 1;
-    const confronto = _poiPubblicati.size || _aulePubblicate.size;
+    const confronto = _pubblicati.edifici.size > 0;
+    const gruppi = [['Punti di interesse', 'punti'], ['Aule', 'aule'], ['Edifici', 'edifici']]
+        .map(([titolo, chiave]) => ({ titolo, ..._differenze(attuali[chiave], _pubblicati[chiave]) }))
+        .filter(g => g.aggiunti.length + g.modificati.length + g.eliminati.length > 0);
+    const nomi = (etichetta, elenco) => elenco.length
+        ? `<div><span class="admin-testo-sub">${etichetta}:</span> ${elenco.map(escapeHtml).join(', ')}</div>` : '';
+    const dettaglio = gruppi.map(g => `
+        <details class="mappe-diff">
+            <summary>${g.titolo}: ${g.aggiunti.length} aggiunti &middot; ${g.modificati.length} modificati &middot; ${g.eliminati.length} eliminati</summary>
+            ${nomi('Aggiunti', g.aggiunti)}${nomi('Modificati', g.modificati)}${nomi('Eliminati', g.eliminati)}
+        </details>`).join('');
     anteprima.innerHTML = `
         <div class="admin-anteprima-titolo">Modifiche da pubblicare come <span class="admin-oro">v${prossima}</span> <span class="admin-testo-sub admin-piccolo">(partendo da ${escapeHtml(_mappeOrigine)})</span></div>
-        <div>${_mappeDati.edifici.length} edifici &middot; ${aule.size} aule &middot; ${punti.size} punti di interesse &middot; ${_mappeDati.lineeBus.length} linee bus</div>
-        ${confronto ? `<div class="admin-anteprima-nota">Rispetto alla versione pubblicata &mdash; punti: ${_contaDifferenze(punti, _poiPubblicati)}; aule: ${_contaDifferenze(aule, _aulePubblicate)}</div>` : ''}`;
+        <div>${attuali.edifici.size} edifici &middot; ${attuali.aule.size} aule &middot; ${attuali.punti.size} punti di interesse &middot; ${_mappeDati.lineeBus.length} linee bus</div>
+        <div class="admin-anteprima-nota">${modificato ? 'Ci sono modifiche non ancora salvate nella bozza.' : 'Tutto salvato nella bozza.'}</div>
+        ${confronto ? `<div class="admin-anteprima-nota">Rispetto alla versione pubblicata:</div>${dettaglio || '<div class="admin-anteprima-nota">nessuna differenza.</div>'}` : ''}`;
     anteprima.classList.remove('hidden');
 }
 
@@ -242,24 +384,29 @@ function _edificioAttuale() {
     return _mappeDati && _mappeDati.edifici[_edificioSel];
 }
 
-/** Elenco che si sta modificando: punti di interesse o aule dell'edificio scelto. */
+/** Elenco che si sta modificando: punti di interesse, aule dell'edificio scelto o edifici. */
 function _elementiEditor() {
     if (!_mappeDati) return [];
     if (_modoEditor === 'poi') return _mappeDati.puntiInteresse;
+    if (_modoEditor === 'edifici') return _mappeDati.edifici;
     const e = _edificioAttuale();
     if (e && !Array.isArray(e.aule)) e.aule = [];
     return e ? e.aule : [];
 }
 
-/** [lng, lat] dell'elemento, oppure null (aula senza posizione). */
+/** [lng, lat] dell'elemento (per gli edifici il centro), oppure null (aula senza posizione). */
 function _coordElemento(el) {
-    const c = _modoEditor === 'poi' ? el.coordinate : el.coordinata;
+    const c = _modoEditor === 'poi' ? el.coordinate
+        : _modoEditor === 'aule' ? el.coordinata
+        : el.centro && [el.centro.lng, el.centro.lat];
     return _coordValide(c) ? c : null;
 }
 
 function _impostaCoord(el, c) {
     if (_modoEditor === 'poi') {
         el.coordinate = c;
+    } else if (_modoEditor === 'edifici') {
+        if (c) el.centro = { lat: c[1], lng: c[0] };
     } else {
         el.coordinata = c;
         el.coordinate = c ? [c] : [];
@@ -268,12 +415,19 @@ function _impostaCoord(el, c) {
 
 function _sottotitoloElemento(el) {
     if (_modoEditor === 'poi') return `${el.tipo || '?'}${el.descrizione ? ' · ' + el.descrizione : ''}`;
+    if (_modoEditor === 'edifici') {
+        const piani = Array.isArray(el.piani) ? el.piani : [];
+        return `${el.codiceSede || 'senza codice sede'} · ${piani.length === 1 ? 'piano' : 'piani'} ${piani.join(', ') || '?'}` +
+            ` · ${(el.aule || []).length} aule`;
+    }
     return `${el.roomCode || 'senza codice'} · piano ${el.piano ?? '?'}` +
         ` · ${el.capienza ?? '?'} posti${_coordElemento(el) ? '' : ' · non sulla mappa'}`;
 }
 
 function _impostaModoEditor(modo) {
     if (modo === _modoEditor) return;
+    // Passando dagli edifici alle aule si resta sull'edificio selezionato
+    if (_modoEditor === 'edifici' && _poiSel >= 0) _edificioSel = _poiSel;
     _modoEditor = modo;
     _poiSel = -1;
     document.getElementById('poi-cerca').value = '';
@@ -295,7 +449,9 @@ function _disegnaEditorMappe() {
     const aule = _modoEditor === 'aule';
     editor.dataset.modo = _modoEditor;
     document.querySelectorAll('#poi-modo [data-modo]').forEach(b => b.classList.toggle('active', b.dataset.modo === _modoEditor));
-    document.getElementById('poi-cerca').placeholder = aule ? 'Cerca per nome, codice o id' : 'Cerca per nome, descrizione o id';
+    document.getElementById('poi-cerca').placeholder = {
+        poi: 'Cerca per nome, descrizione o id', aule: 'Cerca per nome, codice o id', edifici: 'Cerca per nome, codice sede o id',
+    }[_modoEditor];
     document.getElementById('poi-aggiungi-testo').textContent = aule ? 'Aggiungi aula' : 'Aggiungi punto';
     document.getElementById('poi-elimina-testo').textContent = aule ? 'Elimina aula' : 'Elimina punto';
 
@@ -314,6 +470,9 @@ function _disegnaEditorMappe() {
         .sort((x, y) => (x.e.nome || x.e.id).localeCompare(y.e.nome || y.e.id, 'it'))
         .map(({ e, i }) => `<option value="${i}">${escapeHtml(e.nome || e.id)} (${(e.aule || []).length})</option>`).join('');
     document.getElementById('poi-edificio').value = String(_edificioSel);
+    // Icone già usate dagli edifici: suggerimenti del campo Icona
+    document.getElementById('edificio-icone').innerHTML = [...new Set(_mappeDati.edifici.map(e => e.icona).filter(Boolean))].sort()
+        .map(i => `<option value="${escapeHtml(i)}">`).join('');
 
     _inizializzaMappaPoi();
     _disegnaEdificiPoi();
@@ -335,13 +494,13 @@ function _inizializzaMappaPoi() {
     _poiStrato = L.layerGroup().addTo(_poiMappa);
 }
 
-// Perimetri degli edifici come riferimento; nel modo aule quello scelto è evidenziato
+// Perimetri degli edifici come riferimento; nei modi aule ed edifici quello scelto è evidenziato
 function _disegnaEdificiPoi() {
     if (!_poiMappa) return;
     _poiEdifici.clearLayers();
     _mappeDati.edifici.forEach((e, i) => {
         if (!Array.isArray(e.perimetro) || e.perimetro.length < 3) return;
-        const scelto = _modoEditor === 'aule' && i === _edificioSel;
+        const scelto = (_modoEditor === 'aule' && i === _edificioSel) || (_modoEditor === 'edifici' && i === _poiSel);
         L.polygon(e.perimetro.map(([lng, lat]) => [lat, lng]), {
             color: COLORE_AULA, weight: scelto ? 2.5 : 1, fillOpacity: scelto ? 0.18 : 0.06, interactive: false,
         }).addTo(_poiEdifici);
@@ -354,7 +513,7 @@ function _poiVisibili() {
     return _elementiEditor()
         .map((p, i) => ({ p, i }))
         .filter(({ p }) => (!tipo || p.tipo === tipo) &&
-            (!testo || [p.nome, p.descrizione, p.roomCode, p.id].some(v => String(v ?? '').toLowerCase().includes(testo))));
+            (!testo || [p.nome, p.descrizione, p.roomCode, p.codiceSede, p.id].some(v => String(v ?? '').toLowerCase().includes(testo))));
 }
 
 function _disegnaPoi() {
@@ -437,18 +596,22 @@ function _selezionaPoi(indice, centra) {
     if (!p) _poiSel = -1;
     document.getElementById('poi-form').classList.toggle('hidden', !p);
     _disegnaPoi();
+    if (_modoEditor === 'edifici') _disegnaEdificiPoi();
     _mettiSegnaposto(p || {});
     if (!p) return;
 
     document.getElementById('poi-nome').value = p.nome || '';
-    document.getElementById('poi-id').value = p.id || '';
+    // L'id degli edifici lo usano le aule e l'app: qui non si cambia
+    const campoId = document.getElementById('poi-id');
+    campoId.value = p.id || '';
+    campoId.disabled = _modoEditor === 'edifici';
     document.getElementById('poi-tipo').value = p.tipo || '';
     document.getElementById('poi-descrizione').value = p.descrizione || '';
     document.getElementById('aula-roomcode').value = p.roomCode || '';
-    document.getElementById('aula-piano').value = p.piano ?? '';
     document.getElementById('aula-capienza').value = p.capienza ?? '';
-    document.getElementById('aula-piano').classList.remove('poi-errore');
     document.getElementById('aula-capienza').classList.remove('poi-errore');
+    if (_modoEditor === 'aule') _compilaPianoAula(p);
+    if (_modoEditor === 'edifici') _compilaEdificio(p);
     _compilaCoordinatePoi(p);
     document.querySelector(`.poi-riga[data-poi="${indice}"]`)?.scrollIntoView({ block: 'nearest' });
 
@@ -457,7 +620,8 @@ function _selezionaPoi(indice, centra) {
 }
 
 // Campi di testo dell'elemento selezionato
-[['poi-nome', 'nome'], ['poi-tipo', 'tipo'], ['poi-id', 'id'], ['poi-descrizione', 'descrizione'], ['aula-roomcode', 'roomCode']].forEach(([idCampo, chiave]) =>
+[['poi-nome', 'nome'], ['poi-tipo', 'tipo'], ['poi-id', 'id'], ['poi-descrizione', 'descrizione'], ['aula-roomcode', 'roomCode'],
+    ['edificio-codice', 'codiceSede'], ['edificio-icona', 'icona']].forEach(([idCampo, chiave]) =>
     document.getElementById(idCampo)?.addEventListener('input', (e) => {
         const p = _poiSelezionato();
         if (!p) return;
@@ -468,27 +632,125 @@ function _selezionaPoi(indice, centra) {
         if (chiave === 'tipo' && segno) segno.style.background = _colorePoi(p.tipo);
     }));
 
-// Piano e capienza delle aule: numeri interi
-['aula-piano', 'aula-capienza'].forEach(idCampo =>
-    document.getElementById(idCampo)?.addEventListener('input', (e) => {
-        const p = _poiSelezionato();
-        if (!p) return;
-        const testo = e.target.value.trim();
-        const n = Number(testo);
-        const valido = testo !== '' && Number.isInteger(n) && (idCampo === 'aula-piano' || n >= 0);
-        e.target.classList.toggle('poi-errore', !valido);
-        if (!valido) return;
-        if (idCampo === 'aula-capienza') {
-            p.capienza = n;
-        } else {
-            p.piano = n;
-            // Un piano nuovo va anche nell'elenco dei piani dell'edificio
-            const ed = _edificioAttuale();
-            if (ed && Array.isArray(ed.piani) && !ed.piani.includes(n)) ed.piani = [...ed.piani, n].sort((a, b) => a - b);
-        }
-        _modificaMappe();
-        _disegnaPoi();
-    }));
+// Capienza delle aule: intero non negativo
+document.getElementById('aula-capienza')?.addEventListener('input', (e) => {
+    const p = _poiSelezionato();
+    if (!p) return;
+    const testo = e.target.value.trim();
+    const n = Number(testo);
+    const valido = testo !== '' && Number.isInteger(n) && n >= 0;
+    e.target.classList.toggle('poi-errore', !valido);
+    if (!valido) return;
+    p.capienza = n;
+    _modificaMappe();
+    _disegnaPoi();
+});
+
+// Piano dell'aula: uno dei piani dell'edificio (si aggiungono nel modo Edifici).
+// Un piano che non è nell'elenco resta scelto, segnalato, finché non lo si cambia.
+function _compilaPianoAula(aula) {
+    const ed = _edificioAttuale();
+    const piani = ed && Array.isArray(ed.piani) ? ed.piani : [];
+    const fuori = Number.isInteger(aula.piano) && !piani.includes(aula.piano);
+    const campo = document.getElementById('aula-piano');
+    campo.innerHTML = piani.map(n => `<option value="${n}">${escapeHtml(_nomePiano(n))}</option>`).join('') +
+        (fuori ? `<option value="${aula.piano}">${escapeHtml(_nomePiano(aula.piano))} (non tra i piani dell'edificio)</option>` : '');
+    campo.value = String(aula.piano);
+    campo.classList.toggle('poi-errore', fuori);
+}
+
+document.getElementById('aula-piano')?.addEventListener('change', (e) => {
+    const p = _poiSelezionato();
+    if (!p || _modoEditor !== 'aule') return;
+    p.piano = Number(e.target.value);
+    _compilaPianoAula(p);
+    _modificaMappe();
+    _disegnaPoi();
+});
+
+// ----- Modo edifici: codice sede, icona, zoom e piani -----
+
+function _compilaEdificio(ed) {
+    document.getElementById('edificio-codice').value = ed.codiceSede || '';
+    document.getElementById('edificio-icona').value = ed.icona || '';
+    document.getElementById('edificio-zoom').value = ed.zoomIniziale ?? '';
+    document.getElementById('edificio-zoom').classList.remove('poi-errore');
+    document.getElementById('edificio-nuovo-piano').value = '';
+    document.getElementById('edificio-nuovo-piano').classList.remove('poi-errore');
+    _disegnaPianiEdificio(ed);
+}
+
+function _disegnaPianiEdificio(ed) {
+    const piani = Array.isArray(ed.piani) ? ed.piani : [];
+    document.getElementById('edificio-piani').innerHTML = piani.map(n => {
+        const aule = (ed.aule || []).filter(a => a.piano === n).length;
+        return `<span class="edificio-piano">${escapeHtml(_nomePiano(n))}
+            <span class="admin-testo-sub admin-piccolo">${aule} ${aule === 1 ? 'aula' : 'aule'}</span>
+            <button type="button" data-piano="${n}" title="Togli ${escapeHtml(_nomePiano(n).toLowerCase())}" aria-label="Togli ${escapeHtml(_nomePiano(n).toLowerCase())}"><span class="admin-ms">close</span></button>
+        </span>`;
+    }).join('') || '<span class="admin-testo-sub admin-piccolo">Nessun piano</span>';
+}
+
+document.getElementById('edificio-zoom')?.addEventListener('input', (e) => {
+    const ed = _poiSelezionato();
+    if (!ed || _modoEditor !== 'edifici') return;
+    const n = Number(e.target.value.trim().replace(',', '.'));
+    const valido = e.target.value.trim() !== '' && Number.isFinite(n) && n >= 1 && n <= 22;
+    e.target.classList.toggle('poi-errore', !valido);
+    if (!valido) return;
+    ed.zoomIniziale = n;
+    _modificaMappe();
+});
+
+// Un piano si toglie solo se non ci sono aule (e ne resta almeno uno)
+document.getElementById('edificio-piani')?.addEventListener('click', (e) => {
+    const pulsante = e.target.closest('[data-piano]');
+    const ed = _poiSelezionato();
+    if (!pulsante || !ed || _modoEditor !== 'edifici') return;
+    const n = Number(pulsante.dataset.piano);
+    const aule = (ed.aule || []).filter(a => a.piano === n);
+    if (aule.length) {
+        const quante = aule.length === 1 ? 'c\'è 1 aula' : `ci sono ${aule.length} aule`;
+        showToast(`Al ${_nomePiano(n).toLowerCase()} ${quante} (${aule.map(a => a.nome || a.id).join(', ')}): spostale su un altro piano prima di toglierlo`, 'error');
+        return;
+    }
+    if (ed.piani.length <= 1) {
+        showToast('Un edificio deve avere almeno un piano', 'error');
+        return;
+    }
+    ed.piani = ed.piani.filter(x => x !== n);
+    _modificaMappe();
+    _disegnaPianiEdificio(ed);
+    _disegnaPoi();
+});
+
+function _aggiungiPianoEdificio() {
+    const ed = _poiSelezionato();
+    if (!ed || _modoEditor !== 'edifici') return;
+    const campo = document.getElementById('edificio-nuovo-piano');
+    const testo = campo.value.trim();
+    const n = Number(testo);
+    const valido = testo !== '' && Number.isInteger(n);
+    campo.classList.toggle('poi-errore', !valido);
+    if (!valido) return;
+    const piani = Array.isArray(ed.piani) ? ed.piani : [];
+    if (piani.includes(n)) {
+        showToast(`Il ${_nomePiano(n).toLowerCase()} c'è già`, 'error');
+        return;
+    }
+    ed.piani = [...piani, n].sort((a, b) => a - b);
+    campo.value = '';
+    _modificaMappe();
+    _disegnaPianiEdificio(ed);
+    _disegnaPoi();
+}
+
+document.getElementById('edificio-aggiungi-piano')?.addEventListener('click', _aggiungiPianoEdificio);
+document.getElementById('edificio-nuovo-piano')?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    _aggiungiPianoEdificio();
+});
 
 // Coordinate scritte a mano. In un campo si può incollare la coppia "lat, lng" copiata da Google Maps.
 // Per le aule i due campi vuoti tolgono la posizione.
@@ -561,7 +823,7 @@ function _idLibero(base, elementi) {
 
 // Nuovo elemento: il punto va al centro della mappa, l'aula senza posizione (si aggiunge dopo)
 document.getElementById('poi-aggiungi')?.addEventListener('click', () => {
-    if (!_mappeDati) return;
+    if (!_mappeDati || _modoEditor === 'edifici') return;
     const elementi = _elementiEditor();
     if (_modoEditor === 'poi') {
         elementi.push({
@@ -596,7 +858,7 @@ document.getElementById('poi-aggiungi')?.addEventListener('click', () => {
 
 document.getElementById('poi-elimina')?.addEventListener('click', async () => {
     const p = _poiSelezionato();
-    if (!p) return;
+    if (!p || _modoEditor === 'edifici') return;
     const cosa = _modoEditor === 'aule' ? `l'aula "${p.nome || p.id}" di ${_edificioAttuale().nome || _edificioAttuale().id}` : `"${p.nome || p.id}"`;
     if (!(await customConfirm(`Eliminare ${cosa}? Sparirà dalle app solo dopo la pubblicazione.`, {
         title: _modoEditor === 'aule' ? 'Elimina aula' : 'Elimina punto', confirmText: 'Elimina', icon: '📍', isDanger: true
@@ -620,11 +882,9 @@ document.getElementById('cfg-mappe-file')?.addEventListener('change', async (e) 
             throw new Error('il file non è un JSON valido (' + err.message + ')');
         }
         _validaMappe(dati);
-        _mappeDati = dati;
-        _mappeOrigine = file.name;
-        _poiSel = -1;
         _edificioSel = 0;
-        segnaModifiche('mappe');
+        _usaMappe(dati, (_configApp && _configApp.mappa_version) || 0, file.name);
+        _modificaMappe();
         _disegnaEditorMappe();
         _inquadraPoi();
     } catch (err) {
@@ -646,10 +906,69 @@ document.getElementById('cfg-mappe-scarica')?.addEventListener('click', () => {
 });
 
 document.getElementById('cfg-mappe-annulla')?.addEventListener('click', async () => {
-    if (!(await customConfirm('Scartare tutte le modifiche e tornare alla versione pubblicata?', {
+    const dove = _bozzaMappe ? 'all\'ultima bozza salvata' : 'alla versione pubblicata';
+    if (!(await customConfirm(`Scartare le modifiche non salvate e tornare ${dove}?`, {
         title: 'Annulla modifiche', confirmText: 'Scarta', icon: '🗺️', isDanger: true
     }))) return;
     azzeraModifiche('mappe');
+    cancellaCopiaLocaleMappe();
+    caricaEditorMappe();
+});
+
+// Salva bozza: il JSON in modifica va nel bucket, ma config_app non cambia e le app non lo vedono.
+// Se un altro admin ha salvato la bozza dopo che è stata aperta qui, si chiede prima di sovrascriverla.
+document.getElementById('cfg-mappe-salva-bozza')?.addEventListener('click', async () => {
+    if (!_mappeDati) return;
+    const pulsante = document.getElementById('cfg-mappe-salva-bozza');
+    pulsante.disabled = true;
+    try {
+        const remota = await leggiBozzaMappe();
+        if (remota && remota.salvata_il !== (_bozzaMappe && _bozzaMappe.salvata_il) &&
+            !(await customConfirm(`La bozza è stata salvata di nuovo il ${_dataBreve(remota.salvata_il)}${remota.salvata_da ? ` da ${remota.salvata_da}` : ''}, dopo che l'hai aperta. Sovrascriverla con le tue modifiche?`, {
+                title: 'Bozza cambiata', confirmText: 'Sovrascrivi', icon: '🗺️', isDanger: true
+            }))) {
+            pulsante.disabled = false;
+            return;
+        }
+        const bozza = {
+            base_version: _mappeBase,
+            salvata_il: new Date().toISOString(),
+            salvata_da: userEmailDisplay.textContent || '',
+            dati: _mappeDati,
+        };
+        const gz = await _gzip(new TextEncoder().encode(JSON.stringify(bozza)));
+        const { error } = await _supabase.storage.from(BUCKET_MAPPE).upload(
+            BOZZA_MAPPE,
+            new Blob([gz], { type: 'application/gzip' }),
+            { upsert: true, contentType: 'application/gzip', cacheControl: '0' }
+        );
+        if (error) throw new Error(error.message);
+        _bozzaMappe = { base_version: bozza.base_version, salvata_il: bozza.salvata_il, salvata_da: bozza.salvata_da };
+        _mappeOrigine = `bozza del ${_dataBreve(bozza.salvata_il)}`;
+        azzeraModifiche('mappe');
+        cancellaCopiaLocaleMappe();
+        _aggiornaAnteprimaMappe();
+        showToast('Bozza salvata: le app non la vedono finché non pubblichi');
+    } catch (err) {
+        showToast('Errore nel salvataggio della bozza: ' + err.message, 'error');
+        pulsante.disabled = false;
+    }
+});
+
+document.getElementById('cfg-mappe-bozza')?.addEventListener('click', async (e) => {
+    if (!e.target.closest('[data-azione="scarta-bozza"]')) return;
+    const nonSalvate = _modificheNonSalvate.has('mappe') ? ' Anche le modifiche non salvate andranno perse.' : '';
+    if (!(await customConfirm(`Eliminare la bozza e ripartire dalla versione pubblicata?${nonSalvate}`, {
+        title: 'Scarta bozza', confirmText: 'Elimina bozza', icon: '🗺️', isDanger: true
+    }))) return;
+    const { error } = await _supabase.storage.from(BUCKET_MAPPE).remove([BOZZA_MAPPE]);
+    if (error) {
+        showToast('Errore nell\'eliminazione della bozza: ' + error.message, 'error');
+        return;
+    }
+    azzeraModifiche('mappe');
+    cancellaCopiaLocaleMappe();
+    showToast('Bozza eliminata');
     caricaEditorMappe();
 });
 
@@ -671,10 +990,19 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
         showToast('Impossibile pubblicare: ' + err.message, 'error');
         return;
     }
-    const versione = ((_configApp && _configApp.mappa_version) || 0) + 1;
+    // Versione pubblicata letta adesso: un altro admin può aver pubblicato dopo l'apertura della pagina
+    const { data: config, error: errVersione } = await _supabase.from('config_app').select('mappa_version').eq('id', 1).single();
+    if (errVersione) {
+        showToast('Impossibile leggere la versione pubblicata: ' + errVersione.message, 'error');
+        return;
+    }
+    const pubblicata = config.mappa_version || 0;
+    const versione = pubblicata + 1;
     const path = `mappe_v${versione}.json.gz`;
-    if (!(await customConfirm(`Pubblicare le mappe come v${versione}? Tutte le app le scaricheranno al prossimo controllo.`, {
-        title: 'Pubblica mappe', confirmText: 'Pubblica', icon: '🗺️', isDanger: false
+    const superata = pubblicata !== _mappeBase
+        ? ` Attenzione: le modifiche partono dalla v${_mappeBase}, ma intanto è stata pubblicata la v${pubblicata}: quello che è cambiato nella v${pubblicata} e non è qui andrà perso.` : '';
+    if (!(await customConfirm(`Pubblicare le mappe come v${versione}? Tutte le app le scaricheranno al prossimo controllo.${superata}`, {
+        title: 'Pubblica mappe', confirmText: 'Pubblica', icon: '🗺️', isDanger: !!superata
     }))) return;
 
     const pulsante = document.getElementById('cfg-mappe-pubblica');
@@ -697,8 +1025,13 @@ document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async (
         const { error: errConfig } = await _registraMappe(versione, path, sha256, gz.byteLength);
         if (errConfig) throw new Error('registrazione: ' + errConfig.message);
 
-        showToast(`Mappe pubblicate come v${versione} (${_kb(gz.byteLength)})`);
+        // 3. La bozza è stata pubblicata: si elimina (se non c'era, remove non fa nulla)
+        const { error: errBozza } = await _supabase.storage.from(BUCKET_MAPPE).remove([BOZZA_MAPPE]);
+        showToast(errBozza
+            ? `Mappe pubblicate come v${versione}, ma la bozza non è stata eliminata (${errBozza.message}): scartala a mano`
+            : `Mappe pubblicate come v${versione} (${_kb(gz.byteLength)})`, errBozza ? 'error' : undefined);
         azzeraModifiche('mappe');
+        cancellaCopiaLocaleMappe();
         fetchConfigApp(['mappe']);
         aggiornaStatoPanoramica();
     } catch (err) {

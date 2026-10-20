@@ -594,20 +594,23 @@
                 <div class="section-header">
                     <div>
                         <h2>Mappe</h2>
-                        <p class="admin-sottotitolo">Modifica i punti di interesse qui sotto oppure carica un mappe.json: il risultato viene reso compatto, firmato e compresso nel browser e le app lo scaricano solo quando la versione sale.</p>
+                        <p class="admin-sottotitolo">Modifica punti di interesse, aule ed edifici qui sotto oppure carica un mappe.json. Salva la bozza quante volte vuoi (le app non la vedono, e puoi riprenderla da un altro dispositivo) e pubblica tutto in una volta: il risultato viene reso compatto, firmato e compresso nel browser e le app lo scaricano solo quando la versione sale.</p>
                     </div>
                 </div>
 
                 <div class="admin-riquadro">
                     <div id="cfg-mappe-stato" class="cfg-stato">Caricamento...</div>
+                    <!-- Bozza salvata nel bucket (bozza_mappe.json.gz): compilata da JS -->
+                    <div id="cfg-mappe-bozza" class="admin-avviso att mappe-bozza hidden"></div>
 
-                    <!-- Editor di punti di interesse e aule: lavora sul JSON pubblicato (o sul file scelto sotto).
-                         data-modo="poi" | "aule" mostra i campi .solo-poi o .solo-aule -->
+                    <!-- Editor di punti di interesse, aule ed edifici: lavora sulla bozza, sul JSON pubblicato o sul file scelto sotto.
+                         data-modo="poi" | "aule" | "edifici" mostra i campi .solo-poi, .solo-aule o .solo-edifici -->
                     <h3 class="admin-riquadro-titolo">
                         <span class="admin-ms">edit_location_alt</span><span class="admin-riempi">Modifica mappe</span>
                         <span id="poi-modo" class="admin-segmenti">
                             <button type="button" data-modo="poi" class="active">Punti di interesse</button>
                             <button type="button" data-modo="aule">Aule</button>
+                            <button type="button" data-modo="edifici">Edifici</button>
                         </span>
                     </h3>
                     <div id="poi-vuoto" class="admin-testo-sub hidden">Nessuna mappa da modificare: scegli un file mappe.json qui sotto per iniziare.</div>
@@ -616,7 +619,7 @@
                             <select id="poi-edificio" class="form-control solo-aule" aria-label="Edificio"></select>
                             <input type="search" id="poi-cerca" class="form-control" placeholder="Cerca per nome, descrizione o id">
                             <select id="poi-filtro-tipo" class="form-control solo-poi" aria-label="Tipo"></select>
-                            <button type="button" id="poi-aggiungi" class="btn btn-secondary btn-sm"><span class="admin-ms">add_location_alt</span> <span id="poi-aggiungi-testo">Aggiungi punto</span></button>
+                            <button type="button" id="poi-aggiungi" class="btn btn-secondary btn-sm solo-poi solo-aule"><span class="admin-ms">add_location_alt</span> <span id="poi-aggiungi-testo">Aggiungi punto</span></button>
                         </div>
                         <div class="poi-griglia">
                             <div id="poi-mappa" class="poi-mappa"></div>
@@ -638,19 +641,44 @@
                                     <label for="aula-roomcode">Codice aula (roomCode)</label>
                                     <input type="text" id="aula-roomcode" class="form-control" placeholder="es. PAST - 8">
                                 </div>
+                                <div class="form-group solo-edifici">
+                                    <label for="edificio-codice">Codice sede</label>
+                                    <input type="text" id="edificio-codice" class="form-control" placeholder="es. BRI - 4">
+                                </div>
                                 <div class="form-group">
                                     <label for="poi-id">Id (unico)</label>
-                                    <input type="text" id="poi-id" class="form-control">
+                                    <input type="text" id="poi-id" class="form-control" title="L'id degli edifici non si può cambiare">
                                 </div>
                             </div>
-                            <div class="form-group solo-poi">
+                            <div class="form-group solo-poi solo-edifici">
                                 <label for="poi-descrizione">Descrizione</label>
                                 <textarea id="poi-descrizione" class="form-control" rows="2"></textarea>
+                            </div>
+                            <!-- Solo edifici: icona, zoom iniziale e piani (le aule scelgono il piano tra questi) -->
+                            <div class="admin-griglia-campi solo-edifici">
+                                <div class="form-group">
+                                    <label for="edificio-icona">Icona</label>
+                                    <input type="text" id="edificio-icona" class="form-control" list="edificio-icone" placeholder="school, library, lab...">
+                                    <datalist id="edificio-icone"></datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="edificio-zoom">Zoom iniziale</label>
+                                    <input type="text" id="edificio-zoom" class="form-control" inputmode="decimal" placeholder="es. 18">
+                                </div>
+                            </div>
+                            <div class="form-group solo-edifici">
+                                <label for="edificio-nuovo-piano">Piani</label>
+                                <div id="edificio-piani" class="edificio-piani"></div>
+                                <div class="edificio-nuovo-piano">
+                                    <input type="number" id="edificio-nuovo-piano" class="form-control" step="1" placeholder="es. 1 o -1">
+                                    <button type="button" id="edificio-aggiungi-piano" class="btn btn-secondary btn-sm"><span class="admin-ms">add</span> Aggiungi piano</button>
+                                </div>
+                                <p class="admin-aiuto">0 &egrave; il piano terra, i numeri negativi i piani interrati. Un piano si toglie solo quando non ci sono pi&ugrave; aule.</p>
                             </div>
                             <div class="admin-griglia-campi solo-aule">
                                 <div class="form-group">
                                     <label for="aula-piano">Piano</label>
-                                    <input type="number" id="aula-piano" class="form-control" step="1">
+                                    <select id="aula-piano" class="form-control"></select>
                                 </div>
                                 <div class="form-group">
                                     <label for="aula-capienza">Capienza (posti)</label>
@@ -667,8 +695,8 @@
                                     <input type="text" id="poi-lng" class="form-control" inputmode="decimal">
                                 </div>
                             </div>
-                            <p class="admin-aiuto admin-spazio-sotto">Trascina il segnaposto sulla mappa, oppure incolla in Latitudine le coordinate copiate da Google Maps (es. <code>40.3345, 18.1204</code>).<span class="solo-aule"> Per le aule la posizione &egrave; facoltativa: lasciando vuoti i due campi l'aula non compare sulla mappa.</span></p>
-                            <div class="poi-azioni">
+                            <p class="admin-aiuto admin-spazio-sotto">Trascina il segnaposto sulla mappa, oppure incolla in Latitudine le coordinate copiate da Google Maps (es. <code>40.3345, 18.1204</code>).<span class="solo-aule"> Per le aule la posizione &egrave; facoltativa: lasciando vuoti i due campi l'aula non compare sulla mappa.</span><span class="solo-edifici"> Per gli edifici la posizione &egrave; il centro, dove l'app inquadra la mappa. Perimetro, nuovi edifici ed eliminazioni si fanno caricando un nuovo mappe.json.</span></p>
+                            <div class="poi-azioni solo-poi solo-aule">
                                 <button type="button" id="aula-posiziona" class="btn btn-secondary btn-sm solo-aule"><span class="admin-ms">my_location</span> <span id="aula-posiziona-testo">Metti sulla mappa</span></button>
                                 <button type="button" id="poi-elimina" class="btn btn-secondary btn-sm admin-pericolo"><span class="admin-ms">delete</span> <span id="poi-elimina-testo">Elimina punto</span></button>
                             </div>
@@ -682,6 +710,7 @@
                     <!-- Mostrata da JS quando ci sono modifiche da pubblicare -->
                     <div id="cfg-mappe-anteprima" class="admin-anteprima hidden"></div>
                     <div class="poi-azioni">
+                        <button type="button" id="cfg-mappe-salva-bozza" class="btn btn-secondary btn-sm" disabled><span class="admin-ms">save</span> Salva bozza</button>
                         <button type="button" id="cfg-mappe-pubblica" class="btn btn-primary btn-sm" disabled>Pubblica mappe</button>
                         <button type="button" id="cfg-mappe-scarica" class="btn btn-secondary btn-sm" disabled><span class="admin-ms">download</span> Scarica JSON</button>
                         <button type="button" id="cfg-mappe-annulla" class="btn btn-secondary btn-sm" disabled>Annulla modifiche</button>

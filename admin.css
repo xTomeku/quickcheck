@@ -936,11 +936,64 @@ div.admin-errore {
 
 .poi-elenco-vuoto { padding: 0.6rem; }
 
-/* Campi del solo modo punti di interesse o del solo modo aule */
-#poi-editor[data-modo="poi"] .solo-aule,
-#poi-editor[data-modo="aule"] .solo-poi {
+/* Campi di alcuni modi soltanto: un elemento con più classi solo-* resta nei modi indicati */
+#poi-editor[data-modo="poi"] :is(.solo-aule, .solo-edifici):not(.solo-poi),
+#poi-editor[data-modo="aule"] :is(.solo-poi, .solo-edifici):not(.solo-aule),
+#poi-editor[data-modo="edifici"] :is(.solo-poi, .solo-aule):not(.solo-edifici) {
     display: none;
 }
+
+/* Piani dell'edificio (modo edifici) */
+.edificio-piani {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+}
+
+.edificio-piano {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.25rem 0.3rem 0.25rem 0.7rem;
+    border: 1px solid var(--bordo);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    font-size: 0.85rem;
+}
+
+.edificio-piano button {
+    display: inline-flex;
+    padding: 2px;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--sub);
+    cursor: pointer;
+}
+
+.edificio-piano button:hover { color: var(--rosso); background: rgba(248, 113, 113, 0.12); }
+.edificio-piano button .admin-ms { font-size: 16px; }
+
+.edificio-nuovo-piano {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    margin-bottom: 0.4rem;
+}
+
+.edificio-nuovo-piano input { max-width: 140px; }
+.edificio-nuovo-piano .btn .admin-ms { font-size: 18px; vertical-align: -4px; }
+
+/* Bozza delle mappe e differenze rispetto alla versione pubblicata */
+.mappe-bozza { align-items: center; margin-bottom: 1.2rem; }
+.mappe-bozza .admin-errore { margin-top: 0.3rem; }
+.mappe-bozza .btn { flex: none; }
+.mappe-bozza .btn .admin-ms { font-size: 18px; vertical-align: -4px; }
+
+.mappe-diff { margin-top: 0.3rem; font-size: 0.85rem; }
+.mappe-diff summary { cursor: pointer; color: var(--txt2); }
+.mappe-diff > div { margin: 0.25rem 0 0 1rem; }
 
 .poi-barra #poi-edificio { flex: 1 1 240px; }
 
