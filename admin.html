@@ -619,86 +619,184 @@
                             <select id="poi-edificio" class="form-control solo-aule" aria-label="Edificio"></select>
                             <input type="search" id="poi-cerca" class="form-control" placeholder="Cerca per nome, descrizione o id">
                             <select id="poi-filtro-tipo" class="form-control solo-poi" aria-label="Tipo"></select>
-                            <button type="button" id="poi-aggiungi" class="btn btn-secondary btn-sm solo-poi solo-aule"><span class="admin-ms">add_location_alt</span> <span id="poi-aggiungi-testo">Aggiungi punto</span></button>
+                            <button type="button" id="poi-aggiungi" class="btn btn-primary btn-sm"><span class="admin-ms">add_location_alt</span> <span id="poi-aggiungi-testo">Aggiungi punto</span></button>
                         </div>
                         <div class="poi-griglia">
                             <div id="poi-mappa" class="poi-mappa"></div>
                             <div id="poi-elenco" class="poi-elenco"></div>
                         </div>
-                        <!-- Campi dell'elemento selezionato (nella mappa il suo segnaposto si può trascinare) -->
-                        <div id="poi-form" class="admin-gruppo poi-form hidden">
+                        <!-- Moduli di aggiunta e modifica, uno per tipo. Lavorano su una copia dell'elemento, che entra
+                             nelle mappe solo con Aggiungi / Salva modifiche (classe "nuovo" per un elemento da aggiungere).
+                             data-campo = chiave nel JSON (lat e lng: coordinate), data-azione = pulsante (vedi dati-app.js) -->
+
+                        <!-- Punto di interesse -->
+                        <div id="form-poi" class="admin-gruppo mappe-modulo hidden">
+                            <div class="mappe-modulo-testa">
+                                <span class="admin-ms">place</span>
+                                <h4 class="mappe-modulo-titolo admin-riempi"></h4>
+                                <span class="mappe-modulo-stato"></span>
+                            </div>
                             <div class="admin-griglia-campi">
                                 <div class="form-group">
                                     <label for="poi-nome">Nome</label>
-                                    <input type="text" id="poi-nome" class="form-control">
+                                    <input type="text" id="poi-nome" class="form-control" data-campo="nome" placeholder="es. Bar Ecotekne">
                                 </div>
-                                <div class="form-group solo-poi">
+                                <div class="form-group">
                                     <label for="poi-tipo">Tipo</label>
-                                    <input type="text" id="poi-tipo" class="form-control" list="poi-tipi" placeholder="bar, mensa, fermata...">
+                                    <input type="text" id="poi-tipo" class="form-control" data-campo="tipo" list="poi-tipi" placeholder="bar, mensa, fermata...">
                                     <datalist id="poi-tipi"></datalist>
-                                </div>
-                                <div class="form-group solo-aule">
-                                    <label for="aula-roomcode">Codice aula (roomCode)</label>
-                                    <input type="text" id="aula-roomcode" class="form-control" placeholder="es. PAST - 8">
-                                </div>
-                                <div class="form-group solo-edifici">
-                                    <label for="edificio-codice">Codice sede</label>
-                                    <input type="text" id="edificio-codice" class="form-control" placeholder="es. BRI - 4">
                                 </div>
                                 <div class="form-group">
                                     <label for="poi-id">Id (unico)</label>
-                                    <input type="text" id="poi-id" class="form-control" title="L'id degli edifici non si può cambiare">
+                                    <input type="text" id="poi-id" class="form-control" data-campo="id">
                                 </div>
                             </div>
-                            <div class="form-group solo-poi solo-edifici">
+                            <div class="form-group">
                                 <label for="poi-descrizione">Descrizione</label>
-                                <textarea id="poi-descrizione" class="form-control" rows="2"></textarea>
-                            </div>
-                            <!-- Solo edifici: icona, zoom iniziale e piani (le aule scelgono il piano tra questi) -->
-                            <div class="admin-griglia-campi solo-edifici">
-                                <div class="form-group">
-                                    <label for="edificio-icona">Icona</label>
-                                    <input type="text" id="edificio-icona" class="form-control" list="edificio-icone" placeholder="school, library, lab...">
-                                    <datalist id="edificio-icone"></datalist>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edificio-zoom">Zoom iniziale</label>
-                                    <input type="text" id="edificio-zoom" class="form-control" inputmode="decimal" placeholder="es. 18">
-                                </div>
-                            </div>
-                            <div class="form-group solo-edifici">
-                                <label for="edificio-nuovo-piano">Piani</label>
-                                <div id="edificio-piani" class="edificio-piani"></div>
-                                <div class="edificio-nuovo-piano">
-                                    <input type="number" id="edificio-nuovo-piano" class="form-control" step="1" placeholder="es. 1 o -1">
-                                    <button type="button" id="edificio-aggiungi-piano" class="btn btn-secondary btn-sm"><span class="admin-ms">add</span> Aggiungi piano</button>
-                                </div>
-                                <p class="admin-aiuto">0 &egrave; il piano terra, i numeri negativi i piani interrati. Un piano si toglie solo quando non ci sono pi&ugrave; aule.</p>
-                            </div>
-                            <div class="admin-griglia-campi solo-aule">
-                                <div class="form-group">
-                                    <label for="aula-piano">Piano</label>
-                                    <select id="aula-piano" class="form-control"></select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="aula-capienza">Capienza (posti)</label>
-                                    <input type="number" id="aula-capienza" class="form-control" min="0" step="1">
-                                </div>
+                                <textarea id="poi-descrizione" class="form-control" data-campo="descrizione" rows="2"></textarea>
                             </div>
                             <div class="admin-griglia-campi">
                                 <div class="form-group">
                                     <label for="poi-lat">Latitudine</label>
-                                    <input type="text" id="poi-lat" class="form-control" inputmode="decimal">
+                                    <input type="text" id="poi-lat" class="form-control" data-campo="lat" inputmode="decimal">
                                 </div>
                                 <div class="form-group">
                                     <label for="poi-lng">Longitudine</label>
-                                    <input type="text" id="poi-lng" class="form-control" inputmode="decimal">
+                                    <input type="text" id="poi-lng" class="form-control" data-campo="lng" inputmode="decimal">
                                 </div>
                             </div>
-                            <p class="admin-aiuto admin-spazio-sotto">Trascina il segnaposto sulla mappa, oppure incolla in Latitudine le coordinate copiate da Google Maps (es. <code>40.3345, 18.1204</code>).<span class="solo-aule"> Per le aule la posizione &egrave; facoltativa: lasciando vuoti i due campi l'aula non compare sulla mappa.</span><span class="solo-edifici"> Per gli edifici la posizione &egrave; il centro, dove l'app inquadra la mappa. Perimetro, nuovi edifici ed eliminazioni si fanno caricando un nuovo mappe.json.</span></p>
-                            <div class="poi-azioni solo-poi solo-aule">
-                                <button type="button" id="aula-posiziona" class="btn btn-secondary btn-sm solo-aule"><span class="admin-ms">my_location</span> <span id="aula-posiziona-testo">Metti sulla mappa</span></button>
-                                <button type="button" id="poi-elimina" class="btn btn-secondary btn-sm admin-pericolo"><span class="admin-ms">delete</span> <span id="poi-elimina-testo">Elimina punto</span></button>
+                            <p class="admin-aiuto admin-spazio-sotto">Trascina il segnaposto sulla mappa, oppure incolla in Latitudine le coordinate copiate da Google Maps (es. <code>40.3345, 18.1204</code>).</p>
+                            <div class="poi-azioni">
+                                <button type="button" class="btn btn-primary btn-sm" data-azione="conferma"><span class="admin-ms">check</span> <span class="mappe-modulo-conferma">Aggiungi punto</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="annulla"><span class="admin-ms">undo</span> <span class="mappe-modulo-annulla">Annulla</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm admin-pericolo mappe-solo-esistente" data-azione="elimina"><span class="admin-ms">delete</span> Elimina punto</button>
+                            </div>
+                        </div>
+
+                        <!-- Aula (dell'edificio scelto nella barra) -->
+                        <div id="form-aula" class="admin-gruppo mappe-modulo hidden">
+                            <div class="mappe-modulo-testa">
+                                <span class="admin-ms">meeting_room</span>
+                                <h4 class="mappe-modulo-titolo admin-riempi"></h4>
+                                <span class="mappe-modulo-stato"></span>
+                            </div>
+                            <div class="admin-griglia-campi">
+                                <div class="form-group">
+                                    <label for="aula-nome">Nome</label>
+                                    <input type="text" id="aula-nome" class="form-control" data-campo="nome" placeholder="es. Aula 3">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aula-roomcode">Codice aula (roomCode)</label>
+                                    <input type="text" id="aula-roomcode" class="form-control" data-campo="roomCode" placeholder="es. PAST - 8">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aula-id">Id (unico nell'edificio)</label>
+                                    <input type="text" id="aula-id" class="form-control" data-campo="id">
+                                </div>
+                            </div>
+                            <div class="admin-griglia-campi">
+                                <div class="form-group">
+                                    <label for="aula-piano">Piano</label>
+                                    <select id="aula-piano" class="form-control" data-campo="piano"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="aula-capienza">Capienza (posti)</label>
+                                    <input type="number" id="aula-capienza" class="form-control" data-campo="capienza" min="0" step="1">
+                                </div>
+                            </div>
+                            <div class="admin-griglia-campi">
+                                <div class="form-group">
+                                    <label for="aula-lat">Latitudine</label>
+                                    <input type="text" id="aula-lat" class="form-control" data-campo="lat" inputmode="decimal">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aula-lng">Longitudine</label>
+                                    <input type="text" id="aula-lng" class="form-control" data-campo="lng" inputmode="decimal">
+                                </div>
+                            </div>
+                            <p class="admin-aiuto admin-spazio-sotto">I piani si aggiungono nella scheda Edifici. La posizione &egrave; facoltativa: lasciando vuoti i due campi l'aula non compare sulla mappa; trascina il segnaposto o incolla le coordinate copiate da Google Maps.</p>
+                            <div class="poi-azioni">
+                                <button type="button" class="btn btn-primary btn-sm" data-azione="conferma"><span class="admin-ms">check</span> <span class="mappe-modulo-conferma">Aggiungi aula</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="annulla"><span class="admin-ms">undo</span> <span class="mappe-modulo-annulla">Annulla</span></button>
+                                <button type="button" id="aula-posiziona" class="btn btn-secondary btn-sm" data-azione="posiziona"><span class="admin-ms">my_location</span> <span id="aula-posiziona-testo">Metti sulla mappa</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm admin-pericolo mappe-solo-esistente" data-azione="elimina"><span class="admin-ms">delete</span> Elimina aula</button>
+                            </div>
+                        </div>
+
+                        <!-- Edificio -->
+                        <div id="form-edificio" class="admin-gruppo mappe-modulo hidden">
+                            <div class="mappe-modulo-testa">
+                                <span class="admin-ms">apartment</span>
+                                <h4 class="mappe-modulo-titolo admin-riempi"></h4>
+                                <span class="mappe-modulo-stato"></span>
+                            </div>
+                            <div class="admin-griglia-campi">
+                                <div class="form-group">
+                                    <label for="edificio-nome">Nome</label>
+                                    <input type="text" id="edificio-nome" class="form-control" data-campo="nome" placeholder="es. ET Corpo B">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edificio-codice">Codice sede</label>
+                                    <input type="text" id="edificio-codice" class="form-control" data-campo="codiceSede" placeholder="es. BRI - 4">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edificio-id">Id (unico)</label>
+                                    <input type="text" id="edificio-id" class="form-control" data-campo="id" title="L'id di un edificio esistente non si pu&ograve; cambiare: lo usano le aule e l'app">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edificio-descrizione">Descrizione</label>
+                                <textarea id="edificio-descrizione" class="form-control" data-campo="descrizione" rows="2"></textarea>
+                            </div>
+                            <div class="admin-griglia-campi">
+                                <div class="form-group">
+                                    <label for="edificio-icona">Icona</label>
+                                    <input type="text" id="edificio-icona" class="form-control" data-campo="icona" list="edificio-icone" placeholder="school, library, lab...">
+                                    <datalist id="edificio-icone"></datalist>
+                                </div>
+                                <div class="form-group">
+                                    <label for="edificio-zoom">Zoom iniziale</label>
+                                    <input type="text" id="edificio-zoom" class="form-control" data-campo="zoomIniziale" inputmode="decimal" placeholder="es. 18">
+                                </div>
+                            </div>
+
+                            <h5 class="mappe-modulo-sezione">Piani</h5>
+                            <div id="edificio-piani" class="edificio-piani"></div>
+                            <div class="edificio-nuovo-piano">
+                                <input type="number" id="edificio-nuovo-piano" class="form-control" step="1" placeholder="es. 1 o -1" aria-label="Nuovo piano">
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="aggiungi-piano"><span class="admin-ms">add</span> Aggiungi piano</button>
+                            </div>
+                            <p class="admin-aiuto">0 &egrave; il piano terra, i numeri negativi i piani interrati. Un piano si toglie solo quando non ci sono pi&ugrave; aule.</p>
+
+                            <h5 class="mappe-modulo-sezione">Centro</h5>
+                            <div class="admin-griglia-campi">
+                                <div class="form-group">
+                                    <label for="edificio-lat">Latitudine</label>
+                                    <input type="text" id="edificio-lat" class="form-control" data-campo="lat" inputmode="decimal">
+                                </div>
+                                <div class="form-group">
+                                    <label for="edificio-lng">Longitudine</label>
+                                    <input type="text" id="edificio-lng" class="form-control" data-campo="lng" inputmode="decimal">
+                                </div>
+                            </div>
+                            <p class="admin-aiuto">&Egrave; il punto dove l'app inquadra la mappa: trascina il segnaposto, incolla le coordinate o calcolalo dal perimetro.</p>
+                            <div class="poi-azioni admin-spazio-sotto">
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="centro-perimetro"><span class="admin-ms">center_focus_strong</span> Centro del perimetro</button>
+                            </div>
+
+                            <h5 class="mappe-modulo-sezione">Perimetro</h5>
+                            <p id="edificio-perimetro-info" class="admin-testo-sub admin-piccolo"></p>
+                            <div class="poi-azioni">
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="disegna"><span class="admin-ms">draw</span> <span id="edificio-disegna-testo">Disegna perimetro</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="togli-vertice"><span class="admin-ms">undo</span> Togli ultimo vertice</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="cancella-perimetro"><span class="admin-ms">layers_clear</span> Cancella perimetro</button>
+                            </div>
+                            <p id="edificio-perimetro-aiuto" class="admin-aiuto hidden">Clicca sulla mappa sugli angoli dell'edificio, in ordine: ogni clic aggiunge un vertice. Trascina un vertice per spostarlo, clic destro per toglierlo.</p>
+
+                            <div class="poi-azioni mappe-modulo-fondo">
+                                <button type="button" class="btn btn-primary btn-sm" data-azione="conferma"><span class="admin-ms">check</span> <span class="mappe-modulo-conferma">Aggiungi edificio</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-azione="annulla"><span class="admin-ms">undo</span> <span class="mappe-modulo-annulla">Annulla</span></button>
+                                <button type="button" class="btn btn-secondary btn-sm admin-pericolo mappe-solo-esistente" data-azione="elimina"><span class="admin-ms">delete</span> Elimina edificio</button>
                             </div>
                         </div>
                     </div>

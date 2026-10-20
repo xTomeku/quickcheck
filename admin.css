@@ -859,7 +859,7 @@ div.admin-errore {
 
 .poi-barra .btn .admin-ms,
 .poi-azioni .btn .admin-ms,
-.poi-form .btn .admin-ms {
+.mappe-modulo .btn .admin-ms {
     font-size: 18px;
     vertical-align: -4px;
 }
@@ -936,11 +936,59 @@ div.admin-errore {
 
 .poi-elenco-vuoto { padding: 0.6rem; }
 
-/* Campi di alcuni modi soltanto: un elemento con più classi solo-* resta nei modi indicati */
+/* Controlli della barra di un solo modo (filtro tipo, scelta dell'edificio) */
 #poi-editor[data-modo="poi"] :is(.solo-aule, .solo-edifici):not(.solo-poi),
 #poi-editor[data-modo="aule"] :is(.solo-poi, .solo-edifici):not(.solo-aule),
 #poi-editor[data-modo="edifici"] :is(.solo-poi, .solo-aule):not(.solo-edifici) {
     display: none;
+}
+
+/* Moduli di aggiunta e modifica (punto, aula, edificio): tratteggiato oro per un elemento da aggiungere */
+.mappe-modulo {
+    margin: 0.8rem 0 0;
+    padding: 1rem;
+    border: 1px solid var(--bordo);
+    border-radius: 12px;
+}
+
+.mappe-modulo.nuovo { border: 1px dashed var(--oro); }
+.mappe-modulo.nuovo .mappe-solo-esistente { display: none; }
+.mappe-modulo .form-control:disabled { opacity: 0.55; cursor: not-allowed; }
+
+.mappe-modulo-testa {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.9rem;
+}
+
+.mappe-modulo-testa > .admin-ms { font-size: 20px; color: var(--oro); }
+.mappe-modulo-titolo { margin: 0; font-size: 0.95rem; }
+.mappe-modulo-stato { flex: none; font-size: 0.8rem; color: var(--giallo); }
+
+.mappe-modulo-sezione {
+    margin: 1rem 0 0.5rem;
+    font-size: 0.85rem;
+    color: var(--sub);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.mappe-modulo-fondo {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--bordo);
+}
+
+/* Disegno del perimetro: cursore a croce e vertici trascinabili */
+#poi-mappa.disegno { cursor: crosshair; }
+
+.perimetro-vertice {
+    background: #fff;
+    border: 3px solid var(--oro);
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    cursor: move;
 }
 
 /* Piani dell'edificio (modo edifici) */
@@ -996,8 +1044,6 @@ div.admin-errore {
 .mappe-diff > div { margin: 0.25rem 0 0 1rem; }
 
 .poi-barra #poi-edificio { flex: 1 1 240px; }
-
-.poi-form { margin: 0.8rem 0 0; }
 
 .poi-errore { border-color: var(--rosso) !important; }
 

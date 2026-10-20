@@ -121,11 +121,14 @@ let _bozzaMappe = null;         // { base_version, salvata_il, salvata_da } dell
 let _pubblicati = _indiceMappe(null); // la versione pubblicata, per il riepilogo delle differenze
 let _modoEditor = 'poi';        // 'poi' | 'aule' | 'edifici'
 let _edificioSel = 0;           // indice in _mappeDati.edifici (modo aule)
-let _poiSel = -1;               // indice dell'elemento selezionato nell'elenco del modo attuale
+let _poiSel = -1;               // indice nell'elenco del modo attuale dell'elemento aperto nel modulo (-1 = nessuno o nuovo)
+let _modulo = null;             // { indice (-1 = nuovo), copia, originale (JSON), idManuale }: vedi "Moduli di aggiunta e modifica"
+let _disegnoPerimetro = false;  // modo edifici: i clic sulla mappa aggiungono vertici al perimetro
 let _poiMappa = null;
 let _poiEdifici = null;         // perimetri degli edifici
+let _poiPerimetro = null;       // perimetro (e vertici) dell'edificio nel modulo
 let _poiStrato = null;          // segnaposto di tutti gli elementi
-let _poiMarker = null;          // segnaposto trascinabile dell'elemento selezionato
+let _poiMarker = null;          // segnaposto trascinabile dell'elemento nel modulo
 
 const COLORI_POI = {
     fermata: '#38bdf8', bar: '#facc15', mensa: '#fb923c', casa: '#c084fc',
@@ -246,7 +249,7 @@ function _usaMappe(dati, base, origine) {
     _mappeDati = dati;
     _mappeBase = base;
     _mappeOrigine = origine;
-    _poiSel = -1;
+    _chiudiModulo();
     if (_edificioSel >= dati.edifici.length) _edificioSel = 0;
 }
 
@@ -257,6 +260,7 @@ async function caricaEditorMappe() {
     if (_modificheNonSalvate.has('mappe') && _mappeDati) { _disegnaEditorMappe(); return; }
     const versione = (_configApp && _configApp.mappa_version) || 0;
     _mappeDati = null;
+    _chiudiModulo();
     _bozzaMappe = null;
     _mappeBase = versione;
     let pubblicate = null, bozza = null;
@@ -378,7 +382,7 @@ function _aggiornaAnteprimaMappe() {
     anteprima.classList.remove('hidden');
 }
 
-// ----- Modo attuale: elenco, coordinate e testi -----
+// ----- Modo attuale: elenco e mappa -----
 
 function _edificioAttuale() {
     return _mappeDati && _mappeDati.edifici[_edificioSel];
@@ -424,12 +428,12 @@ function _sottotitoloElemento(el) {
         ` · ${el.capienza ?? '?'} posti${_coordElemento(el) ? '' : ' · non sulla mappa'}`;
 }
 
-function _impostaModoEditor(modo) {
-    if (modo === _modoEditor) return;
-    // Passando dagli edifici alle aule si resta sull'edificio selezionato
-    if (_modoEditor === 'edifici' && _poiSel >= 0) _edificioSel = _poiSel;
+async function _impostaModoEditor(modo) {
+    if (modo === _modoEditor || !(await _puoiLasciareModulo())) return;
+    // Passando dagli edifici alle aule si resta sull'edificio aperto
+    if (_modoEditor === 'edifici' && _modulo && _modulo.indice >= 0) _edificioSel = _modulo.indice;
     _modoEditor = modo;
-    _poiSel = -1;
+    _chiudiModulo();
     document.getElementById('poi-cerca').value = '';
     _disegnaEditorMappe();
     _inquadraPoi();
@@ -446,14 +450,12 @@ function _disegnaEditorMappe() {
     _aggiornaAnteprimaMappe();
     if (!_mappeDati) return;
 
-    const aule = _modoEditor === 'aule';
     editor.dataset.modo = _modoEditor;
     document.querySelectorAll('#poi-modo [data-modo]').forEach(b => b.classList.toggle('active', b.dataset.modo === _modoEditor));
     document.getElementById('poi-cerca').placeholder = {
         poi: 'Cerca per nome, descrizione o id', aule: 'Cerca per nome, codice o id', edifici: 'Cerca per nome, codice sede o id',
     }[_modoEditor];
-    document.getElementById('poi-aggiungi-testo').textContent = aule ? 'Aggiungi aula' : 'Aggiungi punto';
-    document.getElementById('poi-elimina-testo').textContent = aule ? 'Elimina aula' : 'Elimina punto';
+    document.getElementById('poi-aggiungi-testo').textContent = { poi: 'Aggiungi punto', aule: 'Aggiungi aula', edifici: 'Aggiungi edificio' }[_modoEditor];
 
     // Tipi esistenti: filtro e suggerimenti del campo Tipo
     const tipi = [...new Set(_mappeDati.puntiInteresse.map(p => p.tipo).filter(Boolean))].sort();
@@ -475,8 +477,7 @@ function _disegnaEditorMappe() {
         .map(i => `<option value="${escapeHtml(i)}">`).join('');
 
     _inizializzaMappaPoi();
-    _disegnaEdificiPoi();
-    _selezionaPoi(_poiSel < _elementiEditor().length ? _poiSel : -1, false);
+    _disegnaModulo(false);
 }
 
 function _inizializzaMappaPoi() {
@@ -491,19 +492,69 @@ function _inizializzaMappaPoi() {
         maxZoom: 20, maxNativeZoom: 19, attribution: '&copy; OpenStreetMap',
     }).addTo(_poiMappa);
     _poiEdifici = L.layerGroup().addTo(_poiMappa);
+    _poiPerimetro = L.layerGroup().addTo(_poiMappa);
     _poiStrato = L.layerGroup().addTo(_poiMappa);
+    // Disegno del perimetro: ogni clic aggiunge un vertice in fondo
+    _poiMappa.on('click', (e) => {
+        if (!_disegnoPerimetro || _modoEditor !== 'edifici' || !_modulo) return;
+        const ed = _modulo.copia;
+        if (!Array.isArray(ed.perimetro)) ed.perimetro = [];
+        ed.perimetro.push([Number(e.latlng.lng.toFixed(7)), Number(e.latlng.lat.toFixed(7))]);
+        _disegnaPerimetroModulo();
+        _aggiornaModulo();
+    });
 }
 
-// Perimetri degli edifici come riferimento; nei modi aule ed edifici quello scelto è evidenziato
+// Perimetri degli edifici come riferimento; nel modo aule quello scelto è evidenziato.
+// L'edificio nel modulo si disegna dalla copia (_disegnaPerimetroModulo).
 function _disegnaEdificiPoi() {
     if (!_poiMappa) return;
     _poiEdifici.clearLayers();
+    const nelModulo = _modoEditor === 'edifici' && _modulo ? _modulo.indice : null;
     _mappeDati.edifici.forEach((e, i) => {
-        if (!Array.isArray(e.perimetro) || e.perimetro.length < 3) return;
-        const scelto = (_modoEditor === 'aule' && i === _edificioSel) || (_modoEditor === 'edifici' && i === _poiSel);
+        if (i === nelModulo || !Array.isArray(e.perimetro) || e.perimetro.length < 3) return;
+        const scelto = _modoEditor === 'aule' && i === _edificioSel;
         L.polygon(e.perimetro.map(([lng, lat]) => [lat, lng]), {
             color: COLORE_AULA, weight: scelto ? 2.5 : 1, fillOpacity: scelto ? 0.18 : 0.06, interactive: false,
         }).addTo(_poiEdifici);
+    });
+    _disegnaPerimetroModulo();
+}
+
+// Perimetro dell'edificio nel modulo; con il disegno attivo anche i vertici
+// (trascinabili, clic destro per toglierli)
+function _disegnaPerimetroModulo() {
+    if (!_poiMappa) return;
+    _poiPerimetro.clearLayers();
+    document.getElementById('poi-mappa').classList.toggle('disegno', _disegnoPerimetro);
+    if (_modoEditor !== 'edifici' || !_modulo) return;
+    const ed = _modulo.copia;
+    const perimetro = Array.isArray(ed.perimetro) ? ed.perimetro : [];
+    const punti = perimetro.map(([lng, lat]) => [lat, lng]);
+    if (punti.length >= 3) {
+        L.polygon(punti, { color: COLORE_AULA, weight: 2.5, fillOpacity: 0.2, interactive: false }).addTo(_poiPerimetro);
+    } else if (punti.length === 2) {
+        L.polyline(punti, { color: COLORE_AULA, weight: 2.5, dashArray: '5 5', interactive: false }).addTo(_poiPerimetro);
+    }
+    if (!_disegnoPerimetro) return;
+    perimetro.forEach((v, k) => {
+        L.marker([v[1], v[0]], {
+            draggable: true,
+            zIndexOffset: 900,
+            icon: L.divIcon({ className: 'perimetro-vertice', iconSize: [14, 14], iconAnchor: [7, 7] }),
+        }).bindTooltip(`Vertice ${k + 1}: trascinalo per spostarlo, clic destro per toglierlo`)
+            .on('dragend', (e) => {
+                const pos = e.target.getLatLng();
+                perimetro[k] = [Number(pos.lng.toFixed(7)), Number(pos.lat.toFixed(7))];
+                _disegnaPerimetroModulo();
+                _aggiornaModulo();
+            })
+            .on('contextmenu', () => {
+                perimetro.splice(k, 1);
+                _disegnaPerimetroModulo();
+                _aggiornaModulo();
+            })
+            .addTo(_poiPerimetro);
     });
 }
 
@@ -530,17 +581,17 @@ function _disegnaPoi() {
         </button>`).join('')
         : `<div class="admin-testo-sub admin-piccolo poi-elenco-vuoto">${vuoto}</div>`;
     elenco.querySelectorAll('[data-poi]').forEach(b =>
-        b.addEventListener('click', () => _selezionaPoi(Number(b.dataset.poi), true)));
+        b.addEventListener('click', () => _apriModulo(Number(b.dataset.poi), true)));
 
     if (!_poiMappa) return;
     _poiStrato.clearLayers();
     visibili.forEach(({ p, i }) => {
-        if (i === _poiSel) return; // il selezionato ha il suo segnaposto trascinabile
+        if (i === _poiSel) return; // l'elemento nel modulo ha il suo segnaposto trascinabile
         const c = _coordElemento(p);
         if (!c) return;
         L.circleMarker([c[1], c[0]], {
             radius: 7, color: '#111', weight: 1.5, fillColor: _coloreElemento(p), fillOpacity: 0.95,
-        }).bindTooltip(escapeHtml(p.nome || p.id)).on('click', () => _selezionaPoi(i, false)).addTo(_poiStrato);
+        }).bindTooltip(escapeHtml(p.nome || p.id)).on('click', () => _apriModulo(i, false)).addTo(_poiStrato);
     });
 }
 
@@ -557,20 +608,181 @@ function _inquadraPoi() {
     else _poiMappa.setView([40.35, 18.15], 13);
 }
 
-function _poiSelezionato() {
-    return _mappeDati && _poiSel >= 0 ? _elementiEditor()[_poiSel] || null : null;
+document.getElementById('poi-cerca')?.addEventListener('input', () => _disegnaPoi());
+document.getElementById('poi-filtro-tipo')?.addEventListener('change', () => { _disegnaPoi(); _inquadraPoi(); });
+document.getElementById('poi-edificio')?.addEventListener('change', async (e) => {
+    if (!(await _puoiLasciareModulo())) {
+        e.target.value = String(_edificioSel);
+        return;
+    }
+    _edificioSel = Number(e.target.value);
+    _chiudiModulo();
+    document.getElementById('poi-cerca').value = '';
+    _disegnaModulo(false);
+    _inquadraPoi();
+});
+
+/** Centro della mappa come [lng, lat] (posizione dei nuovi elementi). */
+function _centroMappa() {
+    const c = _poiMappa ? _poiMappa.getCenter() : { lat: 40.35, lng: 18.15 };
+    return [Number(c.lng.toFixed(7)), Number(c.lat.toFixed(7))];
 }
 
-function _compilaCoordinatePoi(p) {
-    const c = _coordElemento(p);
-    document.getElementById('poi-lat').value = c ? c[1] : '';
-    document.getElementById('poi-lng').value = c ? c[0] : '';
-    document.getElementById('poi-lat').classList.remove('poi-errore');
-    document.getElementById('poi-lng').classList.remove('poi-errore');
-    document.getElementById('aula-posiziona-testo').textContent = c ? 'Togli dalla mappa' : 'Metti sulla mappa';
+// ----- Moduli di aggiunta e modifica: uno per tipo (punto di interesse, aula, edificio) -----
+// Il modulo lavora su una copia dell'elemento: entra nelle mappe solo con "Aggiungi" o
+// "Salva modifiche", "Annulla" la scarta. I campi hanno data-campo = chiave nel JSON
+// (lat e lng sono le coordinate), i pulsanti data-azione.
+
+const MODULI = { poi: 'form-poi', aule: 'form-aula', edifici: 'form-edificio' };
+const TESTI_MODULO = {
+    poi: { nuovo: 'Nuovo punto di interesse', modifica: 'Modifica punto di interesse', aggiungi: 'Aggiungi punto', cosa: 'punto' },
+    aule: { nuovo: 'Nuova aula', modifica: 'Modifica aula', aggiungi: 'Aggiungi aula', cosa: 'aula' },
+    edifici: { nuovo: 'Nuovo edificio', modifica: 'Modifica edificio', aggiungi: 'Aggiungi edificio', cosa: 'edificio' },
+};
+
+const _formModulo = () => document.getElementById(MODULI[_modoEditor]);
+const _campo = (chiave) => _formModulo().querySelector(`[data-campo="${chiave}"]`);
+
+function _chiudiModulo() {
+    _modulo = null;
+    _poiSel = -1;
+    _disegnoPerimetro = false;
 }
 
-// Segnaposto trascinabile dell'elemento selezionato (se ha una posizione)
+/** Apre nel modulo una copia dell'elemento indice dell'elenco attuale (senza disegnare). */
+function _impostaModulo(indice) {
+    const el = _elementiEditor()[indice];
+    if (!el) { _chiudiModulo(); return; }
+    _modulo = { indice, copia: structuredClone(el), originale: JSON.stringify(el), idManuale: true };
+    _poiSel = indice;
+    _disegnoPerimetro = false;
+}
+
+function _moduloCambiato() {
+    return !!_modulo && JSON.stringify(_modulo.copia) !== _modulo.originale;
+}
+
+/** true se il modulo aperto si può chiudere: senza modifiche, o se si sceglie di scartarle. */
+async function _puoiLasciareModulo() {
+    if (!_moduloCambiato()) return true;
+    const testo = _modulo.indice === -1
+        ? `Il nuovo elemento${_modulo.copia.nome ? ` "${_modulo.copia.nome}"` : ''} non è stato aggiunto: scartarlo?`
+        : `Le modifiche a "${_modulo.copia.nome || _modulo.copia.id}" non sono state salvate: scartarle?`;
+    return customConfirm(testo, {
+        title: 'Modulo non confermato', confirmText: 'Scarta', cancelText: 'Resta qui', icon: '📍', isDanger: true
+    });
+}
+
+/** true se non ci sono aggiunte o modifiche in sospeso nel modulo (non entrerebbero nella bozza). */
+function _nessunModuloInSospeso() {
+    if (!_moduloCambiato()) return true;
+    showToast(_modulo.indice === -1 ? 'Aggiungi o annulla prima il nuovo elemento' : 'Salva o annulla prima le modifiche nel modulo aperto', 'error');
+    return false;
+}
+
+// Clic su un elemento dell'elenco o della mappa
+async function _apriModulo(indice, centra) {
+    if (_modulo && _modulo.indice === indice) return;
+    if (!(await _puoiLasciareModulo())) return;
+    _impostaModulo(indice);
+    _disegnaModulo(centra);
+}
+
+/** Nuovo elemento del modo attuale: il punto e il centro dell'edificio partono dal centro della mappa, l'aula senza posizione. */
+function _elementoVuoto() {
+    if (_modoEditor === 'poi') {
+        return { id: '', nome: '', descrizione: '', tipo: document.getElementById('poi-filtro-tipo').value, coordinate: _centroMappa() };
+    }
+    if (_modoEditor === 'aule') {
+        const ed = _edificioAttuale();
+        return {
+            id: '', nome: '', roomCode: '',
+            piano: Array.isArray(ed.piani) && ed.piani.length ? (ed.piani.includes(0) ? 0 : ed.piani[0]) : 0,
+            coordinata: null, coordinate: [], ...AULA_STATO_INIZIALE, capienza: 0,
+        };
+    }
+    const [lng, lat] = _centroMappa();
+    return {
+        id: '', nome: '', descrizione: '', codiceSede: '', centro: { lat, lng }, zoomIniziale: 18,
+        perimetro: [], piani: [0], aule: [], icona: 'school',
+    };
+}
+
+document.getElementById('poi-aggiungi')?.addEventListener('click', async () => {
+    if (!_mappeDati || (_modoEditor === 'aule' && !_edificioAttuale())) return;
+    if (!(await _puoiLasciareModulo())) return;
+    const copia = _elementoVuoto();
+    _modulo = { indice: -1, copia, originale: JSON.stringify(copia), idManuale: false };
+    _poiSel = -1;
+    // Un edificio nuovo parte col disegno del perimetro attivo: si clicca sugli angoli
+    _disegnoPerimetro = _modoEditor === 'edifici';
+    _disegnaModulo(false);
+    _formModulo().scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    _campo('nome').focus();
+});
+
+// Mostra il modulo del modo attuale (o nessuno) con i valori della copia
+function _disegnaModulo(centra) {
+    Object.values(MODULI).forEach(id => document.getElementById(id).classList.add('hidden'));
+    _disegnaPoi();
+    _disegnaEdificiPoi();
+    const el = _modulo && _modulo.copia;
+    _mettiSegnaposto(el || {});
+    if (!el) return;
+
+    const form = _formModulo();
+    const nuovo = _modulo.indice === -1;
+    form.classList.remove('hidden');
+    form.classList.toggle('nuovo', nuovo);
+    form.querySelectorAll('[data-campo]').forEach(c => {
+        c.classList.remove('poi-errore');
+        if (c.dataset.campo in el && c.tagName !== 'SELECT') c.value = el[c.dataset.campo] ?? '';
+    });
+    if (_modoEditor === 'aule') _compilaPianoAula(el);
+    if (_modoEditor === 'edifici') {
+        // L'id degli edifici lo usano le aule e l'app: si sceglie solo quando l'edificio è nuovo
+        _campo('id').disabled = !nuovo;
+        document.getElementById('edificio-nuovo-piano').value = '';
+        document.getElementById('edificio-nuovo-piano').classList.remove('poi-errore');
+        _disegnaPianiEdificio(el);
+    }
+    _compilaCoordinate(el);
+    _aggiornaModulo();
+    document.querySelector(`.poi-riga[data-poi="${_poiSel}"]`)?.scrollIntoView({ block: 'nearest' });
+
+    const c = _coordElemento(el);
+    if (centra && c && _poiMappa) _poiMappa.setView([c[1], c[0]], Math.max(_poiMappa.getZoom(), 17));
+}
+
+// Titolo, stato e pulsanti del modulo (dopo ogni modifica della copia)
+function _aggiornaModulo() {
+    if (!_modulo) return;
+    const form = _formModulo();
+    const testi = TESTI_MODULO[_modoEditor];
+    const nuovo = _modulo.indice === -1;
+    const cambiato = _moduloCambiato();
+    const el = _modulo.copia;
+    let titolo = nuovo ? testi.nuovo : `${testi.modifica}: ${el.nome || el.id}`;
+    if (_modoEditor === 'aule') titolo += ` (${_edificioAttuale().nome || _edificioAttuale().id})`;
+    form.querySelector('.mappe-modulo-titolo').textContent = titolo;
+    form.querySelector('.mappe-modulo-stato').textContent = nuovo ? 'non ancora aggiunto' : cambiato ? 'modifiche non salvate' : '';
+    form.querySelector('.mappe-modulo-conferma').textContent = nuovo ? testi.aggiungi : 'Salva modifiche';
+    form.querySelector('.mappe-modulo-annulla').textContent = nuovo ? 'Annulla' : 'Annulla modifiche';
+    form.querySelector('[data-azione="conferma"]').disabled = !nuovo && !cambiato;
+    form.querySelector('[data-azione="annulla"]').disabled = !nuovo && !cambiato;
+    if (_modoEditor === 'edifici') _aggiornaPerimetroModulo();
+}
+
+function _compilaCoordinate(el) {
+    const c = _coordElemento(el);
+    _campo('lat').value = c ? c[1] : '';
+    _campo('lng').value = c ? c[0] : '';
+    _campo('lat').classList.remove('poi-errore');
+    _campo('lng').classList.remove('poi-errore');
+    if (_modoEditor === 'aule') document.getElementById('aula-posiziona-testo').textContent = c ? 'Togli dalla mappa' : 'Metti sulla mappa';
+}
+
+// Segnaposto trascinabile dell'elemento nel modulo (se ha una posizione)
 function _mettiSegnaposto(p) {
     if (_poiMarker) { _poiMarker.remove(); _poiMarker = null; }
     const c = _coordElemento(p);
@@ -579,106 +791,233 @@ function _mettiSegnaposto(p) {
         draggable: true,
         zIndexOffset: 1000,
         icon: L.divIcon({ className: 'poi-segnaposto', html: `<span style="background:${_coloreElemento(p)}"></span>`, iconSize: [26, 26], iconAnchor: [13, 26] }),
-    }).addTo(_poiMappa);
+    }).bindTooltip(_modoEditor === 'edifici' ? 'Centro dell\'edificio' : '').addTo(_poiMappa);
     _poiMarker.on('dragend', () => {
         const pos = _poiMarker.getLatLng();
         _impostaCoord(p, [Number(pos.lng.toFixed(7)), Number(pos.lat.toFixed(7))]);
-        _compilaCoordinatePoi(p);
-        _modificaMappe();
+        _compilaCoordinate(p);
+        _aggiornaModulo();
     });
 }
 
-// Seleziona un elemento (-1 = nessuno): compila i campi e mette il segnaposto trascinabile.
-// centra = porta la mappa sull'elemento
-function _selezionaPoi(indice, centra) {
-    _poiSel = indice;
-    const p = _poiSelezionato();
-    if (!p) _poiSel = -1;
-    document.getElementById('poi-form').classList.toggle('hidden', !p);
-    _disegnaPoi();
-    if (_modoEditor === 'edifici') _disegnaEdificiPoi();
-    _mettiSegnaposto(p || {});
-    if (!p) return;
-
-    document.getElementById('poi-nome').value = p.nome || '';
-    // L'id degli edifici lo usano le aule e l'app: qui non si cambia
-    const campoId = document.getElementById('poi-id');
-    campoId.value = p.id || '';
-    campoId.disabled = _modoEditor === 'edifici';
-    document.getElementById('poi-tipo').value = p.tipo || '';
-    document.getElementById('poi-descrizione').value = p.descrizione || '';
-    document.getElementById('aula-roomcode').value = p.roomCode || '';
-    document.getElementById('aula-capienza').value = p.capienza ?? '';
-    document.getElementById('aula-capienza').classList.remove('poi-errore');
-    if (_modoEditor === 'aule') _compilaPianoAula(p);
-    if (_modoEditor === 'edifici') _compilaEdificio(p);
-    _compilaCoordinatePoi(p);
-    document.querySelector(`.poi-riga[data-poi="${indice}"]`)?.scrollIntoView({ block: 'nearest' });
-
-    const c = _coordElemento(p);
-    if (centra && c && _poiMappa) _poiMappa.setView([c[1], c[0]], Math.max(_poiMappa.getZoom(), 17));
+/** Id libero ricavato dal nome ("Bar Ecotekne" -> "bar_ecotekne", poi "bar_ecotekne_2"...). */
+function _idDaNome(nome, elementi) {
+    const radice = String(nome || '').normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || TESTI_MODULO[_modoEditor].cosa;
+    const ids = new Set(elementi.map(el => el.id));
+    let id = radice, n = 2;
+    while (ids.has(id)) id = `${radice}_${n++}`;
+    return id;
 }
 
-// Campi di testo dell'elemento selezionato
-[['poi-nome', 'nome'], ['poi-tipo', 'tipo'], ['poi-id', 'id'], ['poi-descrizione', 'descrizione'], ['aula-roomcode', 'roomCode'],
-    ['edificio-codice', 'codiceSede'], ['edificio-icona', 'icona']].forEach(([idCampo, chiave]) =>
-    document.getElementById(idCampo)?.addEventListener('input', (e) => {
-        const p = _poiSelezionato();
-        if (!p) return;
-        p[chiave] = chiave === 'descrizione' ? e.target.value : e.target.value.trim();
-        _modificaMappe();
-        _disegnaPoi();
+// Campi dei moduli: scrivono nella copia
+function _campoModulo(e) {
+    const el = _modulo && _modulo.copia;
+    const chiave = e.target.dataset.campo;
+    if (!el || !chiave) return;
+    const valore = e.target.value;
+    if (chiave === 'lat' || chiave === 'lng') {
+        _coordinateScritte(e.target);
+        return;
+    }
+    if (chiave === 'capienza' || chiave === 'zoomIniziale') {
+        const n = Number(valore.trim().replace(',', '.'));
+        const valido = valore.trim() !== '' &&
+            (chiave === 'capienza' ? Number.isInteger(n) && n >= 0 : Number.isFinite(n) && n >= 1 && n <= 22);
+        e.target.classList.toggle('poi-errore', !valido);
+        if (!valido) return;
+        el[chiave] = n;
+    } else if (chiave === 'piano') {
+        el.piano = Number(valore);
+        _compilaPianoAula(el);
+    } else {
+        el[chiave] = chiave === 'descrizione' ? valore : valore.trim();
+        // Elemento nuovo: l'id si ricava dal nome finché non lo si scrive a mano
+        if (chiave === 'id') _modulo.idManuale = el.id !== '';
+        if (chiave === 'nome' && _modulo.indice === -1 && !_modulo.idManuale) {
+            el.id = _idDaNome(el.nome, _elementiEditor());
+            _campo('id').value = el.id;
+        }
         const segno = _poiMarker && _poiMarker.getElement()?.querySelector('span');
-        if (chiave === 'tipo' && segno) segno.style.background = _colorePoi(p.tipo);
-    }));
+        if (chiave === 'tipo' && segno) segno.style.background = _colorePoi(el.tipo);
+    }
+    _aggiornaModulo();
+}
 
-// Capienza delle aule: intero non negativo
-document.getElementById('aula-capienza')?.addEventListener('input', (e) => {
-    const p = _poiSelezionato();
-    if (!p) return;
-    const testo = e.target.value.trim();
-    const n = Number(testo);
-    const valido = testo !== '' && Number.isInteger(n) && n >= 0;
-    e.target.classList.toggle('poi-errore', !valido);
-    if (!valido) return;
-    p.capienza = n;
+// Coordinate scritte a mano. In un campo si può incollare la coppia "lat, lng" copiata da Google Maps.
+// Per le aule i due campi vuoti tolgono la posizione.
+function _coordinateScritte(campo) {
+    const el = _modulo.copia;
+    const latEl = _campo('lat');
+    const lngEl = _campo('lng');
+    const coppia = campo.value.match(/^\s*(-?\d+\.\d+)\s*[,;\s]\s*(-?\d+\.\d+)\s*$/);
+    if (coppia) {
+        latEl.value = coppia[1];
+        lngEl.value = coppia[2];
+    }
+    if (_modoEditor === 'aule' && !latEl.value.trim() && !lngEl.value.trim()) {
+        _impostaCoord(el, null);
+        _compilaCoordinate(el);
+        _mettiSegnaposto(el);
+        _aggiornaModulo();
+        return;
+    }
+    const lat = parseFloat(latEl.value.replace(',', '.'));
+    const lng = parseFloat(lngEl.value.replace(',', '.'));
+    const valide = _coordValide([lng, lat]);
+    latEl.classList.toggle('poi-errore', !valide);
+    lngEl.classList.toggle('poi-errore', !valide);
+    if (!valide) return;
+    const nuova = !_coordElemento(el);
+    _impostaCoord(el, [lng, lat]);
+    if (_modoEditor === 'aule') document.getElementById('aula-posiziona-testo').textContent = 'Togli dalla mappa';
+    if (nuova) _mettiSegnaposto(el);
+    else if (_poiMarker) _poiMarker.setLatLng([lat, lng]);
+    if (_poiMappa) _poiMappa.panTo([lat, lng]);
+    _aggiornaModulo();
+}
+
+/** Cosa impedisce di aggiungere o salvare l'elemento (null se è a posto). */
+function _problemaElemento(el, elementi, indice) {
+    if (!el.nome) return 'Scrivi il nome';
+    if (!el.id) return 'Scrivi l\'id';
+    if (elementi.some((altro, i) => i !== indice && altro.id === el.id)) return `L'id "${el.id}" è già usato`;
+    if (_modoEditor === 'poi') {
+        if (!el.tipo) return 'Scegli il tipo';
+        if (!_coordValide(el.coordinate)) return 'Le coordinate non sono valide';
+    } else if (_modoEditor === 'aule') {
+        if (!el.roomCode) return 'Scrivi il codice aula';
+        if (!Number.isInteger(el.capienza) || el.capienza < 0) return 'La capienza non è valida';
+        if (!(_edificioAttuale().piani || []).includes(el.piano)) return 'Scegli uno dei piani dell\'edificio';
+    } else {
+        if (!Array.isArray(el.piani) || el.piani.length === 0) return 'Aggiungi almeno un piano';
+        if (!el.centro || !_coordValide([el.centro.lng, el.centro.lat])) return 'Il centro non è valido';
+        const vertici = (el.perimetro || []).length;
+        if (vertici > 0 && vertici < 3) return 'Il perimetro deve avere almeno 3 vertici (oppure nessuno)';
+    }
+    return null;
+}
+
+function _confermaModulo() {
+    const el = _modulo.copia;
+    const elementi = _elementiEditor();
+    const problema = _problemaElemento(el, elementi, _modulo.indice);
+    if (problema) {
+        showToast(problema, 'error');
+        return;
+    }
+    const nuovo = _modulo.indice === -1;
+    const indice = nuovo ? elementi.push(el) - 1 : _modulo.indice;
+    if (!nuovo) elementi[indice] = el;
+    _impostaModulo(indice); // resta aperto, ora senza modifiche in sospeso
+    if (nuovo) document.getElementById('poi-cerca').value = '';
     _modificaMappe();
-    _disegnaPoi();
+    _disegnaEditorMappe(); // conteggi del menu edifici, tipi e icone
+    const cosa = TESTI_MODULO[_modoEditor].cosa;
+    showToast(`${cosa[0].toUpperCase() + cosa.slice(1)} ${nuovo ? (cosa === 'aula' ? 'aggiunta' : 'aggiunto') : 'salvato'}: salva la bozza o pubblica quando hai finito`);
+}
+
+function _annullaModulo() {
+    if (_modulo.indice === -1) {
+        _chiudiModulo();
+    } else {
+        _modulo.copia = JSON.parse(_modulo.originale);
+        _disegnoPerimetro = false;
+    }
+    _disegnaModulo(false);
+}
+
+async function _eliminaElemento() {
+    const indice = _modulo.indice;
+    const el = _elementiEditor()[indice];
+    if (!el) return;
+    if (_modoEditor === 'edifici' && (el.aule || []).length) {
+        showToast(`${el.nome || el.id} ha ${el.aule.length} aule: eliminale prima dalla scheda Aule`, 'error');
+        return;
+    }
+    const cosa = _modoEditor === 'aule' ? `l'aula "${el.nome || el.id}" di ${_edificioAttuale().nome || _edificioAttuale().id}`
+        : _modoEditor === 'edifici' ? `l'edificio "${el.nome || el.id}"` : `"${el.nome || el.id}"`;
+    if (!(await customConfirm(`Eliminare ${cosa}? Sparirà dalle app solo dopo la pubblicazione.`, {
+        title: { poi: 'Elimina punto', aule: 'Elimina aula', edifici: 'Elimina edificio' }[_modoEditor], confirmText: 'Elimina', icon: '📍', isDanger: true
+    }))) return;
+    _elementiEditor().splice(indice, 1);
+    if (_modoEditor === 'edifici' && _edificioSel >= indice) _edificioSel = Math.max(0, _edificioSel - (_edificioSel > indice ? 1 : 0));
+    if (_edificioSel >= _mappeDati.edifici.length) _edificioSel = 0;
+    _chiudiModulo();
+    _modificaMappe();
+    _disegnaEditorMappe();
+}
+
+// Pulsanti dei moduli
+async function _azioneModulo(e) {
+    const pulsante = e.target.closest('[data-azione], [data-piano]');
+    if (!pulsante || !_modulo) return;
+    const el = _modulo.copia;
+    if (pulsante.dataset.piano !== undefined) {
+        _togliPiano(Number(pulsante.dataset.piano));
+        return;
+    }
+    switch (pulsante.dataset.azione) {
+        case 'conferma': _confermaModulo(); break;
+        case 'annulla': _annullaModulo(); break;
+        case 'elimina': await _eliminaElemento(); break;
+        case 'posiziona': // aula: "Metti sulla mappa" (al centro della vista) / "Togli dalla mappa"
+            _impostaCoord(el, _coordElemento(el) ? null : _centroMappa());
+            _compilaCoordinate(el);
+            _mettiSegnaposto(el);
+            _aggiornaModulo();
+            break;
+        case 'aggiungi-piano': _aggiungiPianoEdificio(); break;
+        case 'disegna':
+            _disegnoPerimetro = !_disegnoPerimetro;
+            _disegnaPerimetroModulo();
+            _aggiornaModulo();
+            break;
+        case 'togli-vertice':
+            (el.perimetro || []).pop();
+            _disegnaPerimetroModulo();
+            _aggiornaModulo();
+            break;
+        case 'cancella-perimetro':
+            el.perimetro = [];
+            _disegnaPerimetroModulo();
+            _aggiornaModulo();
+            break;
+        case 'centro-perimetro': { // media dei vertici
+            const v = el.perimetro || [];
+            if (v.length < 3) { showToast('Disegna prima il perimetro (almeno 3 vertici)', 'error'); break; }
+            const media = (k) => Number((v.reduce((s, p) => s + p[k], 0) / v.length).toFixed(7));
+            _impostaCoord(el, [media(0), media(1)]);
+            _compilaCoordinate(el);
+            _mettiSegnaposto(el);
+            _aggiornaModulo();
+            break;
+        }
+    }
+}
+
+Object.values(MODULI).forEach(id => {
+    const form = document.getElementById(id);
+    form?.addEventListener('input', (e) => { if (e.target.tagName !== 'SELECT') _campoModulo(e); });
+    form?.addEventListener('change', (e) => { if (e.target.tagName === 'SELECT') _campoModulo(e); });
+    form?.addEventListener('click', _azioneModulo);
 });
 
-// Piano dell'aula: uno dei piani dell'edificio (si aggiungono nel modo Edifici).
-// Un piano che non è nell'elenco resta scelto, segnalato, finché non lo si cambia.
+// ----- Aule: piano tra quelli dell'edificio -----
+
+// Un piano che non è nell'elenco resta scelto, segnalato, finché non lo si cambia
 function _compilaPianoAula(aula) {
     const ed = _edificioAttuale();
     const piani = ed && Array.isArray(ed.piani) ? ed.piani : [];
     const fuori = Number.isInteger(aula.piano) && !piani.includes(aula.piano);
-    const campo = document.getElementById('aula-piano');
+    const campo = _campo('piano');
     campo.innerHTML = piani.map(n => `<option value="${n}">${escapeHtml(_nomePiano(n))}</option>`).join('') +
         (fuori ? `<option value="${aula.piano}">${escapeHtml(_nomePiano(aula.piano))} (non tra i piani dell'edificio)</option>` : '');
     campo.value = String(aula.piano);
     campo.classList.toggle('poi-errore', fuori);
 }
 
-document.getElementById('aula-piano')?.addEventListener('change', (e) => {
-    const p = _poiSelezionato();
-    if (!p || _modoEditor !== 'aule') return;
-    p.piano = Number(e.target.value);
-    _compilaPianoAula(p);
-    _modificaMappe();
-    _disegnaPoi();
-});
-
-// ----- Modo edifici: codice sede, icona, zoom e piani -----
-
-function _compilaEdificio(ed) {
-    document.getElementById('edificio-codice').value = ed.codiceSede || '';
-    document.getElementById('edificio-icona').value = ed.icona || '';
-    document.getElementById('edificio-zoom').value = ed.zoomIniziale ?? '';
-    document.getElementById('edificio-zoom').classList.remove('poi-errore');
-    document.getElementById('edificio-nuovo-piano').value = '';
-    document.getElementById('edificio-nuovo-piano').classList.remove('poi-errore');
-    _disegnaPianiEdificio(ed);
-}
+// ----- Edifici: piani e perimetro -----
 
 function _disegnaPianiEdificio(ed) {
     const piani = Array.isArray(ed.piani) ? ed.piani : [];
@@ -691,23 +1030,9 @@ function _disegnaPianiEdificio(ed) {
     }).join('') || '<span class="admin-testo-sub admin-piccolo">Nessun piano</span>';
 }
 
-document.getElementById('edificio-zoom')?.addEventListener('input', (e) => {
-    const ed = _poiSelezionato();
-    if (!ed || _modoEditor !== 'edifici') return;
-    const n = Number(e.target.value.trim().replace(',', '.'));
-    const valido = e.target.value.trim() !== '' && Number.isFinite(n) && n >= 1 && n <= 22;
-    e.target.classList.toggle('poi-errore', !valido);
-    if (!valido) return;
-    ed.zoomIniziale = n;
-    _modificaMappe();
-});
-
 // Un piano si toglie solo se non ci sono aule (e ne resta almeno uno)
-document.getElementById('edificio-piani')?.addEventListener('click', (e) => {
-    const pulsante = e.target.closest('[data-piano]');
-    const ed = _poiSelezionato();
-    if (!pulsante || !ed || _modoEditor !== 'edifici') return;
-    const n = Number(pulsante.dataset.piano);
+function _togliPiano(n) {
+    const ed = _modulo.copia;
     const aule = (ed.aule || []).filter(a => a.piano === n);
     if (aule.length) {
         const quante = aule.length === 1 ? 'c\'è 1 aula' : `ci sono ${aule.length} aule`;
@@ -719,14 +1044,12 @@ document.getElementById('edificio-piani')?.addEventListener('click', (e) => {
         return;
     }
     ed.piani = ed.piani.filter(x => x !== n);
-    _modificaMappe();
     _disegnaPianiEdificio(ed);
-    _disegnaPoi();
-});
+    _aggiornaModulo();
+}
 
 function _aggiungiPianoEdificio() {
-    const ed = _poiSelezionato();
-    if (!ed || _modoEditor !== 'edifici') return;
+    const ed = _modulo.copia;
     const campo = document.getElementById('edificio-nuovo-piano');
     const testo = campo.value.trim();
     const n = Number(testo);
@@ -740,134 +1063,30 @@ function _aggiungiPianoEdificio() {
     }
     ed.piani = [...piani, n].sort((a, b) => a - b);
     campo.value = '';
-    _modificaMappe();
     _disegnaPianiEdificio(ed);
-    _disegnaPoi();
+    _aggiornaModulo();
 }
 
-document.getElementById('edificio-aggiungi-piano')?.addEventListener('click', _aggiungiPianoEdificio);
 document.getElementById('edificio-nuovo-piano')?.addEventListener('keydown', (e) => {
-    if (e.key !== 'Enter') return;
+    if (e.key !== 'Enter' || !_modulo) return;
     e.preventDefault();
     _aggiungiPianoEdificio();
 });
 
-// Coordinate scritte a mano. In un campo si può incollare la coppia "lat, lng" copiata da Google Maps.
-// Per le aule i due campi vuoti tolgono la posizione.
-['poi-lat', 'poi-lng'].forEach(idCampo =>
-    document.getElementById(idCampo)?.addEventListener('input', (e) => {
-        const p = _poiSelezionato();
-        if (!p) return;
-        const latEl = document.getElementById('poi-lat');
-        const lngEl = document.getElementById('poi-lng');
-        const coppia = e.target.value.match(/^\s*(-?\d+\.\d+)\s*[,;\s]\s*(-?\d+\.\d+)\s*$/);
-        if (coppia) {
-            latEl.value = coppia[1];
-            lngEl.value = coppia[2];
-        }
-        if (_modoEditor === 'aule' && !latEl.value.trim() && !lngEl.value.trim()) {
-            _impostaCoord(p, null);
-            _compilaCoordinatePoi(p);
-            _modificaMappe();
-            _selezionaPoi(_poiSel, false);
-            return;
-        }
-        const lat = parseFloat(latEl.value.replace(',', '.'));
-        const lng = parseFloat(lngEl.value.replace(',', '.'));
-        const valide = _coordValide([lng, lat]);
-        latEl.classList.toggle('poi-errore', !valide);
-        lngEl.classList.toggle('poi-errore', !valide);
-        if (!valide) return;
-        const nuova = !_coordElemento(p);
-        _impostaCoord(p, [lng, lat]);
-        _modificaMappe();
-        document.getElementById('aula-posiziona-testo').textContent = 'Togli dalla mappa';
-        if (nuova) { _disegnaPoi(); _mettiSegnaposto(p); }
-        else if (_poiMarker) _poiMarker.setLatLng([lat, lng]);
-        if (_poiMappa) _poiMappa.panTo([lat, lng]);
-    }));
-
-document.getElementById('poi-cerca')?.addEventListener('input', () => _disegnaPoi());
-document.getElementById('poi-filtro-tipo')?.addEventListener('change', () => { _disegnaPoi(); _inquadraPoi(); });
-document.getElementById('poi-edificio')?.addEventListener('change', (e) => {
-    _edificioSel = Number(e.target.value);
-    _poiSel = -1;
-    document.getElementById('poi-cerca').value = '';
-    _disegnaEdificiPoi();
-    _selezionaPoi(-1, false);
-    _inquadraPoi();
-});
-
-/** Centro della mappa come [lng, lat] (posizione dei nuovi elementi). */
-function _centroMappa() {
-    const c = _poiMappa ? _poiMappa.getCenter() : { lat: 40.35, lng: 18.15 };
-    return [Number(c.lng.toFixed(7)), Number(c.lat.toFixed(7))];
+// Numero di vertici e pulsanti del perimetro
+function _aggiornaPerimetroModulo() {
+    const n = (_modulo.copia.perimetro || []).length;
+    document.getElementById('edificio-perimetro-info').textContent =
+        n === 0 ? 'Nessun perimetro: sulla mappa l\'edificio è solo il suo centro.'
+            : `${n} vertici${n < 3 ? ' (ne servono almeno 3)' : ''}.`;
+    document.getElementById('edificio-disegna-testo').textContent = _disegnoPerimetro ? 'Fine disegno'
+        : n ? 'Modifica perimetro' : 'Disegna perimetro';
+    document.querySelector('#form-edificio [data-azione="disegna"]').classList.toggle('btn-primary', _disegnoPerimetro);
+    document.querySelector('#form-edificio [data-azione="disegna"]').classList.toggle('btn-secondary', !_disegnoPerimetro);
+    document.querySelector('#form-edificio [data-azione="togli-vertice"]').disabled = n === 0;
+    document.querySelector('#form-edificio [data-azione="cancella-perimetro"]').disabled = n === 0;
+    document.getElementById('edificio-perimetro-aiuto').classList.toggle('hidden', !_disegnoPerimetro);
 }
-
-// "Metti sulla mappa" (al centro della vista) / "Togli dalla mappa" per l'aula selezionata
-document.getElementById('aula-posiziona')?.addEventListener('click', () => {
-    const p = _poiSelezionato();
-    if (!p) return;
-    _impostaCoord(p, _coordElemento(p) ? null : _centroMappa());
-    _modificaMappe();
-    _selezionaPoi(_poiSel, false);
-});
-
-/** Primo id libero del tipo base_1, base_2... */
-function _idLibero(base, elementi) {
-    const ids = new Set(elementi.map(el => el.id));
-    let n = 1;
-    while (ids.has(`${base}_${n}`)) n++;
-    return `${base}_${n}`;
-}
-
-// Nuovo elemento: il punto va al centro della mappa, l'aula senza posizione (si aggiunge dopo)
-document.getElementById('poi-aggiungi')?.addEventListener('click', () => {
-    if (!_mappeDati || _modoEditor === 'edifici') return;
-    const elementi = _elementiEditor();
-    if (_modoEditor === 'poi') {
-        elementi.push({
-            id: _idLibero('nuovo_punto', elementi),
-            nome: 'Nuovo punto',
-            descrizione: '',
-            tipo: document.getElementById('poi-filtro-tipo').value || 'bar',
-            coordinate: _centroMappa(),
-        });
-    } else {
-        const ed = _edificioAttuale();
-        if (!ed) return;
-        elementi.push({
-            id: _idLibero('nuova_aula', elementi),
-            nome: 'Nuova aula',
-            roomCode: '',
-            piano: Array.isArray(ed.piani) && ed.piani.length ? (ed.piani.includes(0) ? 0 : ed.piani[0]) : 0,
-            coordinata: null,
-            coordinate: [],
-            ...AULA_STATO_INIZIALE,
-            capienza: 0,
-        });
-    }
-    document.getElementById('poi-cerca').value = '';
-    _modificaMappe();
-    if (_modoEditor === 'aule') _disegnaEditorMappe(); // aggiorna il conteggio nel menu degli edifici
-    _selezionaPoi(elementi.length - 1, false);
-    const nome = document.getElementById('poi-nome');
-    nome.focus();
-    nome.select();
-});
-
-document.getElementById('poi-elimina')?.addEventListener('click', async () => {
-    const p = _poiSelezionato();
-    if (!p || _modoEditor === 'edifici') return;
-    const cosa = _modoEditor === 'aule' ? `l'aula "${p.nome || p.id}" di ${_edificioAttuale().nome || _edificioAttuale().id}` : `"${p.nome || p.id}"`;
-    if (!(await customConfirm(`Eliminare ${cosa}? Sparirà dalle app solo dopo la pubblicazione.`, {
-        title: _modoEditor === 'aule' ? 'Elimina aula' : 'Elimina punto', confirmText: 'Elimina', icon: '📍', isDanger: true
-    }))) return;
-    _elementiEditor().splice(_poiSel, 1);
-    _modificaMappe();
-    _poiSel = -1;
-    _disegnaEditorMappe();
-});
 
 // Scelta di un file: sostituisce tutto il contenuto in modifica (niente viene caricato qui)
 document.getElementById('cfg-mappe-file')?.addEventListener('change', async (e) => {
@@ -918,7 +1137,7 @@ document.getElementById('cfg-mappe-annulla')?.addEventListener('click', async ()
 // Salva bozza: il JSON in modifica va nel bucket, ma config_app non cambia e le app non lo vedono.
 // Se un altro admin ha salvato la bozza dopo che è stata aperta qui, si chiede prima di sovrascriverla.
 document.getElementById('cfg-mappe-salva-bozza')?.addEventListener('click', async () => {
-    if (!_mappeDati) return;
+    if (!_mappeDati || !_nessunModuloInSospeso()) return;
     const pulsante = document.getElementById('cfg-mappe-salva-bozza');
     pulsante.disabled = true;
     try {
@@ -983,7 +1202,7 @@ async function _registraMappe(versione, path, sha256, byte) {
 
 // Pubblicazione: JSON compatto, firmato (SHA-256) e compresso (gzip) nel browser
 document.getElementById('cfg-mappe-pubblica')?.addEventListener('click', async () => {
-    if (!_mappeDati) return;
+    if (!_mappeDati || !_nessunModuloInSospeso()) return;
     try {
         _validaMappe(_mappeDati);
     } catch (err) {
