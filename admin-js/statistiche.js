@@ -28,14 +28,27 @@ const kpiUsersRangeLabel = document.getElementById('kpi-users-range-label');
 let currentStatsRangeDays = 30;
 
 // ===== Analytics / Statistiche Download =====
+// L'API di GitHub senza login concede 60 richieste l'ora per connessione (contano anche le pagine
+// del sito aperte dallo stesso PC): le release salvate si riusano per 15 minuti e solo il pulsante
+// Aggiorna le chiede sempre. Se GitHub non risponde restano quelle salvate.
+const STATS_CACHE_MINUTI = 15;
+
+const _oraBreve = (ms) => new Date(ms).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' });
+
 async function fetchDownloadStats(isManualRefresh = false) {
     if (!analyticsVersionsList) return;
 
     if (refreshIcon) refreshIcon.classList.add('spinning');
     if (refreshAnalyticsBtn) refreshAnalyticsBtn.disabled = true;
 
+    // In memoria: { ora, dati } (le versioni precedenti salvavano solo l'elenco delle release)
     const cacheKey = 'qc_cache_admin_stats';
-    const cached = localStorage.getItem(cacheKey);
+    let cached = null;
+    try {
+        const salvato = JSON.parse(localStorage.getItem(cacheKey));
+        if (Array.isArray(salvato)) cached = { ora: 0, dati: salvato };
+        else if (salvato && Array.isArray(salvato.dati)) cached = salvato;
+    } catch (e) { /* niente in memoria */ }
 
     const renderStats = (releases) => {
         let totalDownloads = 0;
@@ -160,20 +173,38 @@ async function fetchDownloadStats(isManualRefresh = false) {
         }
     };
 
-    // If cached data exists and it's not a forced manual refresh, render it immediately
+    const fermaRotella = () => {
+        if (refreshIcon) refreshIcon.classList.remove('spinning');
+        if (refreshAnalyticsBtn) refreshAnalyticsBtn.disabled = false;
+    };
+    const datiDelle = () => {
+        if (analyticsLastSync) analyticsLastSync.textContent = cached.ora ? `Dati delle ${_oraBreve(cached.ora)}` : 'Dati salvati in precedenza';
+    };
+
+    // Dati salvati: si mostrano subito; se sono recenti non si chiede nulla a GitHub
     if (cached && !isManualRefresh) {
         try {
-            renderStats(JSON.parse(cached));
-        } catch(e) {}
+            renderStats(cached.dati);
+            datiDelle();
+        } catch (e) { /* si riprova da GitHub */ }
+        if (Date.now() - cached.ora < STATS_CACHE_MINUTI * 60000) {
+            fermaRotella();
+            return;
+        }
     }
 
     try {
         const res = await fetch('https://api.github.com/repos/xTomeku/Quick_Check_Unisalento/releases');
         if (!res.ok) {
-            throw new Error(`GitHub API HTTP ${res.status}`);
+            // Limite orario finito: GitHub dice quando si azzera
+            const reset = Number(res.headers.get('x-ratelimit-reset'));
+            const err = new Error(res.status === 403 || res.status === 429
+                ? `GitHub ha raggiunto il limite di richieste orarie${reset ? `, riprova dopo le ${_oraBreve(reset * 1000)}` : ''}`
+                : `GitHub API HTTP ${res.status}`);
+            throw err;
         }
         const data = await res.json();
-        localStorage.setItem(cacheKey, JSON.stringify(data));
+        try { localStorage.setItem(cacheKey, JSON.stringify({ ora: Date.now(), dati: data })); } catch (e) { /* storage pieno */ }
         renderStats(data);
         if (isManualRefresh) {
             showToast('Statistiche aggiornate con successo!');
@@ -183,12 +214,17 @@ async function fetchDownloadStats(isManualRefresh = false) {
         if (!cached) {
             analyticsVersionsList.innerHTML = `
                 <div class="admin-errore admin-centro">
-                    <p class="admin-spazio-sotto">Impossibile recuperare i dati da GitHub Releases (${err.message}).</p>
+                    <p class="admin-spazio-sotto">Impossibile recuperare i dati da GitHub Releases (${escapeHtml(err.message)}).</p>
                     <button class="btn btn-secondary btn-sm" onclick="fetchDownloadStats(true)">Riprova</button>
                 </div>
             `;
+        } else if (!isManualRefresh) {
+            datiDelle(); // restano i dati salvati, già mostrati: niente avviso all'apertura
         } else {
-            showToast('Errore durante l\'aggiornamento delle statistiche', 'error');
+            // L'avviso solo se l'aggiornamento l'ha chiesto l'admin
+            renderStats(cached.dati);
+            datiDelle();
+            showToast(`Statistiche non aggiornate: ${err.message}. Restano i dati${cached.ora ? ` delle ${_oraBreve(cached.ora)}` : ' salvati'}.`, 'error');
         }
     } finally {
         if (refreshIcon) refreshIcon.classList.remove('spinning');
