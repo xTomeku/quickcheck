@@ -1,0 +1,499 @@
+/* Colori di UDU (rosso, giallo, bianco) e dell'azzurro del dipartimento di Medicina, font Inter come QuickCheck.
+   Rosso: barre e azione principale. Azzurro: inchiostro del foglio risposte e segni dello studente.
+   Giallo: evidenziazioni (domanda corrente, filtro attivo, ultimi minuti). */
+:root {
+  /* Colori UDU (rosso, giallo, bianco) e azzurro del dipartimento di Medicina */
+  --udu-rosso: #c6242d;
+  --udu-rosso-scuro: #a51d25;
+  --udu-giallo: #feec03;
+  --medicina: #50aed0;
+
+  --carta: #ffffff;
+  --foglio: #f6f9fa;
+  --grafite: #16212a;
+  --grafite-2: #5b6770;
+  --modulo: #247a9a;
+  --modulo-linea: #cfe3eb;
+  --modulo-velo: #eef7fa;
+  --biro: var(--medicina);
+  --biro-velo: #e2f2f8;
+  --su-biro: #0e2630;
+  --rosso: var(--udu-rosso);
+  --rosso-velo: #fbe9ea;
+  --omessa: #8a959c;
+  --tacca: #16212a;
+
+  --font: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --t-piccolo: 0.875rem;
+  --t-base: 1rem;
+  --t-domanda: 1.1875rem;
+  --t-h2: 1.5rem;
+  --t-h1: clamp(2.1rem, 5.5vw, 3.4rem);
+  --raggio: 14px;
+  --raggio-foglio: 16px;
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; overflow-x: clip; }
+body { overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--carta);
+  color: var(--grafite);
+  font-family: var(--font);
+  font-size: var(--t-base);
+  line-height: 1.6;
+  -webkit-tap-highlight-color: transparent;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--carta);
+}
+h1, h2, h3 { margin: 0; line-height: 1.15; text-wrap: balance; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--biro); outline-offset: 2px; }
+.num { font-variant-numeric: tabular-nums; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.pagina {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 20px 64px;
+}
+
+/* ---------- pulsanti ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 48px; padding: 0 20px;
+  border-radius: var(--raggio); border: 1px solid transparent;
+  font-size: 15px; font-weight: 700; text-decoration: none; line-height: 1.2;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.btn-primario { background: var(--udu-rosso); color: #fff; box-shadow: 0 4px 14px rgba(198, 36, 45, 0.22); }
+.btn-primario:hover:not(:disabled) { background: var(--udu-rosso-scuro); }
+.btn-secondario { background: var(--carta); border-color: #d3dce1; color: var(--grafite); }
+.btn-secondario:hover:not(:disabled) { background: var(--foglio); border-color: var(--modulo); }
+.btn-testo { background: none; border: none; color: var(--biro); padding-inline: 8px; min-height: 44px; font-weight: 700; }
+.btn-pericolo { background: var(--udu-rosso); color: #fff; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ---------- pallini del foglio risposte ---------- */
+.pallino {
+  --d: 26px;
+  position: relative;
+  display: inline-grid; place-items: center;
+  width: var(--d); height: var(--d); flex: none;
+  border-radius: 50%;
+  border: 1.5px solid var(--modulo-linea);
+  color: var(--modulo);
+  font-size: 0.75rem; font-weight: 700; line-height: 1;
+}
+.pallino::after {
+  content: ''; position: absolute; inset: -1.5px; border-radius: 50%;
+  background: var(--biro); transform: scale(0); transition: transform 160ms ease-out;
+}
+.pallino > span { position: relative; z-index: 1; }
+.pallino.pieno { border-color: var(--biro); color: var(--su-biro); }
+.pallino.pieno::after { transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .pallino::after { transition: none; }
+}
+
+/* ---------- home ---------- */
+.marchio { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--modulo); }
+.marchio svg { flex: none; }
+.home { display: grid; gap: 56px; }
+.eroe {
+  display: grid; gap: 32px; align-items: center;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  padding-top: 24px;
+}
+.eroe h1 { font-size: var(--t-h1); font-weight: 900; letter-spacing: -0.03em; line-height: 1.08; max-width: 15ch; }
+.eroe h1 em { font-style: normal; color: var(--udu-rosso); }
+.eroe .sottotitolo { margin-top: 16px; font-size: 1.1875rem; color: var(--grafite-2); max-width: 46ch; }
+.eroe .azioni { margin-top: 28px; display: grid; gap: 14px; justify-items: start; }
+.azione-principale { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.azione-principale .nota { font-size: var(--t-piccolo); color: var(--grafite-2); }
+.una-materia { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.una-materia > span { color: var(--grafite-2); font-size: var(--t-piccolo); margin-right: 4px; }
+
+.ripresa {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
+  padding: 16px 20px; border-radius: var(--raggio);
+  background: var(--biro-velo); border: 1.5px solid var(--biro);
+}
+.ripresa p { min-width: 0; }
+.ripresa strong { display: block; }
+.ripresa .bottoni { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.colonne { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.blocco h2 { font-size: var(--t-h2); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 14px; }
+.vuoto { color: var(--grafite-2); padding: 18px 0; border-top: 1px dashed var(--modulo-linea); }
+
+.storico { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--modulo-linea); }
+.storico li {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 4px 16px; align-items: baseline;
+  padding: 14px 0; border-bottom: 1px solid var(--modulo-linea);
+}
+.btn-elimina {
+  align-self: center; background: none; border: none; color: var(--grafite-2);
+  font-size: 1.25rem; line-height: 1; padding: 4px 10px; border-radius: 8px;
+}
+.btn-elimina:hover { background: var(--rosso-velo); color: var(--rosso); }
+.storico-conferma { grid-column: 1 / -1; color: var(--grafite-2); font-size: var(--t-piccolo); }
+.storico-svuota { margin-top: 14px; color: var(--grafite-2); font-size: var(--t-piccolo); }
+.link-sommesso.pericolo { color: var(--rosso); font-weight: 700; }
+.storico .quando { color: var(--grafite-2); font-size: var(--t-piccolo); }
+.storico .punti { display: flex; gap: 14px; flex-wrap: wrap; justify-content: flex-end; }
+.storico .punti span { white-space: nowrap; }
+.storico .punti b { font-weight: 700; }
+.btn-riga { all: unset; display: contents; cursor: pointer; }
+
+.deboli { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.deboli li { display: grid; gap: 6px; }
+.deboli .riga { display: flex; justify-content: space-between; gap: 12px; }
+.deboli .materia, .argomenti-prova .materia { color: var(--grafite-2); font-size: var(--t-piccolo); }
+/* una tacca per domanda, come la striscia della pagella: un argomento con una domanda sola
+   non deve sembrare un disastro quanto uno con sei */
+.segni { display: flex; gap: 3px; }
+.segni i { flex: 0 1 16px; min-width: 5px; height: 10px; border-radius: 2px; }
+.segni i.errata { background: var(--rosso); }
+.segni i.omessa { background: var(--omessa); opacity: 0.5; }
+.segni i.corretta { background: var(--biro); opacity: 0.4; }
+
+.btn-ripassa { margin-top: 18px; }
+
+.piede { color: var(--grafite-2); font-size: var(--t-piccolo); border-top: 1px solid var(--modulo-linea); padding-top: 18px; display: grid; gap: 6px; max-width: 72ch; }
+
+/* fascia di UDU Lecce in fondo alla home: il logo è bianco, quindi vuole il fondo rosso,
+   e il filo giallo sotto richiama la barra in alto */
+.fascia-udu {
+  display: grid; justify-items: center; gap: 12px;
+  padding: 26px 24px; border-radius: var(--raggio-foglio);
+  background: var(--udu-rosso); border-bottom: 4px solid var(--udu-giallo);
+  color: #fff;
+}
+.fascia-udu img { width: min(210px, 70%); height: auto; }
+
+.errore { color: var(--rosso); font-weight: 700; }
+.eroe-foglio { max-width: 380px; justify-self: end; width: 100%; transform: rotate(-1.4deg); }
+@media (max-width: 900px) { .eroe-foglio { justify-self: start; transform: none; max-width: 420px; } }
+
+/* ---------- foglio risposte ---------- */
+.foglio {
+  position: relative;
+  background: var(--foglio);
+  border: 1px solid var(--modulo-linea);
+  border-radius: var(--raggio-foglio);
+  padding: 16px 18px 18px 32px;
+  color: var(--grafite);
+}
+/* tacche di sincronizzazione, una per riga, come sui moduli a lettura ottica */
+.foglio-righe > li { position: relative; }
+.foglio-righe > li::before {
+  content: ''; position: absolute; left: -20px; top: 50%; width: 9px; height: 4px; margin-top: -2px;
+  background: var(--tacca); opacity: 0.85;
+}
+.foglio-testata { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; color: var(--modulo); font-weight: 700; font-size: var(--t-piccolo); padding-bottom: 10px; border-bottom: 1.5px solid var(--modulo); }
+.foglio-testata .conteggio { color: var(--grafite-2); font-weight: 400; }
+.foglio-blocco { padding-top: 8px; }
+.foglio-blocco + .foglio-blocco { margin-top: 6px; border-top: 1px solid var(--modulo-linea); padding-top: 10px; }
+.foglio-blocco h3 { font-size: 0.75rem; font-weight: 700; color: var(--modulo); margin-bottom: 4px; letter-spacing: 0.01em; }
+.foglio-righe { list-style: none; margin: 0; padding: 0; }
+.foglio-riga {
+  width: 100%;
+  display: grid; grid-template-columns: 2.2ch minmax(0, 1fr) 1.2em; align-items: center; gap: 10px;
+  min-height: 34px; padding: 3px 6px; margin: 0 -6px;
+  border: none; border-radius: 6px; background: none; text-align: left;
+}
+.foglio-riga:hover { background: var(--modulo-velo); }
+.foglio-riga.attuale { background: rgba(254, 236, 3, 0.4); }
+.foglio-riga .n { color: var(--modulo); font-weight: 700; font-size: 0.8125rem; text-align: right; }
+.foglio-riga .pallini { display: flex; gap: 5px; }
+.foglio-riga .pallino { --d: 22px; font-size: 0.625rem; }
+.foglio-riga .casella {
+  min-width: 0; height: 24px; border: 1.5px solid var(--modulo-linea); border-radius: 3px;
+  padding: 0 6px; font-size: 0.8125rem; line-height: 21px; color: var(--biro); font-weight: 700;
+  overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+}
+.foglio-riga .casella.piena { border-color: var(--biro); }
+.foglio-riga .dubbio { color: var(--modulo); font-weight: 800; text-align: center; }
+
+/* ---------- esame ---------- */
+.barra-esame {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--udu-rosso); color: #fff;
+  border-bottom: 4px solid var(--udu-giallo);
+}
+.barra-esame .interno {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 10px;
+  display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap;
+}
+.barra-esame .dove { min-width: 0; flex: 1 1 auto; }
+.barra-esame .dove strong { font-size: 1.125rem; }
+.barra-esame .dove span { display: block; color: rgba(255, 255, 255, 0.85); font-size: var(--t-piccolo); }
+.timer { font-size: 1.5rem; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+.timer.ultimi { color: var(--udu-giallo); }
+.timer small { display: block; font-size: 0.75rem; font-weight: 400; color: rgba(255, 255, 255, 0.85); text-align: right; letter-spacing: 0; }
+
+.esame { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 40px; align-items: start; padding-top: 28px; }
+.colonna-foglio { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); max-height: calc(100vh - 110px); overflow-y: auto; }
+
+.domanda { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; max-width: 68ch; min-width: 0; }
+.domanda-testata { display: flex; align-items: baseline; gap: 14px; color: var(--grafite-2); font-size: var(--t-piccolo); }
+.domanda-testata .numero { font-size: 2.75rem; line-height: 1; font-weight: 800; color: var(--grafite); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.domanda-testo { font-size: var(--t-domanda); line-height: 1.6; }
+.lacuna { display: inline-block; min-width: 4.5em; border-bottom: 2px solid var(--modulo); margin: 0 0.15em; transform: translateY(-0.2em); }
+
+.opzioni { display: grid; gap: 8px; }
+.opzione {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 14px;
+  width: 100%; text-align: left; padding: 12px 14px;
+  background: var(--foglio); border: 1.5px solid var(--modulo-linea); border-radius: var(--raggio);
+}
+.opzione:hover { border-color: var(--modulo); }
+.opzione[aria-checked='true'] { border-color: var(--biro); background: var(--biro-velo); }
+.opzione .pallino { --d: 32px; font-size: 0.8125rem; }
+
+.completamento { display: grid; gap: 8px; }
+.completamento label { color: var(--grafite-2); font-size: var(--t-piccolo); }
+.completamento .campo { display: flex; align-items: baseline; gap: 10px; }
+.completamento input {
+  flex: 1 1 auto; min-width: 0; width: 100%;
+  font-size: 1.375rem; font-weight: 700; color: var(--biro);
+  background: var(--foglio); border: 1.5px solid var(--modulo-linea); border-radius: var(--raggio);
+  padding: 12px 14px;
+}
+.completamento input:focus { outline: none; border-color: var(--biro); box-shadow: 0 0 0 3px var(--biro-velo); }
+.completamento .unita { color: var(--grafite-2); font-weight: 700; }
+.completamento .aiuto { color: var(--grafite-2); font-size: var(--t-piccolo); }
+
+.comandi { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-top: 6px; }
+.comandi .spinta { margin-left: auto; display: flex; gap: 10px; }
+.btn-dubbio[aria-pressed='true'] { border-color: var(--modulo); background: var(--modulo-velo); color: var(--modulo); }
+
+.conferma {
+  border: 1.5px solid var(--grafite); border-radius: var(--raggio); background: var(--foglio);
+  padding: 18px 20px; display: grid; gap: 14px; max-width: 68ch;
+}
+.conferma h2 { font-size: 1.1875rem; }
+.conferma .bottoni { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* la schermata del tempo scaduto ha una cosa sola da dire: sta al centro e non in un angolo */
+.pagina-avviso { display: grid; justify-items: center; padding-top: min(14vh, 120px); }
+
+.nota-uscita { color: var(--grafite-2); font-size: var(--t-piccolo); }
+.link-sommesso { background: none; border: none; padding: 0; color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+.link-sommesso:hover { color: var(--grafite); }
+.barra-mobile { display: none; }
+.solo-desktop-inline { display: inline; }
+.cassetto-sfondo { display: none; }
+
+/* ---------- risultati ---------- */
+.risultati { display: grid; gap: 48px; padding-top: 16px; }
+.risultati-testata h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 900; letter-spacing: -0.03em; }
+.risultati-testata p { color: var(--grafite-2); margin-top: 8px; }
+.pagelle { display: grid; gap: 0; border-top: 1.5px solid var(--grafite); }
+.pagella {
+  display: grid; grid-template-columns: minmax(8ch, 0.6fr) auto minmax(0, 1.6fr); gap: 8px 28px; align-items: center;
+  padding: 18px 0; border-bottom: 1px solid var(--modulo-linea);
+}
+.pagella .materia { font-weight: 700; font-size: 1.125rem; }
+.pagella .materia span { display: block; font-weight: 400; color: var(--grafite-2); font-size: var(--t-piccolo); }
+.voto { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.voto small { font-size: 1rem; font-weight: 700; color: var(--grafite-2); letter-spacing: 0; margin-left: 2px; }
+.voto.insufficiente { color: var(--rosso); }
+/* una colonna per domanda: la sezione intera ne ha 31, un ripasso molto meno */
+.striscia { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: 3px; }
+.striscia i { height: 22px; border-radius: 2px; background: var(--modulo-velo); }
+.striscia i.corretta { background: var(--biro); }
+.striscia i.errata { background: var(--rosso); }
+.striscia i.omessa { background: transparent; box-shadow: inset 0 0 0 1.5px var(--modulo-linea); }
+.legenda { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: var(--t-piccolo); color: var(--grafite-2); margin-top: 8px; }
+.legenda b { color: var(--grafite); }
+.totale { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 16px 0 0; font-weight: 700; }
+
+.revisione-filtri { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.chip { min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1.5px solid var(--modulo-linea); background: var(--foglio); font-weight: 700; font-size: 0.9375rem; }
+.chip[aria-pressed='true'] { background: var(--udu-giallo); color: var(--grafite); border-color: #d9c900; }
+.revisione { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--modulo-linea); }
+.voce { display: grid; grid-template-columns: 3ch minmax(0, 1fr); gap: 6px 16px; padding: 20px 0; border-bottom: 1px solid var(--modulo-linea); }
+.voce .n { font-weight: 800; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.voce .corpo { display: grid; gap: 10px; min-width: 0; }
+.voce .argomento { color: var(--grafite-2); font-size: var(--t-piccolo); }
+.voce .esito { font-weight: 700; }
+.voce .esito.corretta { color: var(--biro); }
+.voce .esito.errata { color: var(--rosso); }
+.voce .esito.omessa { color: var(--omessa); }
+.risposte-voce { display: grid; gap: 4px; }
+.risposte-voce .tua.sbagliata { color: var(--rosso); text-decoration: line-through; text-decoration-thickness: 2px; }
+.risposte-voce .giusta { color: var(--biro); font-weight: 700; }
+.spiegazione { color: var(--grafite-2); border-left: 3px solid var(--modulo-linea); padding-left: 12px; }
+
+.argomenti-prova { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px 32px; }
+.argomenti-prova li { display: grid; gap: 6px; }
+.argomenti-prova .riga { display: flex; justify-content: space-between; gap: 12px; }
+.argomenti-prova .riga > span:last-child { color: var(--grafite-2); white-space: nowrap; }
+/* senza min-width il titolo non si restringe e il conteggio gli finisce sopra */
+.argomenti-prova .voce-unita { min-width: 0; }
+.argomenti-prova .materia { display: block; }
+/* i titoli delle unità del syllabus sono lunghi, ma tagliarli toglie proprio l'informazione:
+   vanno a capo quante volte serve */
+.argomenti-prova .titolo-unita { display: block; }
+
+
+.fine-azioni { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 900px) {
+  .eroe { grid-template-columns: minmax(0, 1fr); }
+  .colonne { grid-template-columns: minmax(0, 1fr); }
+  .esame { grid-template-columns: minmax(0, 1fr); padding-top: 20px; padding-bottom: 88px; }
+  .colonna-foglio {
+    position: fixed; z-index: 20; left: 0; right: 0; bottom: 0; top: auto;
+    max-height: min(78vh, 640px); overflow-y: auto;
+    padding: 12px max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+    background: var(--carta); border-top: 1.5px solid var(--modulo);
+    visibility: hidden; transform: translateY(calc(100% + 90px));
+    transition: transform 200ms ease-out, visibility 0s linear 200ms;
+  }
+  .colonna-foglio.aperto { visibility: visible; transform: none; transition: transform 200ms ease-out; }
+  .cassetto-sfondo.aperto { display: block; position: fixed; inset: 0; z-index: 15; background: rgb(10 25 35 / 0.4); border: none; }
+  .esame .solo-desktop { display: none; }
+  .barra-mobile {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px;
+    position: fixed; z-index: 12; left: 0; right: 0; bottom: 0;
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    background: var(--carta); border-top: 1px solid var(--modulo-linea);
+  }
+  .barra-mobile .btn { padding-inline: 6px; min-width: 0; white-space: nowrap; font-size: 0.9375rem; }
+  .colonna-foglio { bottom: calc(68px + env(safe-area-inset-bottom, 0px)); }
+  .pagella { grid-template-columns: minmax(0, 1fr) auto; }
+  .pagella .striscia-box { grid-column: 1 / -1; }
+}
+@media (max-width: 520px) {
+  .domanda-testata .numero { font-size: 2.25rem; }
+  .timer { font-size: 1.25rem; }
+  .barra-esame .interno { flex-wrap: nowrap; gap: 12px; }
+  .barra-esame .consegna { min-height: 40px; padding: 6px 12px; }
+  .solo-desktop-inline { display: none; }
+  .timer small { display: none; }
+  .eroe .azioni .btn-primario { width: 100%; }
+  .azione-principale { width: 100%; }
+  /* etichetta su una riga sua e i tre bottoni in colonne uguali: altrimenti restano sfalsati */
+  .una-materia { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .una-materia > span { grid-column: 1 / -1; margin-right: 0; }
+  .una-materia .btn { padding-inline: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .colonna-foglio { transition: none; }
+}
+
+/* ---------- intestazione QuickCheck ---------- */
+.qc-barra {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 8;
+  background: var(--udu-rosso);
+  border-bottom: 4px solid var(--udu-giallo);
+}
+.qc-barra .interno {
+  max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 12px;
+}
+.qc-sinistra { display: flex; align-items: center; gap: 14px; min-width: 0; }
+/* il distintivo è un disco rosso scuro e la barra è rossa: l'anello bianco lo stacca dal fondo */
+.udu-distintivo { width: 34px; height: 34px; flex: none; border-radius: 50%; background: #fff; padding: 2px; }
+.qc-marchio { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 800; letter-spacing: -0.01em; }
+.qc-marchio img { width: 30px; height: 30px; border-radius: 8px; }
+.qc-marchio span { color: rgba(255, 255, 255, 0.85); font-weight: 600; }
+.qc-marchio b { font-weight: 800; color: #fff; }
+.qc-torna { color: #fff; text-decoration: none; font-weight: 600; font-size: 0.9375rem; flex: none; white-space: nowrap; }
+button.qc-torna { background: none; border: none; padding: 0; }
+.qc-torna:hover { color: var(--udu-giallo); }
+/* sul telefono i due marchi più il ritorno al sito non ci stanno: la parola "Simulatore" è
+   già nel titolo della pagina subito sotto, quindi qui sparisce */
+@media (max-width: 440px) {
+  .qc-sinistra { gap: 10px; }
+  .qc-marchio span { display: none; }
+  .udu-distintivo { width: 28px; height: 28px; }
+}
+.etichetta { display: block; color: var(--modulo); font-weight: 700; font-size: 0.9375rem; margin-bottom: 14px; }
+.piede a { color: var(--grafite); }
+
+/* pulsante di consegna sulla barra rossa */
+.barra-esame .consegna { background: #fff; border-color: #fff; color: var(--udu-rosso); }
+.barra-esame .consegna:hover:not(:disabled) { background: var(--udu-giallo); border-color: var(--udu-giallo); color: var(--grafite); }
+.barra-esame :focus-visible, .qc-barra :focus-visible { outline-color: var(--udu-giallo); }
+
+/* testi "corretti" in azzurro scuro: l'azzurro Medicina pieno su bianco non è abbastanza leggibile */
+.risposte-voce .giusta, .voce .esito.corretta, .completamento input { color: var(--modulo); }
+.foglio-riga .casella { color: var(--modulo); }
+
+/* ---------- pannello domande (solo in sviluppo, admin.html) ---------- */
+.admin { display: grid; gap: 24px; }
+.admin h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; }
+.admin-accesso { max-width: 60ch; }
+.admin .bottoni { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.admin-testata { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: flex-end; }
+.admin-testata p { color: var(--grafite-2); }
+.admin-avviso { padding: 10px 14px; border-radius: var(--raggio); background: var(--modulo-velo); color: var(--grafite); }
+.admin-conteggi { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 32px; border-top: 1.5px solid var(--grafite); padding-top: 14px; }
+.admin-conteggio { display: grid; gap: 2px; font-size: 0.9375rem; }
+.admin-conteggio strong { font-size: 1.0625rem; }
+.admin-filtri { display: flex; flex-wrap: wrap; gap: 12px 16px; align-items: flex-end; }
+.admin-filtri label, .admin-campi label { display: grid; gap: 4px; font-size: var(--t-piccolo); color: var(--grafite-2); min-width: 0; }
+.admin-filtri .cresce, .admin-campi .cresce { flex: 1 1 220px; }
+.admin-filtri .revisione-filtri { margin-bottom: 0; }
+.admin select, .admin input[type='text'], .admin input[type='search'], .admin input[type='number'], .admin textarea {
+  min-height: 42px; padding: 8px 10px; border: 1.5px solid var(--modulo-linea); border-radius: 8px;
+  background: var(--foglio); color: var(--grafite); font-size: 1rem; max-width: 100%;
+}
+.admin textarea { width: 100%; resize: vertical; line-height: 1.5; }
+.admin select:focus, .admin input:focus, .admin textarea:focus { outline: none; border-color: var(--biro); box-shadow: 0 0 0 3px var(--biro-velo); }
+.admin-totale { color: var(--grafite-2); font-size: var(--t-piccolo); }
+.admin-lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--modulo-linea); }
+.admin-riga {
+  width: 100%; display: grid; grid-template-columns: 9ch minmax(0, 1fr); gap: 14px; align-items: start; text-align: left;
+  padding: 12px 6px; background: none; border: none; border-bottom: 1px solid var(--modulo-linea);
+}
+.admin-riga:hover { background: var(--modulo-velo); }
+.admin-riga-testo { display: grid; gap: 2px; min-width: 0; }
+.admin-meta { color: var(--grafite-2); font-size: var(--t-piccolo); overflow-wrap: anywhere; }
+.pill { display: inline-block; text-align: center; padding: 2px 8px; border-radius: 999px; font-size: 0.8125rem; font-weight: 700; border: 1.5px solid currentColor; }
+.pill-bozza { color: var(--grafite-2); }
+.pill-approvata { color: var(--biro); background: var(--biro-velo); }
+.pill-scartata { color: var(--rosso); }
+.admin-modale {
+  position: fixed; inset: 0; z-index: 30; display: grid; place-items: start center; overflow-y: auto;
+  background: rgb(10 20 20 / 0.45);
+  padding: calc(24px + env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px));
+}
+.admin-modale-corpo {
+  width: min(760px, 100%); background: var(--carta); border: 1.5px solid var(--modulo); border-radius: var(--raggio);
+  padding: 20px; display: grid; gap: 12px;
+}
+.admin-modale-corpo h2 { font-size: 1.25rem; overflow-wrap: anywhere; }
+.admin-modale-corpo > label { font-size: var(--t-piccolo); color: var(--grafite-2); margin-bottom: -6px; }
+.admin-campi { display: flex; flex-wrap: wrap; gap: 12px; }
+.admin-opzioni { border: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.admin-opzioni legend { font-size: var(--t-piccolo); color: var(--grafite-2); margin-bottom: 6px; }
+.admin-opzione { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 10px; align-items: center; }
+.admin-opzione input[type='radio'] { width: 20px; height: 20px; accent-color: var(--biro); }
+.admin-opzione .lettera { font-weight: 700; color: var(--modulo); width: 1.2em; }
+.admin-opzione input[type='text'] { width: 100%; }
+.admin-import-esito ul { margin: 6px 0 0; padding-left: 18px; font-size: var(--t-piccolo); }

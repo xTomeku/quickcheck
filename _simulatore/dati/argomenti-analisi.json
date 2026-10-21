@@ -1,0 +1,3526 @@
+{
+  "versione": "2026-10-21",
+  "anno_accademico": "2026/2027",
+  "formato_prova": {
+    "domande": 31,
+    "multipla": 15,
+    "completamento": 16,
+    "opzioni_multipla": 5,
+    "durata_minuti": 45,
+    "punteggio": {
+      "corretta": 1,
+      "errata": -0.1,
+      "omessa": 0
+    },
+    "nota": "Formato ricavato dai testi ufficiali dei due appelli 2025/26 (15 a risposta multipla + 16 a completamento) e dalle linee guida MUR."
+  },
+  "fonti": [
+    {
+      "tipo": "syllabus",
+      "descrizione": "Syllabus MUR semestre aperto 2026/2027 (Biologia, Chimica e propedeutica biochimica, Fisica), pubblicati il 19/06/2026",
+      "url": "https://www.mur.gov.it/it/news/venerdi-19062026/semestre-aperto-aa-2026-2027"
+    },
+    {
+      "tipo": "prove_ufficiali",
+      "descrizione": "Testi ufficiali MUR degli esami del semestre filtro 2025/26, 1° appello (20/11/2025) e 2° appello (10/12/2025); 6 prove, 186 domande classificate a mano. Originali su iscrizioni-semestre-aperto.mur.gov.it (ora dietro SPID), letti da copia identica ripubblicata da Wauniversity.",
+      "url": "https://wauniversity.it/esami-semestre-filtro-medicina-2025/"
+    },
+    {
+      "tipo": "banca_dati",
+      "descrizione": "Banca dati MUR/CINECA del test di accesso di luglio 2024: 3500 quesiti con risposta, di cui 2975 di biologia, chimica e fisica-matematica. Classificazione automatica a keyword, indicativa. Licenza di riuso non dichiarata.",
+      "url": "https://domande-ap.mur.gov.it/"
+    }
+  ],
+  "metodologia_pesi": {
+    "formula": "peso = 0.5·quota_CFU + 0.35·frequenza_prove_2025 + 0.15·frequenza_banca_2024, normalizzato a 1 per materia",
+    "quota_CFU": "CFU dell'unità / CFU della materia, diviso equamente tra gli argomenti dell'unità",
+    "frequenze": "con smoothing di Laplace (+0,5 per argomento) per non azzerare gli argomenti mai usciti",
+    "motivazione": "I CFU riflettono il nuovo programma; le prove 2025 sono il segnale più fedele ma su un campione piccolo (62 domande per materia); la banca 2024 è ampia ma riferita al vecchio programma di livello liceale, quindi pesa meno.",
+    "domande_attese_per_prova": "peso suggerito × 31"
+  },
+  "materie": [
+    {
+      "id": "biologia",
+      "nome": "Biologia",
+      "cfu": 6.0,
+      "totali": {
+        "argomenti": 44,
+        "prove_2025": 62,
+        "banca_mur_2024_totale": 1190,
+        "banca_mur_2024_nel_syllabus": 596
+      },
+      "unita": [
+        {
+          "numero": 1,
+          "titolo": "Le basi dell'organizzazione biologica e molecolare della vita",
+          "cfu": 0.5,
+          "prove_2025": 7,
+          "banca_mur_2024": 149,
+          "peso_suggerito": 0.1202,
+          "argomenti": [
+            {
+              "id": "bio.1.1",
+              "titolo": "Albero della vita, teoria cellulare e proprietà del vivente",
+              "contenuti": [
+                "albero della vita",
+                "teoria cellulare",
+                "proprietà fondamentali della materia vivente"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 9,
+              "peso": {
+                "cfu": 0.0139,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0154,
+                "suggerito": 0.0155
+              },
+              "domande_attese_per_prova": 0.48
+            },
+            {
+              "id": "bio.1.2",
+              "titolo": "Virus",
+              "contenuti": [
+                "caratteristiche generali",
+                "acido nucleico, capside, involucro",
+                "classi di virus animali",
+                "ciclo litico e lisogeno",
+                "ciclo dei virus animali e dei retrovirus",
+                "entrata e uscita dalla cellula"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 23,
+              "peso": {
+                "cfu": 0.0139,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.038,
+                "suggerito": 0.0189
+              },
+              "domande_attese_per_prova": 0.59
+            },
+            {
+              "id": "bio.1.3",
+              "titolo": "Cellula procariotica",
+              "contenuti": [
+                "membrana, parete, membrana esterna, capsula",
+                "fimbrie, pili, flagelli",
+                "Gram positivi e Gram negativi",
+                "eubatteri e archeobatteri",
+                "trasferimento genico orizzontale: trasformazione, coniugazione, trasduzione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 40,
+              "peso": {
+                "cfu": 0.0139,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0655,
+                "suggerito": 0.023
+              },
+              "domande_attese_per_prova": 0.71
+            },
+            {
+              "id": "bio.1.4",
+              "titolo": "Cellula eucariotica ed endosimbiosi",
+              "contenuti": [
+                "sistema delle endomembrane",
+                "origine del nucleo",
+                "endosimbiosi e origine dei mitocondri",
+                "da unicellulari a pluricellulari"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 13,
+              "peso": {
+                "cfu": 0.0139,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0218,
+                "suggerito": 0.0123
+              },
+              "domande_attese_per_prova": 0.38
+            },
+            {
+              "id": "bio.1.5",
+              "titolo": "Macromolecole biologiche ed enzimi",
+              "contenuti": [
+                "carboidrati e lipidi",
+                "amminoacidi, legame peptidico, struttura delle proteine, domini, siti attivi",
+                "enzimi: concetti e classi (chinasi/fosfatasi, ubiquitinasi, acetilasi)",
+                "modificazioni post-traduzionali",
+                "nucleotidi, acidi nucleici, doppia elica",
+                "RNA codificanti e non codificanti"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 1,
+                "completamento": 3,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 3
+              },
+              "banca_mur_2024": 58,
+              "peso": {
+                "cfu": 0.0139,
+                "prove_2025": 0.0536,
+                "banca_2024": 0.0947,
+                "suggerito": 0.0399
+              },
+              "domande_attese_per_prova": 1.24
+            },
+            {
+              "id": "bio.1.6",
+              "titolo": "Metabolismo di base",
+              "contenuti": [
+                "anabolismo e catabolismo",
+                "reazioni di condensazione e idrolisi"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 6,
+              "peso": {
+                "cfu": 0.0139,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0105,
+                "suggerito": 0.0106
+              },
+              "domande_attese_per_prova": 0.33
+            }
+          ]
+        },
+        {
+          "numero": 2,
+          "titolo": "I meccanismi cellulari di trasmissione e controllo dell'informazione genetica e epigenetica",
+          "cfu": 0.5,
+          "prove_2025": 5,
+          "banca_mur_2024": 34,
+          "peso_suggerito": 0.0773,
+          "argomenti": [
+            {
+              "id": "bio.2.1",
+              "titolo": "Genoma eucariotico e cromosomi",
+              "contenuti": [
+                "cromosomi lineari",
+                "organizzazione minimale del cromosoma",
+                "DNA centromerico e telomerico"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 25,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0413,
+                "suggerito": 0.0263
+              },
+              "domande_attese_per_prova": 0.82
+            },
+            {
+              "id": "bio.2.2",
+              "titolo": "Cromatina ed epigenetica",
+              "contenuti": [
+                "nucleosomi e istoni",
+                "istone H1 e fibra da 30 nm",
+                "eucromatina ed eterocromatina",
+                "metilazione del DNA",
+                "rimodellamento della cromatina",
+                "modificazioni degli istoni ed epigenetica",
+                "condensine"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 2,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 6,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0417,
+                "banca_2024": 0.0105,
+                "suggerito": 0.03
+              },
+              "domande_attese_per_prova": 0.93
+            },
+            {
+              "id": "bio.2.3",
+              "titolo": "Genoma umano e sequenze ripetute",
+              "contenuti": [
+                "sequenze singole e famiglie geniche (globine, rRNA)",
+                "sequenze ripetute in tandem: mini e microsatelliti",
+                "sequenze intersperse: LINE, SINE, retrovirus endogeni",
+                "elementi mobili del DNA"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 3,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0057,
+                "suggerito": 0.021
+              },
+              "domande_attese_per_prova": 0.65
+            }
+          ]
+        },
+        {
+          "numero": 3,
+          "titolo": "Il flusso dell'informazione",
+          "cfu": 1.0,
+          "prove_2025": 13,
+          "banca_mur_2024": 73,
+          "peso_suggerito": 0.1751,
+          "argomenti": [
+            {
+              "id": "bio.3.1",
+              "titolo": "Replicazione del DNA",
+              "contenuti": [
+                "meccanismo semiconservativo",
+                "origini di replicazione e forcella",
+                "elicasi e topoisomerasi",
+                "primasi e innesco",
+                "DNA polimerasi e correzione degli errori",
+                "filamento continuo e discontinuo, frammenti di Okazaki",
+                "DNA ligasi",
+                "telomeri, telomerasi e senescenza replicativa"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 14,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.0417,
+                "banca_2024": 0.0235,
+                "suggerito": 0.0274
+              },
+              "domande_attese_per_prova": 0.85
+            },
+            {
+              "id": "bio.3.2",
+              "titolo": "Il gene: struttura e regolazione in cis",
+              "contenuti": [
+                "concetto di gene",
+                "gene procariotico ed eucariotico",
+                "geni policistronici e monocistronici",
+                "promotori ed elementi regolativi in cis",
+                "esoni e introni"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.0417,
+                "banca_2024": 0.0024,
+                "suggerito": 0.0242
+              },
+              "domande_attese_per_prova": 0.75
+            },
+            {
+              "id": "bio.3.3",
+              "titolo": "Trascrizione nei procarioti e operone lac",
+              "contenuti": [
+                "trascrizione procariotica",
+                "regolazione: modello dell'operone lac"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0024,
+                "suggerito": 0.0117
+              },
+              "domande_attese_per_prova": 0.36
+            },
+            {
+              "id": "bio.3.4",
+              "titolo": "Livelli di controllo dell'espressione genica negli eucarioti",
+              "contenuti": [
+                "controllo trascrizionale, post-trascrizionale, traduzionale e post-traduzionale"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0008,
+                "suggerito": 0.0115
+              },
+              "domande_attese_per_prova": 0.36
+            },
+            {
+              "id": "bio.3.5",
+              "titolo": "Trascrizione negli eucarioti",
+              "contenuti": [
+                "RNA polimerasi I, II, III",
+                "fattori generali di trascrizione e TATA box",
+                "enhancer e silencer",
+                "fattori specifici: recettori degli ormoni steroidei",
+                "inizio, allungamento e terminazione"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 0,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 12,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.0298,
+                "banca_2024": 0.0202,
+                "suggerito": 0.0227
+              },
+              "domande_attese_per_prova": 0.7
+            },
+            {
+              "id": "bio.3.6",
+              "titolo": "Maturazione degli RNA",
+              "contenuti": [
+                "capping, poliadenilazione",
+                "splicing e splicing alternativo, spliceosoma, snRNA",
+                "ribozimi ed editing",
+                "stabilità dell'mRNA: deadenilazione, miRNA, RNA interference",
+                "maturazione di rRNA e tRNA"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 6,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0105,
+                "suggerito": 0.0171
+              },
+              "domande_attese_per_prova": 0.53
+            },
+            {
+              "id": "bio.3.7",
+              "titolo": "Traduzione e codice genetico",
+              "contenuti": [
+                "meccanismo della traduzione",
+                "rRNA, tRNA, mRNA, ribosomi",
+                "amminoacil-tRNA",
+                "codice genetico: codoni, anticodoni, degenerazione, universalità",
+                "UTR e regolazione",
+                "fattori di inizio, allungamento, terminazione"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 2,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 37,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.0417,
+                "banca_2024": 0.0607,
+                "suggerito": 0.0329
+              },
+              "domande_attese_per_prova": 1.02
+            },
+            {
+              "id": "bio.3.8",
+              "titolo": "Ripiegamento delle proteine e chaperon",
+              "contenuti": [
+                "corretto ripiegamento",
+                "proteine chaperon",
+                "errori di ripiegamento"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0008,
+                "suggerito": 0.0115
+              },
+              "domande_attese_per_prova": 0.36
+            },
+            {
+              "id": "bio.3.9",
+              "titolo": "Degradazione proteica: ubiquitina e proteasoma",
+              "contenuti": [
+                "degradazione proteasomica ubiquitina-dipendente",
+                "proteine simili all'ubiquitina"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0185,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.004,
+                "suggerito": 0.0161
+              },
+              "domande_attese_per_prova": 0.5
+            }
+          ]
+        },
+        {
+          "numero": 4,
+          "titolo": "I meccanismi cellulari di trasmissione e controllo dei caratteri selvatici e mutati",
+          "cfu": 0.75,
+          "prove_2025": 6,
+          "banca_mur_2024": 125,
+          "peso_suggerito": 0.1289,
+          "argomenti": [
+            {
+              "id": "bio.4.1",
+              "titolo": "Mutazioni e riparazione del DNA",
+              "contenuti": [
+                "sostituzioni, inserzioni, delezioni",
+                "mutazioni geniche e cromosomiche",
+                "espansione di sequenze ripetute",
+                "riparazione del danno su singolo e doppio filamento"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 12,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0202,
+                "suggerito": 0.0218
+              },
+              "domande_attese_per_prova": 0.68
+            },
+            {
+              "id": "bio.4.2",
+              "titolo": "Genetica mendeliana e interazioni alleliche",
+              "contenuti": [
+                "omozigosi, eterozigosi, eterozigosi composta",
+                "dominanza e recessività, genotipo e fenotipo",
+                "leggi di Mendel",
+                "dominanza incompleta e codominanza",
+                "alleli multipli e sistema AB0",
+                "pleiotropia ed epistasi",
+                "associazione completa e incompleta, mappe genetiche"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 74,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0298,
+                "banca_2024": 0.1206,
+                "suggerito": 0.041
+              },
+              "domande_attese_per_prova": 1.27
+            },
+            {
+              "id": "bio.4.3",
+              "titolo": "Penetranza, espressività, eredità poligenica e imprinting",
+              "contenuti": [
+                "penetranza ed espressività",
+                "caratteri poligenici ed eredità quantitativa",
+                "imprinting genomico"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.004,
+                "suggerito": 0.0194
+              },
+              "domande_attese_per_prova": 0.6
+            },
+            {
+              "id": "bio.4.4",
+              "titolo": "Cariotipo e anomalie cromosomiche",
+              "contenuti": [
+                "cariotipo e bandeggio",
+                "diploidia e cromosomi omologhi",
+                "aneuploidie e poliploidie",
+                "anomalie di struttura: traslocazioni, inversioni, delezioni, inserzioni",
+                "trisomia 21"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 7,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0298,
+                "banca_2024": 0.0121,
+                "suggerito": 0.0247
+              },
+              "domande_attese_per_prova": 0.77
+            },
+            {
+              "id": "bio.4.5",
+              "titolo": "Alberi genealogici e modalità di trasmissione",
+              "contenuti": [
+                "ereditarietà autosomica dominante e recessiva",
+                "ereditarietà legata all'X e all'Y",
+                "ereditarietà mitocondriale"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 30,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0494,
+                "suggerito": 0.022
+              },
+              "domande_attese_per_prova": 0.68
+            }
+          ]
+        },
+        {
+          "numero": 5,
+          "titolo": "Le strutture cellulari: biogenesi, morfologia e funzioni",
+          "cfu": 1.75,
+          "prove_2025": 15,
+          "banca_mur_2024": 121,
+          "peso_suggerito": 0.2663,
+          "argomenti": [
+            {
+              "id": "bio.5.1",
+              "titolo": "Membrane biologiche",
+              "contenuti": [
+                "componenti e modello a mosaico fluido",
+                "glicocalice",
+                "asimmetria di membrana"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 9,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0154,
+                "suggerito": 0.0198
+              },
+              "domande_attese_per_prova": 0.61
+            },
+            {
+              "id": "bio.5.2",
+              "titolo": "Trasporto di membrana e potenziale di membrana",
+              "contenuti": [
+                "osmosi, diffusione, trasporto passivo",
+                "canali e trasportatori",
+                "trasporto attivo: pompe ATPasi e trasportatori ABC",
+                "potenziale di membrana e d'azione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 28,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0461,
+                "suggerito": 0.0244
+              },
+              "domande_attese_per_prova": 0.76
+            },
+            {
+              "id": "bio.5.3",
+              "titolo": "Smistamento delle proteine e compartimenti",
+              "contenuti": [
+                "compartimenti cellulari e relazioni topologiche",
+                "segnali di indirizzamento"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0024,
+                "suggerito": 0.0178
+              },
+              "domande_attese_per_prova": 0.55
+            },
+            {
+              "id": "bio.5.4",
+              "titolo": "Nucleo e trasporto nucleare",
+              "contenuti": [
+                "involucro nucleare, nucleolo, condensati nucleari",
+                "pori nucleari e nucleoporine",
+                "segnali NLS/NES, importine, esportine, Ran",
+                "regolazione dell'import (recettori steroidei, NF-kB, SREBP)",
+                "export degli RNA"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 2,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 3
+              },
+              "banca_mur_2024": 5,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0536,
+                "banca_2024": 0.0089,
+                "suggerito": 0.0313
+              },
+              "domande_attese_per_prova": 0.97
+            },
+            {
+              "id": "bio.5.5",
+              "titolo": "Mitocondri ed energetica cellulare",
+              "contenuti": [
+                "struttura e funzioni, genoma mitocondriale",
+                "glicolisi, ciclo di Krebs, catena di trasporto degli elettroni, sintesi di ATP",
+                "bilancio energetico",
+                "fusione e fissione",
+                "import: TOM, TIM, SAM, OXA"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 0,
+                "completamento": 3,
+                "con_calcolo": 0,
+                "appello_1": 3,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 37,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0417,
+                "banca_2024": 0.0607,
+                "suggerito": 0.0349
+              },
+              "domande_attese_per_prova": 1.08
+            },
+            {
+              "id": "bio.5.6",
+              "titolo": "Perossisomi",
+              "contenuti": [
+                "funzioni biosintetiche, cataboliche, detossificanti",
+                "trasporto ai perossisomi e perossine",
+                "sindrome di Zellweger"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0024,
+                "suggerito": 0.0137
+              },
+              "domande_attese_per_prova": 0.42
+            },
+            {
+              "id": "bio.5.7",
+              "titolo": "Via secretoria: reticolo endoplasmatico e Golgi",
+              "contenuti": [
+                "RE liscio e rugoso, Golgi e reti cis/trans",
+                "SRP, traslocone, peptidasi del segnale",
+                "glicosilazione, calnexina e calreticolina",
+                "controllo di qualità, UPR ed ERAD",
+                "fibrosi cistica",
+                "secrezione costitutiva e regolata"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 17,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0283,
+                "suggerito": 0.0217
+              },
+              "domande_attese_per_prova": 0.67
+            },
+            {
+              "id": "bio.5.8",
+              "titolo": "Traffico vescicolare",
+              "contenuti": [
+                "formazione delle vescicole e proteine di rivestimento",
+                "attracco e fusione: NSF, SNAP, SNARE, RAB",
+                "ruolo dei fosfoinositidi"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 6,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0105,
+                "suggerito": 0.019
+              },
+              "domande_attese_per_prova": 0.59
+            },
+            {
+              "id": "bio.5.9",
+              "titolo": "Endocitosi e lisosomi",
+              "contenuti": [
+                "endocitosi in fase fluida e mediata da recettori (transferrina, LDL, EGF)",
+                "endosomi, corpi multivescicolari, lisosomi",
+                "mannosio-6-fosfato e malattie da accumulo",
+                "transcitosi e fagocitosi"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 2,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 11,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0298,
+                "banca_2024": 0.0186,
+                "suggerito": 0.0244
+              },
+              "domande_attese_per_prova": 0.76
+            },
+            {
+              "id": "bio.5.10",
+              "titolo": "Autofagia",
+              "contenuti": [
+                "macro, micro e autofagia mediata da chaperon",
+                "mitofagia",
+                "alterazioni della via autofagica"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0024,
+                "suggerito": 0.0178
+              },
+              "domande_attese_per_prova": 0.55
+            },
+            {
+              "id": "bio.5.11",
+              "titolo": "Microtubuli, ciglia e flagelli",
+              "contenuti": [
+                "struttura e dinamica dei microtubuli, ruolo del GTP",
+                "centrosoma e γ-TuRC",
+                "MAP motrici e non motrici: dineine e chinesine",
+                "ciglia e flagelli"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0008,
+                "suggerito": 0.0134
+              },
+              "domande_attese_per_prova": 0.42
+            },
+            {
+              "id": "bio.5.12",
+              "titolo": "Microfilamenti di actina e motilità cellulare",
+              "contenuti": [
+                "polimerizzazione dell'actina, ATP e Arp2/3",
+                "proteine accessorie, miosine, distrofina, sarcomero",
+                "regolazione da Rho, Rac, Cdc42",
+                "migrazione e chemiotassi"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 3,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0057,
+                "suggerito": 0.0142
+              },
+              "domande_attese_per_prova": 0.44
+            },
+            {
+              "id": "bio.5.13",
+              "titolo": "Filamenti intermedi e connessioni del citoscheletro",
+              "contenuti": [
+                "struttura e funzioni dei filamenti intermedi",
+                "cheratine e lamina nucleare",
+                "connessioni nucleoscheletro-citoscheletro"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0224,
+                "prove_2025": 0.006,
+                "banca_2024": 0.004,
+                "suggerito": 0.0139
+              },
+              "domande_attese_per_prova": 0.43
+            }
+          ]
+        },
+        {
+          "numero": 6,
+          "titolo": "La cellula e l'ambiente, la segnalazione cellulare e la trasduzione del segnale",
+          "cfu": 0.75,
+          "prove_2025": 8,
+          "banca_mur_2024": 17,
+          "peso_suggerito": 0.1065,
+          "argomenti": [
+            {
+              "id": "bio.6.1",
+              "titolo": "Matrice extracellulare e integrine",
+              "contenuti": [
+                "struttura, funzioni e degradazione della matrice",
+                "integrine e meccanotrasduzione",
+                "fibronectina"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 2,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0536,
+                "banca_2024": 0.0024,
+                "suggerito": 0.0399
+              },
+              "domande_attese_per_prova": 1.24
+            },
+            {
+              "id": "bio.6.2",
+              "titolo": "Adesione e giunzioni cellulari",
+              "contenuti": [
+                "caderine e CAM",
+                "giunzioni occludenti, aderenti, desmosomi, emidesmosomi, comunicanti"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.006,
+                "banca_2024": 0.004,
+                "suggerito": 0.0235
+              },
+              "domande_attese_per_prova": 0.73
+            },
+            {
+              "id": "bio.6.3",
+              "titolo": "Segnalazione cellulare e trasduzione del segnale",
+              "contenuti": [
+                "segnalazione da contatto, autocrina, paracrina, endocrina, sinaptica",
+                "recettori di membrana e intracellulari (NO, ormoni lipidici)",
+                "recettori accoppiati a canali e a proteine G, GEF e GAP",
+                "secondi messaggeri e amplificazione",
+                "desensitizzazione (visione)",
+                "recettori tirosin-chinasici, Ras-MAPK, insulina, EGF",
+                "fosfoinositidi e oncogeni"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 2,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 14,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0536,
+                "banca_2024": 0.0235,
+                "suggerito": 0.0431
+              },
+              "domande_attese_per_prova": 1.34
+            }
+          ]
+        },
+        {
+          "numero": 7,
+          "titolo": "Il controllo della proliferazione e della sopravvivenza cellulare",
+          "cfu": 0.75,
+          "prove_2025": 8,
+          "banca_mur_2024": 77,
+          "peso_suggerito": 0.1255,
+          "argomenti": [
+            {
+              "id": "bio.7.1",
+              "titolo": "Ciclo cellulare, cicline e CDK",
+              "contenuti": [
+                "fasi e punti di controllo",
+                "cicline, CDK e loro modulazione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 15,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0179,
+                "banca_2024": 0.0251,
+                "suggerito": 0.0225
+              },
+              "domande_attese_per_prova": 0.7
+            },
+            {
+              "id": "bio.7.2",
+              "titolo": "Punto di restrizione, p53 e oncogeni",
+              "contenuti": [
+                "fattori di crescita e ciclina D-Cdk4/6",
+                "fosforilazione di Rb e attivazione di E2F",
+                "inibitori ciclina-CDK",
+                "danno al DNA e p53",
+                "proto-oncogeni, oncogeni, oncosoppressori, virus oncogeni"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0008,
+                "suggerito": 0.0147
+              },
+              "domande_attese_per_prova": 0.46
+            },
+            {
+              "id": "bio.7.3",
+              "titolo": "Mitosi e citodieresi",
+              "contenuti": [
+                "fasi e ingresso in mitosi",
+                "fuso mitotico e cinetocore, complesso NDC80",
+                "APC/C, degradazione di cicline e securina",
+                "separazione dei cromatidi fratelli",
+                "citodieresi e mitosi asimmetrica"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 2,
+                "completamento": 1,
+                "con_calcolo": 1,
+                "appello_1": 2,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 24,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0417,
+                "banca_2024": 0.0396,
+                "suggerito": 0.033
+              },
+              "domande_attese_per_prova": 1.02
+            },
+            {
+              "id": "bio.7.4",
+              "titolo": "Meiosi e gametogenesi",
+              "contenuti": [
+                "meccanismo molecolare e conseguenze genetiche",
+                "crossing over",
+                "differenze mitosi/meiosi",
+                "cause di aneuploidia",
+                "gametogenesi maschile e femminile",
+                "cellule staminali"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 31,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0298,
+                "banca_2024": 0.051,
+                "suggerito": 0.0306
+              },
+              "domande_attese_per_prova": 0.95
+            },
+            {
+              "id": "bio.7.5",
+              "titolo": "Morte cellulare: necrosi e apoptosi",
+              "contenuti": [
+                "necrosi e apoptosi",
+                "vie intrinseca ed estrinseca",
+                "caspasi iniziatrici ed esecutrici",
+                "MOMP, citocromo c, apoptosoma",
+                "famiglia BCL2",
+                "recettori di morte"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 0,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 7,
+              "peso": {
+                "cfu": 0.025,
+                "prove_2025": 0.0298,
+                "banca_2024": 0.0121,
+                "suggerito": 0.0247
+              },
+              "domande_attese_per_prova": 0.77
+            }
+          ]
+        }
+      ],
+      "fuori_syllabus_banca_2024": [
+        {
+          "id": "bio.x.anatomia",
+          "titolo": "Anatomia e fisiologia umana",
+          "banca_mur_2024": 277
+        },
+        {
+          "id": "bio.x.evoluzione",
+          "titolo": "Evoluzione ed ecologia",
+          "banca_mur_2024": 59
+        },
+        {
+          "id": "bio.x.biotecnologie",
+          "titolo": "Biotecnologie",
+          "banca_mur_2024": 12
+        },
+        {
+          "id": "bio.x.piante",
+          "titolo": "Fotosintesi e biologia vegetale",
+          "banca_mur_2024": 36
+        }
+      ],
+      "banca_2024_non_classificate": 210
+    },
+    {
+      "id": "chimica",
+      "nome": "Chimica e propedeutica biochimica",
+      "cfu": 6.0,
+      "totali": {
+        "argomenti": 42,
+        "prove_2025": 62,
+        "banca_mur_2024_totale": 1015,
+        "banca_mur_2024_nel_syllabus": 910
+      },
+      "unita": [
+        {
+          "numero": 1,
+          "titolo": "La struttura dell'atomo, i legami chimici, stati di aggregazione della materia e termodinamica dei sistemi aperti",
+          "cfu": 1.0,
+          "prove_2025": 15,
+          "banca_mur_2024": 470,
+          "peso_suggerito": 0.2441,
+          "argomenti": [
+            {
+              "id": "chim.1.1",
+              "titolo": "Struttura dell'atomo e isotopi",
+              "contenuti": [
+                "teoria atomica",
+                "protoni, neutroni, elettroni",
+                "numero atomico e di massa",
+                "isotopi",
+                "proprietà magnetiche del nucleo e RMN"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 2,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 94,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0422,
+                "banca_2024": 0.1015,
+                "suggerito": 0.0383
+              },
+              "domande_attese_per_prova": 1.19
+            },
+            {
+              "id": "chim.1.2",
+              "titolo": "Numeri quantici, orbitali e configurazione elettronica",
+              "contenuti": [
+                "numeri quantici e orbitali",
+                "principio di Pauli e regola di Hund",
+                "configurazione elettronica degli elementi biologici"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 2,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 34,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0371,
+                "suggerito": 0.0244
+              },
+              "domande_attese_per_prova": 0.76
+            },
+            {
+              "id": "chim.1.3",
+              "titolo": "Tavola periodica e proprietà periodiche",
+              "contenuti": [
+                "sistema periodico",
+                "volume atomico, energia di ionizzazione, affinità elettronica, elettronegatività",
+                "regola dell'ottetto"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 70,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0757,
+                "suggerito": 0.0218
+              },
+              "domande_attese_per_prova": 0.68
+            },
+            {
+              "id": "chim.1.4",
+              "titolo": "Molecole, ioni, mole e numero di Avogadro",
+              "contenuti": [
+                "molecole, ioni e ioni poliatomici",
+                "massa molecolare e uma",
+                "mole e numero di Avogadro"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 62,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0671,
+                "suggerito": 0.0205
+              },
+              "domande_attese_per_prova": 0.64
+            },
+            {
+              "id": "chim.1.5",
+              "titolo": "Legame chimico e geometria molecolare",
+              "contenuti": [
+                "legame covalente omopolare, eteropolare, di coordinazione",
+                "legame ionico e metallico",
+                "ibridazione sp, sp2, sp3",
+                "orbitali σ e π",
+                "distanza, energia e angolo di legame, geometria",
+                "molecole polari e apolari"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 0,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 44,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0478,
+                "suggerito": 0.026
+              },
+              "domande_attese_per_prova": 0.81
+            },
+            {
+              "id": "chim.1.6",
+              "titolo": "Interazioni deboli",
+              "contenuti": [
+                "legame idrogeno",
+                "forze di van der Waals",
+                "interazioni idrofobiche"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0027,
+                "suggerito": 0.0108
+              },
+              "domande_attese_per_prova": 0.34
+            },
+            {
+              "id": "chim.1.7",
+              "titolo": "Numero di ossidazione e nomenclatura inorganica",
+              "contenuti": [
+                "numero di ossidazione",
+                "formule e nomenclatura di composti binari e ternari",
+                "ossidi, idrossidi, perossidi, acidi, basi, sali"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 2,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 113,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0542,
+                "banca_2024": 0.1219,
+                "suggerito": 0.0456
+              },
+              "domande_attese_per_prova": 1.41
+            },
+            {
+              "id": "chim.1.8",
+              "titolo": "Stato solido e stato gassoso",
+              "contenuti": [
+                "solidi ionici, molecolari, covalenti, metallici",
+                "temperatura assoluta",
+                "leggi di Boyle, Charles, Gay-Lussac",
+                "equazione di stato dei gas perfetti",
+                "teoria cinetica e Maxwell-Boltzmann",
+                "gas e respirazione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 9,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0102,
+                "suggerito": 0.0162
+              },
+              "domande_attese_per_prova": 0.5
+            },
+            {
+              "id": "chim.1.9",
+              "titolo": "Stato liquido e passaggi di stato",
+              "contenuti": [
+                "ebollizione e calore di evaporazione",
+                "tensione superficiale",
+                "pressione di vapore",
+                "diagrammi di fase di H2O e CO2",
+                "evaporazione del sudore e termoregolazione"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 0,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 35,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0381,
+                "suggerito": 0.0246
+              },
+              "domande_attese_per_prova": 0.76
+            },
+            {
+              "id": "chim.1.10",
+              "titolo": "Termodinamica chimica e bioenergetica",
+              "contenuti": [
+                "funzioni di stato",
+                "entalpia, reazioni eso/endotermiche",
+                "entropia",
+                "energia libera di Gibbs, reazioni eso/endoergoniche",
+                "spontaneità ed equilibrio nei sistemi aperti"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 7,
+              "peso": {
+                "cfu": 0.0167,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0081,
+                "suggerito": 0.0159
+              },
+              "domande_attese_per_prova": 0.49
+            }
+          ]
+        },
+        {
+          "numero": 2,
+          "titolo": "Miscele, soluzioni e le proprietà colligative delle soluzioni",
+          "cfu": 1.0,
+          "prove_2025": 6,
+          "banca_mur_2024": 117,
+          "peso_suggerito": 0.1429,
+          "argomenti": [
+            {
+              "id": "chim.2.1",
+              "titolo": "Miscele e sistemi dispersi",
+              "contenuti": [
+                "miscele omogenee ed eterogenee",
+                "soluzioni, sospensioni, colloidi, aerosol",
+                "soluzioni gassose, liquide, solide"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 10,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0113,
+                "suggerito": 0.0157
+              },
+              "domande_attese_per_prova": 0.49
+            },
+            {
+              "id": "chim.2.2",
+              "titolo": "Acqua come solvente, solubilità ed elettroliti",
+              "contenuti": [
+                "acqua come solvente polare",
+                "soluti ionici e non ionici",
+                "elettroliti e fluidi biologici",
+                "solubilità dei gas: legge di Henry"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 40,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0435,
+                "suggerito": 0.029
+              },
+              "domande_attese_per_prova": 0.9
+            },
+            {
+              "id": "chim.2.3",
+              "titolo": "Concentrazione delle soluzioni",
+              "contenuti": [
+                "percentuali p/p, p/v, v/v",
+                "molarità, molalità, frazione molare",
+                "soluzioni non ideali e coefficiente di attività",
+                "equivalenti in ambito biomedico"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 50,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0542,
+                "suggerito": 0.0264
+              },
+              "domande_attese_per_prova": 0.82
+            },
+            {
+              "id": "chim.2.4",
+              "titolo": "Miscele di gas e legge di Dalton",
+              "contenuti": [
+                "legge di Dalton",
+                "composizione dell'aria, aria inspirata ed espirata"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0016,
+                "suggerito": 0.0143
+              },
+              "domande_attese_per_prova": 0.44
+            },
+            {
+              "id": "chim.2.5",
+              "titolo": "Proprietà colligative",
+              "contenuti": [
+                "legge di Raoult",
+                "abbassamento della pressione di vapore",
+                "innalzamento ebullioscopico e abbassamento crioscopico"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 14,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0156,
+                "suggerito": 0.0248
+              },
+              "domande_attese_per_prova": 0.77
+            },
+            {
+              "id": "chim.2.6",
+              "titolo": "Osmosi, pressione osmotica e van't Hoff",
+              "contenuti": [
+                "pressione osmotica e membrane",
+                "fattore di van't Hoff",
+                "osmolarità e osmolalità"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0027,
+                "suggerito": 0.0186
+              },
+              "domande_attese_per_prova": 0.58
+            },
+            {
+              "id": "chim.2.7",
+              "titolo": "Tonicità e soluzioni di interesse clinico",
+              "contenuti": [
+                "pressione osmotica intra ed extracellulare",
+                "soluzioni isotoniche, ipertoniche, ipotoniche",
+                "soluzione fisiologica e glucosata",
+                "emolisi ed edema"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0238,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0005,
+                "suggerito": 0.0141
+              },
+              "domande_attese_per_prova": 0.44
+            }
+          ]
+        },
+        {
+          "numero": 3,
+          "titolo": "Le reazioni chimiche negli organismi viventi: caratteristiche generali, cinetica e equilibrio chimico",
+          "cfu": 0.5,
+          "prove_2025": 5,
+          "banca_mur_2024": 72,
+          "peso_suggerito": 0.0832,
+          "argomenti": [
+            {
+              "id": "chim.3.1",
+              "titolo": "Reazioni chimiche e bilanciamento",
+              "contenuti": [
+                "definizioni",
+                "conservazione di massa, energia, carica",
+                "bilanciamento"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 2,
+                "completamento": 0,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 61,
+              "peso": {
+                "cfu": 0.0208,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0661,
+                "suggerito": 0.0309
+              },
+              "domande_attese_per_prova": 0.96
+            },
+            {
+              "id": "chim.3.2",
+              "titolo": "Cinetica chimica",
+              "contenuti": [
+                "velocità di reazione e fattori che la influenzano",
+                "reazioni a più stadi",
+                "ordine e molecolarità",
+                "Arrhenius e teoria degli urti",
+                "energia di attivazione e stato di transizione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 4,
+              "peso": {
+                "cfu": 0.0208,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0048,
+                "suggerito": 0.0175
+              },
+              "domande_attese_per_prova": 0.54
+            },
+            {
+              "id": "chim.3.3",
+              "titolo": "Catalizzatori ed enzimi",
+              "contenuti": [
+                "definizione di catalizzatore",
+                "cenni sugli enzimi"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 4,
+              "peso": {
+                "cfu": 0.0208,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0048,
+                "suggerito": 0.0133
+              },
+              "domande_attese_per_prova": 0.41
+            },
+            {
+              "id": "chim.3.4",
+              "titolo": "Equilibrio chimico e solubilità",
+              "contenuti": [
+                "reazioni reversibili e irreversibili",
+                "costante di equilibrio e legge di azione di massa",
+                "ΔG ed equilibrio, stato stazionario",
+                "principio di Le Châtelier e quoziente di reazione",
+                "effetto della temperatura, equilibri multipli",
+                "prodotto di solubilità, ione comune, calcoli renali"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 3,
+              "peso": {
+                "cfu": 0.0208,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0038,
+                "suggerito": 0.0215
+              },
+              "domande_attese_per_prova": 0.67
+            }
+          ]
+        },
+        {
+          "numero": 4,
+          "titolo": "Acidi, basi, sali, pH, soluzioni tampone; reazioni di ossido-riduzione ed elettrochimica",
+          "cfu": 1.0,
+          "prove_2025": 13,
+          "banca_mur_2024": 79,
+          "peso_suggerito": 0.1597,
+          "argomenti": [
+            {
+              "id": "chim.4.1",
+              "titolo": "Acidi, basi, sali e pH",
+              "contenuti": [
+                "teorie di Arrhenius, Brønsted-Lowry, Lewis",
+                "autoprotolisi e Kw",
+                "pH e pOH",
+                "Ka, Kb, pKa, pKb; acidi e basi forti e deboli",
+                "indicatori, acidi poliprotici",
+                "idrolisi salina",
+                "solubilità e pH (ossalato, fosfato, urato)"
+              ],
+              "prove_2025": {
+                "totale": 7,
+                "multipla": 4,
+                "completamento": 3,
+                "con_calcolo": 2,
+                "appello_1": 3,
+                "appello_2": 4
+              },
+              "banca_mur_2024": 49,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0904,
+                "banca_2024": 0.0532,
+                "suggerito": 0.0604
+              },
+              "domande_attese_per_prova": 1.87
+            },
+            {
+              "id": "chim.4.2",
+              "titolo": "Soluzioni tampone",
+              "contenuti": [
+                "tamponi di acidi e basi deboli",
+                "equazione di Henderson-Hasselbalch",
+                "efficienza del tampone"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 0,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 5,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0059,
+                "suggerito": 0.0323
+              },
+              "domande_attese_per_prova": 1.0
+            },
+            {
+              "id": "chim.4.3",
+              "titolo": "Equilibrio acido-base nei fluidi biologici",
+              "contenuti": [
+                "pH del sangue",
+                "tampone CO2/bicarbonato, fosfato, proteine",
+                "acidosi e alcalosi"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 4,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0048,
+                "suggerito": 0.0279
+              },
+              "domande_attese_per_prova": 0.86
+            },
+            {
+              "id": "chim.4.4",
+              "titolo": "Ossidoriduzioni ed elettrochimica",
+              "contenuti": [
+                "reazioni redox e semireazioni",
+                "cella galvanica, anodo, catodo",
+                "potenziali standard ed equazione di Nernst",
+                "ΔG e differenza di potenziale",
+                "redox biologiche e respirazione",
+                "reazioni di Fenton e Haber-Weiss"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 2,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 21,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0422,
+                "banca_2024": 0.0231,
+                "suggerito": 0.0391
+              },
+              "domande_attese_per_prova": 1.21
+            }
+          ]
+        },
+        {
+          "numero": 5,
+          "titolo": "Proprietà del carbonio e reattività dei composti organici, idrocarburi, alogenuri alchilici, idrocarburi aromatici e derivati",
+          "cfu": 0.5,
+          "prove_2025": 6,
+          "banca_mur_2024": 109,
+          "peso_suggerito": 0.0998,
+          "argomenti": [
+            {
+              "id": "chim.5.1",
+              "titolo": "Carbonio, rappresentazione dei composti e nomenclatura IUPAC",
+              "contenuti": [
+                "proprietà e ibridazione del carbonio",
+                "rappresentazione dei composti",
+                "idrocarburi saturi, insaturi, ciclici, eterociclici",
+                "regole IUPAC"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 53,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0575,
+                "suggerito": 0.0209
+              },
+              "domande_attese_per_prova": 0.65
+            },
+            {
+              "id": "chim.5.2",
+              "titolo": "Stereochimica e isomeria",
+              "contenuti": [
+                "diastereoisomeri, enantiomeri, epimeri, racemi",
+                "regole di priorità e convenzione R/S",
+                "potere ottico rotatorio, destrogiro/levogiro",
+                "proiezioni di Fischer",
+                "isomeria geometrica cis/trans"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 16,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0177,
+                "suggerito": 0.0149
+              },
+              "domande_attese_per_prova": 0.46
+            },
+            {
+              "id": "chim.5.3",
+              "titolo": "Rottura omolitica e reazioni radicaliche",
+              "contenuti": [
+                "rottura omolitica",
+                "reazioni radicaliche"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0005,
+                "suggerito": 0.0081
+              },
+              "domande_attese_per_prova": 0.25
+            },
+            {
+              "id": "chim.5.4",
+              "titolo": "Rottura eterolitica, nucleofili, elettrofili, SN1/SN2 ed eliminazione",
+              "contenuti": [
+                "carbocationi e carbanioni",
+                "effetto induttivo e delocalizzazione",
+                "nucleofili ed elettrofili",
+                "SN1, SN2 ed eliminazione",
+                "alogenuri alchilici"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 6,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.006,
+                "banca_2024": 0.007,
+                "suggerito": 0.0091
+              },
+              "domande_attese_per_prova": 0.28
+            },
+            {
+              "id": "chim.5.5",
+              "titolo": "Alcani e cicloalcani",
+              "contenuti": [
+                "struttura, nomenclatura, proprietà",
+                "tensione nei cicloalcani",
+                "ossidazione/combustione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 17,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0188,
+                "suggerito": 0.0151
+              },
+              "domande_attese_per_prova": 0.47
+            },
+            {
+              "id": "chim.5.6",
+              "titolo": "Alcheni e dieni",
+              "contenuti": [
+                "struttura, nomenclatura, proprietà",
+                "dieni coniugati",
+                "addizione elettrofila"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 2,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 10,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.0422,
+                "banca_2024": 0.0113,
+                "suggerito": 0.0224
+              },
+              "domande_attese_per_prova": 0.69
+            },
+            {
+              "id": "chim.5.7",
+              "titolo": "Idrocarburi aromatici",
+              "contenuti": [
+                "benzene, eterocicli aromatici (pirimidine) e policiclici (purine)",
+                "regola di Hückel",
+                "sostituzione elettrofila aromatica, effetti dei sostituenti",
+                "tossicità degli aromatici"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 7,
+              "peso": {
+                "cfu": 0.0119,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0081,
+                "suggerito": 0.0093
+              },
+              "domande_attese_per_prova": 0.29
+            }
+          ]
+        },
+        {
+          "numero": 6,
+          "titolo": "I gruppi funzionali e isomerie: alcoli, fenoli, eteri, tioli e tioeteri; aldeidi e chetoni; acidi carbossilici e derivati, ammine e ammidi",
+          "cfu": 1.0,
+          "prove_2025": 2,
+          "banca_mur_2024": 23,
+          "peso_suggerito": 0.1042,
+          "argomenti": [
+            {
+              "id": "chim.6.1",
+              "titolo": "Alcoli, tioli, fenoli ed eteri",
+              "contenuti": [
+                "struttura, nomenclatura, proprietà",
+                "disidratazione, ossidazione, sostituzione",
+                "etanolo; acidità del fenolo",
+                "eteri, tioeteri, epossidi"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 8,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0091,
+                "suggerito": 0.0285
+              },
+              "domande_attese_per_prova": 0.88
+            },
+            {
+              "id": "chim.6.2",
+              "titolo": "Ammine",
+              "contenuti": [
+                "struttura, nomenclatura, proprietà",
+                "basicità e nucleofilicità",
+                "alchilazione e formazione di sali",
+                "nitrosammine, colina"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0016,
+                "suggerito": 0.0232
+              },
+              "domande_attese_per_prova": 0.72
+            },
+            {
+              "id": "chim.6.3",
+              "titolo": "Aldeidi e chetoni",
+              "contenuti": [
+                "struttura, nomenclatura, proprietà",
+                "ossidazione, riduzione, addizione nucleofila, condensazione aldolica",
+                "emiacetali, acetali, immine/basi di Schiff",
+                "H in alfa, tautomeria cheto-enolica",
+                "chinoni e ubichinone"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0005,
+                "suggerito": 0.023
+              },
+              "domande_attese_per_prova": 0.71
+            },
+            {
+              "id": "chim.6.4",
+              "titolo": "Acidi carbossilici e derivati",
+              "contenuti": [
+                "anidridi, esteri, tioesteri, ammidi, acilfosfati",
+                "acidità",
+                "salificazione, decarbossilazione, sostituzione nucleofila acilica",
+                "esterificazione di Fischer, idrolisi, transesterificazione",
+                "condensazione di Claisen, lattoni",
+                "idrolisi delle ammidi"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 14,
+              "peso": {
+                "cfu": 0.0417,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0156,
+                "suggerito": 0.0295
+              },
+              "domande_attese_per_prova": 0.91
+            }
+          ]
+        },
+        {
+          "numero": 7,
+          "titolo": "Amminoacidi e proteine, carboidrati, lipidi, nucleotidi, polinucleotidi e acidi nucleici",
+          "cfu": 1.0,
+          "prove_2025": 15,
+          "banca_mur_2024": 40,
+          "peso_suggerito": 0.1661,
+          "argomenti": [
+            {
+              "id": "chim.7.1",
+              "titolo": "Amminoacidi",
+              "contenuti": [
+                "struttura, nomenclatura, abbreviazioni",
+                "classificazione per catena laterale",
+                "stereochimica e proiezioni di Fischer",
+                "proprietà acido-base e punto isoelettrico",
+                "essenziali e non essenziali"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0181,
+                "banca_2024": 0.0027,
+                "suggerito": 0.0206
+              },
+              "domande_attese_per_prova": 0.64
+            },
+            {
+              "id": "chim.7.2",
+              "titolo": "Legame peptidico e struttura delle proteine",
+              "contenuti": [
+                "formazione e caratteristiche del legame peptidico",
+                "struttura primaria, secondaria, terziaria, quaternaria",
+                "interazioni deboli e ponti disolfuro"
+              ],
+              "prove_2025": {
+                "totale": 5,
+                "multipla": 1,
+                "completamento": 4,
+                "con_calcolo": 1,
+                "appello_1": 4,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 11,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0663,
+                "banca_2024": 0.0124,
+                "suggerito": 0.0389
+              },
+              "domande_attese_per_prova": 1.21
+            },
+            {
+              "id": "chim.7.3",
+              "titolo": "Carboidrati",
+              "contenuti": [
+                "struttura, nomenclatura, stereochimica",
+                "isomeri, epimeri, anomeri, tautomeri; ciclizzazione e mutarotazione",
+                "ossidazione, riduzione, reazione di Maillard",
+                "legame glicosidico, disaccaridi, oligosaccaridi, amminozuccheri",
+                "omopolisaccaridi (amido, cellulosa, glicogeno) ed eteropolisaccaridi"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 3,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 3
+              },
+              "banca_mur_2024": 10,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0422,
+                "banca_2024": 0.0113,
+                "suggerito": 0.0303
+              },
+              "domande_attese_per_prova": 0.94
+            },
+            {
+              "id": "chim.7.4",
+              "titolo": "Lipidi",
+              "contenuti": [
+                "acidi grassi saturi e insaturi",
+                "trigliceridi: oli e grassi",
+                "glicerofosfolipidi, sfingolipidi, glicolipidi",
+                "colesterolo e derivati (ormoni steroidei, acidi biliari, vitamina D)"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 4,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 14,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0542,
+                "banca_2024": 0.0156,
+                "suggerito": 0.0352
+              },
+              "domande_attese_per_prova": 1.09
+            },
+            {
+              "id": "chim.7.5",
+              "titolo": "Nucleotidi e acidi nucleici",
+              "contenuti": [
+                "basi azotate, nucleosidi, nucleotidi",
+                "ATP",
+                "NAD+/NADH, FAD/FADH2",
+                "legame fosfodiestere; struttura di DNA e RNA"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 3,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.0301,
+                "banca_2024": 0.0038,
+                "suggerito": 0.025
+              },
+              "domande_attese_per_prova": 0.77
+            },
+            {
+              "id": "chim.7.6",
+              "titolo": "Modificazioni non enzimatiche e antiossidanti",
+              "contenuti": [
+                "deaminazione della citosina",
+                "reazioni del radicale idrossilico con lipidi, proteine, DNA",
+                "antiossidanti: glutatione, tocoferolo, carotenoidi"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0278,
+                "prove_2025": 0.006,
+                "banca_2024": 0.0005,
+                "suggerito": 0.0161
+              },
+              "domande_attese_per_prova": 0.5
+            }
+          ]
+        }
+      ],
+      "fuori_syllabus_banca_2024": [
+        {
+          "id": "chim.x.metabolismo",
+          "titolo": "Biochimica metabolica (vecchio programma)",
+          "banca_mur_2024": 0
+        }
+      ],
+      "banca_2024_non_classificate": 105
+    },
+    {
+      "id": "fisica",
+      "nome": "Fisica",
+      "cfu": 6.0,
+      "totali": {
+        "argomenti": 38,
+        "prove_2025": 62,
+        "banca_mur_2024_totale": 770,
+        "banca_mur_2024_nel_syllabus": 363
+      },
+      "unita": [
+        {
+          "numero": 1,
+          "titolo": "Introduzione ai metodi della fisica",
+          "cfu": 0.2,
+          "prove_2025": 9,
+          "banca_mur_2024": 48,
+          "peso_suggerito": 0.0839,
+          "argomenti": [
+            {
+              "id": "fis.1.1",
+              "titolo": "Notazione scientifica e ordini di grandezza",
+              "contenuti": [
+                "notazione scientifica",
+                "stima dell'ordine di grandezza"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0083,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0065
+              },
+              "domande_attese_per_prova": 0.2
+            },
+            {
+              "id": "fis.1.2",
+              "titolo": "Grandezze fisiche, dimensioni e unità di misura",
+              "contenuti": [
+                "grandezze, dimensioni e unità SI",
+                "conversioni tra unità",
+                "grandezze estensive e intensive, scalari e vettoriali"
+              ],
+              "prove_2025": {
+                "totale": 7,
+                "multipla": 3,
+                "completamento": 4,
+                "con_calcolo": 6,
+                "appello_1": 4,
+                "appello_2": 3
+              },
+              "banca_mur_2024": 30,
+              "peso": {
+                "cfu": 0.0083,
+                "prove_2025": 0.0926,
+                "banca_2024": 0.0798,
+                "suggerito": 0.0486
+              },
+              "domande_attese_per_prova": 1.51
+            },
+            {
+              "id": "fis.1.3",
+              "titolo": "Funzioni trigonometriche elementari",
+              "contenuti": [
+                "seno, coseno, tangente"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 5,
+              "peso": {
+                "cfu": 0.0083,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0144,
+                "suggerito": 0.0085
+              },
+              "domande_attese_per_prova": 0.26
+            },
+            {
+              "id": "fis.1.4",
+              "titolo": "Vettori",
+              "contenuti": [
+                "definizione e componenti",
+                "somma e differenza",
+                "prodotto scalare e vettoriale"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 2,
+                "completamento": 0,
+                "con_calcolo": 1,
+                "appello_1": 0,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 13,
+              "peso": {
+                "cfu": 0.0083,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.0353,
+                "suggerito": 0.0203
+              },
+              "domande_attese_per_prova": 0.63
+            }
+          ]
+        },
+        {
+          "numero": 2,
+          "titolo": "Meccanica",
+          "cfu": 1.4,
+          "prove_2025": 8,
+          "banca_mur_2024": 129,
+          "peso_suggerito": 0.2137,
+          "argomenti": [
+            {
+              "id": "fis.2.1",
+              "titolo": "Cinematica del punto materiale",
+              "contenuti": [
+                "posizione, spostamento, traiettoria, legge oraria",
+                "velocità e accelerazione medie e istantanee",
+                "moto rettilineo uniforme e uniformemente accelerato, caduta libera",
+                "moto parabolico",
+                "moto circolare uniforme e accelerazione centripeta"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 49,
+              "peso": {
+                "cfu": 0.0467,
+                "prove_2025": 0.0432,
+                "banca_2024": 0.1296,
+                "suggerito": 0.0579
+              },
+              "domande_attese_per_prova": 1.79
+            },
+            {
+              "id": "fis.2.2",
+              "titolo": "Dinamica e forze",
+              "contenuti": [
+                "tre principi della dinamica",
+                "equilibrio statico e traslazionale",
+                "forza peso e gravitazionale",
+                "forze di contatto, attrito statico e dinamico, tensione",
+                "forze elastiche e legge di Hooke"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 35,
+              "peso": {
+                "cfu": 0.0467,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0929,
+                "suggerito": 0.0438
+              },
+              "domande_attese_per_prova": 1.36
+            },
+            {
+              "id": "fis.2.3",
+              "titolo": "Lavoro, energia e potenza",
+              "contenuti": [
+                "lavoro meccanico e potenza",
+                "teorema dell'energia cinetica",
+                "forze conservative e non conservative",
+                "energia potenziale gravitazionale ed elastica",
+                "conservazione dell'energia meccanica"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 31,
+              "peso": {
+                "cfu": 0.0467,
+                "prove_2025": 0.0432,
+                "banca_2024": 0.0825,
+                "suggerito": 0.0508
+              },
+              "domande_attese_per_prova": 1.58
+            },
+            {
+              "id": "fis.2.4",
+              "titolo": "Quantità di moto, impulso e urti",
+              "contenuti": [
+                "quantità di moto e impulso",
+                "conservazione nei sistemi isolati"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 11,
+              "peso": {
+                "cfu": 0.0467,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0301,
+                "suggerito": 0.0343
+              },
+              "domande_attese_per_prova": 1.06
+            },
+            {
+              "id": "fis.2.5",
+              "titolo": "Sistemi di corpi, corpo rigido e leve",
+              "contenuti": [
+                "centro di massa",
+                "corpo rigido",
+                "momento torcente ed equilibrio rotazionale",
+                "leve nel corpo umano"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 3,
+              "peso": {
+                "cfu": 0.0467,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0092,
+                "suggerito": 0.0269
+              },
+              "domande_attese_per_prova": 0.83
+            }
+          ]
+        },
+        {
+          "numero": 3,
+          "titolo": "Meccanica dei fluidi",
+          "cfu": 1.2,
+          "prove_2025": 10,
+          "banca_mur_2024": 36,
+          "peso_suggerito": 0.1692,
+          "argomenti": [
+            {
+              "id": "fis.3.1",
+              "titolo": "Fluidi, pressione e densità",
+              "contenuti": [
+                "fluidi vs solidi",
+                "pressione e densità"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 17,
+              "peso": {
+                "cfu": 0.04,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0458,
+                "suggerito": 0.0334
+              },
+              "domande_attese_per_prova": 1.03
+            },
+            {
+              "id": "fis.3.2",
+              "titolo": "Idrostatica: Stevino, Pascal, Archimede",
+              "contenuti": [
+                "legge di Stevino",
+                "principio di Pascal",
+                "principio di Archimede e galleggiamento",
+                "misura della pressione: Torricelli, manometro"
+              ],
+              "prove_2025": {
+                "totale": 6,
+                "multipla": 3,
+                "completamento": 3,
+                "con_calcolo": 6,
+                "appello_1": 2,
+                "appello_2": 4
+              },
+              "banca_mur_2024": 11,
+              "peso": {
+                "cfu": 0.04,
+                "prove_2025": 0.0802,
+                "banca_2024": 0.0301,
+                "suggerito": 0.0526
+              },
+              "domande_attese_per_prova": 1.63
+            },
+            {
+              "id": "fis.3.3",
+              "titolo": "Idrodinamica: portata, continuità e Bernoulli",
+              "contenuti": [
+                "flusso e portata",
+                "moto stazionario, laminare, turbolento",
+                "equazione di continuità",
+                "teorema di Bernoulli: stenosi e aneurisma"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 8,
+              "peso": {
+                "cfu": 0.04,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.0223,
+                "suggerito": 0.0341
+              },
+              "domande_attese_per_prova": 1.06
+            },
+            {
+              "id": "fis.3.4",
+              "titolo": "Fluidi reali: viscosità e legge di Poiseuille",
+              "contenuti": [
+                "profilo di velocità nel moto laminare",
+                "viscosità",
+                "legge di Poiseuille",
+                "resistenze idrauliche in serie e parallelo"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.04,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0267
+              },
+              "domande_attese_per_prova": 0.83
+            },
+            {
+              "id": "fis.3.5",
+              "titolo": "Fenomeni di superficie",
+              "contenuti": [
+                "tensione superficiale",
+                "capillarità e interfacce",
+                "pressione di curvatura e legge di Laplace"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.04,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0224
+              },
+              "domande_attese_per_prova": 0.69
+            }
+          ]
+        },
+        {
+          "numero": 4,
+          "titolo": "Onde meccaniche",
+          "cfu": 0.4,
+          "prove_2025": 9,
+          "banca_mur_2024": 21,
+          "peso_suggerito": 0.0922,
+          "argomenti": [
+            {
+              "id": "fis.4.1",
+              "titolo": "Oscillazioni e grandezze ondulatorie",
+              "contenuti": [
+                "oscillatore armonico",
+                "frequenza, periodo, pulsazione, lunghezza d'onda",
+                "velocità di propagazione",
+                "onde trasversali e longitudinali"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 2,
+                "completamento": 2,
+                "con_calcolo": 1,
+                "appello_1": 4,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 21,
+              "peso": {
+                "cfu": 0.0133,
+                "prove_2025": 0.0556,
+                "banca_2024": 0.0563,
+                "suggerito": 0.0346
+              },
+              "domande_attese_per_prova": 1.07
+            },
+            {
+              "id": "fis.4.2",
+              "titolo": "Sovrapposizione e interferenza",
+              "contenuti": [
+                "principio di sovrapposizione",
+                "interferenza"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0133,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.009
+              },
+              "domande_attese_per_prova": 0.28
+            },
+            {
+              "id": "fis.4.3",
+              "titolo": "Energia, potenza e intensità delle onde",
+              "contenuti": [
+                "energia e potenza trasportate",
+                "intensità",
+                "legge dell'inverso del quadrato"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0133,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0133
+              },
+              "domande_attese_per_prova": 0.41
+            },
+            {
+              "id": "fis.4.4",
+              "titolo": "Onde acustiche e decibel",
+              "contenuti": [
+                "propagazione e velocità del suono",
+                "intensità e percezione",
+                "livello sonoro in decibel"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 1,
+                "appello_1": 0,
+                "appello_2": 3
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0133,
+                "prove_2025": 0.0432,
+                "banca_2024": 0.0013,
+                "suggerito": 0.022
+              },
+              "domande_attese_per_prova": 0.68
+            },
+            {
+              "id": "fis.4.5",
+              "titolo": "Effetto Doppler",
+              "contenuti": [
+                "descrizione qualitativa"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 1,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0133,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0133
+              },
+              "domande_attese_per_prova": 0.41
+            }
+          ]
+        },
+        {
+          "numero": 5,
+          "titolo": "Termodinamica",
+          "cfu": 1.0,
+          "prove_2025": 9,
+          "banca_mur_2024": 47,
+          "peso_suggerito": 0.1525,
+          "argomenti": [
+            {
+              "id": "fis.5.1",
+              "titolo": "Sistemi termodinamici, temperatura e gas perfetti",
+              "contenuti": [
+                "sistema, ambiente, variabili e funzioni di stato",
+                "temperatura e scale",
+                "gas perfetti ed equazione di stato"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 2,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 27,
+              "peso": {
+                "cfu": 0.0333,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.072,
+                "suggerito": 0.0383
+              },
+              "domande_attese_per_prova": 1.19
+            },
+            {
+              "id": "fis.5.2",
+              "titolo": "Calore, capacità termica e calorimetria",
+              "contenuti": [
+                "calore",
+                "capacità termica e calore specifico",
+                "cambiamenti di stato e calore latente",
+                "calorimetria"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 11,
+              "peso": {
+                "cfu": 0.0333,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0301,
+                "suggerito": 0.0277
+              },
+              "domande_attese_per_prova": 0.86
+            },
+            {
+              "id": "fis.5.3",
+              "titolo": "Trasmissione del calore",
+              "contenuti": [
+                "conduzione",
+                "convezione",
+                "irraggiamento"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0333,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0065,
+                "suggerito": 0.0241
+              },
+              "domande_attese_per_prova": 0.75
+            },
+            {
+              "id": "fis.5.4",
+              "titolo": "Primo principio e trasformazioni termodinamiche",
+              "contenuti": [
+                "energia interna, calore e lavoro",
+                "trasformazioni reversibili e irreversibili",
+                "isoterma, isocora, isobara, adiabatica"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 5,
+              "peso": {
+                "cfu": 0.0333,
+                "prove_2025": 0.0432,
+                "banca_2024": 0.0144,
+                "suggerito": 0.0339
+              },
+              "domande_attese_per_prova": 1.05
+            },
+            {
+              "id": "fis.5.5",
+              "titolo": "Secondo principio, macchine termiche ed entropia",
+              "contenuti": [
+                "enunciati e irreversibilità",
+                "cicli e macchine termiche, rendimento",
+                "ciclo di Carnot",
+                "entropia"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 2,
+              "peso": {
+                "cfu": 0.0333,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.0065,
+                "suggerito": 0.0285
+              },
+              "domande_attese_per_prova": 0.88
+            }
+          ]
+        },
+        {
+          "numero": 6,
+          "titolo": "Elettricità e magnetismo",
+          "cfu": 1.2,
+          "prove_2025": 10,
+          "banca_mur_2024": 80,
+          "peso_suggerito": 0.1911,
+          "argomenti": [
+            {
+              "id": "fis.6.1",
+              "titolo": "Carica elettrica, legge di Coulomb e campo elettrico",
+              "contenuti": [
+                "proprietà e conservazione della carica",
+                "legge di Coulomb",
+                "campo elettrico e linee di forza",
+                "moto di una carica in campo uniforme"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 12,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0327,
+                "suggerito": 0.0257
+              },
+              "domande_attese_per_prova": 0.8
+            },
+            {
+              "id": "fis.6.2",
+              "titolo": "Energia e potenziale elettrico",
+              "contenuti": [
+                "energia potenziale elettrica",
+                "potenziale e differenza di potenziale",
+                "conservazione dell'energia per cariche in moto"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 1,
+                "appello_1": 0,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 5,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.0144,
+                "suggerito": 0.0272
+              },
+              "domande_attese_per_prova": 0.84
+            },
+            {
+              "id": "fis.6.3",
+              "titolo": "Conduttori e dielettrici",
+              "contenuti": [
+                "induzione elettrostatica",
+                "polarizzazione"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 1,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0039,
+                "suggerito": 0.0214
+              },
+              "domande_attese_per_prova": 0.66
+            },
+            {
+              "id": "fis.6.4",
+              "titolo": "Corrente elettrica e circuiti",
+              "contenuti": [
+                "corrente continua e generatore ideale",
+                "leggi di Ohm, resistenza e resistività",
+                "effetto Joule",
+                "resistenze in serie e parallelo"
+              ],
+              "prove_2025": {
+                "totale": 3,
+                "multipla": 1,
+                "completamento": 2,
+                "con_calcolo": 2,
+                "appello_1": 3,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 34,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0432,
+                "banca_2024": 0.0903,
+                "suggerito": 0.043
+              },
+              "domande_attese_per_prova": 1.33
+            },
+            {
+              "id": "fis.6.5",
+              "titolo": "Capacità e condensatori",
+              "contenuti": [
+                "capacità elettrica",
+                "condensatore piano e dielettrico",
+                "energia immagazzinata",
+                "condensatori in serie e parallelo"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 1,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 18,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0484,
+                "suggerito": 0.028
+              },
+              "domande_attese_per_prova": 0.87
+            },
+            {
+              "id": "fis.6.6",
+              "titolo": "Campo magnetico e forza di Lorentz",
+              "contenuti": [
+                "campo generato da correnti (Oersted)",
+                "forza di Lorentz su cariche e fili",
+                "moto circolare in campo uniforme"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 0,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 1
+              },
+              "banca_mur_2024": 6,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.017,
+                "suggerito": 0.0276
+              },
+              "domande_attese_per_prova": 0.86
+            },
+            {
+              "id": "fis.6.7",
+              "titolo": "Induzione elettromagnetica",
+              "contenuti": [
+                "flusso magnetico e forza elettromotrice",
+                "legge di Faraday-Neumann-Lenz",
+                "correnti indotte"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 4,
+              "peso": {
+                "cfu": 0.0286,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0118,
+                "suggerito": 0.0182
+              },
+              "domande_attese_per_prova": 0.56
+            }
+          ]
+        },
+        {
+          "numero": 7,
+          "titolo": "Fisica delle radiazioni",
+          "cfu": 0.6,
+          "prove_2025": 7,
+          "banca_mur_2024": 2,
+          "peso_suggerito": 0.0975,
+          "argomenti": [
+            {
+              "id": "fis.7.1",
+              "titolo": "Onde elettromagnetiche",
+              "contenuti": [
+                "natura delle onde e.m.: campi E e B perpendicolari",
+                "lunghezza d'onda, frequenza, velocità, intensità"
+              ],
+              "prove_2025": {
+                "totale": 2,
+                "multipla": 1,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0309,
+                "banca_2024": 0.0039,
+                "suggerito": 0.0185
+              },
+              "domande_attese_per_prova": 0.57
+            },
+            {
+              "id": "fis.7.2",
+              "titolo": "Spettro elettromagnetico",
+              "contenuti": [
+                "regioni dello spettro: radio, microonde, IR, visibile, UV, X, gamma"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0095
+              },
+              "domande_attese_per_prova": 0.29
+            },
+            {
+              "id": "fis.7.3",
+              "titolo": "Fotoni e quantizzazione dell'energia",
+              "contenuti": [
+                "fotone come quanto di energia",
+                "E = h·f"
+              ],
+              "prove_2025": {
+                "totale": 1,
+                "multipla": 0,
+                "completamento": 1,
+                "con_calcolo": 0,
+                "appello_1": 1,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0185,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0138
+              },
+              "domande_attese_per_prova": 0.43
+            },
+            {
+              "id": "fis.7.4",
+              "titolo": "Assorbimento della radiazione: Lambert-Beer",
+              "contenuti": [
+                "legge di Lambert-Beer"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0095
+              },
+              "domande_attese_per_prova": 0.29
+            },
+            {
+              "id": "fis.7.5",
+              "titolo": "Radioattività e decadimenti",
+              "contenuti": [
+                "nuclei instabili e isotopi radioattivi",
+                "attività, legge del decadimento, emivita",
+                "decadimenti α, β, γ"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0095
+              },
+              "domande_attese_per_prova": 0.29
+            },
+            {
+              "id": "fis.7.6",
+              "titolo": "Radiazioni ionizzanti e non ionizzanti",
+              "contenuti": [
+                "distinzione per energia",
+                "esempi"
+              ],
+              "prove_2025": {
+                "totale": 0,
+                "multipla": 0,
+                "completamento": 0,
+                "con_calcolo": 0,
+                "appello_1": 0,
+                "appello_2": 0
+              },
+              "banca_mur_2024": 0,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0062,
+                "banca_2024": 0.0013,
+                "suggerito": 0.0095
+              },
+              "domande_attese_per_prova": 0.29
+            },
+            {
+              "id": "fis.7.7",
+              "titolo": "Ottica geometrica",
+              "contenuti": [
+                "riflessione e rifrazione, indice di rifrazione",
+                "lenti sottili convergenti e punti coniugati",
+                "formazione delle immagini"
+              ],
+              "prove_2025": {
+                "totale": 4,
+                "multipla": 2,
+                "completamento": 2,
+                "con_calcolo": 0,
+                "appello_1": 2,
+                "appello_2": 2
+              },
+              "banca_mur_2024": 1,
+              "peso": {
+                "cfu": 0.0143,
+                "prove_2025": 0.0556,
+                "banca_2024": 0.0039,
+                "suggerito": 0.0272
+              },
+              "domande_attese_per_prova": 0.84
+            }
+          ]
+        }
+      ],
+      "fuori_syllabus_banca_2024": [
+        {
+          "id": "fis.x.matematica",
+          "titolo": "Matematica (vecchio programma, non nel semestre filtro)",
+          "banca_mur_2024": 343
+        }
+      ],
+      "banca_2024_non_classificate": 64
+    }
+  ]
+}

@@ -1,0 +1,891 @@
+{
+ "versione": "2026-10-21",
+ "formato": {
+  "domande": 31,
+  "multipla": 15,
+  "completamento": 16,
+  "opzioni_multipla": 5,
+  "durata_minuti": 45,
+  "punteggio": {
+   "corretta": 1,
+   "errata": -0.1,
+   "omessa": 0
+  },
+  "nota": "Formato ricavato dai testi ufficiali dei due appelli 2025/26 (15 a risposta multipla + 16 a completamento) e dalle linee guida MUR."
+ },
+ "materie": [
+  {
+   "id": "biologia",
+   "nome": "Biologia",
+   "unita": [
+    {
+     "numero": 1,
+     "titolo": "Le basi dell'organizzazione biologica e molecolare della vita",
+     "cfu": 0.5
+    },
+    {
+     "numero": 2,
+     "titolo": "I meccanismi cellulari di trasmissione e controllo dell'informazione genetica e epigenetica",
+     "cfu": 0.5
+    },
+    {
+     "numero": 3,
+     "titolo": "Il flusso dell'informazione",
+     "cfu": 1.0
+    },
+    {
+     "numero": 4,
+     "titolo": "I meccanismi cellulari di trasmissione e controllo dei caratteri selvatici e mutati",
+     "cfu": 0.75
+    },
+    {
+     "numero": 5,
+     "titolo": "Le strutture cellulari: biogenesi, morfologia e funzioni",
+     "cfu": 1.75
+    },
+    {
+     "numero": 6,
+     "titolo": "La cellula e l'ambiente, la segnalazione cellulare e la trasduzione del segnale",
+     "cfu": 0.75
+    },
+    {
+     "numero": 7,
+     "titolo": "Il controllo della proliferazione e della sopravvivenza cellulare",
+     "cfu": 0.75
+    }
+   ],
+   "argomenti": [
+    {
+     "id": "bio.1.1",
+     "titolo": "Albero della vita, teoria cellulare e proprietà del vivente",
+     "unita": 1,
+     "peso": 0.0155
+    },
+    {
+     "id": "bio.1.2",
+     "titolo": "Virus",
+     "unita": 1,
+     "peso": 0.0189
+    },
+    {
+     "id": "bio.1.3",
+     "titolo": "Cellula procariotica",
+     "unita": 1,
+     "peso": 0.023
+    },
+    {
+     "id": "bio.1.4",
+     "titolo": "Cellula eucariotica ed endosimbiosi",
+     "unita": 1,
+     "peso": 0.0123
+    },
+    {
+     "id": "bio.1.5",
+     "titolo": "Macromolecole biologiche ed enzimi",
+     "unita": 1,
+     "peso": 0.0399
+    },
+    {
+     "id": "bio.1.6",
+     "titolo": "Metabolismo di base",
+     "unita": 1,
+     "peso": 0.0106
+    },
+    {
+     "id": "bio.2.1",
+     "titolo": "Genoma eucariotico e cromosomi",
+     "unita": 2,
+     "peso": 0.0263
+    },
+    {
+     "id": "bio.2.2",
+     "titolo": "Cromatina ed epigenetica",
+     "unita": 2,
+     "peso": 0.03
+    },
+    {
+     "id": "bio.2.3",
+     "titolo": "Genoma umano e sequenze ripetute",
+     "unita": 2,
+     "peso": 0.021
+    },
+    {
+     "id": "bio.3.1",
+     "titolo": "Replicazione del DNA",
+     "unita": 3,
+     "peso": 0.0274
+    },
+    {
+     "id": "bio.3.2",
+     "titolo": "Il gene: struttura e regolazione in cis",
+     "unita": 3,
+     "peso": 0.0242
+    },
+    {
+     "id": "bio.3.3",
+     "titolo": "Trascrizione nei procarioti e operone lac",
+     "unita": 3,
+     "peso": 0.0117
+    },
+    {
+     "id": "bio.3.4",
+     "titolo": "Livelli di controllo dell'espressione genica negli eucarioti",
+     "unita": 3,
+     "peso": 0.0115
+    },
+    {
+     "id": "bio.3.5",
+     "titolo": "Trascrizione negli eucarioti",
+     "unita": 3,
+     "peso": 0.0227
+    },
+    {
+     "id": "bio.3.6",
+     "titolo": "Maturazione degli RNA",
+     "unita": 3,
+     "peso": 0.0171
+    },
+    {
+     "id": "bio.3.7",
+     "titolo": "Traduzione e codice genetico",
+     "unita": 3,
+     "peso": 0.0329
+    },
+    {
+     "id": "bio.3.8",
+     "titolo": "Ripiegamento delle proteine e chaperon",
+     "unita": 3,
+     "peso": 0.0115
+    },
+    {
+     "id": "bio.3.9",
+     "titolo": "Degradazione proteica: ubiquitina e proteasoma",
+     "unita": 3,
+     "peso": 0.0161
+    },
+    {
+     "id": "bio.4.1",
+     "titolo": "Mutazioni e riparazione del DNA",
+     "unita": 4,
+     "peso": 0.0218
+    },
+    {
+     "id": "bio.4.2",
+     "titolo": "Genetica mendeliana e interazioni alleliche",
+     "unita": 4,
+     "peso": 0.041
+    },
+    {
+     "id": "bio.4.3",
+     "titolo": "Penetranza, espressività, eredità poligenica e imprinting",
+     "unita": 4,
+     "peso": 0.0194
+    },
+    {
+     "id": "bio.4.4",
+     "titolo": "Cariotipo e anomalie cromosomiche",
+     "unita": 4,
+     "peso": 0.0247
+    },
+    {
+     "id": "bio.4.5",
+     "titolo": "Alberi genealogici e modalità di trasmissione",
+     "unita": 4,
+     "peso": 0.022
+    },
+    {
+     "id": "bio.5.1",
+     "titolo": "Membrane biologiche",
+     "unita": 5,
+     "peso": 0.0198
+    },
+    {
+     "id": "bio.5.2",
+     "titolo": "Trasporto di membrana e potenziale di membrana",
+     "unita": 5,
+     "peso": 0.0244
+    },
+    {
+     "id": "bio.5.3",
+     "titolo": "Smistamento delle proteine e compartimenti",
+     "unita": 5,
+     "peso": 0.0178
+    },
+    {
+     "id": "bio.5.4",
+     "titolo": "Nucleo e trasporto nucleare",
+     "unita": 5,
+     "peso": 0.0313
+    },
+    {
+     "id": "bio.5.5",
+     "titolo": "Mitocondri ed energetica cellulare",
+     "unita": 5,
+     "peso": 0.0349
+    },
+    {
+     "id": "bio.5.6",
+     "titolo": "Perossisomi",
+     "unita": 5,
+     "peso": 0.0137
+    },
+    {
+     "id": "bio.5.7",
+     "titolo": "Via secretoria: reticolo endoplasmatico e Golgi",
+     "unita": 5,
+     "peso": 0.0217
+    },
+    {
+     "id": "bio.5.8",
+     "titolo": "Traffico vescicolare",
+     "unita": 5,
+     "peso": 0.019
+    },
+    {
+     "id": "bio.5.9",
+     "titolo": "Endocitosi e lisosomi",
+     "unita": 5,
+     "peso": 0.0244
+    },
+    {
+     "id": "bio.5.10",
+     "titolo": "Autofagia",
+     "unita": 5,
+     "peso": 0.0178
+    },
+    {
+     "id": "bio.5.11",
+     "titolo": "Microtubuli, ciglia e flagelli",
+     "unita": 5,
+     "peso": 0.0134
+    },
+    {
+     "id": "bio.5.12",
+     "titolo": "Microfilamenti di actina e motilità cellulare",
+     "unita": 5,
+     "peso": 0.0142
+    },
+    {
+     "id": "bio.5.13",
+     "titolo": "Filamenti intermedi e connessioni del citoscheletro",
+     "unita": 5,
+     "peso": 0.0139
+    },
+    {
+     "id": "bio.6.1",
+     "titolo": "Matrice extracellulare e integrine",
+     "unita": 6,
+     "peso": 0.0399
+    },
+    {
+     "id": "bio.6.2",
+     "titolo": "Adesione e giunzioni cellulari",
+     "unita": 6,
+     "peso": 0.0235
+    },
+    {
+     "id": "bio.6.3",
+     "titolo": "Segnalazione cellulare e trasduzione del segnale",
+     "unita": 6,
+     "peso": 0.0431
+    },
+    {
+     "id": "bio.7.1",
+     "titolo": "Ciclo cellulare, cicline e CDK",
+     "unita": 7,
+     "peso": 0.0225
+    },
+    {
+     "id": "bio.7.2",
+     "titolo": "Punto di restrizione, p53 e oncogeni",
+     "unita": 7,
+     "peso": 0.0147
+    },
+    {
+     "id": "bio.7.3",
+     "titolo": "Mitosi e citodieresi",
+     "unita": 7,
+     "peso": 0.033
+    },
+    {
+     "id": "bio.7.4",
+     "titolo": "Meiosi e gametogenesi",
+     "unita": 7,
+     "peso": 0.0306
+    },
+    {
+     "id": "bio.7.5",
+     "titolo": "Morte cellulare: necrosi e apoptosi",
+     "unita": 7,
+     "peso": 0.0247
+    }
+   ]
+  },
+  {
+   "id": "chimica",
+   "nome": "Chimica e propedeutica biochimica",
+   "unita": [
+    {
+     "numero": 1,
+     "titolo": "La struttura dell'atomo, i legami chimici, stati di aggregazione della materia e termodinamica dei sistemi aperti",
+     "cfu": 1.0
+    },
+    {
+     "numero": 2,
+     "titolo": "Miscele, soluzioni e le proprietà colligative delle soluzioni",
+     "cfu": 1.0
+    },
+    {
+     "numero": 3,
+     "titolo": "Le reazioni chimiche negli organismi viventi: caratteristiche generali, cinetica e equilibrio chimico",
+     "cfu": 0.5
+    },
+    {
+     "numero": 4,
+     "titolo": "Acidi, basi, sali, pH, soluzioni tampone; reazioni di ossido-riduzione ed elettrochimica",
+     "cfu": 1.0
+    },
+    {
+     "numero": 5,
+     "titolo": "Proprietà del carbonio e reattività dei composti organici, idrocarburi, alogenuri alchilici, idrocarburi aromatici e derivati",
+     "cfu": 0.5
+    },
+    {
+     "numero": 6,
+     "titolo": "I gruppi funzionali e isomerie: alcoli, fenoli, eteri, tioli e tioeteri; aldeidi e chetoni; acidi carbossilici e derivati, ammine e ammidi",
+     "cfu": 1.0
+    },
+    {
+     "numero": 7,
+     "titolo": "Amminoacidi e proteine, carboidrati, lipidi, nucleotidi, polinucleotidi e acidi nucleici",
+     "cfu": 1.0
+    }
+   ],
+   "argomenti": [
+    {
+     "id": "chim.1.1",
+     "titolo": "Struttura dell'atomo e isotopi",
+     "unita": 1,
+     "peso": 0.0383
+    },
+    {
+     "id": "chim.1.2",
+     "titolo": "Numeri quantici, orbitali e configurazione elettronica",
+     "unita": 1,
+     "peso": 0.0244
+    },
+    {
+     "id": "chim.1.3",
+     "titolo": "Tavola periodica e proprietà periodiche",
+     "unita": 1,
+     "peso": 0.0218
+    },
+    {
+     "id": "chim.1.4",
+     "titolo": "Molecole, ioni, mole e numero di Avogadro",
+     "unita": 1,
+     "peso": 0.0205
+    },
+    {
+     "id": "chim.1.5",
+     "titolo": "Legame chimico e geometria molecolare",
+     "unita": 1,
+     "peso": 0.026
+    },
+    {
+     "id": "chim.1.6",
+     "titolo": "Interazioni deboli",
+     "unita": 1,
+     "peso": 0.0108
+    },
+    {
+     "id": "chim.1.7",
+     "titolo": "Numero di ossidazione e nomenclatura inorganica",
+     "unita": 1,
+     "peso": 0.0456
+    },
+    {
+     "id": "chim.1.8",
+     "titolo": "Stato solido e stato gassoso",
+     "unita": 1,
+     "peso": 0.0162
+    },
+    {
+     "id": "chim.1.9",
+     "titolo": "Stato liquido e passaggi di stato",
+     "unita": 1,
+     "peso": 0.0246
+    },
+    {
+     "id": "chim.1.10",
+     "titolo": "Termodinamica chimica e bioenergetica",
+     "unita": 1,
+     "peso": 0.0159
+    },
+    {
+     "id": "chim.2.1",
+     "titolo": "Miscele e sistemi dispersi",
+     "unita": 2,
+     "peso": 0.0157
+    },
+    {
+     "id": "chim.2.2",
+     "titolo": "Acqua come solvente, solubilità ed elettroliti",
+     "unita": 2,
+     "peso": 0.029
+    },
+    {
+     "id": "chim.2.3",
+     "titolo": "Concentrazione delle soluzioni",
+     "unita": 2,
+     "peso": 0.0264
+    },
+    {
+     "id": "chim.2.4",
+     "titolo": "Miscele di gas e legge di Dalton",
+     "unita": 2,
+     "peso": 0.0143
+    },
+    {
+     "id": "chim.2.5",
+     "titolo": "Proprietà colligative",
+     "unita": 2,
+     "peso": 0.0248
+    },
+    {
+     "id": "chim.2.6",
+     "titolo": "Osmosi, pressione osmotica e van't Hoff",
+     "unita": 2,
+     "peso": 0.0186
+    },
+    {
+     "id": "chim.2.7",
+     "titolo": "Tonicità e soluzioni di interesse clinico",
+     "unita": 2,
+     "peso": 0.0141
+    },
+    {
+     "id": "chim.3.1",
+     "titolo": "Reazioni chimiche e bilanciamento",
+     "unita": 3,
+     "peso": 0.0309
+    },
+    {
+     "id": "chim.3.2",
+     "titolo": "Cinetica chimica",
+     "unita": 3,
+     "peso": 0.0175
+    },
+    {
+     "id": "chim.3.3",
+     "titolo": "Catalizzatori ed enzimi",
+     "unita": 3,
+     "peso": 0.0133
+    },
+    {
+     "id": "chim.3.4",
+     "titolo": "Equilibrio chimico e solubilità",
+     "unita": 3,
+     "peso": 0.0215
+    },
+    {
+     "id": "chim.4.1",
+     "titolo": "Acidi, basi, sali e pH",
+     "unita": 4,
+     "peso": 0.0604
+    },
+    {
+     "id": "chim.4.2",
+     "titolo": "Soluzioni tampone",
+     "unita": 4,
+     "peso": 0.0323
+    },
+    {
+     "id": "chim.4.3",
+     "titolo": "Equilibrio acido-base nei fluidi biologici",
+     "unita": 4,
+     "peso": 0.0279
+    },
+    {
+     "id": "chim.4.4",
+     "titolo": "Ossidoriduzioni ed elettrochimica",
+     "unita": 4,
+     "peso": 0.0391
+    },
+    {
+     "id": "chim.5.1",
+     "titolo": "Carbonio, rappresentazione dei composti e nomenclatura IUPAC",
+     "unita": 5,
+     "peso": 0.0209
+    },
+    {
+     "id": "chim.5.2",
+     "titolo": "Stereochimica e isomeria",
+     "unita": 5,
+     "peso": 0.0149
+    },
+    {
+     "id": "chim.5.3",
+     "titolo": "Rottura omolitica e reazioni radicaliche",
+     "unita": 5,
+     "peso": 0.0081
+    },
+    {
+     "id": "chim.5.4",
+     "titolo": "Rottura eterolitica, nucleofili, elettrofili, SN1/SN2 ed eliminazione",
+     "unita": 5,
+     "peso": 0.0091
+    },
+    {
+     "id": "chim.5.5",
+     "titolo": "Alcani e cicloalcani",
+     "unita": 5,
+     "peso": 0.0151
+    },
+    {
+     "id": "chim.5.6",
+     "titolo": "Alcheni e dieni",
+     "unita": 5,
+     "peso": 0.0224
+    },
+    {
+     "id": "chim.5.7",
+     "titolo": "Idrocarburi aromatici",
+     "unita": 5,
+     "peso": 0.0093
+    },
+    {
+     "id": "chim.6.1",
+     "titolo": "Alcoli, tioli, fenoli ed eteri",
+     "unita": 6,
+     "peso": 0.0285
+    },
+    {
+     "id": "chim.6.2",
+     "titolo": "Ammine",
+     "unita": 6,
+     "peso": 0.0232
+    },
+    {
+     "id": "chim.6.3",
+     "titolo": "Aldeidi e chetoni",
+     "unita": 6,
+     "peso": 0.023
+    },
+    {
+     "id": "chim.6.4",
+     "titolo": "Acidi carbossilici e derivati",
+     "unita": 6,
+     "peso": 0.0295
+    },
+    {
+     "id": "chim.7.1",
+     "titolo": "Amminoacidi",
+     "unita": 7,
+     "peso": 0.0206
+    },
+    {
+     "id": "chim.7.2",
+     "titolo": "Legame peptidico e struttura delle proteine",
+     "unita": 7,
+     "peso": 0.0389
+    },
+    {
+     "id": "chim.7.3",
+     "titolo": "Carboidrati",
+     "unita": 7,
+     "peso": 0.0303
+    },
+    {
+     "id": "chim.7.4",
+     "titolo": "Lipidi",
+     "unita": 7,
+     "peso": 0.0352
+    },
+    {
+     "id": "chim.7.5",
+     "titolo": "Nucleotidi e acidi nucleici",
+     "unita": 7,
+     "peso": 0.025
+    },
+    {
+     "id": "chim.7.6",
+     "titolo": "Modificazioni non enzimatiche e antiossidanti",
+     "unita": 7,
+     "peso": 0.0161
+    }
+   ]
+  },
+  {
+   "id": "fisica",
+   "nome": "Fisica",
+   "unita": [
+    {
+     "numero": 1,
+     "titolo": "Introduzione ai metodi della fisica",
+     "cfu": 0.2
+    },
+    {
+     "numero": 2,
+     "titolo": "Meccanica",
+     "cfu": 1.4
+    },
+    {
+     "numero": 3,
+     "titolo": "Meccanica dei fluidi",
+     "cfu": 1.2
+    },
+    {
+     "numero": 4,
+     "titolo": "Onde meccaniche",
+     "cfu": 0.4
+    },
+    {
+     "numero": 5,
+     "titolo": "Termodinamica",
+     "cfu": 1.0
+    },
+    {
+     "numero": 6,
+     "titolo": "Elettricità e magnetismo",
+     "cfu": 1.2
+    },
+    {
+     "numero": 7,
+     "titolo": "Fisica delle radiazioni",
+     "cfu": 0.6
+    }
+   ],
+   "argomenti": [
+    {
+     "id": "fis.1.1",
+     "titolo": "Notazione scientifica e ordini di grandezza",
+     "unita": 1,
+     "peso": 0.0065
+    },
+    {
+     "id": "fis.1.2",
+     "titolo": "Grandezze fisiche, dimensioni e unità di misura",
+     "unita": 1,
+     "peso": 0.0486
+    },
+    {
+     "id": "fis.1.3",
+     "titolo": "Funzioni trigonometriche elementari",
+     "unita": 1,
+     "peso": 0.0085
+    },
+    {
+     "id": "fis.1.4",
+     "titolo": "Vettori",
+     "unita": 1,
+     "peso": 0.0203
+    },
+    {
+     "id": "fis.2.1",
+     "titolo": "Cinematica del punto materiale",
+     "unita": 2,
+     "peso": 0.0579
+    },
+    {
+     "id": "fis.2.2",
+     "titolo": "Dinamica e forze",
+     "unita": 2,
+     "peso": 0.0438
+    },
+    {
+     "id": "fis.2.3",
+     "titolo": "Lavoro, energia e potenza",
+     "unita": 2,
+     "peso": 0.0508
+    },
+    {
+     "id": "fis.2.4",
+     "titolo": "Quantità di moto, impulso e urti",
+     "unita": 2,
+     "peso": 0.0343
+    },
+    {
+     "id": "fis.2.5",
+     "titolo": "Sistemi di corpi, corpo rigido e leve",
+     "unita": 2,
+     "peso": 0.0269
+    },
+    {
+     "id": "fis.3.1",
+     "titolo": "Fluidi, pressione e densità",
+     "unita": 3,
+     "peso": 0.0334
+    },
+    {
+     "id": "fis.3.2",
+     "titolo": "Idrostatica: Stevino, Pascal, Archimede",
+     "unita": 3,
+     "peso": 0.0526
+    },
+    {
+     "id": "fis.3.3",
+     "titolo": "Idrodinamica: portata, continuità e Bernoulli",
+     "unita": 3,
+     "peso": 0.0341
+    },
+    {
+     "id": "fis.3.4",
+     "titolo": "Fluidi reali: viscosità e legge di Poiseuille",
+     "unita": 3,
+     "peso": 0.0267
+    },
+    {
+     "id": "fis.3.5",
+     "titolo": "Fenomeni di superficie",
+     "unita": 3,
+     "peso": 0.0224
+    },
+    {
+     "id": "fis.4.1",
+     "titolo": "Oscillazioni e grandezze ondulatorie",
+     "unita": 4,
+     "peso": 0.0346
+    },
+    {
+     "id": "fis.4.2",
+     "titolo": "Sovrapposizione e interferenza",
+     "unita": 4,
+     "peso": 0.009
+    },
+    {
+     "id": "fis.4.3",
+     "titolo": "Energia, potenza e intensità delle onde",
+     "unita": 4,
+     "peso": 0.0133
+    },
+    {
+     "id": "fis.4.4",
+     "titolo": "Onde acustiche e decibel",
+     "unita": 4,
+     "peso": 0.022
+    },
+    {
+     "id": "fis.4.5",
+     "titolo": "Effetto Doppler",
+     "unita": 4,
+     "peso": 0.0133
+    },
+    {
+     "id": "fis.5.1",
+     "titolo": "Sistemi termodinamici, temperatura e gas perfetti",
+     "unita": 5,
+     "peso": 0.0383
+    },
+    {
+     "id": "fis.5.2",
+     "titolo": "Calore, capacità termica e calorimetria",
+     "unita": 5,
+     "peso": 0.0277
+    },
+    {
+     "id": "fis.5.3",
+     "titolo": "Trasmissione del calore",
+     "unita": 5,
+     "peso": 0.0241
+    },
+    {
+     "id": "fis.5.4",
+     "titolo": "Primo principio e trasformazioni termodinamiche",
+     "unita": 5,
+     "peso": 0.0339
+    },
+    {
+     "id": "fis.5.5",
+     "titolo": "Secondo principio, macchine termiche ed entropia",
+     "unita": 5,
+     "peso": 0.0285
+    },
+    {
+     "id": "fis.6.1",
+     "titolo": "Carica elettrica, legge di Coulomb e campo elettrico",
+     "unita": 6,
+     "peso": 0.0257
+    },
+    {
+     "id": "fis.6.2",
+     "titolo": "Energia e potenziale elettrico",
+     "unita": 6,
+     "peso": 0.0272
+    },
+    {
+     "id": "fis.6.3",
+     "titolo": "Conduttori e dielettrici",
+     "unita": 6,
+     "peso": 0.0214
+    },
+    {
+     "id": "fis.6.4",
+     "titolo": "Corrente elettrica e circuiti",
+     "unita": 6,
+     "peso": 0.043
+    },
+    {
+     "id": "fis.6.5",
+     "titolo": "Capacità e condensatori",
+     "unita": 6,
+     "peso": 0.028
+    },
+    {
+     "id": "fis.6.6",
+     "titolo": "Campo magnetico e forza di Lorentz",
+     "unita": 6,
+     "peso": 0.0276
+    },
+    {
+     "id": "fis.6.7",
+     "titolo": "Induzione elettromagnetica",
+     "unita": 6,
+     "peso": 0.0182
+    },
+    {
+     "id": "fis.7.1",
+     "titolo": "Onde elettromagnetiche",
+     "unita": 7,
+     "peso": 0.0185
+    },
+    {
+     "id": "fis.7.2",
+     "titolo": "Spettro elettromagnetico",
+     "unita": 7,
+     "peso": 0.0095
+    },
+    {
+     "id": "fis.7.3",
+     "titolo": "Fotoni e quantizzazione dell'energia",
+     "unita": 7,
+     "peso": 0.0138
+    },
+    {
+     "id": "fis.7.4",
+     "titolo": "Assorbimento della radiazione: Lambert-Beer",
+     "unita": 7,
+     "peso": 0.0095
+    },
+    {
+     "id": "fis.7.5",
+     "titolo": "Radioattività e decadimenti",
+     "unita": 7,
+     "peso": 0.0095
+    },
+    {
+     "id": "fis.7.6",
+     "titolo": "Radiazioni ionizzanti e non ionizzanti",
+     "unita": 7,
+     "peso": 0.0095
+    },
+    {
+     "id": "fis.7.7",
+     "titolo": "Ottica geometrica",
+     "unita": 7,
+     "peso": 0.0272
+    }
+   ]
+  }
+ ]
+}

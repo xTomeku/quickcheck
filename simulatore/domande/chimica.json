@@ -1,0 +1,482 @@
+{
+ "materia": "chimica",
+ "nota": "Banca dimostrativa: domande originali scritte per provare l'app, da sostituire con la banca completa revisionata.",
+ "domande": [
+  {
+   "id": "chim-001",
+   "argomento": "chim.1.1",
+   "tipo": "multipla",
+   "testo": "L'isotopo carbonio-14 contiene:",
+   "opzioni": [
+    "6 protoni e 8 neutroni",
+    "8 protoni e 6 neutroni",
+    "14 protoni",
+    "6 protoni e 14 neutroni",
+    "7 protoni e 7 neutroni"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il numero atomico del carbonio è 6; il numero di massa 14 è la somma di protoni e neutroni, quindi i neutroni sono 8.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-002",
+   "argomento": "chim.1.3",
+   "tipo": "multipla",
+   "testo": "Lungo un periodo della tavola periodica, da sinistra verso destra, l'elettronegatività in genere:",
+   "opzioni": [
+    "Diminuisce",
+    "Aumenta",
+    "Resta costante",
+    "Aumenta solo nei metalli",
+    "Dipende dal numero di neutroni"
+   ],
+   "corretta": 1,
+   "spiegazione": "La carica nucleare efficace cresce e il raggio atomico diminuisce, quindi l'atomo attira più fortemente gli elettroni di legame.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-003",
+   "argomento": "chim.1.5",
+   "tipo": "multipla",
+   "testo": "Nella molecola di metano (CH₄) l'atomo di carbonio ha ibridazione:",
+   "opzioni": [
+    "sp",
+    "sp²",
+    "sp³",
+    "sp³d",
+    "Nessuna ibridazione"
+   ],
+   "corretta": 2,
+   "spiegazione": "Quattro legami σ equivalenti disposti a tetraedro, con angoli di circa 109,5°, corrispondono all'ibridazione sp³.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-004",
+   "argomento": "chim.1.6",
+   "tipo": "multipla",
+   "testo": "L'acqua bolle a una temperatura molto più alta dell'acido solfidrico (H₂S) soprattutto perché:",
+   "opzioni": [
+    "Forma legami ionici",
+    "Le sue molecole formano legami a idrogeno",
+    "Ha una massa molecolare maggiore",
+    "Ha forze di London più intense",
+    "I suoi legami covalenti sono più forti"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'ossigeno, molto elettronegativo e piccolo, permette legami a idrogeno tra molecole; H₂S ha massa maggiore ma non li forma in modo significativo.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-005",
+   "argomento": "chim.1.8",
+   "tipo": "multipla",
+   "testo": "Un gas ideale viene compresso a temperatura costante fino a dimezzarne il volume. La sua pressione:",
+   "opzioni": [
+    "Si dimezza",
+    "Raddoppia",
+    "Quadruplica",
+    "Resta costante",
+    "Si riduce a un quarto"
+   ],
+   "corretta": 1,
+   "spiegazione": "Per la legge di Boyle P·V è costante a T costante: se V si dimezza, P raddoppia.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-006",
+   "argomento": "chim.1.10",
+   "tipo": "multipla",
+   "testo": "Una reazione con ΔH < 0 e ΔS > 0 è:",
+   "opzioni": [
+    "Spontanea a qualsiasi temperatura",
+    "Non spontanea a qualsiasi temperatura",
+    "Spontanea solo ad alta temperatura",
+    "Spontanea solo a bassa temperatura",
+    "Sempre all'equilibrio"
+   ],
+   "corretta": 0,
+   "spiegazione": "ΔG = ΔH − TΔS: con ΔH negativo e −TΔS negativo, ΔG è negativo a ogni temperatura.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-007",
+   "argomento": "chim.2.3",
+   "tipo": "multipla",
+   "testo": "Quanti grammi di NaOH (massa molare 40 g/mol) servono per preparare 500 mL di soluzione 0,2 M?",
+   "opzioni": [
+    "2 g",
+    "4 g",
+    "8 g",
+    "0,4 g",
+    "20 g"
+   ],
+   "corretta": 1,
+   "spiegazione": "Moli = 0,2 mol/L × 0,5 L = 0,1 mol; massa = 0,1 mol × 40 g/mol = 4 g.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-008",
+   "argomento": "chim.2.7",
+   "tipo": "multipla",
+   "testo": "Un globulo rosso posto in una soluzione ipotonica:",
+   "opzioni": [
+    "Si raggrinzisce",
+    "Rimane invariato",
+    "Si rigonfia e può andare incontro a emolisi",
+    "Perde solo ioni potassio",
+    "Si divide"
+   ],
+   "corretta": 2,
+   "spiegazione": "L'acqua entra per osmosi verso l'interno, più concentrato, finché la membrana può rompersi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-009",
+   "argomento": "chim.3.2",
+   "tipo": "multipla",
+   "testo": "Un catalizzatore aumenta la velocità di una reazione perché:",
+   "opzioni": [
+    "Sposta l'equilibrio verso i prodotti",
+    "Rende la reazione più esotermica",
+    "Abbassa l'energia di attivazione",
+    "Aumenta la concentrazione dei reagenti",
+    "Viene consumato durante la reazione"
+   ],
+   "corretta": 2,
+   "spiegazione": "Offre un percorso con un'energia di attivazione minore; non cambia ΔG né la posizione dell'equilibrio e alla fine viene riottenuto.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-010",
+   "argomento": "chim.3.4",
+   "tipo": "multipla",
+   "testo": "Per la reazione esotermica N₂ + 3H₂ ⇌ 2NH₃, quale variazione sposta l'equilibrio verso l'ammoniaca?",
+   "opzioni": [
+    "Aumentare la temperatura",
+    "Diminuire la pressione",
+    "Aggiungere un catalizzatore",
+    "Aumentare la pressione",
+    "Rimuovere H₂"
+   ],
+   "corretta": 3,
+   "spiegazione": "Si passa da 4 a 2 moli di gas: per Le Châtelier un aumento di pressione favorisce il lato con meno moli gassose.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-011",
+   "argomento": "chim.4.1",
+   "tipo": "multipla",
+   "testo": "Il pH di una soluzione 0,01 M di NaOH a 25 °C è:",
+   "opzioni": [
+    "2",
+    "7",
+    "10",
+    "12",
+    "14"
+   ],
+   "corretta": 3,
+   "spiegazione": "NaOH è una base forte: [OH⁻] = 10⁻² M, pOH = 2, quindi pH = 14 − 2 = 12.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-012",
+   "argomento": "chim.4.4",
+   "tipo": "multipla",
+   "testo": "Nella reazione Zn + Cu²⁺ → Zn²⁺ + Cu:",
+   "opzioni": [
+    "Lo zinco si riduce",
+    "Il rame si ossida",
+    "Lo zinco è l'agente riducente",
+    "Lo ione Cu²⁺ è l'agente riducente",
+    "Non c'è trasferimento di elettroni"
+   ],
+   "corretta": 2,
+   "spiegazione": "Lo zinco cede due elettroni e si ossida, quindi riduce il Cu²⁺: è l'agente riducente.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-013",
+   "argomento": "chim.5.2",
+   "tipo": "multipla",
+   "testo": "Due molecole che sono una l'immagine speculare non sovrapponibile dell'altra si definiscono:",
+   "opzioni": [
+    "Diastereoisomeri",
+    "Enantiomeri",
+    "Isomeri di posizione",
+    "Tautomeri",
+    "Conformeri"
+   ],
+   "corretta": 1,
+   "spiegazione": "Gli enantiomeri hanno le stesse proprietà fisiche tranne la rotazione del piano della luce polarizzata, uguale e opposta.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-014",
+   "argomento": "chim.6.3",
+   "tipo": "multipla",
+   "testo": "L'ossidazione di un'aldeide produce:",
+   "opzioni": [
+    "Un alcol primario",
+    "Un chetone",
+    "Un acido carbossilico",
+    "Un etere",
+    "Un'ammina"
+   ],
+   "corretta": 2,
+   "spiegazione": "Il carbonio aldeidico porta un idrogeno che può essere ossidato a ossidrile, dando il gruppo carbossilico.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-015",
+   "argomento": "chim.7.3",
+   "tipo": "multipla",
+   "testo": "Il saccarosio è un disaccaride formato da:",
+   "opzioni": [
+    "Glucosio e galattosio",
+    "Due molecole di glucosio",
+    "Glucosio e fruttosio",
+    "Fruttosio e galattosio",
+    "Glucosio e ribosio"
+   ],
+   "corretta": 2,
+   "spiegazione": "Glucosio e fruttosio sono uniti da un legame α(1→2)β; il lattosio è glucosio più galattosio, il maltosio due glucosi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-016",
+   "argomento": "chim.1.2",
+   "tipo": "completamento",
+   "testo": "Secondo il principio di esclusione di ……, in un orbitale possono stare al massimo due elettroni con spin opposto.",
+   "accettate": [
+    "pauli"
+   ],
+   "spiegazione": "Due elettroni dello stesso atomo non possono avere tutti e quattro i numeri quantici uguali.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-017",
+   "argomento": "chim.1.4",
+   "tipo": "completamento",
+   "testo": "Una mole di qualsiasi sostanza contiene circa 6,022 · 10²³ particelle: questo valore è il numero di ……",
+   "accettate": [
+    "avogadro"
+   ],
+   "spiegazione": "Il numero di Avogadro collega la scala atomica, misurata in u, a quella macroscopica, misurata in grammi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-018",
+   "argomento": "chim.1.7",
+   "tipo": "completamento",
+   "testo": "Il numero di ossidazione dello zolfo nell'acido solforico (H₂SO₄) è ……",
+   "accettate": [
+    "+6",
+    "6",
+    "più 6"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   },
+   "spiegazione": "2·(+1) + x + 4·(−2) = 0, quindi x = +6.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-019",
+   "argomento": "chim.2.2",
+   "tipo": "completamento",
+   "testo": "La legge di …… afferma che la solubilità di un gas in un liquido è proporzionale alla sua pressione parziale.",
+   "accettate": [
+    "henry"
+   ],
+   "spiegazione": "È il motivo per cui un subacqueo che risale troppo in fretta rischia la formazione di bolle di azoto nel sangue.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-020",
+   "argomento": "chim.2.5",
+   "tipo": "completamento",
+   "testo": "L'abbassamento della temperatura di congelamento di una soluzione rispetto al solvente puro si chiama abbassamento ……",
+   "accettate": [
+    "crioscopico"
+   ],
+   "spiegazione": "È una proprietà colligativa: ΔT = i · Kcr · m dipende dal numero di particelle di soluto, non dalla loro natura.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-021",
+   "argomento": "chim.2.6",
+   "tipo": "completamento",
+   "testo": "Una soluzione 0,1 M di NaCl, completamente dissociato, ha pressione osmotica doppia di una soluzione 0,1 M di glucosio perché il coefficiente di van't Hoff di NaCl vale ……",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "spiegazione": "Ogni unità di NaCl libera due ioni, Na⁺ e Cl⁻, mentre il glucosio non si dissocia.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-022",
+   "argomento": "chim.3.1",
+   "tipo": "completamento",
+   "testo": "Bilanciando C₃H₈ + O₂ → CO₂ + H₂O con i coefficienti interi minimi, il coefficiente dell'ossigeno è ……",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "spiegazione": "C₃H₈ + 5 O₂ → 3 CO₂ + 4 H₂O: a destra ci sono 3·2 + 4·1 = 10 atomi di ossigeno.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-023",
+   "argomento": "chim.4.2",
+   "tipo": "completamento",
+   "testo": "In un tampone con acido debole e base coniugata in concentrazioni uguali, il pH è uguale al …… dell'acido.",
+   "accettate": [
+    "pka",
+    "pk a",
+    "pk"
+   ],
+   "spiegazione": "Dall'equazione di Henderson-Hasselbalch, pH = pKa + log([A⁻]/[HA]) = pKa quando il rapporto vale 1.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-024",
+   "argomento": "chim.4.3",
+   "tipo": "completamento",
+   "testo": "Il principale sistema tampone del sangue è la coppia acido carbonico/……",
+   "accettate": [
+    "bicarbonato",
+    "idrogenocarbonato",
+    "hco3-",
+    "hco3",
+    "ione bicarbonato"
+   ],
+   "spiegazione": "Mantiene il pH del sangue intorno a 7,4, con la CO₂ regolata dai polmoni e il bicarbonato dai reni.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-025",
+   "argomento": "chim.5.1",
+   "tipo": "completamento",
+   "testo": "Il nome IUPAC dell'alcano lineare con 5 atomi di carbonio è ……",
+   "accettate": [
+    "pentano",
+    "n-pentano"
+   ],
+   "spiegazione": "Metano, etano, propano, butano, pentano: da cinque carboni in poi il prefisso è numerico greco.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-026",
+   "argomento": "chim.5.7",
+   "tipo": "completamento",
+   "testo": "Per la regola di Hückel un composto ciclico, planare e coniugato è aromatico se ha 4n + …… elettroni π.",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "spiegazione": "Il benzene ha 6 elettroni π, cioè 4·1 + 2.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-027",
+   "argomento": "chim.6.1",
+   "tipo": "completamento",
+   "testo": "L'ossidazione di un alcol secondario produce un ……",
+   "accettate": [
+    "chetone"
+   ],
+   "spiegazione": "Il carbonio con l'ossidrile perde un idrogeno e forma un carbonile legato a due gruppi alchilici; per esempio il 2-propanolo dà acetone.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-028",
+   "argomento": "chim.6.4",
+   "tipo": "completamento",
+   "testo": "La reazione catalizzata da acido tra un acido carbossilico e un alcol, che forma un estere e acqua, è l'…… di Fischer.",
+   "accettate": [
+    "esterificazione"
+   ],
+   "spiegazione": "È una sostituzione nucleofila acilica reversibile; l'idrolisi dell'estere è la reazione inversa.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-029",
+   "argomento": "chim.7.1",
+   "tipo": "completamento",
+   "testo": "Il pH al quale un amminoacido ha carica netta zero si chiama punto ……",
+   "accettate": [
+    "isoelettrico"
+   ],
+   "spiegazione": "Al punto isoelettrico prevale la forma zwitterionica e l'amminoacido non migra in un campo elettrico.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-030",
+   "argomento": "chim.7.4",
+   "tipo": "completamento",
+   "testo": "Un trigliceride è formato da una molecola di …… esterificata con tre acidi grassi.",
+   "accettate": [
+    "glicerolo",
+    "glicerina"
+   ],
+   "spiegazione": "I tre ossidrili del glicerolo formano legami estere con i carbossili degli acidi grassi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "chim-031",
+   "argomento": "chim.7.5",
+   "tipo": "completamento",
+   "testo": "Nel DNA la base complementare dell'adenina è la ……",
+   "accettate": [
+    "timina"
+   ],
+   "spiegazione": "A e T formano due legami a idrogeno, G e C tre. Nell'RNA l'adenina si appaia con l'uracile.",
+   "stato": "approvata",
+   "fonte": "demo"
+  }
+ ]
+}

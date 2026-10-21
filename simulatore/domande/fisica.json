@@ -1,0 +1,507 @@
+{
+ "materia": "fisica",
+ "nota": "Banca dimostrativa: domande originali scritte per provare l'app, da sostituire con la banca completa revisionata.",
+ "domande": [
+  {
+   "id": "fis-001",
+   "argomento": "fis.1.2",
+   "tipo": "multipla",
+   "testo": "Quale delle seguenti è un'unità fondamentale del Sistema Internazionale?",
+   "opzioni": [
+    "Newton",
+    "Joule",
+    "Ampere",
+    "Volt",
+    "Pascal"
+   ],
+   "corretta": 2,
+   "spiegazione": "Le sette unità fondamentali sono metro, kilogrammo, secondo, ampere, kelvin, mole e candela; le altre sono derivate.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-002",
+   "argomento": "fis.1.4",
+   "tipo": "multipla",
+   "testo": "Due forze di 3 N e 4 N, perpendicolari tra loro, hanno una risultante di modulo:",
+   "opzioni": [
+    "1 N",
+    "5 N",
+    "7 N",
+    "12 N",
+    "25 N"
+   ],
+   "corretta": 1,
+   "spiegazione": "Per il teorema di Pitagora: √(3² + 4²) = √25 = 5 N.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-003",
+   "argomento": "fis.2.1",
+   "tipo": "multipla",
+   "testo": "Un corpo parte da fermo con accelerazione costante di 2 m/s². Quale distanza percorre in 5 s?",
+   "opzioni": [
+    "10 m",
+    "20 m",
+    "25 m",
+    "50 m",
+    "100 m"
+   ],
+   "corretta": 2,
+   "spiegazione": "s = ½·a·t² = ½ · 2 · 25 = 25 m.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-004",
+   "argomento": "fis.2.2",
+   "tipo": "multipla",
+   "testo": "Su un corpo di 4 kg agisce una forza risultante di 10 N. La sua accelerazione è:",
+   "opzioni": [
+    "0,4 m/s²",
+    "2,5 m/s²",
+    "14 m/s²",
+    "40 m/s²",
+    "6 m/s²"
+   ],
+   "corretta": 1,
+   "spiegazione": "Dal secondo principio a = F/m = 10/4 = 2,5 m/s².",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-005",
+   "argomento": "fis.2.3",
+   "tipo": "multipla",
+   "testo": "Un oggetto di 2 kg cade da fermo da 5 m di altezza (g = 10 m/s², attrito trascurabile). Con quale energia cinetica arriva al suolo?",
+   "opzioni": [
+    "10 J",
+    "50 J",
+    "100 J",
+    "200 J",
+    "1000 J"
+   ],
+   "corretta": 2,
+   "spiegazione": "Si conserva l'energia meccanica: Ec finale = m·g·h = 2 · 10 · 5 = 100 J.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-006",
+   "argomento": "fis.2.5",
+   "tipo": "multipla",
+   "testo": "Una leva in cui il fulcro si trova tra la forza motrice e la forza resistente è di:",
+   "opzioni": [
+    "Primo genere",
+    "Secondo genere",
+    "Terzo genere",
+    "Quarto genere",
+    "Nessun genere"
+   ],
+   "corretta": 0,
+   "spiegazione": "È la leva di primo genere, come le forbici o l'articolazione tra testa e prima vertebra.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-007",
+   "argomento": "fis.3.2",
+   "tipo": "multipla",
+   "testo": "Un corpo completamente immerso in acqua riceve una spinta di Archimede pari:",
+   "opzioni": [
+    "Al proprio peso",
+    "Al peso del volume d'acqua spostato",
+    "Al proprio volume",
+    "Al prodotto della propria densità per g",
+    "Al peso dell'acqua sovrastante"
+   ],
+   "corretta": 1,
+   "spiegazione": "La spinta vale ρ(fluido) · V(immerso) · g, indipendentemente dal materiale del corpo.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-008",
+   "argomento": "fis.3.3",
+   "tipo": "multipla",
+   "testo": "In un condotto percorso da un fluido ideale a portata costante, se la sezione si dimezza la velocità del fluido:",
+   "opzioni": [
+    "Si dimezza",
+    "Resta uguale",
+    "Raddoppia",
+    "Quadruplica",
+    "Si riduce a un quarto"
+   ],
+   "corretta": 2,
+   "spiegazione": "Per l'equazione di continuità S·v è costante: metà sezione significa velocità doppia.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-009",
+   "argomento": "fis.3.4",
+   "tipo": "multipla",
+   "testo": "Per la legge di Poiseuille, se il raggio di un vaso si dimezza a parità di differenza di pressione, la portata:",
+   "opzioni": [
+    "Si dimezza",
+    "Si riduce a un quarto",
+    "Si riduce a un ottavo",
+    "Si riduce a un sedicesimo",
+    "Resta invariata"
+   ],
+   "corretta": 3,
+   "spiegazione": "La portata è proporzionale a r⁴: (1/2)⁴ = 1/16. Per questo piccole vasocostrizioni hanno grandi effetti.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-010",
+   "argomento": "fis.4.4",
+   "tipo": "multipla",
+   "testo": "Se l'intensità di un suono aumenta di un fattore 100, il suo livello sonoro aumenta di:",
+   "opzioni": [
+    "2 dB",
+    "10 dB",
+    "20 dB",
+    "100 dB",
+    "40 dB"
+   ],
+   "corretta": 2,
+   "spiegazione": "β = 10·log(I/I₀): moltiplicare I per 100 aggiunge 10·log(100) = 20 dB.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-011",
+   "argomento": "fis.5.4",
+   "tipo": "multipla",
+   "testo": "In una trasformazione adiabatica:",
+   "opzioni": [
+    "La temperatura resta costante",
+    "Il sistema non scambia calore con l'ambiente",
+    "La pressione resta costante",
+    "Il volume resta costante",
+    "L'energia interna resta costante"
+   ],
+   "corretta": 1,
+   "spiegazione": "Q = 0, quindi per il primo principio ΔU = −L: un'espansione adiabatica raffredda il gas.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-012",
+   "argomento": "fis.5.5",
+   "tipo": "multipla",
+   "testo": "Una macchina di Carnot lavora tra 600 K e 300 K. Il suo rendimento è:",
+   "opzioni": [
+    "25%",
+    "33%",
+    "50%",
+    "67%",
+    "100%"
+   ],
+   "corretta": 2,
+   "spiegazione": "η = 1 − T(fredda)/T(calda) = 1 − 300/600 = 0,5, con le temperature in kelvin.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-013",
+   "argomento": "fis.6.4",
+   "tipo": "multipla",
+   "testo": "Due resistenze da 6 Ω collegate in parallelo hanno una resistenza equivalente di:",
+   "opzioni": [
+    "12 Ω",
+    "6 Ω",
+    "3 Ω",
+    "2 Ω",
+    "36 Ω"
+   ],
+   "corretta": 2,
+   "spiegazione": "1/R = 1/6 + 1/6 = 1/3, quindi R = 3 Ω. Due resistenze uguali in parallelo valgono la metà.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-014",
+   "argomento": "fis.6.6",
+   "tipo": "multipla",
+   "testo": "Una carica che si muove parallelamente alle linee di un campo magnetico uniforme subisce una forza di Lorentz:",
+   "opzioni": [
+    "Massima",
+    "Nulla",
+    "Diretta come la velocità",
+    "Opposta alla velocità",
+    "Pari a q·v·B"
+   ],
+   "corretta": 1,
+   "spiegazione": "F = q·v·B·sen θ, e con θ = 0° il seno è zero.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-015",
+   "argomento": "fis.7.5",
+   "tipo": "multipla",
+   "testo": "Dopo tre tempi di dimezzamento, la frazione di nuclei radioattivi rimasti è:",
+   "opzioni": [
+    "1/3",
+    "1/6",
+    "1/8",
+    "1/9",
+    "1/16"
+   ],
+   "corretta": 2,
+   "spiegazione": "Ogni emivita dimezza i nuclei: (1/2)³ = 1/8.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-016",
+   "argomento": "fis.1.1",
+   "tipo": "completamento",
+   "testo": "In notazione scientifica 0,00045 si scrive 4,5 · 10 elevato a ……",
+   "accettate": [
+    "-4",
+    "−4",
+    "meno 4",
+    "meno quattro"
+   ],
+   "numero": {
+    "valore": -4,
+    "tolleranza": 0
+   },
+   "spiegazione": "Si sposta la virgola di 4 posti verso destra, quindi l'esponente è −4.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-017",
+   "argomento": "fis.1.2",
+   "tipo": "completamento",
+   "testo": "Una velocità di 72 km/h corrisponde a …… m/s.",
+   "accettate": [
+    "20"
+   ],
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0.01
+   },
+   "unita": "m/s",
+   "spiegazione": "Si divide per 3,6: 72 / 3,6 = 20 m/s.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-018",
+   "argomento": "fis.2.1",
+   "tipo": "completamento",
+   "testo": "Nel moto circolare uniforme l'accelerazione, diretta verso il centro, si chiama accelerazione ……",
+   "accettate": [
+    "centripeta"
+   ],
+   "spiegazione": "Vale v²/r: il modulo della velocità è costante ma la direzione cambia di continuo.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-019",
+   "argomento": "fis.2.4",
+   "tipo": "completamento",
+   "testo": "Un proiettile di 0,01 kg sparato a 400 m/s ha una quantità di moto di …… kg·m/s.",
+   "accettate": [
+    "4"
+   ],
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0.01
+   },
+   "unita": "kg·m/s",
+   "spiegazione": "p = m·v = 0,01 · 400 = 4 kg·m/s.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-020",
+   "argomento": "fis.3.1",
+   "tipo": "completamento",
+   "testo": "Nel Sistema Internazionale la pressione si misura in ……",
+   "accettate": [
+    "pascal",
+    "pa",
+    "n/m2",
+    "n/m²"
+   ],
+   "spiegazione": "1 Pa = 1 N/m². La pressione atmosferica è circa 101 325 Pa.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-021",
+   "argomento": "fis.3.2",
+   "tipo": "completamento",
+   "testo": "A 10 m di profondità in acqua (ρ = 1000 kg/m³, g = 10 m/s²) la pressione idrostatica, esclusa quella atmosferica, vale …… Pa.",
+   "accettate": [
+    "100000",
+    "10^5",
+    "1e5"
+   ],
+   "numero": {
+    "valore": 100000,
+    "tolleranza": 0.01
+   },
+   "unita": "Pa",
+   "spiegazione": "Per la legge di Stevino p = ρ·g·h = 1000 · 10 · 10 = 10⁵ Pa, circa un'atmosfera.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-022",
+   "argomento": "fis.3.5",
+   "tipo": "completamento",
+   "testo": "La risalita spontanea di un liquido in un tubo molto sottile si chiama ……",
+   "accettate": [
+    "capillarità",
+    "capillarita",
+    "risalita capillare",
+    "capillarità"
+   ],
+   "spiegazione": "Dipende dalla tensione superficiale e dall'adesione tra liquido e parete: più il tubo è sottile, più il liquido sale.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-023",
+   "argomento": "fis.4.1",
+   "tipo": "completamento",
+   "testo": "Un'onda di frequenza 50 Hz ha un periodo di …… s.",
+   "accettate": [
+    "0,02",
+    "0.02",
+    "1/50"
+   ],
+   "numero": {
+    "valore": 0.02,
+    "tolleranza": 0.01
+   },
+   "unita": "s",
+   "spiegazione": "Il periodo è l'inverso della frequenza: T = 1/50 = 0,02 s.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-024",
+   "argomento": "fis.4.5",
+   "tipo": "completamento",
+   "testo": "La variazione di frequenza percepita quando sorgente e osservatore sono in moto relativo si chiama effetto ……",
+   "accettate": [
+    "doppler"
+   ],
+   "spiegazione": "In avvicinamento la frequenza percepita aumenta, in allontanamento diminuisce; l'ecografia Doppler lo usa per misurare il flusso sanguigno.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-025",
+   "argomento": "fis.5.1",
+   "tipo": "completamento",
+   "testo": "La temperatura di 27 °C corrisponde a …… K.",
+   "accettate": [
+    "300",
+    "300,15"
+   ],
+   "numero": {
+    "valore": 300,
+    "tolleranza": 0.002
+   },
+   "unita": "K",
+   "spiegazione": "T(K) = T(°C) + 273,15, quindi circa 300 K.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-026",
+   "argomento": "fis.5.2",
+   "tipo": "completamento",
+   "testo": "Per scaldare 2 kg d'acqua (c = 4186 J/(kg·K)) di 10 K servono …… J.",
+   "accettate": [
+    "83720"
+   ],
+   "numero": {
+    "valore": 83720,
+    "tolleranza": 0.01
+   },
+   "unita": "J",
+   "spiegazione": "Q = m·c·ΔT = 2 · 4186 · 10 = 83 720 J.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-027",
+   "argomento": "fis.5.3",
+   "tipo": "completamento",
+   "testo": "La trasmissione del calore che non ha bisogno di un mezzo materiale avviene per ……",
+   "accettate": [
+    "irraggiamento"
+   ],
+   "spiegazione": "L'irraggiamento avviene tramite onde elettromagnetiche, come il calore del Sole che attraversa il vuoto.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-028",
+   "argomento": "fis.6.1",
+   "tipo": "completamento",
+   "testo": "Se la distanza tra due cariche puntiformi raddoppia, la forza di Coulomb diventa …… volte più piccola.",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   },
+   "spiegazione": "La forza è inversamente proporzionale al quadrato della distanza: 2² = 4.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-029",
+   "argomento": "fis.6.5",
+   "tipo": "completamento",
+   "testo": "La capacità elettrica si misura in ……",
+   "accettate": [
+    "farad",
+    "f"
+   ],
+   "spiegazione": "1 F = 1 C/V. Nei circuiti reali si usano di solito µF, nF o pF.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-030",
+   "argomento": "fis.7.3",
+   "tipo": "completamento",
+   "testo": "Nella formula E = h·f dell'energia di un fotone, h è la costante di ……",
+   "accettate": [
+    "planck"
+   ],
+   "spiegazione": "h vale circa 6,63 · 10⁻³⁴ J·s: più alta è la frequenza, più energetico è il fotone.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "fis-031",
+   "argomento": "fis.7.7",
+   "tipo": "completamento",
+   "testo": "Il cambiamento di direzione della luce nel passaggio tra due mezzi con indice di rifrazione diverso si chiama ……",
+   "accettate": [
+    "rifrazione"
+   ],
+   "spiegazione": "È descritto dalla legge di Snell: n₁·sen θ₁ = n₂·sen θ₂.",
+   "stato": "approvata",
+   "fonte": "demo"
+  }
+ ]
+}

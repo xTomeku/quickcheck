@@ -1,0 +1,1535 @@
+{
+  "fonte": "Testi ufficiali MUR, esami semestre filtro a.a. 2025/26",
+  "prove": [
+    {
+      "appello": 1,
+      "data": "2025-11-20",
+      "materia": "biologia",
+      "domande": [
+        {
+          "numero": 1,
+          "tipo": "multipla",
+          "argomento": "bio.5.9",
+          "argomento_titolo": "Endocitosi e lisosomi",
+          "con_calcolo": false,
+          "sintesi": "dove sono marcate le idrolasi lisosomiali (cis-Golgi)"
+        },
+        {
+          "numero": 2,
+          "tipo": "multipla",
+          "argomento": "bio.4.2",
+          "argomento_titolo": "Genetica mendeliana e interazioni alleliche",
+          "con_calcolo": false,
+          "sintesi": "AB0 come esempio di codominanza"
+        },
+        {
+          "numero": 3,
+          "tipo": "multipla",
+          "argomento": "bio.3.9",
+          "argomento_titolo": "Degradazione proteica: ubiquitina e proteasoma",
+          "con_calcolo": false,
+          "sintesi": "ruolo delle ligasi E3 dell'ubiquitina"
+        },
+        {
+          "numero": 4,
+          "tipo": "multipla",
+          "argomento": "bio.7.3",
+          "argomento_titolo": "Mitosi e citodieresi",
+          "con_calcolo": false,
+          "sintesi": "metafase e anafase"
+        },
+        {
+          "numero": 5,
+          "tipo": "multipla",
+          "argomento": "bio.5.3",
+          "argomento_titolo": "Smistamento delle proteine e compartimenti",
+          "con_calcolo": false,
+          "sintesi": "estensione relativa delle membrane cellulari (tre affermazioni)"
+        },
+        {
+          "numero": 6,
+          "tipo": "multipla",
+          "argomento": "bio.3.6",
+          "argomento_titolo": "Maturazione degli RNA",
+          "con_calcolo": false,
+          "sintesi": "eventi di maturazione del pre-mRNA"
+        },
+        {
+          "numero": 7,
+          "tipo": "multipla",
+          "argomento": "bio.3.7",
+          "argomento_titolo": "Traduzione e codice genetico",
+          "con_calcolo": false,
+          "sintesi": "reazione delle amminoacil-tRNA sintetasi"
+        },
+        {
+          "numero": 8,
+          "tipo": "multipla",
+          "argomento": "bio.2.2",
+          "argomento_titolo": "Cromatina ed epigenetica",
+          "con_calcolo": false,
+          "sintesi": "fibra da 11 nm a collana di perle"
+        },
+        {
+          "numero": 9,
+          "tipo": "multipla",
+          "argomento": "bio.6.3",
+          "argomento_titolo": "Segnalazione cellulare e trasduzione del segnale",
+          "con_calcolo": false,
+          "sintesi": "definizione di segnalazione paracrina"
+        },
+        {
+          "numero": 10,
+          "tipo": "multipla",
+          "argomento": "bio.4.1",
+          "argomento_titolo": "Mutazioni e riparazione del DNA",
+          "con_calcolo": false,
+          "sintesi": "classificare la mutazione UCA→UGA"
+        },
+        {
+          "numero": 11,
+          "tipo": "multipla",
+          "argomento": "bio.6.1",
+          "argomento_titolo": "Matrice extracellulare e integrine",
+          "con_calcolo": false,
+          "sintesi": "componenti della matrice extracellulare"
+        },
+        {
+          "numero": 12,
+          "tipo": "multipla",
+          "argomento": "bio.1.3",
+          "argomento_titolo": "Cellula procariotica",
+          "con_calcolo": false,
+          "sintesi": "parete di Gram positivi e negativi"
+        },
+        {
+          "numero": 13,
+          "tipo": "multipla",
+          "argomento": "bio.1.2",
+          "argomento_titolo": "Virus",
+          "con_calcolo": false,
+          "sintesi": "proprietà comuni a tutti i virus"
+        },
+        {
+          "numero": 14,
+          "tipo": "multipla",
+          "argomento": "bio.5.4",
+          "argomento_titolo": "Nucleo e trasporto nucleare",
+          "con_calcolo": false,
+          "sintesi": "segnali di import/export nucleare"
+        },
+        {
+          "numero": 15,
+          "tipo": "multipla",
+          "argomento": "bio.2.1",
+          "argomento_titolo": "Genoma eucariotico e cromosomi",
+          "con_calcolo": false,
+          "sintesi": "composizione dei cromosomi"
+        },
+        {
+          "numero": 16,
+          "tipo": "completamento",
+          "argomento": "bio.4.4",
+          "argomento_titolo": "Cariotipo e anomalie cromosomiche",
+          "con_calcolo": false,
+          "sintesi": "fenotipo associato a 47,XYY"
+        },
+        {
+          "numero": 17,
+          "tipo": "completamento",
+          "argomento": "bio.1.5",
+          "argomento_titolo": "Macromolecole biologiche ed enzimi",
+          "con_calcolo": false,
+          "sintesi": "componenti del dAMP"
+        },
+        {
+          "numero": 18,
+          "tipo": "completamento",
+          "argomento": "bio.5.5",
+          "argomento_titolo": "Mitocondri ed energetica cellulare",
+          "con_calcolo": false,
+          "sintesi": "TIM23 e cariche della sequenza segnale"
+        },
+        {
+          "numero": 19,
+          "tipo": "completamento",
+          "argomento": "bio.7.1",
+          "argomento_titolo": "Ciclo cellulare, cicline e CDK",
+          "con_calcolo": false,
+          "sintesi": "fase del ciclo in cui si replica il DNA"
+        },
+        {
+          "numero": 20,
+          "tipo": "completamento",
+          "argomento": "bio.5.5",
+          "argomento_titolo": "Mitocondri ed energetica cellulare",
+          "con_calcolo": false,
+          "sintesi": "import post-traduzionale nei mitocondri"
+        },
+        {
+          "numero": 21,
+          "tipo": "completamento",
+          "argomento": "bio.3.1",
+          "argomento_titolo": "Replicazione del DNA",
+          "con_calcolo": false,
+          "sintesi": "enzima che sintetizza i primer"
+        },
+        {
+          "numero": 22,
+          "tipo": "completamento",
+          "argomento": "bio.5.5",
+          "argomento_titolo": "Mitocondri ed energetica cellulare",
+          "con_calcolo": false,
+          "sintesi": "complesso OXA"
+        },
+        {
+          "numero": 23,
+          "tipo": "completamento",
+          "argomento": "bio.7.4",
+          "argomento_titolo": "Meiosi e gametogenesi",
+          "con_calcolo": false,
+          "sintesi": "cromosomi nei gameti maturi"
+        },
+        {
+          "numero": 24,
+          "tipo": "completamento",
+          "argomento": "bio.6.1",
+          "argomento_titolo": "Matrice extracellulare e integrine",
+          "con_calcolo": false,
+          "sintesi": "acido ialuronico tra i GAG"
+        },
+        {
+          "numero": 25,
+          "tipo": "completamento",
+          "argomento": "bio.3.2",
+          "argomento_titolo": "Il gene: struttura e regolazione in cis",
+          "con_calcolo": false,
+          "sintesi": "promotore"
+        },
+        {
+          "numero": 26,
+          "tipo": "completamento",
+          "argomento": "bio.3.5",
+          "argomento_titolo": "Trascrizione negli eucarioti",
+          "con_calcolo": false,
+          "sintesi": "TATA box"
+        },
+        {
+          "numero": 27,
+          "tipo": "completamento",
+          "argomento": "bio.6.3",
+          "argomento_titolo": "Segnalazione cellulare e trasduzione del segnale",
+          "con_calcolo": false,
+          "sintesi": "cascata di trasduzione"
+        },
+        {
+          "numero": 28,
+          "tipo": "completamento",
+          "argomento": "bio.7.3",
+          "argomento_titolo": "Mitosi e citodieresi",
+          "con_calcolo": false,
+          "sintesi": "metafase"
+        },
+        {
+          "numero": 29,
+          "tipo": "completamento",
+          "argomento": "bio.7.5",
+          "argomento_titolo": "Morte cellulare: necrosi e apoptosi",
+          "con_calcolo": false,
+          "sintesi": "fosfatidilserina come segnale eat-me"
+        },
+        {
+          "numero": 30,
+          "tipo": "completamento",
+          "argomento": "bio.5.1",
+          "argomento_titolo": "Membrane biologiche",
+          "con_calcolo": false,
+          "sintesi": "asimmetria dei lipidi di membrana"
+        },
+        {
+          "numero": 31,
+          "tipo": "completamento",
+          "argomento": "bio.4.3",
+          "argomento_titolo": "Penetranza, espressività, eredità poligenica e imprinting",
+          "con_calcolo": false,
+          "sintesi": "definizione di penetranza"
+        }
+      ]
+    },
+    {
+      "appello": 1,
+      "data": "2025-11-20",
+      "materia": "chimica",
+      "domande": [
+        {
+          "numero": 1,
+          "tipo": "multipla",
+          "argomento": "chim.1.7",
+          "argomento_titolo": "Numero di ossidazione e nomenclatura inorganica",
+          "con_calcolo": false,
+          "sintesi": "formula del solfato di bario"
+        },
+        {
+          "numero": 2,
+          "tipo": "multipla",
+          "argomento": "chim.1.1",
+          "argomento_titolo": "Struttura dell'atomo e isotopi",
+          "con_calcolo": false,
+          "sintesi": "definizione di numero atomico"
+        },
+        {
+          "numero": 3,
+          "tipo": "multipla",
+          "argomento": "chim.5.5",
+          "argomento_titolo": "Alcani e cicloalcani",
+          "con_calcolo": false,
+          "sintesi": "ibridazione negli alcani aciclici"
+        },
+        {
+          "numero": 4,
+          "tipo": "multipla",
+          "argomento": "chim.6.1",
+          "argomento_titolo": "Alcoli, tioli, fenoli ed eteri",
+          "con_calcolo": false,
+          "sintesi": "ossidazione del 2-propanolo"
+        },
+        {
+          "numero": 5,
+          "tipo": "multipla",
+          "argomento": "chim.7.2",
+          "argomento_titolo": "Legame peptidico e struttura delle proteine",
+          "con_calcolo": false,
+          "sintesi": "amminoacido più abbondante nel collagene"
+        },
+        {
+          "numero": 6,
+          "tipo": "multipla",
+          "argomento": "chim.3.1",
+          "argomento_titolo": "Reazioni chimiche e bilanciamento",
+          "con_calcolo": true,
+          "sintesi": "bilanciare Cl2 + NaOH"
+        },
+        {
+          "numero": 7,
+          "tipo": "multipla",
+          "argomento": "chim.5.6",
+          "argomento_titolo": "Alcheni e dieni",
+          "con_calcolo": true,
+          "sintesi": "contare atomi nel 2,3-dimetil-1-butene"
+        },
+        {
+          "numero": 8,
+          "tipo": "multipla",
+          "argomento": "chim.4.4",
+          "argomento_titolo": "Ossidoriduzioni ed elettrochimica",
+          "con_calcolo": false,
+          "sintesi": "relazione ΔG e potenziale di cella"
+        },
+        {
+          "numero": 9,
+          "tipo": "multipla",
+          "argomento": "chim.1.2",
+          "argomento_titolo": "Numeri quantici, orbitali e configurazione elettronica",
+          "con_calcolo": false,
+          "sintesi": "elettroni in un orbitale con l=1"
+        },
+        {
+          "numero": 10,
+          "tipo": "multipla",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": false,
+          "sintesi": "sale con pH basico"
+        },
+        {
+          "numero": 11,
+          "tipo": "multipla",
+          "argomento": "chim.7.4",
+          "argomento_titolo": "Lipidi",
+          "con_calcolo": false,
+          "sintesi": "acidi grassi omega-3 e omega-6"
+        },
+        {
+          "numero": 12,
+          "tipo": "multipla",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": false,
+          "sintesi": "sale con pH acido"
+        },
+        {
+          "numero": 13,
+          "tipo": "multipla",
+          "argomento": "chim.7.5",
+          "argomento_titolo": "Nucleotidi e acidi nucleici",
+          "con_calcolo": false,
+          "sintesi": "definizione di nucleoside"
+        },
+        {
+          "numero": 14,
+          "tipo": "multipla",
+          "argomento": "chim.7.4",
+          "argomento_titolo": "Lipidi",
+          "con_calcolo": false,
+          "sintesi": "acido arachidonico"
+        },
+        {
+          "numero": 15,
+          "tipo": "multipla",
+          "argomento": "chim.2.2",
+          "argomento_titolo": "Acqua come solvente, solubilità ed elettroliti",
+          "con_calcolo": false,
+          "sintesi": "solubilità dell'ossigeno e temperatura"
+        },
+        {
+          "numero": 16,
+          "tipo": "completamento",
+          "argomento": "chim.5.2",
+          "argomento_titolo": "Stereochimica e isomeria",
+          "con_calcolo": false,
+          "sintesi": "assenza di isomeria geometrica nel 1-butene"
+        },
+        {
+          "numero": 17,
+          "tipo": "completamento",
+          "argomento": "chim.1.9",
+          "argomento_titolo": "Stato liquido e passaggi di stato",
+          "con_calcolo": false,
+          "sintesi": "tensione di vapore e temperatura"
+        },
+        {
+          "numero": 18,
+          "tipo": "completamento",
+          "argomento": "chim.7.1",
+          "argomento_titolo": "Amminoacidi",
+          "con_calcolo": false,
+          "sintesi": "tirosina non essenziale"
+        },
+        {
+          "numero": 19,
+          "tipo": "completamento",
+          "argomento": "chim.7.2",
+          "argomento_titolo": "Legame peptidico e struttura delle proteine",
+          "con_calcolo": true,
+          "sintesi": "gruppi amminici liberi in un dipeptide"
+        },
+        {
+          "numero": 20,
+          "tipo": "completamento",
+          "argomento": "chim.7.2",
+          "argomento_titolo": "Legame peptidico e struttura delle proteine",
+          "con_calcolo": false,
+          "sintesi": "monomeri delle proteine"
+        },
+        {
+          "numero": 21,
+          "tipo": "completamento",
+          "argomento": "chim.5.1",
+          "argomento_titolo": "Carbonio, rappresentazione dei composti e nomenclatura IUPAC",
+          "con_calcolo": true,
+          "sintesi": "contare i carboni da un nome IUPAC"
+        },
+        {
+          "numero": 22,
+          "tipo": "completamento",
+          "argomento": "chim.1.8",
+          "argomento_titolo": "Stato solido e stato gassoso",
+          "con_calcolo": false,
+          "sintesi": "legge di Boyle"
+        },
+        {
+          "numero": 23,
+          "tipo": "completamento",
+          "argomento": "chim.1.7",
+          "argomento_titolo": "Numero di ossidazione e nomenclatura inorganica",
+          "con_calcolo": false,
+          "sintesi": "somma dei numeri di ossidazione"
+        },
+        {
+          "numero": 24,
+          "tipo": "completamento",
+          "argomento": "chim.7.5",
+          "argomento_titolo": "Nucleotidi e acidi nucleici",
+          "con_calcolo": false,
+          "sintesi": "ATP"
+        },
+        {
+          "numero": 25,
+          "tipo": "completamento",
+          "argomento": "chim.3.4",
+          "argomento_titolo": "Equilibrio chimico e solubilità",
+          "con_calcolo": false,
+          "sintesi": "definizione di Kc"
+        },
+        {
+          "numero": 26,
+          "tipo": "completamento",
+          "argomento": "chim.7.2",
+          "argomento_titolo": "Legame peptidico e struttura delle proteine",
+          "con_calcolo": false,
+          "sintesi": "cisteina e ponti disolfuro"
+        },
+        {
+          "numero": 27,
+          "tipo": "completamento",
+          "argomento": "chim.1.5",
+          "argomento_titolo": "Legame chimico e geometria molecolare",
+          "con_calcolo": false,
+          "sintesi": "legame dativo nello ione ammonio"
+        },
+        {
+          "numero": 28,
+          "tipo": "completamento",
+          "argomento": "chim.1.5",
+          "argomento_titolo": "Legame chimico e geometria molecolare",
+          "con_calcolo": false,
+          "sintesi": "definizione di molecola"
+        },
+        {
+          "numero": 29,
+          "tipo": "completamento",
+          "argomento": "chim.4.2",
+          "argomento_titolo": "Soluzioni tampone",
+          "con_calcolo": false,
+          "sintesi": "pH di massimo potere tampone"
+        },
+        {
+          "numero": 30,
+          "tipo": "completamento",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": false,
+          "sintesi": "definizione di pH"
+        },
+        {
+          "numero": 31,
+          "tipo": "completamento",
+          "argomento": "chim.2.3",
+          "argomento_titolo": "Concentrazione delle soluzioni",
+          "con_calcolo": false,
+          "sintesi": "molarità"
+        }
+      ]
+    },
+    {
+      "appello": 1,
+      "data": "2025-11-20",
+      "materia": "fisica",
+      "domande": [
+        {
+          "numero": 1,
+          "tipo": "multipla",
+          "argomento": "fis.4.1",
+          "argomento_titolo": "Oscillazioni e grandezze ondulatorie",
+          "con_calcolo": true,
+          "sintesi": "costante elastica da periodo e massa"
+        },
+        {
+          "numero": 2,
+          "tipo": "multipla",
+          "argomento": "fis.7.7",
+          "argomento_titolo": "Ottica geometrica",
+          "con_calcolo": false,
+          "sintesi": "indice di rifrazione da ε e μ"
+        },
+        {
+          "numero": 3,
+          "tipo": "multipla",
+          "argomento": "fis.3.4",
+          "argomento_titolo": "Fluidi reali: viscosità e legge di Poiseuille",
+          "con_calcolo": true,
+          "sintesi": "Poiseuille: raddoppio di raggio e lunghezza"
+        },
+        {
+          "numero": 4,
+          "tipo": "multipla",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": true,
+          "sintesi": "multipli e sottomultipli del metro"
+        },
+        {
+          "numero": 5,
+          "tipo": "multipla",
+          "argomento": "fis.2.2",
+          "argomento_titolo": "Dinamica e forze",
+          "con_calcolo": false,
+          "sintesi": "stessa forza su masse diverse"
+        },
+        {
+          "numero": 6,
+          "tipo": "multipla",
+          "argomento": "fis.3.1",
+          "argomento_titolo": "Fluidi, pressione e densità",
+          "con_calcolo": false,
+          "sintesi": "definizione di fluido incompressibile"
+        },
+        {
+          "numero": 7,
+          "tipo": "multipla",
+          "argomento": "fis.3.2",
+          "argomento_titolo": "Idrostatica: Stevino, Pascal, Archimede",
+          "con_calcolo": true,
+          "sintesi": "frazione immersa di una zattera"
+        },
+        {
+          "numero": 8,
+          "tipo": "multipla",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": false,
+          "sintesi": "dimensioni di una forza"
+        },
+        {
+          "numero": 9,
+          "tipo": "multipla",
+          "argomento": "fis.6.4",
+          "argomento_titolo": "Corrente elettrica e circuiti",
+          "con_calcolo": true,
+          "sintesi": "corrente negli elettrodomestici"
+        },
+        {
+          "numero": 10,
+          "tipo": "multipla",
+          "argomento": "fis.5.1",
+          "argomento_titolo": "Sistemi termodinamici, temperatura e gas perfetti",
+          "con_calcolo": false,
+          "sintesi": "energia cinetica media e temperatura"
+        },
+        {
+          "numero": 11,
+          "tipo": "multipla",
+          "argomento": "fis.2.1",
+          "argomento_titolo": "Cinematica del punto materiale",
+          "con_calcolo": false,
+          "sintesi": "moto circolare uniforme"
+        },
+        {
+          "numero": 12,
+          "tipo": "multipla",
+          "argomento": "fis.4.1",
+          "argomento_titolo": "Oscillazioni e grandezze ondulatorie",
+          "con_calcolo": false,
+          "sintesi": "cosa non trasporta un'onda acustica"
+        },
+        {
+          "numero": 13,
+          "tipo": "multipla",
+          "argomento": "fis.5.5",
+          "argomento_titolo": "Secondo principio, macchine termiche ed entropia",
+          "con_calcolo": false,
+          "sintesi": "rendimento del ciclo di Carnot"
+        },
+        {
+          "numero": 14,
+          "tipo": "multipla",
+          "argomento": "fis.7.1",
+          "argomento_titolo": "Onde elettromagnetiche",
+          "con_calcolo": false,
+          "sintesi": "velocità delle onde e.m. nei mezzi"
+        },
+        {
+          "numero": 15,
+          "tipo": "multipla",
+          "argomento": "fis.6.3",
+          "argomento_titolo": "Conduttori e dielettrici",
+          "con_calcolo": true,
+          "sintesi": "ddp interna a un conduttore carico"
+        },
+        {
+          "numero": 16,
+          "tipo": "completamento",
+          "argomento": "fis.2.3",
+          "argomento_titolo": "Lavoro, energia e potenza",
+          "con_calcolo": false,
+          "sintesi": "lavoro come prodotto scalare"
+        },
+        {
+          "numero": 17,
+          "tipo": "completamento",
+          "argomento": "fis.7.1",
+          "argomento_titolo": "Onde elettromagnetiche",
+          "con_calcolo": false,
+          "sintesi": "orientamento di E e B"
+        },
+        {
+          "numero": 18,
+          "tipo": "completamento",
+          "argomento": "fis.7.3",
+          "argomento_titolo": "Fotoni e quantizzazione dell'energia",
+          "con_calcolo": false,
+          "sintesi": "energia del fotone e frequenza"
+        },
+        {
+          "numero": 19,
+          "tipo": "completamento",
+          "argomento": "fis.6.6",
+          "argomento_titolo": "Campo magnetico e forza di Lorentz",
+          "con_calcolo": false,
+          "sintesi": "orbita di una carica in campo B"
+        },
+        {
+          "numero": 20,
+          "tipo": "completamento",
+          "argomento": "fis.2.3",
+          "argomento_titolo": "Lavoro, energia e potenza",
+          "con_calcolo": false,
+          "sintesi": "forze dissipative e smorzamento"
+        },
+        {
+          "numero": 21,
+          "tipo": "completamento",
+          "argomento": "fis.7.7",
+          "argomento_titolo": "Ottica geometrica",
+          "con_calcolo": false,
+          "sintesi": "immagine con oggetto entro il fuoco"
+        },
+        {
+          "numero": 22,
+          "tipo": "completamento",
+          "argomento": "fis.5.4",
+          "argomento_titolo": "Primo principio e trasformazioni termodinamiche",
+          "con_calcolo": false,
+          "sintesi": "isocora: ΔU e calore"
+        },
+        {
+          "numero": 23,
+          "tipo": "completamento",
+          "argomento": "fis.4.1",
+          "argomento_titolo": "Oscillazioni e grandezze ondulatorie",
+          "con_calcolo": false,
+          "sintesi": "lunghezza d'onda da v e f"
+        },
+        {
+          "numero": 24,
+          "tipo": "completamento",
+          "argomento": "fis.4.1",
+          "argomento_titolo": "Oscillazioni e grandezze ondulatorie",
+          "con_calcolo": false,
+          "sintesi": "frequenza e periodo"
+        },
+        {
+          "numero": 25,
+          "tipo": "completamento",
+          "argomento": "fis.2.4",
+          "argomento_titolo": "Quantità di moto, impulso e urti",
+          "con_calcolo": true,
+          "sintesi": "urto anelastico: velocità finale"
+        },
+        {
+          "numero": 26,
+          "tipo": "completamento",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": true,
+          "sintesi": "conversione Pa→nPa"
+        },
+        {
+          "numero": 27,
+          "tipo": "completamento",
+          "argomento": "fis.3.2",
+          "argomento_titolo": "Idrostatica: Stevino, Pascal, Archimede",
+          "con_calcolo": true,
+          "sintesi": "pressione idrostatica con Stevino"
+        },
+        {
+          "numero": 28,
+          "tipo": "completamento",
+          "argomento": "fis.3.3",
+          "argomento_titolo": "Idrodinamica: portata, continuità e Bernoulli",
+          "con_calcolo": true,
+          "sintesi": "Bernoulli e continuità: ΔP"
+        },
+        {
+          "numero": 29,
+          "tipo": "completamento",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": true,
+          "sintesi": "conversione µg/mm³ → g/L"
+        },
+        {
+          "numero": 30,
+          "tipo": "completamento",
+          "argomento": "fis.6.4",
+          "argomento_titolo": "Corrente elettrica e circuiti",
+          "con_calcolo": false,
+          "sintesi": "resistenza nella legge di Ohm"
+        },
+        {
+          "numero": 31,
+          "tipo": "completamento",
+          "argomento": "fis.6.4",
+          "argomento_titolo": "Corrente elettrica e circuiti",
+          "con_calcolo": true,
+          "sintesi": "resistenze in serie e parallelo"
+        }
+      ]
+    },
+    {
+      "appello": 2,
+      "data": "2025-12-10",
+      "materia": "biologia",
+      "domande": [
+        {
+          "numero": 1,
+          "tipo": "multipla",
+          "argomento": "bio.5.10",
+          "argomento_titolo": "Autofagia",
+          "con_calcolo": false,
+          "sintesi": "fagocitosi vs autofagia"
+        },
+        {
+          "numero": 2,
+          "tipo": "multipla",
+          "argomento": "bio.3.2",
+          "argomento_titolo": "Il gene: struttura e regolazione in cis",
+          "con_calcolo": false,
+          "sintesi": "definizione di gene"
+        },
+        {
+          "numero": 3,
+          "tipo": "multipla",
+          "argomento": "bio.2.2",
+          "argomento_titolo": "Cromatina ed epigenetica",
+          "con_calcolo": false,
+          "sintesi": "massimo livello di compattamento"
+        },
+        {
+          "numero": 4,
+          "tipo": "multipla",
+          "argomento": "bio.5.4",
+          "argomento_titolo": "Nucleo e trasporto nucleare",
+          "con_calcolo": false,
+          "sintesi": "dove si produce l'rRNA"
+        },
+        {
+          "numero": 5,
+          "tipo": "multipla",
+          "argomento": "bio.7.3",
+          "argomento_titolo": "Mitosi e citodieresi",
+          "con_calcolo": true,
+          "sintesi": "omologhi in una metafase di un aploide"
+        },
+        {
+          "numero": 6,
+          "tipo": "multipla",
+          "argomento": "bio.4.4",
+          "argomento_titolo": "Cariotipo e anomalie cromosomiche",
+          "con_calcolo": false,
+          "sintesi": "proprietà dei cromosomi omologhi"
+        },
+        {
+          "numero": 7,
+          "tipo": "multipla",
+          "argomento": "bio.3.7",
+          "argomento_titolo": "Traduzione e codice genetico",
+          "con_calcolo": false,
+          "sintesi": "rRNA procariotici (Svedberg)"
+        },
+        {
+          "numero": 8,
+          "tipo": "multipla",
+          "argomento": "bio.1.1",
+          "argomento_titolo": "Albero della vita, teoria cellulare e proprietà del vivente",
+          "con_calcolo": false,
+          "sintesi": "affermazione falsa sugli oggetti biologici"
+        },
+        {
+          "numero": 9,
+          "tipo": "multipla",
+          "argomento": "bio.5.2",
+          "argomento_titolo": "Trasporto di membrana e potenziale di membrana",
+          "con_calcolo": false,
+          "sintesi": "permeabilità delle membrane agli ioni"
+        },
+        {
+          "numero": 10,
+          "tipo": "multipla",
+          "argomento": "bio.6.3",
+          "argomento_titolo": "Segnalazione cellulare e trasduzione del segnale",
+          "con_calcolo": false,
+          "sintesi": "segnali con recettori intracellulari"
+        },
+        {
+          "numero": 11,
+          "tipo": "multipla",
+          "argomento": "bio.1.5",
+          "argomento_titolo": "Macromolecole biologiche ed enzimi",
+          "con_calcolo": false,
+          "sintesi": "enzimi proteici vs ribozimi"
+        },
+        {
+          "numero": 12,
+          "tipo": "multipla",
+          "argomento": "bio.6.1",
+          "argomento_titolo": "Matrice extracellulare e integrine",
+          "con_calcolo": false,
+          "sintesi": "fibronectina"
+        },
+        {
+          "numero": 13,
+          "tipo": "multipla",
+          "argomento": "bio.5.9",
+          "argomento_titolo": "Endocitosi e lisosomi",
+          "con_calcolo": false,
+          "sintesi": "segnale di indirizzamento al lisosoma"
+        },
+        {
+          "numero": 14,
+          "tipo": "multipla",
+          "argomento": "bio.3.1",
+          "argomento_titolo": "Replicazione del DNA",
+          "con_calcolo": false,
+          "sintesi": "affermazione falsa sulla forcella"
+        },
+        {
+          "numero": 15,
+          "tipo": "multipla",
+          "argomento": "bio.7.4",
+          "argomento_titolo": "Meiosi e gametogenesi",
+          "con_calcolo": false,
+          "sintesi": "separazione degli omologhi in meiosi"
+        },
+        {
+          "numero": 16,
+          "tipo": "completamento",
+          "argomento": "bio.4.2",
+          "argomento_titolo": "Genetica mendeliana e interazioni alleliche",
+          "con_calcolo": false,
+          "sintesi": "alleli"
+        },
+        {
+          "numero": 17,
+          "tipo": "completamento",
+          "argomento": "bio.2.2",
+          "argomento_titolo": "Cromatina ed epigenetica",
+          "con_calcolo": false,
+          "sintesi": "regolazione epigenetica"
+        },
+        {
+          "numero": 18,
+          "tipo": "completamento",
+          "argomento": "bio.5.4",
+          "argomento_titolo": "Nucleo e trasporto nucleare",
+          "con_calcolo": false,
+          "sintesi": "ripetizioni FG delle nucleoporine (vero/falso)"
+        },
+        {
+          "numero": 19,
+          "tipo": "completamento",
+          "argomento": "bio.1.5",
+          "argomento_titolo": "Macromolecole biologiche ed enzimi",
+          "con_calcolo": false,
+          "sintesi": "molecola liberata nel legame peptidico"
+        },
+        {
+          "numero": 20,
+          "tipo": "completamento",
+          "argomento": "bio.3.1",
+          "argomento_titolo": "Replicazione del DNA",
+          "con_calcolo": false,
+          "sintesi": "topoisomerasi"
+        },
+        {
+          "numero": 21,
+          "tipo": "completamento",
+          "argomento": "bio.2.3",
+          "argomento_titolo": "Genoma umano e sequenze ripetute",
+          "con_calcolo": false,
+          "sintesi": "DNA altamente ripetitivo"
+        },
+        {
+          "numero": 22,
+          "tipo": "completamento",
+          "argomento": "bio.1.5",
+          "argomento_titolo": "Macromolecole biologiche ed enzimi",
+          "con_calcolo": false,
+          "sintesi": "coiled-coil e alfa-eliche"
+        },
+        {
+          "numero": 23,
+          "tipo": "completamento",
+          "argomento": "bio.3.5",
+          "argomento_titolo": "Trascrizione negli eucarioti",
+          "con_calcolo": false,
+          "sintesi": "TFIIH con attività enzimatica"
+        },
+        {
+          "numero": 24,
+          "tipo": "completamento",
+          "argomento": "bio.7.5",
+          "argomento_titolo": "Morte cellulare: necrosi e apoptosi",
+          "con_calcolo": false,
+          "sintesi": "infiammazione da necrosi"
+        },
+        {
+          "numero": 25,
+          "tipo": "completamento",
+          "argomento": "bio.6.1",
+          "argomento_titolo": "Matrice extracellulare e integrine",
+          "con_calcolo": false,
+          "sintesi": "metalloproteasi della matrice"
+        },
+        {
+          "numero": 26,
+          "tipo": "completamento",
+          "argomento": "bio.5.4",
+          "argomento_titolo": "Nucleo e trasporto nucleare",
+          "con_calcolo": false,
+          "sintesi": "SREBP trasportato al nucleo"
+        },
+        {
+          "numero": 27,
+          "tipo": "completamento",
+          "argomento": "bio.6.3",
+          "argomento_titolo": "Segnalazione cellulare e trasduzione del segnale",
+          "con_calcolo": false,
+          "sintesi": "secondi messaggeri"
+        },
+        {
+          "numero": 28,
+          "tipo": "completamento",
+          "argomento": "bio.5.8",
+          "argomento_titolo": "Traffico vescicolare",
+          "con_calcolo": false,
+          "sintesi": "vescicole del sistema endomembranoso"
+        },
+        {
+          "numero": 29,
+          "tipo": "completamento",
+          "argomento": "bio.3.7",
+          "argomento_titolo": "Traduzione e codice genetico",
+          "con_calcolo": false,
+          "sintesi": "amminoacido del tRNA iniziatore"
+        },
+        {
+          "numero": 30,
+          "tipo": "completamento",
+          "argomento": "bio.3.2",
+          "argomento_titolo": "Il gene: struttura e regolazione in cis",
+          "con_calcolo": false,
+          "sintesi": "assenza di introni nei procarioti"
+        },
+        {
+          "numero": 31,
+          "tipo": "completamento",
+          "argomento": "bio.5.7",
+          "argomento_titolo": "Via secretoria: reticolo endoplasmatico e Golgi",
+          "con_calcolo": false,
+          "sintesi": "funzioni del RE liscio"
+        }
+      ]
+    },
+    {
+      "appello": 2,
+      "data": "2025-12-10",
+      "materia": "chimica",
+      "domande": [
+        {
+          "numero": 1,
+          "tipo": "multipla",
+          "argomento": "chim.7.3",
+          "argomento_titolo": "Carboidrati",
+          "con_calcolo": false,
+          "sintesi": "galattosio e glucosio epimeri"
+        },
+        {
+          "numero": 2,
+          "tipo": "multipla",
+          "argomento": "chim.3.4",
+          "argomento_titolo": "Equilibrio chimico e solubilità",
+          "con_calcolo": false,
+          "sintesi": "effetto dello ione comune"
+        },
+        {
+          "numero": 3,
+          "tipo": "multipla",
+          "argomento": "chim.1.1",
+          "argomento_titolo": "Struttura dell'atomo e isotopi",
+          "con_calcolo": false,
+          "sintesi": "definizione di isotopi"
+        },
+        {
+          "numero": 4,
+          "tipo": "multipla",
+          "argomento": "chim.1.7",
+          "argomento_titolo": "Numero di ossidazione e nomenclatura inorganica",
+          "con_calcolo": false,
+          "sintesi": "formula del cloruro di sodio"
+        },
+        {
+          "numero": 5,
+          "tipo": "multipla",
+          "argomento": "chim.7.3",
+          "argomento_titolo": "Carboidrati",
+          "con_calcolo": false,
+          "sintesi": "glicogeno: sede di accumulo"
+        },
+        {
+          "numero": 6,
+          "tipo": "multipla",
+          "argomento": "chim.1.2",
+          "argomento_titolo": "Numeri quantici, orbitali e configurazione elettronica",
+          "con_calcolo": false,
+          "sintesi": "elemento da configurazione elettronica"
+        },
+        {
+          "numero": 7,
+          "tipo": "multipla",
+          "argomento": "chim.3.1",
+          "argomento_titolo": "Reazioni chimiche e bilanciamento",
+          "con_calcolo": false,
+          "sintesi": "definizione di idrolisi"
+        },
+        {
+          "numero": 8,
+          "tipo": "multipla",
+          "argomento": "chim.4.3",
+          "argomento_titolo": "Equilibrio acido-base nei fluidi biologici",
+          "con_calcolo": false,
+          "sintesi": "tamponi del sangue"
+        },
+        {
+          "numero": 9,
+          "tipo": "multipla",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": true,
+          "sintesi": "acido acetico + NaOH equivalenti: pH risultante"
+        },
+        {
+          "numero": 10,
+          "tipo": "multipla",
+          "argomento": "chim.4.4",
+          "argomento_titolo": "Ossidoriduzioni ed elettrochimica",
+          "con_calcolo": false,
+          "sintesi": "definizione di ossidoriduzione"
+        },
+        {
+          "numero": 11,
+          "tipo": "multipla",
+          "argomento": "chim.7.3",
+          "argomento_titolo": "Carboidrati",
+          "con_calcolo": false,
+          "sintesi": "polisaccaridi: affermazione corretta"
+        },
+        {
+          "numero": 12,
+          "tipo": "multipla",
+          "argomento": "chim.7.4",
+          "argomento_titolo": "Lipidi",
+          "con_calcolo": false,
+          "sintesi": "steroide che non è un ormone"
+        },
+        {
+          "numero": 13,
+          "tipo": "multipla",
+          "argomento": "chim.7.4",
+          "argomento_titolo": "Lipidi",
+          "con_calcolo": false,
+          "sintesi": "proprietà dei lipidi"
+        },
+        {
+          "numero": 14,
+          "tipo": "multipla",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": true,
+          "sintesi": "pH di HCl 0,1 mM"
+        },
+        {
+          "numero": 15,
+          "tipo": "multipla",
+          "argomento": "chim.2.5",
+          "argomento_titolo": "Proprietà colligative",
+          "con_calcolo": false,
+          "sintesi": "legge di Raoult e frazione molare"
+        },
+        {
+          "numero": 16,
+          "tipo": "completamento",
+          "argomento": "chim.5.6",
+          "argomento_titolo": "Alcheni e dieni",
+          "con_calcolo": true,
+          "sintesi": "carboni insaturi in C6H10 ciclico"
+        },
+        {
+          "numero": 17,
+          "tipo": "completamento",
+          "argomento": "chim.2.6",
+          "argomento_titolo": "Osmosi, pressione osmotica e van't Hoff",
+          "con_calcolo": false,
+          "sintesi": "definizione di pressione osmotica"
+        },
+        {
+          "numero": 18,
+          "tipo": "completamento",
+          "argomento": "chim.4.2",
+          "argomento_titolo": "Soluzioni tampone",
+          "con_calcolo": false,
+          "sintesi": "uso di Henderson-Hasselbalch"
+        },
+        {
+          "numero": 19,
+          "tipo": "completamento",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": false,
+          "sintesi": "acido secondo Brønsted"
+        },
+        {
+          "numero": 20,
+          "tipo": "completamento",
+          "argomento": "chim.1.9",
+          "argomento_titolo": "Stato liquido e passaggi di stato",
+          "con_calcolo": false,
+          "sintesi": "densità del ghiaccio"
+        },
+        {
+          "numero": 21,
+          "tipo": "completamento",
+          "argomento": "chim.2.5",
+          "argomento_titolo": "Proprietà colligative",
+          "con_calcolo": false,
+          "sintesi": "ebollizione della soluzione fisiologica"
+        },
+        {
+          "numero": 22,
+          "tipo": "completamento",
+          "argomento": "chim.5.6",
+          "argomento_titolo": "Alcheni e dieni",
+          "con_calcolo": false,
+          "sintesi": "planarità dell'etene"
+        },
+        {
+          "numero": 23,
+          "tipo": "completamento",
+          "argomento": "chim.4.1",
+          "argomento_titolo": "Acidi, basi, sali e pH",
+          "con_calcolo": false,
+          "sintesi": "Kw e temperatura"
+        },
+        {
+          "numero": 24,
+          "tipo": "completamento",
+          "argomento": "chim.7.2",
+          "argomento_titolo": "Legame peptidico e struttura delle proteine",
+          "con_calcolo": false,
+          "sintesi": "glicina nel collagene"
+        },
+        {
+          "numero": 25,
+          "tipo": "completamento",
+          "argomento": "chim.4.4",
+          "argomento_titolo": "Ossidoriduzioni ed elettrochimica",
+          "con_calcolo": false,
+          "sintesi": "bilanciamento redox: semireazioni"
+        },
+        {
+          "numero": 26,
+          "tipo": "completamento",
+          "argomento": "chim.3.2",
+          "argomento_titolo": "Cinetica chimica",
+          "con_calcolo": false,
+          "sintesi": "definizione di energia di attivazione"
+        },
+        {
+          "numero": 27,
+          "tipo": "completamento",
+          "argomento": "chim.1.1",
+          "argomento_titolo": "Struttura dell'atomo e isotopi",
+          "con_calcolo": false,
+          "sintesi": "isotopi e neutroni"
+        },
+        {
+          "numero": 28,
+          "tipo": "completamento",
+          "argomento": "chim.2.2",
+          "argomento_titolo": "Acqua come solvente, solubilità ed elettroliti",
+          "con_calcolo": false,
+          "sintesi": "legge di Henry"
+        },
+        {
+          "numero": 29,
+          "tipo": "completamento",
+          "argomento": "chim.1.10",
+          "argomento_titolo": "Termodinamica chimica e bioenergetica",
+          "con_calcolo": false,
+          "sintesi": "entalpia a pressione costante"
+        },
+        {
+          "numero": 30,
+          "tipo": "completamento",
+          "argomento": "chim.1.7",
+          "argomento_titolo": "Numero di ossidazione e nomenclatura inorganica",
+          "con_calcolo": false,
+          "sintesi": "definizione di numero di ossidazione"
+        },
+        {
+          "numero": 31,
+          "tipo": "completamento",
+          "argomento": "chim.6.4",
+          "argomento_titolo": "Acidi carbossilici e derivati",
+          "con_calcolo": false,
+          "sintesi": "urea come diammide"
+        }
+      ]
+    },
+    {
+      "appello": 2,
+      "data": "2025-12-10",
+      "materia": "fisica",
+      "domande": [
+        {
+          "numero": 1,
+          "tipo": "multipla",
+          "argomento": "fis.5.1",
+          "argomento_titolo": "Sistemi termodinamici, temperatura e gas perfetti",
+          "con_calcolo": false,
+          "sintesi": "proprietà di un gas reale"
+        },
+        {
+          "numero": 2,
+          "tipo": "multipla",
+          "argomento": "fis.3.2",
+          "argomento_titolo": "Idrostatica: Stevino, Pascal, Archimede",
+          "con_calcolo": true,
+          "sintesi": "zattera caricata: altezza immersa"
+        },
+        {
+          "numero": 3,
+          "tipo": "multipla",
+          "argomento": "fis.2.3",
+          "argomento_titolo": "Lavoro, energia e potenza",
+          "con_calcolo": false,
+          "sintesi": "unità e proprietà dell'energia cinetica"
+        },
+        {
+          "numero": 4,
+          "tipo": "multipla",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": true,
+          "sintesi": "dm³ in litri"
+        },
+        {
+          "numero": 5,
+          "tipo": "multipla",
+          "argomento": "fis.1.4",
+          "argomento_titolo": "Vettori",
+          "con_calcolo": false,
+          "sintesi": "somma di vettori con modulo |a−b|"
+        },
+        {
+          "numero": 6,
+          "tipo": "multipla",
+          "argomento": "fis.4.4",
+          "argomento_titolo": "Onde acustiche e decibel",
+          "con_calcolo": false,
+          "sintesi": "significato di 0 dB"
+        },
+        {
+          "numero": 7,
+          "tipo": "multipla",
+          "argomento": "fis.5.2",
+          "argomento_titolo": "Calore, capacità termica e calorimetria",
+          "con_calcolo": false,
+          "sintesi": "stessa capacità termica, stesso calore"
+        },
+        {
+          "numero": 8,
+          "tipo": "multipla",
+          "argomento": "fis.6.2",
+          "argomento_titolo": "Energia e potenziale elettrico",
+          "con_calcolo": false,
+          "sintesi": "superfici equipotenziali di una carica"
+        },
+        {
+          "numero": 9,
+          "tipo": "multipla",
+          "argomento": "fis.4.3",
+          "argomento_titolo": "Energia, potenza e intensità delle onde",
+          "con_calcolo": false,
+          "sintesi": "potenza di un'onda e frequenza"
+        },
+        {
+          "numero": 10,
+          "tipo": "multipla",
+          "argomento": "fis.5.4",
+          "argomento_titolo": "Primo principio e trasformazioni termodinamiche",
+          "con_calcolo": false,
+          "sintesi": "ΔU di un gas perfetto"
+        },
+        {
+          "numero": 11,
+          "tipo": "multipla",
+          "argomento": "fis.6.5",
+          "argomento_titolo": "Capacità e condensatori",
+          "con_calcolo": false,
+          "sintesi": "linee di campo in un condensatore"
+        },
+        {
+          "numero": 12,
+          "tipo": "multipla",
+          "argomento": "fis.3.2",
+          "argomento_titolo": "Idrostatica: Stevino, Pascal, Archimede",
+          "con_calcolo": true,
+          "sintesi": "pressione a 50 m di profondità"
+        },
+        {
+          "numero": 13,
+          "tipo": "multipla",
+          "argomento": "fis.3.3",
+          "argomento_titolo": "Idrodinamica: portata, continuità e Bernoulli",
+          "con_calcolo": false,
+          "sintesi": "numero di Reynolds adimensionale"
+        },
+        {
+          "numero": 14,
+          "tipo": "multipla",
+          "argomento": "fis.7.7",
+          "argomento_titolo": "Ottica geometrica",
+          "con_calcolo": false,
+          "sintesi": "lastra a facce parallele"
+        },
+        {
+          "numero": 15,
+          "tipo": "multipla",
+          "argomento": "fis.1.4",
+          "argomento_titolo": "Vettori",
+          "con_calcolo": true,
+          "sintesi": "spostamento risultante di una nave"
+        },
+        {
+          "numero": 16,
+          "tipo": "completamento",
+          "argomento": "fis.6.2",
+          "argomento_titolo": "Energia e potenziale elettrico",
+          "con_calcolo": true,
+          "sintesi": "energia in keV da una ddp"
+        },
+        {
+          "numero": 17,
+          "tipo": "completamento",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": true,
+          "sintesi": "m/s in km/h"
+        },
+        {
+          "numero": 18,
+          "tipo": "completamento",
+          "argomento": "fis.6.6",
+          "argomento_titolo": "Campo magnetico e forza di Lorentz",
+          "con_calcolo": false,
+          "sintesi": "linee del campo magnetico"
+        },
+        {
+          "numero": 19,
+          "tipo": "completamento",
+          "argomento": "fis.2.1",
+          "argomento_titolo": "Cinematica del punto materiale",
+          "con_calcolo": false,
+          "sintesi": "grafico s–t del moto accelerato"
+        },
+        {
+          "numero": 20,
+          "tipo": "completamento",
+          "argomento": "fis.6.1",
+          "argomento_titolo": "Carica elettrica, legge di Coulomb e campo elettrico",
+          "con_calcolo": false,
+          "sintesi": "legge di Coulomb e distanza"
+        },
+        {
+          "numero": 21,
+          "tipo": "completamento",
+          "argomento": "fis.7.7",
+          "argomento_titolo": "Ottica geometrica",
+          "con_calcolo": false,
+          "sintesi": "riflessione totale nelle fibre ottiche"
+        },
+        {
+          "numero": 22,
+          "tipo": "completamento",
+          "argomento": "fis.2.1",
+          "argomento_titolo": "Cinematica del punto materiale",
+          "con_calcolo": true,
+          "sintesi": "caduta libera: altezza a metà velocità"
+        },
+        {
+          "numero": 23,
+          "tipo": "completamento",
+          "argomento": "fis.5.5",
+          "argomento_titolo": "Secondo principio, macchine termiche ed entropia",
+          "con_calcolo": false,
+          "sintesi": "entropia come funzione di stato"
+        },
+        {
+          "numero": 24,
+          "tipo": "completamento",
+          "argomento": "fis.4.4",
+          "argomento_titolo": "Onde acustiche e decibel",
+          "con_calcolo": false,
+          "sintesi": "suono sulla Luna"
+        },
+        {
+          "numero": 25,
+          "tipo": "completamento",
+          "argomento": "fis.3.2",
+          "argomento_titolo": "Idrostatica: Stevino, Pascal, Archimede",
+          "con_calcolo": true,
+          "sintesi": "frazione immersa di un tronco"
+        },
+        {
+          "numero": 26,
+          "tipo": "completamento",
+          "argomento": "fis.5.4",
+          "argomento_titolo": "Primo principio e trasformazioni termodinamiche",
+          "con_calcolo": true,
+          "sintesi": "lavoro nella trasformazione inversa"
+        },
+        {
+          "numero": 27,
+          "tipo": "completamento",
+          "argomento": "fis.4.4",
+          "argomento_titolo": "Onde acustiche e decibel",
+          "con_calcolo": true,
+          "sintesi": "fattore di intensità per 60 dB"
+        },
+        {
+          "numero": 28,
+          "tipo": "completamento",
+          "argomento": "fis.3.2",
+          "argomento_titolo": "Idrostatica: Stevino, Pascal, Archimede",
+          "con_calcolo": true,
+          "sintesi": "carico massimo di una zattera"
+        },
+        {
+          "numero": 29,
+          "tipo": "completamento",
+          "argomento": "fis.1.2",
+          "argomento_titolo": "Grandezze fisiche, dimensioni e unità di misura",
+          "con_calcolo": true,
+          "sintesi": "cm/s² in m/s²"
+        },
+        {
+          "numero": 30,
+          "tipo": "completamento",
+          "argomento": "fis.5.3",
+          "argomento_titolo": "Trasmissione del calore",
+          "con_calcolo": false,
+          "sintesi": "modalità di scambio del calore"
+        },
+        {
+          "numero": 31,
+          "tipo": "completamento",
+          "argomento": "fis.4.5",
+          "argomento_titolo": "Effetto Doppler",
+          "con_calcolo": true,
+          "sintesi": "Doppler: velocità della sorgente"
+        }
+      ]
+    }
+  ]
+}

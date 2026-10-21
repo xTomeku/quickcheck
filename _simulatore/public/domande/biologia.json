@@ -1,0 +1,484 @@
+{
+ "materia": "biologia",
+ "nota": "Banca dimostrativa: domande originali scritte per provare l'app, da sostituire con la banca completa revisionata.",
+ "domande": [
+  {
+   "id": "bio-001",
+   "argomento": "bio.1.2",
+   "tipo": "multipla",
+   "testo": "Quale enzima permette ai retrovirus di produrre DNA a partire dal proprio genoma a RNA?",
+   "opzioni": [
+    "Trascrittasi inversa",
+    "DNA polimerasi III",
+    "RNA polimerasi II",
+    "Primasi",
+    "Integrasi"
+   ],
+   "corretta": 0,
+   "spiegazione": "La trascrittasi inversa sintetizza DNA usando l'RNA virale come stampo. L'integrasi interviene dopo, inserendo quel DNA nel genoma della cellula.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-002",
+   "argomento": "bio.1.3",
+   "tipo": "multipla",
+   "testo": "Nei batteri, il trasferimento di DNA da una cellula all'altra mediato da un batteriofago si chiama:",
+   "opzioni": [
+    "Trasformazione",
+    "Coniugazione",
+    "Trasduzione",
+    "Traslocazione",
+    "Transfezione"
+   ],
+   "corretta": 2,
+   "spiegazione": "Nella trasduzione il fago trasporta frammenti di DNA batterico; la trasformazione è l'assunzione di DNA libero, la coniugazione richiede il contatto tramite pilo.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-003",
+   "argomento": "bio.2.2",
+   "tipo": "multipla",
+   "testo": "L'acetilazione delle code degli istoni ha in genere l'effetto di:",
+   "opzioni": [
+    "Compattare la cromatina e silenziare i geni",
+    "Rendere la cromatina più accessibile e favorire la trascrizione",
+    "Tagliare il DNA tra un nucleosoma e l'altro",
+    "Metilare le citosine vicine",
+    "Impedire la replicazione del DNA"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'acetilazione neutralizza le cariche positive delle lisine, riduce il legame istoni-DNA e apre la cromatina ai fattori di trascrizione.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-004",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "testo": "Durante la replicazione, il filamento sintetizzato in modo discontinuo:",
+   "opzioni": [
+    "È il filamento guida",
+    "Viene allungato in direzione 3'→5'",
+    "È formato da frammenti di Okazaki poi uniti dalla DNA ligasi",
+    "Non richiede primer",
+    "È sintetizzato interamente dalla primasi"
+   ],
+   "corretta": 2,
+   "spiegazione": "Le DNA polimerasi allungano solo in direzione 5'→3', quindi il filamento ritardato è sintetizzato a tratti, ognuno con il suo primer.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-005",
+   "argomento": "bio.3.6",
+   "tipo": "multipla",
+   "testo": "Quale di queste modificazioni NON fa parte della maturazione del pre-mRNA eucariotico?",
+   "opzioni": [
+    "Aggiunta del cappuccio al 5'",
+    "Poliadenilazione al 3'",
+    "Rimozione degli introni",
+    "Aggiunta della sequenza CCA al 3'",
+    "Splicing alternativo"
+   ],
+   "corretta": 3,
+   "spiegazione": "La sequenza CCA all'estremità 3' è tipica della maturazione dei tRNA, non degli mRNA.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-006",
+   "argomento": "bio.3.7",
+   "tipo": "multipla",
+   "testo": "Il codice genetico si dice degenerato perché:",
+   "opzioni": [
+    "Uno stesso codone può codificare più amminoacidi",
+    "Più codoni diversi possono codificare lo stesso amminoacido",
+    "È diverso in ogni specie",
+    "Contiene codoni privi di significato",
+    "I codoni sono parzialmente sovrapposti"
+   ],
+   "corretta": 1,
+   "spiegazione": "Con 61 codoni di senso per 20 amminoacidi, quasi ogni amminoacido ha più codoni. Il contrario non accade: il codice non è ambiguo.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-007",
+   "argomento": "bio.4.2",
+   "tipo": "multipla",
+   "testo": "Incrociando due individui eterozigoti Aa per un carattere a dominanza completa, la proporzione attesa di figli con fenotipo recessivo è:",
+   "opzioni": [
+    "1/2",
+    "3/4",
+    "1/4",
+    "0",
+    "1/3"
+   ],
+   "corretta": 2,
+   "spiegazione": "Dall'incrocio Aa × Aa si ottengono AA, Aa e aa in rapporto 1:2:1; solo aa, cioè 1/4, mostra il fenotipo recessivo.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-008",
+   "argomento": "bio.4.5",
+   "tipo": "multipla",
+   "testo": "Per una malattia recessiva legata all'X, una madre portatrice e un padre sano hanno un figlio maschio. Qual è la probabilità che sia malato?",
+   "opzioni": [
+    "0",
+    "1/4",
+    "1/2",
+    "3/4",
+    "1"
+   ],
+   "corretta": 2,
+   "spiegazione": "Il figlio maschio riceve l'unico X dalla madre, che ha un X mutato su due: la probabilità è 1/2.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-009",
+   "argomento": "bio.5.2",
+   "tipo": "multipla",
+   "testo": "Per ogni molecola di ATP idrolizzata, la pompa sodio-potassio:",
+   "opzioni": [
+    "Porta 3 Na⁺ fuori e 2 K⁺ dentro la cellula",
+    "Porta 2 Na⁺ fuori e 3 K⁺ dentro la cellula",
+    "Porta 3 Na⁺ dentro e 2 K⁺ fuori dalla cellula",
+    "Trasporta solo ioni Na⁺",
+    "Agisce per diffusione facilitata"
+   ],
+   "corretta": 0,
+   "spiegazione": "È un trasporto attivo primario elettrogenico: 3 Na⁺ escono e 2 K⁺ entrano, contribuendo al potenziale di membrana.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-010",
+   "argomento": "bio.5.7",
+   "tipo": "multipla",
+   "testo": "La sequenza segnale di una proteina destinata al reticolo endoplasmatico rugoso viene riconosciuta durante la traduzione da:",
+   "opzioni": [
+    "Importina",
+    "SRP, la particella di riconoscimento del segnale",
+    "Clatrina",
+    "Ubiquitina",
+    "Ran-GTP"
+   ],
+   "corretta": 1,
+   "spiegazione": "SRP lega la sequenza segnale appena esce dal ribosoma, rallenta la traduzione e porta il complesso al suo recettore sulla membrana del RE.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-011",
+   "argomento": "bio.5.11",
+   "tipo": "multipla",
+   "testo": "Le proteine motrici che si muovono lungo i microtubuli verso l'estremità più (+) sono in genere:",
+   "opzioni": [
+    "Dineine",
+    "Miosine",
+    "Chinesine",
+    "Actine",
+    "Cheratine"
+   ],
+   "corretta": 2,
+   "spiegazione": "Le chinesine sono per lo più dirette verso l'estremità +, le dineine verso l'estremità −; le miosine si muovono sull'actina.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-012",
+   "argomento": "bio.6.3",
+   "tipo": "multipla",
+   "testo": "L'adenilato ciclasi, attivata da una proteina G stimolatoria, produce:",
+   "opzioni": [
+    "IP3",
+    "DAG",
+    "cGMP",
+    "cAMP",
+    "Ca²⁺"
+   ],
+   "corretta": 3,
+   "spiegazione": "L'adenilato ciclasi converte ATP in AMP ciclico, secondo messaggero che attiva la PKA. IP3 e DAG derivano invece dalla fosfolipasi C.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-013",
+   "argomento": "bio.7.2",
+   "tipo": "multipla",
+   "testo": "In seguito a un danno al DNA, la proteina p53:",
+   "opzioni": [
+    "Promuove sempre la divisione cellulare",
+    "Può bloccare il ciclo cellulare o indurre l'apoptosi",
+    "Ripara direttamente il DNA tagliando le basi danneggiate",
+    "Si comporta da oncogene attivato",
+    "Degrada le cicline durante la mitosi"
+   ],
+   "corretta": 1,
+   "spiegazione": "p53 è un oncosoppressore: come fattore di trascrizione induce p21, che arresta il ciclo, oppure geni pro-apoptotici se il danno non è riparabile.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-014",
+   "argomento": "bio.7.4",
+   "tipo": "multipla",
+   "testo": "Il crossing-over tra cromosomi omologhi avviene durante:",
+   "opzioni": [
+    "La profase I della meiosi",
+    "L'anafase II della meiosi",
+    "La metafase mitotica",
+    "La fase S",
+    "La telofase I della meiosi"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nella profase I gli omologhi si appaiano formando le tetradi, e i chiasmi sono i punti in cui avviene lo scambio.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-015",
+   "argomento": "bio.7.5",
+   "tipo": "multipla",
+   "testo": "Nella via intrinseca dell'apoptosi, il citocromo c rilasciato dai mitocondri porta alla formazione di:",
+   "opzioni": [
+    "Proteasoma",
+    "Apoptosoma",
+    "Spliceosoma",
+    "Nucleosoma",
+    "Fagosoma"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il citocromo c si lega ad Apaf-1 formando l'apoptosoma, che attiva la caspasi-9 e da lì le caspasi esecutrici.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-016",
+   "argomento": "bio.1.5",
+   "tipo": "completamento",
+   "testo": "I monomeri degli acidi nucleici si chiamano ……",
+   "accettate": [
+    "nucleotidi",
+    "nucleotide"
+   ],
+   "spiegazione": "Ogni nucleotide è formato da una base azotata, uno zucchero pentoso e uno o più gruppi fosfato.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-017",
+   "argomento": "bio.2.1",
+   "tipo": "completamento",
+   "testo": "Le estremità dei cromosomi eucariotici lineari sono chiamate ……",
+   "accettate": [
+    "telomeri",
+    "telomero"
+   ],
+   "spiegazione": "I telomeri sono sequenze ripetute che proteggono le estremità e si accorciano a ogni ciclo, salvo l'azione della telomerasi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-018",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "testo": "L'enzima che srotola la doppia elica alla forcella replicativa è la ……",
+   "accettate": [
+    "elicasi",
+    "dna elicasi"
+   ],
+   "spiegazione": "L'elicasi rompe i legami a idrogeno tra le basi; la topoisomerasi scarica invece la tensione torsionale a monte.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-019",
+   "argomento": "bio.3.3",
+   "tipo": "completamento",
+   "testo": "Nell'operone lac, in assenza di lattosio il …… si lega all'operatore e blocca la trascrizione.",
+   "accettate": [
+    "repressore",
+    "repressore lac",
+    "proteina repressore"
+   ],
+   "spiegazione": "Il lattosio, convertito in allolattosio, si lega al repressore e lo stacca dall'operatore, permettendo la trascrizione.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-020",
+   "argomento": "bio.3.5",
+   "tipo": "completamento",
+   "testo": "Negli eucarioti i geni che codificano proteine sono trascritti dalla RNA polimerasi …… (scrivi il numero romano).",
+   "accettate": [
+    "ii",
+    "2",
+    "due"
+   ],
+   "spiegazione": "La RNA polimerasi I trascrive gran parte degli rRNA, la II gli mRNA e la III tRNA e rRNA 5S.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-021",
+   "argomento": "bio.3.9",
+   "tipo": "completamento",
+   "testo": "Le proteine destinate alla degradazione nel proteasoma vengono marcate con catene di ……",
+   "accettate": [
+    "ubiquitina",
+    "ubiquitine"
+   ],
+   "spiegazione": "Gli enzimi E1, E2 ed E3 legano più molecole di ubiquitina alla proteina bersaglio, che viene poi riconosciuta dal proteasoma 26S.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-022",
+   "argomento": "bio.4.1",
+   "tipo": "completamento",
+   "testo": "Una mutazione puntiforme che trasforma il codone di un amminoacido in un codone di stop si chiama mutazione ……",
+   "accettate": [
+    "nonsenso",
+    "non senso",
+    "nonsense"
+   ],
+   "spiegazione": "Produce una proteina tronca. Se cambia l'amminoacido si parla di missenso, se non lo cambia di mutazione silente.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-023",
+   "argomento": "bio.4.4",
+   "tipo": "completamento",
+   "testo": "La sindrome di Down è causata dalla trisomia del cromosoma ……",
+   "accettate": [
+    "21",
+    "ventuno"
+   ],
+   "numero": {
+    "valore": 21,
+    "tolleranza": 0
+   },
+   "spiegazione": "Nella maggior parte dei casi deriva da una non-disgiunzione meiotica che lascia tre copie del cromosoma 21.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-024",
+   "argomento": "bio.4.3",
+   "tipo": "completamento",
+   "testo": "Quando l'espressione di un allele dipende dal genitore da cui è stato ereditato si parla di …… genomico.",
+   "accettate": [
+    "imprinting"
+   ],
+   "spiegazione": "L'imprinting è un meccanismo epigenetico, basato soprattutto sulla metilazione del DNA, che silenzia la copia materna o paterna.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-025",
+   "argomento": "bio.5.4",
+   "tipo": "completamento",
+   "testo": "Il trasporto delle proteine dal citosol al nucleo attraverso i pori nucleari è mediato da recettori chiamati ……",
+   "accettate": [
+    "importine",
+    "importina",
+    "carioferine"
+   ],
+   "spiegazione": "Le importine riconoscono il segnale di localizzazione nucleare (NLS); nel nucleo Ran-GTP le fa staccare dal carico.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-026",
+   "argomento": "bio.5.5",
+   "tipo": "completamento",
+   "testo": "Nella fosforilazione ossidativa, la sintesi di ATP è catalizzata dall'enzima ATP ……",
+   "accettate": [
+    "sintasi",
+    "sintetasi",
+    "sintasi f0f1"
+   ],
+   "spiegazione": "L'ATP sintasi della membrana mitocondriale interna sfrutta il gradiente di protoni creato dalla catena di trasporto degli elettroni.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-027",
+   "argomento": "bio.5.9",
+   "tipo": "completamento",
+   "testo": "Gli enzimi destinati ai lisosomi vengono riconosciuti nel trans-Golgi grazie a residui di mannosio fosforilati in posizione ……",
+   "accettate": [
+    "6",
+    "sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   },
+   "spiegazione": "Il mannosio-6-fosfato aggiunto nel cis-Golgi è riconosciuto da un recettore nel trans-Golgi che smista gli enzimi verso gli endosomi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-028",
+   "argomento": "bio.5.12",
+   "tipo": "completamento",
+   "testo": "La formazione di reti ramificate di filamenti di actina è promossa dal complesso ……",
+   "accettate": [
+    "arp2/3",
+    "arp 2/3",
+    "arp2 3",
+    "arp23"
+   ],
+   "spiegazione": "Arp2/3 si lega al fianco di un filamento esistente e nuclea un nuovo filamento a circa 70°, come nei lamellipodi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-029",
+   "argomento": "bio.6.2",
+   "tipo": "completamento",
+   "testo": "Le giunzioni formate da connessine, che mettono in comunicazione diretta il citoplasma di cellule adiacenti, sono le giunzioni ……",
+   "accettate": [
+    "comunicanti",
+    "gap",
+    "gap junction",
+    "a fessura"
+   ],
+   "spiegazione": "Le giunzioni comunicanti lasciano passare ioni e piccole molecole: nel cuore sincronizzano la contrazione.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-030",
+   "argomento": "bio.7.1",
+   "tipo": "completamento",
+   "testo": "Le chinasi che regolano il ciclo cellulare e sono attive solo quando legate a una ciclina si indicano con la sigla ……",
+   "accettate": [
+    "cdk",
+    "cdks"
+   ],
+   "spiegazione": "CDK sta per chinasi dipendenti da ciclina: la loro attività segue i livelli oscillanti delle cicline nelle varie fasi.",
+   "stato": "approvata",
+   "fonte": "demo"
+  },
+  {
+   "id": "bio-031",
+   "argomento": "bio.7.3",
+   "tipo": "completamento",
+   "testo": "La fase della mitosi in cui i cromatidi fratelli si separano e migrano verso i poli opposti si chiama ……",
+   "accettate": [
+    "anafase"
+   ],
+   "spiegazione": "All'inizio dell'anafase l'APC/C fa degradare la securina, la separasi taglia la coesina e i cromatidi si separano.",
+   "stato": "approvata",
+   "fonte": "demo"
+  }
+ ]
+}
