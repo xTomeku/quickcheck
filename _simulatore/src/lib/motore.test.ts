@@ -35,12 +35,23 @@ describe('leggiNumero', () => {
     ['300 K', 300],
     ['quattro', 4],
     ['meno 4', -4],
+    // unità con cifre dentro: in fisica sono la norma
+    ['5 m/s^2', 5],
+    ['5 m/s2', 5],
+    ['9,8 m/s²', 9.8],
+    ['1000 kg/m3', 1000],
+    ['760 mmHg', 760],
+    ['2·10^5 Pa', 200000],
+    ['25 °C', 25],
   ])('%s → %d', (input, atteso) => {
     expect(leggiNumero(input)).toBeCloseTo(atteso, 9)
   })
   it('rifiuta testo non numerico', () => {
     expect(leggiNumero('capillarità')).toBeNull()
     expect(leggiNumero('')).toBeNull()
+    // una sola unità, senza numero davanti, non è un numero
+    expect(leggiNumero('m/s^2')).toBeNull()
+    expect(leggiNumero('kg')).toBeNull()
   })
 })
 

@@ -23,20 +23,8 @@ const PAROLE_NUMERO: Record<string, number> = {
   zero: 0, uno: 1, due: 2, tre: 3, quattro: 4, cinque: 5, sei: 6, sette: 7, otto: 8, nove: 9, dieci: 10,
 }
 
-/**
- * Interpreta un numero scritto come lo scriverebbe uno studente:
- * "49050", "49.050" (separatore delle migliaia), "0,02", "4,9·10^4", "4.9x10^4", "1e5", "10^5", "-4", "+6".
- * Un'unità di misura in coda viene ignorata. Restituisce null se non è un numero.
- */
-export function leggiNumero(input: string): number | null {
-  let s = input.trim().toLowerCase().replace(/[−–]/g, '-').replace(/\s+/g, '')
-  if (s in PAROLE_NUMERO) return PAROLE_NUMERO[s]
-  const meno = s.match(/^meno(.+)$/)
-  if (meno) {
-    const v = leggiNumero(meno[1])
-    return v === null ? null : -v
-  }
-  s = s.replace(/[a-zµ°%/·*×x²³]*$/i, (coda) => (/^[·*×x]/.test(coda) ? coda : ''))
+/** Il numero e nient'altro: niente spazi, niente unità, già in minuscolo. */
+function soloNumero(s: string): number | null {
   // separatore delle migliaia all'italiana: 49.050 o 1.000.000
   if (/^[+-]?\d{1,3}(\.\d{3})+(,\d+)?$/.test(s)) s = s.replace(/\./g, '')
   s = s.replace(',', '.')
@@ -50,6 +38,29 @@ export function leggiNumero(input: string): number | null {
   if (!/^[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?$/.test(s)) return null
   const v = Number(s)
   return Number.isFinite(v) ? v : null
+}
+
+/**
+ * Interpreta un numero scritto come lo scriverebbe uno studente:
+ * "49050", "49.050" (separatore delle migliaia), "0,02", "4,9·10^4", "4.9x10^4", "1e5", "10^5", "-4", "+6".
+ * Un'unità di misura in coda viene ignorata, comprese quelle con cifre dentro: "20 m/s", "5 m/s^2",
+ * "1000 kg/m3". Restituisce null se non è un numero.
+ */
+export function leggiNumero(input: string): number | null {
+  const s = input.trim().toLowerCase().replace(/[−–]/g, '-').replace(/\s+/g, '')
+  if (s in PAROLE_NUMERO) return PAROLE_NUMERO[s]
+  const meno = s.match(/^meno(.+)$/)
+  if (meno) {
+    const v = leggiNumero(meno[1])
+    return v === null ? null : -v
+  }
+  const diretto = soloNumero(s)
+  if (diretto !== null) return diretto
+  // L'unità si toglie soltanto adesso, e solo se comincia per lettera: prima si prova a leggere
+  // tutta la stringa come numero, altrimenti la "e" di "1e5" e il "10^" di "10^5" verrebbero
+  // scambiati per unità di misura. Dentro l'unità possono stare cifre e barre: m/s^2, kg/m3, mmHg.
+  const senzaUnita = s.replace(/[a-zµ°%][a-zµ°%/^·.\-²³0-9]*$/, '')
+  return senzaUnita === s ? null : soloNumero(senzaUnita)
 }
 
 export function rispostaCorretta(domanda: Domanda, risposta: Risposta): boolean {
