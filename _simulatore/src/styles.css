@@ -176,6 +176,25 @@ button { cursor: pointer; }
 
 .btn-ripassa { margin-top: 18px; }
 
+/* contatore della banca domande: una scheda per materia, il numero in inchiostro del modulo */
+.banca-testa { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 14px; }
+.banca-testa h2 { font-size: var(--t-h2); font-weight: 800; letter-spacing: -0.02em; }
+.banca-totale { color: var(--grafite-2); font-size: var(--t-piccolo); }
+.banca-totale b { color: var(--grafite); font-weight: 800; }
+.banca-materie { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.banca-materie li {
+  display: grid; gap: 2px; padding: 16px 18px;
+  border-radius: var(--raggio); background: var(--modulo-velo); border: 1.5px solid var(--modulo-linea);
+  transition: border-color 160ms ease-out, transform 160ms ease-out;
+}
+.banca-materie li:hover { border-color: var(--biro); transform: translateY(-2px); }
+.banca-materie li.in-attesa { opacity: 0.6; }
+.banca-nome { font-weight: 700; color: var(--modulo); }
+.banca-numero { font-size: 2.25rem; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; color: var(--grafite); }
+.banca-dettaglio { color: var(--grafite-2); font-size: var(--t-piccolo); }
+@media (max-width: 640px) { .banca-materie { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .banca-materie li { transition: none; } .banca-materie li:hover { transform: none; } }
+
 .piede { color: var(--grafite-2); font-size: var(--t-piccolo); border-top: 1px solid var(--modulo-linea); padding-top: 18px; display: grid; gap: 6px; max-width: 72ch; }
 
 /* fascia di UDU Lecce in fondo alla home: il logo è bianco, quindi vuole il fondo rosso,

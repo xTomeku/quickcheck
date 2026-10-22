@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { MateriaId, Prova, Risultato } from '../types'
-import { argomento, materiaDi, MATERIE, minutiSezione, NOMI_BREVI, ORDINE_MATERIE } from '../lib/dati'
+import { argomento, caricaBanca, materiaDi, MATERIE, minutiSezione, NOMI_BREVI, ORDINE_MATERIE } from '../lib/dati'
 import { formattaPunti } from '../lib/correzione'
 import { argomentiDeboli } from '../lib/statistiche'
 import { LETTERE } from './Testo'
@@ -78,6 +78,40 @@ function ModuloIllustrato() {
   )
 }
 
+/** Quante domande approvate ci sono in banca per una materia, divise per tipo. */
+interface ConteggioBanca {
+  multipla: number
+  completamento: number
+}
+
+/**
+ * Conta le domande della banca per ogni materia. Usa caricaBanca, che filtra già le sole
+ * domande approvate (quelle che possono uscire in prova) e tiene il risultato in cache:
+ * così quando si avvia la prova le domande sono già scaricate.
+ * Se una materia non si carica (es. offline senza cache) semplicemente non compare.
+ */
+function useConteggioBanca() {
+  const [conteggi, setConteggi] = useState<Partial<Record<MateriaId, ConteggioBanca>>>({})
+  useEffect(() => {
+    let attivo = true // evita aggiornamenti di stato se la home viene smontata prima della risposta
+    for (const m of ORDINE_MATERIE) {
+      caricaBanca(m)
+        .then((domande) => {
+          if (!attivo) return
+          const multipla = domande.filter((d) => d.tipo === 'multipla').length
+          setConteggi((prec) => ({ ...prec, [m]: { multipla, completamento: domande.length - multipla } }))
+        })
+        .catch(() => {
+          /* banca non disponibile: il contatore di questa materia resta nascosto */
+        })
+    }
+    return () => {
+      attivo = false
+    }
+  }, [])
+  return conteggi
+}
+
 export function Home({
   inCorso,
   storico,
@@ -96,6 +130,9 @@ export function Home({
   const [daEliminare, setDaEliminare] = useState<string | null>(null)
   const [svuotaChiesto, setSvuotaChiesto] = useState(false)
   const deboli = argomentiDeboli(storico)
+  const conteggi = useConteggioBanca()
+  // totale calcolato solo sulle materie già caricate
+  const totaleBanca = ORDINE_MATERIE.reduce((s, m) => s + (conteggi[m] ? conteggi[m].multipla + conteggi[m].completamento : 0), 0)
 
   return (
     <>
@@ -317,6 +354,32 @@ export function Home({
           ) : null}
         </section>
       </div>
+
+      {/* contatore della banca domande: compare appena almeno una materia è caricata */}
+      {totaleBanca > 0 ? (
+        <section className="banca" aria-labelledby="titolo-banca">
+          <div className="banca-testa">
+            <h2 id="titolo-banca">La banca delle domande</h2>
+            <span className="banca-totale num">
+              <b>{totaleBanca.toLocaleString('it-IT')}</b> domande in tutto
+            </span>
+          </div>
+          <ul className="banca-materie">
+            {ORDINE_MATERIE.map((m) => {
+              const c = conteggi[m]
+              return (
+                <li key={m} className={c ? undefined : 'in-attesa'}>
+                  <span className="banca-nome">{NOMI_BREVI[m]}</span>
+                  <span className="banca-numero num">{c ? (c.multipla + c.completamento).toLocaleString('it-IT') : '…'}</span>
+                  <span className="banca-dettaglio num">
+                    {c ? `${c.multipla} a risposta multipla · ${c.completamento} a completamento` : 'in caricamento'}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        </section>
+      ) : null}
 
       <section className="fascia-udu" aria-label="UDU Lecce">
         <img src="udu-lecce.svg" alt="udu Lecce, Unione degli Universitari" width={400} height={100} />
