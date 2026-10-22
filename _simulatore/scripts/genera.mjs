@@ -229,9 +229,13 @@ REGOLE
 - MULTIPLE: esattamente cinque opzioni, una sola corretta, "corretta" è l'indice da 0 a 4.
   I distrattori devono essere errori che uno studente fa davvero, non assurdità.
   Mai "tutte le precedenti" o "nessuna delle precedenti".
-- COMPLETAMENTO: nel testo metti "……" dove va la risposta. La risposta è UNA parola, sigla,
-  numero o vero/falso. In "accettate" elenca tutte le varianti ragionevoli (singolare e plurale,
-  sigla ed esteso), con per prima quella da mostrare nella correzione.
+- COMPLETAMENTO: nel testo metti "……" dove va la risposta. La risposta è UNA SOLA PAROLA, o una
+  sigla, un numero, vero/falso: mai una frase, mai due parole. Articoli e preposizioni restano
+  nella frase, così che a mancare sia solo il termine: "si dice dipendente da ……" (contatto), e
+  non "si dice segnalazione ……" (da contatto). Se la risposta che hai in mente è di due parole,
+  riscrivi la frase finché a mancare ne resta una sola.
+  In "accettate" elenca tutte le varianti ragionevoli (singolare e plurale, sigla ed esteso), con
+  per prima la parola singola, che è quella mostrata nella correzione.
 - SPIEGAZIONE: due righe che dicono PERCHÉ la risposta è quella, non la ripetizione della risposta.
 - Italiano, registro dei testi ministeriali, niente domande scherzose.
 ${perChat ? formatoPerChat({ materia, arg }, arg.id, lotto) : FORMATO_SCHEMA}`

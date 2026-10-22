@@ -71,6 +71,19 @@ describe('problemi', () => {
     // un numero da solo basta come risposta
     expect(problemi({ ...base, accettate: [], numero: { valore: 42, tolleranza: 0 } }, 'biologia')).toEqual([])
   })
+
+  it('vuole una parola sola come risposta mostrata, non una frase', () => {
+    const base: Bozza = { id: 'bio-904', argomento: 'bio.1.1', tipo: 'completamento', testo: 'Si dice dipendente da ……' }
+    expect(problemi({ ...base, accettate: ['contatto'] }, 'biologia')).toEqual([])
+    expect(problemi({ ...base, accettate: ['da contatto', 'contatto'] }, 'biologia')).toContain('la risposta è più di una parola')
+    // le varianti dopo la prima possono essere lunghe quanto vogliono: servono solo a non bocciare
+    // chi scrive per esteso
+    expect(problemi({ ...base, accettate: ['contatto', 'contatto diretto fra le cellule'] }, 'biologia')).toEqual([])
+    // un numero può avere l'unità accanto senza che sia un problema
+    expect(
+      problemi({ ...base, accettate: ['9,8 m/s2'], numero: { valore: 9.8, tolleranza: 0.01 } }, 'biologia'),
+    ).toEqual([])
+  })
 })
 
 describe('perFile', () => {

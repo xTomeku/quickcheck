@@ -479,6 +479,367 @@
    "spiegazione": "All'inizio dell'anafase l'APC/C fa degradare la securina, la separasi taglia la coesina e i cromatidi si separano.",
    "stato": "approvata",
    "fonte": "demo"
+  },
+  {
+   "id": "bio-63a-01",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Una cellula tumorale che produce un fattore di crescita per il quale esprime essa stessa il recettore si mantiene attiva mediante una segnalazione:",
+   "spiegazione": "Nella segnalazione autocrina la cellula che emette il segnale è anche il bersaglio. Molti tumori sfruttano questo circuito chiuso per crescere senza aspettare segnali dall'esterno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671968626,
+   "tipo": "multipla",
+   "opzioni": [
+    "paracrina",
+    "endocrina",
+    "autocrina",
+    "da contatto",
+    "sinaptica"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-63a-02",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "I glucocorticoidi agiscono su recettori intracellulari perché:",
+   "spiegazione": "Essendo molecole lipidiche, gli ormoni steroidei passano il doppio strato fosfolipidico e trovano il recettore nel citosol o nel nucleo. Il complesso ormone-recettore agisce poi da fattore di trascrizione, e per questo la risposta è più lenta di quella mediata dai recettori di membrana.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671974145,
+   "tipo": "multipla",
+   "opzioni": [
+    "sono trasportati nel citosol da permeasi specifiche",
+    "vengono internalizzati insieme al recettore di membrana",
+    "sono peptidi di piccole dimensioni",
+    "sono liposolubili e attraversano la membrana plasmatica",
+    "si legano a una proteina G citosolica"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-63a-03",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "L'ossido nitrico liberato dall'endotelio provoca il rilassamento della cellula muscolare liscia vasale perché:",
+   "spiegazione": "L'ossido nitrico è un gas che attraversa la membrana e trova il proprio bersaglio dentro la cellula. È la via su cui agiscono la nitroglicerina e i farmaci per la disfunzione erettile, che intervengono sullo stesso secondo messaggero.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671975376,
+   "tipo": "multipla",
+   "opzioni": [
+    "apre canali per il sodio voltaggio-dipendenti",
+    "attiva una guanilato ciclasi citosolica, aumentando il cGMP",
+    "si lega a un recettore accoppiato a proteine G sulla membrana",
+    "impedisce l'ingresso di glucosio nella cellula",
+    "attiva l'adenilato ciclasi di membrana"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-63a-04",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Nel ciclo di attivazione di una proteina G, le proteine GAP:",
+   "spiegazione": "GAP e GEF lavorano in direzioni opposte: le GEF accendono la proteina favorendo l'ingresso del GTP, le GAP la spengono accelerandone l'idrolisi a GDP. È questa coppia a decidere quanto dura il segnale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671981095,
+   "tipo": "multipla",
+   "opzioni": [
+    "favoriscono lo scambio del GDP con GTP",
+    "legano in modo irreversibile il GTP alla subunità alfa",
+    "impediscono al ligando di legarsi al recettore",
+    "fosforilano la proteina G sui residui di tirosina",
+    "accelerano l'idrolisi del GTP, spegnendo la proteina"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-63a-05",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Una sola molecola di adrenalina può portare alla liberazione di milioni di molecole di glucosio. Questo dipende dal fatto che:",
+   "spiegazione": "A ogni gradino della cascata una molecola attiva ne attiva molte a valle, e il numero di molecole coinvolte si moltiplica. L'amplificazione è il motivo per cui concentrazioni ormonali bassissime producono effetti metabolici grandi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671983525,
+   "tipo": "multipla",
+   "opzioni": [
+    "ogni enzima della cascata attiva molte molecole dell'enzima successivo",
+    "il recettore resta legato all'ormone per tutta la durata della risposta",
+    "il recettore viene duplicato a ogni passaggio della cascata",
+    "i secondi messaggeri hanno massa molecolare molto maggiore dell'ormone",
+    "l'ormone entra nel nucleo e attiva la trascrizione di molti geni"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-63a-06",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "I recettori che funzionano essi stessi da canale ionico, come il recettore nicotinico dell'acetilcolina, si dicono recettori ……",
+   "spiegazione": "In questi recettori il legame del neurotrasmettitore apre direttamente il canale, senza passaggi intermedi: la risposta arriva in millisecondi, mentre quella mediata da proteine G e secondi messaggeri è più lenta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671995144,
+   "tipo": "completamento",
+   "accettate": [
+    "ionotropici",
+    "ionotropico",
+    "a canale ionico",
+    "accoppiati a canali ionici"
+   ]
+  },
+  {
+   "id": "bio-63a-07",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Le proteine che accendono una GTPasi favorendo lo scambio del GDP legato con una molecola di GTP si indicano con la sigla ……",
+   "spiegazione": "GEF sta per guanine nucleotide exchange factor. Senza una GEF la proteina G resta legata al GDP, cioè spenta, perché lo scambio spontaneo del nucleotide è troppo lento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792671998172,
+   "tipo": "completamento",
+   "accettate": [
+    "GEF",
+    "GEFs",
+    "fattori di scambio del nucleotide guanilico",
+    "fattori di scambio"
+   ]
+  },
+  {
+   "id": "bio-63a-08",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "L'adenilato ciclasi, attivata dalla subunità alfa di una proteina Gs, trasforma l'ATP nel secondo messaggero ……",
+   "spiegazione": "Il cAMP diffonde nel citosol e attiva la protein chinasi A, che fosforila i bersagli finali. Viene poi degradato dalle fosfodiesterasi, e questo mantiene la risposta limitata nel tempo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672000323,
+   "tipo": "completamento",
+   "accettate": [
+    "cAMP",
+    "AMP ciclico",
+    "AMPc",
+    "adenosina monofosfato ciclico"
+   ]
+  },
+  {
+   "id": "bio-63a-09",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Lo ione che funziona da secondo messaggero e viene liberato nel citosol dai depositi del reticolo endoplasmatico è il ……",
+   "spiegazione": "Nel citosol il calcio è tenuto a concentrazioni mille volte più basse che nel reticolo e nel liquido extracellulare: è questo dislivello a renderlo un segnale rapido appena i canali si aprono.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672003451,
+   "tipo": "completamento",
+   "accettate": [
+    "calcio",
+    "Ca2+",
+    "Ca++",
+    "ione calcio"
+   ]
+  },
+  {
+   "id": "bio-63a-10",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "La segnalazione in cui la molecola segnale resta ancorata alla membrana della cellula che la produce, che deve quindi toccare la cellula bersaglio, si dice dipendente da ……",
+   "spiegazione": "Non essendoci diffusione, il segnale arriva solo alle cellule immediatamente adiacenti. È il meccanismo con cui si decidono i destini cellulari durante lo sviluppo, per esempio nella via Notch-Delta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672007074,
+   "tipo": "completamento",
+   "accettate": [
+    "contatto"
+   ]
+  },
+  {
+   "id": "bio-63a-11",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Gli ormoni idrosolubili devono entrare nella cellula bersaglio per poter agire: vero o falso? ……",
+   "spiegazione": "Non attraversando il doppio strato lipidico, gli ormoni idrosolubili si fermano su recettori di membrana e il messaggio viene portato dentro dai secondi messaggeri. A entrare sono quelli liposolubili, che hanno recettori intracellulari.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672008967,
+   "tipo": "completamento",
+   "accettate": [
+    "falso",
+    "f"
+   ]
+  },
+  {
+   "id": "bio-63b-01",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Il legame dell'EGF al proprio recettore provoca per prima cosa:",
+   "spiegazione": "Avvicinando due molecole di recettore, il ligando permette ai due domini chinasici di fosforilarsi a vicenda. Le tirosine fosforilate diventano gli attacchi per le proteine che proseguono la cascata.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672014657,
+   "tipo": "multipla",
+   "opzioni": [
+    "il distacco della subunità alfa da una proteina G trimerica",
+    "la dimerizzazione del recettore e l'autofosforilazione su residui di tirosina",
+    "l'apertura di un canale per il calcio",
+    "l'idrolisi del GTP legato a Ras",
+    "la traslocazione del recettore nel nucleo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-63b-02",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Una mutazione che rende Ras incapace di idrolizzare il GTP ha come conseguenza che:",
+   "spiegazione": "Ras si spegne idrolizzando il GTP: se non ci riesce resta nella forma attiva e manda segnale di proliferazione in continuazione. Mutazioni di questo tipo sono fra le più frequenti nei tumori umani.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672016128,
+   "tipo": "multipla",
+   "opzioni": [
+    "la via a valle di Ras non può più essere attivata",
+    "il recettore non riesce più a dimerizzare",
+    "Ras viene degradata più rapidamente",
+    "la via delle MAP chinasi resta attiva anche senza fattore di crescita",
+    "la cellula diventa insensibile all'EGF"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-63b-03",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Nella via di segnalazione dell'insulina, la fosforilazione dei substrati IRS serve a:",
+   "spiegazione": "Gli IRS fosforilati fanno da piattaforma d'aggancio: la PI3K richiamata lì produce il lipide che porta Akt alla membrana. È il ramo da cui dipendono l'ingresso del glucosio e gli effetti metabolici dell'insulina.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672017222,
+   "tipo": "multipla",
+   "opzioni": [
+    "attivare l'adenilato ciclasi",
+    "aprire i canali per il potassio della membrana",
+    "reclutare alla membrana la PI3K",
+    "attivare una proteina Gq",
+    "stimolare la guanilato ciclasi citosolica"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-63b-04",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Nei fotorecettori, l'arrestina legata alla rodopsina fosforilata:",
+   "spiegazione": "La chinasi della rodopsina fosforila il recettore attivato e l'arrestina lo copre, interrompendo il segnale a valle. È così che l'occhio si adatta e smette di rispondere a una luce che continua.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672018363,
+   "tipo": "multipla",
+   "opzioni": [
+    "impedisce alla rodopsina di attivare la trasducina",
+    "rigenera l'11-cis-retinale",
+    "attiva la fosfodiesterasi del cGMP",
+    "apre i canali per il sodio del segmento esterno",
+    "aumenta l'affinità della rodopsina per la luce"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-63b-05",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Perché la forma mutata di un recettore tirosin-chinasico può comportarsi da oncogene?",
+   "spiegazione": "Un recettore che si attiva da solo manda il segnale di dividersi anche quando nessun fattore di crescita lo chiede. È il modo più diretto in cui un proto-oncogene diventa oncogene: non un segnale nuovo, ma un segnale che non si spegne.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672019755,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché non lega più l'ATP e quindi non si spegne",
+    "perché viene degradato più lentamente dai lisosomi",
+    "perché perde la capacità di dimerizzare",
+    "perché si lega direttamente al DNA attivando la trascrizione",
+    "perché segnala in continuazione anche in assenza del ligando"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-63b-06",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Dopo la dimerizzazione, i recettori tirosin-chinasici si fosforilano a vicenda sui residui dell'amminoacido ……",
+   "spiegazione": "Il nome stesso della famiglia dice quale amminoacido viene fosforilato. Le tirosine fosforilate sono poi riconosciute dai domini SH2 delle proteine che proseguono la cascata.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672021526,
+   "tipo": "completamento",
+   "accettate": [
+    "tirosina",
+    "tirosine",
+    "Tyr"
+   ]
+  },
+  {
+   "id": "bio-63b-07",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Nella via Ras-MAPK, la chinasi attivata direttamente da Ras nella sua forma legata al GTP è ……",
+   "spiegazione": "Ras-GTP porta Raf alla membrana e la attiva; Raf fosforila MEK, che a sua volta fosforila ERK. Tre chinasi in fila servono ad amplificare il segnale e a dare più punti dove regolarlo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672024338,
+   "tipo": "completamento",
+   "accettate": [
+    "Raf",
+    "Raf-1",
+    "B-Raf",
+    "MAPKKK"
+   ]
+  },
+  {
+   "id": "bio-63b-08",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Il fosfoinositide prodotto dalla PI3K e riconosciuto da Akt si indica con la sigla ……",
+   "spiegazione": "Il PIP3 resta nella membrana e funziona da attracco: Akt vi si lega e solo lì può essere fosforilata e attivata. Il segnale, in questo caso, è un lipide e non una molecola solubile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672026427,
+   "tipo": "completamento",
+   "accettate": [
+    "PIP3",
+    "PI(3,4,5)P3",
+    "PtdIns(3,4,5)P3",
+    "fosfatidilinositolo 3,4,5-trifosfato"
+   ]
+  },
+  {
+   "id": "bio-63b-09",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "La fosfatasi che rimuove il fosfato in posizione 3 dal PIP3 spegnendo la via, soppressore tumorale spesso perduto nei tumori, si chiama ……",
+   "spiegazione": "PTEN fa esattamente il contrario della PI3K. Perderla equivale a tenere la via sempre accesa, e per questo la sua perdita ha lo stesso effetto dell'attivazione di un oncogene.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672030037,
+   "tipo": "completamento",
+   "accettate": [
+    "PTEN"
+   ]
+  },
+  {
+   "id": "bio-63b-10",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Un gene normale della cellula che, mutato, diventa capace di guidare la trasformazione tumorale si chiama ……",
+   "spiegazione": "I proto-oncogeni sono geni che servono alla cellula sana per crescere e dividersi quando è il momento. L'oncogene non è un gene estraneo: è lo stesso gene con una mutazione che lo tiene acceso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672032659,
+   "tipo": "completamento",
+   "accettate": [
+    "proto-oncogene",
+    "protooncogene",
+    "proto oncogene",
+    "proto-oncogeni"
+   ]
+  },
+  {
+   "id": "bio-63b-11",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Un recettore desensitizzato smette di rispondere anche se il segnale è ancora presente: vero o falso? ……",
+   "spiegazione": "La desensitizzazione serve proprio a questo: adattarsi a uno stimolo che dura, in modo che la cellula resti sensibile alle variazioni invece di rispondere al massimo per sempre.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792672038676,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v"
+   ]
   }
  ]
 }

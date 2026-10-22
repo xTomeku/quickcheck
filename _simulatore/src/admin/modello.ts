@@ -59,6 +59,11 @@ export function problemi(d: Bozza, materia?: MateriaId): string[] {
   } else {
     if (!(d.accettate ?? []).some((a) => a.trim()) && !d.numero) p.push('nessuna risposta accettata')
     if (d.testo && !/…|\.{4,}/.test(d.testo)) p.push('nel testo manca lo spazio da completare (……)')
+    // A completamento si risponde con una parola: se ne servono due, lo spazio è nel posto
+    // sbagliato e la frase va riscritta ("dipendente da ……", non "segnalazione ……").
+    // Vale sulla prima accettata, che è quella mostrata in correzione; le altre restano libere.
+    const mostrata = (d.accettate ?? []).find((a) => a.trim())?.trim()
+    if (mostrata && !d.numero && mostrata.split(/\s+/).length > 1) p.push('la risposta è più di una parola')
   }
   return p
 }
