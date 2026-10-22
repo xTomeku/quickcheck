@@ -477,6 +477,3170 @@
    "spiegazione": "A e T formano due legami a idrogeno, G e C tre. Nell'RNA l'adenina si appaia con l'uracile.",
    "stato": "approvata",
    "fonte": "demo"
+  },
+  {
+   "id": "chim-41a-01",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Secondo la teoria di Brønsted e Lowry un acido è:",
+   "spiegazione": "Brønsted e Lowry spostano la definizione dal comportamento in acqua al trasferimento di protoni, quindi la teoria vale anche fuori dall'acqua. Contenere idrogeno non basta: il metano ne ha quattro atomi e non è un acido.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599896,
+   "tipo": "multipla",
+   "opzioni": [
+    "una specie che accetta un doppietto elettronico",
+    "una specie che cede un protone",
+    "una specie che in acqua libera ioni OH-",
+    "una specie che accetta un protone",
+    "qualunque sostanza che contenga idrogeno"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-41a-02",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Un acido di Lewis è una specie che:",
+   "spiegazione": "La definizione di Lewis è la più larga delle tre: guarda agli elettroni e non ai protoni, quindi comprende anche specie senza idrogeno come il tricloruro di alluminio. Ogni acido di Brønsted è anche un acido di Lewis, ma non viceversa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "cede un protone",
+    "cede un doppietto elettronico",
+    "in soluzione acquosa libera ioni H+",
+    "accetta un doppietto elettronico",
+    "accetta un protone"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-41a-03",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "In acqua pura a 25 °C:",
+   "spiegazione": "L'acqua si autoionizza in minima parte, e il prodotto delle due concentrazioni vale 10^-14. Essendo uguali fra loro, ciascuna vale la radice di quel numero, cioè 10^-7: da qui il pH neutro di 7.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "la concentrazione di H+ è maggiore di quella di OH-",
+    "le concentrazioni di H+ e OH- sono entrambe 10^-7 mol/L",
+    "le concentrazioni di H+ e OH- sono entrambe 10^-14 mol/L",
+    "il pH vale 0",
+    "non sono presenti ioni"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-41a-04",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "L'autoprotolisi dell'acqua è la reazione per cui:",
+   "spiegazione": "Una molecola fa da acido e l'altra da base: è l'acqua a comportarsi nei due modi insieme. La reazione è spostatissima verso i reagenti, e per questo gli ioni prodotti sono pochissimi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'acqua si decompone in idrogeno e ossigeno gassosi",
+    "l'acqua dissolve un sale separandone gli ioni",
+    "l'acqua cede elettroni a un metallo",
+    "l'acqua evapora dalla superficie",
+    "due molecole d'acqua si scambiano un protone formando H3O+ e OH-"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "chim-41a-05",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Una soluzione ha pH = 3. La concentrazione degli ioni H+ è:",
+   "spiegazione": "Il pH è l'opposto del logaritmo decimale della concentrazione, quindi pH 3 corrisponde a 10^-3 mol/L. Il valore 10^-11 è la concentrazione degli ioni OH- della stessa soluzione, perché il pOH vale 11.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "3 mol/L",
+    "10^-3 mol/L",
+    "10^3 mol/L",
+    "10^-11 mol/L",
+    "0,3 mol/L"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-41a-06",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "In una soluzione a pH 7 e 25 °C la concentrazione degli ioni H+, espressa in mol/L, è ……",
+   "spiegazione": "Il pH 7 è il valore neutro proprio perché corrisponde a 10^-7 mol/L, la concentrazione che l'acqua pura raggiunge da sé. Sopra quel valore la soluzione è basica, sotto è acida.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "10^-7",
+    "1e-7",
+    "0,0000001",
+    "0.0000001",
+    "1·10^-7",
+    "1*10^-7"
+   ],
+   "numero": {
+    "valore": 1e-7,
+    "tolleranza": 0
+   },
+   "unita": "mol/L"
+  },
+  {
+   "id": "chim-41a-07",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "A 25 °C la somma del pH e del pOH di qualunque soluzione acquosa vale ……",
+   "spiegazione": "È la conseguenza diretta del prodotto ionico dell'acqua, che a 25 °C vale 10^-14. Conoscendo il pH si ricava subito il pOH, e quindi la concentrazione degli ioni OH-.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "14",
+    "quattordici"
+   ],
+   "numero": {
+    "valore": 14,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-41a-08",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Secondo Brønsted-Lowry, la specie che rimane dopo che un acido ha ceduto il suo protone si chiama base ……",
+   "spiegazione": "Acido e base coniugata differiscono per un solo protone e formano una coppia. Più l'acido è forte, più la sua base coniugata è debole: il cloruro, che viene dall'acido cloridrico, è una base trascurabile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "coniugata",
+    "coniugate"
+   ]
+  },
+  {
+   "id": "chim-41a-09",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Una specie capace di comportarsi sia da acido sia da base, come l'acqua, si dice ……",
+   "spiegazione": "L'acqua cede un protone alle basi e lo accetta dagli acidi, e questo le permette di fare da solvente per entrambi. Anche l'ione bicarbonato si comporta così, e per questo è al centro del tampone del sangue.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "anfotera",
+    "anfiprotica",
+    "anfotere",
+    "anfiprotiche",
+    "anfotero",
+    "anfiprotico"
+   ]
+  },
+  {
+   "id": "chim-41a-10",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Una soluzione acquosa che a 25 °C ha pH minore di 7 si dice ……",
+   "spiegazione": "Il confronto è con l'acqua pura: meno di 7 significa più ioni H+ che OH-. Il valore di riferimento vale però solo a 25 °C, perché il prodotto ionico dell'acqua cambia con la temperatura.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "acida",
+    "acido",
+    "acide"
+   ]
+  },
+  {
+   "id": "chim-41b-01",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Un acido forte in soluzione acquosa diluita:",
+   "spiegazione": "Per un acido forte la dissociazione è praticamente totale, quindi la concentrazione di H+ coincide con quella dell'acido di partenza. Per un acido debole serve invece la costante, perché solo una frazione delle molecole cede il protone.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "si dissocia completamente",
+    "si dissocia solo in piccola parte",
+    "non si dissocia affatto",
+    "ha una costante di dissociazione molto piccola",
+    "dà una soluzione a pH basico"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-41b-02",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "A parità di concentrazione, l'acido con la costante di dissociazione Ka maggiore:",
+   "spiegazione": "Una Ka grande significa equilibrio spostato verso i prodotti, quindi più ioni H+ liberati e pH più basso. Il pKa va nella direzione opposta alla Ka, perché è il suo logaritmo con il segno cambiato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è più debole",
+    "dà una soluzione a pH più alto",
+    "è più forte e dà una soluzione a pH più basso",
+    "non si dissocia",
+    "ha un pKa maggiore"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-41b-03",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Un acido con pKa 3, confrontato con uno che ha pKa 5:",
+   "spiegazione": "Due unità di pKa sono un fattore cento nella Ka, ma nel verso opposto: pKa più basso vuol dire acido più forte. È la scala logaritmica a rendere la differenza grande anche quando i numeri sembrano vicini.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è cento volte più debole",
+    "è più forte, perché un pKa minore corrisponde a una Ka maggiore",
+    "ha la stessa forza, perché la differenza è piccola",
+    "si comporta da base",
+    "non si dissocia affatto"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-41b-04",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Un indicatore acido-base cambia colore:",
+   "spiegazione": "L'indicatore è esso stesso un acido debole, e le sue due forme hanno colori diversi: il viraggio avviene dove le due si equivalgono, cioè vicino al suo pKa. Per questo si scelgono indicatori diversi a seconda del pH che interessa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "soltanto a pH 7",
+    "a qualunque valore di pH",
+    "soltanto nelle soluzioni basiche",
+    "in un intervallo di pH che sta intorno al proprio pKa",
+    "quando la soluzione diventa esattamente neutra"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-41b-05",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Dire che l'acido fosforico è un acido triprotico significa che:",
+   "spiegazione": "Le tre costanti sono sempre decrescenti, perché strappare un protone a una specie già negativa è via via più difficile. È per questo che un acido poliprotico può dare più sali diversi e tamponare in più intervalli di pH.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "può cedere tre protoni, con tre costanti di dissociazione successive",
+    "contiene tre atomi di fosforo",
+    "si dissocia tre volte più in fretta degli altri acidi",
+    "ha sempre pH uguale a 3",
+    "può formare tre sali soltanto con il sodio"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-41b-06",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Un acido con costante di dissociazione Ka pari a 1 · 10^-5 ha pKa uguale a ……",
+   "spiegazione": "Il pKa è l'opposto del logaritmo decimale della Ka, quindi una potenza di dieci si legge direttamente come esponente cambiato di segno. Gli acidi deboli di interesse biologico hanno pKa fra 2 e 10.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-41b-07",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "La costante che misura la forza di una base in acqua si indica con il simbolo ……",
+   "spiegazione": "Kb riguarda l'equilibrio in cui la base strappa un protone all'acqua liberando OH-. Per una coppia coniugata il prodotto Ka · Kb è uguale al prodotto ionico dell'acqua.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "Kb",
+    "K_b"
+   ]
+  },
+  {
+   "id": "chim-41b-08",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Un acido che in acqua si dissocia solo in parte si dice acido ……",
+   "spiegazione": "Debole non significa diluito: è una proprietà della sostanza, non della concentrazione. Una soluzione concentrata di acido acetico resta una soluzione di acido debole.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "debole",
+    "deboli"
+   ]
+  },
+  {
+   "id": "chim-41b-09",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "L'acido solforico può cedere due protoni, quindi si dice acido ……",
+   "spiegazione": "La prima dissociazione è praticamente completa, la seconda molto meno: le due costanti differiscono di diversi ordini di grandezza. Di qui i due sali possibili, solfati e idrogenosolfati.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "diprotico",
+    "biprotico",
+    "diprotici",
+    "biprotici"
+   ]
+  },
+  {
+   "id": "chim-41b-10",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Quando un acido debole si trova dissociato esattamente per metà, il pH della soluzione è uguale al suo ……",
+   "spiegazione": "A metà dissociazione le concentrazioni dell'acido e della sua base coniugata sono uguali, e il loro rapporto vale 1: il logaritmo di 1 è zero e il pH coincide con il pKa. È anche il punto in cui un tampone lavora meglio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "pKa",
+    "pK_a"
+   ]
+  },
+  {
+   "id": "chim-41c-01",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Il cloruro di sodio disciolto in acqua dà una soluzione neutra perché:",
+   "spiegazione": "L'idrolisi avviene solo quando uno degli ioni è la base coniugata di un acido debole o l'acido coniugato di una base debole. Qui nessuno dei due lo è, quindi il pH resta quello dell'acqua.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il sale non si dissolve in quantità apprezzabile",
+    "i suoi ioni derivano da un acido forte e da una base forte, e non reagiscono con l'acqua",
+    "lo ione sodio libera ioni OH-",
+    "lo ione cloruro cattura protoni dall'acqua",
+    "la soluzione risulta sempre satura"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-41c-02",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Una soluzione acquosa di acetato di sodio risulta basica perché:",
+   "spiegazione": "Strappando un protone all'acqua, l'acetato lascia in soluzione ioni OH- in eccesso. Il sodio invece non fa nulla: è lo ione che viene dall'acido debole a decidere il pH.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "lo ione sodio reagisce con l'acqua liberando OH-",
+    "il sale contiene gruppi ossidrilici",
+    "l'ione acetato, base coniugata di un acido debole, strappa un protone all'acqua",
+    "l'acetato si ossida in soluzione",
+    "la dissoluzione del sale assorbe calore"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-41c-03",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "L'idrolisi salina è:",
+   "spiegazione": "La dissoluzione separa gli ioni e basta; l'idrolisi è il passo successivo, e riguarda solo gli ioni che hanno proprietà acide o basiche. Per questo sali diversi, tutti solubili, danno pH diversi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "la separazione di un sale nei suoi ioni",
+    "la reazione fra uno degli ioni di un sale e l'acqua, che può modificare il pH",
+    "la precipitazione di un sale da una soluzione satura",
+    "la dissoluzione di un gas in acqua",
+    "la reazione fra un acido e una base che forma un sale"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-41c-04",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "La solubilità del fosfato di calcio, sale di un acido debole, aumenta:",
+   "spiegazione": "In ambiente acido lo ione fosfato cattura protoni e si trasforma in idrogenofosfato: sottraendolo all'equilibrio, il sale continua a dissolversi. È lo stesso motivo per cui lo smalto dei denti si demineralizza quando il pH della bocca si abbassa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "abbassando il pH della soluzione",
+    "alzando il pH della soluzione",
+    "soltanto aumentando la temperatura",
+    "aggiungendo ioni calcio",
+    "indipendentemente dal pH"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-41c-05",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Perché un calcolo di acido urico si forma più facilmente quando le urine sono acide?",
+   "spiegazione": "L'urato è solubile, la sua forma protonata molto meno: il pH decide quale delle due forme prevale. Alcalinizzare le urine è infatti una delle strategie usate per prevenire questi calcoli.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché l'acidità fa aumentare la temperatura dell'urina",
+    "perché gli ioni H+ precipitano insieme all'urato",
+    "perché l'acido urico si dissocia completamente a pH basso",
+    "perché a pH basso prevale l'acido urico, molto meno solubile dello ione urato",
+    "perché l'urina acida contiene sempre più calcio"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-41c-06",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "La reazione fra uno ione proveniente da un sale e l'acqua, che può rendere la soluzione acida o basica, si chiama idrolisi ……",
+   "spiegazione": "Il nome ricorda che il protagonista è un sale e non un acido o una base aggiunti. È il motivo per cui una soluzione di sale può avere pH diverso da 7 pur non contenendo né acidi né basi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "salina"
+   ]
+  },
+  {
+   "id": "chim-41c-07",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Il sale formato da un acido debole e da una base forte dà in acqua una soluzione ……",
+   "spiegazione": "Dei due ioni soltanto quello che viene dall'acido debole reagisce con l'acqua, e lo fa catturando protoni. Il bicarbonato di sodio, usato come antiacido, funziona proprio così.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "basica",
+    "basiche",
+    "alcalina",
+    "alcaline"
+   ]
+  },
+  {
+   "id": "chim-41c-08",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "In acqua lo ione ammonio cede un protone, quindi si comporta da ……",
+   "spiegazione": "È l'acido coniugato dell'ammoniaca, che è una base debole. Per questo i sali di ammonio, come il cloruro, danno soluzioni acide.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "acido",
+    "acida",
+    "acido debole"
+   ]
+  },
+  {
+   "id": "chim-41c-09",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Per ridurre il rischio che si formino calcoli di acido urico si cerca di rendere le urine più ……",
+   "spiegazione": "Alzando il pH la forma prevalente diventa l'urato, che resta in soluzione. È un esempio di come un equilibrio acido-base abbia conseguenze cliniche dirette.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "alcaline",
+    "basiche",
+    "alcalina",
+    "basica"
+   ]
+  },
+  {
+   "id": "chim-41c-10",
+   "argomento": "chim.4.1",
+   "stato": "approvata",
+   "testo": "Una soluzione acquosa di cloruro di sodio a 25 °C ha pH uguale a ……",
+   "spiegazione": "Nessuno dei due ioni idrolizza, quindi il pH resta quello dell'acqua pura. Vale anche cambiando la concentrazione, il che distingue questo caso da quello dei sali che idrolizzano.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "7",
+    "sette"
+   ],
+   "numero": {
+    "valore": 7,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-17a-01",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nella grande maggioranza dei composti il numero di ossidazione dell'ossigeno è:",
+   "spiegazione": "L'ossigeno è molto elettronegativo e attira a sé i due elettroni di legame. Le eccezioni si contano: nei perossidi vale -1, e con il fluoro, più elettronegativo di lui, diventa positivo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "-1",
+    "-2",
+    "0",
+    "+2",
+    "+1"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-17a-02",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "In uno ione poliatomico la somma dei numeri di ossidazione di tutti gli atomi è uguale a:",
+   "spiegazione": "Vale zero solo per una molecola neutra; in uno ione la somma deve restituire la carica. È da questa regola che si ricava il numero di ossidazione di un atomo quando gli altri sono noti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "zero",
+    "la carica complessiva dello ione",
+    "il numero di atomi che lo compongono",
+    "sempre -2",
+    "il numero di ossidazione dell'atomo centrale"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-17a-03",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nello ione solfato, SO4 con carica 2-, il numero di ossidazione dello zolfo è:",
+   "spiegazione": "I quattro ossigeni contano -8 in tutto; perché la somma dia -2 lo zolfo deve valere +6. Nello ione solfito, che ha un ossigeno in meno, con lo stesso conto si ottiene +4.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "+2",
+    "+4",
+    "+6",
+    "-2",
+    "+8"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-17a-04",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nello ione permanganato, MnO4 con carica 1-, il numero di ossidazione del manganese è:",
+   "spiegazione": "Quattro ossigeni fanno -8, e per arrivare a -1 il manganese deve valere +7, il massimo che può raggiungere. È anche la ragione per cui il permanganato è un ossidante così energico: può solo ridursi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "+2",
+    "+4",
+    "+5",
+    "+7",
+    "+6"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-17a-05",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "La formula del nitrato di calcio è:",
+   "spiegazione": "Lo ione calcio ha carica 2+ e il nitrato 1-, quindi servono due nitrati per neutralizzarlo. Le formule con NO2 sono nitriti, non nitrati: un ossigeno in meno cambia il nome.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "CaNO3",
+    "Ca(NO3)2",
+    "Ca2NO3",
+    "CaNO2",
+    "Ca(NO2)2"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-17a-06",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Il composto di formula FeCl3 si chiama:",
+   "spiegazione": "Tre cloruri da 1- richiedono un ferro a +3, e il numero romano serve proprio perché il ferro ha più numeri di ossidazione possibili. Clorati e ipocloriti conterrebbero anche ossigeno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "cloruro di ferro(II)",
+    "cloruro di ferro(III)",
+    "clorato di ferro(III)",
+    "ipoclorito di ferro",
+    "fluoruro di ferro(III)"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-17a-07",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Il numero di ossidazione di un elemento allo stato libero, non combinato con altri, è ……",
+   "spiegazione": "Non essendoci differenze di elettronegatività con sé stesso, nessun atomo attira elettroni più dell'altro. Vale per i metalli puri e per le molecole come O2, N2 e Cl2.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "0",
+    "zero"
+   ],
+   "numero": {
+    "valore": 0,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-17a-08",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nell'acido solforico, H2SO4, il numero di ossidazione dello zolfo è ……",
+   "spiegazione": "Due idrogeni valgono +2 e quattro ossigeni -8: perché il totale faccia zero lo zolfo deve stare a +6. È lo stesso valore che ha nello ione solfato, e non è un caso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "+6",
+    "6",
+    "sei",
+    "+sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-17a-09",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nei composti con i non metalli il numero di ossidazione dell'idrogeno è ……",
+   "spiegazione": "L'idrogeno cede il suo unico elettrone al partner più elettronegativo. Con i metalli succede il contrario e vale -1: sono gli idruri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "+1",
+    "1",
+    "uno",
+    "+uno"
+   ],
+   "numero": {
+    "valore": 1,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-17a-10",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "La formula del carbonato di sodio è ……",
+   "spiegazione": "Lo ione carbonato ha carica 2- e il sodio 1+, quindi servono due atomi di sodio. Il bicarbonato, NaHCO3, ha un idrogeno che prende il posto di uno dei due sodi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "Na2CO3"
+   ]
+  },
+  {
+   "id": "chim-17a-11",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Il composto HCl, in soluzione acquosa, prende il nome di acido ……",
+   "spiegazione": "Gli acidi binari, formati da idrogeno e un non metallo, prendono il suffisso -idrico. Allo stato gassoso lo stesso composto si chiama cloruro di idrogeno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "cloridrico"
+   ]
+  },
+  {
+   "id": "chim-17a-12",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nella nomenclatura tradizionale, fra due composti dello stesso elemento il suffisso -oso indica il numero di ossidazione più ……",
+   "spiegazione": "Ferroso e ferrico, solforoso e solforico: il primo dei due ha sempre il numero di ossidazione minore. La nomenclatura con i numeri romani dice la stessa cosa in modo meno ambiguo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "basso",
+    "bassa",
+    "piccolo",
+    "minore"
+   ]
+  },
+  {
+   "id": "chim-17b-01",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "L'ossido di un metallo, reagendo con l'acqua, dà:",
+   "spiegazione": "Gli ossidi dei metalli sono basici e con l'acqua formano idrossidi, che in soluzione liberano ioni OH-. Gli ossidi dei non metalli fanno l'opposto: con l'acqua danno acidi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "un acido",
+    "un idrossido",
+    "un perossido",
+    "un sale",
+    "un idruro"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-17b-02",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nei perossidi il numero di ossidazione dell'ossigeno è:",
+   "spiegazione": "Nei perossidi due atomi di ossigeno sono legati fra loro, e fra uguali gli elettroni non si spostano: ciascuno conta quindi -1 e non -2. È questo legame debole a rendere l'acqua ossigenata un ossidante.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "0",
+    "-2",
+    "+1",
+    "-1",
+    "+2"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-17b-03",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Gli idrossidi sono composti che:",
+   "spiegazione": "Il gruppo OH, ceduto come ione, è quello che rende basica la soluzione. Attenzione a non confonderli con gli alcoli, che hanno un OH legato al carbonio e non lo liberano.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "contengono il gruppo OH legato a un metallo e in acqua liberano ioni OH-",
+    "contengono un atomo di idrogeno legato a un non metallo",
+    "hanno due atomi di ossigeno legati fra loro",
+    "sono formati soltanto da ossigeno e idrogeno",
+    "contengono un gruppo carbossilico"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-17b-04",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Un sale si ottiene:",
+   "spiegazione": "L'acido cede il protone, la base lo accetta e si forma acqua: ciò che resta, cioè il catione della base e l'anione dell'acido, è il sale. Da qui il nome di reazione di neutralizzazione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "dalla reazione fra due acidi",
+    "dalla reazione fra un acido e una base",
+    "dalla decomposizione di un ossido",
+    "dall'unione di due metalli",
+    "dalla dissoluzione di un gas in acqua"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-17b-05",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "L'acido solforoso, confrontato con l'acido solforico:",
+   "spiegazione": "Il suffisso -oso segnala il numero di ossidazione più basso, +4 invece di +6, e corrisponde a un atomo di ossigeno in meno nella formula. I sali che ne derivano si chiamano solfiti, non solfati.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "contiene un atomo di ossigeno in più",
+    "è sempre un acido più forte",
+    "contiene due atomi di zolfo",
+    "non contiene idrogeno",
+    "contiene lo zolfo con un numero di ossidazione minore"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "chim-17b-06",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Un ossido di un non metallo, che reagendo con l'acqua forma un acido, si chiama anche ……",
+   "spiegazione": "Il nome ricorda che si tratta dell'acido privato dell'acqua. L'anidride carbonica, sciolta nel sangue, forma infatti acido carbonico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "anidride",
+    "anidridi",
+    "ossido acido",
+    "ossidi acidi"
+   ]
+  },
+  {
+   "id": "chim-17b-07",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "La formula dell'idrossido di sodio è ……",
+   "spiegazione": "Un sodio da 1+ e un gruppo OH da 1-: il rapporto è uno a uno. È una base forte, completamente dissociata in acqua.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "NaOH"
+   ]
+  },
+  {
+   "id": "chim-17b-08",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Il perossido di idrogeno, noto come acqua ossigenata, ha formula ……",
+   "spiegazione": "Due idrogeni e due ossigeni legati fra loro: un atomo di ossigeno in più rispetto all'acqua. Quel legame si rompe facilmente, e la decomposizione libera ossigeno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "H2O2"
+   ]
+  },
+  {
+   "id": "chim-17b-09",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Dalla reazione fra acido cloridrico e idrossido di sodio si ottengono acqua e cloruro di ……",
+   "spiegazione": "Il catione viene dalla base e l'anione dall'acido: è il comune sale da cucina. L'altro prodotto, l'acqua, nasce dall'unione del protone dell'acido con l'ossidrile della base.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "sodio",
+    "NaCl"
+   ]
+  },
+  {
+   "id": "chim-17b-10",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Un composto formato da un metallo e dall'idrogeno, in cui l'idrogeno ha numero di ossidazione -1, si chiama ……",
+   "spiegazione": "Essendo più elettronegativo del metallo, qui l'idrogeno guadagna l'elettrone invece di cederlo. È l'unico caso in cui il suo numero di ossidazione è negativo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "idruro",
+    "idruri",
+    "idruro metallico"
+   ]
+  },
+  {
+   "id": "chim-17b-11",
+   "argomento": "chim.1.7",
+   "stato": "approvata",
+   "testo": "Nei nomi tradizionali degli ossiacidi, il suffisso che indica il numero di ossidazione più alto è ……",
+   "spiegazione": "Solforico contro solforoso, nitrico contro nitroso: il suffisso -ico sta sempre per il valore maggiore. I sali corrispondenti prendono il suffisso -ato, mentre quelli degli acidi -osi prendono -ito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "-ico",
+    "ico"
+   ]
+  },
+  {
+   "id": "chim-44a-01",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "In una reazione di ossidoriduzione la specie che si ossida:",
+   "spiegazione": "Ossidarsi significa perdere elettroni, e perdere elettroni fa crescere il numero di ossidazione. Le due cose avvengono sempre in coppia: se qualcosa si ossida, qualcos'altro nella stessa reazione si riduce.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "acquista elettroni",
+    "cede elettroni e aumenta il proprio numero di ossidazione",
+    "non cambia numero di ossidazione",
+    "cede protoni",
+    "si riduce nello stesso momento"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-44a-02",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "L'agente ossidante di una reazione redox è la specie che:",
+   "spiegazione": "È il punto che si confonde più spesso: l'ossidante fa ossidare l'altro e quindi si riduce lui. Il permanganato, per esempio, ossida molte sostanze e nel farlo passa da manganese +7 a +2.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "cede elettroni",
+    "si ossida",
+    "aumenta il proprio numero di ossidazione",
+    "si riduce, acquistando elettroni",
+    "non partecipa alla reazione"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-44a-03",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "In una cella galvanica l'anodo è l'elettrodo:",
+   "spiegazione": "Anodo e ossidazione cominciano entrambi per vocale, catodo e riduzione per consonante: è un modo per ricordarlo. In una pila l'anodo è il polo negativo, perché è da lì che partono gli elettroni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "in cui avviene l'ossidazione",
+    "in cui avviene la riduzione",
+    "che non è immerso nella soluzione",
+    "attraverso cui non passa corrente",
+    "costituito sempre da rame"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-44a-04",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "L'equazione di Nernst serve a calcolare:",
+   "spiegazione": "I potenziali standard valgono a concentrazioni unitarie, condizione quasi mai vera nella realtà. Nernst corregge il potenziale in base alle concentrazioni effettive, ed è il motivo per cui una pila si scarica mentre lavora.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "la costante di equilibrio di una reazione acido-base",
+    "il potenziale di una cella in condizioni diverse da quelle standard",
+    "la massa di sostanza che si deposita a un elettrodo",
+    "il pH di una soluzione tampone",
+    "la solubilità di un sale poco solubile"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-44a-05",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Bilanciando una reazione redox con il metodo delle semireazioni si deve:",
+   "spiegazione": "Gli elettroni non possono comparire nell'equazione finale: quelli persi da una specie devono essere esattamente quelli guadagnati dall'altra. Si moltiplicano quindi le due semireazioni per i fattori che pareggiano il conto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "uguagliare soltanto il numero di atomi di ossigeno",
+    "bilanciare per primi gli atomi di idrogeno",
+    "uguagliare il numero di elettroni ceduti e quelli acquistati",
+    "moltiplicare tutti i coefficienti per due",
+    "sommare fra loro i numeri di ossidazione"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-44a-06",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "La specie che in una redox cede elettroni e fa ridurre l'altra si chiama agente ……",
+   "spiegazione": "Il riducente riduce l'altro e si ossida lui. I metalli, che cedono elettroni con facilità, sono buoni riducenti: lo zinco in una pila si consuma per questo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "riducente",
+    "riducenti"
+   ]
+  },
+  {
+   "id": "chim-44a-07",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "In una cella galvanica l'elettrodo in cui avviene la riduzione si chiama ……",
+   "spiegazione": "Gli elettroni arrivano al catodo attraverso il circuito esterno e lì vengono acquistati da una specie in soluzione. In una pila è il polo positivo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "catodo",
+    "catodi"
+   ]
+  },
+  {
+   "id": "chim-44a-08",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "I potenziali standard di riduzione sono misurati rispetto a un elettrodo di riferimento, quello a ……",
+   "spiegazione": "Al suo potenziale è stato assegnato per convenzione il valore zero, perché un potenziale assoluto non si può misurare: si misurano solo differenze. Tutti i valori tabulati sono quindi confronti con esso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "idrogeno",
+    "idrogeno standard",
+    "SHE"
+   ]
+  },
+  {
+   "id": "chim-44a-09",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "La semireazione in cui una specie acquista elettroni è una semireazione di ……",
+   "spiegazione": "Guadagnare elettroni abbassa il numero di ossidazione, e questo abbassamento è la riduzione. Scrivere le due semireazioni separate è il modo più sicuro di bilanciare una redox.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "riduzione",
+    "riduzioni"
+   ]
+  },
+  {
+   "id": "chim-44a-10",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Quando lo zinco metallico riduce gli ioni rame(II) a rame metallico, il numero di elettroni scambiati per ciascun atomo di zinco è ……",
+   "spiegazione": "Lo zinco passa da 0 a +2 cedendo due elettroni, e il rame da +2 a 0 acquistandone due: il conto torna senza bisogno di moltiplicare le semireazioni. È la reazione della pila Daniell.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-44b-01",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Fra la variazione di energia libera di una reazione redox e la differenza di potenziale della cella vale la relazione:",
+   "spiegazione": "Il segno meno è tutto: una cella che fornisce lavoro ha potenziale positivo e la reazione corrispondente ha energia libera negativa, cioè è spontanea. Il prodotto nF trasforma i volt in joule per mole.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "ΔG = nFE, quindi i due hanno sempre lo stesso segno",
+    "ΔG = -nFE, quindi un potenziale positivo corrisponde a un ΔG negativo",
+    "ΔG non dipende dal potenziale",
+    "ΔG = E diviso nF",
+    "ΔG = nF diviso E"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-44b-02",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Nella catena di trasporto degli elettroni del mitocondrio gli elettroni passano:",
+   "spiegazione": "Gli elettroni scendono una scala di potenziali, e a ogni gradino si libera energia che serve a pompare protoni. L'ossigeno sta in fondo perché ha il potenziale di riduzione più favorevole di tutti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "da trasportatori con potenziale più positivo verso quelli con potenziale più negativo",
+    "in direzione casuale, a seconda della concentrazione",
+    "da trasportatori con potenziale più negativo verso quelli più positivo, fino all'ossigeno",
+    "attraverso l'acqua, che fa da conduttore",
+    "dall'ossigeno verso il NADH"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-44b-03",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Nella respirazione cellulare il NADH si comporta:",
+   "spiegazione": "Il NADH porta gli elettroni raccolti dalla demolizione dei nutrienti e li consegna alla catena, ossidandosi a NAD+. È la forma in cui la cellula trasporta potere riducente da una via metabolica all'altra.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "da ossidante, perché acquista elettroni",
+    "da tampone per il pH della matrice",
+    "da catalizzatore acido",
+    "da riducente, perché cede elettroni",
+    "da solvente per i complessi della catena"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-44b-04",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "La reazione di Fenton produce radicali ossidrilici partendo da:",
+   "spiegazione": "Il ferro(II) cede un elettrone al perossido di idrogeno, che si spezza liberando il radicale ossidrilico. È il motivo per cui un eccesso di ferro libero nei tessuti è pericoloso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "perossido di idrogeno e ioni ferro(II)",
+    "ossigeno e azoto molecolari",
+    "acqua e ioni sodio",
+    "glucosio e ossigeno",
+    "anidride carbonica e acqua"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-44b-05",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Perché i radicali liberi sono dannosi per la cellula?",
+   "spiegazione": "Un elettrone spaiato cerca di appaiarsi strappandolo alla prima molecola che incontra, e questo innesca reazioni a catena. Gli antiossidanti funzionano offrendosi come bersaglio al posto delle strutture importanti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché abbassano il pH del citosol",
+    "perché sono molecole di grandi dimensioni",
+    "perché si accumulano nei lisosomi senza reagire",
+    "perché bloccano la glicolisi",
+    "perché sono specie molto reattive e ossidano lipidi, proteine e DNA"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "chim-44b-06",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Un atomo o una molecola che possiede un elettrone spaiato si chiama ……",
+   "spiegazione": "L'elettrone spaiato rende la specie instabile e molto reattiva. Nella cellula se ne formano continuamente come sottoprodotti della respirazione, e per questo esistono enzimi dedicati a smaltirli.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "radicale",
+    "radicali",
+    "radicale libero",
+    "radicali liberi"
+   ]
+  },
+  {
+   "id": "chim-44b-07",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Nella reazione di Fenton il metallo che innesca la formazione dei radicali è il ……",
+   "spiegazione": "Passando da ferro(II) a ferro(III) cede l'elettrone che rompe il perossido. Nel corpo il ferro è quasi sempre legato a proteine di trasporto proprio per evitare che resti libero di fare questa reazione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "ferro",
+    "Fe",
+    "ferro(II)",
+    "Fe2+"
+   ]
+  },
+  {
+   "id": "chim-44b-08",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Una reazione con variazione di energia libera negativa si dice ……",
+   "spiegazione": "Spontanea non significa veloce: dice che la reazione può avvenire da sé, non quanto tempo ci mette. La velocità dipende dall'energia di attivazione, che è un'altra cosa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "spontanea",
+    "spontanee",
+    "esoergonica",
+    "esoergoniche"
+   ]
+  },
+  {
+   "id": "chim-44b-09",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Alla fine della catena respiratoria l'ossigeno, acquistando elettroni e protoni, si riduce ad ……",
+   "spiegazione": "Quattro elettroni e quattro protoni per ogni molecola di ossigeno danno due molecole d'acqua. Se la riduzione si ferma a metà si formano invece specie reattive come il perossido.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "acqua",
+    "H2O"
+   ]
+  },
+  {
+   "id": "chim-44b-10",
+   "argomento": "chim.4.4",
+   "stato": "approvata",
+   "testo": "Nel NADH la sigla indica la forma ridotta: la forma ossidata corrispondente si scrive ……",
+   "spiegazione": "Il passaggio da NAD+ a NADH corrisponde all'acquisto di due elettroni e di un protone. Il rapporto fra le due forme nella cellula è un indicatore di quanto il metabolismo stia ossidando.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "NAD+",
+    "NAD"
+   ]
+  },
+  {
+   "id": "chim-72a-01",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Il legame peptidico si forma per una reazione di:",
+   "spiegazione": "Due gruppi si uniscono e una molecola d'acqua se ne va: è lo schema di tutte le polimerizzazioni biologiche, dagli zuccheri agli acidi nucleici. La reazione inversa, che rompe il legame, è appunto un'idrolisi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "idrolisi",
+    "condensazione, con eliminazione di una molecola d'acqua",
+    "ossidazione",
+    "riduzione",
+    "addizione di idrogeno"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-72a-02",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Il legame peptidico non permette la libera rotazione perché:",
+   "spiegazione": "Il doppietto dell'azoto si delocalizza verso l'ossigeno del carbonile, e questo irrigidisce il legame rendendo planari i sei atomi coinvolti. La rigidità del piano peptidico è ciò che limita le forme che una catena può assumere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è un legame ionico",
+    "è circondato da gruppi molto ingombranti",
+    "ha un parziale carattere di doppio legame dovuto alla risonanza",
+    "contiene un atomo di zolfo",
+    "è stabilizzato da un ponte disolfuro"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-72a-03",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Per rompere un legame peptidico occorre:",
+   "spiegazione": "È l'inverso esatto della condensazione che lo ha formato. Nello stomaco e nell'intestino lo fanno enzimi specifici, le proteasi, perché da sola la reazione è lentissima.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'addizione di una molecola d'acqua",
+    "l'eliminazione di una molecola d'acqua",
+    "l'ossidazione dell'azoto",
+    "la riduzione del carbonile",
+    "l'aggiunta di un gruppo fosfato"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-72a-04",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "In una catena polipeptidica l'estremità che porta il gruppo amminico libero si chiama:",
+   "spiegazione": "Una catena ha due estremità diverse, e per convenzione la sequenza si scrive partendo da quella amminica. Le sigle 5' e 3' riguardano gli acidi nucleici, non le proteine.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "estremità carbossiterminale",
+    "estremità 5'",
+    "estremità 3'",
+    "estremità amminoterminale",
+    "estremità anomerica"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-72a-05",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Un tripeptide lineare contiene un numero di legami peptidici pari a:",
+   "spiegazione": "I legami sono sempre uno in meno del numero di amminoacidi, perché ciascuno unisce due residui consecutivi. Lo stesso conto vale per qualunque catena lineare, anche lunga.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "6"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-72a-06",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Dal punto di vista dei gruppi funzionali, il legame peptidico è un legame di tipo ……",
+   "spiegazione": "Nasce da un gruppo carbossilico e da un gruppo amminico, e il risultato è un'ammide. Riconoscerlo come tale spiega anche perché resista all'idrolisi spontanea.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "ammidico",
+    "ammide",
+    "amidico",
+    "amide",
+    "carboammidico"
+   ]
+  },
+  {
+   "id": "chim-72a-07",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Oltre al gruppo amminico, il gruppo funzionale presente in ogni amminoacido è il gruppo ……",
+   "spiegazione": "Un amminoacido ha sempre entrambi i gruppi, ed è per questo che può comportarsi da acido e da base. La catena laterale, invece, cambia da un amminoacido all'altro.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "carbossilico",
+    "carbossile",
+    "COOH",
+    "-COOH"
+   ]
+  },
+  {
+   "id": "chim-72a-08",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Il carbonio al quale sono legati sia il gruppo amminico sia quello carbossilico si chiama carbonio ……",
+   "spiegazione": "A quel carbonio si legano anche un idrogeno e la catena laterale: quattro sostituenti diversi, e per questo è un centro chirale. L'unica eccezione è la glicina, la cui catena laterale è un idrogeno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "alfa",
+    "α",
+    "alpha"
+   ]
+  },
+  {
+   "id": "chim-72a-09",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "A pH fisiologico un amminoacido porta una carica positiva e una negativa nella stessa molecola: questa forma si chiama ……",
+   "spiegazione": "Il gruppo carbossilico cede il protone e quello amminico lo accetta: la carica netta è zero ma la molecola è ionica. È il motivo per cui gli amminoacidi sono solidi ad alto punto di fusione e molto solubili in acqua.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "zwitterione",
+    "zwitterioni",
+    "anfione",
+    "ione dipolare"
+   ]
+  },
+  {
+   "id": "chim-72a-10",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Il numero di amminoacidi diversi che compongono le proteine degli organismi viventi è ……",
+   "spiegazione": "Venti tipi bastano perché quello che conta è l'ordine: con venti lettere si scrivono tutte le parole. Alcune proteine contengono residui modificati, ma la modifica avviene dopo la sintesi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-72b-01",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "I ponti disolfuro si formano fra le catene laterali di due residui di:",
+   "spiegazione": "Serve un gruppo tiolico libero, e fra i venti amminoacidi solo la cisteina lo ha. La metionina contiene zolfo ma non ha l'idrogeno che permette l'ossidazione a ponte.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "metionina",
+    "cisteina",
+    "serina",
+    "lisina",
+    "prolina"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-72b-02",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "La struttura quaternaria di una proteina riguarda:",
+   "spiegazione": "Esiste solo nelle proteine fatte di più catene, come l'emoglobina: una proteina a catena singola si ferma alla terziaria. Le subunità si tengono insieme con le stesse interazioni deboli che stabilizzano il ripiegamento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "la sequenza degli amminoacidi",
+    "i ripiegamenti locali della catena, come l'elica alfa",
+    "l'associazione di più catene polipeptidiche in un unico complesso",
+    "la presenza di quattro ponti disolfuro",
+    "il ripiegamento complessivo di una singola catena"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-72b-03",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Il ripiegamento di una proteina globulare in ambiente acquoso è guidato soprattutto:",
+   "spiegazione": "Le catene laterali idrofobiche si raccolgono al centro e quelle polari restano esposte al solvente: è questo effetto, più che singoli legami, a dare la forma. I ponti disolfuro, quando ci sono, la bloccano ma non la creano.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "dai legami peptidici, che si riorganizzano",
+    "dai ponti disolfuro, presenti in tutte le proteine",
+    "dai legami ionici fra le estremità della catena",
+    "dalla tendenza dei residui apolari a sistemarsi all'interno, lontano dall'acqua",
+    "dalla temperatura, che determina la forma finale"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-72b-04",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "La denaturazione di una proteina:",
+   "spiegazione": "Calore, acidi e solventi rompono le interazioni deboli, ma la struttura primaria resta intatta: la proteina è srotolata, non demolita. L'albume che coagula è l'esempio quotidiano, ed è anche la prova che spesso il processo non torna indietro.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "ne distrugge la struttura tridimensionale senza rompere i legami peptidici",
+    "ne spezza la catena in singoli amminoacidi",
+    "ne cambia la sequenza",
+    "avviene solo a temperature inferiori a zero",
+    "è sempre reversibile"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-72b-05",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "L'elica alfa e il foglietto beta sono esempi di struttura ……",
+   "spiegazione": "Sono ripiegamenti locali regolari, tenuti da legami idrogeno fra atomi dello scheletro. Compaiono in proteine anche molto diverse fra loro, perché dipendono dallo scheletro e non dalle catene laterali.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "secondaria",
+    "secondarie"
+   ]
+  },
+  {
+   "id": "chim-72b-06",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "Il legame covalente che unisce due residui di cisteina si chiama ponte ……",
+   "spiegazione": "È l'unico legame covalente che stabilizza la struttura tridimensionale, e si forma per ossidazione dei due gruppi tiolici. Nelle proteine secrete è frequente, perché devono resistere fuori dalla cellula.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "disolfuro",
+    "disolfuro (S-S)",
+    "solfuro",
+    "S-S"
+   ]
+  },
+  {
+   "id": "chim-72b-07",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "L'emoglobina è formata da quattro catene associate fra loro, quindi possiede una struttura ……",
+   "spiegazione": "Le quattro subunità collaborano: il legame dell'ossigeno su una facilita il legame sulle altre. È un comportamento che una catena isolata non potrebbe avere, e dipende proprio da questo livello di organizzazione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "quaternaria",
+    "quaternarie"
+   ]
+  },
+  {
+   "id": "chim-72b-08",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "I legami che tengono avvolta un'elica alfa, fra gli atomi dello scheletro della catena, sono legami a ……",
+   "spiegazione": "Si formano fra il C=O di un residuo e l'N-H di quello situato quattro posizioni più avanti. Sono deboli uno per uno, ma essendo moltissimi e regolari tengono insieme l'intera struttura.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "idrogeno",
+    "ponte di idrogeno"
+   ]
+  },
+  {
+   "id": "chim-72b-09",
+   "argomento": "chim.7.2",
+   "stato": "approvata",
+   "testo": "La struttura primaria di una proteina è la …… dei suoi amminoacidi",
+   "spiegazione": "È l'unico livello scritto direttamente nel gene: tutti gli altri ne derivano. Per questo cambiare un solo amminoacido può cambiare la forma e la funzione dell'intera proteina.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "sequenza",
+    "successione"
+   ]
+  },
+  {
+   "id": "chim-11a-01",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Due atomi che appartengono allo stesso elemento hanno necessariamente uguale:",
+   "spiegazione": "È il numero di protoni a stabilire di quale elemento si tratti. I neutroni possono essere in numero diverso, e in quel caso si parla di isotopi dello stesso elemento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "numero di neutroni",
+    "numero di massa",
+    "numero di protoni",
+    "massa",
+    "numero di legami che possono formare"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-11a-02",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Il numero di massa di un atomo è:",
+   "spiegazione": "Gli elettroni non si contano perché la loro massa è circa duemila volte minore di quella delle particelle nucleari. Il numero di massa è quindi un conteggio di nucleoni, non una massa in senso stretto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il numero dei soli protoni",
+    "la somma del numero di protoni e di neutroni",
+    "la somma di protoni, neutroni ed elettroni",
+    "la massa in grammi dell'atomo",
+    "il numero dei soli neutroni"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-11a-03",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Nella struttura di un atomo, la massa è concentrata:",
+   "spiegazione": "Il nucleo occupa una frazione minuscola del volume dell'atomo ma ne contiene quasi tutta la massa. È il risultato che portò Rutherford ad abbandonare il modello dell'atomo come sfera piena.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "negli elettroni che orbitano intorno al nucleo",
+    "distribuita uniformemente in tutto il volume",
+    "nella superficie esterna dell'atomo",
+    "nel nucleo, in protoni e neutroni",
+    "negli spazi vuoti fra le particelle"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-11a-04",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "In un atomo elettricamente neutro:",
+   "spiegazione": "Le cariche positive del nucleo e quelle negative degli elettroni si compensano esattamente. Quando questo equilibrio si rompe, per perdita o acquisto di elettroni, l'atomo diventa uno ione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il numero di elettroni è uguale a quello dei protoni",
+    "il numero di elettroni è uguale a quello dei neutroni",
+    "non sono presenti elettroni",
+    "il numero di protoni è uguale a quello dei neutroni",
+    "la carica del nucleo è nulla"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-11a-05",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Un atomo ha numero atomico 11 e numero di massa 23. Il numero dei suoi neutroni è:",
+   "spiegazione": "I neutroni si ottengono sottraendo il numero atomico da quello di massa: 23 meno 11 fa 12. Sommare i due numeri, come nell'opzione 34, è l'errore più comune.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "11",
+    "12",
+    "23",
+    "34",
+    "1"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-11a-06",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Le particelle del nucleo prive di carica elettrica sono i ……",
+   "spiegazione": "Hanno massa quasi identica a quella dei protoni ma nessuna carica. Il loro numero influisce sulla massa dell'atomo e sulla stabilità del nucleo, non sul comportamento chimico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "neutroni",
+    "neutrone"
+   ]
+  },
+  {
+   "id": "chim-11a-07",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Il numero che indica quanti protoni ci sono nel nucleo di un atomo si chiama numero ……",
+   "spiegazione": "È il numero che ordina gli elementi nella tavola periodica. Conoscendolo si conosce anche il numero di elettroni dell'atomo neutro, e quindi il suo comportamento chimico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "atomico",
+    "atomico (Z)",
+    "Z"
+   ]
+  },
+  {
+   "id": "chim-11a-08",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Il carbonio ha numero atomico 6: in un atomo di carbonio con numero di massa 14 i neutroni sono ……",
+   "spiegazione": "Quattordici meno sei fa otto, due in più del carbonio più comune. Quei due neutroni di troppo rendono il nucleo instabile, ed è su questo che si basa la datazione al radiocarbonio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "8",
+    "otto"
+   ],
+   "numero": {
+    "valore": 8,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-11a-09",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "La particella con carica negativa che si trova nello spazio intorno al nucleo è l'……",
+   "spiegazione": "Sono gli elettroni più esterni a decidere come un atomo si lega agli altri. La chimica, in sostanza, è la storia di questi elettroni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "elettrone",
+    "elettroni"
+   ]
+  },
+  {
+   "id": "chim-11a-10",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Un atomo che ha perso o acquistato elettroni, e che quindi possiede una carica netta, si chiama ……",
+   "spiegazione": "Perdendo elettroni si ottiene un catione, positivo; acquistandone un anione, negativo. Il numero di protoni non cambia, quindi l'elemento resta lo stesso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "ione",
+    "ioni"
+   ]
+  },
+  {
+   "id": "chim-11b-01",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Due isotopi dello stesso elemento hanno proprietà chimiche:",
+   "spiegazione": "Il comportamento chimico dipende dagli elettroni, e due isotopi ne hanno lo stesso numero e la stessa disposizione. Cambiano la massa e, a volte, la stabilità del nucleo: proprietà fisiche, non chimiche.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "completamente diverse, perché le masse sono diverse",
+    "praticamente identiche, perché gli elettroni sono gli stessi",
+    "diverse soltanto in soluzione acquosa",
+    "identiche solo se entrambi sono stabili",
+    "impossibili da confrontare"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-11b-02",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Perché un isotopo radioattivo può funzionare da tracciante in medicina?",
+   "spiegazione": "L'organismo non distingue i due isotopi, quindi il tracciante percorre la via naturale della sostanza; l'unica differenza è che si può seguire con un rivelatore. È il principio della scintigrafia e della PET.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché viene eliminato più lentamente degli altri atomi",
+    "perché si lega solo alle cellule malate",
+    "perché non partecipa ad alcuna reazione",
+    "perché segue le stesse vie chimiche dell'isotopo stabile, ma la sua radiazione si può rilevare dall'esterno",
+    "perché modifica il metabolismo dell'organo da studiare"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-11b-03",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "La risonanza magnetica nucleare sfrutta:",
+   "spiegazione": "Alcuni nuclei si comportano come minuscole calamite e, in un campo magnetico, assorbono e riemettono energia a una frequenza caratteristica. Non c'è nessuna radiazione ionizzante: è la differenza principale rispetto alla radiografia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il momento magnetico di alcuni nuclei immersi in un campo magnetico",
+    "l'emissione di raggi X da parte degli elettroni",
+    "la radioattività naturale dei tessuti",
+    "la carica elettrica degli ioni in soluzione",
+    "la diversa densità degli organi alle onde sonore"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-11b-04",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Nelle immagini di risonanza magnetica del corpo umano il segnale proviene soprattutto dai nuclei di:",
+   "spiegazione": "L'idrogeno è il nucleo più abbondante nei tessuti, perché l'acqua e i grassi ne sono pieni, e possiede il momento magnetico necessario. Carbonio-12 e ossigeno-16, nuclei pari, non danno segnale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "carbonio-12",
+    "idrogeno",
+    "ossigeno-16",
+    "ferro",
+    "calcio"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-11b-05",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Due isotopi dello stesso elemento hanno uguale numero atomico ma diverso numero di ……",
+   "spiegazione": "Cambiando i neutroni cambia il numero di massa, e con esso le proprietà fisiche. Il nome richiama il fatto che occupano lo stesso posto nella tavola periodica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "neutroni",
+    "neutrone",
+    "massa"
+   ]
+  },
+  {
+   "id": "chim-11b-06",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "La massa atomica riportata sulla tavola periodica è una …… ponderata delle masse dei vari isotopi",
+   "spiegazione": "Il peso di ciascun isotopo nella media è la sua abbondanza in natura. È per questo che i valori in tabella non sono numeri interi, pur essendo i nucleoni contabili uno per uno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "media"
+   ]
+  },
+  {
+   "id": "chim-11b-07",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Perché un nucleo possa dare segnale in risonanza magnetica il suo spin deve essere diverso da ……",
+   "spiegazione": "Un nucleo con spin nullo non si comporta da calamita e resta invisibile alla tecnica. Accade quando protoni e neutroni sono entrambi in numero pari, come nel carbonio-12.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "0",
+    "zero"
+   ],
+   "numero": {
+    "valore": 0,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-11b-08",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "L'isotopo del carbonio impiegato per datare i resti organici è il carbonio-……",
+   "spiegazione": "Si forma continuamente nell'atmosfera e decade con un tempo noto: misurando quanto ne resta si risale a quando l'organismo è morto. Oltre qualche decina di migliaia di anni il metodo non è più utilizzabile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "14",
+    "quattordici",
+    "C-14",
+    "14C"
+   ],
+   "numero": {
+    "valore": 14,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-11b-09",
+   "argomento": "chim.1.1",
+   "stato": "approvata",
+   "testo": "Il fenomeno per cui un nucleo instabile si trasforma emettendo radiazioni si chiama ……",
+   "spiegazione": "Dipende dal rapporto fra protoni e neutroni: quando è troppo sbilanciato il nucleo cerca una configurazione più stabile. Il processo non si può accelerare né rallentare con mezzi chimici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "radioattività",
+    "radioattivita",
+    "decadimento radioattivo",
+    "decadimento"
+   ]
+  },
+  {
+   "id": "chim-74a-01",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "A temperatura ambiente i grassi animali sono solidi e gli oli vegetali liquidi perché:",
+   "spiegazione": "Le catene sature sono diritte e riescono ad avvicinarsi molto, quindi servono temperature più alte per separarle. I doppi legami degli oli piegano le catene e impediscono questo ordine.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "i grassi animali contengono più glicerolo",
+    "gli oli vegetali contengono acqua",
+    "i grassi animali sono ricchi di acidi grassi saturi, che si impacchettano meglio fra loro",
+    "gli oli vegetali hanno catene molto più lunghe",
+    "i grassi animali sono proteine e non lipidi"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-74a-02",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Un doppio legame di configurazione cis in un acido grasso:",
+   "spiegazione": "La piega di circa trenta gradi tiene le catene distanti fra loro, e per questo gli insaturi fondono a temperatura più bassa. I doppi legami trans, al contrario, lasciano la catena quasi diritta e si comportano come i saturi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "introduce una piega nella catena e ne ostacola l'impacchettamento",
+    "rende la catena più rigida e diritta",
+    "aumenta il punto di fusione",
+    "trasforma l'acido grasso in un alcol",
+    "non ha alcun effetto sulla forma della molecola"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-74a-03",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "I glicerofosfolipidi possono formare i doppi strati delle membrane perché:",
+   "spiegazione": "In acqua le teste si girano verso il solvente e le code si nascondono una contro l'altra: la struttura a due strati si forma da sé. Una molecola tutta apolare, come un trigliceride, non può farlo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "sono completamente apolari",
+    "sono completamente solubili in acqua",
+    "contengono tre acidi grassi",
+    "hanno una testa polare e due code apolari nella stessa molecola",
+    "sono molecole molto piccole"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-74a-04",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Negli sfingolipidi lo scheletro della molecola non è il glicerolo ma:",
+   "spiegazione": "La sfingosina è un amminoalcol a lunga catena e sostituisce il glicerolo come base della molecola. Gli sfingolipidi sono abbondanti nel tessuto nervoso, in particolare nella mielina.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il colesterolo",
+    "la sfingosina",
+    "un anello aromatico",
+    "una catena di glucosio",
+    "un amminoacido"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-74a-05",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Un acido grasso che non possiede alcun doppio legame si dice ……",
+   "spiegazione": "Saturo significa che la catena porta tutti gli idrogeni possibili e non può addizionarne altri. Da qui anche il nome dell'idrogenazione industriale, che satura i doppi legami degli oli.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "saturo",
+    "saturi",
+    "satura",
+    "sature"
+   ]
+  },
+  {
+   "id": "chim-74a-06",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Nei trigliceridi gli acidi grassi sono legati a una molecola di ……",
+   "spiegazione": "Il glicerolo ha tre gruppi ossidrilici, e ciascuno può legare un acido grasso. È la forma in cui l'organismo accumula energia, perché a parità di massa i lipidi ne contengono più dei carboidrati.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "glicerolo",
+    "glicerina"
+   ]
+  },
+  {
+   "id": "chim-74a-07",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Il legame che unisce il glicerolo a ciascun acido grasso è un legame ……",
+   "spiegazione": "Nasce dalla reazione fra un gruppo ossidrilico e un gruppo carbossilico, con perdita d'acqua. La sua idrolisi, catalizzata dalle lipasi, è il primo passo della digestione dei grassi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "estere",
+    "esterico",
+    "estereo"
+   ]
+  },
+  {
+   "id": "chim-74a-08",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Negli acidi grassi omega-3 e omega-6 il numero indica la posizione del primo doppio legame contata a partire dall'estremità ……",
+   "spiegazione": "Si conta dalla parte opposta al gruppo carbossilico, cioè dall'ultimo carbonio della catena. Sono acidi grassi essenziali: l'organismo non riesce a introdurre doppi legami in quelle posizioni e deve assumerli con la dieta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "metilica",
+    "metilico",
+    "terminale",
+    "omega",
+    "ω"
+   ]
+  },
+  {
+   "id": "chim-74a-09",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "I lipidi di membrana che portano una catena di zuccheri legata alla testa polare si chiamano ……",
+   "spiegazione": "Gli zuccheri sporgono sulla faccia esterna della membrana e partecipano al riconoscimento fra cellule. Gli antigeni dei gruppi sanguigni sono in parte costruiti così.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "glicolipidi",
+    "glicolipide"
+   ]
+  },
+  {
+   "id": "chim-74b-01",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Il colesterolo appartiene alla classe degli:",
+   "spiegazione": "Lo scheletro a quattro anelli fusi è ciò che definisce uno steroide, e il colesterolo ne è il capostipite negli animali. Non ha code di acidi grassi, quindi non è né un trigliceride né un fosfolipide.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "acidi grassi a catena lunga",
+    "steroidi, con quattro anelli condensati",
+    "trigliceridi",
+    "fosfolipidi",
+    "glicolipidi"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-74b-02",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Nella membrana plasmatica delle cellule animali il colesterolo:",
+   "spiegazione": "La sua struttura rigida ostacola il movimento delle code vicine ma impedisce anche che si impacchettino troppo: tiene la membrana in un intervallo di fluidità utile. Le cellule vegetali usano altri steroli per lo stesso scopo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "forma da solo un terzo strato",
+    "sostituisce i fosfolipidi danneggiati",
+    "si inserisce fra i fosfolipidi e ne regola la fluidità",
+    "si lega agli zuccheri di superficie",
+    "trasporta ioni attraverso il doppio strato"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-74b-03",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Gli acidi biliari, derivati dal colesterolo, servono a:",
+   "spiegazione": "Essendo anfipatici, circondano le gocce di grasso e le disperdono in gocce minute: le lipasi, che lavorano solo in superficie, trovano così molta più area disponibile. È anche la principale via con cui l'organismo elimina colesterolo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "emulsionare i grassi nell'intestino, rendendoli attaccabili dagli enzimi",
+    "trasportare l'ossigeno nel sangue",
+    "neutralizzare l'acido cloridrico dello stomaco",
+    "digerire le proteine",
+    "assorbire il glucosio"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-74b-04",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Nella pelle la vitamina D si forma a partire da un derivato del colesterolo per effetto:",
+   "spiegazione": "La luce ultravioletta apre uno degli anelli del precursore, e da lì seguono due idrossilazioni, nel fegato e nel rene, che danno la forma attiva. È il motivo per cui la carenza è frequente dove si prende poco sole.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "del calore corporeo",
+    "del contatto con l'ossigeno",
+    "dell'azione dei sali biliari",
+    "della radiazione ultravioletta",
+    "della sudorazione"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-74b-05",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Gli ormoni steroidei, come il testosterone e gli estrogeni, derivano tutti dal ……",
+   "spiegazione": "Una stessa molecola di partenza, modificata in punti diversi, dà ormoni con effetti molto differenti. È anche la ragione per cui i farmaci che bloccano la sintesi del colesterolo possono interferire con questi ormoni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "colesterolo"
+   ]
+  },
+  {
+   "id": "chim-74b-06",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Il numero di anelli condensati che formano lo scheletro di uno steroide è ……",
+   "spiegazione": "Tre anelli a sei atomi di carbonio e uno a cinque, fusi fra loro. La struttura è rigida e quasi piatta, e questo spiega l'effetto del colesterolo sulle membrane.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-74b-07",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "La dispersione dei grassi in gocce minute, operata dai sali biliari, si chiama ……",
+   "spiegazione": "Non è una reazione chimica: i grassi restano quello che sono, ma la superficie esposta agli enzimi aumenta enormemente. Senza questo passaggio la digestione dei lipidi sarebbe lentissima.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "emulsione",
+    "emulsionamento",
+    "emulsificazione"
+   ]
+  },
+  {
+   "id": "chim-74b-08",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "L'ormone steroideo prodotto dalla corteccia del surrene in risposta allo stress prolungato è il ……",
+   "spiegazione": "Essendo liposolubile attraversa le membrane e agisce su recettori intracellulari, modificando la trascrizione di molti geni. Per questo i suoi effetti sono lenti a comparire e lenti a passare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "cortisolo"
+   ]
+  },
+  {
+   "id": "chim-74b-09",
+   "argomento": "chim.7.4",
+   "stato": "approvata",
+   "testo": "Nel sangue il colesterolo viaggia dentro complessi formati da lipidi e proteine, chiamati ……",
+   "spiegazione": "Essendo insolubile in acqua, il colesterolo non può circolare da solo. Le sigle LDL e HDL indicano lipoproteine di densità diversa, che lo portano in direzioni opposte: ai tessuti le prime, al fegato le seconde.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "lipoproteine",
+    "lipoproteina"
+   ]
+  },
+  {
+   "id": "chim-42a-01",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Una soluzione tampone è formata da:",
+   "spiegazione": "Servono due specie che si trasformino l'una nell'altra: una pronta a cedere protoni e una pronta ad accettarli. Va bene anche la coppia opposta, una base debole con il suo acido coniugato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "un acido forte e una base forte in parti uguali",
+    "un acido debole e la sua base coniugata",
+    "due acidi forti diversi",
+    "un sale completamente dissociato",
+    "acqua distillata e un indicatore"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-42a-02",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Aggiungendo una piccola quantità di acido forte a una soluzione tampone:",
+   "spiegazione": "I protoni aggiunti non restano liberi: vengono consumati trasformando la base coniugata nell'acido debole. Il rapporto fra le due forme si sposta, ma finché entrambe sono presenti in quantità il pH si muove poco.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il pH scende bruscamente come in acqua pura",
+    "il pH sale, perché il tampone reagisce in modo opposto",
+    "la base coniugata cattura i protoni aggiunti e il pH cambia poco",
+    "il tampone si trasforma in un acido forte",
+    "non avviene alcuna reazione"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-42a-03",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Una soluzione di acido cloridrico non può funzionare da tampone perché:",
+   "spiegazione": "La base coniugata di un acido forte è troppo debole per riprendersi il protone, quindi manca la metà del meccanismo. Tamponare richiede un equilibrio spostabile nei due sensi, e un acido forte non lo offre.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è troppo diluita",
+    "contiene cloro",
+    "ha un pH troppo basso",
+    "essendo completamente dissociato, non dispone di una riserva capace di catturare protoni",
+    "reagisce con l'acqua"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-42a-04",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Il principale sistema tampone del plasma sanguigno è quello formato da:",
+   "spiegazione": "È un tampone aperto: l'anidride carbonica in eccesso viene eliminata con la respirazione e il bicarbonato regolato dal rene. Questa possibilità di regolare entrambi i componenti lo rende molto più efficace di un tampone chiuso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "fosfato monobasico e fosfato dibasico",
+    "ammoniaca e ione ammonio",
+    "acetato e acido acetico",
+    "cloruro e acido cloridrico",
+    "ione bicarbonato e acido carbonico"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "chim-42a-05",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Una soluzione tampone serve a resistere alle variazioni di ……",
+   "spiegazione": "Non impedisce le variazioni, le attenua: aggiungendo acido o base il pH si muove, ma molto meno che in acqua. Nel sangue questo margine è vitale, perché gli enzimi lavorano solo in un intervallo ristretto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "pH"
+   ]
+  },
+  {
+   "id": "chim-42a-06",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Nel sangue il tampone principale è formato dall'acido carbonico e dallo ione ……",
+   "spiegazione": "L'acido carbonico si forma dall'anidride carbonica disciolta, quindi il polmone controlla un componente e il rene l'altro. Alterazioni di questo equilibrio sono le acidosi e le alcalosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "bicarbonato",
+    "idrogenocarbonato",
+    "HCO3-"
+   ]
+  },
+  {
+   "id": "chim-42a-07",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Un tampone preparato con acido acetico, il cui pKa è 4,76, lavora al meglio a pH ……",
+   "spiegazione": "Il potere tamponante è massimo quando acido e base coniugata sono in parti uguali, e in quella condizione il pH coincide con il pKa. Scegliere il tampone giusto significa cercarne uno con pKa vicino al pH che interessa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "4,76",
+    "4.76"
+   ],
+   "numero": {
+    "valore": 4.76,
+    "tolleranza": 0.01
+   }
+  },
+  {
+   "id": "chim-42a-08",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Un tampone smette di funzionare quando uno dei suoi due componenti è quasi del tutto ……",
+   "spiegazione": "Finché entrambe le forme sono presenti il sistema assorbe le aggiunte; quando una finisce, il pH si muove come in una soluzione non tamponata. È il motivo per cui un tampone ha una capacità limitata e misurabile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "esaurito",
+    "consumato",
+    "esaurita",
+    "consumata",
+    "finito"
+   ]
+  },
+  {
+   "id": "chim-42b-01",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "L'equazione di Henderson-Hasselbalch permette di calcolare:",
+   "spiegazione": "Serve il pKa dell'acido debole e le concentrazioni delle due forme: il resto è un logaritmo. Si usa anche al contrario, per decidere in che proporzioni mescolare i due componenti per ottenere il pH desiderato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il pH di un tampone a partire dal pKa e dal rapporto fra base coniugata e acido",
+    "la costante di dissociazione di un acido a partire dal pH",
+    "il volume di titolante necessario a neutralizzare un acido",
+    "la solubilità di un sale al variare del pH",
+    "il potenziale di una cella elettrochimica"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-42b-02",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "In un tampone in cui le concentrazioni di acido debole e base coniugata sono uguali:",
+   "spiegazione": "Il rapporto fra le due concentrazioni vale 1 e il suo logaritmo è zero, quindi resta solo il pKa. Non c'è alcun motivo perché quel valore sia 7: dipende dall'acido scelto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il pH vale 7",
+    "il pH è uguale al pKa dell'acido",
+    "il tampone non funziona",
+    "il pH dipende solo dalla diluizione",
+    "la soluzione è neutra"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-42b-03",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "La capacità tamponante di una soluzione è tanto maggiore quanto più:",
+   "spiegazione": "Due condizioni insieme: tanta sostanza da consumare e un rapporto vicino a uno. Un tampone concentratissimo ma con un componente quasi finito regge poco, e uno equilibrato ma diluito si esaurisce subito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "la soluzione è diluita",
+    "il pH è lontano dal pKa",
+    "le concentrazioni dei due componenti sono elevate e fra loro simili",
+    "l'acido impiegato è forte",
+    "la temperatura è bassa"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-42b-04",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Diluendo con acqua una soluzione tampone, il pH:",
+   "spiegazione": "La diluizione abbassa entrambe le concentrazioni nella stessa misura, e nell'equazione conta il loro rapporto. Quello che peggiora è la capacità tamponante, non il pH di partenza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "aumenta di una unità per ogni diluizione di dieci volte",
+    "diminuisce di una unità per ogni diluizione di dieci volte",
+    "diventa subito uguale a 7",
+    "cambia poco, perché il rapporto fra i due componenti resta lo stesso",
+    "non è più misurabile"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-42b-05",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "In un tampone con pKa 7,2 in cui la base coniugata è dieci volte più concentrata dell'acido, il pH vale ……",
+   "spiegazione": "Il logaritmo di dieci è uno, quindi al pKa si aggiunge esattamente una unità. Ogni volta che il rapporto si decuplica il pH sale di uno: è il modo più rapido di usare l'equazione a mente.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "8,2",
+    "8.2"
+   ],
+   "numero": {
+    "valore": 8.2,
+    "tolleranza": 0.01
+   }
+  },
+  {
+   "id": "chim-42b-06",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Nell'equazione di Henderson-Hasselbalch al pKa si somma il logaritmo del …… fra base coniugata e acido",
+   "spiegazione": "Essendo un rapporto, le unità di misura si semplificano: contano le proporzioni e non le quantità assolute. È anche la ragione per cui la diluizione non sposta il pH.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "rapporto",
+    "quoziente"
+   ]
+  },
+  {
+   "id": "chim-42b-07",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Un tampone è considerato efficace in un intervallo di circa una unità di pH sopra e sotto il suo ……",
+   "spiegazione": "Fuori da quell'intervallo uno dei due componenti è più di dieci volte l'altro, e la riserva da consumare diventa piccola. Per questo in laboratorio si tengono tamponi diversi per intervalli di pH diversi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "pKa",
+    "pK_a"
+   ]
+  },
+  {
+   "id": "chim-42b-08",
+   "argomento": "chim.4.2",
+   "stato": "approvata",
+   "testo": "Un tampone può essere preparato anche partendo da una base debole e dal suo acido ……",
+   "spiegazione": "Il meccanismo è lo stesso, visto dall'altro lato: una specie accetta protoni e l'altra li cede. Il tampone ammoniaca-ammonio, per esempio, lavora in ambiente basico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "coniugato",
+    "coniugati"
+   ]
+  },
+  {
+   "id": "chim-31a-01",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "In una reazione chimica la massa totale dei reagenti:",
+   "spiegazione": "Gli atomi non si creano né si distruggono: si ridistribuiscono fra molecole diverse. In una reazione che sembra perdere massa, come una combustione all'aria aperta, parte dei prodotti è semplicemente volata via come gas.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è sempre maggiore di quella dei prodotti",
+    "è uguale alla massa totale dei prodotti",
+    "è sempre minore di quella dei prodotti",
+    "diminuisce se la reazione libera calore",
+    "non è confrontabile con quella dei prodotti"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-31a-02",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "In una reazione chimica:",
+   "spiegazione": "La chimica riguarda gli elettroni di legame, non i nuclei. Trasformare un elemento in un altro richiede una reazione nucleare, non chimica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "gli atomi di un elemento si trasformano in atomi di un altro",
+    "il numero totale di atomi cambia",
+    "si rompono e si formano legami, ma gli atomi restano gli stessi",
+    "i nuclei degli atomi si modificano",
+    "cambia il numero di protoni degli atomi coinvolti"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-31a-03",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "In una reazione fra ioni in soluzione, la somma delle cariche elettriche:",
+   "spiegazione": "La carica si conserva come la massa: un'equazione ionica va bilanciata anche nelle cariche, non solo negli atomi. È un controllo utile, perché smaschera subito un bilanciamento sbagliato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è la stessa prima e dopo la reazione",
+    "aumenta se si formano ioni positivi",
+    "diventa sempre zero nei prodotti",
+    "non deve essere bilanciata",
+    "dipende dal volume della soluzione"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-31a-04",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Una reazione esotermica è una reazione che:",
+   "spiegazione": "L'energia non si perde: la differenza fra i legami rotti e quelli formati viene ceduta all'ambiente, in genere come calore. Liberare energia non garantisce però che la reazione sia veloce.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "assorbe calore dall'ambiente",
+    "avviene solo a temperature elevate",
+    "non scambia energia con l'ambiente",
+    "libera calore, perché i prodotti hanno energia minore dei reagenti",
+    "produce sempre un gas"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-31a-05",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "La legge secondo cui in una reazione chimica la massa non si crea né si distrugge porta il nome di ……",
+   "spiegazione": "Lavoisier arrivò alla legge pesando i reagenti e i prodotti in recipienti chiusi, dove nulla poteva sfuggire. È il fondamento del bilanciamento delle equazioni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "Lavoisier",
+    "conservazione della massa"
+   ]
+  },
+  {
+   "id": "chim-31a-06",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Le sostanze che si trasformano nel corso di una reazione, scritte a sinistra della freccia, si chiamano ……",
+   "spiegazione": "A destra stanno i prodotti, e la freccia indica il verso della trasformazione. Quando la reazione è reversibile si usa una doppia freccia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "reagenti",
+    "reagente"
+   ]
+  },
+  {
+   "id": "chim-31a-07",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Una reazione che per avvenire assorbe calore dall'ambiente si dice ……",
+   "spiegazione": "I prodotti si trovano a energia maggiore dei reagenti, e la differenza viene presa dall'ambiente, che si raffredda. Le borse del ghiaccio istantaneo funzionano così.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "endotermica",
+    "endotermiche",
+    "endoergonica"
+   ]
+  },
+  {
+   "id": "chim-31a-08",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "La reazione in cui una molecola viene scissa per intervento dell'acqua si chiama ……",
+   "spiegazione": "Il nome dice la cosa: rottura per mezzo dell'acqua. È il meccanismo con cui si demoliscono proteine, grassi e zuccheri durante la digestione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "idrolisi",
+    "idrolisi (scissione con acqua)"
+   ]
+  },
+  {
+   "id": "chim-31b-01",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "La reazione fra idrogeno e ossigeno che forma acqua, correttamente bilanciata, è:",
+   "spiegazione": "A sinistra quattro idrogeni e due ossigeni, a destra altrettanti: il conto torna da entrambe le parti. La prima scrittura, la più istintiva, lascia un atomo di ossigeno senza posto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "H2 + O2 → H2O",
+    "2 H2 + O2 → 2 H2O",
+    "H2 + 2 O2 → 2 H2O",
+    "2 H2 + 2 O2 → 2 H2O",
+    "H2 + O2 → 2 H2O"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-31b-02",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Per bilanciare la combustione del metano, CH4 + O2 → CO2 + H2O, davanti all'ossigeno va il coefficiente:",
+   "spiegazione": "I quattro idrogeni del metano danno due molecole d'acqua, che insieme all'anidride carbonica richiedono quattro atomi di ossigeno: due molecole di O2. Conviene bilanciare per ultimo l'ossigeno, perché compare in entrambi i prodotti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "1",
+    "3",
+    "2",
+    "4",
+    "5"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-31b-03",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Nel bilanciare un'equazione chimica si possono modificare:",
+   "spiegazione": "I coefficienti dicono quante molecole partecipano; gli indici dicono di quali molecole si tratta. Cambiare un indice significa parlare di un'altra sostanza: da H2O si passerebbe ad H2O2, cioè dall'acqua all'acqua ossigenata.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "soltanto i coefficienti davanti alle formule",
+    "gli indici all'interno delle formule",
+    "sia i coefficienti sia gli indici",
+    "il numero di sostanze che compaiono",
+    "la direzione della freccia"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-31b-04",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Nella reazione bilanciata 2 H2 + O2 → 2 H2O il numero totale di atomi di ossigeno presenti fra i reagenti è ……",
+   "spiegazione": "Una molecola di O2 contiene due atomi, e lo stesso numero si ritrova nelle due molecole d'acqua prodotte. È il controllo che conferma il bilanciamento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-31b-05",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "I numeri che si scrivono davanti alle formule per bilanciare un'equazione si chiamano ……",
+   "spiegazione": "Indicano in che proporzioni le sostanze reagiscono, e si leggono come numeri di molecole o di moli. Sono anche la base di tutti i calcoli stechiometrici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "coefficienti",
+    "coefficiente",
+    "coefficienti stechiometrici",
+    "coefficiente stechiometrico"
+   ]
+  },
+  {
+   "id": "chim-31b-06",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "Gli indici scritti all'interno di una formula non si possono toccare, perché cambiarli vorrebbe dire cambiare la ……",
+   "spiegazione": "L'indice fa parte dell'identità del composto: è quello che distingue l'acqua dall'acqua ossigenata. Bilanciare significa aggiustare le quantità, non le sostanze.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "sostanza",
+    "molecola",
+    "formula",
+    "specie chimica",
+    "composto"
+   ]
+  },
+  {
+   "id": "chim-31b-07",
+   "argomento": "chim.3.1",
+   "stato": "approvata",
+   "testo": "La reazione in cui due composti si scambiano gli ioni formando due nuovi composti si chiama reazione di doppio ……",
+   "spiegazione": "Avviene quando uno dei prodotti lascia la soluzione, precipitando o liberandosi come gas, oppure quando si forma acqua. Senza una di queste condizioni gli ioni restano mescolati e non succede nulla.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "scambio",
+    "scambi",
+    "metatesi"
+   ]
+  },
+  {
+   "id": "chim-73a-01",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Due monosaccaridi che differiscono fra loro per la configurazione di un solo carbonio chirale si dicono:",
+   "spiegazione": "Gli enantiomeri sono immagini speculari e differiscono in tutti i centri chirali; gli epimeri in uno solo. Gli anomeri sono un caso particolare di epimeri, quello che riguarda il carbonio anomerico della forma ciclica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "anomeri",
+    "enantiomeri",
+    "epimeri",
+    "tautomeri",
+    "isomeri di struttura"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-73a-02",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Gli anomeri alfa e beta del glucosio differiscono per:",
+   "spiegazione": "Chiudendosi ad anello il carbonio del carbonile diventa chirale, e l'ossidrile può finire sopra o sotto il piano. Nella forma beta sta dalla parte opposta rispetto alla alfa, e questa piccola differenza decide quali enzimi riescono a riconoscere lo zucchero.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il numero di atomi di carbonio",
+    "l'orientamento dell'ossidrile legato al carbonio anomerico",
+    "la presenza di un gruppo amminico",
+    "il numero di atomi di ossigeno",
+    "la posizione del gruppo carbonilico nella catena aperta"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-73a-03",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "La mutarotazione di un monosaccaride in soluzione acquosa è:",
+   "spiegazione": "L'anello si riapre e si richiude continuamente, e nel farlo l'ossidrile anomerico può cambiare lato. Partendo da un anomero puro si arriva così a una miscela all'equilibrio, e la rotazione ottica misurata si sposta fino a stabilizzarsi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "la trasformazione in un altro zucchero",
+    "l'ossidazione del gruppo carbonilico",
+    "la perdita di una molecola d'acqua",
+    "la conversione spontanea di un anomero nell'altro, con variazione del potere ottico rotatorio",
+    "la formazione di un legame glicosidico"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-73a-04",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "La reazione di Maillard, responsabile della doratura degli alimenti cotti, avviene fra:",
+   "spiegazione": "Serve uno zucchero riducente e una proteina o un amminoacido: da lì parte una catena di reazioni che produce colore e aroma. Nell'organismo la stessa chimica, molto più lenta, glicosila le proteine, e nel diabete diventa un problema.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "il gruppo carbonilico di uno zucchero e un gruppo amminico",
+    "due molecole di glucosio",
+    "un acido grasso e il glicerolo",
+    "l'amido e l'acqua",
+    "due gruppi carbossilici"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-73a-05",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Nella forma ciclica di un monosaccaride, il carbonio che era il carbonile e che distingue le forme alfa e beta si chiama carbonio ……",
+   "spiegazione": "È il carbonio su cui si decide quale anomero si ha in mano. Quando partecipa a un legame glicosidico non può più riaprirsi, e lo zucchero perde il potere riducente.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "anomerico",
+    "anomerici",
+    "C1",
+    "emiacetalico"
+   ]
+  },
+  {
+   "id": "chim-73a-06",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Uno zucchero che possiede il gruppo carbonilico libero, e che quindi può ridurre il reattivo di Fehling, si dice zucchero ……",
+   "spiegazione": "Il gruppo carbonilico si ossida cedendo elettroni, e per questo riduce il reattivo. Il saccarosio non lo fa, perché nel suo legame glicosidico sono impegnati entrambi i carboni anomerici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "riducente",
+    "riducenti"
+   ]
+  },
+  {
+   "id": "chim-73a-07",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Il numero di atomi di carbonio contenuti in una molecola di glucosio è ……",
+   "spiegazione": "Sei carboni fanno del glucosio un esoso, la classe di zuccheri più diffusa. Il ribosio, con cinque, è un pentoso ed è quello che compare negli acidi nucleici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "6",
+    "sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-73a-08",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "La forma ciclica a sei atomi nell'anello, quella prevalente per il glucosio in soluzione, si chiama ……",
+   "spiegazione": "L'anello comprende cinque carboni e un ossigeno. La forma a cinque atomi, il furanosio, è invece quella del fruttosio e del ribosio negli acidi nucleici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "piranosio",
+    "piranosica",
+    "piranosio (anello a sei)",
+    "piranoso"
+   ]
+  },
+  {
+   "id": "chim-73b-01",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Il legame glicosidico si forma:",
+   "spiegazione": "È una condensazione come quelle che formano i legami peptidici ed esterei. Impegnando il carbonio anomerico, blocca l'anello e toglie allo zucchero la possibilità di riaprirsi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "fra due gruppi carbossilici di zuccheri diversi",
+    "fra il carbonio anomerico di un monosaccaride e un ossidrile di un altro, con perdita d'acqua",
+    "fra un monosaccaride e un amminoacido",
+    "per ossidazione di due gruppi ossidrilici",
+    "soltanto fra zuccheri a cinque atomi di carbonio"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-73b-02",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Perché l'essere umano non riesce a digerire la cellulosa, pur digerendo l'amido?",
+   "spiegazione": "I due polisaccaridi sono fatti dello stesso monomero, ma i legami hanno geometria diversa e gli enzimi sono specifici. I ruminanti ci riescono grazie ai batteri del loro apparato digerente, non con enzimi propri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché la cellulosa non contiene glucosio",
+    "perché la cellulosa non è solubile in acqua",
+    "perché non possiede l'enzima capace di idrolizzare i legami beta della cellulosa",
+    "perché la cellulosa viene distrutta nello stomaco",
+    "perché la cellulosa è una proteina"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-73b-03",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Rispetto all'amido, il glicogeno:",
+   "spiegazione": "Le ramificazioni sono più frequenti, quindi le estremità libere sono molte di più. Gli enzimi che liberano glucosio lavorano proprio sulle estremità, e questo rende la mobilitazione delle riserve molto più rapida.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "è più ramificato",
+    "è formato da un monosaccaride diverso",
+    "non contiene legami glicosidici",
+    "è una catena perfettamente lineare",
+    "si trova soltanto nei vegetali"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-73b-04",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Il disaccaride formato da una molecola di glucosio e una di fruttosio è il ……",
+   "spiegazione": "È il comune zucchero da tavola, e non è uno zucchero riducente perché il legame impegna i carboni anomerici di entrambi i monosaccaridi. L'enzima che lo scinde nell'intestino è la saccarasi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "saccarosio"
+   ]
+  },
+  {
+   "id": "chim-73b-05",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "Il disaccaride presente nel latte, formato da glucosio e galattosio, è il ……",
+   "spiegazione": "Chi perde l'attività della lattasi non riesce a scinderlo, e il lattosio arriva intero al colon dove i batteri lo fermentano. Da lì i sintomi dell'intolleranza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "lattosio"
+   ]
+  },
+  {
+   "id": "chim-73b-06",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "I polisaccaridi costituiti da un solo tipo di monosaccaride ripetuto si chiamano ……",
+   "spiegazione": "Amido, cellulosa e glicogeno sono tutti polimeri del solo glucosio, e le loro differenze stanno nel tipo di legame e nelle ramificazioni. Gli eteropolisaccaridi, come i glicosamminoglicani, alternano monomeri diversi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "omopolisaccaridi",
+    "omopolisaccaride"
+   ]
+  },
+  {
+   "id": "chim-73b-07",
+   "argomento": "chim.7.3",
+   "stato": "approvata",
+   "testo": "L'amido è formato da due polisaccaridi: l'amilosio, lineare, e l'amilopectina, che è invece ……",
+   "spiegazione": "Le due frazioni si distinguono anche alla prova dello iodio, che dà colori diversi. Nei vegetali l'amido è la riserva di glucosio, come il glicogeno negli animali.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "ramificata",
+    "ramificato"
+   ]
+  },
+  {
+   "id": "chim-64a-01",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Gli acidi carbossilici sono molto più acidi degli alcoli perché:",
+   "spiegazione": "Nel carbossilato la carica negativa è distribuita su due atomi di ossigeno equivalenti, e questa delocalizzazione rende la perdita del protone molto più facile. Nell'alcossido, invece, la carica resta su un solo ossigeno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "contengono più atomi di ossigeno",
+    "l'anione che si forma perdendo il protone è stabilizzato per risonanza",
+    "hanno catene più lunghe",
+    "sono liquidi a temperatura ambiente",
+    "contengono un doppio legame carbonio-carbonio"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-64a-02",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Facendo reagire un acido carbossilico con idrossido di sodio si ottengono:",
+   "spiegazione": "È una normale neutralizzazione: la base strappa il protone e resta il carbossilato con il sodio. I sali così ottenuti sono molto più solubili in acqua dell'acido di partenza, ed è il modo in cui molti farmaci acidi vengono formulati.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "un estere e idrogeno",
+    "un'ammide e acqua",
+    "il sale dell'acido e acqua",
+    "un alcol e anidride carbonica",
+    "due molecole di acido più concentrate"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-64a-03",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Dalla reazione fra un acido carbossilico e un composto con gruppo tiolico si ottiene:",
+   "spiegazione": "Lo zolfo prende il posto dell'ossigeno di un estere normale, e il legame che ne risulta è più ricco di energia. Per questo l'acetil-CoA è il modo con cui la cellula trasporta gruppi acetile pronti a reagire.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "un tioestere, come l'acetil-CoA",
+    "un'anidride",
+    "un lattone",
+    "un sale di sodio",
+    "un alcol"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-64a-04",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "La decarbossilazione di un acido carbossilico comporta:",
+   "spiegazione": "Il gruppo carbossilico se ne va come CO2 e la catena si accorcia di un carbonio. Nel metabolismo accade continuamente, dal ciclo di Krebs alla trasformazione di amminoacidi in ammine attive come l'istamina.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'aggiunta di una molecola d'acqua",
+    "la formazione di un doppio legame con l'azoto",
+    "l'ossidazione del gruppo ossidrilico",
+    "la perdita di una molecola di anidride carbonica",
+    "la trasformazione in un estere"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "chim-64a-05",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Il gruppo funzionale che caratterizza gli acidi carbossilici si scrive ……",
+   "spiegazione": "Riunisce un carbonile e un ossidrile sullo stesso carbonio, e dalla loro vicinanza nasce l'acidità. Separati, come in un aldeide e in un alcol, quella proprietà non c'è.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "COOH",
+    "-COOH",
+    "carbossilico",
+    "carbossile",
+    "R-COOH"
+   ]
+  },
+  {
+   "id": "chim-64a-06",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "L'anione che si ottiene da un acido carbossilico che ha perso il protone si chiama ……",
+   "spiegazione": "A pH fisiologico quasi tutti gli acidi carbossilici dell'organismo si trovano in questa forma, ed è per questo che si parla di lattato e piruvato invece di acido lattico e acido piruvico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "carbossilato",
+    "carbossilati",
+    "ione carbossilato",
+    "R-COO-",
+    "COO-"
+   ]
+  },
+  {
+   "id": "chim-64a-07",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Il derivato che si forma fra un acido carbossilico e un'ammina si chiama ……",
+   "spiegazione": "È il gruppo che tiene insieme le proteine, dove prende il nome di legame peptidico. Fra i derivati degli acidi carbossilici è il meno reattivo, e per questo il più stabile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "ammide",
+    "ammidi",
+    "amide",
+    "amidi"
+   ]
+  },
+  {
+   "id": "chim-64a-08",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "La reazione in cui un nucleofilo prende il posto di un gruppo legato al carbonio carbonilico si chiama sostituzione nucleofila ……",
+   "spiegazione": "È lo schema comune a quasi tutte le trasformazioni dei derivati degli acidi carbossilici: esterificazione, idrolisi, formazione di ammidi. Cambia il nucleofilo, il meccanismo resta lo stesso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "acilica",
+    "acile",
+    "acilico"
+   ]
+  },
+  {
+   "id": "chim-64b-01",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "L'esterificazione di Fischer avviene fra:",
+   "spiegazione": "L'acido forte serve da catalizzatore e la reazione è un equilibrio: per spostarlo verso l'estere si allontana l'acqua man mano che si forma. Al contrario, aggiungendo acqua in eccesso l'estere si idrolizza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "due acidi carbossilici",
+    "un acido carbossilico e un alcol, in ambiente acido",
+    "un estere e una base forte",
+    "un'ammide e l'acqua",
+    "un alcol e un'ammina"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "chim-64b-02",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "L'idrolisi di un'ammide è molto più difficile di quella di un estere perché:",
+   "spiegazione": "L'azoto è un donatore di elettroni migliore dell'ossigeno, quindi il carbonile dell'ammide è meno attaccabile. È questa stabilità a rendere le proteine durevoli, e a richiedere enzimi per demolirle.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'ammide è insolubile in acqua",
+    "l'estere contiene più ossigeno",
+    "il doppietto dell'azoto si delocalizza sul carbonile e rende il legame più stabile",
+    "l'ammide non contiene carbonio",
+    "l'idrolisi delle ammidi non è possibile"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "chim-64b-03",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Un lattone è:",
+   "spiegazione": "Si forma quando il gruppo carbossilico e un ossidrile della stessa molecola reagiscono fra loro, chiudendo un anello. Gli anelli a cinque o sei atomi sono i più stabili, e quindi i più facili da ottenere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "multipla",
+   "opzioni": [
+    "un estere ciclico",
+    "un'ammide ciclica",
+    "un sale degli acidi carbossilici",
+    "un acido grasso a catena corta",
+    "uno zucchero ossidato"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "chim-64b-04",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "La reazione in cui un estere scambia la propria parte alcolica con un altro alcol si chiama ……",
+   "spiegazione": "Non si passa dall'acido libero: il gruppo acilico viene trasferito direttamente da un alcol all'altro. È la reazione con cui si producono i biodiesel dai trigliceridi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "transesterificazione",
+    "transesterificazioni"
+   ]
+  },
+  {
+   "id": "chim-64b-05",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "L'idrolisi di un estere condotta in ambiente basico, che dà il sale dell'acido e l'alcol, si chiama anche ……",
+   "spiegazione": "Applicata ai trigliceridi produce i sali degli acidi grassi, cioè il sapone, e il glicerolo. A differenza dell'idrolisi acida non è un equilibrio: il sale formato non torna indietro.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "saponificazione",
+    "saponificazioni"
+   ]
+  },
+  {
+   "id": "chim-64b-06",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "Nella condensazione di Claisen reagiscono fra loro due molecole di ……",
+   "spiegazione": "Una delle due cede un protone dal carbonio vicino al carbonile e attacca l'altra, formando un legame carbonio-carbonio. È il modo in cui si allungano le catene, e nel metabolismo serve a costruire gli acidi grassi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "estere",
+    "esteri"
+   ]
+  },
+  {
+   "id": "chim-64b-07",
+   "argomento": "chim.6.4",
+   "stato": "approvata",
+   "testo": "L'idrolisi completa di un'ammide produce un acido carbossilico e un'……",
+   "spiegazione": "È la reazione inversa di quella che aveva formato l'ammide. Nelle proteine, ripetuta su ogni legame peptidico, è ciò che le riduce agli amminoacidi di partenza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792705599897,
+   "tipo": "completamento",
+   "accettate": [
+    "ammina",
+    "ammine",
+    "amina",
+    "amine",
+    "ammoniaca"
+   ]
   }
  ]
 }
