@@ -8,13 +8,16 @@
     "build": "tsc -b && vite build",
     "test": "vitest run",
     "pubblica": "node scripts/pubblica.mjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "genera": "node scripts/genera.mjs",
+    "verifica": "node scripts/verifica.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^1.1.0",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -22,6 +25,7 @@
     "typescript": "~6.0.3",
     "vite": "^8.3.4",
     "vite-plugin-pwa": "^2.0.0",
-    "vitest": "^5.0.5"
+    "vitest": "^5.0.5",
+    "zod": "^4.6.7"
   }
 }

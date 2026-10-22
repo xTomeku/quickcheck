@@ -328,7 +328,7 @@ export function Home({
           di più. Risultati e prove in corso restano salvati solo su questo dispositivo.
         </p>
         <p>
-          Una sezione di <a href="../">QuickCheck</a>, progetto indipendente di Stefano Sciurba, realizzato in collaborazione con
+          Una sezione di <a href="../">QuickCheck</a>, progetto indipendente di Stefano Sciurba e Ilaria Mosca, realizzato in collaborazione con
           UDU Lecce, sindacato studentesco. Non è uno strumento ufficiale del Ministero né degli atenei.
         </p>
       </footer>
