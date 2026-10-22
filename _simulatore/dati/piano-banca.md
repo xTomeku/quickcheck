@@ -149,12 +149,39 @@ confine del lotto.
   e la revisione non serve solo a scartare — su 36 domande ha allargato le risposte accettate,
   che è il lavoro che nessun modello può fare al posto nostro.
   I fogli per la verifica alla cieca di tutti e dieci restano in `dati/verifica/`, non ancora usati.
-- **Tappa 2 — chimica.** Stessa cosa, con la quota di calcolo più alta.
-- **Tappa 3 — fisica.** La più delicata: 40% di domande con calcolo, quindi la verifica numerica e le
-  tolleranze contano più di tutto il resto.
+- **Tappa 2 — chimica. Fatta per i primi dieci argomenti** (23 ottobre 2026): 190 domande in 21
+  lotti, 91 multiple e 99 completamenti, 17 con risposta numerica (il 9%, contro l'11% di domande
+  con calcolo misurato nel 2025). Riviste, approvate e pubblicate: la banca di chimica è a 221
+  domande, margine 7,1 volte il minimo. Restano i 32 argomenti più leggeri, il 16% del peso.
+  Nota: `chim.4.1` (acidi e basi) pesa da sola 30 domande e si spezza in tre lotti; nei numerici
+  conviene controllare in revisione che la `tolleranza` sia quella giusta, perché è l'unico campo
+  che i controlli automatici non possono giudicare.
+- **Tappa 3 — fisica. Fatta per i primi dieci argomenti** (23 ottobre 2026): 218 domande in 23
+  lotti, 103 multiple e 115 completamenti, **81 con calcolo, il 37%** contro il 40% delle prove 2025.
+  Riviste, approvate e pubblicate: la banca di fisica è a 249 domande, margine 7,9 volte il minimo.
+  Restano i 28 argomenti più leggeri, il 14% del peso.
+  La quota non è stata alzata a caso: il confronto argomento per argomento con le prove ufficiali
+  mostra che la media globale nasconde due mondi. Statica dei fluidi 6 domande su 6 con calcolo,
+  unità di misura 6 su 7, corrente 2 su 3; dinamica 0 su 1, lavoro ed energia 0 su 3,
+  termodinamica 0 su 2. Sono state quindi sostituite 21 domande concettuali ridondanti con esercizi
+  numerici **solo nei quattro argomenti che calcolano** (fluidi, unità, corrente, idrodinamica),
+  lasciando intatti gli altri. Il campione 2025 per argomento è di 1-7 domande: va preso come
+  direzione, non come obiettivo da centrare.
+  Qui la verifica ha trovato un difetto nella correzione, non nelle domande: `leggiNumero` non
+  riconosceva un numero seguito da un'unità con cifre dentro (`5 m/s^2`), quindi avrebbe segnato
+  errate risposte giuste. Corretto, con sette casi nuovi nei test. È il tipo di difetto che
+  solo le domande di fisica potevano far emergere, e che nessun controllo sulle domande avrebbe visto.
 
 Ogni tappa finisce con `npm run pubblica`, commit e push, quindi il simulatore migliora a pezzi invece
 di restare fermo fino alla fine.
+
+**Dove siamo alla fine delle tre tappe** (23 ottobre 2026): 690 domande approvate e online, da 93
+che erano. La revisione umana ne ha corrette 136 su 597, quasi sempre allargando le risposte
+accettate. Restano 33 argomenti su 124 senza nemmeno una domanda: sono i più leggeri, fra il 14% e
+il 21% del peso a seconda della materia, e per coprirli basta rilanciare `--prompts <materia> 20`
+e lavorare sui dieci successivi.
+Dopo ogni revisione vanno riallineati i file in `dati/generate/`, altrimenti un reimport riporta
+indietro le correzioni fatte nel pannello.
 
 ## 8. Lo script
 
