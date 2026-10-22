@@ -502,6 +502,3858 @@
    "spiegazione": "È descritto dalla legge di Snell: n₁·sen θ₁ = n₂·sen θ₂.",
    "stato": "approvata",
    "fonte": "demo"
+  },
+  {
+   "id": "fis-21a-01",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corridore percorre un giro completo di una pista di 400 m e torna al punto di partenza. Il suo spostamento è:",
+   "spiegazione": "Lo spostamento è il vettore che va dalla posizione iniziale a quella finale: se le due coincidono è nullo. I 400 m sono lo spazio percorso, che è una grandezza scalare e non coincide con lo spostamento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "400 m",
+    "zero",
+    "200 m",
+    "dipende dalla velocità tenuta",
+    "400 m, ma con verso opposto"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-21a-02",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La velocità media di un corpo è definita come:",
+   "spiegazione": "È un rapporto fra una variazione di posizione e una durata, e non dipende da quello che succede nel frattempo. Solo nel moto uniformemente accelerato coincide con la media fra velocità iniziale e finale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la media fra la velocità iniziale e quella finale",
+    "il rapporto fra lo spazio percorso e la velocità",
+    "il rapporto fra lo spostamento e l'intervallo di tempo",
+    "il prodotto dell'accelerazione per il tempo",
+    "la velocità tenuta per il tratto più lungo"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-21a-03",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La velocità istantanea di un corpo è:",
+   "spiegazione": "Restringendo l'intervallo intorno a un istante, il rapporto fra spostamento e tempo si avvicina a un valore preciso: quello è la velocità in quell'istante. È ciò che segna il tachimetro di un'auto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la velocità media calcolata su tutto il percorso",
+    "la velocità massima raggiunta",
+    "sempre uguale alla velocità media",
+    "il valore a cui tende la velocità media su intervalli di tempo sempre più brevi",
+    "il rapporto fra spazio totale e tempo totale"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-21a-04",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "In un grafico spazio-tempo la pendenza della curva in un punto rappresenta:",
+   "spiegazione": "Più la curva sale ripida, più lo spazio cambia in fretta: la pendenza è esattamente il rapporto fra spostamento e tempo. In un moto uniforme la pendenza è costante, quindi il grafico è una retta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la velocità in quell'istante",
+    "l'accelerazione in quell'istante",
+    "lo spazio percorso",
+    "il tempo trascorso",
+    "la massa del corpo"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-21a-05",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un'automobile percorre 120 km in 1,5 h. La sua velocità media è:",
+   "spiegazione": "Centoventi diviso 1,5 fa 80. Un errore frequente è trattare un'ora e mezza come 1,30: in forma decimale mezz'ora è 0,5 h.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "60 km/h",
+    "80 km/h",
+    "90 km/h",
+    "120 km/h",
+    "180 km/h"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-21a-06",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La grandezza vettoriale che congiunge la posizione iniziale con quella finale si chiama ……",
+   "spiegazione": "Avendo direzione e verso è un vettore, al contrario dello spazio percorso. Il suo modulo non può mai superare lo spazio percorso, e lo uguaglia solo nei moti rettilinei che non cambiano verso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "spostamento",
+    "spostamenti",
+    "vettore spostamento"
+   ]
+  },
+  {
+   "id": "fis-21a-07",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "L'accelerazione media è il rapporto fra la variazione di …… e l'intervallo di tempo in cui avviene",
+   "spiegazione": "Accelerare significa cambiare velocità, quindi anche rallentare o curvare a modulo costante sono accelerazioni. È un vettore, perché la velocità è un vettore.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "velocità",
+    "velocita"
+   ]
+  },
+  {
+   "id": "fis-21a-08",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corpo passa da 10 m/s a 30 m/s in 4 s: la sua accelerazione media, in m/s², è ……",
+   "spiegazione": "La variazione di velocità è 20 m/s e il tempo 4 s: venti diviso quattro fa 5. Il valore dice che ogni secondo la velocità cresce di 5 m/s.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "m/s^2"
+  },
+  {
+   "id": "fis-21a-09",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La linea descritta nello spazio da un punto materiale durante il suo moto si chiama ……",
+   "spiegazione": "È la forma del percorso, indipendente da quanto rapidamente viene compiuto. Dipende dal sistema di riferimento: un oggetto lasciato cadere su un treno in moto descrive una retta per chi è a bordo e una parabola per chi guarda da terra.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "traiettoria",
+    "traiettorie"
+   ]
+  },
+  {
+   "id": "fis-21a-10",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un ciclista viaggia a 36 km/h: espressa in metri al secondo la sua velocità è ……",
+   "spiegazione": "Per passare da km/h a m/s si divide per 3,6, e 36 diviso 3,6 fa 10. La conversione nasce dal fatto che un chilometro orario è mille metri in 3600 secondi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-21b-01",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nel moto rettilineo uniforme:",
+   "spiegazione": "Velocità costante significa accelerazione nulla, quindi in tempi uguali si percorrono spazi uguali. Il grafico spazio-tempo è una retta la cui pendenza è proprio la velocità.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'accelerazione è costante ma diversa da zero",
+    "la velocità è costante e lo spazio cresce in proporzione al tempo",
+    "la velocità cresce in proporzione al tempo",
+    "lo spazio cresce con il quadrato del tempo",
+    "il corpo è fermo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-21b-02",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "In un grafico velocità-tempo l'area compresa fra la curva e l'asse dei tempi rappresenta:",
+   "spiegazione": "Moltiplicando una velocità per un tempo si ottiene uno spazio, ed è esattamente quello che fa l'area. Nel moto uniforme l'area è un rettangolo, in quello uniformemente accelerato un triangolo o un trapezio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'accelerazione",
+    "la velocità media",
+    "lo spazio percorso",
+    "la forza applicata",
+    "il tempo impiegato"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-21b-03",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Due corpi di massa diversa vengono lasciati cadere nel vuoto dalla stessa altezza, nello stesso istante:",
+   "spiegazione": "Nel vuoto l'unica accelerazione è quella di gravità, che è la stessa per tutti i corpi: la massa non compare nelle equazioni del moto. Nell'aria la differenza che si osserva è dovuta alla resistenza, non al peso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "arriva prima quello più pesante",
+    "arriva prima quello più leggero",
+    "arriva prima quello con il volume minore",
+    "toccano terra nello stesso istante",
+    "dipende dalla forma dei due corpi"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-21b-04",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un sasso viene lasciato cadere da fermo e cade liberamente per 2 s. Assumendo g = 10 m/s², la velocità raggiunta è:",
+   "spiegazione": "Partendo da fermo la velocità cresce come g per il tempo: dieci per due fa 20 m/s. Confondere questo risultato con l'altezza di caduta, che negli stessi 2 s è 20 m, è una coincidenza numerica da non generalizzare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "5 m/s",
+    "20 m/s",
+    "10 m/s",
+    "40 m/s",
+    "2 m/s"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-21b-05",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corpo parte da fermo con accelerazione costante di 2 m/s². In 5 s percorre:",
+   "spiegazione": "Lo spazio è metà dell'accelerazione per il quadrato del tempo: metà di due fa uno, per venticinque fa 25 m. Chi moltiplica accelerazione per tempo ottiene 10, che è invece la velocità finale in m/s.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "10 m",
+    "50 m",
+    "25 m",
+    "5 m",
+    "20 m"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-21b-06",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nel moto uniformemente accelerato la grandezza che resta costante è l'……",
+   "spiegazione": "La velocità cambia di continuo, ma lo fa sempre dello stesso valore in ogni secondo. La caduta libera è il caso più comune di questo tipo di moto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "accelerazione",
+    "accelerazioni"
+   ]
+  },
+  {
+   "id": "fis-21b-07",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corpo cade liberamente da fermo con g = 10 m/s²: dopo 3 s la sua velocità, in m/s, vale ……",
+   "spiegazione": "Dieci metri al secondo guadagnati ogni secondo, per tre secondi, fanno 30 m/s. In assenza di aria il valore continuerebbe a crescere senza limite.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "30",
+    "trenta"
+   ],
+   "numero": {
+    "valore": 30,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-21b-08",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Lasciato cadere da fermo con g = 10 m/s², in 2 s un corpo scende di un'altezza, in metri, pari a ……",
+   "spiegazione": "Metà di g per il tempo al quadrato: metà di dieci fa cinque, per quattro fa 20 m. Raddoppiando il tempo lo spazio quadruplica, perché dipende dal quadrato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "m"
+  },
+  {
+   "id": "fis-21b-09",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nel moto rettilineo uniforme il grafico dello spazio in funzione del tempo è una ……",
+   "spiegazione": "A pendenza costante corrisponde una velocità costante. Nel moto uniformemente accelerato lo stesso grafico diventa invece una parabola.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "retta",
+    "rette",
+    "linea retta"
+   ]
+  },
+  {
+   "id": "fis-21b-10",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nella caduta libera nel vuoto, la grandezza del corpo che non influenza in alcun modo il moto è la ……",
+   "spiegazione": "Una massa doppia subisce una forza peso doppia, ma oppone anche un'inerzia doppia: i due effetti si annullano esattamente. È il fatto sperimentale su cui si fonda l'equivalenza fra massa inerziale e massa gravitazionale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "massa",
+    "masse"
+   ]
+  },
+  {
+   "id": "fis-21c-01",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nel moto di un proiettile, trascurando la resistenza dell'aria, la componente orizzontale della velocità:",
+   "spiegazione": "Orizzontalmente non agisce alcuna forza, quindi quel moto è uniforme; verticalmente agisce la gravità e il moto è uniformemente accelerato. La parabola nasce dalla combinazione dei due.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "diminuisce fino ad annullarsi",
+    "resta costante per tutta la traiettoria",
+    "aumenta durante la discesa",
+    "è sempre nulla",
+    "cambia verso nel punto più alto"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-21c-02",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nel moto circolare uniforme l'accelerazione:",
+   "spiegazione": "A cambiare non è il modulo della velocità ma la sua direzione, e anche questo è un cambiamento: quindi l'accelerazione esiste. Punta verso il centro perché è lì che la velocità viene continuamente \"piegata\".",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "è nulla, perché la velocità non cambia",
+    "è diretta lungo la traiettoria, nel verso del moto",
+    "ha modulo costante ed è sempre diretta verso il centro",
+    "cresce man mano che il corpo gira",
+    "è diretta verso l'esterno della circonferenza"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-21c-03",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Il periodo di un moto circolare uniforme è:",
+   "spiegazione": "Si misura in secondi ed è l'inverso della frequenza, che conta invece i giri al secondo. Raddoppiando la frequenza il periodo si dimezza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "il tempo impiegato a compiere un giro completo",
+    "il numero di giri compiuti in un secondo",
+    "la lunghezza della circonferenza",
+    "la velocità divisa per il raggio",
+    "l'angolo percorso in un secondo"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-21c-04",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corpo percorre una circonferenza di raggio 2 m con velocità costante di 4 m/s. La sua accelerazione centripeta vale:",
+   "spiegazione": "L'accelerazione centripeta è il quadrato della velocità diviso il raggio: sedici diviso due fa 8 m/s². Dimenticare di elevare al quadrato porta al valore 2, che è l'errore più comune.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 m/s²",
+    "16 m/s²",
+    "4 m/s²",
+    "8 m/s²",
+    "32 m/s²"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-21c-05",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La traiettoria di un corpo lanciato obliquamente, in assenza di resistenza dell'aria, è una ……",
+   "spiegazione": "È il risultato di un moto uniforme in orizzontale e di uno uniformemente accelerato in verticale. Il punto più alto è quello in cui la componente verticale della velocità si annulla.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "parabola",
+    "parabole",
+    "parabolica",
+    "arco di parabola"
+   ]
+  },
+  {
+   "id": "fis-21c-06",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Il numero di giri compiuti in un secondo in un moto circolare si chiama ……",
+   "spiegazione": "Si misura in hertz, cioè in giri al secondo. Periodo e frequenza sono l'uno il reciproco dell'altra.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "frequenza",
+    "frequenze"
+   ]
+  },
+  {
+   "id": "fis-21c-07",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un punto compie 2 giri al secondo: il suo periodo, in secondi, vale ……",
+   "spiegazione": "Il periodo è l'inverso della frequenza: uno diviso due fa 0,5 s. Se i giri al secondo fossero quattro, il periodo scenderebbe a 0,25 s.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "0,5",
+    "0.5",
+    "1/2",
+    "un mezzo",
+    "mezzo"
+   ],
+   "numero": {
+    "valore": 0.5,
+    "tolleranza": 0
+   },
+   "unita": "s"
+  },
+  {
+   "id": "fis-21c-08",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "L'accelerazione che cambia la direzione della velocità senza modificarne il modulo si chiama ……",
+   "spiegazione": "Essendo perpendicolare alla velocità non compie lavoro, quindi non cambia l'energia cinetica. La forza che la produce può essere una fune, l'attrito o la gravità, a seconda del caso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "centripeta",
+    "centripete",
+    "accelerazione centripeta",
+    "normale",
+    "radiale"
+   ]
+  },
+  {
+   "id": "fis-21c-09",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un sasso è lanciato orizzontalmente da un'altezza di 20 m, con g = 10 m/s²: il tempo che impiega a toccare terra, in secondi, è ……",
+   "spiegazione": "Il tempo di caduta dipende solo dall'altezza: da venti metri servono 2 s, qualunque sia la velocità orizzontale. Un sasso lasciato cadere e uno lanciato dalla stessa altezza toccano terra insieme.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "unita": "s"
+  },
+  {
+   "id": "fis-32a-01",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Secondo la legge di Stevino, la pressione in un punto di un liquido in quiete dipende:",
+   "spiegazione": "Contano solo quanto liquido c'è sopra in verticale e quanto è denso. Un recipiente stretto e uno largo, riempiti alla stessa altezza, hanno sul fondo la stessa pressione: è il cosiddetto paradosso idrostatico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "dalla quantità totale di liquido contenuta nel recipiente",
+    "dalla forma del recipiente",
+    "dalla profondità del punto e dalla densità del liquido",
+    "dalla superficie del fondo",
+    "soltanto dalla temperatura"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32a-02",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Il principio di Pascal afferma che:",
+   "spiegazione": "È ciò che rende possibili i freni idraulici e il torchio: una forza piccola su una superficie piccola produce una forza grande su una superficie grande. L'ultima opzione descrive invece il principio di Archimede.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "una pressione esercitata su un fluido confinato si trasmette inalterata in ogni suo punto",
+    "la pressione diminuisce allontanandosi dal punto in cui è applicata",
+    "i liquidi sono incomprimibili solo a basse temperature",
+    "la pressione dipende dalla forma del contenitore",
+    "un corpo immerso riceve una spinta verso l'alto"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-32a-03",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "In un torchio idraulico il pistone piccolo ha area 2 cm² e quello grande 100 cm². Applicando una forza di 20 N sul pistone piccolo, sul grande si ottiene una forza di:",
+   "spiegazione": "La pressione trasmessa vale 20 N diviso 2 cm², cioè 10 N per ogni centimetro quadrato; moltiplicata per i 100 cm² del pistone grande dà 1000 N. La forza è moltiplicata per cinquanta, quanto il rapporto fra le aree.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "40 N",
+    "1000 N",
+    "200 N",
+    "2000 N",
+    "20 N"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-32a-04",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "In acqua di densità 1000 kg/m³, con g = 10 m/s², la pressione dovuta alla sola colonna di liquido a 20 m di profondità vale:",
+   "spiegazione": "Densità per g per profondità: mille per dieci per venti fa 200 000 Pa, cioè 2 · 10^5. È circa il doppio della pressione atmosferica, che da sola vale 10^5 Pa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 · 10^3 Pa",
+    "2 · 10^4 Pa",
+    "2 · 10^6 Pa",
+    "2 · 10^5 Pa",
+    "20 Pa"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-32a-05",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Una forza di 200 N distribuita su una superficie di 0,04 m² esercita una pressione, in pascal, pari a ……",
+   "spiegazione": "Forza diviso area: duecento diviso 0,04 fa 5000 Pa. Dividere per un numero minore di uno fa crescere il risultato, ed è il punto in cui si sbaglia più spesso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "5000",
+    "5 000",
+    "5.000",
+    "5*10^3",
+    "5·10^3",
+    "cinquemila"
+   ],
+   "numero": {
+    "valore": 5000,
+    "tolleranza": 0
+   },
+   "unita": "Pa"
+  },
+  {
+   "id": "fis-32a-06",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "In un liquido di densità 1000 kg/m³, con g = 10 m/s², la pressione a 3 m di profondità, in pascal, vale ……",
+   "spiegazione": "Mille per dieci per tre fa 30 000 Pa. È la pressione aggiunta dal liquido: per avere quella totale va sommata l'atmosferica che preme sulla superficie.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "30000",
+    "30 000",
+    "30.000",
+    "3·10^4",
+    "3*10^4",
+    "3e4",
+    "trentamila"
+   ],
+   "numero": {
+    "valore": 30000,
+    "tolleranza": 0
+   },
+   "unita": "Pa"
+  },
+  {
+   "id": "fis-32a-07",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Secondo la legge di Stevino, a parità di profondità la pressione non dipende dalla …… del recipiente",
+   "spiegazione": "Due vasi comunicanti di sezione diversa mostrano infatti lo stesso livello. Quello che conta è l'altezza della colonna sopra il punto considerato, non quanto liquido c'è in tutto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "forma",
+    "forme",
+    "sezione",
+    "larghezza",
+    "dimensione",
+    "capienza"
+   ]
+  },
+  {
+   "id": "fis-32a-08",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "In un torchio idraulico il pistone piccolo ha area 5 cm² e quello grande 150 cm²: applicando 30 N sul piccolo si ottiene, sul grande, una forza in newton pari a ……",
+   "spiegazione": "La pressione trasmessa è 30 diviso 5, cioè 6 N per centimetro quadrato; moltiplicata per 150 cm² fa 900 N. La forza si moltiplica per trenta, quanto il rapporto fra le aree, ma lo spostamento si riduce nella stessa misura.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "900",
+    "novecento"
+   ],
+   "numero": {
+    "valore": 900,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-32a-09",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Una forza di 50 N distribuita su una superficie di 0,5 m² esercita una pressione, in pascal, pari a ……",
+   "spiegazione": "La pressione è forza diviso area: cinquanta diviso 0,5 fa 100 Pa. A parità di forza, dimezzare la superficie raddoppia la pressione, ed è il motivo per cui un tacco a spillo affonda dove una scarpa piatta no.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "100",
+    "cento"
+   ],
+   "numero": {
+    "valore": 100,
+    "tolleranza": 0
+   },
+   "unita": "Pa"
+  },
+  {
+   "id": "fis-32b-01",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "La spinta che un fluido esercita su un corpo immerso è uguale:",
+   "spiegazione": "È il principio di Archimede: conta quanto fluido il corpo mette da parte, non di che cosa il corpo sia fatto. La spinta dipende dunque dal volume immerso e dalla densità del fluido.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "al peso del corpo",
+    "al peso del fluido spostato dal corpo",
+    "alla densità del corpo moltiplicata per il suo volume",
+    "alla pressione sul fondo del recipiente",
+    "alla differenza fra le densità, moltiplicata per g"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-32b-02",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un corpo immerso in un liquido galleggia quando:",
+   "spiegazione": "Se il corpo è meno denso del fluido, basta immergersi in parte perché la spinta uguagli il peso. Conta la densità media: una nave d'acciaio galleggia perché comprende anche l'aria dei suoi spazi interni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "il suo peso è nullo",
+    "il suo volume è maggiore di quello del liquido spostato",
+    "la sua densità media è minore di quella del liquido",
+    "la sua massa è minore di 1 kg",
+    "la sua superficie è molto estesa"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32b-03",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un corpo di densità 600 kg/m³ galleggia in acqua, di densità 1000 kg/m³. La frazione del suo volume che resta immersa è:",
+   "spiegazione": "All'equilibrio la frazione immersa è il rapporto fra le due densità: seicento su mille fa 0,6. Il 40% è la parte che resta fuori, ed è l'errore in cui si cade scambiando le due frazioni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "40%",
+    "60%",
+    "100%",
+    "6%",
+    "30%"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-32b-04",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un corpo completamente immerso sposta 0,002 m³ di acqua (densità 1000 kg/m³, g = 10 m/s²). La spinta di Archimede che riceve vale:",
+   "spiegazione": "Densità per volume dà la massa del liquido spostato, due chilogrammi; moltiplicata per g fa 20 N. La spinta non dipende dalla profondità a cui il corpo si trova.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 N",
+    "200 N",
+    "20 N",
+    "0,2 N",
+    "2000 N"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32b-05",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un corpo di densità 750 kg/m³ galleggia in acqua, di densità 1000 kg/m³: la percentuale del suo volume che resta immersa è ……",
+   "spiegazione": "La frazione immersa è il rapporto fra le densità: 750 su 1000 fa 0,75, cioè il 75%. Fuori dall'acqua resta quindi un quarto del volume.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "75",
+    "75%",
+    "settantacinque"
+   ],
+   "numero": {
+    "valore": 75,
+    "tolleranza": 0
+   },
+   "unita": "%"
+  },
+  {
+   "id": "fis-32b-06",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un blocco di volume 0,01 m³ è tenuto completamente immerso in acqua (1000 kg/m³, g = 10 m/s²): la spinta che riceve, in newton, vale ……",
+   "spiegazione": "Mille per 0,01 fa dieci chilogrammi d'acqua spostata, che per g danno 100 N. Se il blocco pesa più di così affonda, se pesa meno risale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "100",
+    "cento"
+   ],
+   "numero": {
+    "valore": 100,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-32b-07",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un corpo di volume 0,005 m³ è tenuto completamente immerso in acqua (1000 kg/m³, g = 10 m/s²): la spinta che riceve, in newton, vale ……",
+   "spiegazione": "Mille per 0,005 fa cinque chilogrammi d'acqua spostata, che per g danno 50 N. Se il corpo pesa più di 50 N affonda, se pesa meno risale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "50",
+    "cinquanta"
+   ],
+   "numero": {
+    "valore": 50,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-32b-08",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Una zattera il cui peso è 60 N galleggia ferma sull'acqua: la spinta di Archimede che riceve, in newton, vale ……",
+   "spiegazione": "Galleggiare in equilibrio significa che spinta e peso si annullano, quindi la spinta vale esattamente il peso. Caricando la zattera il peso aumenta, e per restare a galla deve immergersi di più.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "60",
+    "sessanta"
+   ],
+   "numero": {
+    "valore": 60,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-32b-09",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "A parità di fluido, la grandezza che stabilisce se un corpo galleggia o affonda è la sua ……",
+   "spiegazione": "Non il peso da solo, né il volume da solo, ma il loro rapporto. Una nave pesa migliaia di tonnellate e galleggia, un chiodo pesa pochi grammi e va a fondo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "densità",
+    "densita",
+    "densità media",
+    "densita media",
+    "peso specifico"
+   ]
+  },
+  {
+   "id": "fis-32c-01",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "L'esperienza di Torricelli permette di misurare:",
+   "spiegazione": "Il tubo rovesciato sulla vaschetta mostra che l'aria preme sulla superficie libera, sostenendo la colonna. Sopra il mercurio, nel tubo, resta il vuoto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la densità del mercurio",
+    "la pressione atmosferica",
+    "la temperatura dell'aria",
+    "il volume di un gas",
+    "la spinta di Archimede"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-32c-02",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Nel barometro di Torricelli la colonna di mercurio si ferma a circa 760 mm perché:",
+   "spiegazione": "La colonna sale finché la pressione che esercita sul fondo uguaglia quella dell'atmosfera. Se l'atmosfera preme meno, come in montagna, la colonna si ferma più in basso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "il tubo non è più lungo di così",
+    "il mercurio evapora oltre quella quota",
+    "il peso della colonna equilibra esattamente la pressione atmosferica",
+    "il vuoto in cima tira il mercurio verso l'alto",
+    "il mercurio si solidifica"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32c-03",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "In un barometro la colonna di mercurio è alta 76 cm. Ripetendo l'esperienza con acqua, 13,6 volte meno densa, la colonna sarebbe alta circa:",
+   "spiegazione": "A parità di pressione da equilibrare, un liquido meno denso ha bisogno di una colonna più alta, nella stessa proporzione delle densità. È il motivo pratico per cui Torricelli usò il mercurio e non l'acqua.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "76 cm",
+    "1,03 m",
+    "10,3 m",
+    "103 m",
+    "7,6 m"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32c-04",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un manometro misura:",
+   "spiegazione": "Per questo la pressione di uno pneumatico sgonfio del tutto risulta zero: non significa assenza di aria, ma che dentro c'è la stessa pressione di fuori. Per ottenere la pressione assoluta va aggiunta l'atmosferica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la differenza fra la pressione di un fluido e quella atmosferica",
+    "la pressione assoluta, comprensiva di quella atmosferica",
+    "la densità di un liquido",
+    "la portata di un condotto",
+    "la temperatura di un gas"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-32c-05",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Al livello del mare la pressione atmosferica equilibra una colonna di mercurio alta circa …… mm",
+   "spiegazione": "Da qui l'unità di misura millimetri di mercurio, ancora usata in medicina per la pressione arteriosa. In pascal lo stesso valore corrisponde a circa 101 300.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "760",
+    "settecentosessanta"
+   ],
+   "numero": {
+    "valore": 760,
+    "tolleranza": 0.02
+   },
+   "unita": "mm"
+  },
+  {
+   "id": "fis-32c-06",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Assumendo un'atmosfera pari a 10^5 Pa, una pressione di 2 atm corrisponde a …… Pa",
+   "spiegazione": "Due volte centomila fa 200 000 Pa. L'atmosfera non è un'unità del Sistema Internazionale, ma resta comoda come termine di confronto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "200000",
+    "200 000",
+    "200.000",
+    "2·10^5",
+    "2*10^5",
+    "2e5",
+    "duecentomila"
+   ],
+   "numero": {
+    "valore": 200000,
+    "tolleranza": 0
+   },
+   "unita": "Pa"
+  },
+  {
+   "id": "fis-32c-07",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "La pressione letta su un manometro, cioè la differenza rispetto all'atmosferica, si chiama pressione ……",
+   "spiegazione": "È quella che interessa nella pratica, perché dice quanto un fluido preme in più rispetto all'ambiente. Anche i valori della pressione arteriosa sono relativi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "relativa",
+    "relative",
+    "manometrica"
+   ]
+  },
+  {
+   "id": "fis-32c-08",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Se la pressione atmosferica vale 10^5 Pa e un manometro segna una pressione relativa di 2 · 10^5 Pa, la pressione assoluta, in pascal, è ……",
+   "spiegazione": "Alla pressione relativa va sommata l'atmosferica: centomila più duecentomila fa 300 000 Pa. Dimenticare la somma è l'errore tipico di questi esercizi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "300000",
+    "3·10^5",
+    "3*10^5",
+    "3e5",
+    "300 000",
+    "300.000",
+    "trecentomila"
+   ],
+   "numero": {
+    "valore": 300000,
+    "tolleranza": 0
+   },
+   "unita": "Pa"
+  },
+  {
+   "id": "fis-23a-01",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Una forza che agisce perpendicolarmente allo spostamento compie un lavoro:",
+   "spiegazione": "Il lavoro dipende dalla componente della forza lungo lo spostamento, e se la forza è perpendicolare quella componente è zero. È il caso della forza centripeta e della forza peso quando si cammina in piano.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "massimo",
+    "negativo",
+    "nullo",
+    "pari al prodotto dei moduli",
+    "che dipende dalla massa del corpo"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-23a-02",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "La potenza di una macchina è:",
+   "spiegazione": "Due motori possono compiere lo stesso lavoro, ma quello più potente lo fa in meno tempo. Si misura in watt, cioè joule al secondo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "il lavoro compiuto nell'unità di tempo",
+    "il lavoro totale compiuto",
+    "la forza applicata per unità di superficie",
+    "l'energia posseduta dalla macchina",
+    "il rapporto fra energia finale e iniziale"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-23a-03",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Secondo il teorema dell'energia cinetica, il lavoro totale compiuto dalle forze applicate a un corpo è uguale:",
+   "spiegazione": "Se il lavoro totale è positivo il corpo accelera, se è negativo rallenta. È il ponte fra la dinamica e l'energia: permette di trovare una velocità finale senza passare per le leggi del moto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "all'energia potenziale finale",
+    "alla potenza media sviluppata",
+    "alla quantità di moto acquistata",
+    "alla variazione della sua energia cinetica",
+    "al prodotto della massa per la velocità"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-23a-04",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 2 kg si muove alla velocità di 3 m/s. La sua energia cinetica vale:",
+   "spiegazione": "Metà della massa per il quadrato della velocità: metà di due fa uno, per nove fa 9 J. Chi dimentica il fattore un mezzo ottiene 18, chi dimentica il quadrato ottiene 3.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "3 J",
+    "9 J",
+    "6 J",
+    "18 J",
+    "12 J"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-23a-05",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Nel Sistema Internazionale il lavoro e l'energia si misurano in ……",
+   "spiegazione": "Un joule è il lavoro di una forza di un newton su uno spostamento di un metro. Essendo lavoro ed energia la stessa grandezza fisica, condividono l'unità.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "joule",
+    "J"
+   ]
+  },
+  {
+   "id": "fis-23a-06",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "L'unità di misura della potenza nel Sistema Internazionale è il ……",
+   "spiegazione": "Un watt è un joule al secondo. Il cavallo vapore, ancora usato per i motori, vale circa 735 watt.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "watt",
+    "W"
+   ]
+  },
+  {
+   "id": "fis-23a-07",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Una forza di 10 N sposta un corpo di 5 m nella propria direzione e verso: il lavoro compiuto, in joule, è ……",
+   "spiegazione": "Forza per spostamento, quando i due vettori sono paralleli: dieci per cinque fa 50 J. Se la forza fosse inclinata andrebbe considerata solo la sua componente lungo lo spostamento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "50",
+    "cinquanta"
+   ],
+   "numero": {
+    "valore": 50,
+    "tolleranza": 0
+   },
+   "unita": "J"
+  },
+  {
+   "id": "fis-23a-08",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Un motore compie un lavoro di 600 J in 3 s: la potenza sviluppata, in watt, è ……",
+   "spiegazione": "Seicento diviso tre fa 200 W. Lo stesso lavoro svolto in sei secondi corrisponderebbe a metà della potenza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "200",
+    "duecento"
+   ],
+   "numero": {
+    "valore": 200,
+    "tolleranza": 0
+   },
+   "unita": "W"
+  },
+  {
+   "id": "fis-23a-09",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Pur nascendo dal prodotto di due vettori, il lavoro non ha direzione né verso: è quindi una grandezza ……",
+   "spiegazione": "Il prodotto scalare di due vettori restituisce un numero, con il suo segno. Il segno dice se la forza aiuta il moto o lo contrasta, non una direzione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "scalare",
+    "scalari"
+   ]
+  },
+  {
+   "id": "fis-23b-01",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Una forza si dice conservativa quando:",
+   "spiegazione": "Portando un corpo da un punto a un altro per strade diverse, una forza conservativa compie sempre lo stesso lavoro. È questa proprietà a permettere di definire un'energia potenziale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "compie sempre un lavoro positivo",
+    "il lavoro che compie dipende solo dai punti di partenza e di arrivo, non dal percorso",
+    "non compie mai lavoro",
+    "agisce soltanto a distanza",
+    "ha modulo costante"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-23b-02",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Fra le forze elencate, l'unica non conservativa è:",
+   "spiegazione": "L'attrito compie sempre lavoro negativo e il suo valore dipende da quanta strada si fa: più lungo il percorso, più energia dissipata. Per questo non si può definire un'energia potenziale dell'attrito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la forza peso",
+    "la forza elastica di una molla ideale",
+    "la forza gravitazionale",
+    "l'attrito",
+    "la forza elettrostatica"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-23b-03",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Il lavoro compiuto da una forza conservativa lungo un percorso chiuso è:",
+   "spiegazione": "Tornando al punto di partenza, il lavoro dell'andata e quello del ritorno si annullano. È un modo equivalente di definire una forza conservativa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "nullo",
+    "sempre positivo",
+    "sempre negativo",
+    "uguale al doppio del lavoro all'andata",
+    "pari all'energia cinetica finale"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-23b-04",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "In presenza di attrito l'energia meccanica di un sistema:",
+   "spiegazione": "L'energia totale si conserva sempre, ma quella meccanica no: l'attrito la trasferisce all'agitazione disordinata delle particelle, cioè in calore. Ed è un passaggio che non torna indietro da solo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "resta costante",
+    "aumenta",
+    "diminuisce, perché una parte si trasforma in calore",
+    "si annulla immediatamente",
+    "diventa energia potenziale"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-23b-05",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Le forze che trasformano energia meccanica in calore si dicono ……",
+   "spiegazione": "Attrito e resistenza dell'aria sono i casi tipici. Il loro lavoro è sempre negativo, perché si oppongono al moto qualunque sia la direzione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "dissipative",
+    "dissipativa",
+    "non conservative",
+    "non conservativa"
+   ]
+  },
+  {
+   "id": "fis-23b-06",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Soltanto per le forze conservative è possibile definire un'energia ……",
+   "spiegazione": "Dipendendo solo dalla posizione, il lavoro può essere scritto come differenza fra due valori di un'energia immagazzinata. Con l'attrito questo non si può fare, perché conta la strada percorsa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "potenziale",
+    "potenziali"
+   ]
+  },
+  {
+   "id": "fis-23b-07",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "La progressiva riduzione dell'ampiezza delle oscillazioni di un pendolo reale, dovuta all'attrito, si chiama ……",
+   "spiegazione": "A ogni oscillazione una parte dell'energia meccanica diventa calore, quindi l'ampiezza cala fino all'arresto. Un pendolo ideale, senza attrito, oscillerebbe per sempre.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "smorzamento",
+    "smorzamenti"
+   ]
+  },
+  {
+   "id": "fis-23b-08",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Essendo sempre opposto al moto, il lavoro della forza di attrito ha segno ……",
+   "spiegazione": "Forza e spostamento hanno verso opposto, quindi il prodotto scalare è negativo. Per questo l'attrito sottrae energia cinetica e rallenta il corpo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "negativo",
+    "negativa",
+    "-",
+    "meno"
+   ]
+  },
+  {
+   "id": "fis-23c-01",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Vicino alla superficie terrestre, l'energia potenziale gravitazionale di un corpo:",
+   "spiegazione": "Vale massa per g per altezza, quindi raddoppiando l'altezza raddoppia l'energia. Il livello da cui si misura l'altezza è una scelta arbitraria: solo le differenze hanno significato fisico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "non dipende dalla massa",
+    "cresce in proporzione all'altezza",
+    "cresce con il quadrato dell'altezza",
+    "è sempre negativa",
+    "dipende dalla velocità del corpo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-23c-02",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Durante la caduta di un corpo, in assenza di attrito:",
+   "spiegazione": "Scendendo il corpo perde quota e guadagna velocità, in misura esattamente corrispondente. È la conservazione dell'energia meccanica, e vale solo se non ci sono forze dissipative.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'energia cinetica resta costante",
+    "l'energia meccanica aumenta",
+    "l'energia potenziale si trasforma in cinetica e la loro somma resta costante",
+    "l'energia potenziale aumenta",
+    "l'energia si perde man mano"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-23c-03",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 2 kg si trova a 5 m di altezza, con g = 10 m/s². La sua energia potenziale gravitazionale vale:",
+   "spiegazione": "Massa per g per altezza: due per dieci per cinque fa 100 J. È anche l'energia cinetica che il corpo avrà toccando terra, se non ci sono attriti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "10 J",
+    "50 J",
+    "20 J",
+    "100 J",
+    "200 J"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-23c-04",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "L'energia potenziale elastica accumulata in una molla dipende:",
+   "spiegazione": "Vale metà della costante elastica per il quadrato dell'allungamento, quindi comprimere il doppio accumula quattro volte l'energia. Non conta quanto in fretta si comprime, ma di quanto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "dal quadrato della deformazione",
+    "dalla sola costante elastica",
+    "dalla massa agganciata alla molla",
+    "dalla lunghezza a riposo della molla",
+    "dalla velocità con cui si comprime"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-23c-05",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 4 kg si trova a 2 m di altezza, con g = 10 m/s²: la sua energia potenziale, in joule, vale ……",
+   "spiegazione": "Quattro per dieci per due fa 80 J. Raddoppiando la massa o l'altezza il valore raddoppia, perché entrano entrambe in modo lineare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "80",
+    "ottanta"
+   ],
+   "numero": {
+    "valore": 80,
+    "tolleranza": 0
+   },
+   "unita": "J"
+  },
+  {
+   "id": "fis-23c-06",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Un corpo cade da 20 m partendo da fermo, senza attrito e con g = 10 m/s²: arriva al suolo con una velocità, in m/s, pari a ……",
+   "spiegazione": "Uguagliando energia potenziale e cinetica si ottiene la radice di due per g per l'altezza: radice di quattrocento fa 20 m/s. La massa non compare, quindi il risultato vale per qualunque corpo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-23c-07",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "La somma dell'energia cinetica e dell'energia potenziale di un corpo si chiama energia ……",
+   "spiegazione": "Si conserva se agiscono solo forze conservative, e in quel caso le due parti si scambiano continuamente. Con l'attrito la somma diminuisce, pur restando costante l'energia totale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "meccanica",
+    "meccaniche",
+    "meccanica totale"
+   ]
+  },
+  {
+   "id": "fis-23c-08",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Nella legge di Hooke il coefficiente che lega la forza all'allungamento della molla si chiama costante ……",
+   "spiegazione": "Si misura in newton su metro e dice quanta forza serve per allungare la molla di un metro. Più è grande, più la molla è rigida.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "elastica",
+    "elastiche"
+   ]
+  },
+  {
+   "id": "fis-12a-01",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Fra le grandezze elencate, l'unica fondamentale del Sistema Internazionale è:",
+   "spiegazione": "Le grandezze fondamentali sono sette, fra cui massa, lunghezza e tempo; tutte le altre si ricavano da queste. La forza, per esempio, è massa per accelerazione, quindi è derivata.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la forza",
+    "la massa",
+    "l'energia",
+    "la pressione",
+    "la velocità"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-12a-02",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Un joule equivale a:",
+   "spiegazione": "Il lavoro è forza per spostamento, quindi newton per metro. Un newton diviso un metro quadrato sarebbe invece un pascal, cioè una pressione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "un newton diviso un metro",
+    "un newton per un metro",
+    "un newton diviso un secondo",
+    "un chilogrammo per metro al secondo",
+    "un pascal per un metro"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-12a-03",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Un micrometro corrisponde a:",
+   "spiegazione": "Il prefisso micro vale un milionesimo. Le cellule umane misurano appunto qualche decina di micrometri, mentre i virus si misurano in nanometri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "10^-3 m",
+    "10^-9 m",
+    "10^-6 m",
+    "10^-12 m",
+    "10^6 m"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-12a-04",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Un metro quadrato corrisponde a:",
+   "spiegazione": "Un metro è cento centimetri, e passando alle aree il fattore si eleva al quadrato: cento per cento fa 10 000. Per i volumi il fattore diventa un milione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "100 cm²",
+    "1000 cm²",
+    "1 000 000 cm²",
+    "10 000 cm²",
+    "10 cm²"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-12a-05",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Il prefisso nano indica un fattore moltiplicativo pari a:",
+   "spiegazione": "Nano è un miliardesimo, tre ordini di grandezza sotto micro. Confonderlo con micro porta a sbagliare di mille volte, che è l'errore tipico nelle conversioni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "10^-9",
+    "10^-3",
+    "10^-6",
+    "10^9",
+    "10^-12"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-12a-06",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "La densità di un corpo è una grandezza:",
+   "spiegazione": "Si ricava da due grandezze fondamentali, massa e lunghezza, e si misura in chilogrammi su metro cubo. Non ha direzione, quindi è scalare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "fondamentale del Sistema Internazionale",
+    "vettoriale",
+    "senza unità di misura",
+    "che si misura in newton",
+    "derivata, ottenuta dal rapporto fra massa e volume"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "fis-12a-07",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Per convertire una pressione dai pascal ai nanopascal si moltiplica per 10 elevato a ……",
+   "spiegazione": "Un nanopascal è un miliardesimo di pascal, quindi in un pascal ce ne stanno un miliardo: il fattore è 10^9. Passando a un sottomultiplo il numero cresce, anche se l'esponente del prefisso è negativo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "9",
+    "+9",
+    "nove"
+   ],
+   "numero": {
+    "valore": 9,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-12a-08",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Un chilometro corrisponde a …… metri",
+   "spiegazione": "Il prefisso chilo vale mille. Attenzione a non estendere il fattore ai chilometri quadrati, che valgono un milione di metri quadrati.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "1000",
+    "1 000",
+    "1.000",
+    "10^3",
+    "mille"
+   ],
+   "numero": {
+    "valore": 1000,
+    "tolleranza": 0
+   },
+   "unita": "m"
+  },
+  {
+   "id": "fis-12a-09",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Un metro cubo corrisponde a …… litri",
+   "spiegazione": "Un litro è un decimetro cubo, e in un metro cubo ci stanno mille decimetri cubi. È la conversione che serve ogni volta che si passa da volumi di laboratorio a unità del Sistema Internazionale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "1000",
+    "1 000",
+    "1.000",
+    "10^3",
+    "mille"
+   ],
+   "numero": {
+    "valore": 1000,
+    "tolleranza": 0
+   },
+   "unita": "L"
+  },
+  {
+   "id": "fis-12a-10",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Una massa di 2500 g, espressa in chilogrammi, vale ……",
+   "spiegazione": "Si divide per mille: 2500 grammi fanno 2,5 kg. Il chilogrammo, non il grammo, è l'unità fondamentale del Sistema Internazionale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "2,5",
+    "2.5"
+   ],
+   "numero": {
+    "valore": 2.5,
+    "tolleranza": 0
+   },
+   "unita": "kg"
+  },
+  {
+   "id": "fis-12a-11",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Una densità di 2 µg/mm³, espressa in g/L, vale ……",
+   "spiegazione": "I microgrammi diventano grammi dividendo per un milione, e in un litro stanno un milione di millimetri cubi: i due fattori si annullano e il numero resta lo stesso. Conviene sempre convertire numeratore e denominatore separatamente.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "unita": "g/L"
+  },
+  {
+   "id": "fis-12a-12",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Una densità di 1 g/cm³ corrisponde, in kg/m³, a ……",
+   "spiegazione": "I grammi diventano chilogrammi dividendo per mille, i centimetri cubi diventano metri cubi moltiplicando per un milione: il risultato netto è mille. È la densità dell'acqua, utile come termine di confronto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "1000",
+    "1 000",
+    "1.000",
+    "10^3",
+    "mille"
+   ],
+   "numero": {
+    "valore": 1000,
+    "tolleranza": 0
+   },
+   "unita": "kg/m^3"
+  },
+  {
+   "id": "fis-12b-01",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Fra le grandezze elencate, l'unica vettoriale è:",
+   "spiegazione": "La velocità ha un modulo, una direzione e un verso: due automobili che vanno a 50 km/h in direzioni opposte hanno velocità diverse. Le altre quattro sono completamente definite da un numero.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la massa",
+    "la temperatura",
+    "la velocità",
+    "il tempo",
+    "l'energia"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-12b-02",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Per definire completamente una grandezza vettoriale occorrono:",
+   "spiegazione": "Il modulo dice quanto, la direzione lungo quale retta, il verso da che parte. Nella rappresentazione grafica sono rispettivamente la lunghezza, l'inclinazione e la punta della freccia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "il solo valore numerico",
+    "modulo, direzione e verso",
+    "il valore numerico e l'unità di misura",
+    "il punto di applicazione e nulla più",
+    "due numeri qualsiasi"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-12b-03",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Una grandezza si dice estensiva quando:",
+   "spiegazione": "Massa, volume ed energia raddoppiano se si raddoppia il sistema. Le grandezze intensive, come temperatura e densità, restano invece le stesse.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "il suo valore dipende dalla quantità di materia considerata",
+    "ha sempre direzione e verso",
+    "non si può misurare direttamente",
+    "si misura in unità fondamentali",
+    "è uguale in tutti i punti del sistema"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-12b-04",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Fra le grandezze elencate, l'unica intensiva è:",
+   "spiegazione": "Dividendo un sistema in due parti, ciascuna conserva la stessa temperatura ma ha metà della massa e metà del volume. Per questo le grandezze intensive sono utili per identificare una sostanza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la massa",
+    "il volume",
+    "l'energia",
+    "la temperatura",
+    "il numero di moli"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-12b-05",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Due vettori di moduli 3 e 4, perpendicolari fra loro, hanno una risultante di modulo:",
+   "spiegazione": "Con vettori perpendicolari si applica il teorema di Pitagora: radice di nove più sedici fa 5. Il valore 7 si otterrebbe solo se i due vettori fossero paralleli e dello stesso verso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "7",
+    "1",
+    "5",
+    "12",
+    "3,5"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-12b-06",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Mescolando due bicchieri d'acqua, entrambi a 20 °C, si ottiene acqua a:",
+   "spiegazione": "Le temperature non si sommano: si somma l'energia, che è estensiva. È l'esempio più rapido per distinguere le due categorie.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "40 °C, perché le temperature si sommano",
+    "10 °C, perché si fa la media dimezzata",
+    "una temperatura che dipende dai volumi",
+    "una temperatura impossibile da prevedere",
+    "20 °C, perché la temperatura è una grandezza intensiva"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "fis-12b-07",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Due forze perpendicolari fra loro, di moduli 9 N e 12 N, hanno una risultante di modulo, in newton, pari a ……",
+   "spiegazione": "Radice di ottantuno più centoquarantaquattro, cioè radice di 225, fa 15 N. È la terna pitagorica 9-12-15, la 3-4-5 moltiplicata per tre.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "15",
+    "quindici"
+   ],
+   "numero": {
+    "valore": 15,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-12b-08",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Tre forze parallele e concordi, di 2 N, 3 N e 5 N, hanno una risultante di modulo, in newton, pari a ……",
+   "spiegazione": "Avendo tutte la stessa direzione e lo stesso verso, i moduli si sommano come numeri: due più tre più cinque fa 10 N. Con direzioni diverse servirebbe la somma vettoriale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-12b-09",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Due forze perpendicolari, di moduli 6 N e 8 N, hanno una risultante di modulo, in newton, pari a ……",
+   "spiegazione": "Radice di trentasei più sessantaquattro fa 10 N. Sommare i moduli darebbe 14, che è il valore massimo possibile e si ottiene solo con forze parallele e concordi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-12b-10",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Due vettori paralleli e di verso concorde, di moduli 7 e 5, hanno una risultante di modulo ……",
+   "spiegazione": "Con lo stesso verso i moduli si sommano: sette più cinque fa 12, ed è il valore massimo possibile per quei due vettori. Con versi opposti si otterrebbe 2, il minimo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "12",
+    "dodici"
+   ],
+   "numero": {
+    "valore": 12,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-12b-11",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Due vettori paralleli e di verso opposto, di moduli 10 e 4, hanno una risultante di modulo ……",
+   "spiegazione": "Con versi opposti i moduli si sottraggono: dieci meno quattro fa 6, e il verso è quello del vettore più grande. È il valore minimo che la risultante di quei due vettori può assumere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "6",
+    "sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-12b-12",
+   "argomento": "fis.1.2",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 300 g occupa un volume di 100 cm³: la sua densità, in g/cm³, vale ……",
+   "spiegazione": "Massa diviso volume: trecento diviso cento fa 3 g/cm³. Prendendo metà del corpo cambierebbero massa e volume, ma non il loro rapporto: è per questo che la densità identifica la sostanza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "3",
+    "tre"
+   ],
+   "numero": {
+    "valore": 3,
+    "tolleranza": 0
+   },
+   "unita": "g/cm^3"
+  },
+  {
+   "id": "fis-22a-01",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Secondo il primo principio della dinamica, un corpo su cui la risultante delle forze è nulla:",
+   "spiegazione": "Senza forze non serve nulla per mantenere il moto: serve per cambiarlo. Che un corpo in moto rallenti da sé è un'impressione dovuta all'attrito, non una legge della natura.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "si ferma gradualmente",
+    "resta fermo oppure si muove di moto rettilineo uniforme",
+    "si muove con accelerazione costante",
+    "torna al punto di partenza",
+    "cambia direzione senza cambiare velocità"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-22a-02",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Il secondo principio della dinamica afferma che l'accelerazione di un corpo è:",
+   "spiegazione": "La stessa forza produce accelerazioni diverse su masse diverse: la massa misura quanto un corpo resiste al cambiamento. L'accelerazione ha sempre la direzione e il verso della forza risultante.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "proporzionale alla sua massa",
+    "indipendente dalla forza applicata",
+    "direttamente proporzionale alla forza e inversamente proporzionale alla massa",
+    "uguale alla forza applicata",
+    "sempre diretta verso il basso"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-22a-03",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Secondo il terzo principio della dinamica, le forze di azione e reazione:",
+   "spiegazione": "Il punto decisivo è che agiscono su corpi diversi: per questo non si cancellano fra loro. Se agissero sullo stesso corpo nessun movimento sarebbe possibile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "agiscono sullo stesso corpo e quindi si annullano",
+    "hanno moduli diversi",
+    "hanno lo stesso verso",
+    "hanno lo stesso modulo, verso opposto e agiscono su corpi diversi",
+    "esistono solo se i corpi si toccano"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-22a-04",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La differenza fra massa e peso è che:",
+   "spiegazione": "La massa si misura in chilogrammi ed è la stessa ovunque; il peso è una forza, si misura in newton e cambia con g. Sulla Luna il peso è circa un sesto, la massa è identica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la massa è una proprietà del corpo, il peso è la forza con cui la Terra lo attrae",
+    "sono la stessa grandezza con nomi diversi",
+    "la massa si misura in newton e il peso in chilogrammi",
+    "il peso non dipende dal luogo in cui si trova il corpo",
+    "la massa cambia con l'altitudine"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-22a-05",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Una forza di 12 N agisce su un corpo di massa 3 kg. L'accelerazione che ne risulta è:",
+   "spiegazione": "Forza diviso massa: dodici diviso tre fa 4 m/s². Moltiplicare invece di dividere porta a 36, che è l'errore più frequente.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "3 m/s²",
+    "4 m/s²",
+    "36 m/s²",
+    "0,25 m/s²",
+    "12 m/s²"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-22a-06",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "L'unità di misura della forza nel Sistema Internazionale è il ……",
+   "spiegazione": "Un newton è la forza che imprime a un chilogrammo un'accelerazione di un metro al secondo quadrato. Corrisponde più o meno al peso di un etto di materia sulla Terra.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "newton",
+    "N"
+   ]
+  },
+  {
+   "id": "fis-22a-07",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 5 kg, con g = 10 m/s², ha un peso, in newton, pari a ……",
+   "spiegazione": "Il peso è massa per accelerazione di gravità: cinque per dieci fa 50 N. Con il valore più preciso di 9,8 m/s² si otterrebbero 49 N.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "50",
+    "cinquanta"
+   ],
+   "numero": {
+    "valore": 50,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-22a-08",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La tendenza di un corpo a mantenere il proprio stato di quiete o di moto si chiama ……",
+   "spiegazione": "È misurata dalla massa: più un corpo è massiccio, più è difficile cambiarne il moto. Si sente spingendo un'auto ferma, dove non c'è nessun peso da sollevare ma solo inerzia da vincere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "inerzia",
+    "inerzie"
+   ]
+  },
+  {
+   "id": "fis-22a-09",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Su un corpo di massa 2 kg agisce una forza risultante di 10 N: l'accelerazione, in m/s², vale ……",
+   "spiegazione": "Dieci diviso due fa 5 m/s². Lo stesso risultato vale per qualunque coppia forza-massa nello stesso rapporto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "m/s^2"
+  },
+  {
+   "id": "fis-22a-10",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Perché un corpo sia in equilibrio traslazionale la somma vettoriale delle forze applicate deve essere ……",
+   "spiegazione": "Non significa che non ci siano forze, ma che si compensano: un libro sul tavolo ha peso e reazione del piano, uguali e opposte. Per l'equilibrio completo serve anche che i momenti si annullino.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "nulla",
+    "zero",
+    "0",
+    "nullo",
+    "pari a zero",
+    "uguale a zero"
+   ]
+  },
+  {
+   "id": "fis-22a-11",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Portando un corpo sulla Luna, dove g è minore, cambia il suo peso ma non la sua ……",
+   "spiegazione": "La massa è la quantità di materia e non dipende da dove si trova il corpo. Una bilancia tarata in chilogrammi, però, misura in realtà un peso: sulla Luna darebbe un valore sbagliato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "massa",
+    "masse"
+   ]
+  },
+  {
+   "id": "fis-22b-01",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La forza di attrito statico massima, rispetto a quella di attrito dinamico fra le stesse superfici:",
+   "spiegazione": "Per questo costa più fatica mettere in moto un mobile che continuare a spingerlo. Appena il corpo parte, la forza necessaria cala di colpo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "è sempre minore",
+    "è in genere maggiore",
+    "è esattamente uguale",
+    "è nulla",
+    "dipende solo dalla velocità"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-22b-02",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La forza di attrito radente fra due superfici asciutte dipende:",
+   "spiegazione": "Conta quanto le superfici sono premute, non quanto sono estese: un mattone trascinato di piatto o di fianco incontra lo stesso attrito. La natura dei materiali entra attraverso il coefficiente di attrito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "dall'area di contatto fra le superfici",
+    "dalla velocità del corpo, in modo proporzionale",
+    "dalla forza che preme le superfici l'una contro l'altra e dalla loro natura",
+    "dal volume del corpo",
+    "dalla sola massa del corpo"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-22b-03",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Secondo la legge di Hooke la forza esercitata da una molla è:",
+   "spiegazione": "Il segno meno dice che la molla si oppone alla deformazione, tirando indietro se allungata e spingendo se compressa. La proporzionalità vale finché non si supera il limite di elasticità del materiale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "costante, qualunque sia l'allungamento",
+    "proporzionale al quadrato dell'allungamento",
+    "indipendente dalla costante elastica",
+    "proporzionale all'allungamento e di verso opposto",
+    "sempre diretta verso il basso"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-22b-04",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "In una fune ideale, inestensibile e di massa trascurabile, la tensione:",
+   "spiegazione": "Non avendo massa, la fune non richiede forza per essere accelerata: trasmette integralmente quello che riceve. È l'ipotesi che permette di studiare carrucole e sistemi di corpi collegati.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "si trasmette uguale ai due estremi",
+    "diminuisce lungo la fune",
+    "dipende dalla lunghezza della fune",
+    "è nulla se la fune è tesa",
+    "agisce solo verso il basso"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-22b-05",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Una molla di costante elastica 200 N/m viene allungata di 0,1 m. La forza elastica vale:",
+   "spiegazione": "Costante per allungamento: duecento per 0,1 fa 20 N. Attenzione alle unità, perché la costante è in newton su metro e l'allungamento va espresso in metri, non in centimetri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 N",
+    "200 N",
+    "20 N",
+    "0,5 N",
+    "2000 N"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-22b-06",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Una molla di costante elastica 50 N/m allungata di 0,2 m esercita una forza, in newton, pari a ……",
+   "spiegazione": "Cinquanta per 0,2 fa 10 N. Per sapere di quanto si allunga una molla sotto un peso noto si usa la stessa formula al contrario.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-22b-07",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Il coefficiente che compare nella formula della forza di attrito si indica con la lettera greca ……",
+   "spiegazione": "È un numero senza unità di misura, perché nasce dal rapporto fra due forze. Dipende dalla coppia di materiali a contatto e dal fatto che siano fermi o in moto relativo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "mu",
+    "μ",
+    "mi"
+   ]
+  },
+  {
+   "id": "fis-22b-08",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La forza che un piano esercita perpendicolarmente alla propria superficie su un corpo appoggiato si chiama reazione ……",
+   "spiegazione": "Normale, in geometria, significa perpendicolare. È la forza che impedisce al corpo di affondare nel piano, e insieme al peso determina l'attrito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "normale",
+    "vincolare",
+    "normali",
+    "vincolari",
+    "vincolare normale"
+   ]
+  },
+  {
+   "id": "fis-22b-09",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 10 kg appoggiato su un piano orizzontale, con g = 10 m/s², riceve una reazione normale, in newton, di ……",
+   "spiegazione": "Su un piano orizzontale la reazione equilibra esattamente il peso: dieci per dieci fa 100 N. Su un piano inclinato sarebbe minore, perché equilibra solo la componente perpendicolare del peso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "100",
+    "cento"
+   ],
+   "numero": {
+    "valore": 100,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-22b-10",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "L'attrito che agisce su un corpo che sta già strisciando si chiama attrito ……",
+   "spiegazione": "A differenza di quello statico ha un valore ben definito, non un massimo. Per questo un corpo che striscia su un piano con attrito decelera in modo uniforme.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "dinamico",
+    "dinamiche",
+    "radente dinamico",
+    "radente",
+    "cinetico"
+   ]
+  },
+  {
+   "id": "fis-22b-11",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La costante elastica di una molla si misura in newton su ……",
+   "spiegazione": "Dice quanti newton servono per allungare la molla di un metro. Una molla da 500 N/m è molto più rigida di una da 10 N/m.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "metro",
+    "metri",
+    "m"
+   ]
+  },
+  {
+   "id": "fis-64a-01",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "L'intensità di corrente elettrica è definita come:",
+   "spiegazione": "È un flusso di carica, misurato in coulomb al secondo. Gli elettroni si spostano in realtà molto lentamente: ciò che viaggia in fretta è il segnale, non le singole cariche.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la velocità con cui si muovono gli elettroni",
+    "la carica che attraversa una sezione del conduttore nell'unità di tempo",
+    "la differenza di potenziale fra due punti",
+    "il numero di elettroni contenuti nel conduttore",
+    "l'energia trasportata dalla corrente"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-64a-02",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Secondo la prima legge di Ohm, in un conduttore metallico a temperatura costante:",
+   "spiegazione": "Il rapporto fra tensione e corrente resta costante, e quel rapporto è la resistenza. La legge non vale per tutti i componenti: in un diodo, per esempio, il rapporto cambia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "la corrente è indipendente dalla tensione",
+    "la resistenza cresce con la corrente",
+    "la differenza di potenziale è direttamente proporzionale all'intensità di corrente",
+    "la tensione è inversamente proporzionale alla corrente",
+    "la corrente scorre solo in un verso"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-64a-03",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "La resistenza di un filo conduttore:",
+   "spiegazione": "Un filo lungo e sottile oppone più resistenza di uno corto e grosso, come un tubo stretto per l'acqua. Il materiale entra attraverso la resistività, che è una proprietà della sostanza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "non dipende dalle sue dimensioni",
+    "diminuisce allungando il filo",
+    "cresce aumentando la sezione",
+    "cresce con la lunghezza e diminuisce all'aumentare della sezione",
+    "dipende solo dalla corrente che lo attraversa"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-64a-04",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Un generatore ideale di tensione:",
+   "spiegazione": "Non crea cariche: le mette in movimento, fornendo l'energia necessaria. Un generatore reale ha anche una resistenza interna, per cui la tensione ai morsetti cala quando la corrente aumenta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "mantiene costante la differenza di potenziale ai propri capi, qualunque corrente eroghi",
+    "mantiene costante la corrente, qualunque sia il circuito",
+    "non ha bisogno di un circuito chiuso",
+    "produce cariche elettriche dal nulla",
+    "funziona solo con resistenze piccole"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-64a-05",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Ai capi di una resistenza da 20 Ω è applicata una tensione di 10 V. La corrente che la attraversa vale:",
+   "spiegazione": "Tensione diviso resistenza: dieci diviso venti fa 0,5 A. Invertire il rapporto dà 2 A, ed è l'errore tipico quando la resistenza è maggiore della tensione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 A",
+    "0,5 A",
+    "200 A",
+    "20 A",
+    "5 A"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-64a-06",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Una resistenza da 50 Ω con 100 V ai capi è percorsa da una corrente, in ampere, pari a ……",
+   "spiegazione": "Tensione diviso resistenza: cento diviso cinquanta fa 2 A. Raddoppiando la resistenza, a pari tensione, la corrente si dimezza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "unita": "A"
+  },
+  {
+   "id": "fis-64a-07",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Una tensione di 9 V applicata a un componente produce una corrente di 0,3 A: la sua resistenza, in ohm, vale ……",
+   "spiegazione": "Tensione diviso corrente: nove diviso 0,3 fa 30 Ω. È la legge di Ohm usata per misurare una resistenza senza smontarla dal circuito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "30",
+    "trenta"
+   ],
+   "numero": {
+    "valore": 30,
+    "tolleranza": 0
+   },
+   "unita": "ohm"
+  },
+  {
+   "id": "fis-64a-08",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Una resistenza di 5 Ω percorsa da una corrente di 2 A ha ai suoi capi una tensione, in volt, di ……",
+   "spiegazione": "Resistenza per corrente: cinque per due fa 10 V. È la forma della legge di Ohm che si usa per trovare la caduta di tensione su un componente.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "V"
+  },
+  {
+   "id": "fis-64a-09",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "La proprietà del materiale che, insieme alle dimensioni, determina la resistenza di un conduttore si chiama ……",
+   "spiegazione": "Si misura in ohm per metro e dipende dalla temperatura: nei metalli cresce scaldando. Il rame ha resistività bassa, ed è per questo che si usa per i cavi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "resistività",
+    "resistivita",
+    "resistenza specifica",
+    "rho",
+    "ρ"
+   ]
+  },
+  {
+   "id": "fis-64a-10",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Una corrente di 3 A trasporta, in 2 s, una carica pari a …… coulomb",
+   "spiegazione": "Corrente per tempo: tre per due fa 6 C. È la definizione di intensità di corrente usata al contrario.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "6",
+    "sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   },
+   "unita": "C"
+  },
+  {
+   "id": "fis-64a-11",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Un filo percorso da una corrente di 0,5 A trasporta, in 10 s, una carica pari a …… coulomb",
+   "spiegazione": "Corrente per tempo: 0,5 per dieci fa 5 C. Sono circa trentuno miliardi di miliardi di elettroni, il che dà un'idea di quanto sia piccola la carica di uno solo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "C"
+  },
+  {
+   "id": "fis-64b-01",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "L'effetto Joule consiste:",
+   "spiegazione": "Gli elettroni urtano il reticolo del metallo e gli cedono energia, che diventa agitazione termica. È un difetto nei cavi e il principio di funzionamento di stufe, ferri da stiro e lampadine a filamento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505437,
+   "tipo": "multipla",
+   "opzioni": [
+    "nella produzione di un campo magnetico intorno a un filo",
+    "nel riscaldamento di un conduttore percorso da corrente",
+    "nella deviazione degli elettroni in un campo elettrico",
+    "nella generazione di corrente per effetto della luce",
+    "nell'annullamento della resistenza a bassa temperatura"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-64b-02",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Una resistenza da 20 Ω percorsa da una corrente di 3 A dissipa una potenza di:",
+   "spiegazione": "La potenza è la resistenza per il quadrato della corrente: venti per nove fa 180 W. Chi dimentica il quadrato ottiene 60, che è il valore della tensione ai capi in volt.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "60 W",
+    "180 W",
+    "6,7 W",
+    "120 W",
+    "900 W"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-64b-03",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Due resistenze collegate in serie:",
+   "spiegazione": "Essendoci un solo percorso, la corrente non ha scelta e attraversa entrambe. La tensione invece si ripartisce, in proporzione alle rispettive resistenze.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "hanno ai capi la stessa tensione",
+    "possono essere percorse da correnti diverse",
+    "danno una resistenza totale minore della più piccola",
+    "sono percorse dalla stessa corrente e la resistenza totale è la somma delle due",
+    "si comportano come un'unica resistenza dimezzata"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-64b-04",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Collegando due resistenze in parallelo, la resistenza equivalente:",
+   "spiegazione": "Aggiungere un percorso in parallelo offre alla corrente una strada in più, quindi il passaggio diventa complessivamente più facile. È il motivo per cui collegando troppi apparecchi alla stessa presa la corrente totale aumenta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "è minore della più piccola delle due",
+    "è la somma delle due",
+    "è sempre uguale alla media",
+    "è maggiore della più grande",
+    "non si può calcolare"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-64b-05",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Due resistenze da 10 Ω ciascuna, collegate in parallelo, danno una resistenza equivalente di:",
+   "spiegazione": "Con due resistenze uguali in parallelo il risultato è la metà di una delle due: 5 Ω. Il valore 20 Ω sarebbe quello del collegamento in serie.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "20 Ω",
+    "10 Ω",
+    "5 Ω",
+    "2 Ω",
+    "0,1 Ω"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-64b-06",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Tre resistenze da 2 Ω, 3 Ω e 5 Ω collegate in serie danno una resistenza totale, in ohm, di ……",
+   "spiegazione": "In serie le resistenze si sommano: due più tre più cinque fa 10 Ω. In parallelo, con gli stessi valori, il risultato sarebbe minore di 2 Ω.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "ohm"
+  },
+  {
+   "id": "fis-64b-07",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Una resistenza con 10 V ai capi, percorsa da 2 A, dissipa una potenza, in watt, pari a ……",
+   "spiegazione": "Dieci volt per due ampere fa 20 W, tutti trasformati in calore. In un'ora quella resistenza produrrebbe 72 000 joule.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "W"
+  },
+  {
+   "id": "fis-64b-08",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Tre resistenze da 30 Ω ciascuna, collegate in parallelo, danno una resistenza equivalente, in ohm, di ……",
+   "spiegazione": "Con resistenze uguali in parallelo basta dividere il valore per il loro numero: trenta diviso tre fa 10 Ω. In serie, invece, le stesse tre darebbero 90 Ω.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "ohm"
+  },
+  {
+   "id": "fis-64b-09",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Nel collegamento in parallelo la grandezza che risulta uguale per tutti i rami è la ……",
+   "spiegazione": "I rami sono attaccati agli stessi due nodi, quindi hanno la stessa differenza di potenziale. La corrente si divide invece fra i rami, in misura inversa alle resistenze.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "tensione",
+    "tensioni",
+    "differenza di potenziale",
+    "ddp",
+    "d.d.p.",
+    "tensione elettrica"
+   ]
+  },
+  {
+   "id": "fis-64b-10",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Un elettrodomestico da 2200 W alimentato a 220 V assorbe una corrente, in ampere, di ……",
+   "spiegazione": "Potenza diviso tensione: 2200 diviso 220 fa 10 A. È vicino al limite di un impianto domestico, ed è il motivo per cui forno e lavastoviglie accesi insieme fanno scattare il contatore.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "A"
+  },
+  {
+   "id": "fis-64b-11",
+   "argomento": "fis.6.4",
+   "stato": "approvata",
+   "testo": "Nel collegamento in serie la grandezza che resta la stessa in ogni resistenza è l'intensità di ……",
+   "spiegazione": "C'è un unico percorso, quindi tutta la carica passa attraverso ogni componente. Se si interrompe un elemento, l'intero circuito si spegne: era il difetto delle vecchie file di luci natalizie.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "corrente",
+    "correnti",
+    "corrente elettrica"
+   ]
+  },
+  {
+   "id": "fis-51a-01",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Un sistema termodinamico si dice isolato quando:",
+   "spiegazione": "È un'idealizzazione: in pratica ci si avvicina con un recipiente ben coibentato e chiuso. Il sistema isolato più vicino al concetto è l'universo nel suo insieme.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "scambia energia ma non materia con l'ambiente",
+    "non scambia né materia né energia con l'ambiente",
+    "scambia materia ma non energia",
+    "ha temperatura costante",
+    "ha volume costante"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-51a-02",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Un sistema chiuso è un sistema che:",
+   "spiegazione": "Una pentola con il coperchio ben sigillato si scalda ma non perde contenuto. Senza coperchio diventa un sistema aperto, perché il vapore porta via anche materia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "non scambia nulla con l'ambiente",
+    "scambia materia ma non energia",
+    "scambia energia ma non materia",
+    "ha pareti rigide",
+    "si trova sempre all'equilibrio"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-51a-03",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Una funzione di stato è una grandezza che:",
+   "spiegazione": "Temperatura, pressione, volume ed energia interna sono funzioni di stato: due stati identici hanno gli stessi valori, qualunque storia li abbia prodotti. È l'analogia dell'altitudine di una cima, che non dipende dal sentiero.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "dipende dal percorso seguito dalla trasformazione",
+    "si può misurare solo all'equilibrio",
+    "cresce sempre nel tempo",
+    "dipende soltanto dallo stato del sistema e non dal cammino percorso per arrivarci",
+    "non ha unità di misura"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-51a-04",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Calore e lavoro, in termodinamica:",
+   "spiegazione": "Portando un sistema dallo stesso stato iniziale allo stesso stato finale per strade diverse, calore e lavoro cambiano; la loro somma, cioè la variazione di energia interna, no. È il contenuto del primo principio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "non sono funzioni di stato, perché dipendono dalla trasformazione seguita",
+    "sono entrambi funzioni di stato",
+    "sono la stessa grandezza",
+    "non si misurano in joule",
+    "sono sempre uguali fra loro"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-51a-05",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Fra le grandezze elencate, l'unica che non è una variabile di stato è:",
+   "spiegazione": "Non si può dire quanto calore un sistema \"contiene\": il calore è energia in transito, e ha senso solo riferito a una trasformazione. Quello che il sistema contiene è energia interna.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "la pressione",
+    "il volume",
+    "la temperatura",
+    "il numero di moli",
+    "il calore scambiato"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "fis-51a-06",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Tutto ciò che si trova fuori dal sistema e può scambiare con esso energia o materia si chiama ……",
+   "spiegazione": "Dove finisce il sistema e comincia l'ambiente lo decide chi studia il problema. Scegliere bene il confine è spesso metà della soluzione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "ambiente",
+    "ambienti",
+    "intorno",
+    "ambiente esterno"
+   ]
+  },
+  {
+   "id": "fis-51a-07",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Un sistema che scambia con l'ambiente sia energia sia materia si dice ……",
+   "spiegazione": "Una cellula è un sistema aperto: entrano nutrienti e ossigeno, escono scorie e calore. Gli organismi viventi non possono essere sistemi chiusi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "aperto",
+    "aperti"
+   ]
+  },
+  {
+   "id": "fis-51a-08",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Le grandezze che dipendono solo dallo stato del sistema e non dal percorso seguito si chiamano funzioni di ……",
+   "spiegazione": "Per loro la variazione si calcola come differenza fra valore finale e iniziale, senza sapere nulla di quello che è successo nel mezzo. È ciò che le rende utili.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "stato"
+   ]
+  },
+  {
+   "id": "fis-51a-09",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Il primo principio della termodinamica lega la variazione di energia interna al calore scambiato e al ……",
+   "spiegazione": "Sono le due sole vie con cui l'energia entra o esce da un sistema chiuso. Il principio è una forma della conservazione dell'energia, estesa ai fenomeni termici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "lavoro",
+    "lavori",
+    "lavoro compiuto",
+    "lavoro scambiato"
+   ]
+  },
+  {
+   "id": "fis-51a-10",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "La funzione di stato che misura il grado di disordine di un sistema si chiama ……",
+   "spiegazione": "Il secondo principio afferma che in un sistema isolato non può diminuire. È il motivo per cui alcuni processi avvengono in una sola direzione, anche quando l'energia si conserverebbe in entrambe.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "entropia",
+    "entropie",
+    "S"
+   ]
+  },
+  {
+   "id": "fis-51b-01",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Lo zero assoluto corrisponde a:",
+   "spiegazione": "È il limite inferiore della temperatura, e corrisponde allo zero della scala kelvin. Non è raggiungibile: ci si può solo avvicinare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "0 °C",
+    "−273,15 °C",
+    "−100 °C",
+    "273,15 °C",
+    "una temperatura che dipende dalla pressione"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-51b-02",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Raddoppiando la temperatura assoluta di un gas perfetto, l'energia cinetica media delle sue molecole:",
+   "spiegazione": "La temperatura assoluta è proporzionale all'energia cinetica media di traslazione: sono due modi di dire la stessa cosa. Il raddoppio vale solo usando i kelvin, non i gradi Celsius.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "si dimezza",
+    "resta invariata",
+    "raddoppia",
+    "quadruplica",
+    "diventa nulla"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-51b-03",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Secondo l'equazione di stato dei gas perfetti, a temperatura e quantità di gas costanti:",
+   "spiegazione": "Comprimendo un gas a temperatura costante la pressione sale: il loro prodotto rimane costante. È la legge di Boyle, un caso particolare dell'equazione di stato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "pressione e volume sono direttamente proporzionali",
+    "il volume non dipende dalla pressione",
+    "la pressione cresce con il quadrato del volume",
+    "pressione e volume sono inversamente proporzionali",
+    "il prodotto pressione per volume cresce nel tempo"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-51b-04",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Un gas reale si comporta tanto più come un gas perfetto quanto più:",
+   "spiegazione": "Il modello perfetto trascura il volume delle molecole e le forze fra loro: ipotesi accettabili quando le molecole sono lontane. Alte pressioni e basse temperature sono proprio le condizioni in cui il modello sbaglia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "è rarefatto e lontano dalle condizioni di condensazione",
+    "è compresso e vicino al punto di liquefazione",
+    "le sue molecole sono grandi",
+    "la temperatura è bassa",
+    "le forze fra le molecole sono intense"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-51b-05",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Una temperatura di 27 °C corrisponde a …… kelvin",
+   "spiegazione": "Si aggiungono 273 ai gradi Celsius: ventisette più duecentosettantatré fa 300 K. Le due scale hanno la stessa ampiezza di grado, quindi una differenza di temperatura ha lo stesso valore in entrambe.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "300",
+    "300,15",
+    "300.15",
+    "trecento"
+   ],
+   "numero": {
+    "valore": 300,
+    "tolleranza": 0.2
+   },
+   "unita": "K"
+  },
+  {
+   "id": "fis-51b-06",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Nell'equazione di stato dei gas perfetti la costante universale dei gas si indica con la lettera ……",
+   "spiegazione": "Vale circa 8,31 joule per mole e per kelvin. È universale perché non dipende da quale gas si considera, purché il comportamento sia vicino a quello ideale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "R"
+   ]
+  },
+  {
+   "id": "fis-51b-07",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "A temperatura costante, dimezzando il volume di un gas perfetto la sua pressione ……",
+   "spiegazione": "Il prodotto fra pressione e volume resta costante, quindi se un fattore si dimezza l'altro deve raddoppiare. È quello che si sente tappando una siringa e premendo lo stantuffo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "raddoppia",
+    "raddoppiera",
+    "raddoppierà",
+    "si raddoppia",
+    "diventa il doppio"
+   ]
+  },
+  {
+   "id": "fis-51b-08",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "La legge secondo cui, a pressione costante, il volume di un gas è proporzionale alla temperatura assoluta porta il nome di ……",
+   "spiegazione": "È il motivo per cui un pallone gonfio lasciato al sole si espande. Usando i gradi Celsius la proporzionalità non si vede: serve la scala assoluta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "Gay-Lussac",
+    "Charles",
+    "Gay Lussac",
+    "prima legge di Gay-Lussac",
+    "Charles e Gay-Lussac"
+   ]
+  },
+  {
+   "id": "fis-51b-09",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Lo zero assoluto, espresso in gradi Celsius, vale circa ……",
+   "spiegazione": "Il valore preciso è −273,15 °C. A quella temperatura l'agitazione termica delle particelle sarebbe al minimo possibile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "-273",
+    "-273,15",
+    "-273.15",
+    "−273",
+    "−273,15"
+   ],
+   "numero": {
+    "valore": -273,
+    "tolleranza": 0.2
+   },
+   "unita": "°C"
+  },
+  {
+   "id": "fis-41a-01",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "In un oscillatore armonico la forza di richiamo:",
+   "spiegazione": "È la condizione che rende il moto armonico: più il corpo si allontana, più viene richiamato. La forza è massima agli estremi e nulla al centro, al contrario della velocità.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "è costante in modulo",
+    "è proporzionale allo spostamento dalla posizione di equilibrio e diretta in verso opposto",
+    "cresce con il quadrato dello spostamento",
+    "è nulla negli estremi dell'oscillazione",
+    "dipende dalla velocità del corpo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-41a-02",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Il periodo di un sistema massa-molla:",
+   "spiegazione": "Una massa grande è più lenta da muovere, una molla rigida richiama più in fretta. Nell'oscillatore armonico ideale il periodo non dipende dall'ampiezza: è la proprietà che rende utili i pendoli come orologi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "non dipende dalla massa",
+    "diminuisce aumentando la massa",
+    "cresce aumentando la massa e diminuisce se la molla è più rigida",
+    "dipende dall'ampiezza dell'oscillazione",
+    "cresce se la molla è più rigida"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-41a-03",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Se il periodo di un'oscillazione raddoppia, la frequenza:",
+   "spiegazione": "Periodo e frequenza sono l'uno il reciproco dell'altra, quindi vanno sempre in direzioni opposte. Un'oscillazione che dura il doppio si ripete metà delle volte in un secondo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "raddoppia",
+    "resta invariata",
+    "quadruplica",
+    "si dimezza",
+    "diventa nulla"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-41a-04",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Un'onda di frequenza 50 Hz si propaga alla velocità di 340 m/s. La sua lunghezza d'onda vale:",
+   "spiegazione": "La lunghezza d'onda è la velocità divisa per la frequenza: 340 diviso 50 fa 6,8 m. Moltiplicare invece di dividere porta a 17 000, un valore assurdo per un'onda sonora.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "6,8 m",
+    "0,15 m",
+    "17 000 m",
+    "68 m",
+    "3,4 m"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-41a-05",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "L'unità di misura della frequenza nel Sistema Internazionale è l'……",
+   "spiegazione": "Un hertz è un'oscillazione al secondo, cioè l'inverso di un secondo. L'orecchio umano percepisce suoni fra circa 20 e 20 000 Hz.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "hertz",
+    "Hz"
+   ]
+  },
+  {
+   "id": "fis-41a-06",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Un'oscillazione di periodo 0,02 s ha una frequenza, in hertz, pari a ……",
+   "spiegazione": "Uno diviso 0,02 fa 50 Hz. È la frequenza della corrente elettrica distribuita in Europa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "50",
+    "cinquanta"
+   ],
+   "numero": {
+    "valore": 50,
+    "tolleranza": 0
+   },
+   "unita": "Hz"
+  },
+  {
+   "id": "fis-41a-07",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "La distanza fra due creste successive di un'onda si chiama lunghezza d'……",
+   "spiegazione": "È lo spazio percorso dall'onda nel tempo di un periodo. Insieme alla frequenza determina la velocità di propagazione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "onda",
+    "onde"
+   ]
+  },
+  {
+   "id": "fis-41a-08",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Lo spostamento massimo dalla posizione di equilibrio, in un'oscillazione, si chiama ……",
+   "spiegazione": "Nel suono corrisponde al volume, nella luce all'intensità. In un oscillatore armonico ideale non influisce sul periodo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "ampiezza",
+    "ampiezze"
+   ]
+  },
+  {
+   "id": "fis-41a-09",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Un'onda che si propaga a 20 m/s con lunghezza d'onda di 4 m ha una frequenza, in hertz, di ……",
+   "spiegazione": "Velocità diviso lunghezza d'onda: venti diviso quattro fa 5 Hz. La stessa relazione, scritta in tre modi diversi, risolve tutti i problemi di questo tipo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "Hz"
+  },
+  {
+   "id": "fis-41b-01",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "In un'onda longitudinale le particelle del mezzo oscillano:",
+   "spiegazione": "Si alternano zone compresse e zone rarefatte lungo la direzione del moto. Il suono è l'esempio più comune, e per questo può propagarsi anche nei fluidi, che non sopportano deformazioni trasversali.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "perpendicolarmente alla direzione di propagazione",
+    "nella stessa direzione in cui l'onda si propaga",
+    "in cerchio attorno alla posizione di equilibrio",
+    "senza spostarsi affatto",
+    "soltanto nei solidi"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-41b-02",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Il suono che si propaga nell'aria è un'onda:",
+   "spiegazione": "L'aria viene compressa e rarefatta nella direzione in cui il suono viaggia. Essendo un'onda meccanica ha bisogno di un mezzo: nel vuoto non c'è nulla da comprimere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "trasversale",
+    "elettromagnetica",
+    "longitudinale, di compressione e rarefazione",
+    "che non trasporta energia",
+    "che si propaga anche nel vuoto"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-41b-03",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Un'onda che si propaga in un mezzo materiale trasporta:",
+   "spiegazione": "Le particelle oscillano intorno alla propria posizione e restano dove sono: a viaggiare è la perturbazione. Un tappo di sughero su un'onda del mare sale e scende senza allontanarsi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "materia, che viene spostata dal punto di partenza a quello di arrivo",
+    "sia materia sia carica elettrica",
+    "soltanto massa",
+    "energia, senza trasporto di materia",
+    "nulla: l'onda è solo un'immagine"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-41b-04",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "La velocità di propagazione di un'onda meccanica dipende:",
+   "spiegazione": "Densità ed elasticità del mezzo decidono la velocità: il suono viaggia più veloce nell'acqua che nell'aria. Cambiando la frequenza della sorgente cambia la lunghezza d'onda, non la velocità.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "dalle proprietà del mezzo in cui si propaga",
+    "dall'ampiezza dell'onda",
+    "dalla sola frequenza della sorgente",
+    "dall'energia della sorgente",
+    "dalla distanza percorsa"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-41b-05",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Le onde in cui le particelle oscillano perpendicolarmente alla direzione di propagazione si dicono ……",
+   "spiegazione": "Una corda scossa lateralmente ne è l'esempio tipico. Le onde elettromagnetiche sono trasversali, e questo rende possibile la polarizzazione della luce.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "trasversali",
+    "trasversale"
+   ]
+  },
+  {
+   "id": "fis-41b-06",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Le onde sonore, essendo onde meccaniche, non possono propagarsi nel ……",
+   "spiegazione": "Senza materia non c'è nulla da far oscillare. È il motivo per cui nello spazio non si sentirebbe alcun rumore, mentre la luce arriva senza problemi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "vuoto"
+   ]
+  },
+  {
+   "id": "fis-41b-07",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Il suono nell'aria viaggia a circa 340 m/s: in 2 s percorre …… metri",
+   "spiegazione": "Velocità per tempo: 340 per due fa 680 m. È il calcolo che si usa per stimare la distanza di un fulmine contando i secondi fra lampo e tuono.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "680",
+    "seicentoottanta",
+    "seicentottanta"
+   ],
+   "numero": {
+    "valore": 680,
+    "tolleranza": 0.01
+   },
+   "unita": "m"
+  },
+  {
+   "id": "fis-41b-08",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "A differenza di quelle sonore, le onde elettromagnetiche non hanno bisogno di un …… materiale per propagarsi",
+   "spiegazione": "Sono oscillazioni di campi elettrici e magnetici, che si sostengono a vicenda. Per questo la luce del Sole attraversa lo spazio vuoto fino a noi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "mezzo",
+    "mezzi"
+   ]
+  },
+  {
+   "id": "fis-24a-01",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "La quantità di moto di un corpo è:",
+   "spiegazione": "È un vettore che punta come la velocità, e si misura in chilogrammi per metro al secondo. Massa per accelerazione è invece la forza, e metà massa per velocità al quadrato è l'energia cinetica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "il prodotto della massa per l'accelerazione",
+    "il prodotto della massa per la velocità",
+    "metà della massa per il quadrato della velocità",
+    "il rapporto fra forza e tempo",
+    "il prodotto della forza per lo spostamento"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-24a-02",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "L'impulso di una forza è:",
+   "spiegazione": "Conta quanto vale la forza e per quanto tempo agisce: una spinta debole ma prolungata può avere lo stesso impulso di un colpo secco. Si misura in newton per secondo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "la forza divisa per il tempo",
+    "il lavoro compiuto dalla forza",
+    "il prodotto della forza per l'intervallo di tempo durante cui agisce",
+    "la variazione di energia cinetica",
+    "la forza per lo spostamento"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-24a-03",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "L'impulso di una forza applicata a un corpo è uguale:",
+   "spiegazione": "È il teorema dell'impulso, la riscrittura del secondo principio in termini di quantità di moto. Permette di ragionare sugli urti, dove le forze sono grandi e durano pochissimo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "all'energia cinetica finale del corpo",
+    "alla sua massa",
+    "al lavoro compiuto sul corpo",
+    "alla variazione della sua quantità di moto",
+    "alla potenza media sviluppata"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-24a-04",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 4 kg si muove alla velocità di 5 m/s. La sua quantità di moto vale:",
+   "spiegazione": "Massa per velocità: quattro per cinque fa 20 kg·m/s. Il valore 50 si otterrebbe calcolando l'energia cinetica, che è un'altra grandezza e si misura in joule.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "20 kg·m/s",
+    "9 kg·m/s",
+    "0,8 kg·m/s",
+    "50 kg·m/s",
+    "100 kg·m/s"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-24a-05",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Avendo la stessa direzione e lo stesso verso della velocità, la quantità di moto è una grandezza ……",
+   "spiegazione": "Nei problemi di urto va quindi sommata con le regole dei vettori, non con l'aritmetica. Due corpi che si muovono in versi opposti possono avere quantità di moto totale nulla.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "vettoriale",
+    "vettoriali",
+    "vettore"
+   ]
+  },
+  {
+   "id": "fis-24a-06",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 2 kg che si muove a 3 m/s ha una quantità di moto, in kg·m/s, pari a ……",
+   "spiegazione": "Due per tre fa 6 kg·m/s. Un corpo con massa doppia e velocità dimezzata avrebbe la stessa quantità di moto, ma non la stessa energia cinetica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "6",
+    "sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-24a-07",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Una forza di 10 N che agisce per 3 s produce un impulso, in N·s, pari a ……",
+   "spiegazione": "Dieci per tre fa 30 N·s. Lo stesso impulso si otterrebbe con una forza di 30 N applicata per un solo secondo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "30",
+    "trenta"
+   ],
+   "numero": {
+    "valore": 30,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-24a-08",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "L'airbag riduce la forza che agisce sul corpo durante un urto perché ne allunga il ……",
+   "spiegazione": "La variazione di quantità di moto è fissata dalla velocità iniziale, quindi l'impulso necessario è lo stesso: distribuirlo su un tempo maggiore abbassa la forza. È lo stesso principio delle zone deformabili dell'auto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "tempo",
+    "tempi",
+    "tempo di impatto",
+    "tempo d'urto",
+    "intervallo di tempo",
+    "durata"
+   ]
+  },
+  {
+   "id": "fis-24a-09",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Il prodotto di una forza per il tempo durante il quale essa agisce si chiama ……",
+   "spiegazione": "Ha le stesse unità della quantità di moto, e non è un caso: l'uno è la variazione dell'altra. Nei fenomeni d'urto è la grandezza più comoda da usare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "impulso",
+    "impulsi",
+    "impulso della forza"
+   ]
+  },
+  {
+   "id": "fis-24b-01",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "In un sistema isolato la quantità di moto totale:",
+   "spiegazione": "Le forze interne agiscono a coppie uguali e opposte, quindi i loro effetti sulla quantità di moto totale si annullano. Vale negli urti elastici come in quelli anelastici, ed è il motivo per cui è una legge così utile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "aumenta nel tempo",
+    "si conserva, qualunque cosa avvenga all'interno",
+    "diminuisce per effetto degli urti",
+    "si conserva solo negli urti elastici",
+    "dipende dal sistema di riferimento scelto e quindi non si conserva"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-24b-02",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "In un urto completamente anelastico fra due corpi:",
+   "spiegazione": "Parte dell'energia cinetica va in deformazione e calore, quindi non la si ritrova nel moto. La quantità di moto, invece, resta la stessa: è questo che permette di calcolare la velocità finale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'energia cinetica totale si conserva",
+    "la quantità di moto non si conserva",
+    "i due corpi proseguono uniti e l'energia cinetica totale diminuisce",
+    "i corpi rimbalzano con la stessa velocità iniziale",
+    "entrambi i corpi si fermano sempre"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-24b-03",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "In un urto elastico:",
+   "spiegazione": "È la definizione di urto elastico: nessuna energia viene dissipata. Nella realtà è un'idealizzazione, a cui si avvicinano gli urti fra sfere molto rigide o fra particelle.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "si conserva solo l'energia cinetica",
+    "si conserva solo la quantità di moto",
+    "non si conserva nulla",
+    "si conservano sia la quantità di moto sia l'energia cinetica",
+    "i corpi restano sempre attaccati"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-24b-04",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Un corpo di 2 kg che viaggia a 6 m/s urta un corpo di 4 kg fermo e i due restano attaccati. La loro velocità finale è:",
+   "spiegazione": "La quantità di moto iniziale è 12 kg·m/s e la massa totale dopo l'urto è 6 kg: dodici diviso sei fa 2 m/s. L'energia cinetica invece passa da 36 a 12 joule, e la differenza è andata in deformazione e calore.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "6 m/s",
+    "2 m/s",
+    "3 m/s",
+    "1 m/s",
+    "4 m/s"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-24b-05",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Un sistema su cui non agiscono forze esterne, o in cui la loro risultante è nulla, si dice ……",
+   "spiegazione": "È la condizione che garantisce la conservazione della quantità di moto. Durante un urto breve il sistema dei due corpi si può considerare isolato, perché le forze interne sono enormemente maggiori di quelle esterne.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "isolato",
+    "isolati"
+   ]
+  },
+  {
+   "id": "fis-24b-06",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Un corpo di 1 kg a 10 m/s urta un corpo di 4 kg fermo e i due restano uniti: la velocità finale, in m/s, è ……",
+   "spiegazione": "Quantità di moto iniziale 10 kg·m/s, massa totale 5 kg: dieci diviso cinque fa 2 m/s. Più grande è la massa ferma coinvolta, più la velocità finale è piccola.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-24b-07",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Negli urti anelastici una parte dell'energia cinetica si trasforma in calore e in …… dei corpi",
+   "spiegazione": "L'energia totale si conserva sempre: cambia solo la forma in cui si presenta. Le auto moderne sono progettate per deformarsi molto, assorbendo energia che altrimenti arriverebbe ai passeggeri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "deformazione",
+    "deformazioni",
+    "energia di deformazione"
+   ]
+  },
+  {
+   "id": "fis-24b-08",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "In un urto fra due corpi isolati, la grandezza che si conserva sempre, sia nel caso elastico sia in quello anelastico, è la quantità di ……",
+   "spiegazione": "L'energia cinetica si conserva solo negli urti elastici, la quantità di moto in tutti. È la differenza da ricordare quando si decide quale equazione scrivere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "moto"
+   ]
+  },
+  {
+   "id": "fis-33a-01",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "La portata di un condotto è:",
+   "spiegazione": "Si ottiene moltiplicando la sezione per la velocità del fluido e si misura in metri cubi al secondo. Nel circolo sanguigno corrisponde alla gittata cardiaca.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "la massa totale di fluido contenuta nel condotto",
+    "il volume di fluido che attraversa una sezione nell'unità di tempo",
+    "la pressione del fluido all'ingresso",
+    "la velocità massima del fluido",
+    "la sezione del condotto"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-33a-02",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il moto di un fluido si dice stazionario quando:",
+   "spiegazione": "La velocità può essere diversa da punto a punto, ma in ogni punto resta la stessa istante per istante. È la condizione che permette di applicare l'equazione di continuità.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "il fluido è fermo",
+    "la velocità è la stessa in tutti i punti del condotto",
+    "in ciascun punto la velocità non cambia nel tempo",
+    "non c'è attrito interno",
+    "la pressione è costante lungo il condotto"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-33a-03",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Nel moto turbolento, rispetto a quello laminare:",
+   "spiegazione": "I vortici mescolano gli strati e dissipano energia, quindi serve una differenza di pressione maggiore per mantenere la stessa portata. Nei vasi sanguigni la turbolenza produce i soffi che si sentono con lo stetoscopio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "il fluido scorre in strati ordinati e paralleli",
+    "la resistenza al moto è minore",
+    "la velocità è sempre più bassa",
+    "si formano vortici e la resistenza al moto aumenta",
+    "la portata non può essere definita"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-33a-04",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il numero di Reynolds:",
+   "spiegazione": "Essendo un rapporto fra grandezze omogenee, non ha unità di misura. Sotto un valore critico il moto è laminare, sopra diventa turbolento, e questo vale per qualunque fluido e qualunque condotto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "è una grandezza adimensionale che indica se il moto è laminare o turbolento",
+    "si misura in metri al secondo",
+    "misura la portata di un condotto",
+    "è la pressione critica di un fluido",
+    "vale sempre uno nei fluidi ideali"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-33a-05",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Un condotto di sezione 0,5 m² ha una portata di 2 m³/s: la velocità del fluido, in m/s, vale ……",
+   "spiegazione": "Portata diviso sezione: due diviso 0,5 fa 4 m/s. A portata costante, una sezione più piccola impone una velocità più alta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-33a-06",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "In un tubo di sezione 0,02 m² il fluido scorre a 3 m/s: la portata, in m³/s, vale ……",
+   "spiegazione": "Sezione per velocità: 0,02 per tre fa 0,06 m³/s. Attenzione alle unità: se la sezione fosse data in centimetri quadrati andrebbe convertita prima.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "0,06",
+    "0.06"
+   ],
+   "numero": {
+    "valore": 0.06,
+    "tolleranza": 0.001
+   },
+   "unita": "m^3/s"
+  },
+  {
+   "id": "fis-33a-07",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il moto in cui il fluido scorre in strati che non si mescolano fra loro si dice ……",
+   "spiegazione": "Gli strati slittano l'uno sull'altro con velocità diverse, massima al centro e minima alle pareti. È il regime normale del sangue nei vasi sani.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "laminare",
+    "laminari"
+   ]
+  },
+  {
+   "id": "fis-33a-08",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il cuore espelle 70 mL di sangue a ogni battito, con 70 battiti al minuto: la portata, in litri al minuto, vale ……",
+   "spiegazione": "Settanta per settanta fa 4900 mL, cioè 4,9 L al minuto: è la gittata cardiaca a riposo. Sotto sforzo può arrivare a venti litri al minuto, aumentando sia il volume per battito sia la frequenza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "4,9",
+    "4.9"
+   ],
+   "numero": {
+    "valore": 4.9,
+    "tolleranza": 0.01
+   },
+   "unita": "L/min"
+  },
+  {
+   "id": "fis-33a-09",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Una portata di 0,5 m³/s in un condotto di sezione 0,1 m² corrisponde a una velocità, in m/s, di ……",
+   "spiegazione": "Portata diviso sezione: 0,5 diviso 0,1 fa 5 m/s. È la stessa relazione della portata, usata al contrario.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-33b-01",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Secondo l'equazione di continuità, nel punto in cui un condotto si restringe il fluido:",
+   "spiegazione": "La portata deve restare la stessa in ogni sezione, quindi dove l'area è minore la velocità è maggiore. È l'effetto che si ottiene strozzando con un dito la bocca di una canna da giardino.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "rallenta",
+    "scorre più veloce",
+    "mantiene la stessa velocità",
+    "si ferma",
+    "cambia densità"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-33b-02",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Secondo il teorema di Bernoulli, in un condotto orizzontale dove la velocità del fluido aumenta:",
+   "spiegazione": "La somma fra pressione e termine cinetico si conserva, quindi se una parte cresce l'altra deve calare. È il principio che fa volare le ali e che spiega perché due fogli vicini si avvicinano se ci si soffia in mezzo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "la pressione aumenta",
+    "la pressione resta costante",
+    "la pressione diminuisce",
+    "la portata diminuisce",
+    "la densità aumenta"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-33b-03",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "In un vaso sanguigno ristretto da una placca, nel tratto della stenosi:",
+   "spiegazione": "La continuità impone più velocità dove la sezione è minore, e Bernoulli fa scendere la pressione dove la velocità sale. In casi estremi la pressione interna può calare tanto che il vaso tende a collassare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "la velocità diminuisce e la pressione aumenta",
+    "sia velocità sia pressione diminuiscono",
+    "sia velocità sia pressione aumentano",
+    "la velocità aumenta e la pressione laterale diminuisce",
+    "non cambia nulla, perché la portata è costante"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-33b-04",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "In un aneurisma, dove il vaso è dilatato:",
+   "spiegazione": "Sezione più larga significa velocità minore e quindi pressione maggiore, che spinge ancora sulle pareti già indebolite. È un circolo vizioso, ed è il motivo per cui gli aneurismi tendono a crescere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "multipla",
+   "opzioni": [
+    "la velocità diminuisce e la pressione laterale aumenta, favorendo un'ulteriore dilatazione",
+    "la velocità aumenta e la pressione diminuisce",
+    "la portata aumenta",
+    "la pressione resta identica a quella dei tratti vicini",
+    "il sangue si ferma"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-33b-05",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "L'equazione che impone alla portata di essere la stessa in ogni sezione di un condotto si chiama equazione di ……",
+   "spiegazione": "Esprime la conservazione della massa per un fluido incomprimibile: quello che entra deve uscire. Da qui segue che sezione e velocità sono inversamente proporzionali.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "continuità",
+    "continuita",
+    "Leonardo"
+   ]
+  },
+  {
+   "id": "fis-33b-06",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Un condotto passa da una sezione di 4 cm² a una di 1 cm²: se nel tratto largo la velocità è 2 m/s, in quello stretto diventa …… m/s",
+   "spiegazione": "La sezione si riduce a un quarto, quindi la velocità si moltiplica per quattro: due per quattro fa 8 m/s. Le unità della sezione non vanno convertite, perché conta solo il loro rapporto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "8",
+    "otto"
+   ],
+   "numero": {
+    "valore": 8,
+    "tolleranza": 0
+   },
+   "unita": "m/s"
+  },
+  {
+   "id": "fis-33b-07",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il teorema che lega fra loro pressione, velocità e quota di un fluido ideale in movimento porta il nome di ……",
+   "spiegazione": "È la conservazione dell'energia applicata a un fluido in moto stazionario, senza viscosità. Nei fluidi reali una parte dell'energia si perde per attrito interno, e il teorema vale solo in modo approssimato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "Bernoulli"
+   ]
+  },
+  {
+   "id": "fis-33b-08",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Un condotto passa da una sezione di 6 cm² a una di 2 cm²: se nel tratto largo il fluido scorre a 1,5 m/s, nel tratto stretto scorre a …… m/s",
+   "spiegazione": "La sezione si riduce a un terzo, quindi la velocità si triplica: 1,5 per tre fa 4,5 m/s. È il calcolo che spiega perché il sangue acceleri attraversando una stenosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792708505438,
+   "tipo": "completamento",
+   "accettate": [
+    "4,5",
+    "4.5"
+   ],
+   "numero": {
+    "valore": 4.5,
+    "tolleranza": 0.01
+   },
+   "unita": "m/s"
   }
  ]
 }
