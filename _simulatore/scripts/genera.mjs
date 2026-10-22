@@ -83,16 +83,30 @@ function esempi2025(codice) {
   return prove.prove.flatMap((p) => p.domande.filter((d) => d.argomento === codice).map((d) => ({ ...d, materia: p.materia })))
 }
 
-/** Divide un elenco in `quanti` gruppi di lunghezza il più possibile uguale, nell'ordine di partenza. */
+/**
+ * Divide un elenco in `quanti` gruppi consecutivi, bilanciati sulla lunghezza del testo e non sul
+ * numero di voci. "fibronectina" e "struttura, funzioni e degradazione della matrice" sono una voce
+ * per uno ma non sono due mezzi argomento: spartendo a conteggio, un lotto da dieci domande finiva
+ * tutto sulla fibronectina. Ogni gruppo resta non vuoto e l'ordine non cambia, così le voci affini
+ * restano insieme.
+ */
 function fette(elenco, quanti) {
-  const base = Math.floor(elenco.length / quanti)
-  const resto = elenco.length % quanti
+  if (quanti >= elenco.length) return elenco.map((v) => [v])
+  const lunghezze = elenco.map((v) => v.length)
   const gruppi = []
-  let da = 0
+  let i = 0
   for (let k = 0; k < quanti; k++) {
-    const n = base + (k < resto ? 1 : 0)
-    gruppi.push(elenco.slice(da, da + n))
-    da += n
+    const restanti = quanti - k
+    const quota = lunghezze.slice(i).reduce((s, l) => s + l, 0) / restanti
+    const gruppo = []
+    let preso = 0
+    // almeno una voce per gruppo, e una va lasciata a ciascuno dei gruppi che vengono dopo
+    while (i < elenco.length - (restanti - 1) && (!gruppo.length || preso + lunghezze[i] / 2 <= quota)) {
+      gruppo.push(elenco[i])
+      preso += lunghezze[i]
+      i++
+    }
+    gruppi.push(gruppo)
   }
   return gruppi
 }

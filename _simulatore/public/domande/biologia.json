@@ -619,22 +619,6 @@
    ]
   },
   {
-   "id": "bio-63a-09",
-   "argomento": "bio.6.3",
-   "stato": "approvata",
-   "testo": "Lo ione che funziona da secondo messaggero e viene liberato nel citosol dai depositi del reticolo endoplasmatico è il ……",
-   "spiegazione": "Nel citosol il calcio è tenuto a concentrazioni mille volte più basse che nel reticolo e nel liquido extracellulare: è questo dislivello a renderlo un segnale rapido appena i canali si aprono.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792672003451,
-   "tipo": "completamento",
-   "accettate": [
-    "calcio",
-    "Ca2+",
-    "Ca++",
-    "ione calcio"
-   ]
-  },
-  {
    "id": "bio-63a-10",
    "argomento": "bio.6.3",
    "stato": "approvata",
@@ -734,24 +718,6 @@
    "corretta": 0
   },
   {
-   "id": "bio-63b-05",
-   "argomento": "bio.6.3",
-   "stato": "approvata",
-   "testo": "Perché la forma mutata di un recettore tirosin-chinasico può comportarsi da oncogene?",
-   "spiegazione": "Un recettore che si attiva da solo manda il segnale di dividersi anche quando nessun fattore di crescita lo chiede. È il modo più diretto in cui un proto-oncogene diventa oncogene: non un segnale nuovo, ma un segnale che non si spegne.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792672019755,
-   "tipo": "multipla",
-   "opzioni": [
-    "perché non lega più l'ATP e quindi non si spegne",
-    "perché viene degradato più lentamente dai lisosomi",
-    "perché perde la capacità di dimerizzare",
-    "perché si lega direttamente al DNA attivando la trascrizione",
-    "perché segnala in continuazione anche in assenza del ligando"
-   ],
-   "corretta": 4
-  },
-  {
    "id": "bio-63b-06",
    "argomento": "bio.6.3",
    "stato": "approvata",
@@ -840,6 +806,2766 @@
     "vero",
     "v"
    ]
+  },
+  {
+   "id": "bio-63a-09",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Lo ione che funziona da secondo messaggero e viene liberato nel citosol dai depositi del reticolo endoplasmatico è il ……",
+   "spiegazione": "Nel citosol il calcio è tenuto a concentrazioni mille volte più basse che nel reticolo e nel liquido extracellulare: è questo dislivello a renderlo un segnale rapido appena i canali si aprono.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792694665414,
+   "tipo": "completamento",
+   "accettate": [
+    "calcio",
+    "Ca",
+    "Ca2+",
+    "Ca++",
+    "ione calcio"
+   ]
+  },
+  {
+   "id": "bio-63b-05",
+   "argomento": "bio.6.3",
+   "stato": "approvata",
+   "testo": "Perché la forma mutata di un recettore tirosin-chinasico può comportarsi da oncogene?",
+   "spiegazione": "Un recettore che si attiva da solo manda il segnale di dividersi anche quando nessun fattore di crescita lo chiede. È il modo più diretto in cui un proto-oncogene diventa oncogene: non un segnale nuovo, ma un segnale che non si spegne.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792694782694,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché non lega più l'ATP e quindi non si spegne",
+    "perché sulla membrana ne restano meno copie del normale",
+    "perché perde la capacità di dimerizzare",
+    "perché si lega direttamente al DNA attivando la trascrizione",
+    "perché segnala in continuazione anche in assenza del ligando"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-tappa0-01",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Quale caratteristica distingue i virus da tutti gli organismi cellulari?",
+   "spiegazione": "Una cellula contiene sempre sia DNA sia RNA, mentre un virione ne porta uno solo, DNA oppure RNA. È su questa differenza che si fonda la prima grande divisione nella classificazione dei virus.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695840742,
+   "tipo": "multipla",
+   "opzioni": [
+    "Possiedono un solo tipo di acido nucleico",
+    "Sono privi di informazione genetica propria",
+    "Si riproducono per scissione binaria",
+    "Sono delimitati da una parete rigida",
+    "Sono visibili al microscopio ottico"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-tappa0-02",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "L'involucro dei virus che ne sono provvisti deriva da:",
+   "spiegazione": "Uscendo dalla cellula il virione si avvolge in un tratto di membrana dell'ospite, nel quale sono inserite glicoproteine virali. Per questo i virus provvisti di involucro sono più sensibili ai solventi dei lipidi rispetto a quelli nudi.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695842035,
+   "tipo": "multipla",
+   "opzioni": [
+    "membrane della cellula ospite",
+    "sintesi di fosfolipidi codificati dal genoma virale",
+    "un ispessimento del capside",
+    "la parete cellulare del batterio infettato",
+    "proteine della matrice extracellulare"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-tappa0-03",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Nel ciclo lisogeno di un batteriofago il genoma virale:",
+   "spiegazione": "Come profago il genoma virale viene copiato a ogni divisione del batterio e trasmesso a tutta la progenie, senza che si formino nuovi virioni finché un segnale non fa subentrare il ciclo litico.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695843092,
+   "tipo": "multipla",
+   "opzioni": [
+    "si integra nel cromosoma batterico e si replica insieme a esso",
+    "dirige immediatamente la lisi della cellula ospite",
+    "viene degradato dalle nucleasi dell'ospite",
+    "resta nel citoplasma senza mai essere replicato",
+    "passa a un'altra cellula tramite coniugazione"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-tappa0-04",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Nel ciclo replicativo dei retrovirus l'integrasi ha il compito di:",
+   "spiegazione": "Sono due passaggi distinti affidati a due enzimi distinti: la trascrittasi inversa produce il DNA a doppia elica, l'integrasi lo inserisce nel genoma dell'ospite, dove diventa provirus.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695844117,
+   "tipo": "multipla",
+   "opzioni": [
+    "inserire il DNA virale nel genoma della cellula ospite",
+    "sintetizzare DNA usando come stampo l'RNA virale",
+    "tagliare le poliproteine virali nelle proteine mature",
+    "copiare il genoma a RNA in nuove molecole di RNA",
+    "fondere l'involucro virale con la membrana della cellula"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-tappa0-06",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Un virione formato dal solo acido nucleico racchiuso nel capside, senza rivestimento lipidico, si dice virus ……",
+   "spiegazione": "Privi del rivestimento lipidico, i virus nudi resistono meglio nell'ambiente esterno, ai detergenti e ai solventi dei lipidi rispetto a quelli provvisti di involucro.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695845456,
+   "tipo": "completamento",
+   "accettate": [
+    "nudo",
+    "nudi",
+    "non rivestito",
+    "non rivestiti",
+    "senza involucro"
+   ]
+  },
+  {
+   "id": "bio-tappa0-10",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Il genoma di un virus a RNA a polarità positiva può essere tradotto appena entra nella cellula, perché funziona direttamente da ……",
+   "spiegazione": "L'RNA a polarità positiva ha già la sequenza che i ribosomi sanno leggere. Quello a polarità negativa va invece prima copiato nel filamento complementare, e per questo il virione deve portarsi dietro la propria polimerasi.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695846370,
+   "tipo": "completamento",
+   "accettate": [
+    "mRNA",
+    "RNA messaggero",
+    "messaggero"
+   ]
+  },
+  {
+   "id": "bio-15a-01",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Il legame peptidico si forma fra:",
+   "spiegazione": "È una reazione di condensazione: si perde una molecola d'acqua e si forma un legame covalente fra il carbonio del carbossile e l'azoto dell'amminico. I ponti disolfuro esistono, ma uniscono catene laterali di cisteine e non fanno parte dello scheletro.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695847600,
+   "tipo": "multipla",
+   "opzioni": [
+    "due gruppi amminici, con perdita di ammoniaca",
+    "due catene laterali, per mezzo di un ponte disolfuro",
+    "il gruppo carbossilico di un amminoacido e il gruppo amminico del successivo",
+    "il gruppo ossidrilico e il gruppo fosfato di due amminoacidi",
+    "due atomi di carbonio alfa adiacenti"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-15a-02",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "La struttura secondaria di una proteina è determinata da:",
+   "spiegazione": "Eliche alfa e foglietti beta nascono da legami idrogeno fra i gruppi C=O e N-H dello scheletro, non fra le catene laterali. Quelle, con le interazioni idrofobiche e i ponti disolfuro, determinano il ripiegamento terziario.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695848327,
+   "tipo": "multipla",
+   "opzioni": [
+    "legami idrogeno fra gli atomi dello scheletro peptidico",
+    "la sequenza degli amminoacidi letta dal primo all'ultimo",
+    "i ponti disolfuro fra cisteine distanti nella catena",
+    "l'associazione di più catene polipeptidiche",
+    "le interazioni idrofobiche fra le catene laterali"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-15a-03",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Un enzima accelera una reazione perché:",
+   "spiegazione": "L'enzima rende più facile il passaggio allo stato di transizione, quindi la reazione arriva prima all'equilibrio. Dove sta l'equilibrio, però, non cambia: una reazione non spontanea resta non spontanea anche con il suo enzima.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695848902,
+   "tipo": "multipla",
+   "opzioni": [
+    "rende spontanea una reazione che non lo era",
+    "fornisce alla reazione l'energia che le manca",
+    "sposta l'equilibrio della reazione verso i prodotti",
+    "aumenta la temperatura del mezzo",
+    "abbassa l'energia di attivazione"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-15a-04",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Una fosfatasi è un enzima che:",
+   "spiegazione": "Chinasi e fosfatasi fanno il lavoro opposto sulla stessa proteina: le prime la fosforilano usando l'ATP, le seconde la defosforilano. È questa coppia a rendere la fosforilazione un interruttore e non un cambiamento definitivo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695849447,
+   "tipo": "multipla",
+   "opzioni": [
+    "trasferisce un gruppo fosfato dall'ATP a un substrato",
+    "rimuove un gruppo fosfato da un substrato",
+    "lega una catena di ubiquitina a una proteina",
+    "aggiunge un gruppo acetile a un residuo di lisina",
+    "idrolizza il legame peptidico"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-15a-05",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Che cosa distingue un trigliceride da un fosfolipide?",
+   "spiegazione": "Al posto del terzo acido grasso il fosfolipide ha una testa con il fosfato, quindi ha una parte idrofila e una idrofobica. È da questa doppia natura che nascono i doppi strati delle membrane, cosa che un trigliceride non può fare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695849971,
+   "tipo": "multipla",
+   "opzioni": [
+    "il trigliceride contiene glicerolo, il fosfolipide no",
+    "il fosfolipide è apolare in tutta la molecola",
+    "il trigliceride porta tre acidi grassi, il fosfolipide due e un gruppo fosfato",
+    "il trigliceride forma spontaneamente doppi strati in acqua",
+    "il fosfolipide non contiene acidi grassi"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-15a-06",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Il monomero di cui sono fatte le proteine è l'……",
+   "spiegazione": "Gli amminoacidi che compongono le proteine sono venti, tutti con lo stesso scheletro e una catena laterale diversa. È la catena laterale a dare a ciascuno le sue proprietà chimiche.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695850951,
+   "tipo": "completamento",
+   "accettate": [
+    "amminoacido",
+    "amminoacidi",
+    "aminoacido",
+    "aminoacidi"
+   ]
+  },
+  {
+   "id": "bio-15a-07",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "La struttura …… di una proteina è la sequenza dei suoi amminoacidi, letta dal primo all'ultimo",
+   "spiegazione": "È il livello da cui dipendono tutti gli altri: la sequenza contiene già l'informazione per il ripiegamento. Per questo una sola sostituzione può alterare la forma dell'intera proteina.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695851621,
+   "tipo": "completamento",
+   "accettate": [
+    "primaria"
+   ]
+  },
+  {
+   "id": "bio-15a-08",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "La regione dell'enzima in cui si lega il substrato e avviene la reazione si chiama sito ……",
+   "spiegazione": "Il sito attivo è una tasca formata da pochi amminoacidi, spesso distanti nella sequenza e avvicinati dal ripiegamento. La sua forma spiega la specificità: un enzima riconosce il proprio substrato e non altri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695852230,
+   "tipo": "completamento",
+   "accettate": [
+    "attivo",
+    "catalitico"
+   ]
+  },
+  {
+   "id": "bio-15a-09",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Gli enzimi che attaccano catene di ubiquitina alle proteine destinate alla degradazione si chiamano ……",
+   "spiegazione": "La catena di ubiquitina è l'etichetta che manda la proteina al proteasoma. Marcare invece di distruggere subito permette alla cellula di scegliere che cosa eliminare e quando.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695852785,
+   "tipo": "completamento",
+   "accettate": [
+    "ubiquitinasi",
+    "ubiquitina ligasi",
+    "ubiquitin ligasi",
+    "ubiquitina-ligasi",
+    "E3",
+    "E3 ligasi",
+    "ligasi E3"
+   ]
+  },
+  {
+   "id": "bio-15a-10",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Il polisaccaride con cui le cellule animali immagazzinano glucosio si chiama ……",
+   "spiegazione": "È un polimero ramificato di glucosio, accumulato soprattutto nel fegato e nel muscolo. Le ramificazioni offrono molte estremità da cui liberare glucosio in fretta quando serve.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695853318,
+   "tipo": "completamento",
+   "accettate": [
+    "glicogeno"
+   ]
+  },
+  {
+   "id": "bio-15b-01",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Le due catene della doppia elica del DNA sono tenute insieme da:",
+   "spiegazione": "I legami idrogeno fra le basi sono debolissimi presi uno per uno, e proprio per questo la doppia elica può essere aperta per copiarla. I legami fosfodiesterici, molto più forti, tengono insieme i nucleotidi lungo la stessa catena.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695854329,
+   "tipo": "multipla",
+   "opzioni": [
+    "legami fosfodiesterici fra le basi azotate",
+    "legami idrogeno fra le basi complementari",
+    "ponti disolfuro fra gli zuccheri",
+    "legami ionici fra i gruppi fosfato",
+    "legami peptidici"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-15b-02",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Un nucleotide è formato da:",
+   "spiegazione": "Tre pezzi: base, zucchero e fosfato. Senza il fosfato la molecola è un nucleoside, e questa differenza di un solo gruppo è ciò che rende il nucleotide capace di entrare in una catena di acido nucleico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695854889,
+   "tipo": "multipla",
+   "opzioni": [
+    "due basi azotate e un gruppo fosfato",
+    "una base azotata e un gruppo fosfato",
+    "uno zucchero pentoso e un gruppo fosfato",
+    "una base azotata, uno zucchero pentoso e almeno un gruppo fosfato",
+    "una base azotata e uno zucchero pentoso"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-15b-03",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "I microRNA regolano l'espressione genica:",
+   "spiegazione": "Sono RNA non codificanti: non vengono tradotti affatto. Riconoscono per complementarietà gli mRNA bersaglio e li fanno degradare o ne bloccano la traduzione, e un solo microRNA può regolarne molti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695855424,
+   "tipo": "multipla",
+   "opzioni": [
+    "appaiandosi a mRNA bersaglio e riducendone la traduzione",
+    "venendo tradotti in piccoli peptidi regolatori",
+    "trasportando gli amminoacidi al ribosoma",
+    "formando la subunità maggiore del ribosoma",
+    "copiando il DNA in RNA al posto della polimerasi"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-15b-04",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "La fosforilazione di una proteina può:",
+   "spiegazione": "Una modificazione post-traduzionale aggiunge o toglie gruppi chimici a una proteina già fatta: la sequenza resta quella scritta nel gene. È reversibile, e la reversibilità è il motivo per cui funziona da interruttore.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695855945,
+   "tipo": "multipla",
+   "opzioni": [
+    "cambiare la sequenza dei suoi amminoacidi",
+    "aggiungere un amminoacido alla catena",
+    "avvenire soltanto durante la traduzione",
+    "essere rimossa solo degradando la proteina",
+    "cambiarne l'attività senza toccarne la sequenza"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-15b-05",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Dire che le due catene della doppia elica sono antiparallele significa che:",
+   "spiegazione": "Le due catene hanno un orientamento chimico definito dalle estremità 5' e 3', e nella doppia elica puntano in versi opposti. È per questo che la replicazione procede in modo diverso sui due filamenti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695856517,
+   "tipo": "multipla",
+   "opzioni": [
+    "hanno sequenze identiche lette nello stesso verso",
+    "sono avvolte l'una sull'altra in senso sinistrorso",
+    "corrono in direzioni opposte, una da 5' a 3' e l'altra da 3' a 5'",
+    "contengono basi azotate di tipo diverso l'una dall'altra",
+    "si trovano a distanza variabile lungo l'elica"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-15b-06",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Il numero di legami idrogeno che uniscono una guanina alla citosina complementare è ……",
+   "spiegazione": "Adenina e timina ne formano due, guanina e citosina tre. Per questo i tratti ricchi di G e C richiedono più energia per essere separati, e si sciolgono a temperatura più alta.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695857381,
+   "tipo": "completamento",
+   "accettate": [
+    "3",
+    "tre"
+   ],
+   "numero": {
+    "valore": 3,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-15b-07",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Lo zucchero del DNA, che differisce da quello dell'RNA per un atomo di ossigeno in meno, è il ……",
+   "spiegazione": "Manca l'ossidrile in posizione 2', e questa assenza rende il DNA chimicamente più stabile dell'RNA. È una delle ragioni per cui l'informazione a lungo termine è conservata nel DNA.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695857953,
+   "tipo": "completamento",
+   "accettate": [
+    "desossiribosio",
+    "deossiribosio",
+    "2-desossiribosio",
+    "2-deossiribosio"
+   ]
+  },
+  {
+   "id": "bio-15b-08",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "L'RNA che porta gli amminoacidi al ribosoma durante la sintesi proteica si indica con la sigla ……",
+   "spiegazione": "Ogni tRNA porta un amminoacido a un'estremità e un anticodone all'altra, e fa quindi da adattatore fra il linguaggio dei nucleotidi e quello degli amminoacidi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695858526,
+   "tipo": "completamento",
+   "accettate": [
+    "tRNA",
+    "RNA transfer",
+    "RNA di trasporto"
+   ]
+  },
+  {
+   "id": "bio-15b-09",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "L'aggiunta di un gruppo acetile a un residuo di lisina si chiama ……",
+   "spiegazione": "L'acetile neutralizza la carica positiva della lisina e cambia quindi le interazioni della proteina. Sugli istoni è questo effetto a rendere la cromatina più accessibile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695859029,
+   "tipo": "completamento",
+   "accettate": [
+    "acetilazione"
+   ]
+  },
+  {
+   "id": "bio-15b-10",
+   "argomento": "bio.1.5",
+   "stato": "approvata",
+   "testo": "Una base azotata legata al solo zucchero, senza alcun gruppo fosfato, si chiama ……",
+   "spiegazione": "Nucleoside e nucleotide differiscono per la presenza del fosfato. Molti farmaci antivirali sono analoghi dei nucleosidi: la cellula li fosforila e la polimerasi virale li inserisce per errore nella catena.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695859531,
+   "tipo": "completamento",
+   "accettate": [
+    "nucleoside",
+    "nucleosidi"
+   ]
+  },
+  {
+   "id": "bio-22a-01",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Un nucleosoma è formato da:",
+   "spiegazione": "Il DNA compie poco meno di due giri attorno al nucleo proteico, e questa è la prima tappa della compattazione. È anche un livello regolabile: spostare un nucleosoma cambia l'accessibilità di un tratto di DNA.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695860307,
+   "tipo": "multipla",
+   "opzioni": [
+    "due istoni e un tratto di DNA a singolo filamento",
+    "un ottamero di istoni avvolto da circa 150 coppie di basi",
+    "una molecola di DNA ripiegata su sé stessa senza proteine",
+    "quattro molecole di istone H1 e un RNA",
+    "un anello proteico che circonda due doppie eliche"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-22a-02",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Gli istoni si legano saldamente al DNA perché:",
+   "spiegazione": "Lo scheletro del DNA è carico negativamente per i gruppi fosfato, e le lisine e le arginine degli istoni portano cariche positive. Modificare chimicamente quelle cariche è il modo più diretto di allentare la presa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695860883,
+   "tipo": "multipla",
+   "opzioni": [
+    "sono ricchi di amminoacidi basici, carichi positivamente",
+    "hanno carica negativa come il DNA",
+    "contengono atomi di zolfo che formano ponti con le basi",
+    "sono enzimi capaci di tagliare il DNA",
+    "sono completamente idrofobici"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-22a-03",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "L'eterocromatina è:",
+   "spiegazione": "Dove la cromatina è compatta, i fattori di trascrizione non arrivano al DNA. Alcune regioni restano eterocromatiche in ogni cellula, altre lo diventano a seconda del tipo cellulare: è una forma di memoria.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695861406,
+   "tipo": "multipla",
+   "opzioni": [
+    "cromatina poco compatta e attivamente trascritta",
+    "una regione di DNA priva di istoni",
+    "la forma che la cromatina assume soltanto durante la mitosi",
+    "cromatina molto compatta e poco trascritta",
+    "DNA che non appartiene ai cromosomi"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-22a-04",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "La metilazione del DNA a livello di un promotore:",
+   "spiegazione": "Il gruppo metile non altera la sequenza: richiama proteine che compattano la cromatina e tengono lontana la macchina della trascrizione. Il gene resta intatto e, in principio, riattivabile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695861894,
+   "tipo": "multipla",
+   "opzioni": [
+    "aumenta la trascrizione del gene",
+    "tende a spegnere la trascrizione del gene",
+    "cambia la sequenza del gene",
+    "provoca la rottura del filamento",
+    "trasforma la base metilata in uracile"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-22a-05",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "L'istone che si lega al DNA fra un nucleosoma e il successivo, favorendo la formazione della fibra da 30 nm, è l'istone ……",
+   "spiegazione": "Non fa parte del nucleo proteico del nucleosoma: lo abbraccia dall'esterno e lega il DNA in ingresso e in uscita. Senza H1 la fibra resta allo stadio di collana di perle.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695862687,
+   "tipo": "completamento",
+   "accettate": [
+    "H1",
+    "linker"
+   ]
+  },
+  {
+   "id": "bio-22a-06",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Il tratto di DNA che unisce due nucleosomi consecutivi si chiama DNA ……",
+   "spiegazione": "È la parte non avvolta sugli istoni, lunga qualche decina di basi, e proprio per questo è la più accessibile agli enzimi. La sua lunghezza varia e influisce su quanto la fibra può compattarsi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695863261,
+   "tipo": "completamento",
+   "accettate": [
+    "linker",
+    "spaziatore",
+    "ponte"
+   ]
+  },
+  {
+   "id": "bio-22a-07",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "La cromatina poco compatta, accessibile e attivamente trascritta si chiama ……",
+   "spiegazione": "Occupa la parte interna del nucleo e contiene i geni che quella cellula sta usando. Il rapporto fra eucromatina ed eterocromatina cambia da un tipo cellulare all'altro, pur essendo il DNA lo stesso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695863772,
+   "tipo": "completamento",
+   "accettate": [
+    "eucromatina"
+   ]
+  },
+  {
+   "id": "bio-22a-08",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Negli eucarioti la base del DNA che viene metilata è la ……",
+   "spiegazione": "La metilazione colpisce le citosine, soprattutto dove sono seguite da una guanina. Questi siti si concentrano nei promotori, e il loro stato di metilazione viene copiato dopo la replicazione: così il segnale si trasmette alle cellule figlie.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695864318,
+   "tipo": "completamento",
+   "accettate": [
+    "citosina",
+    "citosine",
+    "C"
+   ]
+  },
+  {
+   "id": "bio-22b-01",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "I complessi di rimodellamento della cromatina:",
+   "spiegazione": "Non modificano chimicamente nulla: fanno scorrere o staccano i nucleosomi, liberando il tratto di DNA che serve. È il modo con cui un promotore, prima coperto, diventa raggiungibile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695865150,
+   "tipo": "multipla",
+   "opzioni": [
+    "tagliano il DNA fra due nucleosomi",
+    "spostano o rimuovono i nucleosomi consumando ATP",
+    "sostituiscono il DNA con RNA",
+    "aggiungono gruppi metile alle basi del DNA",
+    "uniscono fra loro due cromosomi omologhi"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-22b-02",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "L'acetilazione delle lisine delle code istoniche rende la cromatina:",
+   "spiegazione": "L'acetile neutralizza la carica positiva della lisina, quindi l'istone trattiene meno il DNA e la fibra si allenta. È un segnale reversibile: altri enzimi rimuovono l'acetile e la cromatina si richiude.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695865720,
+   "tipo": "multipla",
+   "opzioni": [
+    "più aperta e disponibile alla trascrizione",
+    "più compatta e silenziata",
+    "insensibile ai fattori di trascrizione",
+    "incapace di essere replicata",
+    "completamente priva di istoni"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-22b-03",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Le condensine hanno il compito di:",
+   "spiegazione": "Formano anelli che raccolgono il DNA in anse e lo accorciano, rendendo i cromosomi abbastanza compatti da poter essere spostati. Tenere uniti i cromatidi è invece il compito di un altro complesso ad anello.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695866249,
+   "tipo": "multipla",
+   "opzioni": [
+    "tenere uniti i cromatidi fratelli fino all'anafase",
+    "compattare i cromosomi in vista della divisione",
+    "tagliare il DNA danneggiato",
+    "trascrivere i geni ribosomali nel nucleolo",
+    "costruire il complesso del poro nucleare"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-22b-04",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Gli enzimi che rimuovono i gruppi acetile dagli istoni, favorendo la chiusura della cromatina, sono le istone ……",
+   "spiegazione": "Acetilasi e deacetilasi lavorano in direzioni opposte, e il livello di acetilazione è il risultato del loro equilibrio. Alcuni farmaci antitumorali bloccano le deacetilasi proprio per riaprire geni che il tumore aveva spento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695867021,
+   "tipo": "completamento",
+   "accettate": [
+    "deacetilasi",
+    "deacetilasi (HDAC)",
+    "HDAC"
+   ]
+  },
+  {
+   "id": "bio-22b-05",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Lo studio dei cambiamenti ereditabili dell'espressione genica che non alterano la sequenza del DNA si chiama ……",
+   "spiegazione": "Due cellule con lo stesso genoma possono esprimere geni diversi e trasmettere questa differenza alle figlie. È il motivo per cui una cellula epatica continua a fare la cellula epatica dopo ogni divisione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695867583,
+   "tipo": "completamento",
+   "accettate": [
+    "epigenetica"
+   ]
+  },
+  {
+   "id": "bio-22b-06",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "La parte dell'istone che sporge dal nucleosoma e porta le modificazioni chimiche è la coda N-……",
+   "spiegazione": "Le code restano fuori dal nucleo proteico e sono quindi raggiungibili dagli enzimi che le modificano. Su di esse si scrivono acetilazioni, metilazioni e fosforilazioni che altre proteine sanno leggere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695868037,
+   "tipo": "completamento",
+   "accettate": [
+    "terminale",
+    "amminoterminale",
+    "aminoterminale"
+   ]
+  },
+  {
+   "id": "bio-22b-07",
+   "argomento": "bio.2.2",
+   "stato": "approvata",
+   "testo": "Il complesso ad anello che tiene uniti i cromatidi fratelli, diverso dalle condensine, si chiama ……",
+   "spiegazione": "Coesina e condensina sono parenti e hanno la stessa forma ad anello, ma una tiene insieme due cromatidi e l'altra compatta un cromosoma solo. Confonderle è l'errore più comune su questo argomento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695868494,
+   "tipo": "completamento",
+   "accettate": [
+    "coesina",
+    "coesine"
+   ]
+  },
+  {
+   "id": "bio-37a-01",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Durante l'allungamento della catena polipeptidica il legame peptidico viene formato:",
+   "spiegazione": "L'attività catalitica del ribosoma sta nel suo RNA, non nelle sue proteine: il ribosoma è quindi un enzima a RNA. È uno degli argomenti a favore dell'ipotesi che l'RNA abbia preceduto le proteine.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695869216,
+   "tipo": "multipla",
+   "opzioni": [
+    "da un enzima proteico libero nel citosol",
+    "dall'RNA ribosomale della subunità maggiore",
+    "dal tRNA che porta l'amminoacido",
+    "dall'mRNA stesso",
+    "dalla membrana del reticolo endoplasmatico"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-37a-02",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Il ribosoma percorre l'mRNA:",
+   "spiegazione": "La lettura segue lo stesso verso in cui l'mRNA è stato sintetizzato, e la proteina cresce dall'estremità amminica verso quella carbossilica. Il verso di lettura è fissato dal codone di inizio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695869710,
+   "tipo": "multipla",
+   "opzioni": [
+    "dal centro verso le due estremità",
+    "da 3' verso 5'",
+    "in entrambe le direzioni contemporaneamente",
+    "a partire dall'ultimo codone",
+    "da 5' verso 3'"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-37a-03",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "L'enzima che lega ciascun amminoacido al proprio tRNA è:",
+   "spiegazione": "È il punto in cui il codice genetico viene davvero applicato: l'enzima deve riconoscere insieme l'amminoacido giusto e il tRNA giusto. Un errore qui metterebbe l'amminoacido sbagliato in tutte le proteine che usano quel codone.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695870256,
+   "tipo": "multipla",
+   "opzioni": [
+    "la peptidil transferasi",
+    "la RNA polimerasi",
+    "l'amminoacil-tRNA sintetasi",
+    "il fattore di rilascio",
+    "una proteasi del citosol"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-37a-04",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Le due subunità del ribosoma sono formate da:",
+   "spiegazione": "Il ribosoma è un complesso di RNA e proteine, e l'RNA non è un semplice sostegno: è la parte che catalizza. Nei procarioti e negli eucarioti le dimensioni cambiano, ma la composizione mista resta la stessa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695870814,
+   "tipo": "multipla",
+   "opzioni": [
+    "RNA ribosomale e proteine",
+    "soltanto proteine",
+    "soltanto RNA",
+    "DNA e proteine",
+    "fosfolipidi e proteine"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-37a-05",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Il sito del ribosoma in cui entra il tRNA carico del proprio amminoacido si chiama sito ……",
+   "spiegazione": "Il tRNA entra nel sito A, cede l'amminoacido alla catena in crescita e passa al sito P; da lì esce dal sito E. Il ciclo si ripete per ogni codone.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695871768,
+   "tipo": "completamento",
+   "accettate": [
+    "A",
+    "A (amminoacilico)",
+    "amminoacilico",
+    "aminoacilico"
+   ]
+  },
+  {
+   "id": "bio-37a-06",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Il legame fra un amminoacido e il suo tRNA è una reazione che consuma energia, fornita dall'……",
+   "spiegazione": "L'energia spesa qui viene poi usata per formare il legame peptidico: il tRNA carico è una molecola attivata. Tradurre è quindi costoso, ed è una delle attività che consumano più energia nella cellula.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695872276,
+   "tipo": "completamento",
+   "accettate": [
+    "ATP",
+    "adenosina trifosfato"
+   ]
+  },
+  {
+   "id": "bio-37a-07",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Più ribosomi che traducono contemporaneamente la stessa molecola di mRNA formano una struttura chiamata ……",
+   "spiegazione": "Appena un ribosoma ha liberato il codone di inizio, un altro può attaccarsi: così da un solo mRNA si ottengono molte copie della proteina insieme. È uno dei modi con cui la cellula amplifica l'espressione di un gene.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695872798,
+   "tipo": "completamento",
+   "accettate": [
+    "polisoma",
+    "poliribosoma",
+    "polisomi",
+    "poliribosomi"
+   ]
+  },
+  {
+   "id": "bio-37a-08",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Una molecola di RNA capace di catalizzare una reazione chimica, come fa il ribosoma, si chiama ……",
+   "spiegazione": "Prima della loro scoperta si pensava che solo le proteine potessero essere enzimi. I ribozimi mostrano che l'RNA può fare entrambe le cose, conservare informazione e catalizzare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695873341,
+   "tipo": "completamento",
+   "accettate": [
+    "ribozima",
+    "ribozimi"
+   ]
+  },
+  {
+   "id": "bio-37b-01",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Dire che il codice genetico è degenerato significa che:",
+   "spiegazione": "I codoni sono 64 e gli amminoacidi 20, quindi quasi tutti gli amminoacidi hanno più di un codone. L'ambiguità opposta non esiste: un codone specifica sempre un solo amminoacido, altrimenti la traduzione non sarebbe affidabile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695874256,
+   "tipo": "multipla",
+   "opzioni": [
+    "uno stesso codone può specificare più amminoacidi diversi",
+    "più codoni diversi possono specificare lo stesso amminoacido",
+    "alcuni amminoacidi non hanno alcun codone",
+    "il codice è diverso da specie a specie",
+    "i codoni si sovrappongono lungo l'mRNA"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-37b-02",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Il fatto che il codice genetico sia praticamente lo stesso in tutti gli organismi permette di:",
+   "spiegazione": "Un batterio legge un gene umano con il proprio apparato di traduzione e produce la proteina corretta: su questo si fondano l'insulina e l'ormone della crescita ricombinanti. L'universalità del codice è anche un argomento per un'origine comune.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695874735,
+   "tipo": "multipla",
+   "opzioni": [
+    "ottenere proteine umane da batteri in cui si inserisca il gene corrispondente",
+    "trasferire un carattere senza trasferire alcun gene",
+    "tradurre il DNA senza passare dall'RNA",
+    "fare a meno dei tRNA",
+    "usare un solo amminoacido per tutti i codoni"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-37b-03",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Quando nel sito A del ribosoma arriva un codone di stop:",
+   "spiegazione": "Per i codoni di stop non esiste alcun tRNA: al loro posto si lega una proteina, il fattore di rilascio, che provoca il distacco della catena e lo smontaggio del ribosoma.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695875260,
+   "tipo": "multipla",
+   "opzioni": [
+    "entra un tRNA privo di amminoacido",
+    "il ribosoma torna indietro di tre nucleotidi",
+    "si lega un fattore di rilascio e la catena viene staccata",
+    "l'mRNA viene degradato dal ribosoma stesso",
+    "comincia la sintesi di una seconda proteina sullo stesso codone"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-37b-04",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Le regioni non tradotte dell'mRNA, dette UTR, servono a:",
+   "spiegazione": "Stanno prima e dopo la sequenza codificante e restano nell'mRNA maturo. È lì che si legano proteine e microRNA che decidono quanto l'mRNA dura e quanto viene tradotto: due mRNA con la stessa parte codificante possono comportarsi in modo diverso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695875762,
+   "tipo": "multipla",
+   "opzioni": [
+    "codificare la parte iniziale della proteina",
+    "essere rimosse insieme agli introni",
+    "formare il sito attivo della proteina",
+    "regolare la stabilità dell'mRNA e l'efficienza della sua traduzione",
+    "sostituire il codone di inizio"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-37b-05",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "La tripletta del tRNA che si appaia per complementarietà al codone dell'mRNA si chiama ……",
+   "spiegazione": "È l'appaiamento fra codone e anticodone a stabilire quale amminoacido entra nella catena. Il ribosoma non riconosce gli amminoacidi: controlla che l'accoppiamento delle triplette sia corretto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695876585,
+   "tipo": "completamento",
+   "accettate": [
+    "anticodone",
+    "anticodoni"
+   ]
+  },
+  {
+   "id": "bio-37b-06",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Il numero di nucleotidi che compongono un codone è ……",
+   "spiegazione": "Con quattro basi, le triplette possibili sono 64: abbastanza per venti amminoacidi più i segnali di stop. Le coppie, che darebbero solo sedici combinazioni, non basterebbero.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695877599,
+   "tipo": "completamento",
+   "accettate": [
+    "3",
+    "tre"
+   ],
+   "numero": {
+    "valore": 3,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-37b-07",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Il codone AUG, che segnala l'inizio della traduzione, specifica l'amminoacido ……",
+   "spiegazione": "Ogni proteina comincia dunque con una metionina, che spesso viene rimossa dopo. Lo stesso codone, incontrato più avanti nella sequenza, inserisce semplicemente una metionina interna.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695878088,
+   "tipo": "completamento",
+   "accettate": [
+    "metionina",
+    "Met",
+    "formilmetionina",
+    "fMet"
+   ]
+  },
+  {
+   "id": "bio-37b-08",
+   "argomento": "bio.3.7",
+   "stato": "approvata",
+   "testo": "Le proteine che aiutano il ribosoma ad assemblarsi sull'mRNA e a riconoscere il punto da cui partire si chiamano fattori di ……",
+   "spiegazione": "L'inizio è il passaggio più regolato della traduzione: controllare i fattori di inizio permette alla cellula di spegnere o accendere la sintesi proteica in blocco, per esempio quando è sotto stress.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695878615,
+   "tipo": "completamento",
+   "accettate": [
+    "inizio",
+    "iniziazione"
+   ]
+  },
+  {
+   "id": "bio-42a-01",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Un individuo che porta due mutazioni diverse dello stesso gene, una su ciascun cromosoma omologo, si definisce:",
+   "spiegazione": "Le due copie del gene sono entrambe alterate, ma non dallo stesso allele: per questo non si parla di omozigosi. Il fenotipo è comunque quello della malattia, perché nessuna delle due copie funziona.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695879494,
+   "tipo": "multipla",
+   "opzioni": [
+    "omozigote recessivo",
+    "omozigote dominante",
+    "portatore sano",
+    "eterozigote composto",
+    "emizigote"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-42a-02",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Un individuo che mostra il fenotipo dominante per un carattere mendeliano:",
+   "spiegazione": "Il fenotipo dominante non dice quale dei due genotipi ci sia dietro, AA o Aa. Il fenotipo recessivo invece identifica il genotipo, perché compare soltanto quando entrambi gli alleli sono recessivi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695880026,
+   "tipo": "multipla",
+   "opzioni": [
+    "è necessariamente omozigote",
+    "è necessariamente eterozigote",
+    "ha sempre entrambi i genitori omozigoti",
+    "non può avere figli con fenotipo recessivo",
+    "può essere omozigote oppure eterozigote"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-42a-03",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Nell'incrocio fra due individui eterozigoti per un carattere a dominanza completa, il rapporto fenotipico atteso nella progenie è:",
+   "spiegazione": "Dei quattro casi attesi, uno è omozigote dominante, due sono eterozigoti e uno è omozigote recessivo: i primi tre hanno lo stesso aspetto. Il rapporto 1 : 2 : 1 è quello genotipico, non quello fenotipico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695880607,
+   "tipo": "multipla",
+   "opzioni": [
+    "3 : 1",
+    "1 : 1",
+    "1 : 2 : 1",
+    "9 : 3 : 3 : 1",
+    "2 : 1"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-42a-04",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Dall'incrocio fra una pianta a fiori rossi e una a fiori bianchi nascono soltanto piante a fiori rosa. Il carattere mostra:",
+   "spiegazione": "Nell'eterozigote il fenotipo è intermedio fra quelli dei due omozigoti, perché nessuno dei due alleli maschera l'altro. Nella codominanza, invece, l'eterozigote mostra entrambi i caratteri distinti e non una via di mezzo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695881116,
+   "tipo": "multipla",
+   "opzioni": [
+    "codominanza",
+    "dominanza incompleta",
+    "dominanza completa dell'allele per il bianco",
+    "eterozigosi composta",
+    "assortimento indipendente"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-42a-05",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Due genitori sani hanno un figlio affetto da una malattia autosomica recessiva. I genotipi dei genitori sono:",
+   "spiegazione": "Il figlio affetto ha due alleli mutati, uno ricevuto da ciascun genitore, quindi entrambi i genitori ne portano uno pur restando sani. Da due portatori la probabilità che un figlio sia affetto è un quarto a ogni gravidanza.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695881609,
+   "tipo": "multipla",
+   "opzioni": [
+    "entrambi omozigoti dominanti",
+    "entrambi eterozigoti",
+    "uno omozigote recessivo e uno eterozigote",
+    "entrambi omozigoti recessivi",
+    "uno omozigote dominante e uno eterozigote"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-42a-06",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Un individuo che porta due alleli identici per un dato gene si dice ……",
+   "spiegazione": "Omozigote vuol dire che le due copie del gene, una per cromosoma omologo, portano la stessa informazione. Se sono diverse l'individuo è eterozigote, e in quel caso il fenotipo dipende dal rapporto fra i due alleli.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695882376,
+   "tipo": "completamento",
+   "accettate": [
+    "omozigote",
+    "omozigoti"
+   ]
+  },
+  {
+   "id": "bio-42a-07",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "L'insieme dei caratteri osservabili di un individuo, risultato del genotipo e dell'ambiente, si chiama ……",
+   "spiegazione": "Il genotipo è l'informazione, il fenotipo è come si manifesta. Lo stesso genotipo può dare fenotipi diversi se l'ambiente cambia, e fenotipi identici possono nascere da genotipi diversi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695882955,
+   "tipo": "completamento",
+   "accettate": [
+    "fenotipo",
+    "fenotipi"
+   ]
+  },
+  {
+   "id": "bio-42a-08",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "La prima legge di Mendel, per cui i due alleli di un gene si separano nella formazione dei gameti, è la legge della ……",
+   "spiegazione": "Ogni gamete riceve uno solo dei due alleli, perché i cromosomi omologhi si separano nella prima divisione meiotica. È la meiosi a dare un fondamento fisico a una legge ricavata contando i piselli.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695883500,
+   "tipo": "completamento",
+   "accettate": [
+    "segregazione",
+    "disgiunzione",
+    "segregazione degli alleli"
+   ]
+  },
+  {
+   "id": "bio-42a-09",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Dall'incrocio Aa × Aa, la probabilità che un figlio sia omozigote recessivo è di una su ……",
+   "spiegazione": "Ciascun genitore trasmette l'allele recessivo con probabilità un mezzo, e i due eventi sono indipendenti: un mezzo per un mezzo fa un quarto. Il rapporto vale per ogni figlio preso a sé, non a turno fra quattro figli.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695884059,
+   "tipo": "completamento",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-42a-10",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Quando nell'eterozigote entrambi gli alleli si manifestano, ciascuno con il proprio prodotto, si parla di ……",
+   "spiegazione": "Nella codominanza i due prodotti sono presenti entrambi e distinguibili, non mescolati. È la differenza con la dominanza incompleta, dove il fenotipo dell'eterozigote è una via di mezzo fra i due omozigoti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695884636,
+   "tipo": "completamento",
+   "accettate": [
+    "codominanza",
+    "codominanti"
+   ]
+  },
+  {
+   "id": "bio-42a-11",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "L'incrocio con un individuo omozigote recessivo, usato per capire se un individuo dal fenotipo dominante sia omozigote o eterozigote, si chiama incrocio di ……",
+   "spiegazione": "Se dall'incrocio nasce anche un solo figlio con fenotipo recessivo, il genitore in esame era eterozigote. Serve perché dall'aspetto i due genotipi dominanti sono indistinguibili.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695885183,
+   "tipo": "completamento",
+   "accettate": [
+    "prova",
+    "testcross",
+    "test-cross",
+    "test cross"
+   ]
+  },
+  {
+   "id": "bio-42b-01",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Nel sistema AB0 l'allele responsabile del gruppo 0:",
+   "spiegazione": "L'allele 0 non produce un enzima funzionante, quindi il gruppo 0 si manifesta solo quando l'individuo ne ha due copie. Il gene c'è: quello che manca è il prodotto attivo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695886090,
+   "tipo": "multipla",
+   "opzioni": [
+    "è dominante su A e su B",
+    "è codominante con A e con B",
+    "è recessivo rispetto ad A e a B",
+    "si trova su un cromosoma diverso dagli altri due",
+    "comporta l'assenza del gene"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-42b-02",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Dire che un gene ha alleli multipli significa che:",
+   "spiegazione": "Gli alleli multipli stanno nella popolazione, non nel singolo individuo: un diploide ne porta comunque due, uno per cromosoma omologo. Molti geni che agiscono su un solo carattere sono un'altra cosa, l'eredità poligenica.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695886583,
+   "tipo": "multipla",
+   "opzioni": [
+    "ogni individuo ne porta più di due",
+    "il gene è presente in più copie nel genoma",
+    "il gene si trova su più cromosomi",
+    "il carattere è determinato da più geni diversi",
+    "nella popolazione esistono più di due varianti di quel gene"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-42b-03",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Una mutazione in un solo gene provoca nello stesso paziente alterazioni dello scheletro, dell'occhio e dell'aorta. Questo è un esempio di:",
+   "spiegazione": "Un solo gene che influenza più caratteri fra loro indipendenti si dice pleiotropico, e succede quando il suo prodotto serve in tessuti diversi. È il rovescio dell'eredità poligenica, dove molti geni concorrono a un carattere solo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695887132,
+   "tipo": "multipla",
+   "opzioni": [
+    "epistasi",
+    "pleiotropia",
+    "eredità poligenica",
+    "alleli multipli",
+    "eterozigosi composta"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-42b-04",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Si parla di epistasi quando:",
+   "spiegazione": "Nell'epistasi il rapporto è fra geni diversi, non fra alleli dello stesso gene: quello epistatico impedisce all'altro di manifestarsi. Un gene che blocca la produzione del pigmento, per esempio, rende invisibile quale colore l'altro gene avrebbe dato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695887677,
+   "tipo": "multipla",
+   "opzioni": [
+    "un gene influenza più caratteri diversi",
+    "due alleli dello stesso gene si manifestano entrambi",
+    "un carattere dipende da molti geni con effetti piccoli",
+    "un gene maschera l'effetto di un altro gene",
+    "due geni sono vicini sullo stesso cromosoma"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-42b-05",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Due geni che si trovano sullo stesso cromosoma ma molto distanti fra loro:",
+   "spiegazione": "Più i due geni sono distanti, più è probabile che un crossing over cada fra loro e li separi. Oltre una certa distanza la ricombinazione arriva al 50% e l'associazione non è più riconoscibile: per questo le mappe si costruiscono su geni vicini.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695888164,
+   "tipo": "multipla",
+   "opzioni": [
+    "si comportano come se stessero su cromosomi diversi, perché il crossing over li separa spesso",
+    "vengono sempre ereditati insieme",
+    "non possono subire crossing over",
+    "hanno una frequenza di ricombinazione superiore al 50%",
+    "non seguono la legge della segregazione"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-42b-06",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Quando in una popolazione esistono più di due varianti dello stesso gene si parla di alleli ……",
+   "spiegazione": "Il numero di alleli che un gene può avere in una popolazione non ha limite, ma ogni individuo diploide ne porta sempre due. Il sistema AB0, con tre alleli, è l'esempio classico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695888959,
+   "tipo": "completamento",
+   "accettate": [
+    "multipli",
+    "multiplo"
+   ]
+  },
+  {
+   "id": "bio-42b-07",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Nel sistema AB0 i tre alleli A, B e 0 danno quattro gruppi sanguigni e un numero di genotipi diversi pari a ……",
+   "spiegazione": "I genotipi sono AA, A0, BB, B0, AB e 00: sei combinazioni per quattro gruppi, perché A0 dà lo stesso gruppo di AA e B0 lo stesso di BB. Con tre alleli i genotipi possibili sono sempre sei.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695889505,
+   "tipo": "completamento",
+   "accettate": [
+    "6",
+    "sei"
+   ],
+   "numero": {
+    "valore": 6,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-42b-08",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "I gameti che portano una combinazione di alleli diversa da quella dei cromosomi parentali, prodotta dal crossing over, si dicono ……",
+   "spiegazione": "Contare quanti gameti ricombinanti compaiono è il modo di misurare la distanza fra due geni: più sono, più i geni sono lontani. Se i geni sono associati in modo completo i ricombinanti non si formano affatto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695890076,
+   "tipo": "completamento",
+   "accettate": [
+    "ricombinanti",
+    "ricombinante"
+   ]
+  },
+  {
+   "id": "bio-42b-09",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Sulle mappe genetiche la distanza fra due geni si misura in unità chiamate ……",
+   "spiegazione": "Un centimorgan corrisponde all'1% di gameti ricombinanti. È una distanza genetica, non fisica: tratti di cromosoma dove il crossing over è raro risultano brevi sulla mappa anche se contengono molte basi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695890657,
+   "tipo": "completamento",
+   "accettate": [
+    "centimorgan",
+    "centimorgans",
+    "cM",
+    "unità di mappa",
+    "unita di mappa",
+    "u.m."
+   ]
+  },
+  {
+   "id": "bio-42b-10",
+   "argomento": "bio.4.2",
+   "stato": "approvata",
+   "testo": "Due geni molto vicini sullo stesso cromosoma vengono ereditati insieme più spesso di quanto previsto dall'assortimento indipendente: vero o falso? ……",
+   "spiegazione": "È la definizione di associazione: la vicinanza rende improbabile che un crossing over cada fra i due geni, quindi viaggiano insieme. L'assortimento indipendente vale per geni su cromosomi diversi, o abbastanza distanti sullo stesso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695891233,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v"
+   ]
+  },
+  {
+   "id": "bio-54a-01",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "L'involucro nucleare è formato da:",
+   "spiegazione": "Le due membrane delimitano uno spazio che comunica con il lume del reticolo endoplasmatico, e sulla faccia esterna possono stare ribosomi. Il nucleo, da questo punto di vista, è una porzione specializzata del sistema di membrane interne.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695892317,
+   "tipo": "multipla",
+   "opzioni": [
+    "una sola membrana",
+    "due membrane, in continuità con il reticolo endoplasmatico",
+    "una parete proteica rigida",
+    "un doppio strato di proteine senza lipidi",
+    "tre membrane sovrapposte"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-54a-02",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Nel nucleolo avviene:",
+   "spiegazione": "Il nucleolo è una fabbrica: lì i geni corrispondenti vengono trascritti e i prodotti si uniscono alle proteine arrivate dal citoplasma. Le subunità così formate escono poi dal nucleo per lavorare nel citosol.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695892775,
+   "tipo": "multipla",
+   "opzioni": [
+    "la replicazione del DNA",
+    "la traduzione delle proteine nucleari",
+    "la degradazione degli mRNA difettosi",
+    "la produzione dei componenti dei ribosomi e il loro assemblaggio",
+    "la condensazione dei cromosomi in mitosi"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-54a-03",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Attraverso il poro nucleare passano liberamente, senza bisogno di alcun segnale:",
+   "spiegazione": "Il poro lascia diffondere ciò che è piccolo e controlla tutto il resto: è una porta selettiva, non un buco. Questa selettività è ciò che permette alla cellula di decidere quali proteine entrano e quando.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695893247,
+   "tipo": "multipla",
+   "opzioni": [
+    "tutte le proteine, qualunque sia la loro dimensione",
+    "soltanto le molecole piccole, mentre le grandi devono essere riconosciute",
+    "soltanto gli ioni",
+    "nessuna molecola",
+    "soltanto gli acidi nucleici"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-54a-04",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Il nucleolo e gli altri condensati che si formano dentro il nucleo:",
+   "spiegazione": "Si tengono insieme per concentrazione delle molecole che li compongono, un po' come gocce d'olio nell'acqua, e possono formarsi e dissolversi in fretta. È un modo di creare compartimenti senza costruire membrane.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695893694,
+   "tipo": "multipla",
+   "opzioni": [
+    "sono delimitati da una propria membrana",
+    "sono racchiusi in vescicole di trasporto",
+    "si trovano in realtà nel citosol",
+    "sono formati esclusivamente da DNA",
+    "non sono delimitati da alcuna membrana"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-54a-05",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Le proteine che compongono il complesso del poro nucleare si chiamano ……",
+   "spiegazione": "Sono circa trenta proteine diverse, in molte copie, disposte con simmetria intorno al canale. Alcune formano una maglia disordinata che fa da filtro per le molecole grandi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695894338,
+   "tipo": "completamento",
+   "accettate": [
+    "nucleoporine",
+    "nucleoporina"
+   ]
+  },
+  {
+   "id": "bio-54a-06",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "All'ingresso in mitosi l'involucro nucleare si smonta perché le proteine della lamina nucleare vengono ……",
+   "spiegazione": "La fosforilazione rompe le interazioni fra i filamenti e la rete si disfa, permettendo all'involucro di frammentarsi. In telofase le stesse proteine vengono defosforilate e l'involucro si riforma.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695894774,
+   "tipo": "completamento",
+   "accettate": [
+    "fosforilate",
+    "iperfosforilate"
+   ]
+  },
+  {
+   "id": "bio-54a-08",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Il nucleolo si disgrega all'inizio della mitosi e si riforma nelle cellule figlie: vero o falso? ……",
+   "spiegazione": "Non essendo chiuso da una membrana, si dissolve quando la trascrizione si ferma e si riforma intorno agli stessi geni quando riprende. La sua esistenza dipende dall'attività, non da una parete.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695895224,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v"
+   ]
+  },
+  {
+   "id": "bio-54a-07",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "I geni trascritti nel nucleolo in grandissima quantità sono quelli degli RNA ……",
+   "spiegazione": "Una cellula ha bisogno di milioni di ribosomi, quindi questi geni sono presenti in molte copie ripetute e trascritti senza sosta. Il nucleolo è grande quanto questa richiesta lo impone.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695895668,
+   "tipo": "completamento",
+   "accettate": [
+    "ribosomali",
+    "ribosomiali",
+    "ribosomale",
+    "ribosomiale",
+    "rRNA"
+   ]
+  },
+  {
+   "id": "bio-54b-01",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "La sequenza NLS presente in una proteina serve a:",
+   "spiegazione": "È un breve tratto di amminoacidi, spesso ricco di cariche positive, che funziona da indirizzo. Attaccandolo artificialmente a una proteina citoplasmatica, quella proteina comincia ad accumularsi nel nucleo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695896332,
+   "tipo": "multipla",
+   "opzioni": [
+    "ancorarla alla membrana plasmatica",
+    "farla riconoscere da un recettore che la porta nel nucleo",
+    "indirizzarla al mitocondrio",
+    "marcarla per la degradazione nel proteasoma",
+    "farla uscire dal nucleo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-54b-02",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "A che cosa serve la differenza di stato della proteina Ran fra nucleo e citoplasma?",
+   "spiegazione": "Il recettore lascia il carico dove le condizioni glielo impongono: dentro, se lo stava importando, fuori, se lo stava esportando. Senza questa asimmetria il trasporto sarebbe un andirivieni senza esito.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695896792,
+   "tipo": "multipla",
+   "opzioni": [
+    "ad aprire e chiudere fisicamente il poro",
+    "a tagliare la sequenza segnale all'arrivo",
+    "a fornire i nucleotidi per la trascrizione",
+    "a dare una direzione al trasporto, decidendo dove il carico viene rilasciato",
+    "a formare la lamina nucleare"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-54b-03",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "In una cellula non stimolata il fattore di trascrizione NF-kB resta nel citoplasma perché:",
+   "spiegazione": "Il segnale c'è ma è coperto: quando la cellula riceve lo stimolo, l'inibitore viene degradato, il segnale si libera e NF-kB entra nel nucleo in pochi minuti. Tenere pronta una proteina e liberarla al momento giusto è più rapido che sintetizzarla.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695897245,
+   "tipo": "multipla",
+   "opzioni": [
+    "non possiede alcuna sequenza di importazione",
+    "è troppo grande per passare dal poro",
+    "una proteina inibitrice legata a esso ne maschera il segnale di importazione",
+    "il poro nucleare è chiuso in assenza di segnali",
+    "viene degradato appena prodotto"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-54b-04",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Gli mRNA maturi raggiungono il citoplasma:",
+   "spiegazione": "L'esportazione è controllata: solo un mRNA correttamente maturato viene riconosciuto e lasciato passare. È un punto di controllo che evita di tradurre trascritti incompleti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695897721,
+   "tipo": "multipla",
+   "opzioni": [
+    "diffondendo attraverso le membrane dell'involucro nucleare",
+    "attraverso i pori, in complesso con proteine che ne guidano l'esportazione",
+    "dentro vescicole che si staccano dall'involucro nucleare",
+    "soltanto durante la mitosi, quando l'involucro è smontato",
+    "dopo essere stati tradotti dentro il nucleo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-54b-05",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "I recettori che riconoscono il segnale di importazione e accompagnano le proteine dentro il nucleo si chiamano ……",
+   "spiegazione": "Si legano al carico nel citoplasma, lo portano attraverso il poro e lo rilasciano nel nucleo, poi tornano indietro vuote. Le esportine fanno il percorso contrario.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695898585,
+   "tipo": "completamento",
+   "accettate": [
+    "importine",
+    "importina"
+   ]
+  },
+  {
+   "id": "bio-54b-06",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Il segnale che marca una proteina per l'uscita dal nucleo si indica con la sigla ……",
+   "spiegazione": "Alcune proteine portano sia un segnale di entrata sia uno di uscita, e la loro posizione dipende da quale dei due è attivo in quel momento. Mascherare o esporre un segnale è un modo economico di regolare dove una proteina lavora.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695899043,
+   "tipo": "completamento",
+   "accettate": [
+    "NES",
+    "segnale di esportazione nucleare"
+   ]
+  },
+  {
+   "id": "bio-54b-07",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "Il trasporto attraverso il poro nucleare consuma energia sotto forma di ……",
+   "spiegazione": "L'idrolisi del GTP non spinge il carico attraverso il canale: serve a mantenere l'asimmetria fra i due lati, cioè a stabilire la direzione. L'energia paga l'orientamento, non il passaggio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695899479,
+   "tipo": "completamento",
+   "accettate": [
+    "GTP",
+    "guanosina trifosfato"
+   ]
+  },
+  {
+   "id": "bio-54b-08",
+   "argomento": "bio.5.4",
+   "stato": "approvata",
+   "testo": "A differenza di quelle importate nei mitocondri, le proteine entrano nel nucleo già ripiegate nella loro forma finale: vero o falso? ……",
+   "spiegazione": "Il poro nucleare è un canale largo e lascia passare interi complessi già assemblati. L'importazione mitocondriale, al contrario, richiede che la catena sia distesa, perché i suoi canali sono stretti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695899923,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v"
+   ]
+  },
+  {
+   "id": "bio-55a-01",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "La glicolisi avviene:",
+   "spiegazione": "È una via antica, presente anche negli organismi che non hanno mitocondri, e si svolge tutta nel citosol. Solo il suo prodotto finale entra nel mitocondrio, dove l'ossidazione viene completata.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695900827,
+   "tipo": "multipla",
+   "opzioni": [
+    "nella matrice mitocondriale",
+    "nel citosol",
+    "sulla membrana mitocondriale interna",
+    "nello spazio intermembrana",
+    "nel nucleo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-55a-02",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Nel ciclo di Krebs il carbonio che proviene dal glucosio viene liberato sotto forma di:",
+   "spiegazione": "A ogni giro il ciclo stacca due atomi di carbonio e li libera come CO2: è questa l'anidride carbonica che poi espiriamo. L'acetil-CoA non è un prodotto ma il substrato con cui il ciclo comincia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695901261,
+   "tipo": "multipla",
+   "opzioni": [
+    "acido lattico",
+    "anidride carbonica",
+    "acqua",
+    "etanolo",
+    "acetil-CoA"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-55a-03",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "L'ATP sintasi produce ATP sfruttando:",
+   "spiegazione": "La catena respiratoria usa l'energia degli elettroni per spingere protoni fuori dalla matrice; quei protoni rientrano attraverso l'ATP sintasi e la fanno girare. L'energia è quindi conservata in un gradiente, non in un legame chimico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695901704,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'energia liberata dall'idrolisi del NADH",
+    "il gradiente di protoni attraverso la membrana interna",
+    "il passaggio diretto di elettroni all'ossigeno",
+    "il gradiente di sodio della membrana plasmatica",
+    "l'energia luminosa"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-55a-04",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Il DNA mitocondriale:",
+   "spiegazione": "I mitocondri dello zigote vengono dalla cellula uovo, quindi le malattie mitocondriali si trasmettono per via materna e colpiscono maschi e femmine allo stesso modo. È un DNA circolare e senza istoni, come quello dei batteri.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695902189,
+   "tipo": "multipla",
+   "opzioni": [
+    "è identico per sequenza al DNA nucleare",
+    "viene ereditato per metà dal padre e per metà dalla madre",
+    "viene ereditato dalla madre",
+    "è lineare e avvolto intorno agli istoni",
+    "non contiene geni funzionanti"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-55a-05",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Le pieghe della membrana mitocondriale interna, che ne aumentano di molto la superficie, si chiamano ……",
+   "spiegazione": "Più creste significano più spazio per i complessi della catena respiratoria e per l'ATP sintasi. Le cellule che consumano molta energia, come quelle del muscolo cardiaco, hanno mitocondri con creste molto fitte.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695902917,
+   "tipo": "completamento",
+   "accettate": [
+    "creste",
+    "cresta",
+    "cristae",
+    "creste mitocondriali"
+   ]
+  },
+  {
+   "id": "bio-55a-06",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Il prodotto finale della glicolisi, che entra nel mitocondrio per essere ossidato, è il ……",
+   "spiegazione": "Dentro il mitocondrio il piruvato viene trasformato in acetil-CoA e immesso nel ciclo di Krebs. Quando l'ossigeno manca resta invece nel citosol e viene ridotto a lattato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695903966,
+   "tipo": "completamento",
+   "accettate": [
+    "piruvato",
+    "acido piruvico"
+   ]
+  },
+  {
+   "id": "bio-55a-07",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "L'accettore finale degli elettroni della catena respiratoria è l'……",
+   "spiegazione": "Prendendo elettroni e protoni, l'ossigeno si riduce ad acqua. Senza di lui la catena si blocca e con essa il gradiente protonico: è questo il motivo per cui la respirazione è indispensabile, non la produzione di CO2.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695904439,
+   "tipo": "completamento",
+   "accettate": [
+    "ossigeno",
+    "O2",
+    "ossigeno molecolare"
+   ]
+  },
+  {
+   "id": "bio-55a-08",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Il guadagno netto di ATP della glicolisi, per ogni molecola di glucosio, è di ……",
+   "spiegazione": "Ne vengono consumati due nella prima fase e prodotti quattro nella seconda. Il bilancio è modesto, ma non richiede ossigeno: per questo la glicolisi funziona anche quando la respirazione non può.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695904983,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due",
+    "2 ATP"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-55a-09",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Lo spazio racchiuso dalla membrana mitocondriale interna, dove si trovano il DNA mitocondriale e gli enzimi del ciclo di Krebs, si chiama ……",
+   "spiegazione": "È il compartimento più interno del mitocondrio, separato dal citosol da due membrane. I protoni pompati fuori da qui creano la differenza di concentrazione che alimenta la sintesi di ATP.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695905445,
+   "tipo": "completamento",
+   "accettate": [
+    "matrice",
+    "matrice mitocondriale"
+   ]
+  },
+  {
+   "id": "bio-55b-01",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "L'ossidazione completa del glucosio rende alla cellula molto più ATP della sola glicolisi. La differenza dipende da:",
+   "spiegazione": "La glicolisi e il ciclo di Krebs producono soprattutto trasportatori di elettroni, non ATP. È la catena respiratoria, ossidandoli, a ricavarne la maggior parte dell'energia: per questo senza ossigeno il bilancio crolla.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695906403,
+   "tipo": "multipla",
+   "opzioni": [
+    "la fermentazione del piruvato in lattato",
+    "l'ossidazione di NADH e FADH2 nella catena respiratoria",
+    "la sintesi del glicogeno nel fegato",
+    "il trasporto attivo del glucosio nella cellula",
+    "la demolizione delle proteine muscolari"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-55b-02",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "La fissione mitocondriale serve soprattutto a:",
+   "spiegazione": "Dividendosi, il mitocondrio isola la parte guasta in un frammento che può essere digerito senza perdere il resto. Fusione e fissione insieme funzionano quindi da manutenzione continua della popolazione mitocondriale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695906885,
+   "tipo": "multipla",
+   "opzioni": [
+    "aumentare la superficie delle creste",
+    "separare le porzioni danneggiate perché vengano eliminate",
+    "produrre più ATP nell'unità di tempo",
+    "duplicare il DNA mitocondriale",
+    "far passare le proteine attraverso le due membrane"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-55b-03",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Le proteine mitocondriali codificate dal genoma nucleare attraversano la membrana esterna passando attraverso il complesso:",
+   "spiegazione": "TOM è la porta della membrana esterna, e il nome lo dice: translocase of the outer membrane. Da lì le proteine passano ai complessi della membrana interna, oppure a SAM se devono restare nella esterna.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695907370,
+   "tipo": "multipla",
+   "opzioni": [
+    "TOM",
+    "TIM23",
+    "SAM",
+    "OXA",
+    "il poro nucleare"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-55b-04",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Perché una proteina possa essere importata nella matrice mitocondriale occorre:",
+   "spiegazione": "I canali di importazione sono stretti: la proteina passa come una catena distesa e si ripiega solo dopo, dentro la matrice. La sequenza segnale all'estremità fa da indirizzo e viene tagliata all'arrivo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695907817,
+   "tipo": "multipla",
+   "opzioni": [
+    "che sia già ripiegata nella sua forma finale",
+    "che sia dispiegata e porti una sequenza segnale",
+    "che due mitocondri si fondano fra loro",
+    "che nella matrice siano presenti ribosomi liberi",
+    "che la membrana interna si interrompa"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-55b-05",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Il processo per cui due mitocondri si uniscono in uno solo si chiama ……",
+   "spiegazione": "Fondendosi, i mitocondri mescolano contenuti e copie di DNA, e un difetto in uno viene compensato dall'altro. La rete mitocondriale è in continuo rimaneggiamento fra fusioni e divisioni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695908543,
+   "tipo": "completamento",
+   "accettate": [
+    "fusione",
+    "fusione mitocondriale"
+   ]
+  },
+  {
+   "id": "bio-55b-06",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Il complesso che inserisce nella membrana interna le proteine sintetizzate dai ribosomi del mitocondrio stesso si indica con la sigla ……",
+   "spiegazione": "Le poche proteine codificate dal DNA mitocondriale vengono prodotte dentro la matrice, quindi arrivano alla membrana dal lato interno. OXA è la via che serve a loro, al contrario dei complessi TIM, che fanno entrare quelle venute da fuori.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695909868,
+   "tipo": "completamento",
+   "accettate": [
+    "OXA",
+    "complesso OXA"
+   ]
+  },
+  {
+   "id": "bio-55b-07",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "La forma selettiva di autofagia con cui la cellula elimina i mitocondri danneggiati si chiama ……",
+   "spiegazione": "Il mitocondrio da eliminare viene marcato, racchiuso in una vescicola e portato al lisosoma. Quando questo controllo di qualità si guasta i mitocondri difettosi si accumulano, ed è un meccanismo studiato nelle malattie neurodegenerative.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695910346,
+   "tipo": "completamento",
+   "accettate": [
+    "mitofagia"
+   ]
+  },
+  {
+   "id": "bio-55b-08",
+   "argomento": "bio.5.5",
+   "stato": "approvata",
+   "testo": "Il complesso che fa passare attraverso la membrana mitocondriale interna le proteine dirette alla matrice si indica con la sigla ……",
+   "spiegazione": "TOM porta dentro la membrana esterna, TIM23 attraverso la interna: due barriere, due complessi. Il passaggio consuma energia, che viene dal gradiente protonico e dall'ATP della matrice.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695910907,
+   "tipo": "completamento",
+   "accettate": [
+    "TIM23",
+    "TIM",
+    "TIM 23",
+    "complesso TIM23"
+   ]
+  },
+  {
+   "id": "bio-61a-01",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "La proteina più abbondante della matrice extracellulare dei vertebrati è:",
+   "spiegazione": "Il collagene è anche la proteina più abbondante del corpo umano. Actina e miosina sono intracellulari e la cheratina è un filamento intermedio dell'epidermide: nessuna delle tre sta nella matrice.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695912224,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'elastina",
+    "il collagene",
+    "la cheratina",
+    "l'actina",
+    "la miosina"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-61a-02",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "I proteoglicani danno alla matrice la capacità di:",
+   "spiegazione": "Le catene zuccherine dei proteoglicani sono molto cariche negativamente e richiamano acqua, formando un gel che attutisce i carichi. La resistenza alla trazione è invece compito delle fibre di collagene: due funzioni diverse, due molecole diverse.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695912661,
+   "tipo": "multipla",
+   "opzioni": [
+    "trasmettere impulsi elettrici fra le cellule",
+    "formare fibre resistenti alla trazione",
+    "catalizzare la sintesi del collagene",
+    "trattenere acqua e resistere alla compressione",
+    "legare e trasportare l'ossigeno"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-61a-03",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Le metalloproteinasi di matrice sono enzimi che:",
+   "spiegazione": "La matrice non è un deposito fisso: viene continuamente demolita e ricostruita, e le metalloproteinasi fanno la parte della demolizione. Quando la loro attività sfugge al controllo, le cellule tumorali trovano la strada aperta per invadere.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695913087,
+   "tipo": "multipla",
+   "opzioni": [
+    "degradano i componenti della matrice permettendone il rimodellamento",
+    "assemblano il collagene a partire dal procollagene",
+    "trasportano ioni metallici attraverso la membrana",
+    "formano i legami crociati fra le fibre di elastina",
+    "ancorano le cellule epiteliali al tessuto sottostante"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-61a-04",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "La lamina basale è:",
+   "spiegazione": "Non è fatta di cellule né di membrane, ma di matrice: un foglio sottile e fitto di collagene e altre proteine. Separa l'epitelio dal tessuto connettivo sottostante e fa da filtro, per esempio nel glomerulo renale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695913561,
+   "tipo": "multipla",
+   "opzioni": [
+    "un doppio strato di fosfolipidi che circonda l'epitelio",
+    "uno strato di cellule appiattite alla base dell'epitelio",
+    "una matrice extracellulare specializzata su cui poggiano le cellule epiteliali",
+    "un tipo di giunzione fra due cellule adiacenti",
+    "la parete cellulare delle cellule animali"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-61a-05",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Perché la degradazione eccessiva della matrice favorisce la diffusione di un tumore?",
+   "spiegazione": "La matrice è anche una barriera fisica: finché è intatta, una cellula non può attraversarla. Demolirla è il primo passo dell'invasione, e per questo molte cellule tumorali producono metalloproteinasi in eccesso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695914027,
+   "tipo": "multipla",
+   "opzioni": [
+    "perché priva le cellule tumorali di ossigeno",
+    "perché blocca la divisione delle cellule sane vicine",
+    "perché impedisce la formazione di nuovi vasi",
+    "perché aumenta la rigidità del tessuto",
+    "perché apre alle cellule tumorali una via per invadere i tessuti vicini"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-61a-06",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "La proteina della matrice che dà elasticità ai tessuti, permettendo a polmoni e arterie di tornare alla forma iniziale, è l'……",
+   "spiegazione": "Le fibre di elastina si allungano e si riprendono come elastici, grazie a legami crociati fra le catene. Con l'età si degradano e non vengono rimpiazzate: è una delle ragioni per cui la pelle perde tono.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695914766,
+   "tipo": "completamento",
+   "accettate": [
+    "elastina"
+   ]
+  },
+  {
+   "id": "bio-61a-07",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Le lunghe catene di zuccheri fortemente cariche negativamente che si legano al nucleo proteico dei proteoglicani sono i glicosamminoglicani, in sigla ……",
+   "spiegazione": "Le cariche negative attirano ioni positivi e con essi acqua, e questo spiega sia il gel della matrice sia la sua resistenza alla compressione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695915279,
+   "tipo": "completamento",
+   "accettate": [
+    "GAG",
+    "GAGs"
+   ]
+  },
+  {
+   "id": "bio-61a-08",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Il glicosamminoglicano non legato ad alcuna proteina, abbondante nella cartilagine e capace di trattenere grandi quantità d'acqua, è l'acido ……",
+   "spiegazione": "È l'unico glicosamminoglicano a non far parte di un proteoglicano e il più semplice per struttura. La sua capacità di legare acqua lo rende utile anche in medicina, dalle iniezioni intrarticolari alla dermatologia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695915809,
+   "tipo": "completamento",
+   "accettate": [
+    "ialuronico"
+   ]
+  },
+  {
+   "id": "bio-61a-09",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "La vitamina necessaria all'idrossilazione del collagene, la cui carenza provoca lo scorbuto, è la vitamina ……",
+   "spiegazione": "Senza idrossilazione le tre catene del collagene non si avvolgono in modo stabile, e il risultato è una matrice fragile: gengive che sanguinano, ferite che non si chiudono, vasi che si rompono.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695916359,
+   "tipo": "completamento",
+   "accettate": [
+    "C",
+    "acido ascorbico"
+   ]
+  },
+  {
+   "id": "bio-61a-10",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "La matrice extracellulare è un deposito inerte, senza alcun ruolo nella segnalazione alle cellule: vero o falso? ……",
+   "spiegazione": "La matrice trattiene fattori di crescita e li rilascia quando viene degradata, e la sua rigidità stessa è un segnale che le cellule leggono. Chiamarla impalcatura passiva è l'errore più comune su questo argomento.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695916890,
+   "tipo": "completamento",
+   "accettate": [
+    "falso",
+    "f"
+   ]
+  },
+  {
+   "id": "bio-61b-01",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Le integrine sono:",
+   "spiegazione": "Attraversano la membrana, quindi hanno una parte fuori che lega la matrice e una dentro che lega il citoscheletro. È questa continuità meccanica fra esterno e interno a rendere possibile sia l'ancoraggio sia il segnale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695917752,
+   "tipo": "multipla",
+   "opzioni": [
+    "canali ionici della membrana plasmatica",
+    "enzimi che degradano la matrice",
+    "proteine transmembrana che collegano la matrice al citoscheletro",
+    "zuccheri esposti sulla superficie cellulare",
+    "proteine solubili disperse nella matrice"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-61b-02",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Si parla di meccanotrasduzione quando:",
+   "spiegazione": "La cellula non legge soltanto molecole: legge anche tensioni e rigidità. Le integrine sono fra i principali sensori di questo tipo, perché sono fisicamente attaccate sia alla matrice sia al citoscheletro.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695918240,
+   "tipo": "multipla",
+   "opzioni": [
+    "una forza meccanica viene convertita in un segnale biochimico dentro la cellula",
+    "una cellula si muove seguendo un gradiente di sostanze chimiche",
+    "un segnale elettrico si propaga lungo una fibra nervosa",
+    "la matrice viene demolita dalle proteasi",
+    "una proteina viene trasportata dal citosol al nucleo"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-61b-03",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Quando un'integrina lega la matrice, all'interno della cellula si verifica:",
+   "spiegazione": "Sul lato interno si assembla una piastra di proteine che fa da attacco fra l'integrina e l'actina. Lì arrivano anche chinasi che avviano la segnalazione: lo stesso punto serve da ancoraggio e da antenna.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695920517,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'apertura di un canale per il cloro",
+    "la sintesi immediata di nuovo collagene",
+    "il distacco del citoscheletro dalla membrana",
+    "la degradazione dell'integrina stessa",
+    "il reclutamento di proteine che la collegano ai filamenti di actina"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-61b-04",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "La fibronectina svolge principalmente la funzione di:",
+   "spiegazione": "Ha regioni distinte: una lega il collagene, un'altra è riconosciuta dalle integrine. Facendo da intermediaria, tiene la cellula attaccata alla matrice e trasmette le forze fra le due.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695921033,
+   "tipo": "multipla",
+   "opzioni": [
+    "dare alla cartilagine resistenza alla compressione",
+    "fare da ponte fra le integrine e le fibre di collagene",
+    "formare i legami crociati dell'elastina",
+    "trasportare ossigeno ai tessuti",
+    "costituire i canali delle giunzioni comunicanti"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-61b-05",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Durante lo sviluppo embrionale e la guarigione di una ferita, la fibronectina serve alle cellule per:",
+   "spiegazione": "Le cellule in migrazione avanzano aderendo e staccandosi di continuo, e la fibronectina offre loro i punti d'appoggio. Nelle ferite viene deposta presto, e segna la strada su cui le cellule entrano a richiudere il tessuto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695921584,
+   "tipo": "multipla",
+   "opzioni": [
+    "ricevere ossigeno direttamente dal sangue",
+    "dividersi senza bisogno di fattori di crescita",
+    "aderire alla matrice e migrare lungo di essa",
+    "degradare il collagene circostante",
+    "formare giunzioni strette fra loro"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-61b-06",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Le strutture in cui molte integrine si raggruppano collegando la matrice ai fasci di actina si chiamano adesioni ……",
+   "spiegazione": "Si chiamano focali perché l'ancoraggio è concentrato in punti precisi, non diffuso su tutta la superficie. Più la matrice è rigida, più queste adesioni diventano grandi e stabili.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695922327,
+   "tipo": "completamento",
+   "accettate": [
+    "focali",
+    "focale"
+   ]
+  },
+  {
+   "id": "bio-61b-07",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Essendo formate da due catene diverse, alfa e beta, le integrine si definiscono ……",
+   "spiegazione": "Dalla combinazione delle due catene nascono decine di integrine diverse, ciascuna con la propria preferenza per un componente della matrice. È così che una stessa famiglia riconosce bersagli differenti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695922820,
+   "tipo": "completamento",
+   "accettate": [
+    "eterodimeri",
+    "eterodimero",
+    "eterodimeriche"
+   ]
+  },
+  {
+   "id": "bio-61b-08",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Attraverso le integrine la cellula percepisce quanto è rigido il tessuto che la circonda: questa proprietà meccanica della matrice si chiama ……",
+   "spiegazione": "La stessa cellula staminale coltivata su un substrato molle o su uno rigido può prendere destini diversi. La rigidità, quindi, non è solo un fatto meccanico: è informazione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695923376,
+   "tipo": "completamento",
+   "accettate": [
+    "rigidità",
+    "rigidezza",
+    "rigidita"
+   ]
+  },
+  {
+   "id": "bio-61b-09",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Una cellula epiteliale che perde ogni ancoraggio alla matrice va incontro a morte programmata, cioè ad ……",
+   "spiegazione": "Il segnale di sopravvivenza arriva dalle integrine impegnate: senza di esso la cellula conclude di essere fuori posto e si autodistrugge. Le cellule tumorali che metastatizzano devono prima sfuggire a questo controllo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695923952,
+   "tipo": "completamento",
+   "accettate": [
+    "apoptosi",
+    "anoikis",
+    "anoichia"
+   ]
+  },
+  {
+   "id": "bio-61b-10",
+   "argomento": "bio.6.1",
+   "stato": "approvata",
+   "testo": "Le integrine trasmettono segnali in una sola direzione, dall'esterno verso l'interno della cellula: vero o falso? ……",
+   "spiegazione": "Il traffico è nei due sensi: la matrice informa la cellula, e la cellula può cambiare dall'interno l'affinità delle proprie integrine, decidendo quando attaccarsi e quando lasciare la presa.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695924543,
+   "tipo": "completamento",
+   "accettate": [
+    "falso",
+    "f"
+   ]
+  },
+  {
+   "id": "bio-73a-01",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "La rottura dell'involucro nucleare durante la mitosi avviene:",
+   "spiegazione": "I cromosomi si condensano mentre l'involucro è ancora intatto; solo dopo l'involucro si smonta e i microtubuli possono raggiungerli. In telofase accade il contrario: l'involucro si riforma intorno ai due gruppi di cromosomi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695926010,
+   "tipo": "multipla",
+   "opzioni": [
+    "in profase, prima che i cromosomi si condensino",
+    "in prometafase, dopo la condensazione dei cromosomi",
+    "in metafase, quando i cromosomi sono allineati",
+    "in anafase, mentre i cromatidi migrano",
+    "in telofase"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-73a-02",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "L'ingresso della cellula in mitosi è innescato da:",
+   "spiegazione": "La ciclina B si accumula durante l'interfase e, attivando la sua chinasi, fa partire la mitosi fosforilando decine di bersagli. La sua degradazione serve al passaggio opposto, l'uscita dalla mitosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695926488,
+   "tipo": "multipla",
+   "opzioni": [
+    "la degradazione della ciclina B",
+    "l'attivazione del complesso fra CDK1 e ciclina B",
+    "la duplicazione del DNA",
+    "l'allontanamento dei due centrosomi",
+    "l'inattivazione del fuso mitotico"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-73a-04",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Il complesso NDC80 ha il compito di:",
+   "spiegazione": "È l'attacco vero e proprio fra cinetocoro e microtubulo, e deve resistere alla trazione senza lasciare la presa nemmeno mentre il microtubulo si accorcia. Un difetto qui porta a distribuire male i cromosomi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695927490,
+   "tipo": "multipla",
+   "opzioni": [
+    "legare il microtubulo al cinetocoro",
+    "duplicare il centrosoma",
+    "tagliare la coesina fra i cromatidi",
+    "formare l'anello contrattile della citodieresi",
+    "decondensare la cromatina in telofase"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-73a-03",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Il cinetocoro è:",
+   "spiegazione": "È una piattaforma di molte proteine, costruita su una regione specializzata del cromosoma, che fa da presa per i microtubuli. Senza di essa il fuso non avrebbe nulla a cui tirare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695927966,
+   "tipo": "multipla",
+   "opzioni": [
+    "la regione del cromosoma in cui inizia la replicazione del DNA",
+    "il centro da cui irradiano i microtubuli del fuso",
+    "la membrana che avvolge i cromosomi durante la mitosi",
+    "la struttura proteica su cui si agganciano i microtubuli del fuso",
+    "il punto in cui i cromatidi si separano per rottura meccanica"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-73a-05",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "I due filamenti identici che compongono un cromosoma duplicato si chiamano cromatidi ……",
+   "spiegazione": "Sono identici perché nascono dalla replicazione dello stesso DNA, e restano uniti finché l'anafase non li separa. Dividersi bene significa mandarne uno a ciascuna cellula figlia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695928744,
+   "tipo": "completamento",
+   "accettate": [
+    "fratelli",
+    "fratello"
+   ]
+  },
+  {
+   "id": "bio-73a-06",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "La struttura contenente due centrioli, che funge da centro organizzatore dei microtubuli del fuso, si chiama ……",
+   "spiegazione": "Viene duplicato una volta per ciclo cellulare, e i due centrosomi figli si allontanano formando i due poli del fuso. Il numero di centrosomi decide quindi quanti poli avrà la divisione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792696515618,
+   "tipo": "completamento",
+   "accettate": [
+    "centrosoma",
+    "centrosomi"
+   ]
+  },
+  {
+   "id": "bio-73a-07",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "La fase della mitosi in cui l'involucro nucleare si riforma e i cromosomi si decondensano è la ……",
+   "spiegazione": "È il percorso inverso della profase: la cellula rimette a posto il nucleo, ora in due copie. La divisione del citoplasma la accompagna ma è un processo distinto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695929920,
+   "tipo": "completamento",
+   "accettate": [
+    "telofase"
+   ]
+  },
+  {
+   "id": "bio-73a-08",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "All'inizio della mitosi il numero di cromatidi presenti in ciascun cromosoma è ……",
+   "spiegazione": "La duplicazione è già avvenuta in fase S, prima che la mitosi cominci: la mitosi non copia nulla, distribuisce. Dopo l'anafase ogni cromosoma nelle cellule figlie ha di nuovo un solo cromatidio.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695930476,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-73a-09",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Nella mitosi ciascuna cellula figlia riceve metà dei cromosomi della cellula madre: vero o falso? ……",
+   "spiegazione": "Ogni figlia riceve un corredo completo e identico, perché quello che si divide a metà sono i cromatidi di ciascun cromosoma, non il numero dei cromosomi. A dimezzare il corredo è la meiosi, non la mitosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695930982,
+   "tipo": "completamento",
+   "accettate": [
+    "falso",
+    "f"
+   ]
+  },
+  {
+   "id": "bio-73b-01",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Il complesso APC/C fa partire l'anafase perché:",
+   "spiegazione": "APC/C non taglia nulla: attacca catene di ubiquitina ai suoi bersagli e li manda al proteasoma. Togliendo di mezzo securina e ciclina B avvia insieme la separazione dei cromatidi e l'uscita dalla mitosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695931767,
+   "tipo": "multipla",
+   "opzioni": [
+    "taglia direttamente il legame fra i cromatidi fratelli",
+    "marca per la degradazione la securina e la ciclina B",
+    "fosforila i cinetocori",
+    "depolimerizza tutti i microtubuli del fuso",
+    "duplica il centrosoma"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-73b-02",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "La degradazione della securina permette:",
+   "spiegazione": "La securina è il freno della separasi: finché c'è, l'enzima resta inattivo e i cromatidi restano uniti. Toglierla è il segnale di via libera, e per questo la separazione è un passaggio brusco e irreversibile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695932207,
+   "tipo": "multipla",
+   "opzioni": [
+    "ai cromosomi di condensarsi",
+    "al fuso mitotico di formarsi",
+    "all'involucro nucleare di rompersi",
+    "alla separasi di tagliare la coesina",
+    "alla cellula di entrare in fase S"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "bio-73b-03",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "L'anello che strozza la cellula durante la citodieresi è formato da:",
+   "spiegazione": "È lo stesso sistema che fa contrarre il muscolo, qui disposto ad anello sotto la membrana: la miosina scorre sui filamenti di actina e il diametro si restringe. Il fuso, fatto di microtubuli, ha già finito il suo lavoro.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695932705,
+   "tipo": "multipla",
+   "opzioni": [
+    "microtubuli e proteine motrici",
+    "filamenti intermedi di cheratina",
+    "actina e miosina",
+    "fibre di collagene",
+    "membrane del reticolo endoplasmatico"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-73b-04",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Una divisione cellulare asimmetrica produce:",
+   "spiegazione": "L'asimmetria riguarda il citoplasma, non i cromosomi: proteine e organelli vengono ripartiti in modo disuguale, e le due figlie si avviano a destini differenti. Il corredo cromosomico resta identico e completo in entrambe.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695933228,
+   "tipo": "multipla",
+   "opzioni": [
+    "due cellule figlie identiche fra loro e con lo stesso destino",
+    "due cellule figlie con un corredo cromosomico diverso",
+    "due cellule figlie che ricevono contenuti diversi e prendono destini diversi",
+    "una sola cellula figlia",
+    "quattro cellule figlie"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-73b-05",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Il restringimento che compare sulla superficie della cellula mentre il citoplasma si divide si chiama solco di ……",
+   "spiegazione": "Si forma nel piano equatoriale, dove prima stavano i cromosomi allineati, e si approfondisce fino a separare le due cellule. La sua posizione è decisa dal fuso, che indica dove tagliare.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695933971,
+   "tipo": "completamento",
+   "accettate": [
+    "divisione",
+    "segmentazione",
+    "clivaggio",
+    "scissione"
+   ]
+  },
+  {
+   "id": "bio-73b-06",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Quando una cellula staminale si divide in modo asimmetrico, una figlia resta staminale e l'altra comincia a ……",
+   "spiegazione": "È il meccanismo che permette a un tessuto di rinnovarsi senza consumare la riserva di staminali: a ogni divisione se ne mantiene una e se ne spende una. Se l'equilibrio si rompe, il tessuto si esaurisce o cresce fuori controllo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695934472,
+   "tipo": "completamento",
+   "accettate": [
+    "differenziarsi",
+    "differenziare"
+   ]
+  },
+  {
+   "id": "bio-73b-07",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "La fase della mitosi in cui i cromatidi fratelli, ormai separati, migrano verso i poli opposti è l'……",
+   "spiegazione": "I microtubuli del cinetocoro si accorciano e trascinano i cromatidi, mentre i due poli si allontanano ulteriormente. È il momento in cui l'esito della divisione è deciso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695934942,
+   "tipo": "completamento",
+   "accettate": [
+    "anafase"
+   ]
+  },
+  {
+   "id": "bio-73b-08",
+   "argomento": "bio.7.3",
+   "stato": "approvata",
+   "testo": "Alla fine dell'anafase ciascuno dei due poli della cellula ha un corredo cromosomico completo: vero o falso? ……",
+   "spiegazione": "Separandosi, i cromatidi fratelli mandano a ogni polo una copia di ciascun cromosoma. La citodieresi può quindi dividere il citoplasma sapendo che da entrambe le parti l'informazione genetica è intera.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695935518,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v"
+   ]
+  },
+  {
+   "id": "bio-74a-01",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Nella prima divisione meiotica si separano:",
+   "spiegazione": "È questo che dimezza il corredo: a ogni polo arriva un solo omologo di ciascuna coppia, ancora formato da due cromatidi. I cromatidi fratelli si separano soltanto nella seconda divisione, come in una mitosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695936321,
+   "tipo": "multipla",
+   "opzioni": [
+    "i cromatidi fratelli di ciascun cromosoma",
+    "i cromosomi omologhi",
+    "le due catene della doppia elica",
+    "i centrioli del centrosoma",
+    "le due cellule figlie, senza divisione del nucleo"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-74a-02",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Il crossing over avviene:",
+   "spiegazione": "Serve che gli omologhi siano appaiati, e lo sono soltanto in profase I. Uno scambio fra cromatidi fratelli non produrrebbe nulla di nuovo, perché sono identici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695936815,
+   "tipo": "multipla",
+   "opzioni": [
+    "in profase I, fra cromatidi di cromosomi omologhi appaiati",
+    "in metafase II, quando i cromosomi si allineano",
+    "fra i due cromatidi fratelli dello stesso cromosoma",
+    "durante la fase S, mentre il DNA si duplica",
+    "in anafase II, mentre i cromatidi migrano"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "bio-74a-03",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "La variabilità genetica dei gameti prodotti da una meiosi dipende:",
+   "spiegazione": "Due meccanismi indipendenti si sommano: quale omologo di ciascuna coppia finisce in quale gamete, e lo scambio di tratti fra omologhi. Per questo due fratelli, dagli stessi genitori, non sono mai geneticamente identici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695937341,
+   "tipo": "multipla",
+   "opzioni": [
+    "dalla sola duplicazione del DNA in fase S",
+    "dal numero di divisioni mitotiche che l'hanno preceduta",
+    "dall'assortimento indipendente degli omologhi e dal crossing over",
+    "dalla dimensione dei cromosomi coinvolti",
+    "dalla velocità della citodieresi"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-74a-04",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "A differenza della mitosi, la meiosi:",
+   "spiegazione": "La duplicazione del DNA avviene una volta sola, prima della prima divisione: le due divisioni successive non sono precedute da una nuova fase S. È per questo che da una cellula se ne ottengono quattro con metà del corredo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695937831,
+   "tipo": "multipla",
+   "opzioni": [
+    "duplica il DNA due volte, una per ciascuna divisione",
+    "produce due cellule identiche alla cellula madre",
+    "avviene in tutte le cellule dell'organismo",
+    "non comporta mai la separazione dei cromatidi fratelli",
+    "dimezza il corredo cromosomico e dà quattro cellule diverse fra loro"
+   ],
+   "corretta": 4
+  },
+  {
+   "id": "bio-74a-05",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "L'appaiamento ordinato dei cromosomi omologhi che avviene in profase I si chiama ……",
+   "spiegazione": "Gli omologhi si affiancano lungo tutta la loro lunghezza, tenuti insieme da una struttura proteica. È questo contatto preciso a rendere possibile uno scambio fra sequenze corrispondenti.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695938559,
+   "tipo": "completamento",
+   "accettate": [
+    "sinapsi"
+   ]
+  },
+  {
+   "id": "bio-74a-06",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "La struttura formata da due cromosomi omologhi appaiati, e quindi da quattro cromatidi, si chiama ……",
+   "spiegazione": "Quattro cromatidi affiancati sono l'immagine caratteristica della profase I. In metafase I all'equatore si allineano queste strutture, non i singoli cromosomi come nella mitosi.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695939067,
+   "tipo": "completamento",
+   "accettate": [
+    "tetrade",
+    "tetradi",
+    "bivalente",
+    "bivalenti"
+   ]
+  },
+  {
+   "id": "bio-74a-07",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Il punto in cui due cromatidi di omologhi diversi restano uniti dopo lo scambio, visibile al microscopio, si chiama ……",
+   "spiegazione": "Ogni chiasma segnala un avvenuto scambio, e averne almeno uno per coppia è necessario anche per orientare correttamente gli omologhi sul fuso. Dove i chiasmi mancano, aumenta il rischio di una separazione sbagliata.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695939559,
+   "tipo": "completamento",
+   "accettate": [
+    "chiasma",
+    "chiasmi"
+   ]
+  },
+  {
+   "id": "bio-74a-08",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Le cellule che possiedono un solo corredo cromosomico, come i gameti, si dicono ……",
+   "spiegazione": "La fecondazione unisce due corredi aploidi e ricostituisce lo stato diploide. Senza il dimezzamento operato dalla meiosi il numero di cromosomi raddoppierebbe a ogni generazione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695940057,
+   "tipo": "completamento",
+   "accettate": [
+    "aploidi",
+    "aploide"
+   ]
+  },
+  {
+   "id": "bio-74b-01",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Un'aneuploidia nasce più spesso da:",
+   "spiegazione": "Se due omologhi, o due cromatidi, finiscono nella stessa cellula, un gamete ne avrà uno in più e un altro uno in meno. Il rischio cresce con l'età materna, perché gli ovociti restano bloccati a metà meiosi per decenni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695940818,
+   "tipo": "multipla",
+   "opzioni": [
+    "una mutazione puntiforme in un gene",
+    "la mancata separazione di una coppia di cromosomi durante la meiosi",
+    "uno scambio fra cromatidi fratelli",
+    "la duplicazione dell'intero genoma",
+    "un errore nella traduzione di una proteina"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-74b-02",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Nella gametogenesi femminile, da ciascun ovocita primario si ottiene:",
+   "spiegazione": "Le divisioni sono asimmetriche: una cellula si tiene quasi tutto il citoplasma e le altre vengono scartate. Concentrare le riserve in un'unica cellula serve a nutrire l'embrione nei primi giorni.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695941314,
+   "tipo": "multipla",
+   "opzioni": [
+    "quattro cellule uovo tutte funzionanti",
+    "due cellule uovo e due globuli polari",
+    "una sola cellula uovo e tre globuli polari",
+    "una cellula uovo con corredo diploide",
+    "quattro globuli polari e nessuna cellula uovo"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "bio-74b-03",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Una cellula staminale si definisce tale perché:",
+   "spiegazione": "Servono entrambe le proprietà: mantenere la riserva e produrre cellule specializzate. Essere capace di formare un organismo intero è un caso particolare, la totipotenza, e riguarda solo le prime cellule dell'embrione.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695941840,
+   "tipo": "multipla",
+   "opzioni": [
+    "si divide senza alcun controllo",
+    "è capace di autorinnovarsi e di dare cellule differenziate",
+    "è sempre in grado di formare un organismo intero",
+    "non possiede un corredo cromosomico completo",
+    "ha perso la capacità di dividersi"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "bio-74b-04",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "La mancata separazione di due cromosomi durante la divisione si chiama non ……",
+   "spiegazione": "Può avvenire nella prima divisione, e allora riguarda gli omologhi, o nella seconda, e allora riguarda i cromatidi fratelli. In entrambi i casi il risultato sono gameti con un cromosoma in più o in meno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695942624,
+   "tipo": "completamento",
+   "accettate": [
+    "disgiunzione",
+    "disgiunzioni"
+   ]
+  },
+  {
+   "id": "bio-74b-06",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Nel maschio, da ciascuno spermatocita primario si ottiene un numero di spermatozoi pari a ……",
+   "spiegazione": "Qui le divisioni sono simmetriche e tutte e quattro le cellule diventano gameti. È la differenza più vistosa fra le due gametogenesi, e spiega perché gli spermatozoi siano prodotti in numero enorme.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695943118,
+   "tipo": "completamento",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-74b-05",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "La condizione dovuta alla presenza di tre copie del cromosoma 21 è nota come sindrome di ……",
+   "spiegazione": "È la trisomia autosomica compatibile con la vita più frequente, e nella maggior parte dei casi deriva da un errore nella meiosi materna. Il corredo è di 47 cromosomi invece di 46.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695943684,
+   "tipo": "completamento",
+   "accettate": [
+    "Down"
+   ]
+  },
+  {
+   "id": "bio-74b-07",
+   "argomento": "bio.7.4",
+   "stato": "approvata",
+   "testo": "Nella donna la meiosi dell'ovocita si completa soltanto dopo la fecondazione: vero o falso? ……",
+   "spiegazione": "L'ovocita resta fermo a metà della seconda divisione e la porta a termine solo quando viene fecondato, espellendo l'ultimo globulo polare. La prima divisione, invece, era rimasta in attesa fin dalla vita fetale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792695944356,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v"
+   ]
+  },
+  {
+   "id": "bio-tappa0-09",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Gli antibiotici che agiscono sulla parete batterica sono efficaci anche contro i virus: vero o falso? ……",
+   "spiegazione": "I virus non hanno parete né alcuno dei bersagli su cui agiscono gli antibiotici, perché si replicano usando le strutture della cellula ospite. Contro di loro servono farmaci antivirali, diretti contro enzimi virali specifici.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695945403,
+   "tipo": "completamento",
+   "accettate": [
+    "falso",
+    "f"
+   ]
+  },
+  {
+   "id": "bio-tappa0-08",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Il genoma di un batteriofago integrato nel cromosoma della cellula ospite si chiama ……",
+   "spiegazione": "Finché resta allo stato di profago il batterio non viene lisato e trasmette il genoma virale a tutte le cellule figlie; un danno al DNA o uno stress possono far passare al ciclo litico.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695946618,
+   "tipo": "completamento",
+   "accettate": [
+    "profago",
+    "profagi"
+   ]
+  },
+  {
+   "id": "bio-tappa0-07",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "Ciascuna subunità proteica che, ripetuta molte volte, costituisce il capside prende il nome di ……",
+   "spiegazione": "Il capside si forma per autoassemblaggio di molte copie di poche proteine diverse: così un genoma molto piccolo riesce a codificare un rivestimento molto più grande di sé.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695947630,
+   "tipo": "completamento",
+   "accettate": [
+    "capsomero",
+    "capsomeri"
+   ]
+  },
+  {
+   "id": "bio-tappa0-05",
+   "argomento": "bio.1.2",
+   "stato": "approvata",
+   "testo": "L'uscita dalla cellula per gemmazione è propria dei virus che:",
+   "spiegazione": "È gemmando che il virione acquista il proprio involucro, portandosi via un tratto di membrana dell'ospite. A differenza della lisi questa via non uccide subito la cellula, che può continuare a produrre virioni.",
+   "fonte": "ai-conversazione",
+   "aggiornata": 1792695949102,
+   "tipo": "multipla",
+   "opzioni": [
+    "possiedono un involucro",
+    "hanno genoma a DNA a doppia elica",
+    "infettano esclusivamente i batteri",
+    "sono privi di capside",
+    "si replicano nel nucleo"
+   ],
+   "corretta": 0
   }
  ]
 }
