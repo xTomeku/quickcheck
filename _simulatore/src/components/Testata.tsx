@@ -6,7 +6,7 @@ interface Props {
   onInizio?: () => void
 }
 
-/** Barra in alto: marchio QuickCheck, distintivo di UDU Lecce e il ritorno
+/** Barra in alto: marchio QuickCheck, distintivo di udu Lecce e il ritorno
     (il simulatore vive in /quickcheck/simulatore/). */
 export function Testata({ onInizio }: Props) {
   return (
@@ -26,7 +26,7 @@ export function Testata({ onInizio }: Props) {
             <b>QuickCheck</b>
             <span>Simulatore</span>
           </a>
-          <img className="udu-distintivo" src="udu-lecce-distintivo.svg" alt="UDU Lecce" width={34} height={34} />
+          <img className="udu-distintivo" src="udu-lecce-distintivo.svg" alt="udu Lecce" width={34} height={34} />
         </div>
         {onInizio ? (
           <button type="button" className="qc-torna" onClick={onInizio}>

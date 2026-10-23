@@ -6,7 +6,7 @@
  *
  * Strutturato a colonne in armonia visiva con il sito principale di QuickCheck,
  * integrando la banca dati del Syllabus MUR 2026/27, i collegamenti all'app,
- * il modulo per segnalare domande errate, i badge sulla privacy e i canali social con UDU Lecce.
+ * il modulo per segnalare domande errate, i badge sulla privacy e i canali social con udu Lecce.
  */
 
 export function Piede() {
@@ -67,13 +67,13 @@ export function Piede() {
               <span>QuickCheck</span>
             </a>
             <span className="piede-separatore-loghi" aria-hidden="true">×</span>
-            <a href="https://www.instagram.com/udu_sindacatostudentescolecce/" target="_blank" rel="noopener noreferrer" className="piede-marchio-udu" aria-label="Profilo Instagram UDU Lecce">
-              <img src="udu-lecce-distintivo.svg" alt="UDU Lecce" width={32} height={32} />
+            <a href="https://www.instagram.com/udu_lecce/" target="_blank" rel="noopener noreferrer" className="piede-marchio-udu" aria-label="Profilo Instagram udu Lecce">
+              <img src="udu-lecce-distintivo.svg" alt="udu Lecce" width={32} height={32} />
             </a>
           </div>
 
           <p className="piede-descrizione">
-            Simulatore gratuito per le prove del semestre filtro di Medicina, creato da studenti per gli studenti in collaborazione con <b>UDU Lecce</b>.
+            Simulatore gratuito per le prove del semestre filtro di Medicina, creato da studenti per gli studenti in collaborazione con <b>udu Lecce</b>.
           </p>
 
           {/* Badge rassicurante sulla privacy e funzionamento offline */}
@@ -172,9 +172,9 @@ export function Piede() {
           </ul>
         </nav>
 
-        {/* Colonna 4: Segnalazione errori e canali di contatto/social */}
-        <div className="piede-colonna piede-col-contatti">
-          <h4>Segnalazioni & Social</h4>
+        {/* Colonna 4: Segnalazione errori e refusi nelle domande */}
+        <div className="piede-colonna piede-col-segnala">
+          <h4>Hai trovato un refuso?</h4>
 
           {/* Card in evidenza per segnalare domande errate */}
           <div className="piede-card-segnala">
@@ -185,47 +185,91 @@ export function Piede() {
                   <line x1="4" x2="4" y1="22" y2="15" />
                 </svg>
               </span>
-              <b>Hai trovato un refuso?</b>
+              <b>Segnala una domanda</b>
             </div>
-            <p>Segnalaci qualsiasi domanda ambigua o errata per aiutarci ad aggiornare la banca dati.</p>
+            <p>Hai notato una domanda ambigua o un errore nella banca dati? Aiutaci a risolverlo per tutti.</p>
             <a href={linkSegnalazione} className="btn-piede-segnala">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect width="20" height="16" x="2" y="4" rx="2" />
                 <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
               </svg>
-              <span>Segnala una domanda</span>
+              <span>Invia segnalazione</span>
             </a>
           </div>
+        </div>
+      </div>
 
-          {/* Canali Instagram e contatto diretto */}
-          <div className="piede-social">
+      {/* Fascia orizzontale per tutti i canali Instagram: ideatori a sinistra e udu Lecce a destra */}
+      <section className="piede-social-fascia" aria-label="Profili social ufficiali">
+        <div className="piede-social-gruppo">
+          <span className="piede-social-gruppo-titolo">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z" />
+            </svg>
+            Ideatori
+          </span>
+          <div className="piede-social-elenco">
             <a
               href="https://www.instagram.com/stefano_sciurba/"
               target="_blank"
               rel="noopener noreferrer"
               className="piede-social-link"
-              title="Instagram Stefano Sciurba (QuickCheck)"
+              title="Instagram Stefano Sciurba"
             >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
-                <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z" />
-              </svg>
               <span>@stefano_sciurba</span>
+            </a>
+            <a
+              href="https://www.instagram.com/mosca.ilariaa/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="piede-social-link"
+              title="Instagram Ilaria Mosca"
+            >
+              <span>@mosca.ilariaa</span>
+            </a>
+          </div>
+        </div>
+
+        <div className="piede-social-divisore" aria-hidden="true" />
+
+        <div className="piede-social-gruppo">
+          <span className="piede-social-gruppo-titolo">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
+              <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z" />
+            </svg>
+            udu Lecce
+          </span>
+          <div className="piede-social-elenco">
+            <a
+              href="https://www.instagram.com/udu_lecce/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="piede-social-link"
+              title="Instagram udu Lecce"
+            >
+              <span>@udu_lecce</span>
+            </a>
+            <a
+              href="https://www.instagram.com/medicinasperimentalelecce/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="piede-social-link"
+              title="Instagram Medicina Sperimentale Lecce"
+            >
+              <span>@medicinasperimentalelecce</span>
             </a>
             <a
               href="https://www.instagram.com/udu_sindacatostudentescolecce/"
               target="_blank"
               rel="noopener noreferrer"
               className="piede-social-link"
-              title="Instagram UDU Lecce"
+              title="Instagram udu Sindacato Studentesco Lecce"
             >
-              <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
-                <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z" />
-              </svg>
               <span>@udu_sindacatostudentescolecce</span>
             </a>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Fascia inferiore: Copyright e Disclaimer legale di non ufficialità */}
       <div className="piede-fondo">
@@ -234,9 +278,13 @@ export function Piede() {
           <a href="https://www.instagram.com/stefano_sciurba/" target="_blank" rel="noopener noreferrer">
             Stefano Sciurba
           </a>{' '}
-          e <b>Ilaria Mosca</b> in collaborazione con{' '}
-          <a href="https://www.instagram.com/udu_sindacatostudentescolecce/" target="_blank" rel="noopener noreferrer">
-            UDU Lecce
+          e{' '}
+          <a href="https://www.instagram.com/mosca.ilariaa/" target="_blank" rel="noopener noreferrer">
+            Ilaria Mosca
+          </a>{' '}
+          in collaborazione con{' '}
+          <a href="https://www.instagram.com/udu_lecce/" target="_blank" rel="noopener noreferrer">
+            udu Lecce
           </a>.
         </p>
         <p className="piede-disclaimer">

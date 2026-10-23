@@ -382,7 +382,7 @@ export function Home({
         </section>
       ) : null}
 
-      <section className="fascia-udu" aria-label="UDU Lecce">
+      <section className="fascia-udu" aria-label="udu Lecce">
         <img src="udu-lecce.svg" alt="udu Lecce, Unione degli Universitari" width={400} height={100} />
       </section>
 

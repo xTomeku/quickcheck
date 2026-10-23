@@ -34,7 +34,8 @@
    "corretta": 1,
    "spiegazione": "Per il teorema di Pitagora: √(3² + 4²) = √25 = 5 N.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "fis.1.2-vettori-perpendicolari"
   },
   {
    "id": "fis-003",
@@ -983,7 +984,8 @@
     "2 · 10^5 Pa",
     "20 Pa"
    ],
-   "corretta": 3
+   "corretta": 3,
+   "gruppo": "fis.3.2-pressione-profondita"
   },
   {
    "id": "fis-32a-05",
@@ -1031,7 +1033,8 @@
     "valore": 30000,
     "tolleranza": 0
    },
-   "unita": "Pa"
+   "unita": "Pa",
+   "gruppo": "fis.3.2-pressione-profondita"
   },
   {
    "id": "fis-32a-07",
@@ -1261,7 +1264,8 @@
     "il vuoto in cima tira il mercurio verso l'alto",
     "il mercurio si solidifica"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.3.2-torricelli-760"
   },
   {
    "id": "fis-32c-03",
@@ -1316,7 +1320,8 @@
     "valore": 760,
     "tolleranza": 0.02
    },
-   "unita": "mm"
+   "unita": "mm",
+   "gruppo": "fis.3.2-torricelli-760"
   },
   {
    "id": "fis-32c-06",
@@ -2452,7 +2457,8 @@
     "0,5 N",
     "2000 N"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.2.2-molla-calcolo"
   },
   {
    "id": "fis-22b-06",
@@ -2471,7 +2477,8 @@
     "valore": 10,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.2.2-molla-calcolo"
   },
   {
    "id": "fis-22b-07",
@@ -2628,7 +2635,8 @@
     "valore": 2,
     "tolleranza": 0
    },
-   "unita": "A"
+   "unita": "A",
+   "gruppo": "fis.6.4-ohm-calcolo"
   },
   {
    "id": "fis-64a-07",
@@ -2667,7 +2675,8 @@
     "valore": 10,
     "tolleranza": 0
    },
-   "unita": "V"
+   "unita": "V",
+   "gruppo": "fis.6.4-ohm-calcolo"
   },
   {
    "id": "fis-64a-09",
@@ -3242,7 +3251,8 @@
     "68 m",
     "3,4 m"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "fis.4.1-hertz"
   },
   {
    "id": "fis-41a-07",
@@ -3339,7 +3349,8 @@
    "accettate": [
     "mezzo",
     "mezzi"
-   ]
+   ],
+   "gruppo": "fis.7.1-mezzo-materiale"
   },
   {
    "id": "fis-24a-01",
@@ -3375,7 +3386,8 @@
     "la variazione di energia cinetica",
     "la forza per lo spostamento"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.2.4-impulso"
   },
   {
    "id": "fis-24a-03",
@@ -3411,7 +3423,8 @@
     "50 kg·m/s",
     "100 kg·m/s"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "fis.2.4-quantita-di-moto-calcolo"
   },
   {
    "id": "fis-24a-05",
@@ -3444,7 +3457,8 @@
    "numero": {
     "valore": 6,
     "tolleranza": 0
-   }
+   },
+   "gruppo": "fis.2.4-quantita-di-moto-calcolo"
   },
   {
    "id": "fis-24a-08",
@@ -5302,7 +5316,8 @@
     "non trasportano energia",
     "si propagano solo nei metalli"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "fis.7.1-mezzo-materiale"
   },
   {
    "id": "fis-71a-02",
@@ -5413,7 +5428,7 @@
    "id": "fis-71a-08",
    "argomento": "fis.7.1",
    "stato": "approvata",
-   "testo": "Un'onda elettromagnetica di lunghezza d'onda 3 m ha, nel vuoto, una frequenza in hertz pari a ……",
+   "testo": "Un'onda elettromagnetica di lunghezza d'onda 3 m ha, nel vuoto, una frequenza, espressa nell'unità SI, pari a ……",
    "spiegazione": "Si divide la velocità della luce per la lunghezza d'onda: 3·10^8 diviso 3 fa 10^8 Hz, cioè 100 MHz. È la regione delle trasmissioni radio in modulazione di frequenza.",
    "gruppo": "fis.7.1-lambda-frequenza",
    "fonte": "ai-chat",

@@ -1756,7 +1756,8 @@
    "accettate": [
     "neutroni",
     "neutrone"
-   ]
+   ],
+   "gruppo": "chim.1.1-neutroni-parola"
   },
   {
    "id": "chim-11a-07",
@@ -1873,7 +1874,8 @@
     "neutroni",
     "neutrone",
     "massa"
-   ]
+   ],
+   "gruppo": "chim.1.1-neutroni-parola"
   },
   {
    "id": "chim-11b-06",
@@ -2242,7 +2244,8 @@
    "accettate": [
     "pKa",
     "pK_a"
-   ]
+   ],
+   "gruppo": "chim.4.2-ph-uguale-pka"
   },
   {
    "id": "chim-42b-08",

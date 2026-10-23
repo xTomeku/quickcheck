@@ -448,24 +448,54 @@ button { cursor: pointer; }
   transform: translateY(-1px);
 }
 
-/* Link social QuickCheck & UDU Lecce */
-.piede-social {
+/* Fascia orizzontale canali social: ideatori a sinistra e UDU Lecce a destra */
+.piede-social-fascia {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 2px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  padding: 12px 18px;
+  background: var(--modulo-velo);
+  border: 1.5px solid var(--modulo-linea);
+  border-radius: var(--raggio);
+}
+.piede-social-gruppo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.piede-social-gruppo-titolo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: var(--modulo);
+}
+.piede-social-gruppo-titolo svg {
+  color: #e1306c;
+  flex-shrink: 0;
+}
+.piede-social-elenco {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
 }
 .piede-social-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
+  padding: 5px 10px;
   border-radius: 8px;
   background: #fff;
   border: 1.5px solid var(--modulo-linea);
   color: var(--grafite);
   font-size: 0.78125rem;
-  font-weight: 700;
+  font-weight: 600;
   text-decoration: none;
   transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
 }
@@ -475,9 +505,10 @@ button { cursor: pointer; }
   background: var(--biro-velo);
   transform: translateY(-1px);
 }
-.piede-social-link svg {
-  color: #e1306c;
-  flex-shrink: 0;
+.piede-social-divisore {
+  width: 1px;
+  height: 24px;
+  background: var(--modulo-linea);
 }
 
 /* Fascia inferiore: copyright e disclaimer non ufficiale */
@@ -519,16 +550,25 @@ button { cursor: pointer; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 28px 24px;
   }
+  .piede-social-divisore {
+    display: none;
+  }
 }
 @media (max-width: 580px) {
   .piede {
     margin-top: 36px;
     padding-top: 24px;
-    gap: 24px;
+    gap: 20px;
   }
   .piede-griglia {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
+  }
+  .piede-social-fascia {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 14px;
   }
   .piede-banca-info {
     flex-direction: column;
