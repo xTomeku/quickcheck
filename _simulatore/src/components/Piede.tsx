@@ -67,7 +67,7 @@ export function Piede() {
               <span>QuickCheck</span>
             </a>
             <span className="piede-separatore-loghi" aria-hidden="true">×</span>
-            <a href="https://www.instagram.com/udulecce/" target="_blank" rel="noopener noreferrer" className="piede-marchio-udu" aria-label="Profilo Instagram UDU Lecce">
+            <a href="https://www.instagram.com/udu_sindacatostudentescolecce/" target="_blank" rel="noopener noreferrer" className="piede-marchio-udu" aria-label="Profilo Instagram UDU Lecce">
               <img src="udu-lecce-distintivo.svg" alt="UDU Lecce" width={32} height={32} />
             </a>
           </div>
@@ -212,7 +212,7 @@ export function Piede() {
               <span>@stefano_sciurba</span>
             </a>
             <a
-              href="https://www.instagram.com/udulecce/"
+              href="https://www.instagram.com/udu_sindacatostudentescolecce/"
               target="_blank"
               rel="noopener noreferrer"
               className="piede-social-link"
@@ -221,7 +221,7 @@ export function Piede() {
               <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
                 <path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.9a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm0 8.1a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zm5.1-9.4a1.15 1.15 0 1 0 0 2.3 1.15 1.15 0 0 0 0-2.3z" />
               </svg>
-              <span>@udulecce</span>
+              <span>@udu_sindacatostudentescolecce</span>
             </a>
           </div>
         </div>
@@ -235,7 +235,7 @@ export function Piede() {
             Stefano Sciurba
           </a>{' '}
           e <b>Ilaria Mosca</b> in collaborazione con{' '}
-          <a href="https://www.instagram.com/udulecce/" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.instagram.com/udu_sindacatostudentescolecce/" target="_blank" rel="noopener noreferrer">
             UDU Lecce
           </a>.
         </p>
