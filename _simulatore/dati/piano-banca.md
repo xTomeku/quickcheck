@@ -178,8 +178,11 @@ di restare fermo fino alla fine.
 **Dove siamo alla fine delle tre tappe** (23 ottobre 2026): 690 domande approvate e online, da 93
 che erano. La revisione umana ne ha corrette 136 su 597, quasi sempre allargando le risposte
 accettate. Restano 33 argomenti su 124 senza nemmeno una domanda: sono i più leggeri, fra il 14% e
-il 21% del peso a seconda della materia, e per coprirli basta rilanciare `--prompts <materia> 20`
-e lavorare sui dieci successivi.
+il 21% del peso a seconda della materia, ma leggero non vuol dire marginale — fra loro ci sono le
+membrane biologiche, gli alcani e gli alcheni, il potenziale elettrico e le radiazioni ionizzanti.
+I prompt per tutti e 33 sono pronti in `dati/prompt/`: 34 file, 262 domande (biologia 13 argomenti
+e 106 domande, chimica 10 e 82, fisica 10 e 74). Chiuso questo giro resta solo da irrobustire i 60
+argomenti che hanno una o due domande, e per quelli basta rilanciare `--prompts <materia> 20`.
 Dopo ogni revisione vanno riallineati i file in `dati/generate/`, altrimenti un reimport riporta
 indietro le correzioni fatte nel pannello.
 
@@ -215,6 +218,18 @@ Un comando solo prepara tutti i prompt di una materia, in ordine di peso:
 ```bash
 npm run genera -- --prompts biologia 10
 ```
+
+Prende dieci argomenti **fra quelli ancora da fare**: salta quelli che in banca hanno
+già `SOGLIA_COPERTO` domande (3) o più, e dice quanti ne ha saltati. Senza questo filtro, chiedendone
+venti dopo averne fatti dieci si rifarebbero anche i dieci della volta prima. Per prepararli comunque
+tutti, in ordine di peso puro, si aggiunge `--anche-pronti`.
+
+L'ordine fra quelli da fare è **per buco, non per peso**: prima gli argomenti senza nemmeno una
+domanda, poi quelli a una, poi quelli a due, e a pari copertura viene prima quello che pesa di più.
+Il peso dice quanto spesso un argomento esce nelle prove, non quanto è grave non averlo: un
+argomento mai visto nel simulatore è una domanda che all'esame arriva nuova, e questo conta più di
+mezzo punto percentuale di peso. Con `--anche-pronti` l'ordine torna quello del peso puro.
+Nel `_<materia>.md` ogni argomento dice quante domande ha già in banca e quanto pesa.
 
 Scrive `dati/prompt/01a-bio.6.3.txt`, `01b-bio.6.3.txt`, `02a-bio.4.2.txt` e via dicendo, più un
 `dati/prompt/_biologia.md` con le caselle da spuntare mano a mano. Da lì si lavora di copia e

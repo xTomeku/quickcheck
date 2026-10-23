@@ -195,7 +195,365 @@ button { cursor: pointer; }
 @media (max-width: 640px) { .banca-materie { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .banca-materie li { transition: none; } .banca-materie li:hover { transform: none; } }
 
-.piede { color: var(--grafite-2); font-size: var(--t-piccolo); border-top: 1px solid var(--modulo-linea); padding-top: 18px; display: grid; gap: 6px; max-width: 72ch; }
+/* ---------- Piede del simulatore (struttura a colonne, box syllabus e contatti) ---------- */
+.piede {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 2px solid var(--modulo-linea);
+  display: grid;
+  gap: 28px;
+  color: var(--grafite-2);
+  font-size: var(--t-piccolo);
+}
+
+/* Box trasparenza didattica su formato d'esame e Syllabus MUR 2026/27 */
+.piede-banca-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--modulo-velo);
+  border: 1.5px solid var(--modulo-linea);
+  border-left: 4px solid var(--modulo);
+  border-radius: var(--raggio);
+  color: var(--grafite);
+}
+.piede-banca-icona {
+  color: var(--modulo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.piede-banca-testo {
+  display: grid;
+  gap: 4px;
+}
+.piede-banca-testo strong {
+  font-size: 0.9375rem;
+  color: var(--modulo);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.piede-banca-testo p {
+  margin: 0;
+  font-size: 0.84375rem;
+  line-height: 1.5;
+  color: var(--grafite-2);
+}
+.piede-banca-testo b {
+  color: var(--grafite);
+  font-weight: 700;
+}
+
+/* Griglia responsive a 4 colonne per presentare navigazione, progetto e contatti */
+.piede-griglia {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr 1fr 1.25fr;
+  gap: 32px 28px;
+}
+
+/* Colonna brand e privacy */
+.piede-col-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.piede-logo-riga {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.piede-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--grafite);
+  text-decoration: none;
+}
+.piede-logo img {
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+}
+.piede-separatore-loghi {
+  color: var(--modulo-linea);
+  font-weight: 700;
+  font-size: 1.1rem;
+  user-select: none;
+}
+.piede-marchio-udu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 150ms ease;
+}
+.piede-marchio-udu:hover {
+  transform: scale(1.08);
+}
+.piede-marchio-udu img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px #fff, 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+.piede-descrizione {
+  margin: 0;
+  font-size: 0.84375rem;
+  line-height: 1.5;
+  color: var(--grafite-2);
+}
+.piede-badge-privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1.5px solid var(--modulo-linea);
+  border-radius: var(--raggio);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--grafite-2);
+  box-shadow: 0 1px 3px rgba(36, 122, 154, 0.05);
+}
+.piede-badge-privacy svg {
+  color: var(--modulo);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.piede-badge-privacy b {
+  display: block;
+  color: var(--grafite);
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.piede-badge-privacy span {
+  display: block;
+  font-size: 0.78125rem;
+  color: var(--grafite-2);
+}
+
+/* Colonne di navigazione */
+.piede-colonna {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.piede-colonna h4 {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--modulo);
+}
+.piede-elenco {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.piede-elenco li a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--grafite);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 4px 0;
+  transition: color 150ms ease, transform 150ms ease;
+}
+.piede-elenco li a:hover {
+  color: var(--udu-rosso);
+  transform: translateX(2px);
+}
+.piede-elenco li a svg {
+  color: var(--grafite-2);
+  flex-shrink: 0;
+  transition: color 150ms ease;
+}
+.piede-elenco li a:hover svg {
+  color: var(--udu-rosso);
+}
+
+/* Card in risalto per segnalare domande errate */
+.piede-col-contatti {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.piede-card-segnala {
+  background: var(--modulo-velo);
+  border: 1.5px solid var(--modulo-linea);
+  border-radius: var(--raggio);
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+.piede-card-segnala:hover {
+  border-color: var(--biro);
+  box-shadow: 0 4px 12px rgba(80, 174, 208, 0.12);
+}
+.piede-card-segnala-testa {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.piede-card-icona {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--rosso-velo);
+  color: var(--udu-rosso);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.piede-card-segnala-testa b {
+  font-size: 0.875rem;
+  color: var(--grafite);
+  font-weight: 700;
+}
+.piede-card-segnala p {
+  margin: 0;
+  font-size: 0.78125rem;
+  color: var(--grafite-2);
+  line-height: 1.4;
+}
+.btn-piede-segnala {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--udu-rosso);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8125rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 150ms ease, transform 150ms ease;
+  margin-top: 4px;
+}
+.btn-piede-segnala:hover {
+  background: var(--udu-rosso-scuro);
+  transform: translateY(-1px);
+}
+
+/* Link social QuickCheck & UDU Lecce */
+.piede-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+}
+.piede-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1.5px solid var(--modulo-linea);
+  color: var(--grafite);
+  font-size: 0.78125rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease, transform 150ms ease;
+}
+.piede-social-link:hover {
+  border-color: var(--biro);
+  color: var(--modulo);
+  background: var(--biro-velo);
+  transform: translateY(-1px);
+}
+.piede-social-link svg {
+  color: #e1306c;
+  flex-shrink: 0;
+}
+
+/* Fascia inferiore: copyright e disclaimer non ufficiale */
+.piede-fondo {
+  border-top: 1px solid var(--modulo-linea);
+  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px 24px;
+}
+.piede-crediti {
+  margin: 0;
+  color: var(--grafite);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+.piede-crediti a {
+  color: var(--modulo);
+  text-decoration: none;
+  font-weight: 700;
+}
+.piede-crediti a:hover {
+  text-decoration: underline;
+  color: var(--udu-rosso);
+}
+.piede-disclaimer {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--grafite-2);
+  line-height: 1.45;
+  max-width: 65ch;
+}
+
+/* Adattamento responsive per tablet e smartphone */
+@media (max-width: 980px) {
+  .piede-griglia {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 24px;
+  }
+}
+@media (max-width: 580px) {
+  .piede {
+    margin-top: 36px;
+    padding-top: 24px;
+    gap: 24px;
+  }
+  .piede-griglia {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+  .piede-banca-info {
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 16px;
+  }
+  .piede-fondo {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .piede-marchio-udu,
+  .piede-elenco li a,
+  .btn-piede-segnala,
+  .piede-social-link {
+    transition: none;
+  }
+  .piede-marchio-udu:hover,
+  .piede-elenco li a:hover,
+  .btn-piede-segnala:hover,
+  .piede-social-link:hover {
+    transform: none;
+  }
+}
 
 /* fascia di UDU Lecce in fondo alla home: il logo è bianco, quindi vuole il fondo rosso,
    e il filo giallo sotto richiama la barra in alto */

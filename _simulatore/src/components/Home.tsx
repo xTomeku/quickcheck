@@ -5,6 +5,7 @@ import { formattaPunti } from '../lib/correzione'
 import { argomentiDeboli } from '../lib/statistiche'
 import { LETTERE } from './Testo'
 import { Testata } from './Testata'
+import { Piede } from './Piede'
 
 interface Props {
   inCorso: Prova | null
@@ -385,16 +386,7 @@ export function Home({
         <img src="udu-lecce.svg" alt="udu Lecce, Unione degli Universitari" width={400} height={100} />
       </section>
 
-      <footer className="piede">
-        <p>
-          Ogni prova è estratta da una banca di domande sugli argomenti del syllabus 2026/27, con più domande sugli argomenti che pesano
-          di più. Risultati e prove in corso restano salvati solo su questo dispositivo.
-        </p>
-        <p>
-          Una sezione di <a href="../">QuickCheck</a>, progetto indipendente di Stefano Sciurba e Ilaria Mosca, realizzato in collaborazione con
-          UDU Lecce, sindacato studentesco. Non è uno strumento ufficiale del Ministero né degli atenei.
-        </p>
-      </footer>
+      <Piede />
     </main>
     </>
   )

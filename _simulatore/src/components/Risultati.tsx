@@ -5,6 +5,7 @@ import { formattaPunti } from '../lib/correzione'
 import { perUnita, quantoPesa } from '../lib/statistiche'
 import { LETTERE, Testo } from './Testo'
 import { Testata } from './Testata'
+import { Piede } from './Piede'
 
 interface Props {
   risultato: Risultato
@@ -231,6 +232,8 @@ export function Risultati({ risultato, prova, banca, onNuova, onHome }: Props) {
           Torna all'inizio
         </button>
       </div>
+
+      <Piede />
     </main>
     </>
   )
