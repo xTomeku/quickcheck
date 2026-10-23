@@ -297,18 +297,6 @@
    "fonte": "demo"
   },
   {
-   "id": "fis-018",
-   "argomento": "fis.2.1",
-   "tipo": "completamento",
-   "testo": "Nel moto circolare uniforme l'accelerazione, diretta verso il centro, si chiama accelerazione ……",
-   "accettate": [
-    "centripeta"
-   ],
-   "spiegazione": "Vale v²/r: il modulo della velocità è costante ma la direzione cambia di continuo.",
-   "stato": "approvata",
-   "fonte": "demo"
-  },
-  {
    "id": "fis-019",
    "argomento": "fis.2.4",
    "tipo": "completamento",
@@ -508,42 +496,6 @@
    "fonte": "demo"
   },
   {
-   "id": "fis-21a-01",
-   "argomento": "fis.2.1",
-   "stato": "approvata",
-   "testo": "Un corridore percorre un giro completo di una pista di 400 m e torna al punto di partenza. Il suo spostamento è:",
-   "spiegazione": "Lo spostamento è il vettore che va dalla posizione iniziale a quella finale: se le due coincidono è nullo. I 400 m sono lo spazio percorso, che è una grandezza scalare e non coincide con lo spostamento.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "multipla",
-   "opzioni": [
-    "400 m",
-    "zero",
-    "200 m",
-    "dipende dalla velocità tenuta",
-    "400 m, ma con verso opposto"
-   ],
-   "corretta": 1
-  },
-  {
-   "id": "fis-21a-02",
-   "argomento": "fis.2.1",
-   "stato": "approvata",
-   "testo": "La velocità media di un corpo è definita come:",
-   "spiegazione": "È un rapporto fra una variazione di posizione e una durata, e non dipende da quello che succede nel frattempo. Solo nel moto uniformemente accelerato coincide con la media fra velocità iniziale e finale.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "multipla",
-   "opzioni": [
-    "la media fra la velocità iniziale e quella finale",
-    "il rapporto fra lo spazio percorso e la velocità",
-    "il rapporto fra lo spostamento e l'intervallo di tempo",
-    "il prodotto dell'accelerazione per il tempo",
-    "la velocità tenuta per il tratto più lungo"
-   ],
-   "corretta": 2
-  },
-  {
    "id": "fis-21a-03",
    "argomento": "fis.2.1",
    "stato": "approvata",
@@ -596,21 +548,6 @@
     "180 km/h"
    ],
    "corretta": 1
-  },
-  {
-   "id": "fis-21a-06",
-   "argomento": "fis.2.1",
-   "stato": "approvata",
-   "testo": "La grandezza vettoriale che congiunge la posizione iniziale con quella finale si chiama ……",
-   "spiegazione": "Avendo direzione e verso è un vettore, al contrario dello spazio percorso. Il suo modulo non può mai superare lo spazio percorso, e lo uguaglia solo nei moti rettilinei che non cambiano verso.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "spostamento",
-    "spostamenti",
-    "vettore spostamento"
-   ]
   },
   {
    "id": "fis-21a-07",
@@ -905,24 +842,6 @@
    "corretta": 0
   },
   {
-   "id": "fis-21c-04",
-   "argomento": "fis.2.1",
-   "stato": "approvata",
-   "testo": "Un corpo percorre una circonferenza di raggio 2 m con velocità costante di 4 m/s. La sua accelerazione centripeta vale:",
-   "spiegazione": "L'accelerazione centripeta è il quadrato della velocità diviso il raggio: sedici diviso due fa 8 m/s². Dimenticare di elevare al quadrato porta al valore 2, che è l'errore più comune.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "multipla",
-   "opzioni": [
-    "2 m/s²",
-    "16 m/s²",
-    "4 m/s²",
-    "8 m/s²",
-    "32 m/s²"
-   ],
-   "corretta": 3
-  },
-  {
    "id": "fis-21c-05",
    "argomento": "fis.2.1",
    "stato": "approvata",
@@ -973,23 +892,6 @@
     "tolleranza": 0
    },
    "unita": "s"
-  },
-  {
-   "id": "fis-21c-08",
-   "argomento": "fis.2.1",
-   "stato": "approvata",
-   "testo": "L'accelerazione che cambia la direzione della velocità senza modificarne il modulo si chiama ……",
-   "spiegazione": "Essendo perpendicolare alla velocità non compie lavoro, quindi non cambia l'energia cinetica. La forza che la produce può essere una fune, l'attrito o la gravità, a seconda del caso.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "centripeta",
-    "centripete",
-    "accelerazione centripeta",
-    "normale",
-    "radiale"
-   ]
   },
   {
    "id": "fis-21c-09",
@@ -1208,24 +1110,6 @@
    "corretta": 1
   },
   {
-   "id": "fis-32b-02",
-   "argomento": "fis.3.2",
-   "stato": "approvata",
-   "testo": "Un corpo immerso in un liquido galleggia quando:",
-   "spiegazione": "Se il corpo è meno denso del fluido, basta immergersi in parte perché la spinta uguagli il peso. Conta la densità media: una nave d'acciaio galleggia perché comprende anche l'aria dei suoi spazi interni.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "multipla",
-   "opzioni": [
-    "il suo peso è nullo",
-    "il suo volume è maggiore di quello del liquido spostato",
-    "la sua densità media è minore di quella del liquido",
-    "la sua massa è minore di 1 kg",
-    "la sua superficie è molto estesa"
-   ],
-   "corretta": 2
-  },
-  {
    "id": "fis-32b-03",
    "argomento": "fis.3.2",
    "stato": "approvata",
@@ -1344,23 +1228,6 @@
    "unita": "N"
   },
   {
-   "id": "fis-32b-09",
-   "argomento": "fis.3.2",
-   "stato": "approvata",
-   "testo": "A parità di fluido, la grandezza che stabilisce se un corpo galleggia o affonda è la sua ……",
-   "spiegazione": "Non il peso da solo, né il volume da solo, ma il loro rapporto. Una nave pesa migliaia di tonnellate e galleggia, un chiodo pesa pochi grammi e va a fondo.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "densità",
-    "densita",
-    "densità media",
-    "densita media",
-    "peso specifico"
-   ]
-  },
-  {
    "id": "fis-32c-01",
    "argomento": "fis.3.2",
    "stato": "approvata",
@@ -1471,45 +1338,6 @@
    ],
    "numero": {
     "valore": 200000,
-    "tolleranza": 0
-   },
-   "unita": "Pa"
-  },
-  {
-   "id": "fis-32c-07",
-   "argomento": "fis.3.2",
-   "stato": "approvata",
-   "testo": "La pressione letta su un manometro, cioè la differenza rispetto all'atmosferica, si chiama pressione ……",
-   "spiegazione": "È quella che interessa nella pratica, perché dice quanto un fluido preme in più rispetto all'ambiente. Anche i valori della pressione arteriosa sono relativi.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "relativa",
-    "relative",
-    "manometrica"
-   ]
-  },
-  {
-   "id": "fis-32c-08",
-   "argomento": "fis.3.2",
-   "stato": "approvata",
-   "testo": "Se la pressione atmosferica vale 10^5 Pa e un manometro segna una pressione relativa di 2 · 10^5 Pa, la pressione assoluta, in pascal, è ……",
-   "spiegazione": "Alla pressione relativa va sommata l'atmosferica: centomila più duecentomila fa 300 000 Pa. Dimenticare la somma è l'errore tipico di questi esercizi.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "300000",
-    "3·10^5",
-    "3*10^5",
-    "3e5",
-    "300 000",
-    "300.000",
-    "trecentomila"
-   ],
-   "numero": {
-    "valore": 300000,
     "tolleranza": 0
    },
    "unita": "Pa"
@@ -1685,24 +1513,6 @@
    "corretta": 1
   },
   {
-   "id": "fis-23b-02",
-   "argomento": "fis.2.3",
-   "stato": "approvata",
-   "testo": "Fra le forze elencate, l'unica non conservativa è:",
-   "spiegazione": "L'attrito compie sempre lavoro negativo e il suo valore dipende da quanta strada si fa: più lungo il percorso, più energia dissipata. Per questo non si può definire un'energia potenziale dell'attrito.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "multipla",
-   "opzioni": [
-    "la forza peso",
-    "la forza elastica di una molla ideale",
-    "la forza gravitazionale",
-    "l'attrito",
-    "la forza elettrostatica"
-   ],
-   "corretta": 3
-  },
-  {
    "id": "fis-23b-03",
    "argomento": "fis.2.3",
    "stato": "approvata",
@@ -1854,24 +1664,6 @@
    "gruppo": "fis.2.3-energia-potenziale"
   },
   {
-   "id": "fis-23c-04",
-   "argomento": "fis.2.3",
-   "stato": "approvata",
-   "testo": "L'energia potenziale elastica accumulata in una molla dipende:",
-   "spiegazione": "Vale metà della costante elastica per il quadrato dell'allungamento, quindi comprimere il doppio accumula quattro volte l'energia. Non conta quanto in fretta si comprime, ma di quanto.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "multipla",
-   "opzioni": [
-    "dal quadrato della deformazione",
-    "dalla sola costante elastica",
-    "dalla massa agganciata alla molla",
-    "dalla lunghezza a riposo della molla",
-    "dalla velocità con cui si comprime"
-   ],
-   "corretta": 0
-  },
-  {
    "id": "fis-23c-05",
    "argomento": "fis.2.3",
    "stato": "approvata",
@@ -1923,20 +1715,6 @@
     "meccanica",
     "meccaniche",
     "meccanica totale"
-   ]
-  },
-  {
-   "id": "fis-23c-08",
-   "argomento": "fis.2.3",
-   "stato": "approvata",
-   "testo": "Nella legge di Hooke il coefficiente che lega la forza all'allungamento della molla si chiama costante ……",
-   "spiegazione": "Si misura in newton su metro e dice quanta forza serve per allungare la molla di un metro. Più è grande, più la molla è rigida.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "elastica",
-    "elastiche"
    ]
   },
   {
@@ -2711,42 +2489,6 @@
    ]
   },
   {
-   "id": "fis-22b-08",
-   "argomento": "fis.2.2",
-   "stato": "approvata",
-   "testo": "La forza che un piano esercita perpendicolarmente alla propria superficie su un corpo appoggiato si chiama reazione ……",
-   "spiegazione": "Normale, in geometria, significa perpendicolare. È la forza che impedisce al corpo di affondare nel piano, e insieme al peso determina l'attrito.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "normale",
-    "vincolare",
-    "normali",
-    "vincolari",
-    "vincolare normale"
-   ]
-  },
-  {
-   "id": "fis-22b-09",
-   "argomento": "fis.2.2",
-   "stato": "approvata",
-   "testo": "Un corpo di massa 10 kg appoggiato su un piano orizzontale, con g = 10 m/s², riceve una reazione normale, in newton, di ……",
-   "spiegazione": "Su un piano orizzontale la reazione equilibra esattamente il peso: dieci per dieci fa 100 N. Su un piano inclinato sarebbe minore, perché equilibra solo la componente perpendicolare del peso.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505437,
-   "tipo": "completamento",
-   "accettate": [
-    "100",
-    "cento"
-   ],
-   "numero": {
-    "valore": 100,
-    "tolleranza": 0
-   },
-   "unita": "N"
-  },
-  {
    "id": "fis-22b-10",
    "argomento": "fis.2.2",
    "stato": "approvata",
@@ -3240,24 +2982,6 @@
    "corretta": 3
   },
   {
-   "id": "fis-51a-04",
-   "argomento": "fis.5.1",
-   "stato": "approvata",
-   "testo": "Calore e lavoro, in termodinamica:",
-   "spiegazione": "Portando un sistema dallo stesso stato iniziale allo stesso stato finale per strade diverse, calore e lavoro cambiano; la loro somma, cioè la variazione di energia interna, no. È il contenuto del primo principio.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "non sono funzioni di stato, perché dipendono dalla trasformazione seguita",
-    "sono entrambi funzioni di stato",
-    "sono la stessa grandezza",
-    "non si misurano in joule",
-    "sono sempre uguali fra loro"
-   ],
-   "corretta": 0
-  },
-  {
    "id": "fis-51a-05",
    "argomento": "fis.5.1",
    "stato": "approvata",
@@ -3276,36 +3000,6 @@
    "corretta": 4
   },
   {
-   "id": "fis-51a-06",
-   "argomento": "fis.5.1",
-   "stato": "approvata",
-   "testo": "Tutto ciò che si trova fuori dal sistema e può scambiare con esso energia o materia si chiama ……",
-   "spiegazione": "Dove finisce il sistema e comincia l'ambiente lo decide chi studia il problema. Scegliere bene il confine è spesso metà della soluzione.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "ambiente",
-    "ambienti",
-    "intorno",
-    "ambiente esterno"
-   ]
-  },
-  {
-   "id": "fis-51a-07",
-   "argomento": "fis.5.1",
-   "stato": "approvata",
-   "testo": "Un sistema che scambia con l'ambiente sia energia sia materia si dice ……",
-   "spiegazione": "Una cellula è un sistema aperto: entrano nutrienti e ossigeno, escono scorie e calore. Gli organismi viventi non possono essere sistemi chiusi.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "aperto",
-    "aperti"
-   ]
-  },
-  {
    "id": "fis-51a-08",
    "argomento": "fis.5.1",
    "stato": "approvata",
@@ -3316,22 +3010,6 @@
    "tipo": "completamento",
    "accettate": [
     "stato"
-   ]
-  },
-  {
-   "id": "fis-51a-09",
-   "argomento": "fis.5.1",
-   "stato": "approvata",
-   "testo": "Il primo principio della termodinamica lega la variazione di energia interna al calore scambiato e al ……",
-   "spiegazione": "Sono le due sole vie con cui l'energia entra o esce da un sistema chiuso. Il principio è una forma della conservazione dell'energia, estesa ai fenomeni termici.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "lavoro",
-    "lavori",
-    "lavoro compiuto",
-    "lavoro scambiato"
    ]
   },
   {
@@ -3531,24 +3209,6 @@
    "corretta": 1
   },
   {
-   "id": "fis-41a-02",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "Il periodo di un sistema massa-molla:",
-   "spiegazione": "Una massa grande è più lenta da muovere, una molla rigida richiama più in fretta. Nell'oscillatore armonico ideale il periodo non dipende dall'ampiezza: è la proprietà che rende utili i pendoli come orologi.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "non dipende dalla massa",
-    "diminuisce aumentando la massa",
-    "cresce aumentando la massa e diminuisce se la molla è più rigida",
-    "dipende dall'ampiezza dell'oscillazione",
-    "cresce se la molla è più rigida"
-   ],
-   "corretta": 2
-  },
-  {
    "id": "fis-41a-03",
    "argomento": "fis.4.1",
    "stato": "approvata",
@@ -3585,39 +3245,6 @@
    "corretta": 0
   },
   {
-   "id": "fis-41a-05",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "L'unità di misura della frequenza nel Sistema Internazionale è l'……",
-   "spiegazione": "Un hertz è un'oscillazione al secondo, cioè l'inverso di un secondo. L'orecchio umano percepisce suoni fra circa 20 e 20 000 Hz.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "hertz",
-    "Hz"
-   ]
-  },
-  {
-   "id": "fis-41a-06",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "Un'oscillazione di periodo 0,02 s ha una frequenza, in hertz, pari a ……",
-   "spiegazione": "Uno diviso 0,02 fa 50 Hz. È la frequenza della corrente elettrica distribuita in Europa.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "50",
-    "cinquanta"
-   ],
-   "numero": {
-    "valore": 50,
-    "tolleranza": 0
-   },
-   "unita": "Hz"
-  },
-  {
    "id": "fis-41a-07",
    "argomento": "fis.4.1",
    "stato": "approvata",
@@ -3630,39 +3257,6 @@
     "onda",
     "onde"
    ]
-  },
-  {
-   "id": "fis-41a-08",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "Lo spostamento massimo dalla posizione di equilibrio, in un'oscillazione, si chiama ……",
-   "spiegazione": "Nel suono corrisponde al volume, nella luce all'intensità. In un oscillatore armonico ideale non influisce sul periodo.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "ampiezza",
-    "ampiezze"
-   ]
-  },
-  {
-   "id": "fis-41a-09",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "Un'onda che si propaga a 20 m/s con lunghezza d'onda di 4 m ha una frequenza, in hertz, di ……",
-   "spiegazione": "Velocità diviso lunghezza d'onda: venti diviso quattro fa 5 Hz. La stessa relazione, scritta in tre modi diversi, risolve tutti i problemi di questo tipo.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "5",
-    "cinque"
-   ],
-   "numero": {
-    "valore": 5,
-    "tolleranza": 0
-   },
-   "unita": "Hz"
   },
   {
    "id": "fis-41b-01",
@@ -3683,24 +3277,6 @@
    "corretta": 1
   },
   {
-   "id": "fis-41b-02",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "Il suono che si propaga nell'aria è un'onda:",
-   "spiegazione": "L'aria viene compressa e rarefatta nella direzione in cui il suono viaggia. Essendo un'onda meccanica ha bisogno di un mezzo: nel vuoto non c'è nulla da comprimere.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "trasversale",
-    "elettromagnetica",
-    "longitudinale, di compressione e rarefazione",
-    "che non trasporta energia",
-    "che si propaga anche nel vuoto"
-   ],
-   "corretta": 2
-  },
-  {
    "id": "fis-41b-03",
    "argomento": "fis.4.1",
    "stato": "approvata",
@@ -3717,38 +3293,6 @@
     "nulla: l'onda è solo un'immagine"
    ],
    "corretta": 3
-  },
-  {
-   "id": "fis-41b-04",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "La velocità di propagazione di un'onda meccanica dipende:",
-   "spiegazione": "Densità ed elasticità del mezzo decidono la velocità: il suono viaggia più veloce nell'acqua che nell'aria. Cambiando la frequenza della sorgente cambia la lunghezza d'onda, non la velocità.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "dalle proprietà del mezzo in cui si propaga",
-    "dall'ampiezza dell'onda",
-    "dalla sola frequenza della sorgente",
-    "dall'energia della sorgente",
-    "dalla distanza percorsa"
-   ],
-   "corretta": 0
-  },
-  {
-   "id": "fis-41b-05",
-   "argomento": "fis.4.1",
-   "stato": "approvata",
-   "testo": "Le onde in cui le particelle oscillano perpendicolarmente alla direzione di propagazione si dicono ……",
-   "spiegazione": "Una corda scossa lateralmente ne è l'esempio tipico. Le onde elettromagnetiche sono trasversali, e questo rende possibile la polarizzazione della luce.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "trasversali",
-    "trasversale"
-   ]
   },
   {
    "id": "fis-41b-06",
@@ -3903,24 +3447,6 @@
    }
   },
   {
-   "id": "fis-24a-07",
-   "argomento": "fis.2.4",
-   "stato": "approvata",
-   "testo": "Una forza di 10 N che agisce per 3 s produce un impulso, in N·s, pari a ……",
-   "spiegazione": "Dieci per tre fa 30 N·s. Lo stesso impulso si otterrebbe con una forza di 30 N applicata per un solo secondo.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "30",
-    "trenta"
-   ],
-   "numero": {
-    "valore": 30,
-    "tolleranza": 0
-   }
-  },
-  {
    "id": "fis-24a-08",
    "argomento": "fis.2.4",
    "stato": "approvata",
@@ -3937,39 +3463,6 @@
     "intervallo di tempo",
     "durata"
    ]
-  },
-  {
-   "id": "fis-24a-09",
-   "argomento": "fis.2.4",
-   "stato": "approvata",
-   "testo": "Il prodotto di una forza per il tempo durante il quale essa agisce si chiama ……",
-   "spiegazione": "Ha le stesse unità della quantità di moto, e non è un caso: l'uno è la variazione dell'altra. Nei fenomeni d'urto è la grandezza più comoda da usare.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "impulso",
-    "impulsi",
-    "impulso della forza"
-   ]
-  },
-  {
-   "id": "fis-24b-01",
-   "argomento": "fis.2.4",
-   "stato": "approvata",
-   "testo": "In un sistema isolato la quantità di moto totale:",
-   "spiegazione": "Le forze interne agiscono a coppie uguali e opposte, quindi i loro effetti sulla quantità di moto totale si annullano. Vale negli urti elastici come in quelli anelastici, ed è il motivo per cui è una legge così utile.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "aumenta nel tempo",
-    "si conserva, qualunque cosa avvenga all'interno",
-    "diminuisce per effetto degli urti",
-    "si conserva solo negli urti elastici",
-    "dipende dal sistema di riferimento scelto e quindi non si conserva"
-   ],
-   "corretta": 1
   },
   {
    "id": "fis-24b-02",
@@ -4027,20 +3520,6 @@
    "gruppo": "fis.2.4-urto-anelastico"
   },
   {
-   "id": "fis-24b-05",
-   "argomento": "fis.2.4",
-   "stato": "approvata",
-   "testo": "Un sistema su cui non agiscono forze esterne, o in cui la loro risultante è nulla, si dice ……",
-   "spiegazione": "È la condizione che garantisce la conservazione della quantità di moto. Durante un urto breve il sistema dei due corpi si può considerare isolato, perché le forze interne sono enormemente maggiori di quelle esterne.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "isolato",
-    "isolati"
-   ]
-  },
-  {
    "id": "fis-24b-06",
    "argomento": "fis.2.4",
    "stato": "approvata",
@@ -4073,19 +3552,6 @@
     "deformazione",
     "deformazioni",
     "energia di deformazione"
-   ]
-  },
-  {
-   "id": "fis-24b-08",
-   "argomento": "fis.2.4",
-   "stato": "approvata",
-   "testo": "In un urto fra due corpi isolati, la grandezza che si conserva sempre, sia nel caso elastico sia in quello anelastico, è la quantità di ……",
-   "spiegazione": "L'energia cinetica si conserva solo negli urti elastici, la quantità di moto in tutti. È la differenza da ricordare quando si decide quale equazione scrivere.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "moto"
    ]
   },
   {
@@ -4123,42 +3589,6 @@
     "la pressione è costante lungo il condotto"
    ],
    "corretta": 2
-  },
-  {
-   "id": "fis-33a-03",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "Nel moto turbolento, rispetto a quello laminare:",
-   "spiegazione": "I vortici mescolano gli strati e dissipano energia, quindi serve una differenza di pressione maggiore per mantenere la stessa portata. Nei vasi sanguigni la turbolenza produce i soffi che si sentono con lo stetoscopio.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "il fluido scorre in strati ordinati e paralleli",
-    "la resistenza al moto è minore",
-    "la velocità è sempre più bassa",
-    "si formano vortici e la resistenza al moto aumenta",
-    "la portata non può essere definita"
-   ],
-   "corretta": 3
-  },
-  {
-   "id": "fis-33a-04",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "Il numero di Reynolds:",
-   "spiegazione": "Essendo un rapporto fra grandezze omogenee, non ha unità di misura. Sotto un valore critico il moto è laminare, sopra diventa turbolento, e questo vale per qualunque fluido e qualunque condotto.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "è una grandezza adimensionale che indica se il moto è laminare o turbolento",
-    "si misura in metri al secondo",
-    "misura la portata di un condotto",
-    "è la pressione critica di un fluido",
-    "vale sempre uno nei fluidi ideali"
-   ],
-   "corretta": 0
   },
   {
    "id": "fis-33a-05",
@@ -4201,20 +3631,6 @@
    "gruppo": "fis.3.3-portata"
   },
   {
-   "id": "fis-33a-07",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "Il moto in cui il fluido scorre in strati che non si mescolano fra loro si dice ……",
-   "spiegazione": "Gli strati slittano l'uno sull'altro con velocità diverse, massima al centro e minima alle pareti. È il regime normale del sangue nei vasi sani.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "laminare",
-    "laminari"
-   ]
-  },
-  {
    "id": "fis-33a-08",
    "argomento": "fis.3.3",
    "stato": "approvata",
@@ -4254,42 +3670,6 @@
    "gruppo": "fis.3.3-portata"
   },
   {
-   "id": "fis-33b-01",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "Secondo l'equazione di continuità, nel punto in cui un condotto si restringe il fluido:",
-   "spiegazione": "La portata deve restare la stessa in ogni sezione, quindi dove l'area è minore la velocità è maggiore. È l'effetto che si ottiene strozzando con un dito la bocca di una canna da giardino.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "rallenta",
-    "scorre più veloce",
-    "mantiene la stessa velocità",
-    "si ferma",
-    "cambia densità"
-   ],
-   "corretta": 1
-  },
-  {
-   "id": "fis-33b-02",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "Secondo il teorema di Bernoulli, in un condotto orizzontale dove la velocità del fluido aumenta:",
-   "spiegazione": "La somma fra pressione e termine cinetico si conserva, quindi se una parte cresce l'altra deve calare. È il principio che fa volare le ali e che spiega perché due fogli vicini si avvicinano se ci si soffia in mezzo.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "multipla",
-   "opzioni": [
-    "la pressione aumenta",
-    "la pressione resta costante",
-    "la pressione diminuisce",
-    "la portata diminuisce",
-    "la densità aumenta"
-   ],
-   "corretta": 2
-  },
-  {
    "id": "fis-33b-03",
    "argomento": "fis.3.3",
    "stato": "approvata",
@@ -4326,21 +3706,6 @@
    "corretta": 0
   },
   {
-   "id": "fis-33b-05",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "L'equazione che impone alla portata di essere la stessa in ogni sezione di un condotto si chiama equazione di ……",
-   "spiegazione": "Esprime la conservazione della massa per un fluido incomprimibile: quello che entra deve uscire. Da qui segue che sezione e velocità sono inversamente proporzionali.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "continuità",
-    "continuita",
-    "Leonardo"
-   ]
-  },
-  {
    "id": "fis-33b-06",
    "argomento": "fis.3.3",
    "stato": "approvata",
@@ -4361,19 +3726,6 @@
    "gruppo": "fis.3.3-continuita"
   },
   {
-   "id": "fis-33b-07",
-   "argomento": "fis.3.3",
-   "stato": "approvata",
-   "testo": "Il teorema che lega fra loro pressione, velocità e quota di un fluido ideale in movimento porta il nome di ……",
-   "spiegazione": "È la conservazione dell'energia applicata a un fluido in moto stazionario, senza viscosità. Nei fluidi reali una parte dell'energia si perde per attrito interno, e il teorema vale solo in modo approssimato.",
-   "fonte": "ai-chat",
-   "aggiornata": 1792708505438,
-   "tipo": "completamento",
-   "accettate": [
-    "Bernoulli"
-   ]
-  },
-  {
    "id": "fis-33b-08",
    "argomento": "fis.3.3",
    "stato": "approvata",
@@ -4392,6 +3744,1987 @@
    },
    "unita": "m/s",
    "gruppo": "fis.3.3-continuita"
+  },
+  {
+   "id": "fis-018",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Nel moto circolare uniforme l'accelerazione, diretta verso il centro, si chiama accelerazione ……",
+   "spiegazione": "Vale v²/r: il modulo della velocità è costante ma la direzione cambia di continuo.",
+   "gruppo": "fis.2.1-accelerazione-centripeta",
+   "fonte": "demo",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "centripeta"
+   ]
+  },
+  {
+   "id": "fis-21c-04",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corpo percorre una circonferenza di raggio 2 m con velocità costante di 4 m/s. La sua accelerazione centripeta vale:",
+   "spiegazione": "L'accelerazione centripeta è il quadrato della velocità diviso il raggio: sedici diviso due fa 8 m/s². Dimenticare di elevare al quadrato porta al valore 2, che è l'errore più comune.",
+   "gruppo": "fis.2.1-accelerazione-centripeta",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 m/s²",
+    "16 m/s²",
+    "4 m/s²",
+    "8 m/s²",
+    "32 m/s²"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-21c-08",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "L'accelerazione che cambia la direzione della velocità senza modificarne il modulo si chiama ……",
+   "spiegazione": "Essendo perpendicolare alla velocità non compie lavoro, quindi non cambia l'energia cinetica. La forza che la produce può essere una fune, l'attrito o la gravità, a seconda del caso.",
+   "gruppo": "fis.2.1-accelerazione-centripeta",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "centripeta",
+    "centripete",
+    "accelerazione centripeta",
+    "normale",
+    "radiale"
+   ]
+  },
+  {
+   "id": "fis-21a-06",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La grandezza vettoriale che congiunge la posizione iniziale con quella finale si chiama ……",
+   "spiegazione": "Avendo direzione e verso è un vettore, al contrario dello spazio percorso. Il suo modulo non può mai superare lo spazio percorso, e lo uguaglia solo nei moti rettilinei che non cambiano verso.",
+   "gruppo": "fis.2.1-spostamento",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "spostamento",
+    "spostamenti",
+    "vettore spostamento"
+   ]
+  },
+  {
+   "id": "fis-21a-01",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "Un corridore percorre un giro completo di una pista di 400 m e torna al punto di partenza. Il suo spostamento è:",
+   "spiegazione": "Lo spostamento è il vettore che va dalla posizione iniziale a quella finale: se le due coincidono è nullo. I 400 m sono lo spazio percorso, che è una grandezza scalare e non coincide con lo spostamento.",
+   "gruppo": "fis.2.1-spostamento",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "400 m",
+    "zero",
+    "200 m",
+    "dipende dalla velocità tenuta",
+    "400 m, ma con verso opposto"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-21a-02",
+   "argomento": "fis.2.1",
+   "stato": "approvata",
+   "testo": "La velocità media di un corpo è definita come:",
+   "spiegazione": "È un rapporto fra una variazione di posizione e una durata, e non dipende da quello che succede nel frattempo. Solo nel moto uniformemente accelerato coincide con la media fra velocità iniziale e finale.",
+   "gruppo": "fis.2.1-spostamento",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "la media fra la velocità iniziale e quella finale",
+    "il rapporto fra lo spazio percorso e la velocità",
+    "il rapporto fra lo spostamento e l'intervallo di tempo",
+    "il prodotto dell'accelerazione per il tempo",
+    "la velocità tenuta per il tratto più lungo"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32c-07",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "La pressione letta su un manometro, cioè la differenza rispetto all'atmosferica, si chiama pressione ……",
+   "spiegazione": "È quella che interessa nella pratica, perché dice quanto un fluido preme in più rispetto all'ambiente. Anche i valori della pressione arteriosa sono relativi.",
+   "gruppo": "fis.3.2-pressione-relativa",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "relativa",
+    "relative",
+    "manometrica"
+   ]
+  },
+  {
+   "id": "fis-32c-08",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Se la pressione atmosferica vale 10^5 Pa e un manometro segna una pressione relativa di 2 · 10^5 Pa, la pressione assoluta, in pascal, è ……",
+   "spiegazione": "Alla pressione relativa va sommata l'atmosferica: centomila più duecentomila fa 300 000 Pa. Dimenticare la somma è l'errore tipico di questi esercizi.",
+   "gruppo": "fis.3.2-pressione-relativa",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "300000",
+    "3·10^5",
+    "3*10^5",
+    "3e5",
+    "300 000",
+    "300.000",
+    "trecentomila"
+   ],
+   "numero": {
+    "valore": 300000,
+    "tolleranza": 0
+   },
+   "unita": "Pa"
+  },
+  {
+   "id": "fis-23c-08",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Nella legge di Hooke il coefficiente che lega la forza all'allungamento della molla si chiama costante ……",
+   "spiegazione": "Si misura in newton su metro e dice quanta forza serve per allungare la molla di un metro. Più è grande, più la molla è rigida.",
+   "gruppo": "fis.2.3-forza-elastica",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "elastica",
+    "elastiche"
+   ]
+  },
+  {
+   "id": "fis-23b-02",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "Fra le forze elencate, l'unica non conservativa è:",
+   "spiegazione": "L'attrito compie sempre lavoro negativo e il suo valore dipende da quanta strada si fa: più lungo il percorso, più energia dissipata. Per questo non si può definire un'energia potenziale dell'attrito.",
+   "gruppo": "fis.2.3-forza-elastica",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "la forza peso",
+    "la forza elastica di una molla ideale",
+    "la forza gravitazionale",
+    "l'attrito",
+    "la forza elettrostatica"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-23c-04",
+   "argomento": "fis.2.3",
+   "stato": "approvata",
+   "testo": "L'energia potenziale elastica accumulata in una molla dipende:",
+   "spiegazione": "Vale metà della costante elastica per il quadrato dell'allungamento, quindi comprimere il doppio accumula quattro volte l'energia. Non conta quanto in fretta si comprime, ma di quanto.",
+   "gruppo": "fis.2.3-forza-elastica",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "dal quadrato della deformazione",
+    "dalla sola costante elastica",
+    "dalla massa agganciata alla molla",
+    "dalla lunghezza a riposo della molla",
+    "dalla velocità con cui si comprime"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-22b-08",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "La forza che un piano esercita perpendicolarmente alla propria superficie su un corpo appoggiato si chiama reazione ……",
+   "spiegazione": "Normale, in geometria, significa perpendicolare. È la forza che impedisce al corpo di affondare nel piano, e insieme al peso determina l'attrito.",
+   "gruppo": "fis.2.2-reazione-normale",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "normale",
+    "vincolare",
+    "normali",
+    "vincolari",
+    "vincolare normale"
+   ]
+  },
+  {
+   "id": "fis-22b-09",
+   "argomento": "fis.2.2",
+   "stato": "approvata",
+   "testo": "Un corpo di massa 10 kg appoggiato su un piano orizzontale, con g = 10 m/s², riceve una reazione normale, in newton, di ……",
+   "spiegazione": "Su un piano orizzontale la reazione equilibra esattamente il peso: dieci per dieci fa 100 N. Su un piano inclinato sarebbe minore, perché equilibra solo la componente perpendicolare del peso.",
+   "gruppo": "fis.2.2-reazione-normale",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "100",
+    "cento"
+   ],
+   "numero": {
+    "valore": 100,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-51a-09",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Il primo principio della termodinamica lega la variazione di energia interna al calore scambiato e al ……",
+   "spiegazione": "Sono le due sole vie con cui l'energia entra o esce da un sistema chiuso. Il principio è una forma della conservazione dell'energia, estesa ai fenomeni termici.",
+   "gruppo": "fis.5.1-primo-principio",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "lavoro",
+    "lavori",
+    "lavoro compiuto",
+    "lavoro scambiato"
+   ]
+  },
+  {
+   "id": "fis-51a-04",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Calore e lavoro, in termodinamica:",
+   "spiegazione": "Portando un sistema dallo stesso stato iniziale allo stesso stato finale per strade diverse, calore e lavoro cambiano; la loro somma, cioè la variazione di energia interna, no. È il contenuto del primo principio.",
+   "gruppo": "fis.5.1-primo-principio",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "non sono funzioni di stato, perché dipendono dalla trasformazione seguita",
+    "sono entrambi funzioni di stato",
+    "sono la stessa grandezza",
+    "non si misurano in joule",
+    "sono sempre uguali fra loro"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-41a-05",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "L'unità di misura della frequenza nel Sistema Internazionale è l'……",
+   "spiegazione": "Un hertz è un'oscillazione al secondo, cioè l'inverso di un secondo. L'orecchio umano percepisce suoni fra circa 20 e 20 000 Hz.",
+   "gruppo": "fis.4.1-hertz",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "hertz",
+    "Hz"
+   ]
+  },
+  {
+   "id": "fis-41a-06",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Un'oscillazione di periodo 0,02 s ha una frequenza, in hertz, pari a ……",
+   "spiegazione": "Uno diviso 0,02 fa 50 Hz. È la frequenza della corrente elettrica distribuita in Europa.",
+   "gruppo": "fis.4.1-hertz",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "50",
+    "cinquanta"
+   ],
+   "numero": {
+    "valore": 50,
+    "tolleranza": 0
+   },
+   "unita": "Hz"
+  },
+  {
+   "id": "fis-41a-09",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Un'onda che si propaga a 20 m/s con lunghezza d'onda di 4 m ha una frequenza, in hertz, di ……",
+   "spiegazione": "Velocità diviso lunghezza d'onda: venti diviso quattro fa 5 Hz. La stessa relazione, scritta in tre modi diversi, risolve tutti i problemi di questo tipo.",
+   "gruppo": "fis.4.1-hertz",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "Hz"
+  },
+  {
+   "id": "fis-41a-08",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Lo spostamento massimo dalla posizione di equilibrio, in un'oscillazione, si chiama ……",
+   "spiegazione": "Nel suono corrisponde al volume, nella luce all'intensità. In un oscillatore armonico ideale non influisce sul periodo.",
+   "gruppo": "fis.4.1-ampiezza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "ampiezza",
+    "ampiezze"
+   ]
+  },
+  {
+   "id": "fis-41a-02",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Il periodo di un sistema massa-molla:",
+   "spiegazione": "Una massa grande è più lenta da muovere, una molla rigida richiama più in fretta. Nell'oscillatore armonico ideale il periodo non dipende dall'ampiezza: è la proprietà che rende utili i pendoli come orologi.",
+   "gruppo": "fis.4.1-ampiezza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "non dipende dalla massa",
+    "diminuisce aumentando la massa",
+    "cresce aumentando la massa e diminuisce se la molla è più rigida",
+    "dipende dall'ampiezza dell'oscillazione",
+    "cresce se la molla è più rigida"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-41b-04",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "La velocità di propagazione di un'onda meccanica dipende:",
+   "spiegazione": "Densità ed elasticità del mezzo decidono la velocità: il suono viaggia più veloce nell'acqua che nell'aria. Cambiando la frequenza della sorgente cambia la lunghezza d'onda, non la velocità.",
+   "gruppo": "fis.4.1-ampiezza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "dalle proprietà del mezzo in cui si propaga",
+    "dall'ampiezza dell'onda",
+    "dalla sola frequenza della sorgente",
+    "dall'energia della sorgente",
+    "dalla distanza percorsa"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-41b-05",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Le onde in cui le particelle oscillano perpendicolarmente alla direzione di propagazione si dicono ……",
+   "spiegazione": "Una corda scossa lateralmente ne è l'esempio tipico. Le onde elettromagnetiche sono trasversali, e questo rende possibile la polarizzazione della luce.",
+   "gruppo": "fis.4.1-onde-trasversali",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "trasversali",
+    "trasversale"
+   ]
+  },
+  {
+   "id": "fis-41b-02",
+   "argomento": "fis.4.1",
+   "stato": "approvata",
+   "testo": "Il suono che si propaga nell'aria è un'onda:",
+   "spiegazione": "L'aria viene compressa e rarefatta nella direzione in cui il suono viaggia. Essendo un'onda meccanica ha bisogno di un mezzo: nel vuoto non c'è nulla da comprimere.",
+   "gruppo": "fis.4.1-onde-trasversali",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "trasversale",
+    "elettromagnetica",
+    "longitudinale, di compressione e rarefazione",
+    "che non trasporta energia",
+    "che si propaga anche nel vuoto"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-24b-05",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Un sistema su cui non agiscono forze esterne, o in cui la loro risultante è nulla, si dice ……",
+   "spiegazione": "È la condizione che garantisce la conservazione della quantità di moto. Durante un urto breve il sistema dei due corpi si può considerare isolato, perché le forze interne sono enormemente maggiori di quelle esterne.",
+   "gruppo": "fis.2.4-sistema-isolato",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "isolato",
+    "isolati"
+   ]
+  },
+  {
+   "id": "fis-24b-01",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "In un sistema isolato la quantità di moto totale:",
+   "spiegazione": "Le forze interne agiscono a coppie uguali e opposte, quindi i loro effetti sulla quantità di moto totale si annullano. Vale negli urti elastici come in quelli anelastici, ed è il motivo per cui è una legge così utile.",
+   "gruppo": "fis.2.4-sistema-isolato",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "aumenta nel tempo",
+    "si conserva, qualunque cosa avvenga all'interno",
+    "diminuisce per effetto degli urti",
+    "si conserva solo negli urti elastici",
+    "dipende dal sistema di riferimento scelto e quindi non si conserva"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-24b-08",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "In un urto fra due corpi isolati, la grandezza che si conserva sempre, sia nel caso elastico sia in quello anelastico, è la quantità di ……",
+   "spiegazione": "L'energia cinetica si conserva solo negli urti elastici, la quantità di moto in tutti. È la differenza da ricordare quando si decide quale equazione scrivere.",
+   "gruppo": "fis.2.4-sistema-isolato",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "moto"
+   ]
+  },
+  {
+   "id": "fis-33a-07",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il moto in cui il fluido scorre in strati che non si mescolano fra loro si dice ……",
+   "spiegazione": "Gli strati slittano l'uno sull'altro con velocità diverse, massima al centro e minima alle pareti. È il regime normale del sangue nei vasi sani.",
+   "gruppo": "fis.3.3-moto-laminare",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "laminare",
+    "laminari"
+   ]
+  },
+  {
+   "id": "fis-33a-03",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Nel moto turbolento, rispetto a quello laminare:",
+   "spiegazione": "I vortici mescolano gli strati e dissipano energia, quindi serve una differenza di pressione maggiore per mantenere la stessa portata. Nei vasi sanguigni la turbolenza produce i soffi che si sentono con lo stetoscopio.",
+   "gruppo": "fis.3.3-moto-laminare",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "il fluido scorre in strati ordinati e paralleli",
+    "la resistenza al moto è minore",
+    "la velocità è sempre più bassa",
+    "si formano vortici e la resistenza al moto aumenta",
+    "la portata non può essere definita"
+   ],
+   "corretta": 3
+  },
+  {
+   "id": "fis-33a-04",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il numero di Reynolds:",
+   "spiegazione": "Essendo un rapporto fra grandezze omogenee, non ha unità di misura. Sotto un valore critico il moto è laminare, sopra diventa turbolento, e questo vale per qualunque fluido e qualunque condotto.",
+   "gruppo": "fis.3.3-moto-laminare",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "è una grandezza adimensionale che indica se il moto è laminare o turbolento",
+    "si misura in metri al secondo",
+    "misura la portata di un condotto",
+    "è la pressione critica di un fluido",
+    "vale sempre uno nei fluidi ideali"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-33b-05",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "L'equazione che impone alla portata di essere la stessa in ogni sezione di un condotto si chiama equazione di ……",
+   "spiegazione": "Esprime la conservazione della massa per un fluido incomprimibile: quello che entra deve uscire. Da qui segue che sezione e velocità sono inversamente proporzionali.",
+   "gruppo": "fis.3.3-equazione-continuita",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "continuità",
+    "continuita",
+    "Leonardo"
+   ]
+  },
+  {
+   "id": "fis-33b-01",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Secondo l'equazione di continuità, nel punto in cui un condotto si restringe il fluido:",
+   "spiegazione": "La portata deve restare la stessa in ogni sezione, quindi dove l'area è minore la velocità è maggiore. È l'effetto che si ottiene strozzando con un dito la bocca di una canna da giardino.",
+   "gruppo": "fis.3.3-equazione-continuita",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "rallenta",
+    "scorre più veloce",
+    "mantiene la stessa velocità",
+    "si ferma",
+    "cambia densità"
+   ],
+   "corretta": 1
+  },
+  {
+   "id": "fis-33b-07",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Il teorema che lega fra loro pressione, velocità e quota di un fluido ideale in movimento porta il nome di ……",
+   "spiegazione": "È la conservazione dell'energia applicata a un fluido in moto stazionario, senza viscosità. Nei fluidi reali una parte dell'energia si perde per attrito interno, e il teorema vale solo in modo approssimato.",
+   "gruppo": "fis.3.3-bernoulli",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "Bernoulli"
+   ]
+  },
+  {
+   "id": "fis-33b-02",
+   "argomento": "fis.3.3",
+   "stato": "approvata",
+   "testo": "Secondo il teorema di Bernoulli, in un condotto orizzontale dove la velocità del fluido aumenta:",
+   "spiegazione": "La somma fra pressione e termine cinetico si conserva, quindi se una parte cresce l'altra deve calare. È il principio che fa volare le ali e che spiega perché due fogli vicini si avvicinano se ci si soffia in mezzo.",
+   "gruppo": "fis.3.3-bernoulli",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "la pressione aumenta",
+    "la pressione resta costante",
+    "la pressione diminuisce",
+    "la portata diminuisce",
+    "la densità aumenta"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-32b-09",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "A parità di fluido, la grandezza che stabilisce se un corpo galleggia o affonda è la sua ……",
+   "spiegazione": "Non il peso da solo, né il volume da solo, ma il loro rapporto. Una nave pesa migliaia di tonnellate e galleggia, un chiodo pesa pochi grammi e va a fondo.",
+   "gruppo": "fis.3.2-galleggiamento",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "densità",
+    "densita",
+    "densità media",
+    "densita media",
+    "peso specifico"
+   ]
+  },
+  {
+   "id": "fis-32b-02",
+   "argomento": "fis.3.2",
+   "stato": "approvata",
+   "testo": "Un corpo immerso in un liquido galleggia quando:",
+   "spiegazione": "Se il corpo è meno denso del fluido, basta immergersi in parte perché la spinta uguagli il peso. Conta la densità media: una nave d'acciaio galleggia perché comprende anche l'aria dei suoi spazi interni.",
+   "gruppo": "fis.3.2-galleggiamento",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "multipla",
+   "opzioni": [
+    "il suo peso è nullo",
+    "il suo volume è maggiore di quello del liquido spostato",
+    "la sua densità media è minore di quella del liquido",
+    "la sua massa è minore di 1 kg",
+    "la sua superficie è molto estesa"
+   ],
+   "corretta": 2
+  },
+  {
+   "id": "fis-51a-06",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Tutto ciò che si trova fuori dal sistema e può scambiare con esso energia o materia si chiama ……",
+   "spiegazione": "Dove finisce il sistema e comincia l'ambiente lo decide chi studia il problema. Scegliere bene il confine è spesso metà della soluzione.",
+   "gruppo": "fis.5.1-sistema-e-ambiente",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "ambiente",
+    "ambienti",
+    "intorno",
+    "ambiente esterno"
+   ]
+  },
+  {
+   "id": "fis-51a-07",
+   "argomento": "fis.5.1",
+   "stato": "approvata",
+   "testo": "Un sistema che scambia con l'ambiente sia energia sia materia si dice ……",
+   "spiegazione": "Una cellula è un sistema aperto: entrano nutrienti e ossigeno, escono scorie e calore. Gli organismi viventi non possono essere sistemi chiusi.",
+   "gruppo": "fis.5.1-sistema-e-ambiente",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "aperto",
+    "aperti"
+   ]
+  },
+  {
+   "id": "fis-24a-09",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Il prodotto di una forza per il tempo durante il quale essa agisce si chiama ……",
+   "spiegazione": "Ha le stesse unità della quantità di moto, e non è un caso: l'uno è la variazione dell'altra. Nei fenomeni d'urto è la grandezza più comoda da usare.",
+   "gruppo": "fis.2.4-impulso",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "impulso",
+    "impulsi",
+    "impulso della forza"
+   ]
+  },
+  {
+   "id": "fis-24a-07",
+   "argomento": "fis.2.4",
+   "stato": "approvata",
+   "testo": "Una forza di 10 N che agisce per 3 s produce un impulso, in N·s, pari a ……",
+   "spiegazione": "Dieci per tre fa 30 N·s. Lo stesso impulso si otterrebbe con una forza di 30 N applicata per un solo secondo.",
+   "gruppo": "fis.2.4-impulso",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768100734,
+   "tipo": "completamento",
+   "accettate": [
+    "30",
+    "trenta"
+   ],
+   "numero": {
+    "valore": 30,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-13a-01",
+   "argomento": "fis.1.3",
+   "stato": "approvata",
+   "testo": "In un triangolo rettangolo con ipotenusa di 10 cm, il cateto opposto a un angolo di 30° misura:",
+   "spiegazione": "Il cateto opposto si ottiene moltiplicando l'ipotenusa per il seno dell'angolo, e il seno di 30° vale 0,5. Il valore 8,7 cm corrisponde invece al cateto adiacente, che si ricava col coseno.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768600022,
+   "tipo": "multipla",
+   "opzioni": [
+    "5 cm",
+    "8,7 cm",
+    "10 cm",
+    "3,3 cm",
+    "20 cm"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-13a-02",
+   "argomento": "fis.1.3",
+   "stato": "approvata",
+   "testo": "La tangente di un angolo acuto in un triangolo rettangolo è uguale:",
+   "spiegazione": "Seno e coseno sono i rapporti fra i due cateti e l'ipotenusa, e dividendoli l'ipotenusa si semplifica: resta il rapporto fra cateto opposto e cateto adiacente. Per questo la tangente di 90° non è definita, dove il coseno si annulla.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768600613,
+   "tipo": "multipla",
+   "opzioni": [
+    "al rapporto fra il seno e il coseno dello stesso angolo",
+    "al prodotto del seno per il coseno",
+    "al rapporto fra il coseno e il seno",
+    "alla somma del seno e del coseno",
+    "al reciproco del seno"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-13a-03",
+   "argomento": "fis.1.3",
+   "stato": "approvata",
+   "testo": "Il valore del seno di un angolo di 90° è ……",
+   "spiegazione": "È il valore massimo che il seno può assumere, e corrisponde al caso in cui il cateto opposto coincide con l'ipotenusa. Nello stesso punto il coseno vale zero.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768601323,
+   "tipo": "completamento",
+   "accettate": [
+    "1",
+    "uno"
+   ],
+   "numero": {
+    "valore": 1,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-13a-04",
+   "argomento": "fis.1.3",
+   "stato": "approvata",
+   "testo": "Una forza di 10 N inclinata di 60° rispetto all'orizzontale ha una componente orizzontale, in newton, pari a ……",
+   "spiegazione": "La componente lungo l'orizzontale si ottiene moltiplicando il modulo per il coseno dell'angolo, e il coseno di 60° vale 0,5. Usando il seno si otterrebbe 8,7 N, che è la componente verticale.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768602036,
+   "tipo": "completamento",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-42a-01",
+   "argomento": "fis.4.2",
+   "stato": "approvata",
+   "testo": "Il principio di sovrapposizione afferma che, dove due onde si incontrano:",
+   "spiegazione": "Le onde si attraversano senza disturbarsi: l'effetto combinato si ottiene sommando, con il proprio segno, ciò che ciascuna produrrebbe da sola. Superata la regione di incontro, ciascuna riprende la propria forma.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768602864,
+   "tipo": "multipla",
+   "opzioni": [
+    "lo spostamento risultante è la somma algebrica dei singoli spostamenti",
+    "l'onda di ampiezza maggiore prevale sull'altra",
+    "le due onde si fermano fino a quando non si separano",
+    "le due onde cambiano frequenza",
+    "l'ampiezza risultante è sempre il doppio di quella di partenza"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-42a-02",
+   "argomento": "fis.4.2",
+   "stato": "approvata",
+   "testo": "Due onde coerenti di uguale ampiezza si annullano in un punto quando la differenza fra i cammini percorsi è pari a:",
+   "spiegazione": "Mezza lunghezza d'onda di differenza significa arrivare in opposizione di fase, con una cresta sopra una valle. Un numero intero di lunghezze d'onda, invece, fa arrivare le due onde in fase e si rinforzano.",
+   "gruppo": "fis.4.2-cammini",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768603411,
+   "tipo": "multipla",
+   "opzioni": [
+    "mezza lunghezza d'onda, o un suo multiplo dispari",
+    "una lunghezza d'onda intera",
+    "due lunghezze d'onda",
+    "un quarto di lunghezza d'onda",
+    "zero, in ogni caso"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-42a-03",
+   "argomento": "fis.4.2",
+   "stato": "approvata",
+   "testo": "Quando due onde si sovrappongono in fase e l'ampiezza risultante aumenta, l'interferenza si dice ……",
+   "spiegazione": "Le creste cadono sulle creste e gli effetti si sommano, dando un'oscillazione più ampia. L'energia complessiva non si crea dal nulla: si ridistribuisce, perché altrove l'interferenza è distruttiva.",
+   "gruppo": "fis.4.2-interferenza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768604813,
+   "tipo": "completamento",
+   "accettate": [
+    "costruttiva",
+    "costruttive",
+    "costruttivo"
+   ]
+  },
+  {
+   "id": "fis-42a-04",
+   "argomento": "fis.4.2",
+   "stato": "approvata",
+   "testo": "Due onde di uguale ampiezza che si incontrano in opposizione di fase si annullano: l'interferenza si dice ……",
+   "spiegazione": "La cresta dell'una cade sulla valle dell'altra e la somma algebrica è nulla. È il principio delle cuffie a cancellazione di rumore, che generano un'onda in opposizione di fase a quella ambientale.",
+   "gruppo": "fis.4.2-interferenza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768605373,
+   "tipo": "completamento",
+   "accettate": [
+    "distruttiva",
+    "distruttive",
+    "distruttivo"
+   ]
+  },
+  {
+   "id": "fis-42a-05",
+   "argomento": "fis.4.2",
+   "stato": "approvata",
+   "testo": "Perché due onde coerenti si rinforzino a vicenda, la differenza fra i cammini percorsi deve essere un multiplo intero della lunghezza d'……",
+   "spiegazione": "Dopo un numero intero di lunghezze d'onda le due oscillazioni si ritrovano nello stesso punto del ciclo, cioè in fase. Mezza lunghezza d'onda in più le porterebbe invece ad annullarsi.",
+   "gruppo": "fis.4.2-cammini",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768605896,
+   "tipo": "completamento",
+   "accettate": [
+    "onda",
+    "onde"
+   ]
+  },
+  {
+   "id": "fis-43a-01",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "L'intensità di un'onda è definita come:",
+   "spiegazione": "Essendo una potenza per unità di area, si misura in watt al metro quadrato e non dipende da quanto a lungo la sorgente emette. È la grandezza che descrive quanta energia arriva, e non quanta ne è stata prodotta in tutto.",
+   "gruppo": "fis.4.3-intensita",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768607359,
+   "tipo": "multipla",
+   "opzioni": [
+    "la potenza che attraversa l'unità di superficie perpendicolare alla direzione di propagazione",
+    "l'energia totale trasportata dall'onda",
+    "il numero di oscillazioni compiute in un secondo",
+    "la distanza fra due creste successive",
+    "la velocità con cui l'onda si propaga"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-43a-03",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "A parità di frequenza, l'energia trasportata da un'onda meccanica dipende:",
+   "spiegazione": "Raddoppiando l'ampiezza l'energia diventa quattro volte più grande, non il doppio. È il motivo per cui un suono di ampiezza doppia è molto più che doppio in termini di energia che trasporta.",
+   "gruppo": "fis.4.3-ampiezza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768607880,
+   "tipo": "multipla",
+   "opzioni": [
+    "dal quadrato della sua ampiezza",
+    "dalla sua lunghezza d'onda",
+    "dalla sola velocità di propagazione",
+    "dal colore dell'onda",
+    "dalla distanza dalla sorgente, ma non dall'ampiezza"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-43a-04",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "La potenza trasportata da un'onda è l'energia che essa trasporta nell'unità di ……",
+   "spiegazione": "Energia e potenza non sono la stessa cosa: la seconda dice quanto in fretta la prima viene trasferita. Per questo un'onda debole che duri molto può trasportare la stessa energia di un impulso breve e intenso.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768611414,
+   "tipo": "completamento",
+   "accettate": [
+    "tempo",
+    "tempi"
+   ]
+  },
+  {
+   "id": "fis-43a-05",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "Raddoppiando la distanza da una sorgente puntiforme, l'intensità dell'onda diventa un ……",
+   "spiegazione": "La superficie della sfera su cui l'energia si distribuisce quadruplica, mentre la potenza resta la stessa. Vale per qualunque onda che si propaghi liberamente in tutte le direzioni.",
+   "gruppo": "fis.4.3-inverso-quadrato",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768613082,
+   "tipo": "completamento",
+   "accettate": [
+    "quarto",
+    "quarti",
+    "1/4"
+   ]
+  },
+  {
+   "id": "fis-43a-06",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "Una sorgente puntiforme emette una potenza di 100 W: a 2 m di distanza l'intensità, in watt al metro quadrato, vale circa ……",
+   "spiegazione": "Si divide la potenza per la superficie della sfera di raggio 2 m, che è circa 50 metri quadrati: cento diviso cinquanta fa 2 W/m². Dimenticare il fattore quattro pi greco è l'errore tipico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768613679,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "1,99",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0.05
+   },
+   "unita": "W/m^2"
+  },
+  {
+   "id": "fis-43a-07",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "L'energia trasportata da un'onda è proporzionale al quadrato della sua ……",
+   "spiegazione": "Non all'ampiezza, ma al suo quadrato: è la stessa dipendenza che si ritrova nell'energia di un oscillatore armonico. Per questo dimezzare l'ampiezza riduce l'energia a un quarto.",
+   "gruppo": "fis.4.3-ampiezza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768615319,
+   "tipo": "completamento",
+   "accettate": [
+    "ampiezza",
+    "ampiezze"
+   ]
+  },
+  {
+   "id": "fis-62a-01",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Il potenziale elettrico in un punto è definito come:",
+   "spiegazione": "Dividendo per la carica si ottiene una grandezza che descrive il punto e non la carica di prova, e che quindi caratterizza il campo. La sua unità di misura è il joule su coulomb, cioè il volt.",
+   "gruppo": "fis.6.2-potenziale-volt",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768616988,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'energia potenziale di una carica posta in quel punto, divisa per il valore della carica",
+    "la forza che agisce su una carica posta in quel punto",
+    "il lavoro compiuto dal campo lungo tutta la linea di forza",
+    "la quantità di carica presente in quel punto",
+    "l'energia cinetica che una carica possiede in quel punto"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-62a-03",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Il lavoro necessario per spostare una carica di 2 C fra due punti con differenza di potenziale di 12 V vale:",
+   "spiegazione": "Il lavoro è il prodotto della carica per la differenza di potenziale: due per dodici fa 24 J. Dividere invece di moltiplicare è l'errore più comune, e dà 6.",
+   "gruppo": "fis.6.2-lavoro-ddp",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768619334,
+   "tipo": "multipla",
+   "opzioni": [
+    "24 J",
+    "6 J",
+    "14 J",
+    "0,17 J",
+    "144 J"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-62a-02",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Lasciata libera di muoversi, una carica positiva si sposta spontaneamente:",
+   "spiegazione": "Il moto spontaneo avviene nel verso in cui l'energia potenziale diminuisce, e per una carica positiva questo significa andare verso potenziali più bassi. Una carica negativa, con lo stesso ragionamento, si muove nel verso opposto.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768621299,
+   "tipo": "multipla",
+   "opzioni": [
+    "verso i punti a potenziale minore",
+    "verso i punti a potenziale maggiore",
+    "lungo una superficie a potenziale costante",
+    "sempre verso il punto in cui il campo è più intenso",
+    "in direzione perpendicolare al campo elettrico"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-62a-04",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "L'unità di misura del potenziale elettrico e della differenza di potenziale è il ……",
+   "spiegazione": "Un volt corrisponde a un joule per ogni coulomb di carica spostata. Non è quindi un'energia, ma un'energia per unità di carica.",
+   "gruppo": "fis.6.2-potenziale-volt",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768630726,
+   "tipo": "completamento",
+   "accettate": [
+    "volt",
+    "V",
+    "volts"
+   ]
+  },
+  {
+   "id": "fis-62a-05",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Spostando una carica di 0,5 C fra due punti con differenza di potenziale di 20 V si compie un lavoro, in joule, pari a ……",
+   "spiegazione": "Basta moltiplicare la carica per la differenza di potenziale: 0,5 per venti fa 10 J. Il risultato non dipende dal percorso seguito, ma solo dai due punti di partenza e di arrivo.",
+   "gruppo": "fis.6.2-lavoro-ddp",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768633401,
+   "tipo": "completamento",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "J"
+  },
+  {
+   "id": "fis-62a-06",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Le superfici su cui il potenziale elettrico ha lo stesso valore in ogni punto si dicono ……",
+   "spiegazione": "Spostando una carica lungo una di queste superfici il campo non compie lavoro, perché il potenziale non cambia. Sono sempre perpendicolari alle linee del campo elettrico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768634097,
+   "tipo": "completamento",
+   "accettate": [
+    "equipotenziali",
+    "equipotenziale"
+   ]
+  },
+  {
+   "id": "fis-62a-07",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Avvicinando fra loro due cariche dello stesso segno, la loro energia potenziale elettrica ……",
+   "spiegazione": "Due cariche uguali si respingono, quindi per avvicinarle occorre compiere lavoro contro la forza elettrica, e quel lavoro resta immagazzinato nel sistema. Con cariche di segno opposto avviene il contrario.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768634727,
+   "tipo": "completamento",
+   "accettate": [
+    "aumenta",
+    "cresce",
+    "aumentera",
+    "aumenterà"
+   ]
+  },
+  {
+   "id": "fis-62b-01",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Una carica che si muove in un campo elettrico senza attriti:",
+   "spiegazione": "La forza elettrica è conservativa, quindi ciò che la carica perde in energia potenziale lo ritrova come energia cinetica. Il lavoro dipende solo dai punti iniziale e finale, non dal percorso.",
+   "gruppo": "fis.6.2-conservazione",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768635991,
+   "tipo": "multipla",
+   "opzioni": [
+    "mantiene costante la somma della propria energia cinetica e potenziale",
+    "mantiene costante la propria energia cinetica",
+    "mantiene costante la propria energia potenziale",
+    "perde energia a ogni spostamento",
+    "acquista energia solo se il campo è uniforme"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-62b-02",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Spostando una carica lungo una superficie a potenziale costante, il campo elettrico:",
+   "spiegazione": "Il lavoro è dato dalla carica moltiplicata per la differenza di potenziale, e in questo caso quella differenza è nulla. L'energia cinetica della carica, di conseguenza, non cambia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768636700,
+   "tipo": "multipla",
+   "opzioni": [
+    "non compie alcun lavoro",
+    "compie un lavoro pari alla carica per la lunghezza del percorso",
+    "compie sempre un lavoro negativo",
+    "raddoppia la propria intensità",
+    "cambia verso"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-62b-03",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Un protone inizialmente fermo viene accelerato da una differenza di potenziale di 500 V: la sua energia cinetica finale è:",
+   "spiegazione": "Una carica elementare che attraversa una differenza di potenziale di un volt acquista per definizione un elettronvolt, quindi cinquecento volt danno 500 eV. Espressa in joule la stessa energia sarebbe un numero piccolissimo, circa 8·10^-17.",
+   "gruppo": "fis.6.2-elettronvolt",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768637349,
+   "tipo": "multipla",
+   "opzioni": [
+    "500 eV",
+    "500 J",
+    "1000 eV",
+    "250 eV",
+    "nulla, perché il protone è troppo pesante"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-62b-04",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "In assenza di attriti la somma dell'energia cinetica e dell'energia potenziale di una carica in moto si ……",
+   "spiegazione": "La forza elettrica è conservativa, quindi non disperde energia: il totale resta lo stesso durante tutto il moto. È lo stesso principio che si applica a un corpo che cade nel campo gravitazionale.",
+   "gruppo": "fis.6.2-conservazione",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768639136,
+   "tipo": "completamento",
+   "accettate": [
+    "conserva",
+    "mantiene",
+    "conserva sempre"
+   ]
+  },
+  {
+   "id": "fis-62b-05",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Una carica perde 20 J di energia potenziale muovendosi nel campo: la sua energia cinetica cresce, in joule, di ……",
+   "spiegazione": "Se non c'è dissipazione, tutto ciò che si perde come energia potenziale ricompare come energia cinetica. Il valore della carica non serve: la conservazione vale qualunque esso sia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768639812,
+   "tipo": "completamento",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "J"
+  },
+  {
+   "id": "fis-62b-06",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "L'energia che una carica elementare acquista attraversando una differenza di potenziale di un volt si chiama ……",
+   "spiegazione": "È un'unità comoda per le particelle, dove il joule risulterebbe enorme rispetto alle energie in gioco. Vale circa 1,6·10^-19 joule, cioè il valore della carica elementare.",
+   "gruppo": "fis.6.2-elettronvolt",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768640366,
+   "tipo": "completamento",
+   "accettate": [
+    "elettronvolt",
+    "elettronvolts",
+    "eV",
+    "electronvolt"
+   ]
+  },
+  {
+   "id": "fis-62b-07",
+   "argomento": "fis.6.2",
+   "stato": "approvata",
+   "testo": "Un elettrone accelerato da una differenza di potenziale di 2000 V acquista un'energia, in keV, pari a ……",
+   "spiegazione": "Duemila volt danno duemila elettronvolt, cioè 2 keV, perché la carica è quella elementare. È l'ordine di grandezza delle energie usate nei tubi a raggi X di piccola potenza.",
+   "gruppo": "fis.6.2-elettronvolt",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768640953,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "unita": "keV"
+  },
+  {
+   "id": "fis-63a-01",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "In un conduttore carico in condizioni di equilibrio, il campo elettrico all'interno del materiale:",
+   "spiegazione": "Se all'interno ci fosse un campo, le cariche libere si muoverebbero e l'equilibrio non sarebbe raggiunto: la condizione di equilibrio richiede proprio che il campo interno si annulli. Da questo segue che tutto il conduttore è allo stesso potenziale.",
+   "gruppo": "fis.6.3-campo-interno",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768641898,
+   "tipo": "multipla",
+   "opzioni": [
+    "è nullo",
+    "è uniforme e diretto verso il centro",
+    "è massimo al centro del conduttore",
+    "ha lo stesso valore che all'esterno",
+    "cresce proporzionalmente alla carica depositata"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-63a-02",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "La carica in eccesso depositata su un conduttore isolato:",
+   "spiegazione": "Le cariche in eccesso, respingendosi, si allontanano il più possibile le une dalle altre, e il più lontano che possono andare è la superficie. Nei conduttori non sferici si addensano dove la curvatura è maggiore, ed è il principio del parafulmine.",
+   "gruppo": "fis.6.3-carica-superficie",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768642609,
+   "tipo": "multipla",
+   "opzioni": [
+    "si distribuisce tutta sulla superficie esterna",
+    "si distribuisce uniformemente in tutto il volume",
+    "si concentra nel centro del conduttore",
+    "resta nel punto in cui è stata depositata",
+    "si annulla in breve tempo"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-63a-03",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "Avvicinando un corpo carico positivamente a un conduttore neutro e isolato, senza toccarlo:",
+   "spiegazione": "La carica totale resta zero, ma si ridistribuisce: una faccia diventa negativa e quella opposta positiva. È il motivo per cui un corpo carico attrae anche oggetti neutri.",
+   "gruppo": "fis.6.3-induzione-elettrostatica",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768643180,
+   "tipo": "multipla",
+   "opzioni": [
+    "le cariche del conduttore si separano, con gli elettroni richiamati verso il corpo carico",
+    "il conduttore acquista una carica netta positiva",
+    "il conduttore acquista una carica netta negativa",
+    "nel conduttore non avviene alcun cambiamento",
+    "il conduttore si scarica a terra"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-63a-04",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "Un materiale isolante immerso in un campo elettrico si comporta così:",
+   "spiegazione": "Gli elettroni restano legati ai propri atomi, quindi non si ha corrente, ma le cariche possono spostarsi di poco all'interno di ciascuna molecola. Il campo all'interno del materiale si riduce, senza annullarsi come in un conduttore.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768644126,
+   "tipo": "multipla",
+   "opzioni": [
+    "le sue molecole si orientano o si deformano, ma le cariche non possono scorrere liberamente",
+    "le sue cariche si spostano liberamente come in un metallo",
+    "non subisce alcun effetto da parte del campo",
+    "diventa un conduttore in modo permanente",
+    "annulla completamente il campo al proprio interno"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-63a-05",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "Inserendo una lastra di materiale isolante fra le armature di un condensatore carico e isolato, la differenza di potenziale fra le armature:",
+   "spiegazione": "Le cariche indotte sulle facce dell'isolante generano un campo opposto a quello delle armature, e il campo risultante è più debole; a carica costante, la differenza di potenziale cala e la capacità aumenta. È la ragione per cui i condensatori reali hanno un isolante fra le armature.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768644688,
+   "tipo": "multipla",
+   "opzioni": [
+    "diminuisce, perché il campo fra le armature si riduce",
+    "aumenta, perché aumenta la carica",
+    "resta invariata",
+    "si annulla del tutto",
+    "cambia di segno"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-63a-06",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "In un conduttore carico che ha raggiunto l'equilibrio il campo elettrico interno è ……",
+   "spiegazione": "Finché un campo è presente le cariche libere si muovono, e si fermano solo quando la loro stessa disposizione lo annulla. Per questo tutti i punti del conduttore si trovano allo stesso potenziale.",
+   "gruppo": "fis.6.3-campo-interno",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768645432,
+   "tipo": "completamento",
+   "accettate": [
+    "nullo",
+    "zero",
+    "nulla"
+   ]
+  },
+  {
+   "id": "fis-63a-07",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "In un conduttore isolato la carica in eccesso si dispone tutta sulla sua ……",
+   "spiegazione": "Le cariche dello stesso segno si respingono e si allontanano fino al punto più esterno disponibile. All'interno, di conseguenza, non resta carica netta.",
+   "gruppo": "fis.6.3-carica-superficie",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768646002,
+   "tipo": "completamento",
+   "accettate": [
+    "superficie",
+    "superficie esterna",
+    "superfici"
+   ]
+  },
+  {
+   "id": "fis-63a-08",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "Il fenomeno per cui le cariche di un conduttore neutro si separano all'avvicinarsi di un corpo carico si chiama induzione ……",
+   "spiegazione": "Non c'è contatto e non passa carica: si riorganizza soltanto quella che c'è già. Collegando a terra il conduttore mentre è sotto induzione, invece, si può caricarlo in modo permanente.",
+   "gruppo": "fis.6.3-induzione-elettrostatica",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768646569,
+   "tipo": "completamento",
+   "accettate": [
+    "elettrostatica",
+    "elettrostatiche",
+    "elettrica"
+   ]
+  },
+  {
+   "id": "fis-63a-09",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "Le molecole che, anche in assenza di campo elettrico, presentano già un momento di dipolo si dicono molecole ……",
+   "spiegazione": "In esse la distribuzione delle cariche è asimmetrica, come nell'acqua, e in un campo elettrico tendono a ruotare per allinearsi. Le molecole non polari, invece, acquistano un dipolo soltanto perché il campo le deforma.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768647106,
+   "tipo": "completamento",
+   "accettate": [
+    "polari",
+    "polare",
+    "dipolari"
+   ]
+  },
+  {
+   "id": "fis-63a-10",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "L'orientamento dei dipoli di un isolante sotto l'azione di un campo elettrico si chiama ……",
+   "spiegazione": "Il materiale resta nel complesso neutro, ma le sue facce mostrano cariche di segno opposto. L'effetto è un campo interno più debole di quello applicato.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768647715,
+   "tipo": "completamento",
+   "accettate": [
+    "polarizzazione",
+    "polarizzazioni",
+    "polarizzazione dielettrica"
+   ]
+  },
+  {
+   "id": "fis-63a-11",
+   "argomento": "fis.6.3",
+   "stato": "approvata",
+   "testo": "Il rivestimento metallico che protegge una regione dai campi elettrici esterni si chiama gabbia di ……",
+   "spiegazione": "Le cariche del metallo si ridistribuiscono in modo da annullare il campo nella cavità interna. È il motivo per cui in un'automobile si è relativamente al sicuro dai fulmini.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768648274,
+   "tipo": "completamento",
+   "accettate": [
+    "Faraday",
+    "faraday"
+   ]
+  },
+  {
+   "id": "fis-67a-01",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "In un circuito si genera una forza elettromotrice indotta quando:",
+   "spiegazione": "Non basta che il campo ci sia: deve cambiare il flusso, cioè il prodotto fra campo, area e orientamento. Un circuito immobile in un campo costante non produce alcuna corrente indotta.",
+   "gruppo": "fis.6.7-flusso-variabile",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768649295,
+   "tipo": "multipla",
+   "opzioni": [
+    "il flusso del campo magnetico attraverso il circuito varia nel tempo",
+    "il circuito si trova immerso in un campo magnetico, anche costante",
+    "il circuito è percorso da una corrente continua",
+    "la resistenza del circuito aumenta",
+    "il circuito viene collegato a una pila"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-67a-02",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Il verso della corrente indotta in una spira è tale da:",
+   "spiegazione": "Se la corrente indotta rafforzasse la variazione, il fenomeno si amplificherebbe da sé e si otterrebbe energia dal nulla: l'opposizione è ciò che salva la conservazione dell'energia. In pratica, per avvicinare un magnete a una spira occorre fare lavoro.",
+   "gruppo": "fis.6.7-lenz",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768649800,
+   "tipo": "multipla",
+   "opzioni": [
+    "opporsi alla variazione di flusso che l'ha generata",
+    "rafforzare la variazione di flusso che l'ha generata",
+    "annullare completamente il campo magnetico esterno",
+    "essere sempre orario, visto dal polo nord del magnete",
+    "invertirsi a ogni istante, indipendentemente dal moto del magnete"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-67a-03",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Un magnete e una spira sono entrambi fermi, uno vicino all'altra: nella spira:",
+   "spiegazione": "Il campo è presente, ma immobile: il flusso concatenato resta lo stesso e non si induce nulla. Basta muovere uno dei due, o deformare la spira, perché la corrente compaia.",
+   "gruppo": "fis.6.7-flusso-variabile",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768650302,
+   "tipo": "multipla",
+   "opzioni": [
+    "non circola alcuna corrente, perché il flusso non varia",
+    "circola una corrente costante",
+    "circola una corrente che cresce nel tempo",
+    "circola una corrente alternata",
+    "circola corrente solo se il magnete è molto intenso"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-67a-04",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Il flusso magnetico attraverso una spira varia di 0,2 Wb in 0,1 s: la forza elettromotrice media indotta vale:",
+   "spiegazione": "La forza elettromotrice è la variazione di flusso divisa per il tempo in cui avviene: 0,2 diviso 0,1 fa 2 V. Più rapida è la variazione, maggiore è la tensione indotta, a parità di flusso.",
+   "gruppo": "fis.6.7-faraday-calcolo",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768650890,
+   "tipo": "multipla",
+   "opzioni": [
+    "2 V",
+    "0,02 V",
+    "0,5 V",
+    "20 V",
+    "0,2 V"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-67a-05",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Il fenomeno per cui la variazione di un campo magnetico fa nascere una corrente in un circuito si chiama …… elettromagnetica",
+   "spiegazione": "Non serve alcun generatore: basta che il campo concatenato con il circuito cambi nel tempo. Su questo principio funzionano i trasformatori, gli alternatori e la ricarica senza fili.",
+   "gruppo": "fis.6.3-induzione-elettrostatica",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768652000,
+   "tipo": "completamento",
+   "accettate": [
+    "induzione",
+    "induzioni"
+   ]
+  },
+  {
+   "id": "fis-67a-06",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Il principio secondo cui la corrente indotta si oppone sempre alla variazione che l'ha prodotta porta il nome di ……",
+   "spiegazione": "È il segno meno della legge di Faraday-Neumann, e non è un dettaglio formale: senza di esso l'induzione violerebbe la conservazione dell'energia. Spiega anche la frenata delle correnti parassite nei freni elettromagnetici.",
+   "gruppo": "fis.6.7-lenz",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768652569,
+   "tipo": "completamento",
+   "accettate": [
+    "Lenz",
+    "lenz",
+    "legge di Lenz"
+   ]
+  },
+  {
+   "id": "fis-67a-07",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Un flusso magnetico che varia di 0,6 Wb in 3 s induce una forza elettromotrice media, in volt, pari a ……",
+   "spiegazione": "Si divide la variazione di flusso per l'intervallo di tempo: 0,6 diviso 3 fa 0,2 V. La stessa variazione in un tempo dieci volte più breve darebbe una tensione dieci volte maggiore.",
+   "gruppo": "fis.6.7-faraday-calcolo",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768653328,
+   "tipo": "completamento",
+   "accettate": [
+    "0,2",
+    "0.2",
+    "zerovirgoladue"
+   ],
+   "numero": {
+    "valore": 0.2,
+    "tolleranza": 0
+   },
+   "unita": "V"
+  },
+  {
+   "id": "fis-67a-08",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "L'unità di misura del flusso del campo magnetico è il ……",
+   "spiegazione": "Corrisponde a un tesla moltiplicato per un metro quadrato, cioè a un campo che attraversa una superficie. Un weber che si annulla in un secondo induce la tensione di un volt.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768653864,
+   "tipo": "completamento",
+   "accettate": [
+    "weber",
+    "Wb",
+    "webers"
+   ]
+  },
+  {
+   "id": "fis-67a-09",
+   "argomento": "fis.6.7",
+   "stato": "approvata",
+   "testo": "Le correnti indotte che si formano in un blocco di metallo in movimento in un campo magnetico, e che lo frenano, si chiamano correnti ……",
+   "spiegazione": "Si chiudono su se stesse all'interno del metallo e dissipano energia per effetto Joule, sottraendola al moto. Sono un difetto nei trasformatori, dove si riducono laminando il nucleo, e un vantaggio nei freni elettromagnetici.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768654432,
+   "tipo": "completamento",
+   "accettate": [
+    "parassite",
+    "parassita",
+    "di Foucault"
+   ]
+  },
+  {
+   "id": "fis-71a-01",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "A differenza delle onde sonore, le onde elettromagnetiche:",
+   "spiegazione": "Ciò che oscilla non è la materia ma il campo elettrico e quello magnetico, che si sostengono a vicenda: non serve nulla da mettere in vibrazione. È per questo che la luce delle stelle ci raggiunge attraverso lo spazio vuoto, mentre il suono no.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768655421,
+   "tipo": "multipla",
+   "opzioni": [
+    "si propagano anche nel vuoto, senza bisogno di un mezzo materiale",
+    "hanno bisogno di un mezzo più denso per propagarsi",
+    "sono onde longitudinali",
+    "non trasportano energia",
+    "si propagano solo nei metalli"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-71a-02",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "In un'onda elettromagnetica che si propaga nel vuoto, il campo elettrico e il campo magnetico:",
+   "spiegazione": "I due campi sono ortogonali fra loro e al verso di propagazione, e oscillano in fase con la stessa frequenza. Questa geometria è il motivo per cui le onde elettromagnetiche sono onde trasversali.",
+   "gruppo": "fis.7.1-campi-perpendicolari",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768655938,
+   "tipo": "multipla",
+   "opzioni": [
+    "oscillano perpendicolari fra loro e alla direzione di propagazione",
+    "oscillano nella stessa direzione in cui l'onda si propaga",
+    "oscillano paralleli fra loro",
+    "sono costanti nel tempo",
+    "oscillano con frequenze diverse l'uno dall'altro"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-71a-03",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Un'onda elettromagnetica di frequenza 5·10^14 Hz ha, nel vuoto, una lunghezza d'onda di circa:",
+   "spiegazione": "La lunghezza d'onda è la velocità della luce divisa per la frequenza: 3·10^8 diviso 5·10^14 dà 6·10^-7 m, cioè 600 nm. È un valore nel campo del visibile, verso il rosso.",
+   "gruppo": "fis.7.1-lambda-frequenza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768656430,
+   "tipo": "multipla",
+   "opzioni": [
+    "6·10^-7 m",
+    "6·10^-14 m",
+    "6·10^7 m",
+    "1,5·10^23 m",
+    "1,7·10^6 m"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-71a-04",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Quando un'onda elettromagnetica passa dal vuoto a un mezzo trasparente come il vetro:",
+   "spiegazione": "La frequenza è imposta dalla sorgente e non cambia attraversando un'interfaccia, mentre la velocità nel mezzo è minore: di conseguenza la lunghezza d'onda si accorcia. È questa riduzione di velocità che provoca la rifrazione.",
+   "gruppo": "fis.7.1-velocita-nel-mezzo",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768657122,
+   "tipo": "multipla",
+   "opzioni": [
+    "la frequenza resta la stessa e la lunghezza d'onda diminuisce",
+    "la frequenza diminuisce e la lunghezza d'onda resta la stessa",
+    "aumentano sia la frequenza sia la lunghezza d'onda",
+    "la velocità di propagazione aumenta",
+    "l'onda si trasforma in un'onda longitudinale"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-71a-05",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Nel vuoto tutte le onde elettromagnetiche, dalle onde radio ai raggi gamma, hanno la stessa ……",
+   "spiegazione": "Vale circa 3·10^8 metri al secondo e non dipende dalla frequenza: quello che cambia da una regione all'altra dello spettro è la lunghezza d'onda. Nei mezzi materiali, invece, la velocità diminuisce e può dipendere dal colore.",
+   "gruppo": "fis.7.1-velocita-nel-mezzo",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768657856,
+   "tipo": "completamento",
+   "accettate": [
+    "velocità",
+    "velocita",
+    "velocità di propagazione"
+   ]
+  },
+  {
+   "id": "fis-71a-06",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Poiché le grandezze che oscillano non vibrano lungo la direzione in cui l'onda avanza, le onde elettromagnetiche sono onde ……",
+   "spiegazione": "Nelle onde longitudinali, come il suono, l'oscillazione avviene invece lungo la direzione del moto dell'onda. Essendo trasversali, le onde elettromagnetiche possono essere polarizzate.",
+   "gruppo": "fis.4.1-onde-trasversali",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768658373,
+   "tipo": "completamento",
+   "accettate": [
+    "trasversali",
+    "trasversale",
+    "trasverse"
+   ]
+  },
+  {
+   "id": "fis-71a-07",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Il campo magnetico di un'onda elettromagnetica oscilla in un piano …… a quello del campo elettrico",
+   "spiegazione": "I due campi non sono indipendenti: ciascuno è generato dalla variazione dell'altro, e la geometria che ne risulta è quella ortogonale. Insieme alla direzione di propagazione formano una terna di direzioni mutuamente perpendicolari.",
+   "gruppo": "fis.7.1-campi-perpendicolari",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768658955,
+   "tipo": "completamento",
+   "accettate": [
+    "perpendicolare",
+    "ortogonale",
+    "perpendicolari"
+   ]
+  },
+  {
+   "id": "fis-71a-08",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Un'onda elettromagnetica di lunghezza d'onda 3 m ha, nel vuoto, una frequenza in hertz pari a ……",
+   "spiegazione": "Si divide la velocità della luce per la lunghezza d'onda: 3·10^8 diviso 3 fa 10^8 Hz, cioè 100 MHz. È la regione delle trasmissioni radio in modulazione di frequenza.",
+   "gruppo": "fis.7.1-lambda-frequenza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768659495,
+   "tipo": "completamento",
+   "accettate": [
+    "10^8",
+    "1·10^8",
+    "100000000",
+    "100 milioni",
+    "1e8"
+   ],
+   "numero": {
+    "valore": 100000000,
+    "tolleranza": 0.02
+   },
+   "unita": "Hz"
+  },
+  {
+   "id": "fis-71a-09",
+   "argomento": "fis.7.1",
+   "stato": "approvata",
+   "testo": "Vero o falso: un'onda elettromagnetica trasporta energia da un punto all'altro senza trasportare materia. Rispondi ……",
+   "spiegazione": "Ciò che viaggia è la perturbazione dei campi, non le particelle: è il motivo per cui il Sole ci scalda attraverso lo spazio vuoto. Vale per tutte le onde, anche per quelle meccaniche, dove però serve un mezzo.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768660055,
+   "tipo": "completamento",
+   "accettate": [
+    "vero",
+    "v",
+    "si",
+    "sì"
+   ]
+  },
+  {
+   "id": "fis-72a-01",
+   "argomento": "fis.7.2",
+   "stato": "approvata",
+   "testo": "Le regioni dello spettro elettromagnetico, ordinate per frequenza crescente, sono:",
+   "spiegazione": "Al crescere della frequenza la lunghezza d'onda diminuisce e l'energia dei fotoni aumenta, quindi l'ordine per energia è lo stesso. L'infrarosso sta fra le microonde e il visibile, non prima delle microonde.",
+   "gruppo": "fis.7-regioni-spettro",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768660977,
+   "tipo": "multipla",
+   "opzioni": [
+    "onde radio, microonde, infrarosso, visibile, ultravioletto, raggi X, raggi gamma",
+    "raggi gamma, raggi X, ultravioletto, visibile, infrarosso, microonde, onde radio",
+    "onde radio, infrarosso, microonde, visibile, raggi X, ultravioletto, raggi gamma",
+    "microonde, onde radio, visibile, infrarosso, ultravioletto, raggi gamma, raggi X",
+    "visibile, infrarosso, ultravioletto, microonde, onde radio, raggi X, raggi gamma"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-72a-02",
+   "argomento": "fis.7.2",
+   "stato": "approvata",
+   "testo": "La radiazione visibile all'occhio umano ha lunghezze d'onda comprese circa fra:",
+   "spiegazione": "È una finestra molto stretta dello spettro, dal violetto al rosso. Subito oltre i due estremi ci sono l'ultravioletto, più energetico, e l'infrarosso, meno energetico.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768661517,
+   "tipo": "multipla",
+   "opzioni": [
+    "400 e 700 nm",
+    "4 e 7 nm",
+    "400 e 700 µm",
+    "40 e 70 nm",
+    "4 e 7 mm"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-72a-03",
+   "argomento": "fis.7.2",
+   "stato": "approvata",
+   "testo": "Le radiazioni con lunghezza d'onda immediatamente maggiore di quella del rosso visibile si chiamano ……",
+   "spiegazione": "Essendo meno energetiche della luce visibile, non si vedono ma si avvertono come calore. Le termocamere lavorano proprio in questa regione dello spettro.",
+   "gruppo": "fis.7-regioni-spettro",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768662231,
+   "tipo": "completamento",
+   "accettate": [
+    "infrarosse",
+    "infrarosso",
+    "infrarossi"
+   ]
+  },
+  {
+   "id": "fis-72a-04",
+   "argomento": "fis.7.2",
+   "stato": "approvata",
+   "testo": "Le radiazioni elettromagnetiche con la frequenza più alta e la lunghezza d'onda più corta sono i raggi ……",
+   "spiegazione": "Essendo le più energetiche, attraversano i tessuti e sono fortemente ionizzanti. Hanno origine nei nuclei atomici, a differenza dei raggi X, che nascono dalle transizioni degli elettroni o dalla loro frenata.",
+   "gruppo": "fis.7-regioni-spettro",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768662751,
+   "tipo": "completamento",
+   "accettate": [
+    "gamma",
+    "γ"
+   ]
+  },
+  {
+   "id": "fis-72a-05",
+   "argomento": "fis.7.2",
+   "stato": "approvata",
+   "testo": "Una radiazione di frequenza 6·10^14 Hz ha, nel vuoto, una lunghezza d'onda in nanometri pari a ……",
+   "spiegazione": "Dividendo la velocità della luce per la frequenza si ottengono 5·10^-7 m, che sono 500 nm. È una radiazione che l'occhio percepisce come verde.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768663300,
+   "tipo": "completamento",
+   "accettate": [
+    "500",
+    "cinquecento"
+   ],
+   "numero": {
+    "valore": 500,
+    "tolleranza": 0.02
+   },
+   "unita": "nm"
+  },
+  {
+   "id": "fis-74a-01",
+   "argomento": "fis.7.4",
+   "stato": "approvata",
+   "testo": "Secondo la legge di Lambert-Beer, l'assorbanza di una soluzione è proporzionale:",
+   "spiegazione": "Raddoppiando la concentrazione, o lo spessore della cuvetta, l'assorbanza raddoppia: è una relazione lineare, e per questo serve a misurare concentrazioni sconosciute. L'intensità della luce incidente non entra nell'assorbanza, che è un rapporto fra intensità.",
+   "gruppo": "fis.7.4-legge-lambert-beer",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768664113,
+   "tipo": "multipla",
+   "opzioni": [
+    "alla concentrazione della sostanza assorbente e allo spessore attraversato",
+    "alla sola intensità della luce incidente",
+    "al quadrato della concentrazione",
+    "alla temperatura della soluzione",
+    "al volume totale del campione"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-74a-02",
+   "argomento": "fis.7.4",
+   "stato": "approvata",
+   "testo": "Un campione con assorbanza pari a 1 trasmette:",
+   "spiegazione": "L'assorbanza è il logaritmo decimale del rapporto fra luce entrante e luce uscente, quindi un'assorbanza di 1 corrisponde a un decimo. Essendo logaritmica, un'assorbanza di 2 significa un centesimo, non un quinto.",
+   "gruppo": "fis.7.4-assorbanza-trasmittanza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768664821,
+   "tipo": "multipla",
+   "opzioni": [
+    "il 10% della luce incidente",
+    "il 50% della luce incidente",
+    "l'1% della luce incidente",
+    "il 90% della luce incidente",
+    "tutta la luce incidente"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-74a-03",
+   "argomento": "fis.7.4",
+   "stato": "approvata",
+   "testo": "Nella legge di Lambert-Beer l'assorbanza è direttamente proporzionale alla …… della sostanza assorbente",
+   "spiegazione": "È il motivo per cui la legge si usa all'inverso: si misura l'assorbanza e si ricava quanta sostanza c'è. La proporzionalità vale finché la soluzione non è troppo concentrata.",
+   "gruppo": "fis.7.4-legge-lambert-beer",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768665647,
+   "tipo": "completamento",
+   "accettate": [
+    "concentrazione",
+    "concentrazioni",
+    "molarità"
+   ]
+  },
+  {
+   "id": "fis-74a-04",
+   "argomento": "fis.7.4",
+   "stato": "approvata",
+   "testo": "Il coefficiente che indica quanto una sostanza assorbe a una data lunghezza d'onda si chiama coefficiente di estinzione ……",
+   "spiegazione": "Dipende dalla sostanza e dalla lunghezza d'onda scelta, non dalla quantità presente. Per questo nelle misure si lavora alla lunghezza d'onda in cui quel coefficiente è massimo, dove la misura è più sensibile.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768666150,
+   "tipo": "completamento",
+   "accettate": [
+    "molare",
+    "molari",
+    "specifico"
+   ]
+  },
+  {
+   "id": "fis-74a-05",
+   "argomento": "fis.7.4",
+   "stato": "approvata",
+   "testo": "Un campione che trasmette l'1% della luce incidente ha un'assorbanza pari a ……",
+   "spiegazione": "L'uno per cento è un centesimo, e il logaritmo decimale di cento fa 2. La scala logaritmica permette di descrivere con numeri piccoli attenuazioni enormi.",
+   "gruppo": "fis.7.4-assorbanza-trasmittanza",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768666702,
+   "tipo": "completamento",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-76a-01",
+   "argomento": "fis.7.6",
+   "stato": "approvata",
+   "testo": "Una radiazione si dice ionizzante quando:",
+   "spiegazione": "Quello che conta è l'energia del singolo fotone, non quanti fotoni arrivano: una luce intensissima di bassa frequenza non ionizza nulla. Per questo la distinzione si fa sulla frequenza, non sulla potenza della sorgente.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768667547,
+   "tipo": "multipla",
+   "opzioni": [
+    "l'energia dei suoi fotoni è sufficiente a strappare elettroni agli atomi che incontra",
+    "la sua intensità è molto elevata",
+    "viene emessa in modo continuo e non a impulsi",
+    "riscalda i tessuti che attraversa",
+    "si propaga soltanto nel vuoto"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-76a-02",
+   "argomento": "fis.7.6",
+   "stato": "approvata",
+   "testo": "Fra le radiazioni elencate, quelle ionizzanti sono:",
+   "spiegazione": "Soltanto le radiazioni oltre l'ultravioletto hanno fotoni abbastanza energetici da ionizzare la materia biologica. Microonde e onde radio cedono energia che si manifesta come calore, senza rompere legami.",
+   "gruppo": "fis.7-regioni-spettro",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768668031,
+   "tipo": "multipla",
+   "opzioni": [
+    "i raggi X e la radiazione gamma",
+    "le microonde e le onde radio",
+    "la luce visibile e l'infrarosso",
+    "le onde sonore di alta frequenza",
+    "il campo magnetico statico"
+   ],
+   "corretta": 0
+  },
+  {
+   "id": "fis-76a-03",
+   "argomento": "fis.7.6",
+   "stato": "approvata",
+   "testo": "La radiazione ionizzante costituita da nuclei di elio emessi da nuclei radioattivi si chiama radiazione ……",
+   "spiegazione": "Essendo formata da particelle pesanti e doppiamente cariche, cede energia in pochissimo spazio: basta un foglio di carta per fermarla. Proprio per questo è molto dannosa se la sorgente viene inalata o ingerita.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768668704,
+   "tipo": "completamento",
+   "accettate": [
+    "alfa",
+    "α",
+    "alpha"
+   ]
+  },
+  {
+   "id": "fis-76a-04",
+   "argomento": "fis.7.6",
+   "stato": "approvata",
+   "testo": "Fra infrarosso e ultravioletto, la radiazione capace di danneggiare direttamente il DNA è l'……",
+   "spiegazione": "I suoi fotoni hanno energia sufficiente a far reagire fra loro basi adiacenti del DNA, formando dimeri che la cellula deve riparare. L'infrarosso, meno energetico, trasmette solo calore.",
+   "gruppo": "fis.7-regioni-spettro",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768669213,
+   "tipo": "completamento",
+   "accettate": [
+    "ultravioletto",
+    "ultravioletta",
+    "UV",
+    "ultraviolette"
+   ]
+  },
+  {
+   "id": "fis-76a-05",
+   "argomento": "fis.7.6",
+   "stato": "approvata",
+   "testo": "L'energia che una radiazione non ionizzante cede ai tessuti si manifesta soprattutto come ……",
+   "spiegazione": "Non bastando a strappare elettroni, l'energia assorbita finisce nell'agitazione delle molecole. È il principio del forno a microonde e, in medicina, della diatermia.",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768669790,
+   "tipo": "completamento",
+   "accettate": [
+    "calore",
+    "calori",
+    "riscaldamento"
+   ]
+  },
+  {
+   "id": "fis-43a-02",
+   "argomento": "fis.4.3",
+   "stato": "approvata",
+   "testo": "Triplicando la distanza da una sorgente puntiforme che emette in modo uniforme, l'intensità dell'onda:",
+   "spiegazione": "La stessa potenza si distribuisce su una sfera la cui superficie cresce col quadrato del raggio, quindi tre volte più lontano significa nove volte meno intenso. È la legge dell'inverso del quadrato, la stessa che vale per la luce.",
+   "gruppo": "fis.4.3-inverso-quadrato",
+   "fonte": "ai-chat",
+   "aggiornata": 1792768674119,
+   "tipo": "multipla",
+   "opzioni": [
+    "diventa un nono di quella iniziale",
+    "diventa un terzo di quella iniziale",
+    "diventa nove volte quella iniziale",
+    "non cambia",
+    "si riduce di tre unità"
+   ],
+   "corretta": 0
   }
  ]
 }

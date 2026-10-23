@@ -57,9 +57,11 @@ describe('leggiNumero', () => {
 
 describe('esito', () => {
   it('multipla: confronta l\'indice originale', () => {
-    const d = trova(bancaBio, 'bio-007')
-    expect(esito(d, 2)).toBe('corretta')
-    expect(esito(d, 0)).toBe('errata')
+    // niente id fissi qui: le domande della banca si rivedono e si scartano nel pannello, e un
+    // test che ne nomina una si rompe il giorno in cui quella domanda non piace più
+    const d = bancaBio.find((q) => q.tipo === 'multipla')!
+    expect(esito(d, d.corretta)).toBe('corretta')
+    expect(esito(d, (d.corretta + 1) % d.opzioni.length)).toBe('errata')
     expect(esito(d, null)).toBe('omessa')
   })
   it('completamento testuale tollerante', () => {

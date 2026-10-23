@@ -183,7 +183,8 @@
    ],
    "spiegazione": "Ogni nucleotide è formato da una base azotata, uno zucchero pentoso e uno o più gruppi fosfato.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.1.5-nucleotidi"
   },
   {
    "id": "bio-017",
@@ -223,7 +224,8 @@
    ],
    "spiegazione": "Il lattosio, convertito in allolattosio, si lega al repressore e lo stacca dall'operatore, permettendo la trascrizione.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.3.2-operone"
   },
   {
    "id": "bio-020",
@@ -250,7 +252,8 @@
    ],
    "spiegazione": "Gli enzimi E1, E2 ed E3 legano più molecole di ubiquitina alla proteina bersaglio, che viene poi riconosciuta dal proteasoma 26S.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.3.4-ubiquitina-proteasoma"
   },
   {
    "id": "bio-022",
@@ -307,7 +310,8 @@
    ],
    "spiegazione": "L'ATP sintasi della membrana mitocondriale interna sfrutta il gradiente di protoni creato dalla catena di trasporto degli elettroni.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.5.5-fosforilazione-ossidativa"
   },
   {
    "id": "bio-027",
@@ -354,7 +358,8 @@
    ],
    "spiegazione": "Le giunzioni comunicanti lasciano passare ioni e piccole molecole: nel cuore sincronizzano la contrazione.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.6.2-giunzioni-comunicanti"
   },
   {
    "id": "bio-030",
@@ -385,7 +390,8 @@
     "da contatto",
     "sinaptica"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "bio.6.3-segnalazione-da-contatto"
   },
   {
    "id": "bio-63a-02",
@@ -439,7 +445,8 @@
     "fosforilano la proteina G sui residui di tirosina",
     "accelerano l'idrolisi del GTP, spegnendo la proteina"
    ],
-   "corretta": 4
+   "corretta": 4,
+   "gruppo": "bio.6.3-recettori-e-secondi-messaggeri"
   },
   {
    "id": "bio-63a-05",
@@ -518,7 +525,8 @@
    "tipo": "completamento",
    "accettate": [
     "contatto"
-   ]
+   ],
+   "gruppo": "bio.6.3-segnalazione-da-contatto"
   },
   {
    "id": "bio-63a-11",
@@ -550,7 +558,8 @@
     "l'idrolisi del GTP legato a Ras",
     "la traslocazione del recettore nel nucleo"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.6.3-recettori-e-secondi-messaggeri"
   },
   {
    "id": "bio-63b-02",
@@ -619,7 +628,8 @@
     "tirosina",
     "tirosine",
     "Tyr"
-   ]
+   ],
+   "gruppo": "bio.6.3-recettori-e-secondi-messaggeri"
   },
   {
    "id": "bio-63b-07",
@@ -711,7 +721,8 @@
     "Ca2+",
     "Ca++",
     "ione calcio"
-   ]
+   ],
+   "gruppo": "bio.6.3-recettori-e-secondi-messaggeri"
   },
   {
    "id": "bio-63b-05",
@@ -801,7 +812,8 @@
     "eterozigosi composta",
     "assortimento indipendente"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.4.2-codominanza"
   },
   {
    "id": "bio-42a-05",
@@ -862,7 +874,8 @@
     "segregazione",
     "disgiunzione",
     "segregazione degli alleli"
-   ]
+   ],
+   "gruppo": "bio.4.2-segregazione"
   },
   {
    "id": "bio-42a-09",
@@ -894,7 +907,8 @@
    "accettate": [
     "codominanza",
     "codominanti"
-   ]
+   ],
+   "gruppo": "bio.4.2-codominanza"
   },
   {
    "id": "bio-42a-11",
@@ -946,7 +960,8 @@
     "il carattere è determinato da più geni diversi",
     "nella popolazione esistono più di due varianti di quel gene"
    ],
-   "corretta": 4
+   "corretta": 4,
+   "gruppo": "bio.4.2-alleli-multipli"
   },
   {
    "id": "bio-42b-03",
@@ -964,7 +979,8 @@
     "alleli multipli",
     "eterozigosi composta"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.4.2-alleli-multipli"
   },
   {
    "id": "bio-42b-04",
@@ -1000,7 +1016,8 @@
     "hanno una frequenza di ricombinazione superiore al 50%",
     "non seguono la legge della segregazione"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "bio.4.2-segregazione"
   },
   {
    "id": "bio-42b-06",
@@ -1014,7 +1031,8 @@
    "accettate": [
     "multipli",
     "multiplo"
-   ]
+   ],
+   "gruppo": "bio.4.2-alleli-multipli"
   },
   {
    "id": "bio-42b-07",
@@ -1245,7 +1263,8 @@
    "tipo": "completamento",
    "accettate": [
     "glicogeno"
-   ]
+   ],
+   "gruppo": "bio.1.5-glicogeno"
   },
   {
    "id": "bio-15b-01",
@@ -1281,7 +1300,8 @@
     "una base azotata, uno zucchero pentoso e almeno un gruppo fosfato",
     "una base azotata e uno zucchero pentoso"
    ],
-   "corretta": 3
+   "corretta": 3,
+   "gruppo": "bio.1.5-nucleotidi"
   },
   {
    "id": "bio-15b-03",
@@ -1397,7 +1417,8 @@
    "tipo": "completamento",
    "accettate": [
     "acetilazione"
-   ]
+   ],
+   "gruppo": "bio.2.2-acetilazione-istoni"
   },
   {
    "id": "bio-15b-10",
@@ -1501,7 +1522,8 @@
     "perché aumenta la rigidità del tessuto",
     "perché apre alle cellule tumorali una via per invadere i tessuti vicini"
    ],
-   "corretta": 4
+   "corretta": 4,
+   "gruppo": "bio.6.1-rigidita-matrice"
   },
   {
    "id": "bio-61a-06",
@@ -1641,7 +1663,8 @@
     "trasportare ossigeno ai tessuti",
     "costituire i canali delle giunzioni comunicanti"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.6.2-giunzioni-comunicanti"
   },
   {
    "id": "bio-61b-05",
@@ -1703,7 +1726,8 @@
     "rigidità",
     "rigidezza",
     "rigidita"
-   ]
+   ],
+   "gruppo": "bio.6.1-rigidita-matrice"
   },
   {
    "id": "bio-61b-09",
@@ -1718,7 +1742,8 @@
     "apoptosi",
     "anoikis",
     "anoichia"
-   ]
+   ],
+   "gruppo": "bio.5.1-apoptosi"
   },
   {
    "id": "bio-61b-10",
@@ -1786,7 +1811,8 @@
     "il gradiente di sodio della membrana plasmatica",
     "l'energia luminosa"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.5.5-fosforilazione-ossidativa"
   },
   {
    "id": "bio-55a-04",
@@ -1820,7 +1846,8 @@
     "cresta",
     "cristae",
     "creste mitocondriali"
-   ]
+   ],
+   "gruppo": "bio.5.5-creste"
   },
   {
    "id": "bio-55a-06",
@@ -1834,7 +1861,8 @@
    "accettate": [
     "piruvato",
     "acido piruvico"
-   ]
+   ],
+   "gruppo": "bio.5.5-piruvato"
   },
   {
    "id": "bio-55a-07",
@@ -1849,7 +1877,8 @@
     "ossigeno",
     "O2",
     "ossigeno molecolare"
-   ]
+   ],
+   "gruppo": "bio.5.5-fosforilazione-ossidativa"
   },
   {
    "id": "bio-55a-08",
@@ -1882,7 +1911,8 @@
    "accettate": [
     "matrice",
     "matrice mitocondriale"
-   ]
+   ],
+   "gruppo": "bio.5.5-traslocasi-tim"
   },
   {
    "id": "bio-55b-01",
@@ -1900,7 +1930,8 @@
     "il trasporto attivo del glucosio nella cellula",
     "la demolizione delle proteine muscolari"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.5.5-piruvato"
   },
   {
    "id": "bio-55b-02",
@@ -1918,7 +1949,8 @@
     "duplicare il DNA mitocondriale",
     "far passare le proteine attraverso le due membrane"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.5.5-creste"
   },
   {
    "id": "bio-55b-03",
@@ -1936,7 +1968,8 @@
     "OXA",
     "il poro nucleare"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "bio.5.5-traslocasi-tim"
   },
   {
    "id": "bio-55b-04",
@@ -2013,7 +2046,8 @@
     "TIM",
     "TIM 23",
     "complesso TIM23"
-   ]
+   ],
+   "gruppo": "bio.5.5-traslocasi-tim"
   },
   {
    "id": "bio-73a-01",
@@ -2028,10 +2062,11 @@
     "in profase, prima che i cromosomi si condensino",
     "in prometafase, dopo la condensazione dei cromosomi",
     "in metafase, quando i cromosomi sono allineati",
-    "in anafase, mentre i cromatidi migrano",
+    "in anafase, quando il fuso comincia a smontarsi",
     "in telofase"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.7.3-telofase"
   },
   {
    "id": "bio-73a-02",
@@ -2085,7 +2120,8 @@
     "formare l'anello contrattile della citodieresi",
     "decondensare la cromatina in telofase"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "bio.7.3-telofase"
   },
   {
    "id": "bio-73a-05",
@@ -2099,7 +2135,8 @@
    "accettate": [
     "fratelli",
     "fratello"
-   ]
+   ],
+   "gruppo": "bio.7.3-cromatidi-fratelli"
   },
   {
    "id": "bio-73a-06",
@@ -2126,7 +2163,8 @@
    "tipo": "completamento",
    "accettate": [
     "telofase"
-   ]
+   ],
+   "gruppo": "bio.7.3-telofase"
   },
   {
    "id": "bio-73a-08",
@@ -2176,7 +2214,8 @@
     "depolimerizza tutti i microtubuli del fuso",
     "duplica il centrosoma"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.7.3-cromatidi-fratelli"
   },
   {
    "id": "bio-73b-02",
@@ -2194,7 +2233,8 @@
     "alla separasi di tagliare la coesina",
     "alla cellula di entrare in fase S"
    ],
-   "corretta": 3
+   "corretta": 3,
+   "gruppo": "bio.2.2-coesina"
   },
   {
    "id": "bio-73b-03",
@@ -2212,7 +2252,8 @@
     "fibre di collagene",
     "membrane del reticolo endoplasmatico"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "bio.5.13-cheratine"
   },
   {
    "id": "bio-73b-04",
@@ -2273,7 +2314,8 @@
    "tipo": "completamento",
    "accettate": [
     "anafase"
-   ]
+   ],
+   "gruppo": "bio.7.3-cromatidi-fratelli"
   },
   {
    "id": "bio-73b-08",
@@ -2539,7 +2581,8 @@
     "Met",
     "formilmetionina",
     "fMet"
-   ]
+   ],
+   "gruppo": "bio.3.7-fattori-di-inizio"
   },
   {
    "id": "bio-37b-08",
@@ -2553,7 +2596,8 @@
    "accettate": [
     "inizio",
     "iniziazione"
-   ]
+   ],
+   "gruppo": "bio.3.7-fattori-di-inizio"
   },
   {
    "id": "bio-54a-01",
@@ -3223,7 +3267,8 @@
     "incapace di essere replicata",
     "completamente priva di istoni"
    ],
-   "corretta": 0
+   "corretta": 0,
+   "gruppo": "bio.2.2-acetilazione-istoni"
   },
   {
    "id": "bio-22b-03",
@@ -3241,7 +3286,8 @@
     "trascrivere i geni ribosomali nel nucleolo",
     "costruire il complesso del poro nucleare"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.2.3-geni-rrna"
   },
   {
    "id": "bio-22b-04",
@@ -3298,7 +3344,8 @@
    "accettate": [
     "coesina",
     "coesine"
-   ]
+   ],
+   "gruppo": "bio.2.2-coesina"
   },
   {
    "id": "bio-tappa0-01",
@@ -3471,7 +3518,7 @@
    "testo": "Un gene è definito come:",
    "spiegazione": "Il prodotto di un gene non è necessariamente una proteina: i geni degli rRNA, dei tRNA e dei microRNA non vengono mai tradotti. Nella definizione rientrano anche le sequenze regolative che ne governano l'espressione.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191702,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "qualunque sequenza di DNA che venga duplicata insieme al cromosoma",
@@ -3490,13 +3537,13 @@
    "spiegazione": "Nei batteri i geni di una stessa via metabolica sono trascritti in un unico messaggero e tradotti insieme, così la cellula li regola con un solo interruttore. Negli eucarioti ogni mRNA porta di regola l'informazione per una sola catena polipeptidica.",
    "gruppo": "bio.3.2-mrna-cistroni",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191702,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "porta l'informazione per più proteine diverse ed è tipico dei procarioti",
     "porta l'informazione per una sola proteina ed è tipico dei procarioti",
     "contiene più copie dello stesso messaggio, per aumentarne la resa",
-    "si trova solo negli eucarioti, dopo lo splicing alternativo",
+    "si trova solo negli eucarioti, dopo la maturazione dell'RNA",
     "è un mRNA che ha perso la coda poli-A"
    ],
    "corretta": 0
@@ -3508,7 +3555,7 @@
    "testo": "Il promotore di un gene:",
    "spiegazione": "Serve a far trovare alla RNA polimerasi il punto e il filamento da cui partire, e per questo non ha bisogno di essere trascritto per funzionare. Ogni gene trascritto, anche batterico, ne ha uno.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "viene tradotto nella porzione iniziale della proteina",
@@ -3527,7 +3574,7 @@
    "spiegazione": "La distinzione è fra sequenze, che restano dove sono scritte, e prodotti diffusibili come i fattori di trascrizione, che agiscono in trans. È il motivo per cui una mutazione in un elemento in cis colpisce una sola delle due copie del gene.",
    "gruppo": "bio.3.2-elementi-cis",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "è una sequenza di DNA che agisce sui geni della stessa molecola su cui si trova",
@@ -3546,7 +3593,7 @@
    "spiegazione": "La polimerasi trascrive il gene per intero: gli introni vengono rimossi dopo, sul precursore dell'RNA. Nei geni umani sono spesso molto più lunghi degli esoni che separano.",
    "gruppo": "bio.3.2-introni-esoni",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "non vengono trascritti, perché la polimerasi li salta",
@@ -3565,7 +3612,7 @@
    "spiegazione": "Il ripiegamento del DNA avvicina fisicamente l'enhancer al promotore, quindi la distanza lungo la sequenza conta poco. Proprio per questo lo stesso enhancer può controllare un gene lontano e non quello che gli sta accanto.",
    "gruppo": "bio.3.2-enhancer-silencer",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "può aumentare la trascrizione agendo anche a migliaia di basi di distanza e in entrambi gli orientamenti",
@@ -3582,8 +3629,9 @@
    "stato": "approvata",
    "testo": "Nei batteri l'insieme di geni contigui trascritti in un unico mRNA sotto lo stesso promotore si chiama ……",
    "spiegazione": "Regolare un solo promotore basta ad accendere o spegnere insieme tutti gli enzimi di una via metabolica. L'operone del lattosio è l'esempio classico.",
+   "gruppo": "bio.3.2-operone",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "operone",
@@ -3599,7 +3647,7 @@
    "spiegazione": "Avviene nel nucleo, prima che il messaggero esca, ed è svolto dallo spliceosoma. Saldando gli esoni in combinazioni diverse, uno stesso gene può dare proteine differenti.",
    "gruppo": "bio.3.2-splicing",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "splicing",
@@ -3615,7 +3663,7 @@
    "spiegazione": "Essendo sequenze e non prodotti diffusibili, agiscono solo là dove stanno scritte. I fattori di trascrizione, che invece diffondono, agiscono in trans.",
    "gruppo": "bio.3.2-elementi-cis",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "cis",
@@ -3631,7 +3679,7 @@
    "spiegazione": "È la regola negli eucarioti, dove ogni messaggero ha di norma un solo punto di inizio della traduzione. Nei procarioti lo stesso mRNA può invece servire più geni.",
    "gruppo": "bio.3.2-mrna-cistroni",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "monocistronico",
@@ -3647,7 +3695,7 @@
    "spiegazione": "Sono le porzioni che lo splicing conserva e salda insieme, e che contengono l'informazione poi tradotta. Nei geni umani occupano in media una piccola frazione della lunghezza complessiva.",
    "gruppo": "bio.3.2-introni-esoni",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "esoni",
@@ -3662,7 +3710,7 @@
    "spiegazione": "È il corrispettivo negativo dell'enhancer: regolare un gene non significa solo accenderlo, ma anche tenerlo spento dove non serve. Nei tessuti differenziati gran parte del genoma è tenuta a freno così.",
    "gruppo": "bio.3.2-enhancer-silencer",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "silenziatore",
@@ -3678,7 +3726,7 @@
    "spiegazione": "La duplicazione di un gene lascia due copie libere di divergere, e da lì nascono proteine affini ma specializzate, come le globine embrionali, fetali e adulte. I geni di una famiglia possono stare su cromosomi diversi: quelli delle catene alfa e beta dell'emoglobina ne sono l'esempio.",
    "gruppo": "bio.2.3-famiglia-genica",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "geni simili fra loro, nati per duplicazione di un progenitore comune e con funzioni affini",
@@ -3697,7 +3745,7 @@
    "spiegazione": "L'unità ripetuta è di due a sei nucleotidi, e la variabilità del numero di ripetizioni rende ogni individuo distinguibile: è la base dei profili genetici usati in medicina legale. L'espansione eccessiva di alcune di queste ripetizioni causa malattie come la corea di Huntington.",
    "gruppo": "bio.2.3-microsatelliti",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "brevi sequenze di poche basi ripetute in tandem, con un numero di ripetizioni variabile da individuo a individuo",
@@ -3716,7 +3764,7 @@
    "spiegazione": "Entrambe si moltiplicano attraverso una copia a RNA retrotrascritta e reinserita, ma solo le LINE hanno l'enzima per farlo da sé. Le SINE, come la sequenza Alu, sono di fatto parassiti di un parassita.",
    "gruppo": "bio.2.3-elementi-line",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "le LINE sono presenti solo nei procarioti e le SINE solo negli eucarioti",
@@ -3735,7 +3783,7 @@
    "spiegazione": "Per un gene che dà una proteina un solo mRNA può essere tradotto molte volte, e il prodotto si moltiplica a valle; per un gene che dà direttamente RNA questo passaggio manca, quindi l'unico modo di aumentare la resa è avere più copie del gene. Nell'uomo sono centinaia, raggruppate nelle regioni che formano il nucleolo.",
    "gruppo": "bio.2.3-geni-rrna",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "la cellula ha bisogno di grandi quantità di rRNA, che non possono essere moltiplicate dalla traduzione",
@@ -3753,7 +3801,7 @@
    "testo": "Nel genoma umano la frazione che codifica proteine è circa:",
    "spiegazione": "La quasi totalità del genoma è fatta di introni, sequenze regolative, DNA ripetuto ed elementi mobili. Non codificare proteine non significa essere inutile: molte di quelle sequenze vengono trascritte o servono a regolare i geni.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "il 25%",
@@ -3772,7 +3820,7 @@
    "spiegazione": "A variare non è la sequenza dell'unità ma quante volte si ripete, e ciascuno eredita una combinazione propria dai due genitori. Bastano una decina di questi marcatori per rendere un profilo praticamente unico.",
    "gruppo": "bio.2.3-microsatelliti",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "microsatelliti",
@@ -3791,7 +3839,7 @@
    "spiegazione": "Avendo l'enzima, possono copiarsi e reinserirsi altrove senza aiuto esterno. Sono la classe di elementi mobili che occupa la frazione maggiore del genoma umano.",
    "gruppo": "bio.2.3-elementi-line",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "LINE",
@@ -3808,7 +3856,7 @@
    "testo": "Gli elementi mobili che per spostarsi passano attraverso un intermedio a RNA si chiamano ……",
    "spiegazione": "La copia a RNA viene retrotrascritta in DNA e inserita in un nuovo punto, quindi l'originale resta al suo posto e il numero di copie cresce. I trasposoni a DNA, invece, si spostano tagliando e incollando la sequenza stessa.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "retrotrasposoni",
@@ -3825,7 +3873,7 @@
    "spiegazione": "La somiglianza di sequenza tradisce l'origine comune, mentre le differenze accumulate dopo la duplicazione danno a ciascun membro una funzione un po' diversa. È così che l'emoglobina fetale lega l'ossigeno più avidamente di quella adulta.",
    "gruppo": "bio.2.3-famiglia-genica",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "famiglia",
@@ -3839,8 +3887,9 @@
    "stato": "approvata",
    "testo": "Le sequenze di origine virale integrate nel genoma e trasmesse alla discendenza si chiamano retrovirus ……",
    "spiegazione": "Sono il residuo di infezioni avvenute nella linea germinale di antenati lontani, e oggi nella quasi totalità dei casi non sono più capaci di produrre virus. Alcune di quelle sequenze sono state riutilizzate dalla cellula, per esempio nella placenta.",
+   "gruppo": "bio.2.3-geni-rrna",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "endogeni",
@@ -3857,7 +3906,7 @@
    "testo": "Vero o falso: una copia di un gene che ha perso la capacità di dare un prodotto funzionale si chiama pseudogene. Rispondi ……",
    "spiegazione": "Dopo una duplicazione una delle due copie è libera di accumulare mutazioni senza danno, e a volte finisce inattivata. Gli pseudogeni restano nel genoma come traccia della storia evolutiva di una famiglia genica.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "vero",
@@ -3874,7 +3923,7 @@
    "spiegazione": "Mosaico perché i componenti sono tanti e diversi, fluido perché nessuno di essi è fissato: lipidi e proteine diffondono nel piano della membrana. È questa mobilità che permette ai recettori di raggrupparsi quando serve.",
    "gruppo": "bio.5.1-mobilita-laterale",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "un doppio strato lipidico fluido in cui le proteine sono immerse e possono spostarsi lateralmente",
@@ -3893,14 +3942,14 @@
    "spiegazione": "Inserendosi fra le code dei fosfolipidi ne limita i movimenti quando fa caldo, ma al freddo impedisce che si impacchettino in modo ordinato. Agisce quindi come un tampone della fluidità, non come un semplice fluidificante.",
    "gruppo": "bio.5.1-colesterolo-fluidita",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "ne aumenta la fluidità in qualunque condizione di temperatura",
     "la irrigidisce alle temperature elevate e ne impedisce l'eccessivo compattamento a quelle basse",
     "forma i canali attraverso cui passa l'acqua",
     "si trova soltanto nelle membrane dei batteri",
-    "costituisce la componente glucidica del glicocalice"
+    "si dispone tutto nel foglietto interno della membrana"
    ],
    "corretta": 1
   },
@@ -3912,7 +3961,7 @@
    "spiegazione": "Gli zuccheri legati a proteine e lipidi sporgono soltanto verso l'esterno, perché la glicosilazione avviene nel lume del reticolo e del Golgi. Da quelle catene dipendono il riconoscimento immunitario e i gruppi sanguigni.",
    "gruppo": "bio.5.1-glicocalice",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "la rete di filamenti proteici che sostiene la membrana dal lato interno",
@@ -3931,7 +3980,7 @@
    "spiegazione": "Il passaggio spontaneo di un fosfolipide da un foglietto all'altro è lentissimo, perché la testa polare dovrebbe attraversare la zona idrofobica: l'asimmetria, una volta stabilita, si conserva. A mantenerla attivamente sono enzimi specifici che spendono ATP.",
    "gruppo": "bio.5.1-asimmetria-flippasi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "i due foglietti hanno composizione lipidica diversa, mantenuta da enzimi che spostano i lipidi fra l'uno e l'altro",
@@ -3949,7 +3998,7 @@
    "testo": "Le proteine integrali di membrana si distinguono da quelle periferiche perché:",
    "spiegazione": "Il tratto che attraversa il doppio strato è formato da amminoacidi apolari, compatibili con l'ambiente delle code lipidiche; per estrarre una proteina integrale serve un detergente. Le periferiche, tenute da legami più deboli con teste polari o altre proteine, si staccano variando la forza ionica.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "attraversano il doppio strato con tratti idrofobici, mentre le periferiche restano legate alla superficie",
@@ -3968,7 +4017,7 @@
    "spiegazione": "È una molecola rigida e in gran parte apolare, che si incunea fra le catene e ne ostacola sia i movimenti sia l'impacchettamento ordinato. Nei batteri, che non ne hanno, la fluidità si regola variando la lunghezza e l'insaturazione delle code.",
    "gruppo": "bio.5.1-colesterolo-fluidita",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "colesterolo",
@@ -3983,7 +4032,7 @@
    "spiegazione": "Il salto spontaneo di una testa polare attraverso la zona idrofobica è troppo lento per essere utile, quindi serve un trasporto attivo. Grazie a questi enzimi la composizione dei due foglietti resta diversa.",
    "gruppo": "bio.5.1-asimmetria-flippasi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "flippasi",
@@ -4001,7 +4050,7 @@
    "spiegazione": "Si forma perché gli zuccheri vengono aggiunti nel lume del reticolo e del Golgi, che corrisponde all'esterno della cellula. Protegge la superficie e porta i segnali con cui le cellule si riconoscono fra loro.",
    "gruppo": "bio.5.1-glicocalice",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "glicocalice",
@@ -4015,8 +4064,9 @@
    "stato": "approvata",
    "testo": "La comparsa della fosfatidilserina sulla faccia esterna della membrana è un segnale che la cellula sta andando in ……",
    "spiegazione": "Normalmente quel fosfolipide è confinato nel foglietto interno, quindi vederlo all'esterno significa che l'asimmetria non è più mantenuta. I macrofagi lo riconoscono e rimuovono la cellula prima che si rompa.",
+   "gruppo": "bio.5.1-apoptosi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "apoptosi",
@@ -4033,7 +4083,7 @@
    "spiegazione": "Capovolgersi costringerebbe le porzioni polari della proteina ad attraversare la zona idrofobica del doppio strato, cosa energeticamente proibitiva. Per questo l'orientamento stabilito al momento dell'inserimento nella membrana non cambia più.",
    "gruppo": "bio.5.1-mobilita-laterale",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "vero",
@@ -4050,7 +4100,7 @@
    "spiegazione": "Il rivestimento si assembla sul lato citosolico e, incurvandosi, piega la membrana su cui è appoggiato; le stesse proteine riconoscono i segnali dei recettori del carico. A trasporto avvenuto il rivestimento si smonta, altrimenti la vescicola non potrebbe fondersi.",
    "gruppo": "bio.5.8-rivestimento-vescicole",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "deformare la membrana in una gemma e selezionare il carico da includere",
@@ -4069,7 +4119,7 @@
    "spiegazione": "La via anterograda esce dal reticolo verso il Golgi, quella retrograda recupera gli enzimi e i recettori che devono tornare indietro. Senza il recupero retrogrado il reticolo si svuoterebbe dei propri componenti.",
    "gruppo": "bio.5.8-copi-copii",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "COPII porta le vescicole dal reticolo endoplasmatico al Golgi, COPI le riporta in direzione opposta",
@@ -4088,7 +4138,7 @@
    "spiegazione": "L'avvolgimento reciproco delle SNARE della vescicola e di quelle del bersaglio libera energia e vince la repulsione fra le due membrane. È il passaggio che le fa diventare una sola membrana continua.",
    "gruppo": "bio.5.8-fusione-snare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "nella fase di fusione, appaiandosi fra vescicola e membrana bersaglio fino ad avvicinare i due doppi strati",
@@ -4106,7 +4156,7 @@
    "testo": "Le proteine RAB sono:",
    "spiegazione": "Legando GTP o GDP passano fra uno stato attivo e uno inattivo, e in quello attivo reclutano le proteine che tengono la vescicola vicino al bersaglio giusto. Danno al traffico la sua specificità, prima che le SNARE completino la fusione.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "piccole GTPasi che riconoscono il compartimento bersaglio e regolano l'attracco della vescicola",
@@ -4124,7 +4174,7 @@
    "testo": "Nel traffico vescicolare i fosfoinositidi hanno il ruolo di:",
    "spiegazione": "Secondo quali posizioni dell'inositolo sono fosforilate, la membrana espone un'etichetta diversa, riconosciuta da domini proteici specifici. Così una proteina citosolica sa a quale compartimento attaccarsi, anche se tutte le membrane sono fatte degli stessi lipidi di base.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "marcare l'identità delle diverse membrane e reclutare le proteine che vi devono lavorare",
@@ -4141,8 +4191,9 @@
    "stato": "approvata",
    "testo": "La proteina che forma la gabbia delle vescicole di endocitosi mediata da recettore si chiama ……",
    "spiegazione": "Le sue unità a tre braccia si assemblano in una struttura chiusa a maglie, che curva la membrana su cui poggia. Le stesse gabbie si formano anche in uscita dal Golgi, verso i lisosomi.",
+   "gruppo": "bio.5.8-fusione-snare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "clatrina",
@@ -4157,7 +4208,7 @@
    "spiegazione": "Quelle sulla vescicola e quelle sul bersaglio sono diverse e si riconoscono soltanto a coppie giuste, il che aggiunge un controllo sulla destinazione. La tossina botulinica agisce proprio tagliandole, e per questo blocca il rilascio del neurotrasmettitore.",
    "gruppo": "bio.5.8-fusione-snare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "SNARE",
@@ -4174,7 +4225,7 @@
    "spiegazione": "Dopo la fusione le SNARE restano avvolte fra loro in un complesso molto stabile, che va sciolto spendendo energia perché possano essere riutilizzate. Senza questo riciclo ogni proteina servirebbe una volta sola.",
    "gruppo": "bio.5.8-fusione-snare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "NSF",
@@ -4189,7 +4240,7 @@
    "spiegazione": "È la via retrograda, quella che recupera gli enzimi residenti del reticolo sfuggiti con il flusso in uscita. Molte di quelle proteine portano un segnale di ritorno che i recettori di questo rivestimento riconoscono.",
    "gruppo": "bio.5.8-copi-copii",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "COPI",
@@ -4207,7 +4258,7 @@
    "spiegazione": "Finché la gabbia è montata, le membrane non possono avvicinarsi abbastanza perché le SNARE lavorino. Il rivestimento si smonta subito dopo il distacco dalla membrana di partenza e le sue unità vengono riutilizzate.",
    "gruppo": "bio.5.8-rivestimento-vescicole",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "falso",
@@ -4223,7 +4274,7 @@
    "spiegazione": "Una proteina che entra nel lume del reticolo non attraversa più membrane: passa al Golgi e poi all'esterno per esocitosi. Per questo gli zuccheri aggiunti in quel lume si ritrovano sulla faccia esterna della membrana plasmatica.",
    "gruppo": "bio.5.3-topologia-lume",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "l'ambiente extracellulare",
@@ -4242,7 +4293,7 @@
    "spiegazione": "Essendo in testa, esce dal ribosoma per primo e può essere letto quando della catena c'è ancora poco: così il ribosoma viene portato sulla membrana e la proteina entra nel lume mentre viene sintetizzata. Una volta dentro, una peptidasi taglia via il segnale.",
    "gruppo": "bio.5.3-peptide-segnale-srp",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "si trova di regola all'estremità amminoterminale e viene riconosciuto mentre la traduzione è ancora in corso",
@@ -4261,7 +4312,7 @@
    "spiegazione": "Dopo ogni divisione l'involucro nucleare si riforma e le proteine nucleari vanno reimportate: il segnale deve restare per poter essere usato di nuovo. Il trasporto avviene attraverso i pori, senza attraversare un doppio strato lipidico.",
    "gruppo": "bio.5.3-segnale-nls",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "è ricco di amminoacidi basici e non viene rimosso dopo il trasporto",
@@ -4280,7 +4331,7 @@
    "spiegazione": "I canali di importazione del mitocondrio sono stretti, quindi la catena deve essere tenuta distesa dagli chaperon fino all'ingresso e ripiegata solo dentro. Il genoma mitocondriale codifica una piccola minoranza delle proteine dell'organello: la grande maggioranza arriva dal citosol.",
    "gruppo": "bio.5.3-importazione-mitocondriale",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "sono sintetizzate da ribosomi liberi nel citosol e importate dopo la sintesi, in forma non ripiegata",
@@ -4299,7 +4350,7 @@
    "spiegazione": "Legandosi al segnale appena emerso, mette in pausa la traduzione e la riprende solo quando il ribosoma è agganciato al traslocone. Così la proteina non finisce per sbaglio nel citosol.",
    "gruppo": "bio.5.3-peptide-segnale-srp",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "SRP",
@@ -4316,7 +4367,7 @@
    "spiegazione": "È una breve sequenza ricca di lisine e arginine, riconosciuta dalle importine che accompagnano la proteina attraverso il poro. Non venendo tagliata, serve di nuovo a ogni reimportazione dopo la mitosi.",
    "gruppo": "bio.5.3-segnale-nls",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "NLS",
@@ -4332,7 +4383,7 @@
    "testo": "L'etichetta aggiunta nel Golgi che indirizza gli enzimi idrolitici ai lisosomi è il mannosio-6-……",
    "spiegazione": "Un recettore del Golgi riconosce quel gruppo e carica gli enzimi nelle vescicole dirette al lisosoma. Se la fosforilazione non avviene, gli enzimi vengono secreti all'esterno invece di raggiungere il lisosoma, come nella malattia delle cellule I.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "fosfato",
@@ -4350,7 +4401,7 @@
    "spiegazione": "Dal reticolo al Golgi alle vescicole di secrezione il contenuto passa senza mai attraversare una membrana, e finisce fuori dalla cellula. Ragionare in termini di topologia spiega perché la faccia interna del lume e quella esterna della membrana plasmatica sono la stessa faccia.",
    "gruppo": "bio.5.3-topologia-lume",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "extracellulare",
@@ -4365,7 +4416,7 @@
    "testo": "Vero o falso: una proteina priva di qualunque segnale di indirizzamento resta nel citosol. Rispondi ……",
    "spiegazione": "La sintesi comincia sempre nel citosol, e solo un segnale può far deviare la proteina altrove: senza istruzioni, resta dove è stata prodotta. È il motivo per cui il citosol è la destinazione predefinita e non richiede alcuna etichetta.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "vero",
@@ -4382,7 +4433,7 @@
    "spiegazione": "La doppia membrana si forma intorno al materiale da eliminare, che può comprendere organelli interi, e solo dopo arriva la fusione con il lisosoma. Le altre descrizioni corrispondono a microautofagia, autofagia mediata da chaperon, fagocitosi e via del proteasoma.",
    "gruppo": "bio.5.10-macroautofagia-autofagosoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "nel sequestro di porzioni di citoplasma in una vescicola a doppia membrana, che poi si fonde con il lisosoma",
@@ -4399,8 +4450,9 @@
    "stato": "approvata",
    "testo": "L'autofagia mediata da chaperon si distingue dalle altre forme di autofagia perché:",
    "spiegazione": "È l'unica delle tre a essere selettiva per singole proteine, riconosciute da uno chaperon citosolico e consegnate a un recettore della membrana lisosomiale. Per passare, la proteina deve essere srotolata: non entra ripiegata.",
+   "gruppo": "bio.5.10-macroautofagia-autofagosoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "non prevede alcuna vescicola: la singola proteina, riconosciuta per un suo motivo di sequenza, viene traslocata attraverso la membrana del lisosoma",
@@ -4419,7 +4471,7 @@
    "spiegazione": "Un mitocondrio che ha perso il potenziale di membrana va rimosso, altrimenti continua a produrre specie reattive dell'ossigeno senza fornire ATP; le proteine che lo marcano per la rimozione sono mutate in alcune forme familiari di Parkinson. I neuroni, che non si dividono e consumano molta energia, sono i primi a soffrirne.",
    "gruppo": "bio.5.10-mitofagia",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "a forme ereditarie di malattia di Parkinson",
@@ -4438,7 +4490,7 @@
    "spiegazione": "Il digiuno rimuove il segnale che normalmente tiene la via spenta, e la cellula comincia a riciclare le proprie strutture per sopravvivere. È il motivo per cui l'autofagia è considerata una risposta di adattamento allo stress, e non solo un sistema di smaltimento.",
    "gruppo": "bio.5.10-nutrienti-mtor",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "multipla",
    "opzioni": [
     "aumenta, perché demolire i costituenti propri fornisce amminoacidi e substrati energetici",
@@ -4457,7 +4509,7 @@
    "spiegazione": "Si forma per estensione di una cisterna che avvolge il materiale, e la doppia membrana è la traccia di quel meccanismo. Solo la membrana interna finisce digerita insieme al contenuto.",
    "gruppo": "bio.5.10-macroautofagia-autofagosoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "autofagosoma",
@@ -4473,7 +4525,7 @@
    "spiegazione": "Non c'è alcuna vescicola che si forma altrove: è il lisosoma stesso a deformarsi e a prendere ciò che gli sta accanto. Per questo riguarda piccole quantità di materiale, e non organelli interi come la macroautofagia.",
    "gruppo": "bio.5.10-macroautofagia-autofagosoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "microautofagia",
@@ -4489,7 +4541,7 @@
    "spiegazione": "Gli enzimi idrolitici lavorano a pH acido, condizione che esiste solo dentro quel compartimento. Dopo la digestione i monomeri recuperati tornano nel citosol e vengono riutilizzati.",
    "gruppo": "bio.5.10-macroautofagia-autofagosoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "lisosoma",
@@ -4505,7 +4557,7 @@
    "spiegazione": "È un sensore dello stato nutrizionale: attivo quando c'è abbondanza, inibisce la via autofagica e spinge la cellula a crescere. Il digiuno, o i farmaci che lo bloccano, hanno l'effetto opposto.",
    "gruppo": "bio.5.10-nutrienti-mtor",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496379,
    "tipo": "completamento",
    "accettate": [
     "mTOR",
@@ -4520,7 +4572,7 @@
    "testo": "L'accumulo di proteine mal ripiegate nei neuroni per difetto della via autofagica si osserva nelle malattie dette ……",
    "spiegazione": "I neuroni non si dividono, quindi non possono diluire gli aggregati fra cellule figlie e dipendono dal riciclo interno per liberarsene. Quando quella via si inceppa, il materiale si accumula e la cellula ne soffre.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "neurodegenerative",
@@ -4536,7 +4588,7 @@
    "spiegazione": "La suddivisione nasce dal confronto delle sequenze degli RNA ribosomali, che ha mostrato quanto gli archei siano distanti dai batteri pur essendo entrambi procarioti. I virus non compaiono nell'albero, perché non derivano da un progenitore cellulare comune.",
    "gruppo": "bio.1.1-tre-domini",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "Bacteria, Archaea ed Eukarya",
@@ -4555,7 +4607,7 @@
    "spiegazione": "È l'affermazione che chiude la porta alla generazione spontanea: la continuità della vita passa per la divisione cellulare. Le cellule procariotiche, prive di nucleo, sono cellule a tutti gli effetti.",
    "gruppo": "bio.1.1-teoria-cellulare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "ogni cellula deriva da una cellula preesistente",
@@ -4573,7 +4625,7 @@
    "testo": "Quale fra queste proprietà è comune a tutti gli organismi viventi?",
    "spiegazione": "Movimento, fotosintesi, nucleo e tessuti sono proprietà di alcuni gruppi, non di tutti: un batterio immobile e un albero non si somigliano in nulla di tutto questo. La trasmissione dell'informazione, insieme a metabolismo e omeostasi, è invece condivisa da ogni forma di vita.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "la capacità di riprodursi trasmettendo alla discendenza un'informazione ereditaria",
@@ -4591,7 +4643,7 @@
    "testo": "I virus non vengono considerati organismi viventi perché:",
    "spiegazione": "Fuori dalla cellula sono particelle inerti: non ricavano energia, non sintetizzano proteine, non mantengono alcun ambiente interno. Hanno però un genoma e mutano, e infatti evolvono: è l'autonomia che manca, non l'informazione.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "non hanno metabolismo proprio e si moltiplicano soltanto dentro una cellula ospite",
@@ -4610,7 +4662,7 @@
    "spiegazione": "Sono procarioti, ma per diversi caratteri molecolari somigliano agli eucarioti più di quanto somiglino ai batteri. Molti vivono in ambienti estremi, e proprio da quelli sono stati descritti per primi.",
    "gruppo": "bio.1.1-tre-domini",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "Archaea",
@@ -4627,7 +4679,7 @@
    "spiegazione": "È il principio che, enunciato da Virchow, ha chiuso la questione della generazione spontanea. Ne segue che tutte le cellule di un organismo discendono dallo zigote per divisioni successive.",
    "gruppo": "bio.1.1-teoria-cellulare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "preesistente",
@@ -4642,7 +4694,7 @@
    "testo": "Il mantenimento di condizioni interne costanti nonostante le variazioni dell'ambiente esterno si chiama ……",
    "spiegazione": "Costa energia, perché andare contro i gradienti non è spontaneo: è la ragione per cui un organismo vivo consuma anche quando è fermo. Quando il controllo cessa, l'ambiente interno si equilibra con l'esterno.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "omeostasi",
@@ -4657,7 +4709,7 @@
    "testo": "Gli organismi che ricavano il carbonio da composti organici prodotti da altri si dicono ……",
    "spiegazione": "Non sanno fissare il carbonio inorganico, quindi dipendono dagli autotrofi per la materia organica. Animali, funghi e gran parte dei batteri rientrano in questa categoria.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "eterotrofi",
@@ -4672,7 +4724,7 @@
    "testo": "La funzione principale dei filamenti intermedi è:",
    "spiegazione": "Sono i più stabili e i meno dinamici dei tre sistemi del citoscheletro, e si lasciano deformare senza rompersi: la loro è una funzione di tenuta, non di movimento. I compiti elencati nelle altre opzioni spettano a microtubuli e microfilamenti di actina.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "dare alla cellula resistenza alle sollecitazioni meccaniche di trazione",
@@ -4691,7 +4743,7 @@
    "spiegazione": "Le subunità sono allungate e si appaiano in modo antiparallelo, quindi le due estremità del filamento risultano equivalenti. Non avendo polarità, nessun motore molecolare può camminarvi sopra in una direzione precisa.",
    "gruppo": "bio.5.13-polarita-motori",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "non hanno polarità e si assemblano senza legare né idrolizzare nucleotidi",
@@ -4710,7 +4762,7 @@
    "spiegazione": "Dà forma e resistenza al nucleo e serve da punto di ancoraggio alla cromatina, che non galleggia libera. Si smonta per fosforilazione all'inizio della mitosi e si ricostruisce quando i nuclei figli si riformano.",
    "gruppo": "bio.5.13-lamina-nucleare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "una rete di filamenti intermedi che riveste la faccia interna dell'involucro nucleare",
@@ -4727,8 +4779,9 @@
    "stato": "approvata",
    "testo": "I filamenti intermedi delle cellule epiteliali, che danno robustezza alla pelle, sono formati da proteine della famiglia delle ……",
    "spiegazione": "Ne esistono decine di tipi, espressi in combinazioni diverse secondo l'epitelio, e formano fasci che attraversano la cellula da una giunzione all'altra. Mutazioni che li rendono fragili provocano malattie in cui la pelle si solleva in bolle al minimo sfregamento.",
+   "gruppo": "bio.5.13-cheratine",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "cheratine",
@@ -4745,7 +4798,7 @@
    "spiegazione": "Sono filamenti intermedi, ma gli unici che stanno dentro il nucleo invece che nel citoplasma. Difetti di una di esse causano sindromi con invecchiamento precoce, perché il nucleo diventa meccanicamente fragile.",
    "gruppo": "bio.5.13-lamina-nucleare",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "lamine",
@@ -4760,7 +4813,7 @@
    "testo": "Le giunzioni cellulari su cui i filamenti intermedi di due cellule vicine si ancorano reciprocamente si chiamano ……",
    "spiegazione": "Collegando i citoscheletri di cellule adiacenti, distribuiscono la trazione su tutto l'epitelio invece di concentrarla su una cellula sola. Dove quel collegamento viene a mancare, come in alcune malattie autoimmuni, l'epitelio si scolla.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "desmosomi",
@@ -4778,7 +4831,7 @@
    "spiegazione": "Un motore molecolare ha bisogno di una direzione definita per sapere da che parte camminare, e quella direzione gliela dà la polarità del filamento. Per il trasporto intracellulare la cellula usa quindi microtubuli e actina.",
    "gruppo": "bio.5.13-polarita-motori",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "falso",
@@ -4794,14 +4847,14 @@
    "spiegazione": "L'organello produce una sostanza tossica e la neutralizza nello stesso compartimento: è questo confinamento che rende sicura la reazione. La superossido dismutasi agisce su un'altra specie reattiva, l'anione superossido, e il suo prodotto è proprio il perossido di idrogeno.",
    "gruppo": "bio.5.6-perossido-catalasi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "dalla catalasi, che lo trasforma in acqua e ossigeno",
     "dalla superossido dismutasi, che lo trasforma in ossigeno molecolare",
     "dal lisozima, che lo idrolizza",
     "dagli enzimi della catena respiratoria mitocondriale",
-    "dalle perossine, che lo trasportano fuori dall'organello"
+    "dalle pompe della membrana, che lo espellono nel citosol"
    ],
    "corretta": 0
   },
@@ -4813,7 +4866,7 @@
    "spiegazione": "A differenza dei mitocondri, il perossisoma accetta proteine già ripiegate e perfino complessi di più subunità, perché il suo sistema di importazione è più tollerante. Non avendo DNA proprio, dipende interamente dal citosol per i suoi enzimi.",
    "gruppo": "bio.5.6-importazione-dna-perossisomi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "sono sintetizzate nel citosol e importate già ripiegate, grazie a un segnale che recettori specifici riconoscono",
@@ -4830,8 +4883,9 @@
    "stato": "approvata",
    "testo": "Fra le funzioni dei perossisomi rientra:",
    "spiegazione": "Gli acidi grassi più lunghi non possono essere accorciati dal mitocondrio e vengono prima ridotti di lunghezza qui, poi passati ad esso. I perossisomi partecipano anche alla sintesi dei plasmalogeni e alla detossificazione, per esempio dell'etanolo, ma non producono ATP.",
+   "gruppo": "bio.1.5-glicogeno",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "la beta-ossidazione degli acidi grassi a catena molto lunga",
@@ -4850,7 +4904,7 @@
    "spiegazione": "È uno degli enzimi più veloci che si conoscano, perché il perossido va eliminato prima che danneggi le altre molecole. La sua abbondanza nei perossisomi è tale da essere usata per riconoscerli al microscopio.",
    "gruppo": "bio.5.6-perossido-catalasi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "catalasi",
@@ -4865,7 +4919,7 @@
    "spiegazione": "Alcune fanno da recettore nel citosol, altre formano il canale di passaggio nella membrana dell'organello. Quando una di esse non funziona, il perossisoma resta una vescicola vuota priva di enzimi.",
    "gruppo": "bio.5.6-perossine-zellweger",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "perossine",
@@ -4882,7 +4936,7 @@
    "spiegazione": "I perossisomi si formano ma restano senza enzimi, quindi gli acidi grassi a catena molto lunga si accumulano nei tessuti. Il quadro clinico colpisce soprattutto cervello, fegato e reni, ed è grave già alla nascita.",
    "gruppo": "bio.5.6-perossine-zellweger",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "Zellweger",
@@ -4898,7 +4952,7 @@
    "spiegazione": "Non hanno genoma né ribosomi: tutti i loro enzimi sono codificati dal nucleo e arrivano dal citosol. Si moltiplicano per divisione di perossisomi già esistenti, o gemmando dal reticolo endoplasmatico.",
    "gruppo": "bio.5.6-importazione-dna-perossisomi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "falso",
@@ -4914,7 +4968,7 @@
    "spiegazione": "Genoma proprio, apparato di sintesi proteica proprio e doppia membrana sono esattamente ciò che si aspetterebbe da un procariote inglobato da un'altra cellula. I ribosomi mitocondriali somigliano a quelli batterici, tanto che alcuni antibiotici li colpiscono.",
    "gruppo": "bio.1.4-endosimbiosi-mitocondri",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "possiedono un DNA circolare e ribosomi propri e sono delimitati da due membrane",
@@ -4932,7 +4986,7 @@
    "testo": "Il sistema delle endomembrane comprende:",
    "spiegazione": "Sono i compartimenti che si scambiano materiale per mezzo di vescicole, e che quindi formano un sistema continuo dal punto di vista topologico. I mitocondri ne restano fuori: le proteine vi arrivano attraverso traslocasi, non con vescicole.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "reticolo endoplasmatico, apparato di Golgi, endosomi, lisosomi e vescicole di trasporto",
@@ -4950,7 +5004,7 @@
    "testo": "Rispetto a una cellula procariotica, la cellula eucariotica ha il vantaggio di:",
    "spiegazione": "Chiudere gli enzimi idrolitici nel lisosoma o le ossidasi nel perossisoma permette di tenere nella stessa cellula condizioni chimiche che altrimenti si annullerebbero. La compartimentazione è il tratto che distingue l'organizzazione eucariotica, più ancora della dimensione.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "poter separare in compartimenti distinti reazioni fra loro incompatibili",
@@ -4969,7 +5023,7 @@
    "spiegazione": "Una cellula ospite avrebbe inglobato un procariote capace di respirazione aerobia, senza digerirlo, e il rapporto si è poi stabilizzato. I cloroplasti delle piante hanno un'origine analoga, da procarioti fotosintetici.",
    "gruppo": "bio.1.4-endosimbiosi-mitocondri",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "batteri",
@@ -4990,7 +5044,7 @@
    "spiegazione": "Quella interna corrisponde alla membrana dell'antico procariote inglobato, quella esterna alla membrana con cui la cellula ospite lo ha avvolto. È per questo che fra le due esiste uno spazio intermembrana.",
    "gruppo": "bio.1.4-endosimbiosi-mitocondri",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "2",
@@ -5008,7 +5062,7 @@
    "testo": "Il passaggio dagli organismi unicellulari a quelli pluricellulari ha reso possibile la divisione del lavoro fra cellule ……",
    "spiegazione": "Se non deve badare a tutto da sé, una cellula può dedicarsi a una funzione sola e farla meglio. Il prezzo è la dipendenza reciproca: una cellula specializzata isolata non sopravvive.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "specializzate",
@@ -5025,7 +5079,7 @@
    "spiegazione": "Agisce su un RNA già trascritto, decidendo quali esoni conservare, quindi interviene dopo la trascrizione e prima della traduzione. È il meccanismo per cui un solo gene può dare proteine diverse in tessuti diversi.",
    "gruppo": "bio.3.2-splicing",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "post-trascrizionale",
@@ -5043,7 +5097,7 @@
    "testo": "La stabilità di un mRNA influisce sull'espressione del gene perché:",
    "spiegazione": "Ogni messaggero può essere letto molte volte prima di essere demolito, quindi la sua vita media moltiplica la quantità di proteina ottenuta da una sola trascrizione. È il motivo per cui la cellula regola l'espressione anche decidendo quanto a lungo conservare l'mRNA.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "un messaggero che resta integro più a lungo viene tradotto un numero maggiore di volte",
@@ -5062,7 +5116,7 @@
    "spiegazione": "Interviene quando la proteina esiste già, e ne regola la quantità accorciandone la vita media. Dei meccanismi elencati, uno è trascrizionale e tre riguardano il destino dell'mRNA.",
    "gruppo": "bio.3.4-ubiquitina-proteasoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "la degradazione della proteina matura da parte del proteasoma",
@@ -5079,8 +5133,9 @@
    "stato": "approvata",
    "testo": "Il livello di controllo che decide se un gene venga copiato in RNA oppure no si dice controllo ……",
    "spiegazione": "È il più economico, perché blocca il processo al primo passaggio e non spreca nulla a valle. È anche quello su cui si gioca il differenziamento: le cellule di un organismo hanno gli stessi geni e li trascrivono in modo diverso.",
+   "gruppo": "bio.3.2-splicing",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "trascrizionale",
@@ -5094,8 +5149,9 @@
    "stato": "approvata",
    "testo": "Il livello di controllo che agisce sulla velocità con cui un mRNA già maturo viene letto dai ribosomi si dice controllo ……",
    "spiegazione": "Il messaggero è pronto e presente, ma la cellula decide se e quanto tradurlo: è il livello più rapido, perché non richiede di trascrivere nulla di nuovo. Lo usano le cellule che devono rispondere in fretta, come l'ovocita fecondato con gli mRNA accumulati prima della fecondazione.",
+   "gruppo": "bio.3.2-splicing",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "traduzionale",
@@ -5111,7 +5167,7 @@
    "spiegazione": "Serve una catena di più unità perché il proteasoma riconosca il bersaglio: una sola etichetta ha altri significati. È il modo in cui la cellula elimina sia le proteine danneggiate sia quelle che non servono più, come i regolatori del ciclo cellulare.",
    "gruppo": "bio.3.4-ubiquitina-proteasoma",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "ubiquitina",
@@ -5126,11 +5182,11 @@
    "spiegazione": "Nella sequenza sta già l'informazione sufficiente a raggiungere la conformazione più stabile, come mostrano gli esperimenti di denaturazione e rinaturazione in provetta. Gli chaperon rendono il percorso più efficiente, ma non scelgono la destinazione.",
    "gruppo": "bio.3.8-sequenza-conformazione",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "dalla sequenza dei suoi amminoacidi",
-    "dagli chaperon, che le impongono la forma definitiva",
+    "dal ribosoma, che la ripiega mentre la sintetizza",
     "dal tipo di ribosoma su cui è stata sintetizzata",
     "dalla lunghezza della coda di poliadenilato del suo mRNA",
     "dal compartimento in cui la proteina viene trasportata"
@@ -5145,7 +5201,7 @@
    "spiegazione": "Una catena appena sintetizzata espone regioni idrofobiche che nella proteina finita starebbero all'interno, e se incontrano quelle di un'altra catena si attaccano. Gli chaperon le tengono coperte finché il ripiegamento non è compiuto, e poi si staccano.",
    "gruppo": "bio.3.8-chaperon-hsp",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "impedendo le interazioni scorrette fra catene non ancora ripiegate e la loro aggregazione",
@@ -5163,7 +5219,7 @@
    "testo": "Nelle malattie da prioni la proteina patologica:",
    "spiegazione": "L'informazione che si trasmette è la forma, non la sequenza: la conformazione alterata fa da stampo e converte le molecole sane che incontra. È la ragione per cui una malattia del genere può essere trasmissibile pur non avendo un genoma proprio.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "ha la stessa sequenza di quella normale ma una conformazione diversa, che induce le altre copie ad assumerla",
@@ -5182,7 +5238,7 @@
    "spiegazione": "Il nome viene dall'idea di accompagnare senza intervenire sul risultato: la forma finale resta quella dettata dalla sequenza. Molte lavorano consumando ATP, legando e rilasciando ripetutamente la catena.",
    "gruppo": "bio.3.8-chaperon-hsp",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "chaperon",
@@ -5201,7 +5257,7 @@
    "spiegazione": "Il calore denatura le proteine ed espone le loro regioni idrofobiche, quindi proprio in quella condizione servono più aiutanti del ripiegamento. Molte sono però prodotte anche a temperatura normale, perché il lavoro di assistenza è continuo.",
    "gruppo": "bio.3.8-chaperon-hsp",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "HSP",
@@ -5219,7 +5275,7 @@
    "testo": "I depositi insolubili di proteine mal ripiegate che si accumulano nei tessuti sono detti aggregati di ……",
    "spiegazione": "Le catene mal ripiegate si impilano in foglietti beta molto stabili, difficili da degradare proprio perché compatti. Depositi di questo tipo si trovano in diverse malattie neurodegenerative e sistemiche.",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "amiloide",
@@ -5238,7 +5294,7 @@
    "spiegazione": "Rompere legami in molecole ricche di energia libera energia utilizzabile, che la cellula conserva in forma di ATP e di coenzimi ridotti. L'anabolismo fa il percorso opposto e spende ciò che il catabolismo ha reso disponibile.",
    "gruppo": "bio.1.6-catabolismo-anabolismo",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "demoliscono molecole complesse in molecole più semplici, rendendo disponibile energia",
@@ -5257,7 +5313,7 @@
    "spiegazione": "I gruppi che reagiscono cedono rispettivamente un idrogeno e un ossidrile, che insieme formano acqua. È così che si formano il legame peptidico fra due amminoacidi e il legame glicosidico fra due monosaccaridi.",
    "gruppo": "bio.1.6-condensazione-idrolisi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "multipla",
    "opzioni": [
     "condensazione",
@@ -5276,7 +5332,7 @@
    "spiegazione": "L'acqua fornisce l'idrogeno a un frammento e l'ossidrile all'altro, quindi è un reagente e non un prodotto. È la via con cui la digestione demolisce proteine, amidi e grassi.",
    "gruppo": "bio.1.6-condensazione-idrolisi",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "idrolisi",
@@ -5292,7 +5348,7 @@
    "spiegazione": "Costruire ordine a partire da precursori semplici non è spontaneo, quindi va pagato con l'energia ricavata dal catabolismo. Le due metà del metabolismo procedono insieme e sono collegate dall'ATP.",
    "gruppo": "bio.1.6-catabolismo-anabolismo",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "anabolismo",
@@ -5306,8 +5362,9 @@
    "stato": "approvata",
    "testo": "La molecola che fa da moneta di scambio energetico fra catabolismo e anabolismo si indica con la sigla ……",
    "spiegazione": "L'idrolisi del suo legame fosfoanidridico terminale libera energia in una quantità comoda, né troppa né troppo poca per le reazioni cellulari. Non è una riserva a lungo termine: viene continuamente consumata e rigenerata.",
+   "gruppo": "bio.1.6-catabolismo-anabolismo",
    "fonte": "ai-chat",
-   "aggiornata": 1792758191703,
+   "aggiornata": 1792768496380,
    "tipo": "completamento",
    "accettate": [
     "ATP",

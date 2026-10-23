@@ -118,11 +118,11 @@ function fette(elenco, quanti) {
  * vedono fra loro, quindi a ognuno tocca una fetta dei contenuti del syllabus: così non escono due
  * volte le stesse domande e non resta scoperto niente. Mai più lotti che contenuti, o uno resta a secco.
  */
-function spezza(arg, quante) {
+function spezza(arg, quante, da = 0) {
   const quanti = Math.min(Math.ceil(quante / MASSIMO_PER_LOTTO), arg.contenuti.length || 1)
   const porzioni = fette(arg.contenuti, quanti)
   return porzioni.map((contenuti, i) => ({
-    lettera: LETTERE[i],
+    lettera: LETTERE[da + i],
     quale: i + 1,
     su: quanti,
     quante: Math.floor(quante / quanti) + (i < quante % quanti ? 1 : 0),
@@ -137,8 +137,26 @@ function spezza(arg, quante) {
  */
 const marcaLotto = (codice, lettera) => codice.split('.').slice(1).join('') + lettera
 
-/** Dove va salvata la risposta di un lotto. */
-const fileLotto = (codice, lotto) => (lotto.su > 1 ? `${codice}-${lotto.lettera}.json` : `${codice}.json`)
+/**
+ * La prima lettera libera per i lotti di un argomento. Gli id sono fissi per scelta, così
+ * rigenerando un lotto il pannello sostituisce le sue domande invece di affiancarne una copia; ma
+ * dal secondo giro in poi lo stesso argomento torna, e ripartire dalla "a" sovrascriverebbe le
+ * domande del giro precedente. Si guarda quindi quali lettere sono già state usate.
+ */
+function primaLetteraLibera(codice, prefisso, gia = []) {
+  const marca = codice.split('.').slice(1).join('')
+  const usate = new Set()
+  for (const d of gia) {
+    const m = d.id?.match(new RegExp(`^${prefisso}-${marca}([a-z])-`))
+    if (m) usate.add(m[1])
+  }
+  for (let i = 0; i < LETTERE.length; i++) if (!usate.has(LETTERE[i])) return i
+  return 0
+}
+
+/** Dove va salvata la risposta di un lotto: la lettera resta nel nome appena non è la prima. */
+const fileLotto = (codice, lotto) =>
+  lotto.su > 1 || lotto.lettera !== 'a' ? `${codice}-${lotto.lettera}.json` : `${codice}.json`
 
 /**
  * Il blocco che serve solo quando il prompt si incolla in chat: senza API non c'è lo schema a
@@ -199,7 +217,27 @@ FORMATO
   risposta è esatta) e se serve l'unità in "unita". Altrimenti "valore_numerico" vuoto,
   "tolleranza" 0, "unita" vuota.`
 
-function costruisciPrompt({ materia, unita, arg }, lotto, esempi, perChat = false) {
+/**
+ * Le domande che su questo argomento ci sono già. Dal secondo giro in poi è il blocco che conta
+ * più di tutti: senza, il modello riscrive le stesse cose con parole diverse, e quello che esce
+ * sono doppioni o domande che regalano la risposta a un completamento già in banca.
+ * Si passano il testo e la risposta attesa, non la spiegazione: serve a sapere cosa è già chiesto.
+ */
+function giaChieste(domande) {
+  if (!domande?.length) return ''
+  const righe = domande.map((d) => {
+    const risposta = d.tipo === 'multipla' ? d.opzioni?.[d.corretta] : (d.accettate ?? [])[0]
+    return `- ${d.testo}  →  ${risposta ?? '?'}`
+  })
+  return `
+QUESTE DOMANDE SU QUESTO ARGOMENTO CI SONO GIÀ (${domande.length}): non rifarle, nemmeno
+riformulate, e non chiedere una parola che una di queste scrive nel testo o fra le opzioni,
+altrimenti in una stessa prova la seconda domanda risulta gratis.
+${righe.join(SALTO)}
+`
+}
+
+function costruisciPrompt({ materia, unita, arg }, lotto, esempi, perChat = false, gia = []) {
   const quante = lotto.quante
   const multiple = Math.round((quante * 15) / 31)
   const completamenti = quante - multiple
@@ -232,7 +270,7 @@ UNITÀ ${unita.numero} DEL SYLLABUS: ${unita.titolo}
 CONTENUTI DA COPRIRE: ${lotto.contenuti.join('; ')}
 ${confine}
 DA PRODURRE: ${quante} domande, ${multiple} a risposta multipla e ${completamenti} a completamento.
-
+${giaChieste(gia)}
 ${titoloEsempi}:
 ${righeEsempi}
 
@@ -287,15 +325,39 @@ function perBanca(d, codice, prefisso, indice, marca) {
  * nell'ordine in cui conviene farli. Serve al giro a mano: una esecuzione, poi si lavora di copia
  * e incolla senza tornare al terminale.
  */
-/** Quante domande ha già in banca ciascun argomento di una materia. */
-function quanteInBanca(materiaId) {
-  const conta = new Map()
+/**
+ * Le domande che ciascun argomento di una materia ha già, per codice di argomento. Conta sia quelle
+ * in banca sia le bozze in dati/generate/ non ancora importate: altrimenti, finché una revisione è
+ * in corso, lo script le richiederebbe una seconda volta.
+ */
+function inBanca(materiaId) {
+  const per = new Map()
+  const metti = (d) => {
+    if (d.stato === 'scartata') return
+    if (!per.has(d.argomento)) per.set(d.argomento, [])
+    per.get(d.argomento).push(d)
+  }
   const f = resolve(radice, 'public/domande', `${materiaId}.json`)
-  if (!existsSync(f)) return conta
-  for (const d of JSON.parse(readFileSync(f, 'utf8')).domande)
-    conta.set(d.argomento, (conta.get(d.argomento) ?? 0) + 1)
-  return conta
+  if (existsSync(f)) for (const d of JSON.parse(readFileSync(f, 'utf8')).domande) metti(d)
+  const generate = resolve(radice, 'dati/generate')
+  if (existsSync(generate)) {
+    for (const nome of readdirSync(generate)) {
+      if (!nome.endsWith('.json') || nome.startsWith('_')) continue
+      const lotto = JSON.parse(readFileSync(resolve(generate, nome), 'utf8'))
+      if (lotto.materia !== materiaId || lotto.domande?.[0]?.stato !== 'bozza') continue
+      for (const d of lotto.domande) metti(d)
+    }
+  }
+  return per
 }
+
+/**
+ * Quante domande vuole un argomento perché si possa dire coperto: una per voce di contenuto del
+ * syllabus, e mai meno di SOGLIA_COPERTO. Contare le domande e fermarsi a tre bastava a chiudere i
+ * buchi veri, ma un argomento con cinque voci e tre domande ne lascia due senza nemmeno una
+ * domanda, e all'esame quelle due escono come le altre.
+ */
+const quanteNeVuole = (arg) => Math.max(SOGLIA_COPERTO, (arg.contenuti ?? []).length)
 
 function preparaPrompts(materiaId, quanti, anchePronti = false) {
   const analisi = leggiJson('dati/argomenti-analisi.json')
@@ -306,27 +368,25 @@ function preparaPrompts(materiaId, quanti, anchePronti = false) {
   }
   // Di default si saltano gli argomenti già coperti, altrimenti chiedendone venti si rifanno anche
   // i dieci della volta scorsa. Con --anche-pronti si prendono i più pesanti e basta.
-  const conta = quanteInBanca(materiaId)
+  const per = inBanca(materiaId)
+  const quante = (a) => (per.get(a.id) ?? []).length
+  const mancano = (a) => quanteNeVuole(a) - quante(a)
   const tutti = materia.unita
     .flatMap((u) => u.argomenti.map((a) => ({ unita: u, arg: a })))
     .sort((x, y) => y.arg.peso.suggerito - x.arg.peso.suggerito)
-  // Fra gli argomenti da fare vengono prima quelli a zero domande, poi quelli a una, poi quelli a
-  // due; a pari copertura decide il peso, che l'ordinamento qui sopra ha già dato. Un argomento mai
-  // visto nel simulatore è una domanda che all'esame arriva nuova, e questo conta più di mezzo punto
-  // percentuale di peso: il peso dice quanto spesso escono, non quanto è grave non averle.
-  const daFare = anchePronti
-    ? tutti
-    : tutti
-        .filter((v) => (conta.get(v.arg.id) ?? 0) < SOGLIA_COPERTO)
-        .sort((x, y) => (conta.get(x.arg.id) ?? 0) - (conta.get(y.arg.id) ?? 0))
+  // Vengono prima gli argomenti a cui manca di più per essere coperti, e a pari distanza decide il
+  // peso, che l'ordinamento qui sopra ha già dato. Un argomento scoperto è una domanda che
+  // all'esame arriva nuova, e questo conta più di mezzo punto percentuale di peso: il peso dice
+  // quanto spesso escono, non quanto è grave non averle.
+  const daFare = anchePronti ? tutti : tutti.filter((v) => mancano(v.arg) > 0).sort((x, y) => mancano(y.arg) - mancano(x.arg))
   const ordinati = daFare.slice(0, quanti)
   if (!ordinati.length) {
-    console.error(`Tutti gli argomenti di ${materia.nome} hanno già almeno ${SOGLIA_COPERTO} domande.`)
+    console.error(`Ogni argomento di ${materia.nome} ha già almeno una domanda per voce di contenuto del syllabus.`)
     console.error('Per prepararli lo stesso: npm run genera -- --prompts ' + materiaId + ' ' + quanti + ' --anche-pronti')
     process.exit(1)
   }
   if (!anchePronti && tutti.length > daFare.length) {
-    console.log(`(${tutti.length - daFare.length} argomenti saltati: hanno già ${SOGLIA_COPERTO} domande o più)`)
+    console.log(`(${tutti.length - daFare.length} argomenti saltati: hanno già una domanda per voce di contenuto)`)
   }
 
   const cartella = resolve(radice, 'dati/prompt')
@@ -343,18 +403,21 @@ function preparaPrompts(materiaId, quanti, anchePronti = false) {
   let totale = 0
   let quantiFile = 0
   ordinati.forEach((voce, i) => {
-    const quante = Math.max(4, Math.round(voce.arg.peso.suggerito * BASE_PIANO))
-    const lotti = spezza(voce.arg, quante)
+    const gia = per.get(voce.arg.id) ?? []
+    // Quante chiederne: tante quante ne mancano per coprire le voci di contenuto, con un po' di
+    // margine perché una voce regge più di una domanda, senza superare quanto prevede il piano.
+    const dalPiano = Math.round(voce.arg.peso.suggerito * BASE_PIANO)
+    const quante = anchePronti ? Math.max(4, dalPiano) : Math.max(4, Math.min(mancano(voce.arg) * 2, Math.max(4, dalPiano)))
+    const lotti = spezza(voce.arg, quante, primaLetteraLibera(voce.arg.id, PREFISSI[materiaId], gia))
     const esempi = esempi2025(voce.arg.id)
     totale += quante
-    const gia = conta.get(voce.arg.id) ?? 0
     righe.push(
       `### ${i + 1}. ${voce.arg.titolo} — ${quante} domande${lotti.length > 1 ? ` in ${lotti.length} lotti` : ''}` +
-        ` · ${gia ? `in banca ne ha ${gia}` : 'in banca non ne ha nessuna'}, peso ${(voce.arg.peso.suggerito * 100).toFixed(1)}%`,
+        ` · ne ha ${gia.length} su ${(voce.arg.contenuti ?? []).length} voci di contenuto, peso ${(voce.arg.peso.suggerito * 100).toFixed(1)}%`,
     )
     for (const lotto of lotti) {
       const nome = `${String(i + 1).padStart(2, '0')}${lotto.lettera}-${voce.arg.id}.txt`
-      writeFileSync(resolve(cartella, nome), costruisciPrompt({ ...voce, materia }, lotto, esempi, true) + SALTO)
+      writeFileSync(resolve(cartella, nome), costruisciPrompt({ ...voce, materia }, lotto, esempi, true, gia) + SALTO)
       righe.push(`- [ ] \`${nome}\` (${lotto.quante} domande) → salva in \`dati/generate/${fileLotto(voce.arg.id, lotto)}\``)
       console.log(`  ${nome}  ${String(lotto.quante).padStart(2)} domande  ${voce.arg.titolo}`)
       quantiFile++
@@ -371,7 +434,7 @@ function preparaPrompts(materiaId, quanti, anchePronti = false) {
     `${totale} domande in ${quantiFile} prompt, circa il ${quota}% di quelle che escono in una prova di ${materia.nome.toLowerCase()}.`,
     anchePronti
       ? ''
-      : 'In ordine di buco: prima gli argomenti senza nemmeno una domanda, poi quelli a una o due; a pari copertura viene prima quello che pesa di più.',
+      : "In ordine di buco: prima gli argomenti a cui manca di più per avere una domanda su ogni voce di contenuto del syllabus; a pari distanza viene prima quello che pesa di più.",
     '',
     'Per ogni file: aprilo, copia tutto, incollalo in una conversazione NUOVA con Claude, salva il',
     'JSON della risposta dove dice la riga e importalo dal pannello.',
@@ -437,7 +500,8 @@ async function main() {
 
   const quante = Number(process.argv[3]) || Math.max(4, Math.round(trovato.arg.peso.suggerito * BASE_PIANO))
   const esempi = esempi2025(codice)
-  const lotti = spezza(trovato.arg, quante)
+  const gia = inBanca(trovato.materia.id).get(codice) ?? []
+  const lotti = spezza(trovato.arg, quante, primaLetteraLibera(codice, PREFISSI[trovato.materia.id], gia))
 
   if (soloPrompt) {
     for (const lotto of lotti) {
@@ -445,7 +509,7 @@ async function main() {
         const dove = `dati/generate/${fileLotto(codice, lotto)}`
         console.log(`${SALTO}===== LOTTO ${lotto.quale} DI ${lotto.su} — conversazione a parte, risposta in ${dove} =====${SALTO}`)
       }
-      console.log(costruisciPrompt(trovato, lotto, esempi, true))
+      console.log(costruisciPrompt(trovato, lotto, esempi, true, gia))
     }
     return
   }
@@ -473,7 +537,7 @@ async function main() {
   let fuori = 0
   for (const lotto of lotti) {
     if (lotto.su > 1) console.log(`  lotto ${lotto.quale} di ${lotto.su}: ${lotto.quante} domande su ${lotto.contenuti.join('; ')}`)
-    const risposta = await chiediLotto(client, costruisciPrompt(trovato, lotto, esempi))
+    const risposta = await chiediLotto(client, costruisciPrompt(trovato, lotto, esempi, false, gia))
     const marca = marcaLotto(codice, lotto.lettera)
     domande.push(...risposta.parsed_output.domande.map((d, i) => perBanca(d, codice, prefisso, i, marca)))
     dentro += risposta.usage.input_tokens
