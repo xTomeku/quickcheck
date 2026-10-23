@@ -5,7 +5,7 @@
 //   node scripts/genera.mjs bio.1.2          # quante ne prevede il piano per quell'argomento
 //   node scripts/genera.mjs bio.1.2 10       # quante ne vuoi tu
 //   node scripts/genera.mjs bio.1.2 10 --prompt   # stampa il prompt da incollare in chat, senza chiamare nessuno
-//   node scripts/genera.mjs --prompts biologia 10 # i 10 argomenti piu' pesanti ancora da fare
+//   node scripts/genera.mjs --prompts biologia 10 # i 10 argomenti ancora da fare, i piu' scoperti prima
 //   node scripts/genera.mjs --prompts biologia 10 --anche-pronti  # senza saltare quelli gia' coperti
 //
 // Gli argomenti pesanti vogliono più domande di quante ne stiano bene in una risposta sola, quindi
@@ -310,7 +310,15 @@ function preparaPrompts(materiaId, quanti, anchePronti = false) {
   const tutti = materia.unita
     .flatMap((u) => u.argomenti.map((a) => ({ unita: u, arg: a })))
     .sort((x, y) => y.arg.peso.suggerito - x.arg.peso.suggerito)
-  const daFare = anchePronti ? tutti : tutti.filter((v) => (conta.get(v.arg.id) ?? 0) < SOGLIA_COPERTO)
+  // Fra gli argomenti da fare vengono prima quelli a zero domande, poi quelli a una, poi quelli a
+  // due; a pari copertura decide il peso, che l'ordinamento qui sopra ha già dato. Un argomento mai
+  // visto nel simulatore è una domanda che all'esame arriva nuova, e questo conta più di mezzo punto
+  // percentuale di peso: il peso dice quanto spesso escono, non quanto è grave non averle.
+  const daFare = anchePronti
+    ? tutti
+    : tutti
+        .filter((v) => (conta.get(v.arg.id) ?? 0) < SOGLIA_COPERTO)
+        .sort((x, y) => (conta.get(x.arg.id) ?? 0) - (conta.get(y.arg.id) ?? 0))
   const ordinati = daFare.slice(0, quanti)
   if (!ordinati.length) {
     console.error(`Tutti gli argomenti di ${materia.nome} hanno già almeno ${SOGLIA_COPERTO} domande.`)
@@ -339,7 +347,11 @@ function preparaPrompts(materiaId, quanti, anchePronti = false) {
     const lotti = spezza(voce.arg, quante)
     const esempi = esempi2025(voce.arg.id)
     totale += quante
-    righe.push(`### ${i + 1}. ${voce.arg.titolo} — ${quante} domande${lotti.length > 1 ? ` in ${lotti.length} lotti` : ''}`)
+    const gia = conta.get(voce.arg.id) ?? 0
+    righe.push(
+      `### ${i + 1}. ${voce.arg.titolo} — ${quante} domande${lotti.length > 1 ? ` in ${lotti.length} lotti` : ''}` +
+        ` · ${gia ? `in banca ne ha ${gia}` : 'in banca non ne ha nessuna'}, peso ${(voce.arg.peso.suggerito * 100).toFixed(1)}%`,
+    )
     for (const lotto of lotti) {
       const nome = `${String(i + 1).padStart(2, '0')}${lotto.lettera}-${voce.arg.id}.txt`
       writeFileSync(resolve(cartella, nome), costruisciPrompt({ ...voce, materia }, lotto, esempi, true) + SALTO)
@@ -352,9 +364,14 @@ function preparaPrompts(materiaId, quanti, anchePronti = false) {
 
   const quota = Math.round(ordinati.reduce((s, v) => s + v.arg.peso.suggerito, 0) * 100)
   const elenco = [
-    `# ${materia.nome}: i ${quanti} argomenti che pesano di più`,
+    anchePronti
+      ? `# ${materia.nome}: i ${quanti} argomenti che pesano di più`
+      : `# ${materia.nome}: ${ordinati.length} argomenti ancora da coprire`,
     '',
     `${totale} domande in ${quantiFile} prompt, circa il ${quota}% di quelle che escono in una prova di ${materia.nome.toLowerCase()}.`,
+    anchePronti
+      ? ''
+      : 'In ordine di buco: prima gli argomenti senza nemmeno una domanda, poi quelli a una o due; a pari copertura viene prima quello che pesa di più.',
     '',
     'Per ogni file: aprilo, copia tutto, incollalo in una conversazione NUOVA con Claude, salva il',
     'JSON della risposta dove dice la riga e importalo dal pannello.',
