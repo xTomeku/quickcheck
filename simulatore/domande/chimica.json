@@ -297,7 +297,8 @@
    },
    "spiegazione": "2·(+1) + x + 4·(−2) = 0, quindi x = +6.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "chim.1.7-ossidazione-zolfo"
   },
   {
    "id": "chim-019",
@@ -369,7 +370,8 @@
    ],
    "spiegazione": "Dall'equazione di Henderson-Hasselbalch, pH = pKa + log([A⁻]/[HA]) = pKa quando il rapporto vale 1.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "chim.4.2-ph-uguale-pka"
   },
   {
    "id": "chim-024",
@@ -566,7 +568,8 @@
     "10^-11 mol/L",
     "0,3 mol/L"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "chim.4.1-ph-concentrazione"
   },
   {
    "id": "chim-41a-06",
@@ -589,7 +592,8 @@
     "valore": 1e-7,
     "tolleranza": 0
    },
-   "unita": "mol/L"
+   "unita": "mol/L",
+   "gruppo": "chim.4.1-ph-concentrazione"
   },
   {
    "id": "chim-41a-07",
@@ -1134,7 +1138,8 @@
    "numero": {
     "valore": 6,
     "tolleranza": 0
-   }
+   },
+   "gruppo": "chim.1.7-ossidazione-zolfo"
   },
   {
    "id": "chim-17a-09",
@@ -2108,7 +2113,8 @@
     "34",
     "1"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "chim.1.1-neutroni"
   },
   {
    "id": "chim-11a-06",
@@ -2155,7 +2161,8 @@
    "numero": {
     "valore": 8,
     "tolleranza": 0
-   }
+   },
+   "gruppo": "chim.1.1-neutroni"
   },
   {
    "id": "chim-11a-09",
@@ -2801,7 +2808,8 @@
     "il pH dipende solo dalla diluizione",
     "la soluzione è neutra"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "chim.4.2-ph-uguale-pka"
   },
   {
    "id": "chim-42b-03",

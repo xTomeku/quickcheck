@@ -478,7 +478,8 @@
    ],
    "spiegazione": "All'inizio dell'anafase l'APC/C fa degradare la securina, la separasi taglia la coesina e i cromatidi si separano.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.7.3-anafase"
   },
   {
    "id": "bio-63a-01",
@@ -3249,7 +3250,8 @@
    "tipo": "completamento",
    "accettate": [
     "anafase"
-   ]
+   ],
+   "gruppo": "bio.7.3-anafase"
   },
   {
    "id": "bio-73b-08",
