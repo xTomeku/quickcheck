@@ -36,17 +36,20 @@ interface OpzioniEstrazione {
  * Estrae `quante` domande di un tipo con probabilità proporzionale al peso dell'argomento.
  * Ogni domanda già presa dallo stesso argomento ne dimezza il peso, così la prova copre più argomenti;
  * domande dello stesso `gruppo` (quasi duplicati) non escono mai insieme.
+ * `gruppiUsati` arriva da fuori quando più estrazioni compongono la stessa sezione: le multiple e i
+ * completamenti si pescano separatamente, ma due quasi duplicati non devono uscire insieme nemmeno
+ * se uno è dell'uno e uno dell'altro tipo.
  */
 export function estraiPesate(
   candidate: Domanda[],
   quante: number,
   pesi: Map<string, number>,
   { viste = new Set(), rng = Math.random }: OpzioniEstrazione = {},
+  gruppiUsati: Set<string> = new Set(),
 ): Domanda[] {
   const pool = candidate.slice()
   const scelte: Domanda[] = []
   const perArgomento = new Map<string, number>()
-  const gruppiUsati = new Set<string>()
 
   while (scelte.length < quante && pool.length > 0) {
     const punteggi = pool.map((d) => {
@@ -85,12 +88,15 @@ export function generaSezione(
   // il rinforzo non esclude gli altri argomenti, li mette solo in secondo piano: con una banca
   // piccola un ripasso che peschi solo dai deboli resterebbe a corto di domande
   const pesi = new Map(materia.argomenti.map((a) => [a.id, a.peso * (opzioni.rinforzo?.get(a.id) ?? 1)]))
-  const multiple = estraiPesate(banca.filter((d) => d.tipo === 'multipla'), quante.multipla, pesi, opzioni)
+  // un solo insieme per tutta la sezione, condiviso dalle due estrazioni
+  const gruppiUsati = new Set<string>()
+  const multiple = estraiPesate(banca.filter((d) => d.tipo === 'multipla'), quante.multipla, pesi, opzioni, gruppiUsati)
   const completamento = estraiPesate(
     banca.filter((d) => d.tipo === 'completamento'),
     quante.completamento,
     pesi,
     opzioni,
+    gruppiUsati,
   )
   const domande: DomandaInProva[] = [
     ...mescola(multiple, rng).map((d) => ({

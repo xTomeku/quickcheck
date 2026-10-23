@@ -5,7 +5,8 @@
 //   node scripts/genera.mjs bio.1.2          # quante ne prevede il piano per quell'argomento
 //   node scripts/genera.mjs bio.1.2 10       # quante ne vuoi tu
 //   node scripts/genera.mjs bio.1.2 10 --prompt   # stampa il prompt da incollare in chat, senza chiamare nessuno
-//   node scripts/genera.mjs --prompts biologia 10 # prepara i prompt dei 10 argomenti che pesano di piu'
+//   node scripts/genera.mjs --prompts biologia 10 # i 10 argomenti piu' pesanti ancora da fare
+//   node scripts/genera.mjs --prompts biologia 10 --anche-pronti  # senza saltare quelli gia' coperti
 //
 // Gli argomenti pesanti vogliono più domande di quante ne stiano bene in una risposta sola, quindi
 // oltre MASSIMO_PER_LOTTO le domande si spezzano in più lotti, uno per conversazione, ognuno su una
@@ -33,6 +34,7 @@ const MODELLO = 'claude-opus-5-5'
 const BASE_PIANO = 500 // domande per materia, come da piano
 const MASSIMO_PER_LOTTO = 12 // più di così in una risposta sola e in fondo la qualità cala
 const LETTERE = 'abcdefgh'
+const SOGLIA_COPERTO = 3 // da qui in su l'argomento si considera già fatto e --prompts lo salta
 const radice = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const leggiJson = (rel) => JSON.parse(readFileSync(resolve(radice, rel), 'utf8'))
 
@@ -285,17 +287,39 @@ function perBanca(d, codice, prefisso, indice, marca) {
  * nell'ordine in cui conviene farli. Serve al giro a mano: una esecuzione, poi si lavora di copia
  * e incolla senza tornare al terminale.
  */
-function preparaPrompts(materiaId, quanti) {
+/** Quante domande ha già in banca ciascun argomento di una materia. */
+function quanteInBanca(materiaId) {
+  const conta = new Map()
+  const f = resolve(radice, 'public/domande', `${materiaId}.json`)
+  if (!existsSync(f)) return conta
+  for (const d of JSON.parse(readFileSync(f, 'utf8')).domande)
+    conta.set(d.argomento, (conta.get(d.argomento) ?? 0) + 1)
+  return conta
+}
+
+function preparaPrompts(materiaId, quanti, anchePronti = false) {
   const analisi = leggiJson('dati/argomenti-analisi.json')
   const materia = analisi.materie.find((m) => m.id === materiaId)
   if (!materia) {
     console.error(`Materia sconosciuta: "${materiaId}". Sono biologia, chimica, fisica.`)
     process.exit(1)
   }
-  const ordinati = materia.unita
+  // Di default si saltano gli argomenti già coperti, altrimenti chiedendone venti si rifanno anche
+  // i dieci della volta scorsa. Con --anche-pronti si prendono i più pesanti e basta.
+  const conta = quanteInBanca(materiaId)
+  const tutti = materia.unita
     .flatMap((u) => u.argomenti.map((a) => ({ unita: u, arg: a })))
     .sort((x, y) => y.arg.peso.suggerito - x.arg.peso.suggerito)
-    .slice(0, quanti)
+  const daFare = anchePronti ? tutti : tutti.filter((v) => (conta.get(v.arg.id) ?? 0) < SOGLIA_COPERTO)
+  const ordinati = daFare.slice(0, quanti)
+  if (!ordinati.length) {
+    console.error(`Tutti gli argomenti di ${materia.nome} hanno già almeno ${SOGLIA_COPERTO} domande.`)
+    console.error('Per prepararli lo stesso: npm run genera -- --prompts ' + materiaId + ' ' + quanti + ' --anche-pronti')
+    process.exit(1)
+  }
+  if (!anchePronti && tutti.length > daFare.length) {
+    console.log(`(${tutti.length - daFare.length} argomenti saltati: hanno già ${SOGLIA_COPERTO} domande o più)`)
+  }
 
   const cartella = resolve(radice, 'dati/prompt')
   mkdirSync(cartella, { recursive: true })
@@ -376,7 +400,11 @@ async function main() {
   const soloPrompt = process.argv.includes('--prompt')
   if (process.argv.includes('--prompts')) {
     const i = process.argv.indexOf('--prompts')
-    preparaPrompts(process.argv[i + 1] ?? 'biologia', Number(process.argv[i + 2]) || 10)
+    preparaPrompts(
+      process.argv[i + 1] ?? 'biologia',
+      Number(process.argv[i + 2]) || 10,
+      process.argv.includes('--anche-pronti'),
+    )
     return
   }
   const codice = process.argv[2]

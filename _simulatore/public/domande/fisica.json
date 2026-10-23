@@ -51,7 +51,8 @@
    "corretta": 2,
    "spiegazione": "s = ½·a·t² = ½ · 2 · 25 = 25 m.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "fis.2.1-spazio-accelerato"
   },
   {
    "id": "fis-004",
@@ -68,7 +69,8 @@
    "corretta": 1,
    "spiegazione": "Dal secondo principio a = F/m = 10/4 = 2,5 m/s².",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "fis.2.2-forza-massa-accelerazione"
   },
   {
    "id": "fis-005",
@@ -221,7 +223,8 @@
    "corretta": 2,
    "spiegazione": "1/R = 1/6 + 1/6 = 1/3, quindi R = 3 Ω. Due resistenze uguali in parallelo valgono la metà.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "fis.6.4-parallelo"
   },
   {
    "id": "fis-014",
@@ -418,7 +421,8 @@
    "unita": "K",
    "spiegazione": "T(K) = T(°C) + 273,15, quindi circa 300 K.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "fis.5.1-celsius-kelvin"
   },
   {
    "id": "fis-026",
@@ -762,7 +766,8 @@
     "5 m",
     "20 m"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.2.1-spazio-accelerato"
   },
   {
    "id": "fis-21b-06",
@@ -1057,7 +1062,8 @@
     "2000 N",
     "20 N"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "fis.3.2-torchio"
   },
   {
    "id": "fis-32a-04",
@@ -1098,7 +1104,8 @@
     "valore": 5000,
     "tolleranza": 0
    },
-   "unita": "Pa"
+   "unita": "Pa",
+   "gruppo": "fis.3.2-pressione-forza-area"
   },
   {
    "id": "fis-32a-06",
@@ -1159,7 +1166,8 @@
     "valore": 900,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.3.2-torchio"
   },
   {
    "id": "fis-32a-09",
@@ -1178,7 +1186,8 @@
     "valore": 100,
     "tolleranza": 0
    },
-   "unita": "Pa"
+   "unita": "Pa",
+   "gruppo": "fis.3.2-pressione-forza-area"
   },
   {
    "id": "fis-32b-01",
@@ -1232,7 +1241,8 @@
     "6%",
     "30%"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "fis.3.2-frazione-immersa"
   },
   {
    "id": "fis-32b-04",
@@ -1250,7 +1260,8 @@
     "0,2 N",
     "2000 N"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.3.2-spinta"
   },
   {
    "id": "fis-32b-05",
@@ -1270,7 +1281,8 @@
     "valore": 75,
     "tolleranza": 0
    },
-   "unita": "%"
+   "unita": "%",
+   "gruppo": "fis.3.2-frazione-immersa"
   },
   {
    "id": "fis-32b-06",
@@ -1289,7 +1301,8 @@
     "valore": 100,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.3.2-spinta"
   },
   {
    "id": "fis-32b-07",
@@ -1308,7 +1321,8 @@
     "valore": 50,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.3.2-spinta"
   },
   {
    "id": "fis-32b-08",
@@ -1836,7 +1850,8 @@
     "100 J",
     "200 J"
    ],
-   "corretta": 3
+   "corretta": 3,
+   "gruppo": "fis.2.3-energia-potenziale"
   },
   {
    "id": "fis-23c-04",
@@ -1873,7 +1888,8 @@
     "valore": 80,
     "tolleranza": 0
    },
-   "unita": "J"
+   "unita": "J",
+   "gruppo": "fis.2.3-energia-potenziale"
   },
   {
    "id": "fis-23c-06",
@@ -2242,7 +2258,8 @@
     "12",
     "3,5"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.1.2-vettori-perpendicolari"
   },
   {
    "id": "fis-12b-06",
@@ -2279,7 +2296,8 @@
     "valore": 15,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.1.2-vettori-perpendicolari"
   },
   {
    "id": "fis-12b-08",
@@ -2298,7 +2316,8 @@
     "valore": 10,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.1.2-vettori-paralleli"
   },
   {
    "id": "fis-12b-09",
@@ -2317,7 +2336,8 @@
     "valore": 10,
     "tolleranza": 0
    },
-   "unita": "N"
+   "unita": "N",
+   "gruppo": "fis.1.2-vettori-perpendicolari"
   },
   {
    "id": "fis-12b-10",
@@ -2335,7 +2355,8 @@
    "numero": {
     "valore": 12,
     "tolleranza": 0
-   }
+   },
+   "gruppo": "fis.1.2-vettori-paralleli"
   },
   {
    "id": "fis-12b-11",
@@ -2353,7 +2374,8 @@
    "numero": {
     "valore": 6,
     "tolleranza": 0
-   }
+   },
+   "gruppo": "fis.1.2-vettori-paralleli"
   },
   {
    "id": "fis-12b-12",
@@ -2462,7 +2484,8 @@
     "0,25 m/s²",
     "12 m/s²"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "fis.2.2-forza-massa-accelerazione"
   },
   {
    "id": "fis-22a-06",
@@ -2528,7 +2551,8 @@
     "valore": 5,
     "tolleranza": 0
    },
-   "unita": "m/s^2"
+   "unita": "m/s^2",
+   "gruppo": "fis.2.2-forza-massa-accelerazione"
   },
   {
    "id": "fis-22a-10",
@@ -2842,7 +2866,8 @@
     "20 A",
     "5 A"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "fis.6.4-legge-ohm"
   },
   {
    "id": "fis-64a-06",
@@ -2880,7 +2905,8 @@
     "valore": 30,
     "tolleranza": 0
    },
-   "unita": "ohm"
+   "unita": "ohm",
+   "gruppo": "fis.6.4-legge-ohm"
   },
   {
    "id": "fis-64a-08",
@@ -2935,7 +2961,8 @@
     "valore": 6,
     "tolleranza": 0
    },
-   "unita": "C"
+   "unita": "C",
+   "gruppo": "fis.6.4-carica"
   },
   {
    "id": "fis-64a-11",
@@ -2954,7 +2981,8 @@
     "valore": 5,
     "tolleranza": 0
    },
-   "unita": "C"
+   "unita": "C",
+   "gruppo": "fis.6.4-carica"
   },
   {
    "id": "fis-64b-01",
@@ -3044,7 +3072,8 @@
     "2 Ω",
     "0,1 Ω"
    ],
-   "corretta": 2
+   "corretta": 2,
+   "gruppo": "fis.6.4-parallelo"
   },
   {
    "id": "fis-64b-06",
@@ -3101,7 +3130,8 @@
     "valore": 10,
     "tolleranza": 0
    },
-   "unita": "ohm"
+   "unita": "ohm",
+   "gruppo": "fis.6.4-parallelo"
   },
   {
    "id": "fis-64b-09",
@@ -3410,7 +3440,8 @@
     "valore": 300,
     "tolleranza": 0.2
    },
-   "unita": "K"
+   "unita": "K",
+   "gruppo": "fis.5.1-celsius-kelvin"
   },
   {
    "id": "fis-51b-06",
@@ -3992,7 +4023,8 @@
     "1 m/s",
     "4 m/s"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "fis.2.4-urto-anelastico"
   },
   {
    "id": "fis-24b-05",
@@ -4025,7 +4057,8 @@
     "valore": 2,
     "tolleranza": 0
    },
-   "unita": "m/s"
+   "unita": "m/s",
+   "gruppo": "fis.2.4-urto-anelastico"
   },
   {
    "id": "fis-24b-07",
@@ -4144,7 +4177,8 @@
     "valore": 4,
     "tolleranza": 0
    },
-   "unita": "m/s"
+   "unita": "m/s",
+   "gruppo": "fis.3.3-portata"
   },
   {
    "id": "fis-33a-06",
@@ -4163,7 +4197,8 @@
     "valore": 0.06,
     "tolleranza": 0.001
    },
-   "unita": "m^3/s"
+   "unita": "m^3/s",
+   "gruppo": "fis.3.3-portata"
   },
   {
    "id": "fis-33a-07",
@@ -4215,7 +4250,8 @@
     "valore": 5,
     "tolleranza": 0
    },
-   "unita": "m/s"
+   "unita": "m/s",
+   "gruppo": "fis.3.3-portata"
   },
   {
    "id": "fis-33b-01",
@@ -4321,7 +4357,8 @@
     "valore": 8,
     "tolleranza": 0
    },
-   "unita": "m/s"
+   "unita": "m/s",
+   "gruppo": "fis.3.3-continuita"
   },
   {
    "id": "fis-33b-07",
@@ -4353,7 +4390,8 @@
     "valore": 4.5,
     "tolleranza": 0.01
    },
-   "unita": "m/s"
+   "unita": "m/s",
+   "gruppo": "fis.3.3-continuita"
   }
  ]
 }

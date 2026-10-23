@@ -115,6 +115,27 @@ describe('generazione', () => {
     expect(daA / 800).toBeGreaterThan(0.6)
   })
 
+  it('non fa uscire insieme due quasi duplicati se uno è multipla e l’altro completamento', () => {
+    // il difetto stava qui: multiple e completamenti si pescano con due estrazioni separate, e
+    // prima ciascuna teneva un elenco di gruppi tutto suo, quindi il gruppo valeva solo dentro un tipo
+    const arg = MATERIE.biologia.argomenti[0].id
+    const multipla = (id: string, gruppo?: string): Domanda =>
+      ({ id, argomento: arg, tipo: 'multipla', testo: '', opzioni: ['a', 'b', 'c', 'd', 'e'], corretta: 0, ...(gruppo ? { gruppo } : {}) })
+    const completamento = (id: string, gruppo?: string): Domanda =>
+      ({ id, argomento: arg, tipo: 'completamento', testo: '', accettate: ['x'], ...(gruppo ? { gruppo } : {}) })
+    const banca: Domanda[] = [
+      ...Array.from({ length: 10 }, (_, i) => multipla(`m${i}`)),
+      ...Array.from({ length: 10 }, (_, i) => completamento(`c${i}`)),
+      multipla('gm', 'g'),
+      completamento('gc', 'g'),
+    ]
+    for (let k = 0; k < 200; k++) {
+      const s = generaSezione(MATERIE.biologia, banca, { rng: rngConSeme(k) }, { multipla: 6, completamento: 6 })
+      const ids = s.domande.map((q) => q.id)
+      expect(ids.includes('gm') && ids.includes('gc')).toBe(false)
+    }
+  })
+
   it('una sezione con tutte risposte giuste vale 31 punti', () => {
     const s = generaSezione(MATERIE.biologia, bancaBio, { rng: rngConSeme(3) })
     for (const { id } of s.domande) {
