@@ -2,6 +2,7 @@
 // del verificatore con le chiavi.
 //
 //   node scripts/verifica.mjs --cieca bio.6.3       # scrive le domande senza soluzione, e le chiavi
+//   node scripts/verifica.mjs --nuove biologia      # i fogli (da 45) delle domande del terzo giro e del quarto lotto
 //   node scripts/verifica.mjs --confronta bio.6.3   # legge dati/verifica/bio.6.3-risposte.txt
 //
 // È il passo 4 della catena in dati/piano-banca.md, fatto a mano: le domande si incollano in una
@@ -33,8 +34,48 @@ function lottiDi(codice) {
     .sort()
 }
 
-/** Le domande dell'argomento, nell'ordine dei lotti: la numerazione del foglio nasce da qui. */
+const bancaDi = (materia) =>
+  JSON.parse(readFileSync(resolve(radice, 'public/domande', `${materia}.json`), 'utf8')).domande.filter(
+    (d) => !d.stato || d.stato === 'approvata',
+  )
+const PREFISSO_MATERIA = { bio: 'biologia', chim: 'chimica', fis: 'fisica' }
+const PEZZO = 45
+
+/** Gli id scritti nel terzo giro e nel quarto lotto: dati/generate/_terzo-giro-*.json e _quarto-giro-*.json. */
+function idNuovi(materia) {
+  return ['_terzo-giro', '_quarto-giro'].flatMap((p) => {
+    const f = resolve(cartellaGenerate, `${p}-${materia}.json`)
+    return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')).domande.map((d) => d.id) : []
+  })
+}
+
+/**
+ * Le domande da verificare. Di norma si guarda la banca approvata, che è quella vera, dopo la revisione:
+ *   bio.6.3            tutte le approvate di quell'argomento
+ *   biologia-nuove-2   il secondo pezzo (45 domande) di quelle scritte nel terzo giro e nel quarto lotto
+ * Con --lotti si torna ai vecchi file di dati/generate (<codice>.json, <codice>-a.json...).
+ */
 function domandeDi(codice) {
+  const nuove = codice.match(/^(biologia|chimica|fisica)-nuove-(\d+)$/)
+  if (nuove) {
+    const ids = new Set(idNuovi(nuove[1]))
+    const tutte = bancaDi(nuove[1]).filter((d) => ids.has(d.id))
+    const da = (Number(nuove[2]) - 1) * PEZZO
+    return tutte.slice(da, da + PEZZO)
+  }
+  if (!process.argv.includes('--lotti')) {
+    const materia = PREFISSO_MATERIA[codice.split('.')[0]]
+    if (!materia) {
+      console.error(`Non capisco "${codice}": serve un argomento come bio.6.3 o un pezzo come biologia-nuove-1.`)
+      process.exit(1)
+    }
+    const domande = bancaDi(materia).filter((d) => d.argomento === codice)
+    if (!domande.length) {
+      console.error(`Nessuna domanda approvata per "${codice}" in public/domande/${materia}.json.`)
+      process.exit(1)
+    }
+    return domande
+  }
   const lotti = lottiDi(codice)
   if (!lotti.length) {
     console.error(`Nessun lotto per "${codice}" in dati/generate/. Cerco ${codice}.json oppure ${codice}-a.json.`)
@@ -81,7 +122,7 @@ function cieca(codice) {
   writeFileSync(fileDomande, righe.join(SALTO))
   writeFileSync(resolve(cartellaVerifica, `${codice}-chiavi.txt`), `${chiavi.join(SALTO)}${SALTO}`)
 
-  console.log(`${domande.length} domande senza soluzione da ${lottiDi(codice).length} lotti.`)
+  console.log(`${domande.length} domande senza soluzione.`)
   console.log(`  dati/verifica/${codice}-domande.txt   da incollare in una conversazione nuova`)
   console.log(`  dati/verifica/${codice}-chiavi.txt    le chiavi, da non guardare prima`)
   console.log(`${SALTO}Salva la risposta in dati/verifica/${codice}-risposte.txt, poi:`)
@@ -235,9 +276,17 @@ if (!comando || !codice) {
   console.error('  node scripts/verifica.mjs --confronta bio.6.3')
   process.exit(1)
 }
-if (comando === '--cieca') cieca(codice)
+if (comando === '--nuove') {
+  // un foglio ogni PEZZO domande nuove della materia: biologia-nuove-1, biologia-nuove-2...
+  const pezzi = Math.ceil(bancaDi(codice).filter((d) => new Set(idNuovi(codice)).has(d.id)).length / PEZZO)
+  if (!pezzi) {
+    console.error(`Nessuna domanda nuova di ${codice} approvata in banca: importa e approva prima le bozze.`)
+    process.exit(1)
+  }
+  for (let k = 1; k <= pezzi; k++) cieca(`${codice}-nuove-${k}`)
+} else if (comando === '--cieca') cieca(codice)
 else if (comando === '--confronta') await confronta(codice)
 else {
-  console.error(`Comando sconosciuto: ${comando}. Sono --cieca e --confronta.`)
+  console.error(`Comando sconosciuto: ${comando}. Sono --cieca, --nuove e --confronta.`)
   process.exit(1)
 }

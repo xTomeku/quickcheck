@@ -7344,6 +7344,74 @@
     "σ"
    ],
    "spiegazione": "Il fattore sigma si associa al core della polimerasi, la guida sul promotore e poi si stacca durante l'allungamento."
+  },
+  {
+   "id": "bio-54q-01",
+   "argomento": "bio.5.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I fattori SREBP, ancorati alla membrana del reticolo endoplasmatico, quando i livelli di steroli nella cellula sono bassi:",
+   "opzioni": [
+    "vengono portati al Golgi e tagliati: il frammento attivo entra nel nucleo e attiva i geni della sintesi dei lipidi",
+    "restano nel reticolo e vengono degradati",
+    "escono dalla cellula tramite esocitosi",
+    "si legano al DNA mitocondriale",
+    "ostacolano le proteine della lamina nucleare"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il taglio libera il dominio che lega il DNA: così la cellula aumenta la produzione di colesterolo quando ne ha bisogno."
+  },
+  {
+   "id": "bio-59q-01",
+   "argomento": "bio.5.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nell'endocitosi della transferrina, a differenza di quella delle LDL, la transferrina, dopo aver ceduto il ferro nell'endosoma:",
+   "opzioni": [
+    "torna sulla membrana insieme al recettore e viene riciclata, senza essere degradata nei lisosomi",
+    "viene degradata nei lisosomi come le LDL",
+    "rimane per sempre nell'endosoma",
+    "viene secreta nel nucleo",
+    "viene trasformata in ferritina"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'ambiente acido dell'endosoma fa rilasciare il ferro; la proteina resta legata al recettore e ritorna in superficie, dove si dissocia e può essere riutilizzata."
+  },
+  {
+   "id": "bio-72q-01",
+   "argomento": "bio.7.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I virus oncogeni a DNA, come il papillomavirus umano, possono causare tumori perché le loro proteine:",
+   "opzioni": [
+    "inattivano le proteine che frenano la proliferazione, come p53 e Rb",
+    "attivano la riparazione del DNA",
+    "bloccano la sintesi di ATP",
+    "inducono sempre l'apoptosi",
+    "degradano il fuso mitotico"
+   ],
+   "corretta": 0,
+   "spiegazione": "Legando e inattivando i freni della proliferazione, le proteine virali costringono la cellula a restare nel ciclo e a replicare il DNA virale."
+  },
+  {
+   "id": "bio-23q-01",
+   "argomento": "bio.2.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nei minisatelliti l'unità ripetuta in tandem è lunga:",
+   "opzioni": [
+    "alcune decine di basi",
+    "una sola base",
+    "centinaia di migliaia di basi",
+    "esattamente tre basi",
+    "zero basi: sono privi di ripetizioni"
+   ],
+   "corretta": 0,
+   "spiegazione": "Sono ripetizioni in tandem di unità di circa 10-60 basi; il numero di ripetizioni varia da individuo a individuo ed è la base dell'impronta genetica."
   }
  ]
 }

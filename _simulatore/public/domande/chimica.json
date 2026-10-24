@@ -7071,6 +7071,220 @@
     "valore": 2,
     "tolleranza": 0
    }
+  },
+  {
+   "id": "chim-16q-01",
+   "argomento": "chim.1.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le forze di dispersione di London fra molecole apolari sono dovute a:",
+   "opzioni": [
+    "dipoli temporanei, indotti dal movimento casuale degli elettroni",
+    "legami covalenti fra molecole vicine",
+    "trasferimento di elettroni fra le molecole",
+    "attrazione fra ioni di carica opposta",
+    "condivisione di coppie di elettroni"
+   ],
+   "corretta": 0,
+   "spiegazione": "Gli elettroni di una molecola apolare si distribuiscono in modo asimmetrico per brevi istanti: il dipolo temporaneo ne induce un altro nella molecola vicina e le due si attraggono debolmente."
+  },
+  {
+   "id": "chim-16q-02",
+   "argomento": "chim.1.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In acqua, le molecole apolari tendono ad aggregarsi fra loro perché:",
+   "opzioni": [
+    "si attraggono con legami covalenti",
+    "formano legami ionici con l'acqua",
+    "così riducono la superficie di contatto con l'acqua, che guadagna in entropia",
+    "l'acqua le respinge per repulsione elettrica",
+    "reagiscono con l'acqua formando acidi"
+   ],
+   "corretta": 2,
+   "spiegazione": "Le molecole d'acqua attorno a un soluto apolare sono costrette in un assetto ordinato: aggregandosi, le molecole apolari liberano acqua e ne aumentano il disordine."
+  },
+  {
+   "id": "chim-16q-03",
+   "argomento": "chim.1.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le molecole apolari, che non si sciolgono in acqua e tendono ad aggregarsi, sono dette ……",
+   "accettate": [
+    "idrofobiche",
+    "idrofobe",
+    "idrofobico",
+    "idrofobica",
+    "apolari"
+   ],
+   "spiegazione": "Il termine significa \"che teme l'acqua\": gli idrocarburi e le code lipidiche dei fosfolipidi sono esempi di gruppi idrofobici."
+  },
+  {
+   "id": "chim-16q-04",
+   "argomento": "chim.1.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'insieme delle deboli attrazioni fra molecole neutre, comprese le forze di London, è chiamato forze di van der ……",
+   "accettate": [
+    "Waals",
+    "waals"
+   ],
+   "spiegazione": "Le forze di van der Waals comprendono le interazioni fra dipoli permanenti, quelle fra dipoli indotti e le forze di dispersione."
+  },
+  {
+   "id": "chim-26q-01",
+   "argomento": "chim.2.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il passaggio netto di solvente attraverso una membrana che lascia passare solo il solvente avviene:",
+   "opzioni": [
+    "dalla soluzione meno concentrata verso quella più concentrata",
+    "dalla soluzione più concentrata verso quella meno concentrata",
+    "solo se il soluto attraversa la membrana",
+    "con consumo di ATP",
+    "in entrambe le direzioni con velocità diverse, senza un verso netto"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il solvente si sposta verso il compartimento a maggiore osmolarità: è l'osmosi, che si ferma quando la pressione idrostatica la bilancia."
+  },
+  {
+   "id": "chim-26q-02",
+   "argomento": "chim.2.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Osmolarità e osmolalità differiscono perché la prima si riferisce:",
+   "opzioni": [
+    "alle moli per chilogrammo di solvente, la seconda per litro di soluzione",
+    "alle moli di particelle per litro di soluzione, la seconda per chilogrammo di solvente",
+    "ai grammi per litro, la seconda ai grammi per chilogrammo",
+    "alla pressione, la seconda alla temperatura",
+    "alle sole particelle neutre, la seconda a quelle cariche"
+   ],
+   "corretta": 1,
+   "spiegazione": "Osmolarità è per litro di soluzione e dipende dalla temperatura; osmolalità è per chilogrammo di solvente e non ne dipende."
+  },
+  {
+   "id": "chim-26q-03",
+   "argomento": "chim.2.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una membrana che lascia passare il solvente ma non il soluto è detta ……",
+   "accettate": [
+    "semipermeabile",
+    "semipermeabili",
+    "selettivamente permeabile"
+   ],
+   "spiegazione": "È la condizione necessaria perché si manifesti l'osmosi: il solvente passa verso la soluzione più concentrata."
+  },
+  {
+   "id": "chim-26q-04",
+   "argomento": "chim.2.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una soluzione 0,1 M di CaCl₂, completamente dissociato, ha osmolarità, in osmol/L, pari a ……",
+   "accettate": [
+    "0,3",
+    "0.3"
+   ],
+   "spiegazione": "Ogni unità formula libera tre ioni (uno di calcio e due di cloruro): 0,1 · 3 = 0,3 osmol/L.",
+   "numero": {
+    "valore": 0.3,
+    "tolleranza": 0
+   },
+   "unita": "osmol/L"
+  },
+  {
+   "id": "chim-18q-01",
+   "argomento": "chim.1.8",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella distribuzione di Maxwell-Boltzmann delle velocità molecolari di un gas, aumentando la temperatura:",
+   "opzioni": [
+    "il massimo si sposta verso velocità maggiori e la distribuzione si allarga",
+    "il massimo si sposta verso velocità minori",
+    "tutte le molecole assumono la stessa velocità",
+    "la distribuzione diventa più stretta",
+    "la velocità media si annulla"
+   ],
+   "corretta": 0,
+   "spiegazione": "A temperatura più alta l'energia cinetica media cresce e le velocità si distribuiscono su un intervallo più ampio."
+  },
+  {
+   "id": "chim-44q-01",
+   "argomento": "chim.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La reazione di Haber-Weiss, catalizzata da ioni metallici, porta alla formazione di:",
+   "opzioni": [
+    "radicale idrossilico, a partire da superossido e perossido di idrogeno",
+    "acqua e ossigeno molecolare con rilascio di energia",
+    "idrogeno gassoso",
+    "ozono",
+    "un idrossido insolubile"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il metallo catalizza la reazione fra il radicale superossido e il perossido di idrogeno, producendo il radicale idrossilico, molto dannoso per le molecole biologiche."
+  },
+  {
+   "id": "chim-64q-01",
+   "argomento": "chim.6.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli acilfosfati, come l'1,3-bisfosfoglicerato, sono composti biologicamente importanti perché:",
+   "opzioni": [
+    "hanno un'elevata energia di idrolisi e possono cedere il gruppo fosfato a un'altra molecola",
+    "sono molto stabili e non reagiscono con l'acqua",
+    "sono i costituenti principali delle membrane",
+    "trasportano ossigeno nel sangue",
+    "non contengono fosforo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il legame acil-fosfato è ad alta energia: la sua idrolisi libera molta energia, che viene usata per sintetizzare ATP da ADP."
+  },
+  {
+   "id": "chim-19q-01",
+   "argomento": "chim.1.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nel diagramma di stato dell'acqua, a differenza di quello della maggior parte delle sostanze, la curva di equilibrio solido-liquido ha pendenza:",
+   "opzioni": [
+    "negativa, perché il ghiaccio è meno denso dell'acqua liquida",
+    "positiva, perché il ghiaccio è più denso",
+    "nulla",
+    "verticale",
+    "uguale a quella della curva solido-vapore"
+   ],
+   "corretta": 0,
+   "spiegazione": "Aumentando la pressione il ghiaccio fonde a temperatura più bassa: è la conseguenza della minore densità del solido rispetto al liquido."
+  },
+  {
+   "id": "chim-73q-01",
+   "argomento": "chim.7.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella reazione di Maillard fra uno zucchero con gruppo carbonilico libero e un'ammina si forma dapprima una base di Schiff, che si riarrangia in un composto detto:",
+   "opzioni": [
+    "prodotto di Amadori",
+    "acetale",
+    "disaccaride",
+    "lattone",
+    "anomero"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il prodotto di Amadori è un amminochetone stabile: è l'intermedio da cui derivano i pigmenti bruni degli alimenti cotti e, in vivo, i prodotti di glicazione."
   }
  ]
 }

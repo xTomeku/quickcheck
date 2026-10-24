@@ -7122,6 +7122,44 @@
     "valore": -3,
     "tolleranza": 0
    }
+  },
+  {
+   "id": "fis-41q-01",
+   "argomento": "fis.4.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La pulsazione ω di un'oscillazione di frequenza f è data da:",
+   "opzioni": [
+    "ω = 2π·f",
+    "ω = f / 2π",
+    "ω = 1 / f",
+    "ω = f²",
+    "ω = π·f"
+   ],
+   "corretta": 0,
+   "spiegazione": "La pulsazione misura la velocità angolare, in rad/s: a ogni periodo l'angolo percorso è 2π, quindi ω = 2π/T = 2πf.",
+   "gruppo": "fis.4.1-pulsazione-frequenza"
+  },
+  {
+   "id": "fis-41q-02",
+   "argomento": "fis.4.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un'oscillazione ha frequenza 5 Hz: la sua pulsazione, in rad/s, è circa …… (usa π = 3,14).",
+   "accettate": [
+    "31,4",
+    "31.4",
+    "10π"
+   ],
+   "spiegazione": "ω = 2π·f = 2 · 3,14 · 5 = 31,4 rad/s.",
+   "numero": {
+    "valore": 31.4,
+    "tolleranza": 0.02
+   },
+   "unita": "rad/s",
+   "gruppo": "fis.4.1-pulsazione-frequenza"
   }
  ]
 }
