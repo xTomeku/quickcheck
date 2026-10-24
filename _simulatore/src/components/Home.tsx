@@ -67,7 +67,7 @@ function ModuloIllustrato() {
           {caselle.map((c, i) => (
             <li key={i}>
               <div className="foglio-riga">
-                <span className="n num">{16 + i}</span>
+                <span className="n num">{22 + i}</span>
                 <span className={`casella${c ? ' piena' : ''}`}>{c}</span>
                 <span className="dubbio" />
               </div>
@@ -185,7 +185,7 @@ export function Home({
             Allenati sulle prove, <em>nel formato vero.</em>
           </h1>
           <p className="sottotitolo">
-            Per ogni materia 31 domande in 45 minuti: 15 a risposta multipla e 16 a completamento. Ogni risposta corretta vale 1
+            Per ogni materia 31 domande in 50 minuti: 21 a risposta multipla e 10 a completamento. Ogni risposta corretta vale 1
             punto, ogni errore toglie 0,1.
           </p>
           <div className="azioni">
@@ -194,7 +194,7 @@ export function Home({
                 {caricamento ? 'Preparo la prova…' : 'Inizia la prova completa'}
               </button>
               <span className="nota">
-                {inCorso ? 'Concludi o abbandona prima la prova in corso.' : 'Biologia, chimica e fisica una dopo l’altra, 2 ore e 15 minuti.'}
+                {inCorso ? 'Concludi o abbandona prima la prova in corso.' : 'Biologia, chimica e fisica una dopo l’altra, 2 ore e 30 minuti.'}
               </span>
             </div>
             <div className="una-materia">

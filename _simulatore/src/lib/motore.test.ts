@@ -89,14 +89,14 @@ describe('punteggio', () => {
 })
 
 describe('generazione', () => {
-  it('produce 15 multiple poi 16 completamenti, senza duplicati', () => {
+  it('produce 21 multiple poi 10 completamenti, senza duplicati', () => {
     const s = generaSezione(MATERIE.biologia, bancaBio, { rng: rngConSeme(1) })
     expect(s.domande).toHaveLength(31)
     const tipi = s.domande.map((q) => trova(bancaBio, q.id).tipo)
-    expect(tipi.slice(0, 15).every((t) => t === 'multipla')).toBe(true)
-    expect(tipi.slice(15).every((t) => t === 'completamento')).toBe(true)
+    expect(tipi.slice(0, 21).every((t) => t === 'multipla')).toBe(true)
+    expect(tipi.slice(21).every((t) => t === 'completamento')).toBe(true)
     expect(new Set(s.domande.map((q) => q.id)).size).toBe(31)
-    for (const q of s.domande.slice(0, 15)) expect([...q.ordine!].sort()).toEqual([0, 1, 2, 3, 4])
+    for (const q of s.domande.slice(0, 21)) expect([...q.ordine!].sort()).toEqual([0, 1, 2, 3, 4])
   })
 
   it('rispetta i pesi e non mette insieme domande dello stesso gruppo', () => {

@@ -41,8 +41,8 @@ export function Piede() {
         <div className="piede-banca-testo">
           <strong>Formato d'esame e Syllabus MUR 2026/27</strong>
           <p>
-            Ogni simulazione replica il formato ufficiale delle prove del semestre filtro: <b>31 domande in 45 minuti</b> per
-            materia (15 a risposta multipla e 16 a completamento). Criteri di correzione ministeriali: <b>+1</b> per risposta esatta,
+            Ogni simulazione replica il formato ufficiale delle prove del semestre filtro: <b>31 domande in 50 minuti</b> per
+            materia (21 a risposta multipla e 10 a completamento). Criteri di correzione ministeriali: <b>+1</b> per risposta esatta,
             <b> −0,1</b> per risposta errata e <b>0</b> per risposta omessa (sufficienza a 18). Le domande sono estratte in modo bilanciato
             in base ai CFU e alla frequenza nelle prove ministeriali.
           </p>

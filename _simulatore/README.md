@@ -3,7 +3,7 @@
 Simulatore delle prove del semestre filtro di Medicina, pubblicato come sezione del sito di QuickCheck:
 **https://xtomeku.github.io/quickcheck/simulatore/**
 
-Per ogni materia 31 domande (15 a risposta multipla + 16 a completamento) in 45 minuti, punteggio +1 / −0,1 / 0,
+Per ogni materia 31 domande (21 a risposta multipla + 10 a completamento) in 50 minuti, punteggio +1 / −0,1 / 0,
 correzione con spiegazioni e argomenti da ripassare.
 
 È un'app statica in React + Vite + TypeScript: nessun server e nessun costo. Estrazione della prova, timer,

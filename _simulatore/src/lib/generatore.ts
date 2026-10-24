@@ -76,7 +76,7 @@ export function estraiPesate(
 
 /**
  * Costruisce una sezione: prima le multiple, poi i completamenti, come nella prova ufficiale.
- * `quante` serve ai ripassi, che sono più corti dei 15 + 16 della prova vera.
+ * `quante` serve ai ripassi, che sono più corti dei 21 + 10 della prova vera.
  */
 export function generaSezione(
   materia: Materia,

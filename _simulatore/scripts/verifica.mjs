@@ -3,6 +3,7 @@
 //
 //   node scripts/verifica.mjs --cieca bio.6.3       # scrive le domande senza soluzione, e le chiavi
 //   node scripts/verifica.mjs --nuove biologia      # i fogli (da 45) delle domande del terzo giro e del quarto lotto
+//   node scripts/verifica.mjs --prof fisica         # i fogli (da 45) delle bozze della profondità 20, prima di importarle
 //   node scripts/verifica.mjs --confronta bio.6.3   # legge dati/verifica/bio.6.3-risposte.txt
 //
 // È il passo 4 della catena in dati/piano-banca.md, fatto a mano: le domande si incollano in una
@@ -49,6 +50,12 @@ function idNuovi(materia) {
   })
 }
 
+/** Le bozze della profondità 20 di una materia (non ancora in banca). */
+function bozzeProfondita(materia, suffisso = '') {
+  const f = resolve(cartellaGenerate, `_giro5${suffisso}-${materia}.json`)
+  return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')).domande : []
+}
+
 /**
  * Le domande da verificare. Di norma si guarda la banca approvata, che è quella vera, dopo la revisione:
  *   bio.6.3            tutte le approvate di quell'argomento
@@ -56,6 +63,12 @@ function idNuovi(materia) {
  * Con --lotti si torna ai vecchi file di dati/generate (<codice>.json, <codice>-a.json...).
  */
 function domandeDi(codice) {
+  // fogli della profondità 20: le bozze di dati/generate/_giro5-<materia>.json, da verificare prima di importarle
+  const prof = codice.match(/^(biologia|chimica|fisica)-prof([a-z]?)-(\d+)$/)
+  if (prof) {
+    const da = (Number(prof[3]) - 1) * PEZZO
+    return bozzeProfondita(prof[1], prof[2]).slice(da, da + PEZZO)
+  }
   const nuove = codice.match(/^(biologia|chimica|fisica)-nuove-(\d+)$/)
   if (nuove) {
     const ids = new Set(idNuovi(nuove[1]))
@@ -284,9 +297,19 @@ if (comando === '--nuove') {
     process.exit(1)
   }
   for (let k = 1; k <= pezzi; k++) cieca(`${codice}-nuove-${k}`)
+} else if (comando === '--prof') {
+  // un foglio ogni PEZZO bozze della profondità 20: biologia-prof-1, biologia-prof-2...
+  // `--prof fisica` legge _giro5-fisica.json; `--prof fisica b` legge _giro5b-fisica.json (fogli fisica-profb-1...)
+  const suf = argv.filter((a) => !a.startsWith('--'))[1] ?? ''
+  const pezzi = Math.ceil(bozzeProfondita(codice, suf).length / PEZZO)
+  if (!pezzi) {
+    console.error(`Nessuna bozza in dati/generate/_giro5${suf}-${codice}.json.`)
+    process.exit(1)
+  }
+  for (let k = 1; k <= pezzi; k++) cieca(`${codice}-prof${suf}-${k}`)
 } else if (comando === '--cieca') cieca(codice)
 else if (comando === '--confronta') await confronta(codice)
 else {
-  console.error(`Comando sconosciuto: ${comando}. Sono --cieca, --nuove e --confronta.`)
+  console.error(`Comando sconosciuto: ${comando}. Sono --cieca, --nuove, --prof e --confronta.`)
   process.exit(1)
 }

@@ -3,9 +3,9 @@ import type { Domanda, Materia, MateriaId } from '../types'
 
 export const FORMATO = {
   domande: 31,
-  multipla: 15,
-  completamento: 16,
-  minutiPerSezione: 45,
+  multipla: 21,
+  completamento: 10,
+  minutiPerSezione: 50,
   punteggio: { corretta: 1, errata: -0.1, omessa: 0 },
 } as const
 
@@ -15,7 +15,7 @@ export const RIPASSO = { multipla: 5, completamento: 5 } as const
 /** Di quanto viene moltiplicato il peso di un argomento debole nell'estrazione di un ripasso. */
 export const RINFORZO_RIPASSO = 6
 
-/** Minuti proporzionali alle domande: 45 per una sezione intera, meno per un ripasso. */
+/** Minuti proporzionali alle domande: 50 per una sezione intera, meno per un ripasso. */
 export function minutiSezione(domande: number): number {
   return Math.max(1, Math.round((domande / FORMATO.domande) * FORMATO.minutiPerSezione))
 }

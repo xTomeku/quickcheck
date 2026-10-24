@@ -12,7 +12,7 @@ interface Props {
   onEsci: () => void
 }
 
-/** Una sezione intera dura 45 minuti, un ripasso in proporzione alle sue domande. */
+/** Una sezione intera dura 50 minuti, un ripasso in proporzione alle sue domande. */
 const durataMs = (s: Sezione) => minutiSezione(s.domande.length) * 60_000
 
 function mmss(ms: number) {

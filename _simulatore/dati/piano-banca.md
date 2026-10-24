@@ -124,7 +124,7 @@ confine del lotto.
   domande che escono in una prova.
 - Il pannello mostra gli avvisi: le domande che non passano i controlli e quelle su cui il
   verificatore non era d'accordo vanno guardate per prime, sono quelle dove si nasconde il danno.
-- Finché una materia non ha almeno 15 multiple e 16 completamenti approvati non compone una prova:
+- Finché una materia non ha almeno 21 multiple e 10 completamenti approvati non compone una prova:
   è il pannello stesso a dirlo, con l'avviso rosso sotto i conteggi.
 
 ## 7. Le tappe
