@@ -488,13 +488,16 @@
    "id": "fis-031",
    "argomento": "fis.7.7",
    "tipo": "completamento",
-   "testo": "Il cambiamento di direzione della luce nel passaggio tra due mezzi con indice di rifrazione diverso si chiama ……",
+   "testo": "Il cambiamento di direzione della luce nel passaggio tra due mezzi trasparenti diversi si chiama ……",
    "accettate": [
-    "rifrazione"
+    "rifrazione",
+    "rifrazioni",
+    "rifrazione ottica"
    ],
    "spiegazione": "È descritto dalla legge di Snell: n₁·sen θ₁ = n₂·sen θ₂.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "fis.7.7-indice-rifrazione"
   },
   {
    "id": "fis-21a-03",
@@ -1497,7 +1500,8 @@
    "accettate": [
     "scalare",
     "scalari"
-   ]
+   ],
+   "gruppo": "fis.1.4-scalare-vettoriale"
   },
   {
    "id": "fis-23b-01",
@@ -3034,7 +3038,8 @@
     "entropia",
     "entropie",
     "S"
-   ]
+   ],
+   "gruppo": "fis.5.5-entropia"
   },
   {
    "id": "fis-51b-01",
@@ -3439,7 +3444,8 @@
     "vettoriale",
     "vettoriali",
     "vettore"
-   ]
+   ],
+   "gruppo": "fis.1.4-scalare-vettoriale"
   },
   {
    "id": "fis-24a-06",
@@ -5740,6 +5746,1382 @@
     "si riduce di tre unità"
    ],
    "corretta": 0
+  },
+  {
+   "id": "fis-55a-01",
+   "argomento": "fis.5.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Secondo l'enunciato di Clausius del secondo principio della termodinamica, il calore:",
+   "opzioni": [
+    "non passa spontaneamente da un corpo più freddo a uno più caldo",
+    "passa sempre da un corpo più freddo a uno più caldo",
+    "può essere trasformato interamente in lavoro",
+    "non può mai essere trasferito fra due corpi",
+    "si conserva sempre in ogni scambio"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il calore fluisce spontaneamente dal corpo caldo al freddo; per il verso opposto serve lavoro, come in un frigorifero."
+  },
+  {
+   "id": "fis-55a-02",
+   "argomento": "fis.5.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In un sistema isolato, nel corso di una trasformazione spontanea, l'entropia:",
+   "opzioni": [
+    "diminuisce",
+    "aumenta",
+    "resta costante",
+    "è sempre nulla",
+    "oscilla in modo periodico"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'entropia di un sistema isolato non può diminuire: nelle trasformazioni spontanee aumenta e determina il verso in cui avvengono.",
+   "gruppo": "fis.5.5-entropia"
+  },
+  {
+   "id": "fis-55a-03",
+   "argomento": "fis.5.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il rendimento di una macchina termica è il rapporto fra:",
+   "opzioni": [
+    "il calore ceduto alla sorgente fredda e quello assorbito",
+    "il calore assorbito e il lavoro prodotto",
+    "il lavoro prodotto e il calore assorbito dalla sorgente calda",
+    "la temperatura della sorgente fredda e quella della sorgente calda",
+    "il lavoro prodotto e il calore ceduto alla sorgente fredda"
+   ],
+   "corretta": 2,
+   "spiegazione": "Il rendimento misura quanta parte del calore assorbito viene trasformata in lavoro utile: η = L / Q₁."
+  },
+  {
+   "id": "fis-55a-04",
+   "argomento": "fis.5.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una macchina termica assorbe 500 J dalla sorgente calda e produce 100 J di lavoro: il suo rendimento, in percentuale, è ……",
+   "accettate": [
+    "20",
+    "20%",
+    "venti"
+   ],
+   "spiegazione": "Il rendimento è il lavoro diviso il calore assorbito: 100 / 500 = 0,20, cioè il 20%.",
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "%"
+  },
+  {
+   "id": "fis-55a-05",
+   "argomento": "fis.5.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una trasformazione che non può tornare spontaneamente allo stato di partenza è detta ……",
+   "accettate": [
+    "irreversibile",
+    "irreversibili"
+   ],
+   "spiegazione": "Le trasformazioni reali, come il passaggio di calore da un corpo caldo a uno freddo, sono irreversibili: aumentano l'entropia dell'universo."
+  },
+  {
+   "id": "fis-55a-06",
+   "argomento": "fis.5.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il rendimento di una macchina termica reale è sempre ……  di 1.",
+   "accettate": [
+    "inferiore",
+    "minore"
+   ],
+   "spiegazione": "Per il secondo principio non è possibile trasformare interamente in lavoro il calore assorbito: una parte deve essere ceduta alla sorgente fredda."
+  },
+  {
+   "id": "fis-65a-01",
+   "argomento": "fis.6.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Raddoppiando la distanza fra le armature di un condensatore piano, la sua capacità:",
+   "opzioni": [
+    "si dimezza",
+    "raddoppia",
+    "quadruplica",
+    "resta invariata",
+    "si riduce al 25%"
+   ],
+   "corretta": 0,
+   "spiegazione": "La capacità di un condensatore piano è inversamente proporzionale alla distanza fra le armature: C = ε·S / d."
+  },
+  {
+   "id": "fis-65a-02",
+   "argomento": "fis.6.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Inserendo un materiale isolante fra le armature di un condensatore piano, la capacità:",
+   "opzioni": [
+    "diminuisce",
+    "aumenta",
+    "si annulla",
+    "resta invariata",
+    "diventa infinita"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il dielettrico si polarizza e riduce il campo fra le armature: a parità di carica diminuisce la tensione e quindi aumenta la capacità.",
+   "gruppo": "fis.6.5-dielettrico"
+  },
+  {
+   "id": "fis-65a-03",
+   "argomento": "fis.6.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Due condensatori collegati in parallelo hanno una capacità equivalente pari:",
+   "opzioni": [
+    "alla media delle due capacità",
+    "al reciproco della somma delle capacità",
+    "alla somma delle due capacità",
+    "alla differenza fra le due capacità",
+    "al prodotto delle due capacità"
+   ],
+   "corretta": 2,
+   "spiegazione": "In parallelo le armature si sommano: la carica totale è la somma delle cariche, a parità di tensione, e le capacità si sommano.",
+   "gruppo": "fis.6.5-condensatori-parallelo"
+  },
+  {
+   "id": "fis-65a-04",
+   "argomento": "fis.6.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un condensatore di capacità 2 μF viene caricato con una differenza di potenziale di 10 V: la carica accumulata, in microcoulomb, è ……",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "spiegazione": "La carica è il prodotto della capacità per la tensione: 2 μF · 10 V = 20 μC.",
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "μC"
+  },
+  {
+   "id": "fis-65a-05",
+   "argomento": "fis.6.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un condensatore da 4 μF e uno da 6 μF sono collegati in parallelo: la capacità equivalente, in microfarad, è ……",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "spiegazione": "In parallelo le capacità si sommano: 4 + 6 = 10 μF.",
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "μF",
+   "gruppo": "fis.6.5-condensatori-parallelo"
+  },
+  {
+   "id": "fis-65a-06",
+   "argomento": "fis.6.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un materiale isolante inserito fra le armature di un condensatore, che ne aumenta la capacità, si chiama ……",
+   "accettate": [
+    "dielettrico",
+    "dielettrici"
+   ],
+   "spiegazione": "Il dielettrico si polarizza e riduce il campo fra le armature: a parità di carica la tensione diminuisce e la capacità cresce.",
+   "gruppo": "fis.6.5-dielettrico"
+  },
+  {
+   "id": "fis-52a-01",
+   "argomento": "fis.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il calore specifico di una sostanza è la quantità di calore necessaria per:",
+   "opzioni": [
+    "innalzare di 1 K la temperatura di 1 kg di sostanza",
+    "fondere 1 kg di sostanza",
+    "innalzare di 1 K la temperatura di qualsiasi quantità di sostanza",
+    "portare 1 kg di sostanza all'ebollizione",
+    "convertire 1 kg di sostanza in lavoro"
+   ],
+   "corretta": 0,
+   "spiegazione": "È una grandezza riferita all'unità di massa e caratteristica della sostanza: nell'acqua vale circa 4186 J/(kg·K)."
+  },
+  {
+   "id": "fis-52a-02",
+   "argomento": "fis.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Durante la fusione del ghiaccio a 0 °C, fornendo calore, la temperatura:",
+   "opzioni": [
+    "aumenta in modo lineare",
+    "resta costante finché tutto il ghiaccio non è fuso",
+    "diminuisce",
+    "sale rapidamente fino a 100 °C",
+    "oscilla"
+   ],
+   "corretta": 1,
+   "spiegazione": "Durante un cambiamento di stato il calore fornito serve a rompere i legami fra le molecole e non ad aumentare l'energia cinetica."
+  },
+  {
+   "id": "fis-52a-03",
+   "argomento": "fis.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Mescolando in un calorimetro due masse d'acqua a temperature diverse, la temperatura finale di equilibrio è:",
+   "opzioni": [
+    "più alta di entrambe",
+    "più bassa di entrambe",
+    "compresa fra le due temperature iniziali",
+    "uguale alla temperatura più alta",
+    "uguale alla somma delle due temperature"
+   ],
+   "corretta": 2,
+   "spiegazione": "Il calore ceduto dalla massa più calda è uguale a quello assorbito dalla più fredda: la temperatura finale sta in mezzo."
+  },
+  {
+   "id": "fis-52a-04",
+   "argomento": "fis.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Per fondere 2 kg di ghiaccio, sapendo che il calore di fusione dell'acqua è 3,3 · 10⁵ J/kg, servono …… J.",
+   "accettate": [
+    "660000",
+    "660 000",
+    "6,6·10^5",
+    "6.6e5",
+    "6,6 · 10^5"
+   ],
+   "spiegazione": "Q = m·λ = 2 · 3,3·10⁵ = 6,6·10⁵ J, cioè 660 000 J.",
+   "numero": {
+    "valore": 660000,
+    "tolleranza": 0.01
+   },
+   "unita": "J"
+  },
+  {
+   "id": "fis-52a-05",
+   "argomento": "fis.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il calore che serve per far cambiare stato a 1 kg di una sostanza, senza variarne la temperatura, si chiama calore ……",
+   "accettate": [
+    "latente"
+   ],
+   "spiegazione": "Il calore latente è assorbito o ceduto durante un cambiamento di stato, ma non fa variare la temperatura."
+  },
+  {
+   "id": "fis-52a-06",
+   "argomento": "fis.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Mescolando 1 kg di acqua a 20 °C con 1 kg di acqua a 40 °C, la temperatura finale di equilibrio, in gradi Celsius, è ……",
+   "accettate": [
+    "30",
+    "trenta"
+   ],
+   "spiegazione": "Le masse sono uguali e il calore specifico è lo stesso: la temperatura finale è la media delle due, cioè 30 °C.",
+   "numero": {
+    "valore": 30,
+    "tolleranza": 0
+   },
+   "unita": "°C"
+  },
+  {
+   "id": "fis-25a-01",
+   "argomento": "fis.2.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il centro di massa di un sistema di corpi è il punto:",
+   "opzioni": [
+    "in cui si può pensare concentrata tutta la massa, per descrivere il moto traslatorio del sistema",
+    "in cui si trova sempre il corpo più massiccio",
+    "in cui la forza peso è nulla",
+    "che coincide sempre con il centro geometrico",
+    "in cui si annullano tutte le forze interne"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il moto del centro di massa è determinato dalla sola risultante delle forze esterne, come se tutta la massa fosse concentrata lì."
+  },
+  {
+   "id": "fis-25a-02",
+   "argomento": "fis.2.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il momento di una forza rispetto a un punto dipende da:",
+   "opzioni": [
+    "la sola intensità della forza",
+    "l'intensità della forza e dalla distanza fra la sua retta d'azione e il punto",
+    "la massa del corpo su cui agisce",
+    "la velocità del corpo",
+    "il tempo per cui agisce"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il momento è il prodotto della forza per il braccio: la stessa forza ha effetto maggiore se applicata più lontano dal punto di rotazione."
+  },
+  {
+   "id": "fis-25a-03",
+   "argomento": "fis.2.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un corpo rigido è in equilibrio quando:",
+   "opzioni": [
+    "la sola risultante delle forze è nulla",
+    "il solo momento risultante è nullo",
+    "la risultante delle forze e il momento risultante sono entrambi nulli",
+    "la forza peso è uguale alla forza di attrito",
+    "la velocità del centro di massa è costante"
+   ],
+   "corretta": 2,
+   "spiegazione": "Servono due condizioni: l'equilibrio traslazionale (forze) e quello rotazionale (momenti)."
+  },
+  {
+   "id": "fis-25a-04",
+   "argomento": "fis.2.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una forza di 20 N agisce perpendicolarmente a una sbarra, a 0,5 m dal punto di rotazione: il suo momento, in N·m, è ……",
+   "accettate": [
+    "10",
+    "dieci"
+   ],
+   "spiegazione": "Il momento è forza per braccio: 20 · 0,5 = 10 N·m.",
+   "numero": {
+    "valore": 10,
+    "tolleranza": 0
+   },
+   "unita": "N·m"
+  },
+  {
+   "id": "fis-25a-05",
+   "argomento": "fis.2.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una leva, la distanza fra il fulcro e la retta d'azione della forza si chiama ……",
+   "accettate": [
+    "braccio",
+    "bracci"
+   ],
+   "spiegazione": "Il momento di una forza è il prodotto dell'intensità della forza per il suo braccio: a braccio maggiore corrisponde un momento maggiore."
+  },
+  {
+   "id": "fis-25a-06",
+   "argomento": "fis.2.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il centro di massa di un'asta omogenea lunga 4 m si trova a …… m da un estremo.",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "spiegazione": "Per un corpo omogeneo e simmetrico il centro di massa coincide con il centro geometrico, a metà dell'asta.",
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   },
+   "unita": "m"
+  },
+  {
+   "id": "fis-34a-01",
+   "argomento": "fis.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nel moto ordinato a strati di un fluido viscoso in un tubo cilindrico, la velocità lungo il raggio ha un profilo:",
+   "opzioni": [
+    "con andamento quadratico, massimo al centro e nullo a contatto con la parete",
+    "uniforme su tutta la sezione",
+    "lineare, massimo vicino alla parete",
+    "nullo al centro e massimo alla parete",
+    "sinusoidale lungo il raggio"
+   ],
+   "corretta": 0,
+   "spiegazione": "Gli strati vicini alla parete sono frenati dall'attrito: la velocità cresce verso l'asse, dove raggiunge il massimo."
+  },
+  {
+   "id": "fis-34a-02",
+   "argomento": "fis.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La viscosità di un fluido è una misura:",
+   "opzioni": [
+    "della sua densità",
+    "dell'attrito interno fra gli strati del fluido in moto",
+    "della sua pressione",
+    "della sua temperatura di ebollizione",
+    "della sua capacità di scaldarsi"
+   ],
+   "corretta": 1,
+   "spiegazione": "Più è alta la viscosità, maggiore è l'attrito fra gli strati e più difficile è far scorrere il fluido."
+  },
+  {
+   "id": "fis-34a-03",
+   "argomento": "fis.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Due vasi sanguigni uguali, collegati in serie, hanno una resistenza idraulica complessiva:",
+   "opzioni": [
+    "dimezzata",
+    "uguale",
+    "doppia di quella di un solo vaso",
+    "quadrupla",
+    "nulla"
+   ],
+   "corretta": 2,
+   "spiegazione": "In serie le resistenze si sommano, come per le resistenze elettriche: due resistenze uguali danno una resistenza doppia."
+  },
+  {
+   "id": "fis-34a-04",
+   "argomento": "fis.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Raddoppiando la lunghezza di un condotto, a parità di altre condizioni, la portata di un fluido viscoso si riduce a 1/……",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "spiegazione": "La resistenza idraulica è proporzionale alla lunghezza del condotto: raddoppiandola, a parità di pressione, la portata si dimezza.",
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-34a-05",
+   "argomento": "fis.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Tre vasi uguali, ciascuno di resistenza idraulica R, collegati in parallelo hanno resistenza equivalente pari a R diviso ……",
+   "accettate": [
+    "3",
+    "tre"
+   ],
+   "spiegazione": "In parallelo si sommano gli inversi delle resistenze: 1/R + 1/R + 1/R = 3/R, quindi la resistenza equivalente è R/3.",
+   "numero": {
+    "valore": 3,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-34a-06",
+   "argomento": "fis.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La portata di un fluido si misura nel Sistema Internazionale in metri cubi al ……",
+   "accettate": [
+    "secondo",
+    "secondi",
+    "s"
+   ],
+   "spiegazione": "La portata è il volume di fluido che attraversa una sezione nell'unità di tempo: m³/s."
+  },
+  {
+   "id": "fis-61a-01",
+   "argomento": "fis.6.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In un sistema isolato la carica elettrica totale:",
+   "opzioni": [
+    "si conserva",
+    "aumenta nel tempo",
+    "diminuisce nel tempo",
+    "si annulla sempre",
+    "dipende dalla temperatura"
+   ],
+   "corretta": 0,
+   "spiegazione": "La carica non si crea né si distrugge: può solo passare da un corpo all'altro."
+  },
+  {
+   "id": "fis-61a-02",
+   "argomento": "fis.6.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le linee di forza del campo elettrico generato da una carica puntiforme positiva:",
+   "opzioni": [
+    "entrano nella carica in direzione radiale",
+    "escono dalla carica in direzione radiale",
+    "sono circonferenze concentriche attorno alla carica",
+    "sono rette parallele fra loro",
+    "si incrociano nei pressi della carica"
+   ],
+   "corretta": 1,
+   "spiegazione": "Per convenzione le linee escono dalle cariche positive e entrano in quelle negative; non si incrociano mai."
+  },
+  {
+   "id": "fis-61a-03",
+   "argomento": "fis.6.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una carica positiva posta in un campo elettrico uniforme subisce una forza:",
+   "opzioni": [
+    "con verso opposto a quello del campo",
+    "perpendicolare al campo",
+    "con la stessa direzione e lo stesso verso del campo",
+    "nulla",
+    "diretta sempre verso il basso"
+   ],
+   "corretta": 2,
+   "spiegazione": "La forza è F = q·E: per q positiva è parallela e concorde con il campo; per q negativa sarebbe opposta."
+  },
+  {
+   "id": "fis-61a-04",
+   "argomento": "fis.6.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una carica di 2 μC si trova in un campo elettrico di 5 · 10⁵ N/C: la forza che subisce, in newton, è ……",
+   "accettate": [
+    "1",
+    "uno"
+   ],
+   "spiegazione": "F = q·E = 2·10⁻⁶ C · 5·10⁵ N/C = 1 N.",
+   "numero": {
+    "valore": 1,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-61a-05",
+   "argomento": "fis.6.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il campo elettrico in un punto è la forza che agisce sull'unità di ……  posta in quel punto.",
+   "accettate": [
+    "carica",
+    "carica elettrica"
+   ],
+   "spiegazione": "Il campo è la forza per unità di carica di prova: E = F/q, con unità N/C."
+  },
+  {
+   "id": "fis-61a-06",
+   "argomento": "fis.6.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Due cariche elettriche dello stesso segno si ……",
+   "accettate": [
+    "respingono",
+    "respinge",
+    "allontanano"
+   ],
+   "spiegazione": "Cariche uguali si respingono, cariche opposte si attraggono: lo stabilisce la legge di Coulomb."
+  },
+  {
+   "id": "fis-54a-01",
+   "argomento": "fis.5.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il primo principio della termodinamica afferma che la variazione di energia interna di un sistema è uguale a:",
+   "opzioni": [
+    "il calore assorbito meno il lavoro compiuto dal sistema",
+    "il calore assorbito più il lavoro compiuto dal sistema",
+    "il prodotto del calore per il lavoro",
+    "il lavoro compiuto meno il calore ceduto, moltiplicato per la temperatura",
+    "la pressione moltiplicata per la variazione di volume, ma sempre positiva"
+   ],
+   "corretta": 0,
+   "spiegazione": "È la conservazione dell'energia: ΔU = Q − L, con L positivo se il lavoro è compiuto dal sistema.",
+   "gruppo": "fis.5.1-primo-principio"
+  },
+  {
+   "id": "fis-54a-02",
+   "argomento": "fis.5.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una trasformazione isoterma di un gas perfetto l'energia interna:",
+   "opzioni": [
+    "aumenta",
+    "resta costante",
+    "diminuisce",
+    "è sempre nulla",
+    "dipende dalla pressione finale"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'energia interna di un gas perfetto dipende solo dalla temperatura: se questa non cambia, ΔU = 0."
+  },
+  {
+   "id": "fis-54a-03",
+   "argomento": "fis.5.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una trasformazione a volume costante si chiama ……",
+   "accettate": [
+    "isocora",
+    "isocòra",
+    "isovolumica"
+   ],
+   "spiegazione": "Se il volume non cambia il gas non compie lavoro: tutto il calore scambiato modifica l'energia interna."
+  },
+  {
+   "id": "fis-54a-04",
+   "argomento": "fis.5.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un gas riceve 300 J di calore e compie un lavoro di 120 J: la variazione di energia interna, in joule, è ……",
+   "accettate": [
+    "180",
+    "centottanta"
+   ],
+   "spiegazione": "ΔU = Q − L = 300 − 120 = 180 J.",
+   "numero": {
+    "valore": 180,
+    "tolleranza": 0
+   },
+   "unita": "J"
+  },
+  {
+   "id": "fis-31a-01",
+   "argomento": "fis.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Rispetto a un solido, un fluido:",
+   "opzioni": [
+    "assume la forma del recipiente che lo contiene",
+    "mantiene sempre la propria forma",
+    "non ha massa",
+    "non può essere compresso né deformato",
+    "ha sempre densità minore"
+   ],
+   "corretta": 0,
+   "spiegazione": "I fluidi non hanno forma propria: liquidi e gas scorrono e si adattano al recipiente."
+  },
+  {
+   "id": "fis-31a-02",
+   "argomento": "fis.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un blocco di massa 480 g occupa un volume di 60 cm³. La sua densità è:",
+   "opzioni": [
+    "0,125 g/cm³",
+    "8 g/cm³",
+    "80 g/cm³",
+    "420 g/cm³",
+    "8 kg/cm³"
+   ],
+   "corretta": 1,
+   "spiegazione": "La densità è massa diviso volume: 480 g / 60 cm³ = 8 g/cm³."
+  },
+  {
+   "id": "fis-31a-03",
+   "argomento": "fis.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La pressione è il rapporto fra la forza perpendicolare a una superficie e l'…… della superficie stessa.",
+   "accettate": [
+    "area",
+    "superficie"
+   ],
+   "spiegazione": "p = F/S: a parità di forza, la pressione è maggiore su una superficie più piccola."
+  },
+  {
+   "id": "fis-31a-04",
+   "argomento": "fis.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una forza di 100 N agisce perpendicolarmente su una superficie di 0,5 m²: la pressione, in N/m², è ……",
+   "accettate": [
+    "200",
+    "duecento"
+   ],
+   "spiegazione": "La pressione è il rapporto fra forza e area: 100 N / 0,5 m² = 200 N/m².",
+   "numero": {
+    "valore": 200,
+    "tolleranza": 0
+   },
+   "unita": "N/m²"
+  },
+  {
+   "id": "fis-66a-01",
+   "argomento": "fis.6.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un filo rettilineo percorso da corrente genera un campo magnetico le cui linee di forza sono:",
+   "opzioni": [
+    "circonferenze concentriche attorno al filo",
+    "rette parallele al filo",
+    "rette perpendicolari al filo uscenti da esso",
+    "spirali che si allontanano dal filo",
+    "assenti: un filo non genera campo magnetico"
+   ],
+   "corretta": 0,
+   "spiegazione": "È il risultato dell'esperimento di Oersted: la corrente produce un campo magnetico con linee circolari centrate sul filo."
+  },
+  {
+   "id": "fis-66a-02",
+   "argomento": "fis.6.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una carica che si muove perpendicolarmente a un campo magnetico uniforme descrive:",
+   "opzioni": [
+    "un moto rettilineo uniforme",
+    "una circonferenza",
+    "un moto uniformemente accelerato",
+    "un'ellisse",
+    "un'oscillazione lungo il campo"
+   ],
+   "corretta": 1,
+   "spiegazione": "La forza di Lorentz è sempre perpendicolare alla velocità: non compie lavoro e fa solo curvare la traiettoria, con raggio r = m·v/(q·B)."
+  },
+  {
+   "id": "fis-66a-03",
+   "argomento": "fis.6.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'esperimento che per primo mostrò che una corrente elettrica genera un campo magnetico è legato al nome di ……",
+   "accettate": [
+    "Oersted",
+    "Ørsted",
+    "oersted"
+   ],
+   "spiegazione": "Nel 1820 Oersted osservò che un ago magnetico viene deviato dal passaggio di corrente in un filo vicino."
+  },
+  {
+   "id": "fis-66a-04",
+   "argomento": "fis.6.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una carica di 1 μC si muove a 10³ m/s perpendicolarmente a un campo magnetico di 0,5 T: la forza di Lorentz, in newton, è ……",
+   "accettate": [
+    "0,0005",
+    "5·10^-4",
+    "5e-4",
+    "5*10^-4",
+    "0.0005"
+   ],
+   "spiegazione": "F = q·v·B = 10⁻⁶ · 10³ · 0,5 = 5·10⁻⁴ N.",
+   "numero": {
+    "valore": 0.0005,
+    "tolleranza": 0
+   },
+   "unita": "N"
+  },
+  {
+   "id": "fis-77a-01",
+   "argomento": "fis.7.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'indice di rifrazione di un mezzo trasparente è il rapporto fra:",
+   "opzioni": [
+    "la velocità della luce nel vuoto e la velocità della luce nel mezzo",
+    "la velocità della luce nel mezzo e quella nel vuoto",
+    "la frequenza e la lunghezza d'onda della luce",
+    "due angoli misurati rispetto alla superficie",
+    "la densità del mezzo e quella dell'aria"
+   ],
+   "corretta": 0,
+   "spiegazione": "n = c/v: nel vuoto vale 1, in ogni mezzo materiale è maggiore di 1 perché la luce vi si propaga più lentamente.",
+   "gruppo": "fis.7.7-indice-rifrazione"
+  },
+  {
+   "id": "fis-77a-02",
+   "argomento": "fis.7.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un oggetto è posto davanti a una lente convergente a una distanza maggiore del doppio della distanza focale. L'immagine formata è:",
+   "opzioni": [
+    "virtuale, diritta e ingrandita",
+    "reale, rovesciata e rimpicciolita",
+    "reale, diritta e ingrandita",
+    "virtuale, rovesciata e rimpicciolita",
+    "reale, rovesciata e ingrandita"
+   ],
+   "corretta": 1,
+   "spiegazione": "Oltre il doppio della focale i raggi convergono prima del doppio della focale, dall'altra parte: l'immagine è reale, capovolta e più piccola."
+  },
+  {
+   "id": "fis-77a-03",
+   "argomento": "fis.7.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un oggetto è posto a 30 cm da una lente convergente di distanza focale 10 cm: l'immagine si forma a una distanza dalla lente, in centimetri, di ……",
+   "accettate": [
+    "15",
+    "quindici"
+   ],
+   "spiegazione": "Dall'equazione dei punti coniugati: 1/q = 1/f − 1/p = 1/10 − 1/30 = 2/30, quindi q = 15 cm.",
+   "numero": {
+    "valore": 15,
+    "tolleranza": 0
+   },
+   "unita": "cm"
+  },
+  {
+   "id": "fis-77a-04",
+   "argomento": "fis.7.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella riflessione della luce su una superficie liscia, l'angolo di incidenza è uguale all'angolo di ……",
+   "accettate": [
+    "riflessione"
+   ],
+   "spiegazione": "È la legge della riflessione: i due angoli, misurati rispetto alla normale, sono uguali."
+  },
+  {
+   "id": "fis-53a-01",
+   "argomento": "fis.5.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nel trasferimento di calore per conduzione:",
+   "opzioni": [
+    "l'energia passa da una particella alla successiva senza che ci sia spostamento di materia",
+    "il calore viaggia solo attraverso il vuoto",
+    "la materia calda si sposta trasportando energia",
+    "il calore viene emesso come onde elettromagnetiche",
+    "la temperatura resta uguale in tutti i punti"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nella conduzione le particelle più energetiche cedono energia a quelle vicine tramite urti, senza spostarsi su grandi distanze."
+  },
+  {
+   "id": "fis-53a-02",
+   "argomento": "fis.5.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il calore si trasmette per convezione:",
+   "opzioni": [
+    "nel vuoto",
+    "nei fluidi, con spostamento di materia",
+    "solo nei solidi",
+    "solo nei corpi caldi",
+    "solo attraverso la radiazione"
+   ],
+   "corretta": 1,
+   "spiegazione": "Nella convezione il fluido riscaldato si espande, diventa meno denso e sale, mentre quello freddo scende: si creano correnti."
+  },
+  {
+   "id": "fis-53a-03",
+   "argomento": "fis.5.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il passaggio di calore per conduzione è favorito da materiali che lo trasmettono bene, come i ……",
+   "accettate": [
+    "metalli",
+    "metallo"
+   ],
+   "spiegazione": "I metalli hanno elettroni liberi che trasportano energia molto bene, per questo sono ottimi conduttori termici."
+  },
+  {
+   "id": "fis-53a-04",
+   "argomento": "fis.5.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I materiali che conducono male il calore, come il polistirolo, sono detti isolanti ……",
+   "accettate": [
+    "termici",
+    "termico"
+   ],
+   "spiegazione": "Un buon isolante riduce il passaggio di calore: è usato per limitare la dispersione termica."
+  },
+  {
+   "id": "fis-35a-01",
+   "argomento": "fis.3.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale fenomeno spiega perché una goccia d'acqua libera tende ad assumere forma sferica?",
+   "opzioni": [
+    "le forze di coesione fra le molecole tendono a minimizzare l'area della superficie",
+    "la forza di gravità agisce solo sulla superficie",
+    "la pressione atmosferica schiaccia la goccia",
+    "le molecole d'acqua perdono energia",
+    "la densità dell'acqua è minore all'esterno"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le molecole in superficie sono attratte verso l'interno: per ridurre l'energia, il liquido assume la forma con la minima superficie, cioè la sfera."
+  },
+  {
+   "id": "fis-35a-02",
+   "argomento": "fis.3.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una bolla di sapone sferica, rispetto all'esterno, la pressione interna è:",
+   "opzioni": [
+    "maggiore, per effetto della curvatura della superficie",
+    "minore, per effetto della curvatura",
+    "uguale",
+    "nulla",
+    "uguale alla pressione atmosferica meno quella del vapore"
+   ],
+   "corretta": 0,
+   "spiegazione": "La superficie curva esercita una compressione verso l'interno: la pressione all'interno deve superare quella esterna."
+  },
+  {
+   "id": "fis-35a-03",
+   "argomento": "fis.3.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Per la legge di Laplace la sovrappressione dentro una bolla è inversamente proporzionale al ……  della bolla.",
+   "accettate": [
+    "raggio"
+   ],
+   "spiegazione": "La sovrappressione dovuta alla tensione superficiale è inversamente proporzionale al raggio: le bolle più piccole hanno una pressione interna maggiore."
+  },
+  {
+   "id": "fis-35a-04",
+   "argomento": "fis.3.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un insetto può camminare sull'acqua grazie alla tensione ……",
+   "accettate": [
+    "superficiale"
+   ],
+   "spiegazione": "Le forze di coesione creano una specie di pellicola elastica sulla superficie dell'acqua, che sostiene oggetti leggeri."
+  },
+  {
+   "id": "fis-44a-01",
+   "argomento": "fis.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il suono si propaga con velocità maggiore:",
+   "opzioni": [
+    "nei solidi che nei gas",
+    "nei gas che nei solidi",
+    "nel vuoto che nell'aria",
+    "nell'aria fredda che nell'aria calda",
+    "nei gas, perché meno densi"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nei solidi le particelle sono più vicine e la rigidità del mezzo è maggiore: la perturbazione si trasmette più in fretta."
+  },
+  {
+   "id": "fis-44a-02",
+   "argomento": "fis.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La soglia di udibilità dell'orecchio umano corrisponde a un livello sonoro di:",
+   "opzioni": [
+    "0 dB",
+    "1 dB",
+    "10 dB",
+    "60 dB",
+    "120 dB"
+   ],
+   "corretta": 0,
+   "spiegazione": "Per definizione il livello sonoro zero corrisponde all'intensità minima percepibile, circa 10⁻¹² W/m².",
+   "gruppo": "fis.4.4-livello-sonoro"
+  },
+  {
+   "id": "fis-44a-03",
+   "argomento": "fis.4.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'unità di misura del livello sonoro è il ……",
+   "accettate": [
+    "decibel",
+    "dB",
+    "db"
+   ],
+   "spiegazione": "Il decibel è un'unità logaritmica: aumentare il livello di 10 dB equivale a moltiplicare per dieci l'intensità.",
+   "gruppo": "fis.4.4-livello-sonoro"
+  },
+  {
+   "id": "fis-44a-04",
+   "argomento": "fis.4.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I suoni di frequenza superiore a circa 20 000 Hz, non udibili dall'uomo, sono detti ……",
+   "accettate": [
+    "ultrasuoni",
+    "ultrasuono"
+   ],
+   "spiegazione": "L'orecchio umano percepisce frequenze fra circa 20 Hz e 20 kHz; oltre questo limite si parla di ultrasuoni, usati per esempio in ecografia."
+  },
+  {
+   "id": "fis-14a-01",
+   "argomento": "fis.1.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il prodotto scalare di due vettori perpendicolari è:",
+   "opzioni": [
+    "nullo",
+    "massimo",
+    "uguale al prodotto dei moduli",
+    "uguale alla somma dei moduli",
+    "negativo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il prodotto scalare è a·b·cos θ: per θ = 90° il coseno vale zero.",
+   "gruppo": "fis.1.4-scalare-vettoriale"
+  },
+  {
+   "id": "fis-14a-02",
+   "argomento": "fis.1.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il prodotto vettoriale di due vettori paralleli è:",
+   "opzioni": [
+    "un vettore parallelo ad entrambi",
+    "il vettore nullo",
+    "un vettore di modulo massimo",
+    "uno scalare uguale al prodotto dei moduli",
+    "un vettore perpendicolare di modulo massimo"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il modulo del prodotto vettoriale è a·b·sin θ: per θ = 0° il seno vale zero, quindi il prodotto vettoriale è il vettore nullo.",
+   "gruppo": "fis.1.4-scalare-vettoriale"
+  },
+  {
+   "id": "fis-14a-03",
+   "argomento": "fis.1.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un vettore di modulo 10 forma un angolo di 30° con l'asse x: la sua componente lungo l'asse y vale ……",
+   "accettate": [
+    "5",
+    "cinque"
+   ],
+   "spiegazione": "La componente y è v·sin 30° = 10 · 0,5 = 5.",
+   "numero": {
+    "valore": 5,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-14a-04",
+   "argomento": "fis.1.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il prodotto scalare dei vettori a = (2, 3) e b = (4, 1) vale ……",
+   "accettate": [
+    "11",
+    "undici"
+   ],
+   "spiegazione": "Il prodotto scalare è la somma dei prodotti delle componenti omologhe: 2·4 + 3·1 = 11.",
+   "numero": {
+    "valore": 11,
+    "tolleranza": 0
+   },
+   "gruppo": "fis.1.4-scalare-vettoriale"
+  },
+  {
+   "id": "fis-73a-01",
+   "argomento": "fis.7.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Passando dalla luce rossa alla luce blu, l'energia del singolo fotone:",
+   "opzioni": [
+    "aumenta",
+    "diminuisce",
+    "resta invariata",
+    "si annulla",
+    "raddoppia ad ogni cambio di colore"
+   ],
+   "corretta": 0,
+   "spiegazione": "La luce blu ha frequenza maggiore di quella rossa: l'energia del fotone è proporzionale alla frequenza."
+  },
+  {
+   "id": "fis-73a-02",
+   "argomento": "fis.7.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di queste radiazioni elettromagnetiche ha i fotoni più energetici?",
+   "opzioni": [
+    "le onde radio",
+    "i raggi X",
+    "le microonde",
+    "la luce visibile",
+    "la luce rossa"
+   ],
+   "corretta": 1,
+   "spiegazione": "Fra quelle elencate i raggi X hanno la frequenza più alta e quindi i fotoni più energetici."
+  },
+  {
+   "id": "fis-73a-03",
+   "argomento": "fis.7.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'energia di un fotone è direttamente proporzionale alla …… della radiazione.",
+   "accettate": [
+    "frequenza"
+   ],
+   "spiegazione": "E = h·f: più la frequenza è alta, più è alta l'energia del singolo quanto di luce."
+  },
+  {
+   "id": "fis-73a-04",
+   "argomento": "fis.7.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Se la lunghezza d'onda di una radiazione nel vuoto si dimezza, l'energia dei suoi fotoni diventa …… volte maggiore.",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "spiegazione": "L'energia è E = h·c/λ: è inversamente proporzionale alla lunghezza d'onda, quindi dimezzandola l'energia raddoppia.",
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-45a-01",
+   "argomento": "fis.4.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una sorgente sonora si avvicina a un osservatore fermo: la frequenza percepita è:",
+   "opzioni": [
+    "maggiore di quella emessa",
+    "minore di quella emessa",
+    "uguale a quella emessa",
+    "nulla",
+    "uguale alla metà di quella emessa"
+   ],
+   "corretta": 0,
+   "spiegazione": "Avvicinandosi, la sorgente comprime le onde davanti a sé: la lunghezza d'onda percepita si riduce e la frequenza aumenta.",
+   "gruppo": "fis.4.5-avvicinamento-allontanamento"
+  },
+  {
+   "id": "fis-45a-02",
+   "argomento": "fis.4.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un'ambulanza con la sirena accesa supera un osservatore fermo. Il suono percepito:",
+   "opzioni": [
+    "diventa più grave dopo il passaggio",
+    "diventa più acuto dopo il passaggio",
+    "resta uguale",
+    "cambia solo di intensità",
+    "diventa più acuto prima e dopo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Prima del passaggio la frequenza percepita è maggiore, dopo è minore: il suono si abbassa."
+  },
+  {
+   "id": "fis-45a-03",
+   "argomento": "fis.4.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Se sorgente e osservatore si allontanano, la frequenza percepita è …… di quella emessa.",
+   "accettate": [
+    "minore",
+    "inferiore"
+   ],
+   "spiegazione": "Allontanandosi le onde arrivano più distanziate: la frequenza percepita diminuisce.",
+   "gruppo": "fis.4.5-avvicinamento-allontanamento"
+  },
+  {
+   "id": "fis-45a-04",
+   "argomento": "fis.4.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La frequenza percepita da un osservatore dipende dalla velocità …… fra sorgente e osservatore.",
+   "accettate": [
+    "relativa",
+    "relative"
+   ],
+   "spiegazione": "Conta soltanto il moto relativo fra sorgente e osservatore: se sono fermi l'uno rispetto all'altro la frequenza non cambia."
+  },
+  {
+   "id": "fis-75a-01",
+   "argomento": "fis.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il decadimento α consiste nell'emissione di:",
+   "opzioni": [
+    "un nucleo di elio, formato da due protoni e due neutroni",
+    "un elettrone",
+    "un positrone",
+    "un fotone di alta energia",
+    "un neutrone"
+   ],
+   "corretta": 0,
+   "spiegazione": "La particella α è un nucleo di ⁴He: il nucleo che decade perde due protoni e due neutroni."
+  },
+  {
+   "id": "fis-75a-02",
+   "argomento": "fis.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I raggi γ sono:",
+   "opzioni": [
+    "nuclei di elio",
+    "radiazione elettromagnetica molto energetica, priva di massa e di carica",
+    "elettroni ad alta velocità",
+    "protoni accelerati",
+    "neutroni lenti"
+   ],
+   "corretta": 1,
+   "spiegazione": "Sono fotoni emessi dal nucleo nel passaggio da uno stato eccitato a uno di energia minore."
+  },
+  {
+   "id": "fis-75a-03",
+   "argomento": "fis.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un campione di 80 g di un isotopo radioattivo ha un'emivita di 2 giorni: dopo 4 giorni ne restano …… grammi.",
+   "accettate": [
+    "20",
+    "venti"
+   ],
+   "spiegazione": "4 giorni sono due emivite: la massa si riduce prima a 40 g, poi a 20 g.",
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   },
+   "unita": "g"
+  },
+  {
+   "id": "fis-75a-04",
+   "argomento": "fis.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nel decadimento β⁻ il nucleo emette un elettrone insieme a un ……",
+   "accettate": [
+    "antineutrino",
+    "antineutrini"
+   ],
+   "spiegazione": "Per conservare l'energia e il numero leptonico, con l'elettrone viene emesso un antineutrino."
+  },
+  {
+   "id": "fis-11a-01",
+   "argomento": "fis.1.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il numero 3,2 · 10⁵ è uguale a:",
+   "opzioni": [
+    "320 000",
+    "32 000",
+    "3 200 000",
+    "0,000032",
+    "3 200"
+   ],
+   "corretta": 0,
+   "spiegazione": "Moltiplicare per 10⁵ significa spostare la virgola di cinque posti a destra: 3,2 diventa 320 000."
+  },
+  {
+   "id": "fis-11a-02",
+   "argomento": "fis.1.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'ordine di grandezza di una lunghezza di 2,5 · 10³ m è:",
+   "opzioni": [
+    "10² m",
+    "10³ m",
+    "10⁴ m",
+    "10⁵ m",
+    "10⁻³ m"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'ordine di grandezza è la potenza di dieci più vicina: con un coefficiente 2,5, minore di circa 3, resta 10³."
+  },
+  {
+   "id": "fis-11a-03",
+   "argomento": "fis.1.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il prodotto (2 · 10³) · (3 · 10⁴) è uguale a 6 · 10 elevato a ……",
+   "accettate": [
+    "7",
+    "sette"
+   ],
+   "spiegazione": "Si moltiplicano i coefficienti (2·3 = 6) e si sommano gli esponenti (3 + 4 = 7).",
+   "numero": {
+    "valore": 7,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "fis-11a-04",
+   "argomento": "fis.1.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un millimetro corrisponde a 10 elevato a …… metri.",
+   "accettate": [
+    "-3",
+    "−3",
+    "meno 3",
+    "meno tre"
+   ],
+   "spiegazione": "Il prefisso milli- indica un fattore 10⁻³.",
+   "numero": {
+    "valore": -3,
+    "tolleranza": 0
+   }
   }
  ]
 }

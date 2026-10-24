@@ -4710,7 +4710,8 @@
     "alcol",
     "alcool",
     "alcoli"
-   ]
+   ],
+   "gruppo": "chim.6.1-idratazione-disidratazione"
   },
   {
    "id": "chim-62a-01",
@@ -5114,6 +5115,1962 @@
     "triplo",
     "tripla"
    ]
+  },
+  {
+   "id": "chim-15a-01",
+   "argomento": "chim.1.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il legame in cui uno solo dei due atomi mette a disposizione entrambi gli elettroni della coppia condivisa si chiama:",
+   "opzioni": [
+    "covalente semplice",
+    "ionico",
+    "legame di coordinazione (dativo)",
+    "metallico",
+    "a idrogeno"
+   ],
+   "corretta": 2,
+   "spiegazione": "Nel legame di coordinazione il donatore fornisce la coppia di elettroni e l'accettore un orbitale vuoto; un esempio è lo ione ammonio."
+  },
+  {
+   "id": "chim-15a-02",
+   "argomento": "chim.1.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di queste molecole è apolare, pur avendo legami polari?",
+   "opzioni": [
+    "CO₂",
+    "H₂O",
+    "NH₃",
+    "HCl",
+    "CH₃OH"
+   ],
+   "corretta": 0,
+   "spiegazione": "La CO₂ è lineare: i due momenti di dipolo dei legami C=O hanno la stessa intensità e verso opposto, e si annullano."
+  },
+  {
+   "id": "chim-15a-03",
+   "argomento": "chim.1.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'angolo di legame H–O–H nella molecola dell'acqua è circa:",
+   "opzioni": [
+    "180°",
+    "120°",
+    "90°",
+    "104,5°",
+    "109,5°"
+   ],
+   "corretta": 3,
+   "spiegazione": "Le due coppie di non legame dell'ossigeno comprimono l'angolo tetraedrico ideale di 109,5° a circa 104,5°: la molecola è piegata."
+  },
+  {
+   "id": "chim-15a-04",
+   "argomento": "chim.1.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In un doppio legame carbonio-carbonio sono presenti:",
+   "opzioni": [
+    "due legami σ",
+    "un legame σ e un legame π",
+    "due legami π",
+    "un legame σ e due legami π",
+    "un solo legame π"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il primo legame di ogni coppia di atomi è sempre σ; il secondo, dovuto alla sovrapposizione laterale degli orbitali p, è π."
+  },
+  {
+   "id": "chim-15a-05",
+   "argomento": "chim.1.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Fra sodio e cloro, con differenza di elettronegatività molto elevata, si forma un legame:",
+   "opzioni": [
+    "covalente apolare",
+    "di coordinazione",
+    "metallico",
+    "a idrogeno",
+    "ionico"
+   ],
+   "corretta": 4,
+   "spiegazione": "Quando la differenza di elettronegatività è grande l'elettrone passa da un atomo all'altro: si formano ioni di carica opposta che si attraggono."
+  },
+  {
+   "id": "chim-15a-06",
+   "argomento": "chim.1.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nel legame metallico gli elettroni di valenza sono delocalizzati su tutto il reticolo e rendono i metalli buoni conduttori di corrente ……",
+   "accettate": [
+    "elettrica",
+    "elettrica e termica"
+   ],
+   "spiegazione": "Gli elettroni delocalizzati sono liberi di muoversi: per questo i metalli conducono la corrente elettrica e il calore."
+  },
+  {
+   "id": "chim-15a-07",
+   "argomento": "chim.1.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una geometria trigonale planare l'angolo di legame è di …… gradi.",
+   "accettate": [
+    "120",
+    "centoventi"
+   ],
+   "spiegazione": "Tre sostituenti disposti sullo stesso piano attorno all'atomo centrale si respingono al massimo con angoli di 120°.",
+   "numero": {
+    "valore": 120,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-15a-08",
+   "argomento": "chim.1.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La molecola dell'acqua è polare perché ha geometria ……",
+   "accettate": [
+    "angolata",
+    "piegata"
+   ],
+   "spiegazione": "La forma angolata impedisce ai dipoli dei due legami O–H di annullarsi: la molecola ha un dipolo netto."
+  },
+  {
+   "id": "chim-15a-09",
+   "argomento": "chim.1.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un legame covalente tra due atomi identici, come in Cl₂, è detto ……",
+   "accettate": [
+    "omopolare",
+    "apolare",
+    "puro",
+    "covalente puro"
+   ],
+   "spiegazione": "Gli atomi uguali hanno la stessa elettronegatività: la coppia di elettroni è condivisa in modo equo e il legame non è polarizzato."
+  },
+  {
+   "id": "chim-15a-10",
+   "argomento": "chim.1.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nell'etino (acetilene) gli atomi di carbonio hanno ibridazione ……",
+   "accettate": [
+    "sp"
+   ],
+   "spiegazione": "Il triplo legame è formato da un legame σ e due π; per il σ ogni carbonio usa un orbitale ibrido sp, con geometria lineare."
+  },
+  {
+   "id": "chim-34a-01",
+   "argomento": "chim.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Per una reazione all'equilibrio, la costante di equilibrio dipende:",
+   "opzioni": [
+    "dalle concentrazioni iniziali",
+    "dalla temperatura",
+    "dalla presenza di un catalizzatore",
+    "dalla pressione totale",
+    "dal volume del recipiente"
+   ],
+   "corretta": 1,
+   "spiegazione": "La costante di equilibrio è funzione della sola temperatura: concentrazioni, pressione e catalizzatore cambiano il cammino ma non il valore di K.",
+   "gruppo": "chim.3.4-temperatura-e-costante"
+  },
+  {
+   "id": "chim-34a-02",
+   "argomento": "chim.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Se il quoziente di reazione Q è minore della costante di equilibrio K, la reazione:",
+   "opzioni": [
+    "procede nel verso diretto, perché il sistema non ha ancora raggiunto l'equilibrio",
+    "procede nel verso inverso",
+    "è già all'equilibrio",
+    "si arresta",
+    "non può avvenire senza catalizzatore"
+   ],
+   "corretta": 0,
+   "spiegazione": "Q < K significa che i composti di destra sono meno abbondanti di quanto previsto all'equilibrio: la reazione procede verso destra."
+  },
+  {
+   "id": "chim-34a-03",
+   "argomento": "chim.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un catalizzatore, in una reazione reversibile:",
+   "opzioni": [
+    "sposta l'equilibrio verso i prodotti",
+    "aumenta il valore della costante",
+    "riduce la quantità di reagenti iniziale",
+    "fa raggiungere l'equilibrio più rapidamente, senza modificarne la costante",
+    "la rende favorita in un solo verso"
+   ],
+   "corretta": 3,
+   "spiegazione": "Il catalizzatore abbassa l'energia di attivazione di entrambe le direzioni nella stessa misura: accelera il raggiungimento dell'equilibrio, non lo sposta."
+  },
+  {
+   "id": "chim-34a-04",
+   "argomento": "chim.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nei sistemi biologici lo stato stazionario si distingue dall'equilibrio perché nello stato stazionario:",
+   "opzioni": [
+    "ΔG è uguale a zero",
+    "tutte le reazioni si fermano",
+    "il sistema è aperto: le concentrazioni restano costanti grazie a un flusso continuo di materia ed energia",
+    "la costante di equilibrio vale zero",
+    "non c'è alcuno scambio con l'ambiente"
+   ],
+   "corretta": 2,
+   "spiegazione": "Una cellula mantiene concentrazioni costanti perché riceve e smaltisce continuamente sostanze, ma è lontana dall'equilibrio; ΔG = 0 caratterizza invece l'equilibrio."
+  },
+  {
+   "id": "chim-34a-05",
+   "argomento": "chim.3.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'aggiunta di uno ione comune a una soluzione satura di un sale poco solubile:",
+   "opzioni": [
+    "ne aumenta la solubilità",
+    "ne riduce la solubilità",
+    "non ne modifica la solubilità",
+    "aumenta il valore della costante del sale",
+    "abbassa il valore della costante del sale"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'aumento della concentrazione di uno ione sposta l'equilibrio di dissoluzione verso il solido: una parte del sale precipita."
+  },
+  {
+   "id": "chim-34a-06",
+   "argomento": "chim.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una reazione che procede fino al completo consumo dei reagenti, senza tornare indietro, è detta ……",
+   "accettate": [
+    "irreversibile"
+   ],
+   "spiegazione": "Nelle reazioni irreversibili la reazione inversa è trascurabile; in quelle reversibili reagenti e prodotti coesistono all'equilibrio."
+  },
+  {
+   "id": "chim-34a-07",
+   "argomento": "chim.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'espressione K = [C]ᶜ·[D]ᵈ / ([A]ᵃ·[B]ᵇ) esprime la legge di azione di ……",
+   "accettate": [
+    "massa"
+   ],
+   "spiegazione": "La legge di azione di massa lega le concentrazioni all'equilibrio ai coefficienti della reazione tramite la costante K."
+  },
+  {
+   "id": "chim-34a-08",
+   "argomento": "chim.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il prodotto di solubilità di un sale poco solubile si indica con la sigla ……",
+   "accettate": [
+    "Kps",
+    "Ksp",
+    "kps",
+    "ksp"
+   ],
+   "spiegazione": "Il prodotto di solubilità è il prodotto delle concentrazioni degli ioni in una soluzione satura, ciascuna elevata al proprio coefficiente."
+  },
+  {
+   "id": "chim-34a-09",
+   "argomento": "chim.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quando il prodotto delle concentrazioni ioniche di un sale poco solubile supera il suo prodotto di solubilità, la soluzione è detta ……",
+   "accettate": [
+    "sovrasatura",
+    "sovrassatura",
+    "soprasatura"
+   ],
+   "spiegazione": "Una soluzione sovrasatura contiene più soluto di quanto l'equilibrio consenta: il sale in eccesso tende a precipitare, e così si formano i calcoli renali."
+  },
+  {
+   "id": "chim-34a-10",
+   "argomento": "chim.3.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una reazione esotermica, all'aumentare della temperatura il valore della costante di equilibrio ……",
+   "accettate": [
+    "diminuisce",
+    "cala",
+    "si riduce"
+   ],
+   "spiegazione": "Un aumento di temperatura favorisce la reazione endotermica, cioè quella inversa nelle reazioni esotermiche: i prodotti diminuiscono e K si riduce.",
+   "gruppo": "chim.3.4-temperatura-e-costante"
+  },
+  {
+   "id": "chim-18a-01",
+   "argomento": "chim.1.8",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "A pressione costante il volume di una massa fissa di gas ideale è direttamente proporzionale alla:",
+   "opzioni": [
+    "temperatura assoluta",
+    "temperatura in gradi Celsius",
+    "massa molecolare del gas",
+    "pressione parziale",
+    "densità"
+   ],
+   "corretta": 0,
+   "spiegazione": "È la legge di Charles: il volume cresce linearmente con la temperatura espressa in kelvin, non in gradi Celsius."
+  },
+  {
+   "id": "chim-18a-02",
+   "argomento": "chim.1.8",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale volume occupa, in condizioni standard (0 °C e 1 atm), una mole di gas ideale?",
+   "opzioni": [
+    "1 L",
+    "11,2 L",
+    "22,4 L",
+    "24,5 L",
+    "44,8 L"
+   ],
+   "corretta": 2,
+   "spiegazione": "Dall'equazione di stato PV = nRT, con n = 1, T = 273 K e P = 1 atm si ottiene circa 22,4 L; 24,5 L vale invece a 25 °C."
+  },
+  {
+   "id": "chim-18a-03",
+   "argomento": "chim.1.8",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Se la temperatura assoluta di un gas raddoppia, l'energia cinetica media delle sue molecole:",
+   "opzioni": [
+    "si dimezza",
+    "quadruplica",
+    "resta invariata",
+    "raddoppia",
+    "diventa nulla"
+   ],
+   "corretta": 3,
+   "spiegazione": "Secondo la teoria cinetica l'energia cinetica media è proporzionale alla temperatura assoluta."
+  },
+  {
+   "id": "chim-18a-04",
+   "argomento": "chim.1.8",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un solido ha bassa temperatura di fusione e non conduce elettricità, perché le sue particelle sono tenute insieme da deboli forze intermolecolari. È un solido:",
+   "opzioni": [
+    "ionico",
+    "molecolare",
+    "metallico",
+    "covalente reticolare",
+    "amorfo"
+   ],
+   "corretta": 1,
+   "spiegazione": "Nei solidi molecolari, come il ghiaccio, bastano poche energie per vincere le forze fra molecole: fondono a temperature basse."
+  },
+  {
+   "id": "chim-18a-05",
+   "argomento": "chim.1.8",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'equazione di stato dei gas perfetti si scrive PV = ……",
+   "accettate": [
+    "nRT",
+    "nrt"
+   ],
+   "spiegazione": "Il prodotto di pressione e volume è proporzionale alla quantità di gas e alla temperatura assoluta, tramite la costante universale R."
+  },
+  {
+   "id": "chim-18a-06",
+   "argomento": "chim.1.8",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'unità di misura della temperatura assoluta nel Sistema Internazionale è il ……",
+   "accettate": [
+    "kelvin",
+    "K"
+   ],
+   "spiegazione": "La scala Kelvin parte dallo zero assoluto; il kelvin ha la stessa ampiezza del grado Celsius."
+  },
+  {
+   "id": "chim-18a-07",
+   "argomento": "chim.1.8",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "A volume costante la pressione di un gas è proporzionale alla temperatura assoluta: è la legge di ……",
+   "accettate": [
+    "Gay-Lussac",
+    "Gay Lussac",
+    "gay-lussac",
+    "gay lussac"
+   ],
+   "spiegazione": "La seconda legge dei gas, spesso attribuita a Gay-Lussac, mette in relazione pressione e temperatura assoluta a volume costante."
+  },
+  {
+   "id": "chim-18a-08",
+   "argomento": "chim.1.8",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I gas reali si comportano come gas ideali a bassa pressione e a temperatura ……",
+   "accettate": [
+    "alta",
+    "elevata"
+   ],
+   "spiegazione": "Ad alta temperatura le molecole sono molto veloci e le forze attrattive fra di esse diventano trascurabili."
+  },
+  {
+   "id": "chim-63a-01",
+   "argomento": "chim.6.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale gruppo funzionale caratterizza un chetone?",
+   "opzioni": [
+    "un carbonile legato a due atomi di carbonio",
+    "un carbonile legato a un atomo di idrogeno",
+    "un ossidrile legato a un carbonio",
+    "un carbonile legato a un ossidrile",
+    "due carbonili adiacenti"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nel chetone il C=O è in mezzo alla catena, legato a due carboni; nell'aldeide ha almeno un idrogeno.",
+   "gruppo": "chim.6.1-ossidazione-chetone"
+  },
+  {
+   "id": "chim-63a-02",
+   "argomento": "chim.6.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La riduzione di un chetone produce:",
+   "opzioni": [
+    "un alcol primario",
+    "un alcol secondario",
+    "un acido carbossilico",
+    "un'ammina",
+    "un estere"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'aggiunta di idrogeno al carbonile trasforma il C=O in C–OH: dal chetone si ottiene un alcol secondario.",
+   "gruppo": "chim.6.1-ossidazione-chetone"
+  },
+  {
+   "id": "chim-63a-03",
+   "argomento": "chim.6.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La formazione di un'immina (base di Schiff) da un'aldeide e un'ammina primaria avviene per:",
+   "opzioni": [
+    "sostituzione radicalica",
+    "ossidazione dell'aldeide",
+    "attacco dell'azoto al carbonio carbonilico seguito da perdita di acqua",
+    "eliminazione di acido alogenidrico",
+    "addizione radicalica"
+   ],
+   "corretta": 2,
+   "spiegazione": "L'azoto attacca il carbonio carbonilico; dall'intermedio si perde una molecola d'acqua e si forma il doppio legame C=N."
+  },
+  {
+   "id": "chim-63a-04",
+   "argomento": "chim.6.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il tautomero enolico di un composto carbonilico si forma per spostamento di un idrogeno acido adiacente al carbonile e contiene:",
+   "opzioni": [
+    "due gruppi carbonilici",
+    "un anello a tre termini",
+    "un anello aromatico",
+    "un doppio legame C=C e un ossidrile sul carbonio del doppio legame",
+    "un gruppo carbossilico"
+   ],
+   "corretta": 3,
+   "spiegazione": "La tautomeria cheto-enolica sposta un idrogeno e un doppio legame: dalla forma chetonica C=O si passa alla forma enolica C=C–OH."
+  },
+  {
+   "id": "chim-63a-05",
+   "argomento": "chim.6.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il carbonio carbonilico di aldeidi e chetoni ha una carica parziale positiva ed è attaccato da reagenti ricchi di elettroni detti ……",
+   "accettate": [
+    "nucleofili",
+    "nucleofilo"
+   ],
+   "spiegazione": "I nucleofili donano una coppia di elettroni al carbonio, parzialmente positivo per la polarità del legame C=O."
+  },
+  {
+   "id": "chim-63a-06",
+   "argomento": "chim.6.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'aggiunta di una molecola di alcol a un'aldeide forma un composto detto ……",
+   "accettate": [
+    "emiacetale",
+    "emiacetali"
+   ],
+   "spiegazione": "L'emiacetale ha sullo stesso carbonio un ossidrile e un alcossido; con una seconda molecola di alcol si forma un acetale."
+  },
+  {
+   "id": "chim-63a-07",
+   "argomento": "chim.6.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'ubichinone, trasportatore di elettroni della catena respiratoria, appartiene alla classe dei ……",
+   "accettate": [
+    "chinoni",
+    "chinone"
+   ],
+   "spiegazione": "I chinoni si riducono facilmente a idrochinoni accettando due elettroni e due protoni: per questo sono trasportatori redox."
+  },
+  {
+   "id": "chim-63a-08",
+   "argomento": "chim.6.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La condensazione aldolica sfrutta l'acidità dell'idrogeno legato al carbonio in posizione ……  rispetto al gruppo carbonilico.",
+   "accettate": [
+    "alfa",
+    "α"
+   ],
+   "spiegazione": "L'idrogeno in alfa è acido perché l'anione che si forma è stabilizzato per risonanza con il carbonile."
+  },
+  {
+   "id": "chim-71a-01",
+   "argomento": "chim.7.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "A pH fisiologico un amminoacido si trova prevalentemente come:",
+   "opzioni": [
+    "ione dipolare, con carica positiva sull'azoto e negativa sul carbossile",
+    "molecola neutra priva di cariche",
+    "forma con carica netta +2",
+    "anione con entrambi i gruppi deprotonati",
+    "radicale libero"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le due funzioni acido-base si ionizzano a pH vicino alla neutralità: si ha uno zwitterione, globalmente neutro ma con due cariche."
+  },
+  {
+   "id": "chim-71a-02",
+   "argomento": "chim.7.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di questi amminoacidi ha una catena laterale con carica positiva a pH fisiologico?",
+   "opzioni": [
+    "l'alanina",
+    "l'acido aspartico",
+    "la lisina",
+    "la serina",
+    "la valina"
+   ],
+   "corretta": 2,
+   "spiegazione": "La lisina ha nella catena laterale un gruppo amminico che a pH fisiologico è protonato e carico positivamente."
+  },
+  {
+   "id": "chim-71a-03",
+   "argomento": "chim.7.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli amminoacidi che costituiscono le proteine, a eccezione di uno, hanno il carbonio α:",
+   "opzioni": [
+    "achirale, con configurazione D",
+    "chirale, e nelle proteine hanno configurazione L",
+    "chirale, con configurazione D",
+    "sempre ibridato sp²",
+    "legato a un gruppo ossidrile"
+   ],
+   "corretta": 1,
+   "spiegazione": "Con quattro sostituenti diversi il carbonio α è stereogenico; negli esseri viventi si trovano quasi solo amminoacidi L."
+  },
+  {
+   "id": "chim-71a-04",
+   "argomento": "chim.7.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di questi amminoacidi non può essere sintetizzato dall'organismo umano e va assunto con la dieta?",
+   "opzioni": [
+    "la leucina",
+    "l'alanina",
+    "l'acido glutammico",
+    "la serina",
+    "l'asparagina"
+   ],
+   "corretta": 0,
+   "spiegazione": "La leucina è uno degli amminoacidi essenziali; gli altri possono essere prodotti dalle cellule a partire da altri metaboliti."
+  },
+  {
+   "id": "chim-71a-05",
+   "argomento": "chim.7.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'amminoacido che non ha un carbonio asimmetrico, perché la catena laterale è un atomo di idrogeno, è la ……",
+   "accettate": [
+    "glicina"
+   ],
+   "spiegazione": "Con due idrogeni sul carbonio α la molecola è identica alla sua immagine speculare: la glicina è l'unico amminoacido proteico achirale."
+  },
+  {
+   "id": "chim-71a-06",
+   "argomento": "chim.7.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli amminoacidi che l'organismo non sa sintetizzare e deve introdurre con l'alimentazione sono detti ……",
+   "accettate": [
+    "essenziali",
+    "essenziale"
+   ],
+   "spiegazione": "Gli amminoacidi essenziali negli adulti sono nove; la loro carenza compromette la sintesi proteica."
+  },
+  {
+   "id": "chim-71a-07",
+   "argomento": "chim.7.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'amminoacido aromatico con un gruppo fenolico (–OH) nella catena laterale è la ……",
+   "accettate": [
+    "tirosina"
+   ],
+   "spiegazione": "Il fenolo della tirosina può essere fosforilato da chinasi specifiche, un meccanismo molto importante nella trasduzione del segnale."
+  },
+  {
+   "id": "chim-71a-08",
+   "argomento": "chim.7.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'amminoacido la cui catena laterale contiene un anello indolico è il ……",
+   "accettate": [
+    "triptofano"
+   ],
+   "spiegazione": "Il triptofano è un amminoacido essenziale ed è il precursore della serotonina e della niacina."
+  },
+  {
+   "id": "chim-32a-01",
+   "argomento": "chim.3.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una reazione la cui velocità è proporzionale alla prima potenza della concentrazione del reagente, raddoppiando la concentrazione la velocità:",
+   "opzioni": [
+    "raddoppia",
+    "quadruplica",
+    "si dimezza",
+    "resta invariata",
+    "aumenta di tre volte"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nel primo ordine la velocità è proporzionale alla concentrazione: v = k[A]."
+  },
+  {
+   "id": "chim-32a-02",
+   "argomento": "chim.3.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Secondo la teoria degli urti, una collisione fra molecole porta alla reazione solo se queste hanno:",
+   "opzioni": [
+    "la stessa massa",
+    "energia sufficiente e orientamento adeguato",
+    "cariche opposte",
+    "energia cinetica nulla",
+    "la stessa temperatura"
+   ],
+   "corretta": 1,
+   "spiegazione": "Sono efficaci solo gli urti con energia almeno pari a quella di attivazione e con le molecole orientate in modo da formare i nuovi legami."
+  },
+  {
+   "id": "chim-32a-03",
+   "argomento": "chim.3.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una reazione che avviene in più stadi, la velocità complessiva è determinata:",
+   "opzioni": [
+    "dallo stadio più lento",
+    "dallo stadio più veloce",
+    "dallo stadio iniziale",
+    "dalla media delle velocità degli stadi",
+    "dall'ultimo stadio"
+   ],
+   "corretta": 0,
+   "spiegazione": "Lo stadio più lento è il collo di bottiglia, come il passaggio più stretto di un percorso: determina la velocità globale."
+  },
+  {
+   "id": "chim-32a-04",
+   "argomento": "chim.3.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "A parità di temperatura, una reazione con energia di attivazione più alta ha una costante cinetica:",
+   "opzioni": [
+    "maggiore",
+    "uguale",
+    "minore",
+    "nulla",
+    "che dipende solo dalla pressione"
+   ],
+   "corretta": 2,
+   "spiegazione": "Per l'equazione di Arrhenius, k diminuisce esponenzialmente all'aumentare di Ea: meno molecole possiedono energia sufficiente."
+  },
+  {
+   "id": "chim-32a-05",
+   "argomento": "chim.3.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La velocità di una reazione si esprime come variazione di concentrazione nell'unità di ……",
+   "accettate": [
+    "tempo"
+   ],
+   "spiegazione": "La velocità media è il rapporto fra la variazione di concentrazione di un reagente o di un prodotto e l'intervallo di tempo in cui avviene."
+  },
+  {
+   "id": "chim-32a-06",
+   "argomento": "chim.3.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il numero di molecole che partecipano a un singolo stadio elementare di una reazione si chiama ……",
+   "accettate": [
+    "molecolarità"
+   ],
+   "spiegazione": "La molecolarità è un concetto riferito agli stadi elementari e può valere 1, 2 o, raramente, 3; l'ordine si ricava invece dall'esperimento."
+  },
+  {
+   "id": "chim-32a-07",
+   "argomento": "chim.3.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La somma degli esponenti delle concentrazioni nella legge cinetica è detta …… di reazione.",
+   "accettate": [
+    "ordine"
+   ],
+   "spiegazione": "L'ordine di reazione si determina sperimentalmente e non coincide necessariamente con i coefficienti stechiometrici."
+  },
+  {
+   "id": "chim-32a-08",
+   "argomento": "chim.3.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La dipendenza della costante cinetica dalla temperatura è descritta dalla legge di ……",
+   "accettate": [
+    "Arrhenius",
+    "arrhenius"
+   ],
+   "spiegazione": "Arrhenius ha mostrato che k = A·e^(−Ea/RT): la costante cresce in modo esponenziale con la temperatura."
+  },
+  {
+   "id": "chim-110a-01",
+   "argomento": "chim.1.10",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "A temperatura costante, la variazione di energia libera di Gibbs è legata a ΔH, a ΔS e alla temperatura dalla relazione:",
+   "opzioni": [
+    "ΔG = ΔH − TΔS",
+    "ΔG = ΔH + TΔS",
+    "ΔG = TΔH − ΔS",
+    "ΔG = ΔS − TΔH",
+    "ΔG = ΔH · ΔS"
+   ],
+   "corretta": 0,
+   "spiegazione": "La spontaneità dipende dal bilancio fra il contributo energetico (ΔH) e quello legato al disordine (−TΔS)."
+  },
+  {
+   "id": "chim-110a-02",
+   "argomento": "chim.1.10",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'entropia di un sistema aumenta quando:",
+   "opzioni": [
+    "aumenta il disordine molecolare, come nel passaggio da solido a gas",
+    "il sistema si raffredda fino allo zero assoluto",
+    "una sostanza cristallizza da una soluzione",
+    "un gas viene compresso in un volume minore",
+    "le molecole si dispongono in un reticolo ordinato"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'entropia misura il numero di modi in cui le particelle possono disporsi: cresce con l'espansione, la fusione e l'evaporazione."
+  },
+  {
+   "id": "chim-110a-03",
+   "argomento": "chim.1.10",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di queste grandezze NON è una funzione di stato?",
+   "opzioni": [
+    "l'energia interna",
+    "l'energia libera di Gibbs",
+    "la pressione",
+    "il calore scambiato in una trasformazione",
+    "il volume"
+   ],
+   "corretta": 3,
+   "spiegazione": "Una funzione di stato dipende solo dallo stato iniziale e finale; il calore scambiato dipende invece dal cammino percorso."
+  },
+  {
+   "id": "chim-110a-04",
+   "argomento": "chim.1.10",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'idrolisi dell'ATP ha ΔG negativo, circa −30 kJ/mol. Questo significa che la reazione:",
+   "opzioni": [
+    "richiede energia per avvenire",
+    "è all'equilibrio",
+    "libera energia e può avvenire senza apporto di energia dall'esterno",
+    "non può avvenire nelle cellule",
+    "ha ΔH uguale a zero"
+   ],
+   "corretta": 2,
+   "spiegazione": "Un ΔG negativo indica una reazione che libera energia utile: le cellule la usano per far avvenire reazioni sfavorevoli."
+  },
+  {
+   "id": "chim-110a-05",
+   "argomento": "chim.1.10",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una trasformazione che avviene senza scambio di calore con l'ambiente è detta ……",
+   "accettate": [
+    "adiabatica",
+    "adiabatico"
+   ],
+   "spiegazione": "In una trasformazione adiabatica il sistema è isolato termicamente: il calore scambiato è nullo."
+  },
+  {
+   "id": "chim-110a-06",
+   "argomento": "chim.1.10",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una reazione con ΔG positivo, che richiede energia per avvenire, è detta ……",
+   "accettate": [
+    "endoergonica",
+    "endoergonico"
+   ],
+   "spiegazione": "Il termine indica una reazione non spontanea; negli organismi viene accoppiata all'idrolisi dell'ATP."
+  },
+  {
+   "id": "chim-110a-07",
+   "argomento": "chim.1.10",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il calore scambiato a pressione costante coincide con la variazione di ……",
+   "accettate": [
+    "entalpia"
+   ],
+   "spiegazione": "L'entalpia è la funzione di stato che tiene conto del calore scambiato dalle reazioni a pressione costante."
+  },
+  {
+   "id": "chim-110a-08",
+   "argomento": "chim.1.10",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nel Sistema Internazionale l'energia libera di Gibbs si misura in ……",
+   "accettate": [
+    "joule",
+    "J"
+   ],
+   "spiegazione": "Come ogni energia, ΔG si esprime in joule, in genere per mole di reazione (J/mol o kJ/mol)."
+  },
+  {
+   "id": "chim-52a-01",
+   "argomento": "chim.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Due stereoisomeri che non sono l'uno l'immagine speculare dell'altro sono:",
+   "opzioni": [
+    "diastereoisomeri",
+    "isomeri di struttura",
+    "isomeri conformazionali",
+    "tautomeri",
+    "omologhi"
+   ],
+   "corretta": 0,
+   "spiegazione": "Gli stereoisomeri si dividono in due categorie: quelli che sono immagini speculari e quelli che non lo sono, i diastereoisomeri."
+  },
+  {
+   "id": "chim-52a-02",
+   "argomento": "chim.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un composto che ruota il piano della luce polarizzata in senso orario è detto:",
+   "opzioni": [
+    "levogiro",
+    "destrogiro",
+    "racemo",
+    "inattivo",
+    "achirale"
+   ],
+   "corretta": 1,
+   "spiegazione": "Destrogiro si indica con (+) e levogiro con (−): la direzione di rotazione si misura con il polarimetro e non dipende dalla configurazione R/S."
+  },
+  {
+   "id": "chim-52a-03",
+   "argomento": "chim.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una miscela racemica ha potere ottico rotatorio:",
+   "opzioni": [
+    "doppio rispetto a quello di un solo isomero",
+    "uguale a quello di un solo isomero",
+    "nullo, perché le rotazioni dei due isomeri speculari si annullano",
+    "sempre positivo",
+    "sempre negativo"
+   ],
+   "corretta": 2,
+   "spiegazione": "Il racemo contiene quantità uguali dei due isomeri: le rotazioni opposte si compensano e non si osserva alcuna rotazione."
+  },
+  {
+   "id": "chim-52a-04",
+   "argomento": "chim.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una molecola con tre centri chirali indipendenti può avere al massimo …… stereoisomeri.",
+   "accettate": [
+    "8",
+    "otto"
+   ],
+   "spiegazione": "Con n centri chirali il numero massimo di stereoisomeri è 2ⁿ: con n = 3 si ha 2³ = 8.",
+   "numero": {
+    "valore": 8,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-52a-05",
+   "argomento": "chim.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il glucosio e il galattosio differiscono solo per la configurazione di un carbonio chirale, il carbonio C……",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "spiegazione": "Il galattosio è l'epimero del glucosio in posizione 4: tutti gli altri centri chirali hanno la stessa configurazione.",
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-52a-06",
+   "argomento": "chim.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La configurazione assoluta di un centro chirale si indica con le lettere R e ……",
+   "accettate": [
+    "S",
+    "s"
+   ],
+   "spiegazione": "Secondo la convenzione di Cahn-Ingold-Prelog, la disposizione oraria o antioraria dei sostituenti in ordine di priorità dà R oppure S."
+  },
+  {
+   "id": "chim-52a-07",
+   "argomento": "chim.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un composto con centri chirali che possiede un piano di simmetria interno e per questo non ruota la luce polarizzata è detto ……",
+   "accettate": [
+    "meso",
+    "composto meso",
+    "forma meso"
+   ],
+   "spiegazione": "Nei composti meso le rotazioni dei centri chirali si annullano all'interno della stessa molecola, che è achirale."
+  },
+  {
+   "id": "chim-22a-01",
+   "argomento": "chim.2.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'acqua è un buon solvente per i composti ionici perché le sue molecole:",
+   "opzioni": [
+    "sono polari e si orientano attorno agli ioni, stabilizzandoli in soluzione",
+    "sono apolari e non interagiscono con gli ioni",
+    "reagiscono formando legami covalenti con il soluto",
+    "riducono la carica degli ioni",
+    "sono più grandi degli ioni"
+   ],
+   "corretta": 0,
+   "spiegazione": "I poli parzialmente negativi dell'ossigeno circondano i cationi e quelli positivi dell'idrogeno gli anioni, compensando l'energia necessaria a separarli."
+  },
+  {
+   "id": "chim-22a-02",
+   "argomento": "chim.2.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "All'aumentare della temperatura, la solubilità di un gas in un liquido:",
+   "opzioni": [
+    "aumenta",
+    "diminuisce",
+    "non cambia",
+    "aumenta solo per i gas polari",
+    "diventa infinita"
+   ],
+   "corretta": 1,
+   "spiegazione": "La dissoluzione di un gas è in genere esotermica: aumentando la temperatura l'equilibrio si sposta verso il gas libero."
+  },
+  {
+   "id": "chim-22a-03",
+   "argomento": "chim.2.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di queste sostanze è più solubile in acqua?",
+   "opzioni": [
+    "il glucosio",
+    "l'esano",
+    "il colesterolo",
+    "il benzene",
+    "l'olio d'oliva"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il glucosio forma molti legami a idrogeno con l'acqua; le altre sostanze sono apolari e idrofobiche."
+  },
+  {
+   "id": "chim-22a-04",
+   "argomento": "chim.2.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli ioni di un sale sciolto in acqua sono circondati da molecole di solvente: il fenomeno è detto ……",
+   "accettate": [
+    "idratazione",
+    "solvatazione"
+   ],
+   "spiegazione": "Le molecole d'acqua si dispongono intorno agli ioni con l'orientamento che li stabilizza: gli ioni risultano idratati."
+  },
+  {
+   "id": "chim-22a-05",
+   "argomento": "chim.2.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le sostanze che in soluzione acquosa si dissociano in ioni e conducono la corrente elettrica sono dette ……",
+   "accettate": [
+    "elettroliti",
+    "elettrolita"
+   ],
+   "spiegazione": "Gli ioni liberi in soluzione sono portatori di carica: per questo le soluzioni di elettroliti conducono la corrente."
+  },
+  {
+   "id": "chim-22a-06",
+   "argomento": "chim.2.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella molecola d'acqua l'estremità dell'ossigeno ha una carica parziale ……",
+   "accettate": [
+    "negativa",
+    "negativo"
+   ],
+   "spiegazione": "L'ossigeno, più elettronegativo, attira gli elettroni di legame: ha carica parziale negativa, mentre gli idrogeni hanno carica parziale positiva."
+  },
+  {
+   "id": "chim-61a-01",
+   "argomento": "chim.6.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Per disidratazione di un alcol, in ambiente acido e a caldo, si forma:",
+   "opzioni": [
+    "un alchene",
+    "un alcano",
+    "un'aldeide",
+    "un estere",
+    "un acido carbossilico"
+   ],
+   "corretta": 0,
+   "spiegazione": "La perdita di una molecola d'acqua fra due carboni adiacenti crea un doppio legame carbonio-carbonio.",
+   "gruppo": "chim.6.1-idratazione-disidratazione"
+  },
+  {
+   "id": "chim-61a-02",
+   "argomento": "chim.6.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il fenolo è più acido di un alcol alifatico perché:",
+   "opzioni": [
+    "contiene più atomi di ossigeno",
+    "lo ione fenossido è stabilizzato dalla delocalizzazione della carica sull'anello aromatico",
+    "ha un gruppo carbossilico",
+    "è meno solubile in acqua",
+    "ha un peso molecolare maggiore"
+   ],
+   "corretta": 1,
+   "spiegazione": "La carica negativa dell'ossigeno si distribuisce per risonanza sull'anello: la base coniugata è più stabile e l'acido più forte."
+  },
+  {
+   "id": "chim-61a-03",
+   "argomento": "chim.6.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'ossidazione di un alcol primario può portare a:",
+   "opzioni": [
+    "un'aldeide e poi a un acido carbossilico",
+    "un chetone",
+    "un epossido",
+    "un alcano",
+    "un estere"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'alcol primario si ossida ad aldeide e, con un ossidante forte, procede fino all'acido carbossilico.",
+   "gruppo": "chim.6.1-ossidazione-chetone"
+  },
+  {
+   "id": "chim-61a-04",
+   "argomento": "chim.6.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'alcol di formula C₂H₅OH, presente nelle bevande alcoliche, si chiama ……",
+   "accettate": [
+    "etanolo",
+    "alcol etilico"
+   ],
+   "spiegazione": "L'etanolo è metabolizzato dal fegato, dove l'alcol deidrogenasi lo ossida ad acetaldeide."
+  },
+  {
+   "id": "chim-61a-05",
+   "argomento": "chim.6.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il gruppo funzionale caratteristico degli alcoli è il gruppo ……",
+   "accettate": [
+    "ossidrile",
+    "ossidrilico",
+    "idrossile"
+   ],
+   "spiegazione": "Gli alcoli hanno un gruppo –OH legato a un carbonio saturo; il gruppo ossidrile rende possibili i legami a idrogeno."
+  },
+  {
+   "id": "chim-61a-06",
+   "argomento": "chim.6.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli epossidi hanno un anello formato da …… atomi, di cui uno di ossigeno.",
+   "accettate": [
+    "3",
+    "tre"
+   ],
+   "spiegazione": "Nell'anello a tre termini le tensioni di legame rendono gli epossidi molto reattivi.",
+   "numero": {
+    "valore": 3,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-23a-01",
+   "argomento": "chim.2.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una soluzione 0,5 M di glucosio contiene:",
+   "opzioni": [
+    "0,5 moli di glucosio per litro di soluzione",
+    "0,5 moli di glucosio per chilogrammo di solvente",
+    "0,5 g di glucosio per 100 mL",
+    "0,5 moli di glucosio in 1 L di solvente puro",
+    "0,5 grammi di glucosio per litro"
+   ],
+   "corretta": 0,
+   "spiegazione": "La molarità è il numero di moli di soluto per litro di soluzione."
+  },
+  {
+   "id": "chim-23a-02",
+   "argomento": "chim.2.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La molalità di una soluzione è definita come:",
+   "opzioni": [
+    "moli di soluto per litro di soluzione",
+    "grammi di soluto per 100 mL di soluzione",
+    "moli di soluto divise per le moli di solvente",
+    "moli di soluto per chilogrammo di solvente",
+    "grammi di soluto per litro di soluzione"
+   ],
+   "corretta": 3,
+   "spiegazione": "La molalità si riferisce alla massa del solvente e non dipende dalla temperatura, a differenza della molarità."
+  },
+  {
+   "id": "chim-23a-03",
+   "argomento": "chim.2.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una soluzione di glucosio al 5% p/v contiene:",
+   "opzioni": [
+    "5 g di glucosio in 100 g di soluzione",
+    "5 g di glucosio in 100 mL di soluzione",
+    "5 g di glucosio in 100 mL di solvente",
+    "5 moli di glucosio in 1 L di soluzione",
+    "5 mL di glucosio in 100 mL di soluzione"
+   ],
+   "corretta": 1,
+   "spiegazione": "La percentuale peso su volume esprime i grammi di soluto contenuti in 100 mL di soluzione.",
+   "gruppo": "chim.2.3-percentuale-pv"
+  },
+  {
+   "id": "chim-23a-04",
+   "argomento": "chim.2.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La concentrazione espressa in grammi di soluto per 100 mL di soluzione è detta percentuale peso su ……",
+   "accettate": [
+    "volume"
+   ],
+   "spiegazione": "La percentuale peso su volume è la più usata per le soluzioni in ambito clinico, come la soluzione fisiologica allo 0,9%.",
+   "gruppo": "chim.2.3-percentuale-pv"
+  },
+  {
+   "id": "chim-23a-05",
+   "argomento": "chim.2.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Sciogliendo 20 g di soluto in 80 g di solvente si ottiene una soluzione la cui concentrazione percentuale peso su peso (p/p) è ……",
+   "accettate": [
+    "20",
+    "20%",
+    "venti"
+   ],
+   "spiegazione": "La massa totale è 100 g e il soluto ne rappresenta 20: la concentrazione è del 20% p/p.",
+   "numero": {
+    "valore": 20,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-23a-06",
+   "argomento": "chim.2.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Portando 100 mL di una soluzione 1 M fino a 500 mL, la concentrazione finale, in mol/L, è ……",
+   "accettate": [
+    "0,2",
+    "0.2"
+   ],
+   "spiegazione": "Le moli di soluto restano 0,1 mol; dividendole per 0,5 L si ottiene 0,2 mol/L.",
+   "numero": {
+    "valore": 0.2,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-75a-01",
+   "argomento": "chim.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un nucleotide è formato da:",
+   "opzioni": [
+    "una base azotata, uno zucchero pentoso e uno o più gruppi fosfato",
+    "una base azotata e uno zucchero esoso",
+    "uno zucchero e un amminoacido",
+    "una base azotata e un gruppo carbossilico",
+    "due basi azotate e un fosfato"
+   ],
+   "corretta": 0,
+   "spiegazione": "Senza il fosfato si ha un nucleoside; il nucleotide è il nucleoside fosforilato."
+  },
+  {
+   "id": "chim-75a-02",
+   "argomento": "chim.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il legame fosfodiestere unisce due nucleotidi collegando:",
+   "opzioni": [
+    "le due basi azotate",
+    "il fosfato in posizione 5′ di un nucleotide all'ossidrile in 3′ del precedente",
+    "due fosfati fra loro",
+    "lo zucchero alla base azotata",
+    "i due ossidrili in 2′"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il fosfato fa da ponte tra due zuccheri tramite due legami estere: da qui il nome fosfodiestere."
+  },
+  {
+   "id": "chim-75a-03",
+   "argomento": "chim.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il NAD⁺ nelle reazioni di ossidoriduzione cellulari:",
+   "opzioni": [
+    "accetta elettroni e un protone, trasformandosi in NADH",
+    "cede elettroni, trasformandosi in NADH",
+    "trasporta ossigeno",
+    "si lega al DNA",
+    "è un amminoacido"
+   ],
+   "corretta": 0,
+   "spiegazione": "NAD⁺ è l'ossidato che riceve un idruro dalle molecole che si ossidano; il NADH formato cede poi gli elettroni alla catena respiratoria."
+  },
+  {
+   "id": "chim-75a-04",
+   "argomento": "chim.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La struttura a doppia elica del DNA fu proposta da Watson e ……",
+   "accettate": [
+    "Crick",
+    "crick"
+   ],
+   "spiegazione": "Nel 1953 Watson e Crick proposero il modello dei due filamenti antiparalleli avvolti a elica, con le basi appaiate al centro."
+  },
+  {
+   "id": "chim-75a-05",
+   "argomento": "chim.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il nucleoside formato dalla base adenina legata a uno zucchero pentoso si chiama ……",
+   "accettate": [
+    "adenosina"
+   ],
+   "spiegazione": "Nucleoside è l'unione di base e zucchero; con uno, due o tre fosfati si ottengono AMP, ADP e ATP."
+  },
+  {
+   "id": "chim-75a-06",
+   "argomento": "chim.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La molecola che cede energia con l'idrolisi dei suoi legami fosfoanidridici, trasferendola alle reazioni cellulari, è l'……",
+   "accettate": [
+    "ATP",
+    "atp"
+   ],
+   "spiegazione": "L'idrolisi dell'ATP libera circa 30 kJ/mol e viene accoppiata alle reazioni che richiedono energia."
+  },
+  {
+   "id": "chim-51a-01",
+   "argomento": "chim.5.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di queste formule molecolari corrisponde a un alcano?",
+   "opzioni": [
+    "C₆H₁₄",
+    "C₆H₁₂",
+    "C₆H₁₀",
+    "C₆H₆",
+    "C₆H₈"
+   ],
+   "corretta": 0,
+   "spiegazione": "La formula generale degli alcani aciclici è CₙH₂ₙ₊₂: con n = 6 si ottiene C₆H₁₄."
+  },
+  {
+   "id": "chim-51a-02",
+   "argomento": "chim.5.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il carbonio forma quattro legami perché ha:",
+   "opzioni": [
+    "quattro protoni",
+    "quattro elettroni nello strato di valenza",
+    "quattro neutroni",
+    "quattro strati elettronici",
+    "due elettroni di valenza e due orbitali vuoti"
+   ],
+   "corretta": 1,
+   "spiegazione": "Con quattro elettroni di valenza il carbonio completa l'ottetto formando quattro legami covalenti."
+  },
+  {
+   "id": "chim-51a-03",
+   "argomento": "chim.5.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un composto eterociclico è un composto ciclico in cui:",
+   "opzioni": [
+    "tutti gli atomi dell'anello sono carbonio",
+    "l'anello contiene solo legami doppi",
+    "nell'anello è presente almeno un atomo diverso dal carbonio",
+    "ci sono più anelli condensati",
+    "l'anello non è planare"
+   ],
+   "corretta": 2,
+   "spiegazione": "Azoto, ossigeno e zolfo sono gli eteroatomi più comuni: ne contengono molte molecole biologiche, come le basi azotate."
+  },
+  {
+   "id": "chim-51a-04",
+   "argomento": "chim.5.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il sostituente –C₂H₅ legato a una catena carboniosa si chiama gruppo ……",
+   "accettate": [
+    "etile",
+    "etilico"
+   ],
+   "spiegazione": "L'etile deriva dall'etano per perdita di un atomo di idrogeno."
+  },
+  {
+   "id": "chim-51a-05",
+   "argomento": "chim.5.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un idrocarburo che contiene almeno un doppio legame carbonio-carbonio è detto ……",
+   "accettate": [
+    "insaturo",
+    "insaturi",
+    "alchene",
+    "alcheni"
+   ],
+   "spiegazione": "Doppi o tripli legami riducono il numero di atomi di idrogeno rispetto al massimo possibile: l'idrocarburo è insaturo."
+  },
+  {
+   "id": "chim-51a-06",
+   "argomento": "chim.5.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nelle formule scheletriche gli atomi di idrogeno legati ai carboni non si disegnano perché sono ……",
+   "accettate": [
+    "sottintesi",
+    "sottinteso",
+    "omessi",
+    "impliciti"
+   ],
+   "spiegazione": "Nella rappresentazione scheletrica il numero di idrogeni su ogni carbonio si ricava dalla tetravalenza del carbonio."
+  },
+  {
+   "id": "chim-27a-01",
+   "argomento": "chim.2.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una soluzione isotonica rispetto al plasma ha:",
+   "opzioni": [
+    "la stessa pressione osmotica del plasma",
+    "pressione osmotica doppia",
+    "pressione osmotica dimezzata",
+    "pH uguale a 7",
+    "la stessa quantità di glucosio del plasma"
+   ],
+   "corretta": 0,
+   "spiegazione": "Isotonica significa con uguale pressione osmotica: le cellule immerse in essa non guadagnano né perdono acqua."
+  },
+  {
+   "id": "chim-27a-02",
+   "argomento": "chim.2.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La soluzione fisiologica usata in clinica è una soluzione di:",
+   "opzioni": [
+    "cloruro di sodio al 9%",
+    "glucosio allo 0,9%",
+    "cloruro di sodio allo 0,9%",
+    "cloruro di calcio allo 0,9%",
+    "cloruro di sodio allo 0,09%"
+   ],
+   "corretta": 2,
+   "spiegazione": "La concentrazione dello 0,9% p/v di NaCl è isotonica rispetto al plasma."
+  },
+  {
+   "id": "chim-27a-03",
+   "argomento": "chim.2.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un globulo rosso posto in una soluzione con pressione osmotica maggiore della propria:",
+   "opzioni": [
+    "acquista acqua e si rigonfia",
+    "perde acqua e si raggrinzisce",
+    "resta invariato",
+    "scoppia immediatamente",
+    "si divide"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'acqua esce per osmosi verso la soluzione più concentrata e il globulo rosso si raggrinzisce."
+  },
+  {
+   "id": "chim-27a-04",
+   "argomento": "chim.2.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'accumulo di liquido nello spazio interstiziale dei tessuti, che causa gonfiore, è detto ……",
+   "accettate": [
+    "edema"
+   ],
+   "spiegazione": "Un'alterazione dell'equilibrio osmotico e della pressione nei capillari può far passare troppo liquido dal sangue ai tessuti."
+  },
+  {
+   "id": "chim-27a-05",
+   "argomento": "chim.2.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una soluzione con pressione osmotica maggiore di quella del plasma è detta ……",
+   "accettate": [
+    "ipertonica",
+    "ipertonico"
+   ],
+   "spiegazione": "Il prefisso iper- indica una concentrazione maggiore: una soluzione ipertonica richiama acqua dalle cellule."
+  },
+  {
+   "id": "chim-27a-06",
+   "argomento": "chim.2.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La pressione osmotica dipende dal numero di particelle di soluto e non dalla loro natura: è una proprietà ……",
+   "accettate": [
+    "colligativa",
+    "colligative"
+   ],
+   "spiegazione": "Le proprietà colligative dipendono solo dal numero delle particelle disciolte e non dal tipo di soluto."
+  },
+  {
+   "id": "chim-57a-01",
+   "argomento": "chim.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La particolare stabilità del benzene è dovuta a:",
+   "opzioni": [
+    "la delocalizzazione degli elettroni π su tutto l'anello",
+    "la presenza di tre doppi legami fissi",
+    "l'elevata polarità dei legami C–H",
+    "la presenza di coppie di non legame",
+    "l'ibridazione sp³ dei carboni"
+   ],
+   "corretta": 0,
+   "spiegazione": "I sei elettroni π sono condivisi da tutti gli atomi dell'anello: la risonanza stabilizza la molecola molto più di tre doppi legami isolati."
+  },
+  {
+   "id": "chim-57a-02",
+   "argomento": "chim.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un sostituente attivante, come –OH o –NH₂, legato al benzene:",
+   "opzioni": [
+    "diminuisce la reattività e orienta in meta",
+    "aumenta la reattività dell'anello e orienta i nuovi sostituenti in orto e para",
+    "rende l'anello alifatico",
+    "impedisce ogni reazione",
+    "orienta sempre in meta"
+   ],
+   "corretta": 1,
+   "spiegazione": "I sostituenti che donano elettroni all'anello lo rendono più nucleofilo e favoriscono le posizioni orto e para."
+  },
+  {
+   "id": "chim-57a-03",
+   "argomento": "chim.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'anello aromatico a sei termini con due atomi di azoto, da cui derivano alcune basi azotate come la citosina, è la ……",
+   "accettate": [
+    "pirimidina"
+   ],
+   "spiegazione": "Le basi pirimidiniche (citosina, timina, uracile) derivano da questo anello eterociclico a sei atomi."
+  },
+  {
+   "id": "chim-57a-04",
+   "argomento": "chim.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le basi puriniche sono formate da due anelli condensati: sono composti aromatici ……",
+   "accettate": [
+    "policiclici",
+    "policiclico",
+    "biciclici"
+   ],
+   "spiegazione": "Le purine hanno un anello a sei e uno a cinque termini, entrambi con azoto: sono eterociclici e policiclici."
+  },
+  {
+   "id": "chim-57a-05",
+   "argomento": "chim.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella reazione caratteristica del benzene un idrogeno dell'anello viene sostituito da un altro gruppo: è una sostituzione ……  aromatica.",
+   "accettate": [
+    "elettrofila"
+   ],
+   "spiegazione": "Il benzene conserva l'aromaticità sostituendo un idrogeno con l'elettrofilo, invece di dare addizione ai doppi legami."
+  },
+  {
+   "id": "chim-43a-01",
+   "argomento": "chim.4.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il pH del sangue arterioso in condizioni normali è circa:",
+   "opzioni": [
+    "7,4",
+    "6,8",
+    "7,0",
+    "7,8",
+    "8,2"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il pH ematico è mantenuto in un intervallo molto stretto, 7,35-7,45, dai sistemi tampone e dalla regolazione respiratoria e renale."
+  },
+  {
+   "id": "chim-43a-02",
+   "argomento": "chim.4.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un pH del sangue inferiore a 7,35 è la condizione chiamata:",
+   "opzioni": [
+    "ipossia",
+    "acidosi",
+    "ischemia",
+    "anemia",
+    "disidratazione"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'acidosi è l'abbassamento del pH ematico; può essere respiratoria o metabolica."
+  },
+  {
+   "id": "chim-43a-03",
+   "argomento": "chim.4.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un pH del sangue superiore a 7,45 è la condizione detta ……",
+   "accettate": [
+    "alcalosi"
+   ],
+   "spiegazione": "È la condizione opposta all'acidosi e può essere causata, per esempio, da un'iperventilazione."
+  },
+  {
+   "id": "chim-43a-04",
+   "argomento": "chim.4.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nelle cellule e nelle urine un importante sistema tampone è quello del ……",
+   "accettate": [
+    "fosfato",
+    "fosfati"
+   ],
+   "spiegazione": "La coppia diidrogenofosfato/idrogenofosfato ha un pKa vicino a 7: tampona bene intorno alla neutralità."
+  },
+  {
+   "id": "chim-25a-01",
+   "argomento": "chim.2.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Secondo la legge di Raoult, la pressione di vapore di un solvente in una soluzione, rispetto al solvente puro:",
+   "opzioni": [
+    "diminuisce in proporzione alla frazione molare del soluto",
+    "sale in proporzione alla frazione molare del soluto",
+    "resta invariata",
+    "dipende solo dalla natura del soluto",
+    "si annulla"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le molecole di soluto occupano parte della superficie: la pressione di vapore è proporzionale alla frazione molare del solvente."
+  },
+  {
+   "id": "chim-25a-02",
+   "argomento": "chim.2.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una soluzione acquosa di NaCl 1 m, confrontata con una di glucosio 1 m, ha un abbassamento della temperatura di congelamento:",
+   "opzioni": [
+    "uguale",
+    "circa doppio, perché NaCl si dissocia in due ioni",
+    "circa la metà",
+    "nullo",
+    "circa il quadruplo"
+   ],
+   "corretta": 1,
+   "spiegazione": "Le proprietà colligative dipendono dal numero di particelle: NaCl ne forma due per unità formula, il glucosio una sola."
+  },
+  {
+   "id": "chim-25a-03",
+   "argomento": "chim.2.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Sciogliendo un soluto non volatile in un solvente, la temperatura di ebollizione del solvente ……",
+   "accettate": [
+    "aumenta",
+    "cresce",
+    "si innalza"
+   ],
+   "spiegazione": "L'abbassamento della pressione di vapore richiede una temperatura più alta per eguagliare la pressione esterna: è l'innalzamento ebullioscopico."
+  },
+  {
+   "id": "chim-25a-04",
+   "argomento": "chim.2.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'abbassamento della pressione di vapore di una soluzione si spiega con le molecole di soluto che occupano parte della ……  del liquido.",
+   "accettate": [
+    "superficie"
+   ],
+   "spiegazione": "Le molecole di soluto riducono il numero di molecole di solvente che possono evaporare dalla superficie: la pressione di vapore scende."
+  },
+  {
+   "id": "chim-12a-01",
+   "argomento": "chim.1.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quanti elettroni può contenere al massimo un sottolivello p?",
+   "opzioni": [
+    "6",
+    "2",
+    "10",
+    "14",
+    "8"
+   ],
+   "corretta": 0,
+   "spiegazione": "Un sottolivello p ha tre orbitali, e ciascuno ospita due elettroni: 3 × 2 = 6."
+  },
+  {
+   "id": "chim-12a-02",
+   "argomento": "chim.1.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La configurazione elettronica del carbonio (Z = 6) è:",
+   "opzioni": [
+    "1s² 2s² 2p⁴",
+    "1s² 2s⁴",
+    "1s² 2s² 2p²",
+    "1s² 2p⁴",
+    "1s² 2s² 3s²"
+   ],
+   "corretta": 2,
+   "spiegazione": "Sei elettroni si distribuiscono riempiendo in ordine 1s, 2s e 2p, con due elettroni in 2p."
+  },
+  {
+   "id": "chim-12a-03",
+   "argomento": "chim.1.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La regola secondo cui gli elettroni occupano singolarmente gli orbitali di uguale energia con spin parallelo, prima di appaiarsi, è la regola di ……",
+   "accettate": [
+    "Hund",
+    "hund"
+   ],
+   "spiegazione": "Nel sottolivello p di un atomo di carbonio i due elettroni restano in orbitali diversi, con spin paralleli."
+  },
+  {
+   "id": "chim-12a-04",
+   "argomento": "chim.1.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il numero quantico che descrive la forma dell'orbitale è detto numero quantico ……",
+   "accettate": [
+    "secondario",
+    "azimutale",
+    "angolare"
+   ],
+   "spiegazione": "Il numero quantico secondario l determina la forma (s, p, d, f) ed è legato al momento angolare dell'elettrone."
+  },
+  {
+   "id": "chim-13a-01",
+   "argomento": "chim.1.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Scendendo lungo un gruppo della tavola periodica, il raggio atomico:",
+   "opzioni": [
+    "aumenta",
+    "diminuisce",
+    "resta costante",
+    "raddoppia a ogni periodo",
+    "diventa nullo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Scendendo nel gruppo si aggiungono livelli elettronici più esterni, e l'atomo si ingrandisce."
+  },
+  {
+   "id": "chim-13a-02",
+   "argomento": "chim.1.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale di questi elementi ha la più alta energia di prima ionizzazione?",
+   "opzioni": [
+    "il sodio",
+    "l'elio",
+    "il litio",
+    "il cesio",
+    "il carbonio"
+   ],
+   "corretta": 1,
+   "spiegazione": "L'elio ha un piccolo atomo con lo strato completo: è l'elemento da cui è più difficile strappare un elettrone."
+  },
+  {
+   "id": "chim-13a-03",
+   "argomento": "chim.1.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Secondo la regola dell'ottetto, gli atomi tendono a raggiungere uno strato esterno con …… elettroni.",
+   "accettate": [
+    "8",
+    "otto"
+   ],
+   "spiegazione": "Con otto elettroni nello strato di valenza l'atomo ha la configurazione stabile dei gas nobili.",
+   "numero": {
+    "valore": 8,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "chim-13a-04",
+   "argomento": "chim.1.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'energia liberata quando un atomo neutro acquista un elettrone è l'affinità ……",
+   "accettate": [
+    "elettronica"
+   ],
+   "spiegazione": "Più l'affinità elettronica è alta, più l'atomo tende a formare anioni: è massima per gli alogeni."
+  },
+  {
+   "id": "chim-14a-01",
+   "argomento": "chim.1.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La massa molecolare dell'acqua (H = 1 u, O = 16 u) è:",
+   "opzioni": [
+    "18 u",
+    "17 u",
+    "16 u",
+    "34 u",
+    "10 u"
+   ],
+   "corretta": 0,
+   "spiegazione": "Due atomi di idrogeno e uno di ossigeno: 2 × 1 + 16 = 18 u."
+  },
+  {
+   "id": "chim-14a-02",
+   "argomento": "chim.1.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quanti atomi in totale sono presenti in una molecola di H₂SO₄?",
+   "opzioni": [
+    "7",
+    "6",
+    "4",
+    "8",
+    "5"
+   ],
+   "corretta": 0,
+   "spiegazione": "Due atomi di idrogeno, uno di zolfo e quattro di ossigeno: 2 + 1 + 4 = 7."
+  },
+  {
+   "id": "chim-14a-03",
+   "argomento": "chim.1.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un atomo che ha perso uno o più elettroni diventa uno ione di carica positiva, detto ……",
+   "accettate": [
+    "catione",
+    "cationi"
+   ],
+   "spiegazione": "Il catione ha più protoni che elettroni; l'anione è lo ione di carica negativa, che ha acquistato elettroni."
+  },
+  {
+   "id": "chim-14a-04",
+   "argomento": "chim.1.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "36 g di acqua (massa molare 18 g/mol) corrispondono a …… moli.",
+   "accettate": [
+    "2",
+    "due"
+   ],
+   "spiegazione": "Il numero di moli è la massa divisa per la massa molare: 36 / 18 = 2 mol.",
+   "numero": {
+    "valore": 2,
+    "tolleranza": 0
+   }
   }
  ]
 }

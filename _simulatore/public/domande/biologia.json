@@ -51,7 +51,8 @@
    "corretta": 2,
    "spiegazione": "Le DNA polimerasi allungano solo in direzione 5'→3', quindi il filamento ritardato è sintetizzato a tratti, ognuno con il suo primer.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.3.1-filamenti-primasi"
   },
   {
    "id": "bio-005",
@@ -197,7 +198,8 @@
    ],
    "spiegazione": "I telomeri sono sequenze ripetute che proteggono le estremità e si accorciano a ogni ciclo, salvo l'azione della telomerasi.",
    "stato": "approvata",
-   "fonte": "demo"
+   "fonte": "demo",
+   "gruppo": "bio.3.1-telomeri"
   },
   {
    "id": "bio-018",
@@ -689,8 +691,10 @@
     "proto-oncogene",
     "protooncogene",
     "proto oncogene",
-    "proto-oncogeni"
-   ]
+    "proto-oncogeni",
+    "protooncogeni"
+   ],
+   "gruppo": "bio.7.2-protooncogene"
   },
   {
    "id": "bio-63b-11",
@@ -831,7 +835,8 @@
     "entrambi omozigoti recessivi",
     "uno omozigote dominante e uno eterozigote"
    ],
-   "corretta": 1
+   "corretta": 1,
+   "gruppo": "bio.4.5-genitori-portatori"
   },
   {
    "id": "bio-42a-06",
@@ -5371,6 +5376,1974 @@
     "atp",
     "adenosina trifosfato"
    ]
+  },
+  {
+   "id": "bio-31a-01",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Secondo il modello di replicazione dimostrato da Meselson e Stahl, ogni molecola figlia di DNA contiene:",
+   "opzioni": [
+    "due filamenti parentali, rimasti interi",
+    "due filamenti di nuova sintesi",
+    "un filamento parentale e un filamento di nuova sintesi",
+    "tratti parentali e tratti nuovi alternati su entrambi i filamenti",
+    "un filamento di DNA e uno di RNA"
+   ],
+   "corretta": 2,
+   "spiegazione": "Nell'esperimento con azoto pesante il DNA della prima generazione aveva densità intermedia: ogni doppia elica conserva un filamento vecchio e ne riceve uno nuovo."
+  },
+  {
+   "id": "bio-31a-02",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La DNA polimerasi non sa iniziare da sola una nuova catena: per cominciare ha bisogno di un innesco, che è:",
+   "opzioni": [
+    "un breve frammento di RNA complementare allo stampo",
+    "un breve frammento di DNA sintetizzato dalla topoisomerasi",
+    "una proteina legata all'estremità 5' dello stampo",
+    "un nucleotide modificato legato alla timina",
+    "un tratto di DNA a doppia elica già formato"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le DNA polimerasi allungano soltanto un'estremità 3'-OH già esistente: la sintesi parte da un breve innesco di RNA, che sarà poi sostituito da DNA."
+  },
+  {
+   "id": "bio-31a-03",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale attività permette alle DNA polimerasi di correggere un nucleotide appena inserito in modo errato?",
+   "opzioni": [
+    "un'attività di legame fra nucleotidi adiacenti, che salda i tagli del filamento",
+    "un'attività di rilascio della tensione torsionale",
+    "un'attività di sintesi dell'innesco a RNA",
+    "un'attività esonucleasica 3'→5' che rimuove il nucleotide sbagliato",
+    "un'attività di metilazione del filamento nuovo"
+   ],
+   "corretta": 3,
+   "spiegazione": "Se l'appaiamento è errato la polimerasi si blocca, torna indietro di un passo e taglia il nucleotide sbagliato con la sua attività esonucleasica 3'→5', poi riprende la sintesi."
+  },
+  {
+   "id": "bio-31a-04",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Rispetto ai procarioti, la replicazione dei cromosomi eucariotici lineari, molto più lunghi, parte da:",
+   "opzioni": [
+    "un unico punto di inizio, come nei procarioti",
+    "numerosi punti di inizio attivati contemporaneamente lungo ogni cromosoma",
+    "il solo centromero",
+    "le sole estremità del cromosoma",
+    "un punto di inizio diverso per ciascuno dei due filamenti"
+   ],
+   "corretta": 1,
+   "spiegazione": "Un cromosoma eucariotico è lungo milioni di basi: partendo da un solo punto la replicazione sarebbe troppo lenta, per cui ne vengono attivati molti insieme."
+  },
+  {
+   "id": "bio-31a-05",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Mentre la doppia elica si apre, davanti al punto di apertura si accumula una tensione torsionale. Viene eliminata:",
+   "opzioni": [
+    "dalle RNA polimerasi, che trascrivono i geni",
+    "dalle DNA polimerasi, che allungano i filamenti",
+    "dalle proteine che legano il DNA a filamento singolo",
+    "dalla telomerasi",
+    "dalle topoisomerasi, che tagliano e risaldano uno o entrambi i filamenti"
+   ],
+   "corretta": 4,
+   "spiegazione": "Aprire l'elica genera superavvolgimenti a monte: le topoisomerasi li rilasciano tagliando temporaneamente il DNA e richiudendolo.",
+   "gruppo": "bio.3.1-topoisomerasi"
+  },
+  {
+   "id": "bio-31a-06",
+   "argomento": "bio.3.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nelle cellule somatiche umane, in cui i telomeri non vengono riallungati, a ogni divisione cellulare i telomeri:",
+   "opzioni": [
+    "si accorciano progressivamente, fino all'arresto della divisione cellulare",
+    "si allungano di una ripetizione",
+    "restano invariati, perché sono riparati dalla ligasi",
+    "si fondono tra loro",
+    "raddoppiano di numero"
+   ],
+   "corretta": 0,
+   "spiegazione": "La replicazione non riesce a copiare l'estremità del filamento ritardato: i telomeri si accorciano a ogni ciclo, e quando sono troppo corti la cellula smette di dividersi.",
+   "gruppo": "bio.3.1-telomeri"
+  },
+  {
+   "id": "bio-31a-07",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il filamento di DNA copiato in modo ininterrotto da una sola polimerasi, nella stessa direzione in cui si apre la doppia elica, è detto filamento ……",
+   "accettate": [
+    "guida",
+    "veloce",
+    "continuo",
+    "anticipato",
+    "leading"
+   ],
+   "spiegazione": "Il filamento guida ha polarità compatibile con l'apertura dell'elica e viene sintetizzato senza interruzioni; l'altro filamento va copiato a pezzi.",
+   "gruppo": "bio.3.1-filamenti-primasi"
+  },
+  {
+   "id": "bio-31a-08",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Poiché dal punto di inizio si formano due forcelle che procedono in versi opposti, la replicazione è detta ……",
+   "accettate": [
+    "bidirezionale",
+    "bidirezionali"
+   ],
+   "spiegazione": "Da ogni origine la replicazione procede in entrambe le direzioni, con due forcelle che si allontanano fra loro."
+  },
+  {
+   "id": "bio-31a-09",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'enzima che allunga i telomeri usando come stampo un RNA contenuto nel proprio complesso è la ……",
+   "accettate": [
+    "telomerasi"
+   ],
+   "spiegazione": "La telomerasi è una trascrittasi inversa che aggiunge ripetizioni alle estremità dei cromosomi, compensando l'accorciamento dovuto alla replicazione.",
+   "gruppo": "bio.3.1-telomeri"
+  },
+  {
+   "id": "bio-31a-10",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il modello in cui ogni doppia elica figlia conserva uno dei due filamenti originali si definisce ……",
+   "accettate": [
+    "semiconservativo",
+    "semi-conservativo",
+    "semiconservativa"
+   ],
+   "spiegazione": "Il nome indica che la conservazione è a metà: un filamento resta quello parentale e l'altro è nuovo."
+  },
+  {
+   "id": "bio-31a-11",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'enzima che sintetizza il breve innesco di RNA necessario alla DNA polimerasi per iniziare è la ……",
+   "accettate": [
+    "primasi"
+   ],
+   "spiegazione": "La primasi è una RNA polimerasi che non richiede un'estremità 3'-OH preesistente: crea l'innesco da cui la DNA polimerasi può proseguire.",
+   "gruppo": "bio.3.1-filamenti-primasi"
+  },
+  {
+   "id": "bio-31a-12",
+   "argomento": "bio.3.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La DNA polimerasi lega ogni nuovo nucleotide al gruppo ossidrile in posizione 3' dello zucchero, che nel DNA è il ……",
+   "accettate": [
+    "deossiribosio",
+    "desossiribosio",
+    "2-deossiribosio"
+   ],
+   "spiegazione": "Nel DNA lo zucchero è il deossiribosio: l'OH in 3' dell'ultimo nucleotide reagisce con il fosfato del successivo formando il legame fosfodiestere."
+  },
+  {
+   "id": "bio-75a-01",
+   "argomento": "bio.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Rispetto alla morte cellulare accidentale, l'apoptosi è:",
+   "opzioni": [
+    "un processo regolato e ordinato, che non provoca infiammazione",
+    "un rigonfiamento della cellula con rottura della membrana e rilascio del contenuto",
+    "una morte che si verifica sempre dopo un trauma fisico",
+    "un processo che richiede sempre l'intervento dei linfociti",
+    "una degradazione limitata ai tessuti embrionali"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'apoptosi è un programma attivo: la cellula si frammenta in corpi apoptotici eliminati dai fagociti, senza liberare il contenuto nello spazio extracellulare."
+  },
+  {
+   "id": "bio-75a-02",
+   "argomento": "bio.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale evento avvia la morte cellulare per segnali che arrivano dall'esterno, attraverso i recettori di morte?",
+   "opzioni": [
+    "la comparsa di un danno irreparabile al DNA",
+    "il legame di un ligando al proprio recettore sulla superficie della cellula",
+    "la formazione di pori nella membrana mitocondriale esterna",
+    "l'accumulo di proteine non ripiegate nel reticolo endoplasmatico",
+    "la carenza di nutrienti nel citosol"
+   ],
+   "corretta": 1,
+   "spiegazione": "Ligandi come FasL si legano ai recettori di morte, che reclutano e attivano le caspasi iniziatrici senza passare dal mitocondrio.",
+   "gruppo": "bio.7.5-via-estrinseca"
+  },
+  {
+   "id": "bio-75a-03",
+   "argomento": "bio.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le caspasi esecutrici, come la caspasi-3:",
+   "opzioni": [
+    "sono sintetizzate già nella forma attiva",
+    "attivano per prime i recettori di morte",
+    "sono attivate dalle caspasi iniziatrici e tagliano numerosi substrati cellulari",
+    "impediscono l'attivazione delle caspasi iniziatrici",
+    "rimuovono i fosfolipidi dalla membrana plasmatica"
+   ],
+   "corretta": 2,
+   "spiegazione": "Le esecutrici sono attivate a cascata dalle iniziatrici e, tagliando lamine, citoscheletro e altre proteine, smantellano la cellula."
+  },
+  {
+   "id": "bio-75a-04",
+   "argomento": "bio.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le proteine della famiglia BCL2 regolano l'apoptosi controllando soprattutto:",
+   "opzioni": [
+    "la trascrizione dei geni per le caspasi",
+    "la sintesi di ATP nella matrice mitocondriale",
+    "la frammentazione del DNA nel nucleo",
+    "la permeabilizzazione della membrana mitocondriale esterna",
+    "l'attivazione dei recettori di morte"
+   ],
+   "corretta": 3,
+   "spiegazione": "I membri pro-apoptotici favoriscono la formazione dei pori nella membrana esterna del mitocondrio, quelli anti-apoptotici li impediscono.",
+   "gruppo": "bio.7.5-bcl2-permeabilizzazione"
+  },
+  {
+   "id": "bio-75a-05",
+   "argomento": "bio.7.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La permeabilizzazione della membrana mitocondriale esterna ha come effetto principale:",
+   "opzioni": [
+    "l'ingresso di ioni nella matrice",
+    "il rilascio nel citosol di fattori pro-apoptotici contenuti nello spazio intermembrana",
+    "la riduzione del volume della matrice",
+    "l'aumento della produzione di ATP",
+    "l'esportazione del DNA mitocondriale nel nucleo"
+   ],
+   "corretta": 1,
+   "spiegazione": "Dallo spazio intermembrana escono molecole che innescano la cascata delle caspasi: per questo l'evento è considerato un punto di non ritorno.",
+   "gruppo": "bio.7.5-bcl2-permeabilizzazione"
+  },
+  {
+   "id": "bio-75a-06",
+   "argomento": "bio.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il legame del ligando Fas al suo recettore avvia la via ……  dell'apoptosi, perché il segnale arriva dall'esterno della cellula.",
+   "accettate": [
+    "estrinseca",
+    "estrinseco",
+    "estrinseche",
+    "esterna"
+   ],
+   "spiegazione": "La via estrinseca parte dai recettori di morte della membrana plasmatica; l'altra via, che parte dal mitocondrio, è l'intrinseca.",
+   "gruppo": "bio.7.5-via-estrinseca"
+  },
+  {
+   "id": "bio-75a-07",
+   "argomento": "bio.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le cellule danneggiate in modo acuto, che si gonfiano e si rompono rilasciando il contenuto, muoiono per ……",
+   "accettate": [
+    "necrosi"
+   ],
+   "spiegazione": "La necrosi è una morte accidentale e non regolata: la rottura della membrana libera il contenuto e richiama infiammazione nei tessuti circostanti."
+  },
+  {
+   "id": "bio-75a-08",
+   "argomento": "bio.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un'eccessiva produzione della proteina anti-apoptotica BCL2 favorisce la sopravvivenza di cellule ……",
+   "accettate": [
+    "tumorali",
+    "neoplastiche",
+    "cancerose",
+    "tumorale"
+   ],
+   "spiegazione": "Se la via apoptotica è frenata, cellule danneggiate o con oncogeni attivi non vengono eliminate e possono dare origine a un tumore."
+  },
+  {
+   "id": "bio-75a-09",
+   "argomento": "bio.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le caspasi sono sintetizzate come precursori inattivi, chiamati ……",
+   "accettate": [
+    "procaspasi",
+    "procaspase",
+    "zimogeni",
+    "zimogeno"
+   ],
+   "spiegazione": "Un precursore inattivo si attiva solo dopo un taglio proteolitico: questo evita che le proteasi della morte cellulare agiscano per errore."
+  },
+  {
+   "id": "bio-75a-10",
+   "argomento": "bio.7.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I corpi apoptotici vengono eliminati per fagocitosi da cellule specializzate, come i ……",
+   "accettate": [
+    "macrofagi",
+    "fagociti",
+    "macrofago"
+   ],
+   "spiegazione": "I frammenti della cellula apoptotica espongono segnali di riconoscimento che i fagociti captano, evitando che il contenuto sia liberato."
+  },
+  {
+   "id": "bio-57a-01",
+   "argomento": "bio.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il reticolo endoplasmatico privo di ribosomi sulla superficie è coinvolto soprattutto nella:",
+   "opzioni": [
+    "sintesi dei lipidi e nella detossificazione",
+    "sintesi delle proteine destinate alla secrezione",
+    "glicosilazione iniziale delle proteine",
+    "degradazione delle proteine nel proteasoma",
+    "sintesi del DNA mitocondriale"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il reticolo liscio ospita gli enzimi per la sintesi di fosfolipidi e steroidi e per la detossificazione di farmaci e tossine; la sintesi proteica è dei ribosomi."
+  },
+  {
+   "id": "bio-57a-02",
+   "argomento": "bio.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Dopo l'ingresso della catena nascente nel lume del reticolo endoplasmatico, il peptide segnale viene eliminato da:",
+   "opzioni": [
+    "il proteasoma",
+    "una chinasi di membrana",
+    "una peptidasi del segnale",
+    "una proteasi dei lisosomi",
+    "una DNA ligasi"
+   ],
+   "corretta": 2,
+   "spiegazione": "La peptidasi del segnale, sul versante luminale della membrana, taglia il peptide segnale e libera la proteina nel lume."
+  },
+  {
+   "id": "bio-57a-03",
+   "argomento": "bio.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le catene polipeptidiche nascenti attraversano la membrana del reticolo endoplasmatico attraverso:",
+   "opzioni": [
+    "i pori nucleari",
+    "un canale proteico, il traslocone",
+    "vescicole di trasporto rivestite",
+    "diffusione semplice nel doppio strato lipidico",
+    "trasportatori ABC"
+   ],
+   "corretta": 1,
+   "spiegazione": "Il traslocone è un canale che si apre quando il complesso ribosoma-catena nascente si lega alla membrana e lascia passare la catena in forma distesa."
+  },
+  {
+   "id": "bio-57a-04",
+   "argomento": "bio.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale affermazione sull'apparato di Golgi è corretta?",
+   "opzioni": [
+    "le proteine entrano dal versante trans e escono dal cis",
+    "è il sito di sintesi dei ribosomi",
+    "contiene solo enzimi che degradano le proteine",
+    "le proteine entrano dal versante cis e vengono smistate nel trans-Golgi network",
+    "è collegato direttamente ai pori nucleari"
+   ],
+   "corretta": 3,
+   "spiegazione": "Il Golgi ha una polarità cis-trans: riceve il carico dal reticolo sul lato cis, lo modifica e lo smista nel trans-Golgi network verso le diverse destinazioni."
+  },
+  {
+   "id": "bio-57a-05",
+   "argomento": "bio.5.7",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella forma più comune di fibrosi cistica la proteina CFTR mutata:",
+   "opzioni": [
+    "non si ripiega correttamente nel reticolo endoplasmatico e viene degradata prima di raggiungere la membrana",
+    "viene prodotta in quantità eccessiva e secreta",
+    "raggiunge la membrana ma è priva di ioni",
+    "viene diretta per errore al nucleo",
+    "non viene tradotta, perché manca il codone di inizio"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nella mutazione più frequente la proteina CFTR è mal ripiegata, viene riconosciuta dal controllo di qualità del reticolo e degradata: il canale non arriva in membrana."
+  },
+  {
+   "id": "bio-57a-06",
+   "argomento": "bio.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il sistema che riconosce le proteine mal ripiegate del reticolo, le porta nel citosol e le avvia alla degradazione è indicato con la sigla ……",
+   "accettate": [
+    "ERAD",
+    "erad"
+   ],
+   "spiegazione": "ERAD (degradazione associata al reticolo endoplasmatico) ritrotraslocata le proteine difettose nel citosol, dove sono degradate dal proteasoma."
+  },
+  {
+   "id": "bio-57a-07",
+   "argomento": "bio.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Calnexina e calreticolina legano le glicoproteine neosintetizzate che conservano un residuo di …… sull'oligosaccaride.",
+   "accettate": [
+    "glucosio"
+   ],
+   "spiegazione": "Le due chaperon riconoscono il glucosio terminale: finché la proteina non è ripiegata correttamente resta legata e viene trattenuta nel reticolo."
+  },
+  {
+   "id": "bio-57a-08",
+   "argomento": "bio.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'accumulo di proteine non ripiegate nel reticolo endoplasmatico attiva una risposta adattativa indicata con la sigla ……",
+   "accettate": [
+    "UPR",
+    "upr"
+   ],
+   "spiegazione": "La risposta UPR rallenta la sintesi proteica e aumenta chaperon e capacità di degradazione; se lo stress persiste può indurre l'apoptosi."
+  },
+  {
+   "id": "bio-57a-09",
+   "argomento": "bio.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La secrezione che avviene in modo continuo, senza bisogno di alcuno stimolo, si dice ……",
+   "accettate": [
+    "costitutiva",
+    "costitutivo"
+   ],
+   "spiegazione": "Nella via costitutiva le vescicole si fondono con la membrana appena formate; la via regolata invece immagazzina il carico e lo libera dopo uno stimolo.",
+   "gruppo": "bio.5.7-secrezione-costitutiva-regolata"
+  },
+  {
+   "id": "bio-57a-10",
+   "argomento": "bio.5.7",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La secrezione di insulina da parte delle cellule β avviene dopo uno stimolo ed è un esempio di secrezione ……",
+   "accettate": [
+    "regolata",
+    "regolato"
+   ],
+   "spiegazione": "Nella secrezione regolata il carico è accumulato in granuli di secrezione e liberato solo in risposta a un segnale, come l'aumento della glicemia.",
+   "gruppo": "bio.5.7-secrezione-costitutiva-regolata"
+  },
+  {
+   "id": "bio-44a-01",
+   "argomento": "bio.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una cellula umana con 69 cromosomi, cioè tre corredi completi, è un esempio di:",
+   "opzioni": [
+    "poliploidia",
+    "aneuploidia",
+    "mosaicismo",
+    "isodisomia uniparentale",
+    "ricombinazione"
+   ],
+   "corretta": 0,
+   "spiegazione": "La poliploidia è la presenza di più di due corredi completi (qui 3 × 23 = 69); l'aneuploidia riguarda invece singoli cromosomi in più o in meno."
+  },
+  {
+   "id": "bio-44a-02",
+   "argomento": "bio.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una traslocazione reciproca bilanciata comporta:",
+   "opzioni": [
+    "la perdita di un segmento terminale",
+    "l'inversione di un segmento all'interno dello stesso cromosoma",
+    "lo scambio di segmenti fra cromosomi non omologhi, senza perdita di materiale genetico",
+    "la presenza di un cromosoma in più",
+    "la duplicazione di un cromosoma intero"
+   ],
+   "corretta": 2,
+   "spiegazione": "Due cromosomi non omologhi si scambiano frammenti: la quantità di materiale è invariata, per cui il portatore è spesso sano ma ha rischi per la prole."
+  },
+  {
+   "id": "bio-44a-03",
+   "argomento": "bio.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il bandeggio dei cromosomi permette di:",
+   "opzioni": [
+    "sequenziare ogni base del genoma",
+    "riconoscere ogni cromosoma dal suo schema di bande e individuare riarrangiamenti strutturali",
+    "misurare l'espressione dei geni",
+    "contare le copie dei trascritti",
+    "individuare le mutazioni puntiformi"
+   ],
+   "corretta": 1,
+   "spiegazione": "Dopo colorazione, ogni cromosoma mostra bande chiare e scure caratteristiche: il confronto con il modello rivela delezioni, traslocazioni e inversioni."
+  },
+  {
+   "id": "bio-44a-04",
+   "argomento": "bio.4.4",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una donna con corredo cromosomico normale ha:",
+   "opzioni": [
+    "23 autosomi e un X",
+    "22 autosomi e due X",
+    "23 coppie di autosomi più XX",
+    "22 coppie di autosomi e una coppia XX",
+    "22 coppie di autosomi e un solo X"
+   ],
+   "corretta": 3,
+   "spiegazione": "Il corredo umano comprende 22 coppie di autosomi più i cromosomi sessuali, XX nella donna: 46 cromosomi in tutto."
+  },
+  {
+   "id": "bio-44a-05",
+   "argomento": "bio.4.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La presenza di un solo cromosoma di una coppia di omologhi, invece di due, si chiama ……",
+   "accettate": [
+    "monosomia",
+    "monosomie"
+   ],
+   "spiegazione": "È una forma di aneuploidia per difetto: nell'uomo la sola monosomia sopravvissuta è quella dell'X (sindrome di Turner)."
+  },
+  {
+   "id": "bio-44a-06",
+   "argomento": "bio.4.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'assenza di un segmento di un cromosoma è un'anomalia di struttura detta ……",
+   "accettate": [
+    "delezione",
+    "delezioni"
+   ],
+   "spiegazione": "Nella delezione una parte del cromosoma va perduta, con la perdita dei geni che conteneva."
+  },
+  {
+   "id": "bio-44a-07",
+   "argomento": "bio.4.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La rappresentazione ordinata dei cromosomi di una cellula in metafase, appaiati e numerati, è il ……",
+   "accettate": [
+    "cariotipo",
+    "cariogramma"
+   ],
+   "spiegazione": "Il cariotipo dispone i cromosomi per dimensione e posizione del centromero e serve a rilevare anomalie di numero e di struttura."
+  },
+  {
+   "id": "bio-44a-08",
+   "argomento": "bio.4.4",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La sindrome di Turner è caratterizzata dalla presenza di un solo cromosoma sessuale, il cromosoma ……",
+   "accettate": [
+    "X",
+    "x"
+   ],
+   "spiegazione": "La donna con sindrome di Turner ha cariotipo 45,X: è la sola monosomia compatibile con la vita nell'uomo."
+  },
+  {
+   "id": "bio-13a-01",
+   "argomento": "bio.1.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La colorazione di Gram distingue due gruppi di batteri in base:",
+   "opzioni": [
+    "alla struttura della parete cellulare",
+    "alla forma della cellula",
+    "alla presenza di un nucleo delimitato",
+    "al numero di ribosomi",
+    "alla capacità di sporulare"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nei Gram-positivi la parete spessa trattiene il colorante, nei Gram-negativi lo strato sottile e la membrana esterna lo lasciano uscire."
+  },
+  {
+   "id": "bio-13a-02",
+   "argomento": "bio.1.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La membrana esterna, ricca di lipopolisaccaridi, è tipica dei batteri:",
+   "opzioni": [
+    "Gram-negativi",
+    "Gram-positivi",
+    "solo degli archeobatteri",
+    "tutti i batteri",
+    "privi di parete"
+   ],
+   "corretta": 0,
+   "spiegazione": "Solo i Gram-negativi hanno, oltre alla membrana plasmatica, una membrana esterna: i lipopolisaccaridi sono le endotossine."
+  },
+  {
+   "id": "bio-13a-03",
+   "argomento": "bio.1.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il pilo sessuale dei batteri serve per:",
+   "opzioni": [
+    "muoversi nel mezzo liquido",
+    "aderire alle mucose dell'ospite",
+    "stabilire un ponte con un'altra cellula e consentire il passaggio di DNA",
+    "ottenere energia dalla luce",
+    "dividere la cellula in due"
+   ],
+   "corretta": 2,
+   "spiegazione": "Il pilo F lega due batteri e permette il trasferimento del plasmide dalla cellula donatrice alla ricevente."
+  },
+  {
+   "id": "bio-13a-04",
+   "argomento": "bio.1.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli archeobatteri si distinguono dagli eubatteri perché:",
+   "opzioni": [
+    "hanno un nucleo delimitato da membrana",
+    "hanno lipidi di membrana con legami diversi e pareti prive dei polimeri tipici dei batteri",
+    "sono sempre pluricellulari",
+    "non possiedono ribosomi",
+    "sono eucarioti unicellulari"
+   ],
+   "corretta": 1,
+   "spiegazione": "Gli archeobatteri sono procarioti, ma con membrane e pareti diverse da quelle degli eubatteri, e molti vivono in ambienti estremi."
+  },
+  {
+   "id": "bio-13a-05",
+   "argomento": "bio.1.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Molti batteri patogeni sono protetti dalla fagocitosi da uno strato polisaccaridico esterno alla parete, la ……",
+   "accettate": [
+    "capsula"
+   ],
+   "spiegazione": "La capsula rende il batterio scivoloso e difficile da inglobare per i fagociti, aumentandone la virulenza."
+  },
+  {
+   "id": "bio-13a-06",
+   "argomento": "bio.1.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Per muoversi nell'ambiente i batteri usano filamenti proteici che ruotano, i ……",
+   "accettate": [
+    "flagelli",
+    "flagello"
+   ],
+   "spiegazione": "Il flagello batterico ruota come un'elica, mosso da un motore proteico ancorato alla parete e alla membrana."
+  },
+  {
+   "id": "bio-13a-07",
+   "argomento": "bio.1.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Con la colorazione di Gram i batteri Gram-positivi assumono il colore ……",
+   "accettate": [
+    "viola",
+    "violetto",
+    "blu",
+    "blu-viola"
+   ],
+   "spiegazione": "La parete spessa dei Gram-positivi trattiene il cristalvioletto, e le cellule restano viola; i Gram-negativi si colorano di rosa con il colorante di contrasto."
+  },
+  {
+   "id": "bio-13a-08",
+   "argomento": "bio.1.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il cromosoma dei batteri è tipicamente ……, a differenza di quello degli eucarioti.",
+   "accettate": [
+    "circolare"
+   ],
+   "spiegazione": "I procarioti hanno in genere un cromosoma circolare, privo di membrana nucleare, che si trova nel nucleoide."
+  },
+  {
+   "id": "bio-35a-01",
+   "argomento": "bio.3.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli RNA transfer (tRNA) e l'rRNA 5S sono trascritti dalla:",
+   "opzioni": [
+    "RNA polimerasi III",
+    "RNA polimerasi I",
+    "primasi",
+    "DNA polimerasi",
+    "trascrittasi inversa"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nelle cellule eucariotiche la polimerasi III trascrive i geni per tRNA, rRNA 5S e altri piccoli RNA; l'rRNA maggiore è trascritto dalla I."
+  },
+  {
+   "id": "bio-35a-02",
+   "argomento": "bio.3.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La TATA box è una sequenza del promotore:",
+   "opzioni": [
+    "situata nell'ultimo introne del gene",
+    "situata poco a monte del sito di inizio, riconosciuta da un fattore generale di trascrizione",
+    "riconosciuta direttamente dall'RNA polimerasi senza altri fattori",
+    "tipica dei soli geni procariotici",
+    "che segnala la fine della trascrizione"
+   ],
+   "corretta": 1,
+   "spiegazione": "La TATA box è riconosciuta da un fattore generale, che recluta gli altri fattori e la polimerasi nel punto di inizio."
+  },
+  {
+   "id": "bio-35a-03",
+   "argomento": "bio.3.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un enhancer può aumentare la trascrizione di un gene:",
+   "opzioni": [
+    "solo se adiacente alla TATA box",
+    "solo se posto a valle del gene",
+    "anche quando si trova a grande distanza dal promotore",
+    "solo in un orientamento preciso",
+    "solo se legato direttamente all'RNA polimerasi"
+   ],
+   "corretta": 2,
+   "spiegazione": "Gli enhancer agiscono a distanza: il DNA si ripiega e i fattori legati all'enhancer vengono portati vicino al promotore."
+  },
+  {
+   "id": "bio-35a-04",
+   "argomento": "bio.3.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli ormoni steroidei regolano la trascrizione perché il complesso ormone-recettore:",
+   "opzioni": [
+    "attiva una proteina G sulla membrana plasmatica",
+    "attiva direttamente una chinasi di membrana",
+    "degrada l'mRNA bersaglio",
+    "si lega a sequenze specifiche del DNA e agisce come fattore di trascrizione",
+    "inibisce la DNA polimerasi"
+   ],
+   "corretta": 3,
+   "spiegazione": "Gli ormoni steroidei attraversano la membrana e si legano a recettori intracellulari che, nel nucleo, si legano agli elementi di risposta e regolano i geni."
+  },
+  {
+   "id": "bio-35a-05",
+   "argomento": "bio.3.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una sequenza regolatrice che, legando proteine inibitorie, riduce la trascrizione di un gene è un ……",
+   "accettate": [
+    "silencer",
+    "silenziatore"
+   ],
+   "spiegazione": "Il silencer è l'opposto dell'enhancer: i fattori legati ad esso diminuiscono la trascrizione."
+  },
+  {
+   "id": "bio-35a-06",
+   "argomento": "bio.3.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La proteina che riconosce la TATA box fa parte del fattore generale TFIID ed è indicata con la sigla ……",
+   "accettate": [
+    "TBP",
+    "tbp"
+   ],
+   "spiegazione": "TBP (proteina legante la TATA) si lega al solco minore del DNA e piega la doppia elica, permettendo l'assemblaggio degli altri fattori."
+  },
+  {
+   "id": "bio-35a-07",
+   "argomento": "bio.3.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I fattori generali e la RNA polimerasi si assemblano sul promotore formando il complesso di ……  della trascrizione.",
+   "accettate": [
+    "preinizio",
+    "pre-inizio",
+    "pre inizio"
+   ],
+   "spiegazione": "Il complesso di preinizio è l'assemblaggio di polimerasi e fattori generali che precede l'apertura del DNA e la partenza della sintesi."
+  },
+  {
+   "id": "bio-35a-08",
+   "argomento": "bio.3.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La fosforilazione del dominio carbossi-terminale della polimerasi, indicato con la sigla ……, segna il passaggio dall'inizio all'allungamento.",
+   "accettate": [
+    "CTD",
+    "ctd"
+   ],
+   "spiegazione": "Il dominio C-terminale (CTD) della RNA polimerasi II viene fosforilato dopo l'inizio: la fosforilazione libera la polimerasi dal promotore e recluta i fattori di maturazione."
+  },
+  {
+   "id": "bio-36a-01",
+   "argomento": "bio.3.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Lo splicing alternativo permette a un singolo gene di produrre:",
+   "opzioni": [
+    "diversi mRNA maturi e quindi proteine diverse",
+    "un unico mRNA con più cappucci",
+    "più copie identiche dello stesso mRNA",
+    "solo RNA non codificanti",
+    "solo trascritti senza coda di poli(A)"
+   ],
+   "corretta": 0,
+   "spiegazione": "Combinando in modo diverso gli esoni del pre-mRNA, lo stesso gene può dare origine a più isoforme proteiche.",
+   "gruppo": "bio.3.2-splicing"
+  },
+  {
+   "id": "bio-36a-02",
+   "argomento": "bio.3.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale struttura catalizza la rimozione degli introni dal pre-mRNA?",
+   "opzioni": [
+    "il ribosoma",
+    "lo spliceosoma, formato da snRNA e proteine",
+    "il proteasoma",
+    "la RNA polimerasi II",
+    "il nucleosoma"
+   ],
+   "corretta": 1,
+   "spiegazione": "Lo spliceosoma riconosce i siti di giunzione, taglia gli introni e unisce gli esoni."
+  },
+  {
+   "id": "bio-36a-03",
+   "argomento": "bio.3.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'editing dell'RNA consiste in:",
+   "opzioni": [
+    "la correzione di un errore nel DNA da parte della polimerasi",
+    "il taglio degli introni",
+    "una modificazione della sequenza dell'mRNA dopo la trascrizione, per esempio la deaminazione di una base",
+    "l'aggiunta di una lunga coda di adenine",
+    "la sintesi di RNA a partire da un DNA"
+   ],
+   "corretta": 2,
+   "spiegazione": "Con l'editing alcune basi dell'mRNA vengono modificate (per esempio da A a I) dopo la trascrizione, e la proteina può risultare diversa da quella codificata dal gene."
+  },
+  {
+   "id": "bio-36a-04",
+   "argomento": "bio.3.6",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il cappuccio aggiunto all'estremità 5' dell'mRNA eucariotico serve soprattutto a:",
+   "opzioni": [
+    "legare l'mRNA ai pori nucleari",
+    "indicare il punto di terminazione della trascrizione",
+    "eliminare gli introni",
+    "proteggere l'mRNA dalla degradazione e favorirne la traduzione",
+    "permettere la sintesi della coda di adenine"
+   ],
+   "corretta": 3,
+   "spiegazione": "Il cappuccio di 7-metilguanosina è aggiunto subito dopo l'inizio della trascrizione: protegge dalle esonucleasi e viene riconosciuto dalla maggior parte dei fattori di inizio."
+  },
+  {
+   "id": "bio-36a-05",
+   "argomento": "bio.3.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli snRNA si associano a proteine formando particelle dette ribonucleoproteine nucleari piccole, indicate con la sigla ……",
+   "accettate": [
+    "snRNP",
+    "snrnp"
+   ],
+   "spiegazione": "Le snRNP sono i componenti dello spliceosoma: ciascuna riconosce una parte dei siti di giunzione e partecipa alla catalisi."
+  },
+  {
+   "id": "bio-36a-06",
+   "argomento": "bio.3.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Lo smantellamento di un mRNA comincia con l'accorciamento della coda di poli(A), processo detto ……",
+   "accettate": [
+    "deadenilazione"
+   ],
+   "spiegazione": "Senza la coda di poli(A) l'mRNA perde stabilità, perde il cappuccio ed è degradato."
+  },
+  {
+   "id": "bio-36a-07",
+   "argomento": "bio.3.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il meccanismo per cui piccoli RNA a doppio filamento guidano la degradazione di un mRNA bersaglio si chiama RNA ……",
+   "accettate": [
+    "interference",
+    "interferenza",
+    "RNAi"
+   ],
+   "spiegazione": "Nell'interferenza a RNA, siRNA e miRNA riconoscono l'mRNA per complementarità e ne causano la degradazione o il blocco della traduzione."
+  },
+  {
+   "id": "bio-36a-08",
+   "argomento": "bio.3.6",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il precursore degli rRNA maggiori viene trascritto e maturato in una regione del nucleo detta ……",
+   "accettate": [
+    "nucleolo"
+   ],
+   "spiegazione": "Nel nucleolo l'RNA polimerasi I trascrive il precursore degli rRNA, che viene tagliato e assemblato con le proteine ribosomiali."
+  },
+  {
+   "id": "bio-72a-01",
+   "argomento": "bio.7.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In G1, la fosforilazione della proteina Rb da parte del complesso ciclina D-Cdk4/6 ha come effetto:",
+   "opzioni": [
+    "il rilascio del fattore E2F, che attiva i geni necessari per la fase S",
+    "il blocco della trascrizione dei geni della fase S",
+    "la degradazione immediata di E2F",
+    "l'attivazione di p21",
+    "l'ingresso in mitosi"
+   ],
+   "corretta": 0,
+   "spiegazione": "Rb non fosforilata trattiene E2F; quando è fosforilata lo libera, e E2F attiva i geni per la replicazione del DNA."
+  },
+  {
+   "id": "bio-72a-02",
+   "argomento": "bio.7.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un gene normale che stimola la proliferazione diventa un oncogene quando:",
+   "opzioni": [
+    "entrambi gli alleli perdono la funzione",
+    "una mutazione o un'amplificazione ne provoca un'attività eccessiva o non regolata",
+    "viene trascritto da un'altra polimerasi",
+    "viene tradotto più lentamente",
+    "viene eliminato dal genoma"
+   ],
+   "corretta": 1,
+   "spiegazione": "Gli oncogeni agiscono in modo dominante, come un acceleratore bloccato: basta un allele iperattivo a favorire la proliferazione.",
+   "gruppo": "bio.7.2-protooncogene"
+  },
+  {
+   "id": "bio-72a-03",
+   "argomento": "bio.7.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le proteine inibitrici delle CDK, come p21, bloccano la progressione del ciclo:",
+   "opzioni": [
+    "degradando direttamente le cicline",
+    "attivando la sintesi del DNA",
+    "legandosi ai complessi ciclina-CDK e impedendone l'attività",
+    "fosforilando Rb in modo permanente",
+    "impedendo il legame delle cicline al DNA"
+   ],
+   "corretta": 2,
+   "spiegazione": "p21 è indotta da p53 in risposta al danno al DNA: inibendo i complessi ciclina-CDK, arresta il ciclo in G1."
+  },
+  {
+   "id": "bio-72a-04",
+   "argomento": "bio.7.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il complesso ciclina D-Cdk4/6 viene attivato dai fattori di ……",
+   "accettate": [
+    "crescita"
+   ],
+   "spiegazione": "I fattori di crescita inducono la sintesi di ciclina D, che si associa a Cdk4/6 e dà il via al superamento del punto di restrizione."
+  },
+  {
+   "id": "bio-72a-05",
+   "argomento": "bio.7.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I geni la cui perdita di funzione favorisce la comparsa di un tumore sono detti ……",
+   "accettate": [
+    "oncosoppressori",
+    "oncosoppressore",
+    "soppressori"
+   ],
+   "spiegazione": "Frenano la proliferazione o inducono l'apoptosi: se entrambi gli alleli sono inattivati viene meno il freno e il tumore può svilupparsi."
+  },
+  {
+   "id": "bio-72a-06",
+   "argomento": "bio.7.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La sigla Rb deriva da un tumore infantile dell'occhio in cui la proteina è alterata, il ……",
+   "accettate": [
+    "retinoblastoma"
+   ],
+   "spiegazione": "Il retinoblastoma è causato dalla perdita di entrambi gli alleli del gene Rb: è stato il primo oncosoppressore identificato."
+  },
+  {
+   "id": "bio-72a-07",
+   "argomento": "bio.7.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il punto del ciclo, in G1, oltre il quale la cellula si impegna a dividersi anche senza ulteriori stimoli esterni è il punto di ……",
+   "accettate": [
+    "restrizione"
+   ],
+   "spiegazione": "Superato il punto di restrizione la cellula procede fino alla mitosi senza dipendere dai segnali esterni."
+  },
+  {
+   "id": "bio-52a-01",
+   "argomento": "bio.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'osmosi è il movimento netto di:",
+   "opzioni": [
+    "acqua attraverso una membrana semipermeabile verso la soluzione più ricca di soluti",
+    "soluti verso la soluzione più diluita",
+    "acqua verso la soluzione più diluita",
+    "ioni contro gradiente con consumo di energia",
+    "proteine di membrana nel doppio strato"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'acqua attraversa la membrana verso il compartimento a maggiore osmolarità, riducendo la differenza di concentrazione."
+  },
+  {
+   "id": "bio-52a-02",
+   "argomento": "bio.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una proteina canale si distingue da un trasportatore perché:",
+   "opzioni": [
+    "trasporta sempre contro gradiente",
+    "forma un poro attraverso cui gli ioni fluiscono a favore di gradiente, senza cambiare conformazione per ogni ione",
+    "lega il soluto e cambia conformazione a ogni ciclo",
+    "consuma sempre ATP",
+    "è presente solo nei neuroni"
+   ],
+   "corretta": 1,
+   "spiegazione": "Nel canale gli ioni scorrono liberamente nel poro aperto; il trasportatore lega il soluto e cambia forma per portarlo dall'altro lato."
+  },
+  {
+   "id": "bio-52a-03",
+   "argomento": "bio.5.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La fase di depolarizzazione del potenziale d'azione è dovuta soprattutto a:",
+   "opzioni": [
+    "uscita di K⁺ dalla cellula",
+    "ingresso di Cl⁻",
+    "ingresso di Na⁺ attraverso canali voltaggio-dipendenti",
+    "attività della pompa sodio-potassio",
+    "uscita di Ca²⁺ dai mitocondri"
+   ],
+   "corretta": 2,
+   "spiegazione": "Quando il potenziale supera la soglia si aprono i canali del Na⁺: lo ione entra a favore di gradiente e l'interno diventa positivo."
+  },
+  {
+   "id": "bio-52a-04",
+   "argomento": "bio.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La diffusione semplice e la diffusione facilitata sono forme di trasporto ……",
+   "accettate": [
+    "passivo",
+    "passiva"
+   ],
+   "spiegazione": "Entrambe avvengono a favore del gradiente, senza energia metabolica; la facilitata usa canali o trasportatori."
+  },
+  {
+   "id": "bio-52a-05",
+   "argomento": "bio.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "A riposo l'interno di un neurone è carico rispetto all'esterno in modo ……",
+   "accettate": [
+    "negativo",
+    "negativamente"
+   ],
+   "spiegazione": "Il potenziale di riposo è circa −70 mV, dovuto soprattutto alla permeabilità al K⁺ e alla pompa sodio-potassio."
+  },
+  {
+   "id": "bio-52a-06",
+   "argomento": "bio.5.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il trasportatore che sposta due soluti attraverso la membrana nello stesso verso è detto ……",
+   "accettate": [
+    "simporto",
+    "simporter",
+    "cotrasportatore"
+   ],
+   "spiegazione": "Nel simporto i due soluti viaggiano insieme nella stessa direzione; nell'antiporto vanno in direzioni opposte."
+  },
+  {
+   "id": "bio-59a-01",
+   "argomento": "bio.5.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'endocitosi mediata da recettori delle LDL serve alla cellula per:",
+   "opzioni": [
+    "assumere i lipidi trasportati dalle lipoproteine del sangue",
+    "eliminare i lipidi in eccesso",
+    "sintetizzare nuovi recettori",
+    "degradare le proteine di membrana",
+    "esportare le lipoproteine"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le LDL si legano ai propri recettori, vengono internalizzate in vescicole rivestite e liberano il colesterolo nel lisosoma."
+  },
+  {
+   "id": "bio-59a-02",
+   "argomento": "bio.5.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Passando da endosoma precoce a endosoma tardivo e a lisosoma:",
+   "opzioni": [
+    "il pH del compartimento diminuisce progressivamente",
+    "il pH aumenta fino a diventare basico",
+    "il contenuto è sempre riciclato in membrana",
+    "la membrana perde tutti i trasportatori",
+    "il compartimento si fonde con il nucleo"
+   ],
+   "corretta": 0,
+   "spiegazione": "La pompa protonica acidifica il lume: l'ambiente acido permette l'attività degli enzimi lisosomiali e la dissociazione di molti ligandi dai recettori."
+  },
+  {
+   "id": "bio-59a-03",
+   "argomento": "bio.5.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La fagocitosi è:",
+   "opzioni": [
+    "l'assunzione di piccole quantità di liquido in vescicole rivestite",
+    "la secrezione regolata di enzimi",
+    "l'internalizzazione di grandi particelle, come batteri, tramite protrusioni di membrana",
+    "il trasporto di ioni attraverso canali",
+    "l'adesione fra cellule vicine"
+   ],
+   "corretta": 2,
+   "spiegazione": "Macrofagi e neutrofili emettono pseudopodi che avvolgono la particella e formano un fagosoma, poi fuso con il lisosoma."
+  },
+  {
+   "id": "bio-59a-04",
+   "argomento": "bio.5.9",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il processo con cui una molecola attraversa una cellula polarizzata, internalizzata da un lato e rilasciata sul lato opposto, si chiama ……",
+   "accettate": [
+    "transcitosi"
+   ],
+   "spiegazione": "Nella transcitosi la vescicola attraversa la cellula: per esempio trasporta le immunoglobuline nell'epitelio dell'intestino."
+  },
+  {
+   "id": "bio-59a-05",
+   "argomento": "bio.5.9",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le malattie in cui l'assenza di un enzima lisosomiale porta all'accumulo di substrati non degradati sono dette malattie da ……",
+   "accettate": [
+    "accumulo",
+    "deposito",
+    "storage"
+   ],
+   "spiegazione": "Senza l'enzima il substrato si accumula nei lisosomi, che si gonfiano e danneggiano le cellule: esempi sono la malattia di Tay-Sachs e quella di Gaucher."
+  },
+  {
+   "id": "bio-59a-06",
+   "argomento": "bio.5.9",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli enzimi dei lisosomi sono idrolasi che funzionano al meglio a pH ……",
+   "accettate": [
+    "acido",
+    "acida",
+    "acidi"
+   ],
+   "spiegazione": "La pompa protonica mantiene il lume a pH circa 5: gli stessi enzimi, in caso di rottura del lisosoma, sarebbero poco attivi al pH neutro del citosol."
+  },
+  {
+   "id": "bio-41a-01",
+   "argomento": "bio.4.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La perdita di tre nucleotidi consecutivi all'interno di una regione codificante provoca:",
+   "opzioni": [
+    "la perdita di un solo amminoacido, mentre il resto della proteina resta invariato",
+    "la modifica di tutti gli amminoacidi a valle",
+    "un codone di stop immediato",
+    "nessuna conseguenza, per la degenerazione del codice",
+    "l'aggiunta di tre amminoacidi"
+   ],
+   "corretta": 0,
+   "spiegazione": "Tre nucleotidi sono un codone: se la delezione ne cancella uno intero, la lettura resta in fase e manca un solo amminoacido."
+  },
+  {
+   "id": "bio-41a-02",
+   "argomento": "bio.4.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'espansione di triplette ripetute è il meccanismo di malattie come:",
+   "opzioni": [
+    "la corea di Huntington e la sindrome dell'X fragile",
+    "l'anemia falciforme e la fenilchetonuria",
+    "la sindrome di Turner e la sindrome di Klinefelter",
+    "l'emofilia A e il daltonismo",
+    "l'albinismo e la fibrosi cistica"
+   ],
+   "corretta": 0,
+   "spiegazione": "In queste malattie il numero di ripetizioni di una tripletta aumenta di generazione in generazione, rendendo il gene instabile o alterato."
+  },
+  {
+   "id": "bio-41a-03",
+   "argomento": "bio.4.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le rotture a doppio filamento del DNA vengono riparate dalla:",
+   "opzioni": [
+    "correzione di bozze della DNA polimerasi",
+    "riparazione dei mismatch",
+    "ricombinazione omologa e dalla giunzione delle estremità non omologhe",
+    "fotoriattivazione",
+    "sintesi translesione"
+   ],
+   "corretta": 2,
+   "spiegazione": "Le rotture a doppio filamento sono il danno più grave: si riparano usando l'omologo come stampo o unendo direttamente le estremità, con rischio di errori."
+  },
+  {
+   "id": "bio-41a-04",
+   "argomento": "bio.4.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I dimeri di timina nel DNA sono causati soprattutto dai raggi ……",
+   "accettate": [
+    "UV",
+    "ultravioletti",
+    "ultravioletto",
+    "uv"
+   ],
+   "spiegazione": "I raggi ultravioletti legano covalentemente due timine adiacenti, deformando l'elica: il danno è rimosso dalla riparazione per escissione."
+  },
+  {
+   "id": "bio-41a-05",
+   "argomento": "bio.4.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un'inserzione o la perdita di un numero di nucleotidi non multiplo di tre causa lo scorrimento della cornice di ……",
+   "accettate": [
+    "lettura"
+   ],
+   "spiegazione": "Tutti i codoni a valle vengono letti fuori fase: la proteina risultante è in genere alterata o tronca."
+  },
+  {
+   "id": "bio-41a-06",
+   "argomento": "bio.4.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La sostituzione di una purina con un'altra purina, o di una pirimidina con un'altra pirimidina, è detta ……",
+   "accettate": [
+    "transizione",
+    "transizioni"
+   ],
+   "spiegazione": "Le transizioni sono le sostituzioni puntiformi più frequenti; la sostituzione di una purina con una pirimidina è una trasversione."
+  },
+  {
+   "id": "bio-512a-01",
+   "argomento": "bio.5.12",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella distrofia muscolare di Duchenne è assente o alterata:",
+   "opzioni": [
+    "la distrofina, che collega il citoscheletro di actina alla matrice extracellulare",
+    "la titina",
+    "l'emoglobina",
+    "la spettrina degli eritrociti",
+    "la troponina"
+   ],
+   "corretta": 0,
+   "spiegazione": "La distrofina ancora l'actina alla membrana e alla matrice; senza di essa le fibre muscolari si danneggiano a ogni contrazione."
+  },
+  {
+   "id": "bio-512a-02",
+   "argomento": "bio.5.12",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le proteine della famiglia Rho (Rho, Rac, Cdc42) regolano soprattutto:",
+   "opzioni": [
+    "l'organizzazione e i movimenti del citoscheletro di actina",
+    "la sintesi delle proteine ribosomiali",
+    "la replicazione del DNA",
+    "la maturazione dell'mRNA",
+    "la glicosilazione nel reticolo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Sono piccole GTPasi che, passando dalla forma legata a GDP a quella legata a GTP, controllano la formazione di fibre da stress e protrusioni."
+  },
+  {
+   "id": "bio-512a-03",
+   "argomento": "bio.5.12",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La contrazione delle fibre muscolari striate è dovuta:",
+   "opzioni": [
+    "allo scorrimento reciproco dei filamenti sottili e di quelli spessi",
+    "all'accorciamento dei filamenti sottili",
+    "alla depolimerizzazione dei microtubuli",
+    "all'allungamento della titina",
+    "alla saldatura di fibre adiacenti"
+   ],
+   "corretta": 0,
+   "spiegazione": "Nessun filamento si accorcia: le teste dei filamenti spessi tirano i sottili verso il centro del sarcomero e la lunghezza totale si riduce."
+  },
+  {
+   "id": "bio-512a-04",
+   "argomento": "bio.5.12",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il movimento diretto di una cellula verso una sostanza chimica, come quello dei neutrofili verso un sito di infezione, si chiama ……",
+   "accettate": [
+    "chemiotassi",
+    "chemotassi"
+   ],
+   "spiegazione": "I neutrofili seguono il gradiente di una sostanza chemiotattica rimodellando il citoscheletro di actina nella direzione del movimento."
+  },
+  {
+   "id": "bio-512a-05",
+   "argomento": "bio.5.12",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "L'unità contrattile del muscolo striato, compresa fra due linee Z, è il ……",
+   "accettate": [
+    "sarcomero",
+    "sarcomeri"
+   ],
+   "spiegazione": "Il sarcomero contiene filamenti sottili e spessi disposti in modo regolare: l'accorciamento coordinato di tanti sarcomeri in serie accorcia la fibra."
+  },
+  {
+   "id": "bio-512a-06",
+   "argomento": "bio.5.12",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le protrusioni a lamina larga e sottile, ricche di actina, con cui una cellula in migrazione avanza sono i ……",
+   "accettate": [
+    "lamellipodi",
+    "lamellipodio"
+   ],
+   "spiegazione": "I lamellipodi sono sostenuti da una rete ramificata di actina che spinge in avanti la membrana al bordo della cellula."
+  },
+  {
+   "id": "bio-511a-01",
+   "argomento": "bio.5.11",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quando l'estremità di un microtubulo perde il cappuccio di subunità legate a GTP:",
+   "opzioni": [
+    "il microtubulo si depolimerizza rapidamente",
+    "il microtubulo cresce più in fretta",
+    "il microtubulo diventa un microfilamento",
+    "il dimero viene fosforilato",
+    "il microtubulo si ancora al nucleo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il GTP stabilizza il polimero: quando l'idrolisi supera l'aggiunta di nuovi dimeri, il microtubulo si accorcia."
+  },
+  {
+   "id": "bio-511a-02",
+   "argomento": "bio.5.11",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il complesso γ-TuRC, presente nel centro organizzatore dei microtubuli, ha la funzione di:",
+   "opzioni": [
+    "sintetizzare le molecole di actina",
+    "innescare la formazione dei microtubuli a partire dall'estremità meno (−)",
+    "tagliare i microtubuli in mitosi",
+    "trasportare le vescicole",
+    "degradare le proteine motrici"
+   ],
+   "corretta": 1,
+   "spiegazione": "γ-TuRC fornisce lo stampo per la nucleazione dei microtubuli, che crescono poi dall'estremità più (+)."
+  },
+  {
+   "id": "bio-511a-03",
+   "argomento": "bio.5.11",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le dineine citoplasmatiche trasportano il carico lungo i microtubuli:",
+   "opzioni": [
+    "verso l'estremità meno (−)",
+    "verso l'estremità più (+)",
+    "in entrambe le direzioni, senza preferenze",
+    "solo verso la membrana",
+    "solo dentro il nucleo"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le dineine camminano verso il centro della cellula, a differenza delle chinesine che vanno in genere verso l'estremità più."
+  },
+  {
+   "id": "bio-511a-04",
+   "argomento": "bio.5.11",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I microtubuli sono polimeri di dimeri formati da una subunità α e una β di ……",
+   "accettate": [
+    "tubulina"
+   ],
+   "spiegazione": "Ciascun dimero è formato da una subunità α e una β, e i dimeri si dispongono in 13 protofilamenti attorno a un cilindro cavo."
+  },
+  {
+   "id": "bio-511a-05",
+   "argomento": "bio.5.11",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nelle ciglia mobili i microtubuli sono disposti nella struttura \"9+2\" detta ……",
+   "accettate": [
+    "assonema"
+   ],
+   "spiegazione": "L'assonema ha nove coppie di microtubuli periferici attorno a una coppia centrale ed è il motore del battito."
+  },
+  {
+   "id": "bio-511a-06",
+   "argomento": "bio.5.11",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I microtubuli alternano fasi di crescita e fasi di accorciamento rapido, fenomeno detto instabilità ……",
+   "accettate": [
+    "dinamica"
+   ],
+   "spiegazione": "L'instabilità dinamica permette di esplorare lo spazio cellulare e di riorganizzarsi rapidamente, per esempio all'ingresso in mitosi."
+  },
+  {
+   "id": "bio-21a-01",
+   "argomento": "bio.2.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quale sequenza è essenziale per la corretta distribuzione dei cromosomi alle cellule figlie nella divisione cellulare?",
+   "opzioni": [
+    "il centromero, a cui si agganciano i microtubuli del fuso",
+    "il promotore",
+    "l'operatore",
+    "il sito di inizio della traduzione",
+    "l'origine di trascrizione"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il centromero è la regione su cui si assembla l'apparato di attacco ai microtubuli, indispensabile per distribuire i cromatidi alle cellule figlie."
+  },
+  {
+   "id": "bio-21a-02",
+   "argomento": "bio.2.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il DNA centromerico è costituito soprattutto da:",
+   "opzioni": [
+    "sequenze ripetute, su cui si assemblano proteine specializzate",
+    "geni per gli istoni",
+    "sequenze TTAGGG ripetute",
+    "geni per gli rRNA",
+    "elementi LINE e SINE"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il centromero umano è fatto di ripetizioni di una sequenza: la sua identità dipende più dalle proteine che vi si assemblano che dalla sequenza esatta."
+  },
+  {
+   "id": "bio-21a-03",
+   "argomento": "bio.2.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un cromosoma metafasico è formato da due ……, uniti a livello del centromero.",
+   "accettate": [
+    "cromatidi",
+    "cromatidio"
+   ],
+   "spiegazione": "Dopo la fase S ogni cromosoma è costituito da due copie identiche, i cromatidi fratelli, tenuti insieme dal centromero fino all'anafase."
+  },
+  {
+   "id": "bio-21a-04",
+   "argomento": "bio.2.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il numero di centromeri presenti in un cromosoma normale è ……",
+   "accettate": [
+    "uno",
+    "1",
+    "un",
+    "solo uno"
+   ],
+   "spiegazione": "Un cromosoma con due centromeri, detto dicentrico, è instabile: i due centromeri possono essere tirati in direzioni opposte durante la divisione.",
+   "numero": {
+    "valore": 1,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-62a-01",
+   "argomento": "bio.6.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quali giunzioni sigillano lo spazio fra cellule epiteliali adiacenti, impedendo il passaggio di molecole fra le cellule?",
+   "opzioni": [
+    "le giunzioni occludenti",
+    "le integrine",
+    "gli emidesmosomi",
+    "le giunzioni aderenti",
+    "le selectine"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le giunzioni strette formano una barriera continua e separano il dominio apicale da quello basolaterale."
+  },
+  {
+   "id": "bio-62a-02",
+   "argomento": "bio.6.2",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le caderine sono molecole di adesione che:",
+   "opzioni": [
+    "legano la cellula alla matrice extracellulare",
+    "mediano l'adesione fra cellule in modo dipendente da Ca²⁺",
+    "formano canali fra due cellule",
+    "rivestono le vescicole di endocitosi",
+    "trasportano ioni attraverso la membrana"
+   ],
+   "corretta": 1,
+   "spiegazione": "Le caderine di due cellule si legano fra loro in presenza di Ca²⁺ e sono ancorate al citoscheletro tramite le catenine."
+  },
+  {
+   "id": "bio-62a-03",
+   "argomento": "bio.6.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le giunzioni aderenti collegano la membrana di cellule adiacenti ai filamenti del citoscheletro di ……",
+   "accettate": [
+    "actina"
+   ],
+   "spiegazione": "Le giunzioni aderenti sono ancorate ai microfilamenti di actina tramite catenine, a differenza di altre giunzioni che si collegano ai filamenti intermedi."
+  },
+  {
+   "id": "bio-62a-04",
+   "argomento": "bio.6.2",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le molecole di adesione della superfamiglia delle immunoglobuline, che si legano fra loro senza bisogno di ioni, sono indicate con la sigla ……",
+   "accettate": [
+    "CAM",
+    "cam",
+    "NCAM"
+   ],
+   "spiegazione": "Le CAM si legano fra loro senza bisogno di calcio e mediano l'adesione di cellule specifiche, come i neuroni."
+  },
+  {
+   "id": "bio-71a-01",
+   "argomento": "bio.7.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Quali sono, nell'ordine, le fasi dell'interfase?",
+   "opzioni": [
+    "G1, S, G2",
+    "S, G1, G2",
+    "G1, G2, S",
+    "G2, S, G1",
+    "S, G2, G1"
+   ],
+   "corretta": 0,
+   "spiegazione": "Dopo la divisione la cellula cresce (G1), replica il DNA (S) e si prepara alla mitosi (G2)."
+  },
+  {
+   "id": "bio-71a-02",
+   "argomento": "bio.7.1",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il punto di controllo G2/M verifica soprattutto che:",
+   "opzioni": [
+    "il DNA sia stato replicato completamente e non sia danneggiato",
+    "i cromosomi siano attaccati al fuso",
+    "i segnali mitogeni esterni siano presenti",
+    "la cellula abbia raggiunto un diametro minimo",
+    "la membrana nucleare sia ancora presente"
+   ],
+   "corretta": 0,
+   "spiegazione": "Prima di entrare in mitosi la cellula controlla che la replicazione sia finita e senza danni; altrimenti il ciclo si ferma."
+  },
+  {
+   "id": "bio-71a-03",
+   "argomento": "bio.7.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le cellule che escono dal ciclo e non si dividono più, come i neuroni, si trovano in fase ……",
+   "accettate": [
+    "G0",
+    "g zero"
+   ],
+   "spiegazione": "G0 è uno stato quiescente fuori dal ciclo: alcune cellule possono rientrarvi, i neuroni no."
+  },
+  {
+   "id": "bio-71a-04",
+   "argomento": "bio.7.1",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il punto di controllo in metafase, che verifica che tutti i cinetocori siano correttamente legati ai microtubuli prima dell'anafase, è detto checkpoint del ……",
+   "accettate": [
+    "fuso",
+    "fuso mitotico"
+   ],
+   "spiegazione": "Il checkpoint del fuso blocca la separazione dei cromatidi finché tutti i cinetocori non sono attaccati ai microtubuli."
+  },
+  {
+   "id": "bio-45a-01",
+   "argomento": "bio.4.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In una famiglia una malattia colpisce maschi e femmine in ogni generazione e ogni malato ha almeno un genitore malato. L'ereditarietà è più probabilmente:",
+   "opzioni": [
+    "autosomica dominante",
+    "autosomica recessiva",
+    "recessiva legata all'X",
+    "mitocondriale",
+    "legata al cromosoma Y"
+   ],
+   "corretta": 0,
+   "spiegazione": "La comparsa in ogni generazione, in entrambi i sessi, è tipica della trasmissione autosomica dominante."
+  },
+  {
+   "id": "bio-45a-02",
+   "argomento": "bio.4.5",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un uomo con una malattia mitocondriale ha figli. La malattia sarà trasmessa:",
+   "opzioni": [
+    "a nessuno dei figli",
+    "a tutti i figli maschi",
+    "a tutte le figlie",
+    "a metà dei figli",
+    "a tutti i figli"
+   ],
+   "corretta": 0,
+   "spiegazione": "Il DNA mitocondriale è ereditato solo dalla madre: i mitocondri dello spermatozoo non entrano nello zigote."
+  },
+  {
+   "id": "bio-45a-03",
+   "argomento": "bio.4.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una malattia trasmessa solo dal padre ai figli maschi è legata al cromosoma ……",
+   "accettate": [
+    "Y",
+    "y"
+   ],
+   "spiegazione": "Il cromosoma Y passa solo da padre a figlio: ereditarietà olandrica."
+  },
+  {
+   "id": "bio-45a-04",
+   "argomento": "bio.4.5",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Due genitori sani, entrambi portatori di una malattia autosomica recessiva, hanno una probabilità di avere un figlio affetto pari a 1 su ……",
+   "accettate": [
+    "4",
+    "quattro"
+   ],
+   "spiegazione": "Ciascun genitore trasmette l'allele malato con probabilità 1/2: la probabilità di averlo da entrambi è 1/2 × 1/2 = 1/4.",
+   "numero": {
+    "valore": 4,
+    "tolleranza": 0
+   },
+   "gruppo": "bio.4.5-genitori-portatori"
+  },
+  {
+   "id": "bio-43a-01",
+   "argomento": "bio.4.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Si parla di penetranza incompleta quando:",
+   "opzioni": [
+    "non tutti gli individui con il genotipo malato manifestano la malattia",
+    "tutti i portatori sono malati ma con gravità diversa",
+    "la malattia compare solo nei maschi",
+    "l'allele è presente su un solo cromosoma",
+    "il gene si trova su un cromosoma sessuale"
+   ],
+   "corretta": 0,
+   "spiegazione": "La penetranza è la percentuale di individui con il genotipo che mostra il fenotipo; se è inferiore al 100% alcuni portatori sembrano sani."
+  },
+  {
+   "id": "bio-43a-02",
+   "argomento": "bio.4.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Un carattere poligenico, come l'altezza, ha nella popolazione una distribuzione:",
+   "opzioni": [
+    "continua, a campana, perché dipende da molti geni e dall'ambiente",
+    "a due sole classi distinte",
+    "a tre classi con rapporto 1:2:1",
+    "a quattro classi con rapporto 9:3:3:1",
+    "esclusivamente maschile"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'azione di molti geni e dell'ambiente produce una variazione graduale, descritta da una curva a campana."
+  },
+  {
+   "id": "bio-43a-03",
+   "argomento": "bio.4.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "La variabilità di gravità con cui lo stesso genotipo si manifesta in individui diversi si chiama ……",
+   "accettate": [
+    "espressività"
+   ],
+   "spiegazione": "Con l'espressività variabile alcuni portatori sono lievemente colpiti e altri gravemente, a differenza della penetranza che descrive la comparsa o meno del fenotipo."
+  },
+  {
+   "id": "bio-43a-04",
+   "argomento": "bio.4.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "I caratteri che variano con continuità e dipendono dall'azione combinata di molti geni sono oggetto dell'eredità ……",
+   "accettate": [
+    "quantitativa"
+   ],
+   "spiegazione": "Per questi caratteri non si può individuare un singolo gene: servono misure e stime statistiche."
+  },
+  {
+   "id": "bio-39a-01",
+   "argomento": "bio.3.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Le proteine simili all'ubiquitina, come SUMO, quando si legano a un substrato:",
+   "opzioni": [
+    "ne modificano la funzione o la localizzazione, di norma senza avviarne la degradazione",
+    "ne causano sempre la degradazione immediata",
+    "ne bloccano la sintesi sui ribosomi",
+    "lo inseriscono nei lisosomi",
+    "lo tagliano in piccoli frammenti"
+   ],
+   "corretta": 0,
+   "spiegazione": "Le proteine di questa famiglia sono usate come etichette regolative: SUMO, per esempio, cambia l'attività o la sede di molti fattori di trascrizione.",
+   "gruppo": "bio.3.4-ubiquitina-proteasoma"
+  },
+  {
+   "id": "bio-39a-02",
+   "argomento": "bio.3.9",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nella marcatura delle proteine destinate alla degradazione, quale enzima determina la specificità per il substrato?",
+   "opzioni": [
+    "la ligasi E3",
+    "l'enzima attivatore E1",
+    "una chinasi dipendente da ciclina",
+    "una fosfatasi",
+    "la RNA polimerasi"
+   ],
+   "corretta": 0,
+   "spiegazione": "Sono centinaia di ligasi E3 diverse, ognuna riconosce specifici substrati: sono loro a decidere quali proteine verranno marcate per la degradazione."
+  },
+  {
+   "id": "bio-39a-03",
+   "argomento": "bio.3.9",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Una catena della piccola proteina di marcatura, legata alla lisina in posizione …… della proteina precedente, segnala la degradazione nel proteasoma.",
+   "accettate": [
+    "48",
+    "quarantotto"
+   ],
+   "spiegazione": "Le catene collegate sulla lisina 48 e formate da almeno quattro molecole sono il segnale canonico per la degradazione proteasomica.",
+   "numero": {
+    "valore": 48,
+    "tolleranza": 0
+   }
+  },
+  {
+   "id": "bio-39a-04",
+   "argomento": "bio.3.9",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Gli enzimi che rimuovono dai substrati la piccola proteina di marcatura, controllando la durata del segnale, sono le ……",
+   "accettate": [
+    "deubiquitinasi",
+    "DUB",
+    "dub"
+   ],
+   "spiegazione": "Togliendo la marcatura, le deubiquitinasi riciclano la proteina e possono salvare dalla degradazione substrati marcati per errore."
+  },
+  {
+   "id": "bio-33a-01",
+   "argomento": "bio.3.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "In presenza di lattosio, i geni dell'operone lac vengono trascritti perché:",
+   "opzioni": [
+    "l'allolattosio si lega al repressore e ne impedisce il legame all'operatore",
+    "il lattosio si lega all'operatore e attiva la polimerasi",
+    "il repressore viene degradato nel proteasoma",
+    "il lattosio blocca la polimerasi",
+    "il repressore si lega al promotore"
+   ],
+   "corretta": 0,
+   "spiegazione": "L'allolattosio è l'induttore: legandosi al repressore ne cambia la forma, lo stacca dall'operatore e consente alla polimerasi di procedere.",
+   "gruppo": "bio.3.2-operone"
+  },
+  {
+   "id": "bio-33a-02",
+   "argomento": "bio.3.3",
+   "tipo": "multipla",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nell'operone lac i geni strutturali sono trascritti insieme in un unico mRNA, che per questo è detto:",
+   "opzioni": [
+    "policistronico",
+    "ribosomiale",
+    "non codificante",
+    "bicatenario",
+    "a singolo gene"
+   ],
+   "corretta": 0,
+   "spiegazione": "Un mRNA che porta le informazioni di più geni, tradotti separatamente, è policistronico, tipico dei batteri.",
+   "gruppo": "bio.3.2-operone"
+  },
+  {
+   "id": "bio-33a-03",
+   "argomento": "bio.3.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Il lattosio viene scisso in glucosio e galattosio dall'enzima β-……",
+   "accettate": [
+    "galattosidasi"
+   ],
+   "spiegazione": "La β-galattosidasi è il prodotto del gene lacZ: idrolizza il legame β-galattosidico del lattosio."
+  },
+  {
+   "id": "bio-33a-04",
+   "argomento": "bio.3.3",
+   "tipo": "completamento",
+   "stato": "approvata",
+   "fonte": "ai-chat",
+   "testo": "Nei procarioti la RNA polimerasi riconosce il promotore grazie al fattore ……",
+   "accettate": [
+    "sigma",
+    "σ"
+   ],
+   "spiegazione": "Il fattore sigma si associa al core della polimerasi, la guida sul promotore e poi si stacca durante l'allungamento."
   }
  ]
 }
