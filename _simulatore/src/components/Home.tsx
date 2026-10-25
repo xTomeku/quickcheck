@@ -140,44 +140,6 @@ export function Home({
     <Testata />
     <main className="pagina home">
 
-      {inCorso ? (
-        <section className="ripresa" aria-label="Prova in corso">
-          {confermaAbbandono ? (
-            <>
-              <p>
-                <strong>Abbandonare la prova in corso?</strong>
-                Le risposte date finora non verranno corrette né salvate.
-              </p>
-              <div className="bottoni">
-                <button type="button" className="btn btn-pericolo" onClick={onAbbandona}>
-                  Abbandona la prova
-                </button>
-                <button type="button" className="btn btn-secondario" onClick={() => setConfermaAbbandono(false)}>
-                  Tienila
-                </button>
-              </div>
-            </>
-          ) : (
-            <>
-              <p>
-                <strong>Hai una prova in corso</strong>
-                {NOMI_BREVI[inCorso.sezioni[inCorso.corrente].materia]}
-                {inCorso.sezioni.length > 1 ? `, sezione ${inCorso.corrente + 1} di ${inCorso.sezioni.length}` : ''},{' '}
-                {minutiRimasti(inCorso) === 0 ? 'tempo scaduto' : `circa ${minutiRimasti(inCorso)} minuti rimasti`}.
-              </p>
-              <div className="bottoni">
-                <button type="button" className="btn btn-primario" onClick={onRiprendi}>
-                  Riprendi la prova
-                </button>
-                <button type="button" className="btn btn-testo" onClick={() => setConfermaAbbandono(true)}>
-                  Abbandona
-                </button>
-              </div>
-            </>
-          )}
-        </section>
-      ) : null}
-
       <section className="eroe">
         <div>
           <span className="etichetta">Semestre filtro di Medicina</span>
@@ -189,22 +151,62 @@ export function Home({
             punto, ogni errore toglie 0,1.
           </p>
           <div className="azioni">
-            <div className="azione-principale">
-              <button type="button" className="btn btn-primario" disabled={caricamento || !!inCorso} onClick={() => onInizia(ORDINE_MATERIE)}>
-                {caricamento ? 'Preparo la prova…' : 'Inizia la prova completa'}
-              </button>
-              <span className="nota">
-                {inCorso ? 'Concludi o abbandona prima la prova in corso.' : 'Biologia, chimica e fisica una dopo l’altra, 2 ore e 30 minuti.'}
-              </span>
-            </div>
-            <div className="una-materia">
-              <span>Oppure una materia:</span>
-              {ORDINE_MATERIE.map((m) => (
-                <button key={m} type="button" className="btn btn-secondario" disabled={caricamento || !!inCorso} onClick={() => onInizia([m])}>
-                  {NOMI_BREVI[m]}
-                </button>
-              ))}
-            </div>
+            {inCorso ? (
+              <section className="ripresa" aria-label="Prova in corso">
+                {confermaAbbandono ? (
+                  <>
+                    <p>
+                      <strong>Abbandonare la prova in corso?</strong>
+                      Le risposte date finora non verranno corrette né salvate.
+                    </p>
+                    <div className="bottoni">
+                      <button type="button" className="btn btn-pericolo" onClick={onAbbandona}>
+                        Abbandona la prova
+                      </button>
+                      <button type="button" className="btn btn-secondario" onClick={() => setConfermaAbbandono(false)}>
+                        Tienila
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <p>
+                      <strong>Hai una prova in corso</strong>
+                      {NOMI_BREVI[inCorso.sezioni[inCorso.corrente].materia]}
+                      {inCorso.sezioni.length > 1 ? `, sezione ${inCorso.corrente + 1} di ${inCorso.sezioni.length}` : ''},{' '}
+                      {minutiRimasti(inCorso) === 0 ? 'tempo scaduto' : `circa ${minutiRimasti(inCorso)} minuti rimasti`}.
+                    </p>
+                    <div className="bottoni">
+                      <button type="button" className="btn btn-primario" onClick={onRiprendi}>
+                        Riprendi la prova
+                      </button>
+                      <button type="button" className="btn btn-testo" onClick={() => setConfermaAbbandono(true)}>
+                        Abbandona
+                      </button>
+                    </div>
+                  </>
+                )}
+              </section>
+            ) : (
+              <>
+                <div className="azione-principale">
+                  <button type="button" className="btn btn-primario" disabled={caricamento} onClick={() => onInizia(ORDINE_MATERIE)}>
+                    {caricamento ? 'Preparo la prova…' : 'Inizia la prova completa'}
+                  </button>
+                  <span className="nota">
+                    Biologia, chimica e fisica una dopo l’altra, 2 ore e 30 minuti.
+                  </span>
+                </div>
+                <div className="una-materia">
+                  <span>Oppure una materia:</span>
+                  {ORDINE_MATERIE.map((m) => (
+                    <button key={m} type="button" className="btn btn-secondario" disabled={caricamento} onClick={() => onInizia([m])}>
+                      {NOMI_BREVI[m]}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
             {errore ? (
               <p role="alert" className="errore">
                 {errore}

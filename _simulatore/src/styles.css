@@ -131,6 +131,7 @@ button { cursor: pointer; }
 .una-materia > span { color: var(--grafite-2); font-size: var(--t-piccolo); margin-right: 4px; }
 
 .ripresa {
+  width: 100%; max-width: 560px;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px;
   padding: 16px 20px; border-radius: var(--raggio);
   background: var(--biro-velo); border: 1.5px solid var(--biro);
@@ -711,6 +712,13 @@ button { cursor: pointer; }
 }
 .conferma h2 { font-size: 1.1875rem; }
 .conferma .bottoni { display: flex; flex-wrap: wrap; gap: 10px; }
+
+/* la conferma di consegna sta sopra tutto, su uno sfondo scurito: deve saltare all'occhio */
+.conferma-sfondo {
+  position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 16px;
+  background: rgba(20, 24, 28, 0.55);
+}
+.conferma-finestra { width: min(100%, 460px); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35); }
 
 /* la schermata del tempo scaduto ha una cosa sola da dire: sta al centro e non in un angolo */
 .pagina-avviso { display: grid; justify-items: center; padding-top: min(14vh, 120px); }

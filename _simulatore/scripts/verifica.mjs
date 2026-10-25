@@ -101,7 +101,8 @@ const taglia = (s, n = 44) => (s.length > n ? `${s.slice(0, n - 1)}…` : s)
 
 function cieca(codice) {
   const domande = domandeDi(codice)
-  mkdirSync(cartellaVerifica, { recursive: true })
+  mkdirSync(resolve(cartellaVerifica, 'domande'), { recursive: true })
+  mkdirSync(resolve(cartellaVerifica, 'chiavi'), { recursive: true })
 
   const righe = [
     `VERIFICA ALLA CIECA — ${codice} (${domande.length} domande)`,
@@ -131,13 +132,13 @@ function cieca(codice) {
     righe.push('')
   })
 
-  const fileDomande = resolve(cartellaVerifica, `${codice}-domande.txt`)
+  const fileDomande = resolve(cartellaVerifica, 'domande', `${codice}-domande.txt`)
   writeFileSync(fileDomande, righe.join(SALTO))
-  writeFileSync(resolve(cartellaVerifica, `${codice}-chiavi.txt`), `${chiavi.join(SALTO)}${SALTO}`)
+  writeFileSync(resolve(cartellaVerifica, 'chiavi', `${codice}-chiavi.txt`), `${chiavi.join(SALTO)}${SALTO}`)
 
   console.log(`${domande.length} domande senza soluzione.`)
-  console.log(`  dati/verifica/${codice}-domande.txt   da incollare in una conversazione nuova`)
-  console.log(`  dati/verifica/${codice}-chiavi.txt    le chiavi, da non guardare prima`)
+  console.log(`  dati/verifica/domande/${codice}-domande.txt   da incollare in una conversazione nuova`)
+  console.log(`  dati/verifica/chiavi/${codice}-chiavi.txt    le chiavi, da non guardare prima`)
   console.log(`${SALTO}Salva la risposta in dati/verifica/${codice}-risposte.txt, poi:`)
   console.log(`  npm run verifica -- --confronta ${codice}`)
 }

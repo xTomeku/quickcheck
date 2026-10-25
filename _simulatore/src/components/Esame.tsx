@@ -116,8 +116,19 @@ export function Esame({ prova, banca, onCambia, onFine, onEsci }: Props) {
     if (d.tipo === 'completamento' && window.matchMedia('(pointer: fine)').matches) inputRef.current?.focus()
   }, [indice, d.tipo])
 
+  // la conferma è una finestra sopra la pagina: Esc la chiude, e la pagina sotto non scorre
   useEffect(() => {
-    if (conferma) window.scrollTo({ top: 0 })
+    if (!conferma) return
+    const onEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setConferma(false)
+    }
+    window.addEventListener('keydown', onEsc)
+    const prima = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onEsc)
+      document.body.style.overflow = prima
+    }
   }, [conferma])
 
   const nomeSezione = NOMI_BREVI[sezione.materia]
@@ -181,7 +192,14 @@ export function Esame({ prova, banca, onCambia, onFine, onEsci }: Props) {
       <main className="pagina esame">
         <div className="domanda">
           {conferma ? (
-            <section className="conferma" aria-labelledby="titolo-conferma">
+            <div className="conferma-sfondo" onClick={() => setConferma(false)}>
+            <section
+              className="conferma conferma-finestra"
+              role="alertdialog"
+              aria-modal="true"
+              aria-labelledby="titolo-conferma"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h2 id="titolo-conferma">Consegnare {nomeSezione.toLowerCase()}?</h2>
               <p>
                 {senzaRisposta === 0
@@ -197,11 +215,12 @@ export function Esame({ prova, banca, onCambia, onFine, onEsci }: Props) {
                 <button type="button" className="btn btn-primario" onClick={consegna}>
                   Consegna {nomeSezione.toLowerCase()}
                 </button>
-                <button type="button" className="btn btn-secondario" onClick={() => setConferma(false)}>
+                <button type="button" className="btn btn-secondario" onClick={() => setConferma(false)} autoFocus>
                   Continua a rispondere
                 </button>
               </div>
             </section>
+            </div>
           ) : null}
 
           <div className="domanda-testata">
