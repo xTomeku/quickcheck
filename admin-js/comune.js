@@ -13,6 +13,21 @@ const loginError = document.getElementById('login-error');
 const logoutBtn = document.getElementById('logout-btn');
 const userEmailDisplay = document.getElementById('user-email-display');
 
+// Occhio nel campo password del login: mostra o nasconde quello che si è scritto
+const mostraPasswordBtn = document.getElementById('mostra-password');
+if (mostraPasswordBtn) {
+    mostraPasswordBtn.addEventListener('click', () => {
+        const campo = document.getElementById('password');
+        const visibile = campo.type === 'password';
+        campo.type = visibile ? 'text' : 'password';
+        mostraPasswordBtn.setAttribute('aria-pressed', String(visibile));
+        const testo = visibile ? 'Nascondi la password' : 'Mostra la password';
+        mostraPasswordBtn.setAttribute('aria-label', testo);
+        mostraPasswordBtn.title = testo;
+        campo.focus();
+    });
+}
+
 // Menu laterale (navigazione tra le sezioni)
 const adminMenuApri = document.getElementById('admin-menu-apri');
 const adminVelo = document.getElementById('admin-velo');

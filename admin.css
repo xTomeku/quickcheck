@@ -293,6 +293,47 @@ body.admin-dentro main {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Login: occhio per mostrare la password */
+.campo-password {
+    position: relative;
+}
+
+.campo-password .form-control {
+    padding-right: 3rem;
+}
+
+.mostra-password {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    color: var(--sub);
+    cursor: pointer;
+}
+
+.mostra-password:hover,
+.mostra-password:focus-visible {
+    color: var(--oro);
+    outline: none;
+}
+
+.mostra-password .occhio-barrato {
+    display: none;
+}
+
+.mostra-password[aria-pressed="true"] .occhio-barrato {
+    display: block;
+}
+
 select.form-control {
     background-color: var(--card2);
     color: var(--txt);
