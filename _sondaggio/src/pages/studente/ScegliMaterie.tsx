@@ -1,7 +1,11 @@
+import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
+import PulsanteGoogle from '../../components/PulsanteGoogle'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
+import { chiamaServer } from '../../lib/server'
 import { costruisciStruttura, haDomande, type MateriaDati } from '../../lib/sondaggio'
+import { useStudente } from '../../lib/studente'
 import { supabase } from '../../lib/supabase'
 import { useDomandeAttive, useMaterieCorso } from '../../lib/useDatiSondaggio'
 import { useElenco } from '../../lib/useElenco'
@@ -22,7 +26,43 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
     corsoId,
   )
 
-  if (materie === null || domande === null || corso.righe === null) {
+  // Le materie che questa persona ha già compilato in questa edizione: non si rifanno
+  const { accesso } = useStudente()
+  const [compilate, setCompilate] = useState<Set<string> | null>(null)
+  const [erroreStato, setErroreStato] = useState<{ stato: number; errore: string } | null>(null)
+  const edizioneId = bozza.edizioneId
+  const idToken = accesso?.idToken
+  useEffect(() => {
+    if (!edizioneId || !idToken) return
+    let annullato = false
+    chiamaServer<{ compilate: string[] }>('stato', idToken, edizioneId).then((esito) => {
+      if (annullato) return
+      if (esito.ok) {
+        setErroreStato(null)
+        setCompilate(new Set(esito.dati.compilate))
+      } else {
+        setErroreStato({ stato: esito.stato, errore: esito.errore })
+      }
+    })
+    return () => {
+      annullato = true
+    }
+  }, [edizioneId, idToken])
+
+  if (erroreStato) {
+    return (
+      <div className="space-y-4">
+        <Avviso>{erroreStato.errore}</Avviso>
+        {erroreStato.stato === 401 || erroreStato.stato === 403 ? (
+          <PulsanteGoogle />
+        ) : (
+          <Pulsante onClick={() => window.location.reload()}>Riprova</Pulsante>
+        )}
+      </div>
+    )
+  }
+
+  if (materie === null || domande === null || corso.righe === null || compilate === null) {
     return (
       <div className="space-y-4">
         {(errore || erroreDomande || corso.errore) && (
@@ -39,7 +79,9 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
       ? Array.from({ length: durata }, (_, i) => i + 1)
       : [anno - 1, anno].filter((a) => a >= 1)
 
-  const selezionabile = (m: MateriaDati) => haDomande(costruisciStruttura(m, domande))
+  const giaFatta = (m: MateriaDati) => compilate.has(m.materiaCorsoId)
+  const selezionabile = (m: MateriaDati) =>
+    haDomande(costruisciStruttura(m, domande)) && !giaFatta(m)
   const visibili = materie.filter((m) => anniVisibili.includes(m.anno))
   const scelte = new Set(bozza.materieScelte)
   const nScelte = visibili.filter((m) => scelte.has(m.materiaCorsoId) && selezionabile(m)).length
@@ -135,13 +177,15 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
                             )}
                           </span>
                           <span className="block text-sm text-slate-500">
-                            {ok
-                              ? m.insegnamenti.length === 0
-                                ? 'Nessun docente indicato'
-                                : m.insegnamenti
-                                    .map((i) => `${i.docente.cognome} ${i.docente.nome}`)
-                                    .join(', ')
-                              : 'Nessuna domanda disponibile'}
+                            {giaFatta(m)
+                              ? 'Hai già inviato le risposte per questa materia'
+                              : ok
+                                ? m.insegnamenti.length === 0
+                                  ? 'Nessun docente indicato'
+                                  : m.insegnamenti
+                                      .map((i) => `${i.docente.cognome} ${i.docente.nome}`)
+                                      .join(', ')
+                                : 'Nessuna domanda disponibile'}
                           </span>
                         </span>
                       </label>

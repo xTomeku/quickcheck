@@ -1,16 +1,22 @@
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useBozza } from '../../lib/bozza'
+import { useStudente } from '../../lib/studente'
 
 export default function Conferma() {
   const { azzera } = useBozza()
+  const { esci } = useStudente()
   const location = useLocation()
   const inviato = Boolean(location.state?.inviato)
 
-  // Dopo un invio riuscito la bozza sul dispositivo non serve più
+  // Dopo un invio riuscito la bozza sul dispositivo non serve più, e si esce dall'account:
+  // così nessuno resta collegato su un dispositivo condiviso
   useEffect(() => {
-    if (inviato) azzera()
-  }, [inviato, azzera])
+    if (inviato) {
+      azzera()
+      esci()
+    }
+  }, [inviato, azzera, esci])
 
   return (
     <div className="rounded-xl border border-slate-200 bg-white p-6">

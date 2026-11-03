@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
+import PulsanteGoogle from '../../components/PulsanteGoogle'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
-import type { Json } from '../../lib/database.types'
-import { messaggioErrore } from '../../lib/errori'
+import { chiamaServer } from '../../lib/server'
 import { contaMancanti, costruisciStruttura, preparaInvio } from '../../lib/sondaggio'
-import { supabase } from '../../lib/supabase'
+import { accessoValido, useStudente } from '../../lib/studente'
 import { useDomandeAttive, useMaterieCorso } from '../../lib/useDatiSondaggio'
 
 export default function Riepilogo() {
@@ -13,6 +13,8 @@ export default function Riepilogo() {
   const navigate = useNavigate()
   const { materie, errore } = useMaterieCorso({ ids: bozza.materieScelte })
   const { domande, errore: erroreDomande } = useDomandeAttive()
+  const { accesso } = useStudente()
+  const sessioneValida = accessoValido(accesso)
   const [invio, setInvio] = useState(false)
   const [erroreInvio, setErroreInvio] = useState<string | null>(null)
 
@@ -45,23 +47,22 @@ export default function Riepilogo() {
   const tutteComplete = righe.every((r) => r.mancanti === 0)
 
   async function invia() {
-    if (!bozza.edizioneId) return
+    if (!bozza.edizioneId || !accesso) return
     setInvio(true)
     setErroreInvio(null)
     const payload = righe.map((r) => preparaInvio(r.materia, r.struttura, r.risposte, r.saltati))
-    const { error } = await supabase.rpc('invia_compilazioni', {
-      p_edizione: bozza.edizioneId,
-      p_fuori_corso: bozza.anno === 'fuori_corso',
-      p_materie: payload as unknown as Json,
-      p_anno: typeof bozza.anno === 'number' ? bozza.anno : undefined,
+    const esito = await chiamaServer('invia', accesso.idToken, bozza.edizioneId, {
+      fuori_corso: bozza.anno === 'fuori_corso',
+      anno: typeof bozza.anno === 'number' ? bozza.anno : null,
+      materie: payload,
     })
     setInvio(false)
-    if (error) {
+    if (!esito.ok) {
       // La bozza resta intatta: si può riprovare senza reinserire nulla
       setErroreInvio(
-        error.code === 'P0001'
-          ? messaggioErrore(error)
-          : "Non è stato possibile inviare le risposte. Controlla la connessione e riprova: la tua bozza è al sicuro.",
+        esito.stato === 0 || esito.stato >= 500
+          ? `${esito.errore} La tua bozza è al sicuro.`
+          : esito.errore,
       )
       return
     }
@@ -103,11 +104,25 @@ export default function Riepilogo() {
 
       {erroreInvio && <Avviso>{erroreInvio}</Avviso>}
 
+      {!sessioneValida && (
+        <div className="space-y-3 rounded-xl border border-slate-200 bg-white p-4">
+          <p className="text-sm text-slate-700">
+            L'accesso è scaduto. Accedi di nuovo con Google per inviare: le tue risposte sono al sicuro.
+          </p>
+          <PulsanteGoogle />
+        </div>
+      )}
+
       <div className="flex flex-wrap gap-3">
         <Pulsante grande onClick={() => navigate('/materie')}>
           Cambia materie
         </Pulsante>
-        <Pulsante grande variante="primario" disabled={!tutteComplete || invio} onClick={invia}>
+        <Pulsante
+          grande
+          variante="primario"
+          disabled={!tutteComplete || invio || !sessioneValida}
+          onClick={invia}
+        >
           {invio ? 'Invio in corso…' : 'Invia le risposte'}
         </Pulsante>
       </div>

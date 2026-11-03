@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import PulsanteGoogle from '../../components/PulsanteGoogle'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
+import { DOMINIO_STUDENTI } from '../../lib/google'
+import { accessoValido, useStudente } from '../../lib/studente'
 import { supabase } from '../../lib/supabase'
 
 type Stato =
@@ -12,6 +15,8 @@ type Stato =
 
 export default function Benvenuto() {
   const { bozza, aggiorna, azzera } = useBozza()
+  const { accesso, esci } = useStudente()
+  const connesso = accessoValido(accesso)
   const navigate = useNavigate()
   const [stato, setStato] = useState<Stato>({ tipo: 'caricamento' })
 
@@ -85,18 +90,47 @@ export default function Benvenuto() {
       </p>
       <p className="mt-3 text-sm text-slate-400">
         [Durata stimata: X minuti] [Chi promuove il sondaggio e come verranno usati i risultati]
-        [Link all'informativa sulla privacy]
       </p>
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Pulsante grande variante="primario" onClick={inizia}>
-          {inCorso ? 'Riprendi da dove eri rimasto' : 'Inizia'}
-        </Pulsante>
-        {inCorso && (
-          <Pulsante grande onClick={ricomincia}>
-            Ricomincia da capo
-          </Pulsante>
-        )}
-      </div>
+      <p className="mt-3 text-sm">
+        <a href={`${import.meta.env.BASE_URL}privacy.html`} className="underline">
+          Informativa sulla privacy
+        </a>
+      </p>
+      {connesso && accesso ? (
+        <>
+          <p className="mt-6 text-sm text-slate-600">
+            Accesso come <span className="font-medium">{accesso.email}</span>.{' '}
+            <button type="button" onClick={esci} className="underline">
+              Esci
+            </button>
+          </p>
+          <div className="mt-3 flex flex-wrap gap-3">
+            <Pulsante grande variante="primario" onClick={inizia}>
+              {inCorso ? 'Riprendi da dove eri rimasto' : 'Inizia'}
+            </Pulsante>
+            {inCorso && (
+              <Pulsante grande onClick={ricomincia}>
+                Ricomincia da capo
+              </Pulsante>
+            )}
+          </div>
+        </>
+      ) : (
+        <div className="mt-6 space-y-3">
+          <p className="text-sm text-slate-700">
+            Per evitare che la stessa persona compili due volte, accedi con il tuo account
+            universitario (@{DOMINIO_STUDENTI}). Le risposte restano anonime: il tuo indirizzo non
+            viene salvato né collegato a ciò che scrivi. Il sito conserva solo un codice che impedisce
+            di rispondere due volte per la stessa materia.
+          </p>
+          <PulsanteGoogle />
+          {inCorso && (
+            <p className="text-sm text-slate-500">
+              Hai una bozza salvata su questo dispositivo: dopo l'accesso potrai riprenderla.
+            </p>
+          )}
+        </div>
+      )}
     </div>
   )
 }
