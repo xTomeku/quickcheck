@@ -1,0 +1,34 @@
+@import 'tailwindcss';
+
+/* Colori di Udu (rosso del logo #970f03, giallo, bianco) e azzurro del dipartimento, come nel simulatore.
+   Rosso: barre e azione principale. Giallo: filo sotto la barra e evidenziazioni.
+   Azzurro: selezioni, focus e inchiostro dello studente. */
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --color-udu: #970f03;
+  --color-udu-scuro: #750b02;
+  --color-udu-velo: #fbeae8;
+  --color-udu-giallo: #f7c321;
+  --color-giallo-velo: #fff7d6;
+  --color-medicina: #50aed0;
+  --color-inchiostro: #247a9a;
+  --color-inchiostro-velo: #eef7fa;
+  --color-inchiostro-scuro: #1b6580;
+  --color-grafite: #16212a;
+  /* Pericoli ed errori: un rosso più vivo e leggero del rosso del marchio, per non confondere
+     «Salva» con «Disattiva». Va sempre accompagnato da un'icona o da una parola, mai dal solo colore. */
+  --color-pericolo: #d92d20;
+  --color-pericolo-testo: #b42318;
+  --color-pericolo-velo: #fef3f2;
+}
+
+body {
+  @apply bg-white text-grafite antialiased;
+}
+
+/* Anello del focus: petrolio scuro (contrasto sopra 3:1 sul bianco) con un filo bianco, così si vede anche sul rosso */
+:focus-visible {
+  outline: 3px solid var(--color-inchiostro);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #fff;
+}
