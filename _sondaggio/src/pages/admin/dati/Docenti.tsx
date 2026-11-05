@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react'
+import { useState } from 'react'
+import AvvisoDocenteEsistente from '../../../components/AvvisoDocenteEsistente'
 import PulsanteElimina from '../../../components/PulsanteElimina'
 import {
   ANELLO_APERTO,
@@ -13,6 +14,7 @@ import {
 } from '../../../components/ui'
 import type { Tables } from '../../../lib/database.types'
 import { messaggioErrore } from '../../../lib/errori'
+import { chiaveNome, trovaUguale } from '../../../lib/nomi'
 import { supabase } from '../../../lib/supabase'
 import { useElenco } from '../../../lib/useElenco'
 
@@ -139,12 +141,28 @@ function FormDocente({
   const [cognome, setCognome] = useState(docente?.cognome ?? '')
   const [errore, setErrore] = useState<string | null>(null)
   const [invio, setInvio] = useState(false)
+  // Il nome scritto coincide con un docente già in memoria: si aspetta la scelta di chi compila
+  const [simile, setSimile] = useState<{ cognome: string; nome: string; attivo: boolean } | null>(null)
 
-  async function onSubmit(e: FormEvent) {
-    e.preventDefault()
+  async function salva(forza: boolean) {
     setInvio(true)
     setErrore(null)
     const valori = { nome: nome.trim(), cognome: cognome.trim() }
+    // Un nuovo docente (o un nome cambiato) uguale a uno già presente chiede conferma
+    const cambiato = !docente || chiaveNome(docente) !== chiaveNome(valori)
+    if (!forza && cambiato) {
+      const { data } = await supabase.from('docenti').select('id, nome, cognome, attivo')
+      const uguale = trovaUguale(
+        (data ?? []).filter((d) => d.id !== docente?.id),
+        valori,
+      )
+      if (uguale) {
+        setSimile(uguale)
+        setInvio(false)
+        return
+      }
+    }
+    setSimile(null)
     const { error } = docente
       ? await supabase.from('docenti').update(valori).eq('id', docente.id)
       : await supabase.from('docenti').insert(valori)
@@ -156,21 +174,50 @@ function FormDocente({
   return (
     <form
       ref={ref}
-      onSubmit={onSubmit}
+      onSubmit={(e) => {
+        e.preventDefault()
+        void salva(false)
+      }}
       className={`space-y-4 rounded-xl border border-slate-300 bg-white p-4 ${ANELLO_APERTO}`}
     >
       <h3 className="font-semibold">{docente ? 'Modifica docente' : 'Nuovo docente'}</h3>
       <div className="grid grid-cols-2 gap-4">
         <Campo etichetta="Nome">
-          <Input required value={nome} onChange={(e) => setNome(e.target.value)} />
+          <Input
+            required
+            value={nome}
+            onChange={(e) => {
+              setNome(e.target.value)
+              setSimile(null)
+            }}
+          />
         </Campo>
         <Campo etichetta="Cognome">
-          <Input required value={cognome} onChange={(e) => setCognome(e.target.value)} />
+          <Input
+            required
+            value={cognome}
+            onChange={(e) => {
+              setCognome(e.target.value)
+              setSimile(null)
+            }}
+          />
         </Campo>
       </div>
       {errore && <Avviso>{errore}</Avviso>}
+      {simile && (
+        <AvvisoDocenteEsistente
+          docente={simile}
+          onAggiungiComunque={() => void salva(true)}
+          onAnnulla={onAnnulla}
+        >
+          <p>
+            «Annulla» chiude questo modulo senza salvare: puoi poi usare il docente già presente dalla
+            materia.
+          </p>
+        </AvvisoDocenteEsistente>
+      )}
       <div className="flex gap-2">
-        <Pulsante type="submit" variante="primario" disabled={invio}>
+        <Pulsante type="submit" variante="primario" disabled={invio || simile !== null}>
           {invio ? 'Salvataggio…' : 'Salva'}
         </Pulsante>
         <Pulsante variante="testo" onClick={onAnnulla}>

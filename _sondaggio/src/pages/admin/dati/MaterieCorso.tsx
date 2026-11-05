@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import ComboRicerca from '../../../components/ComboRicerca'
 import { Avviso, Campo, Input, Pulsante, Select } from '../../../components/ui'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
@@ -232,14 +233,13 @@ function CollegaEsistente({
       <div className="flex flex-wrap items-start gap-3">
         <div className="min-w-56 flex-1">
           <Campo etichetta="Aggiungi una materia">
-            <Select required value={materiaId} onChange={(e) => setMateriaId(e.target.value)}>
-              <option value="">Scegli una materia…</option>
-              {materie.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.nome}
-                </option>
-              ))}
-            </Select>
+            <ComboRicerca
+              ariaLabel="Materia da aggiungere"
+              segnaposto="Cerca o scegli una materia…"
+              valore={materiaId}
+              voci={materie.map((m) => ({ id: m.id, etichetta: m.nome }))}
+              onScegli={setMateriaId}
+            />
           </Campo>
           <Pulsante
             variante="testo"
