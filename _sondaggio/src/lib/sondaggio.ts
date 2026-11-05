@@ -11,6 +11,10 @@ export type DomandaCompleta = {
   id: string
   testo: string
   categoria: string
+  gruppo: string | null
+  // Se presente, la domanda compare solo quando la risposta a quella domanda è una di queste opzioni
+  mostra_se_domanda_id: string | null
+  mostra_se_opzioni: string[]
   ambito_docente: string | null
   tipo_risposta: string
   scala_min: number | null
@@ -84,10 +88,62 @@ export function chiaveRisposta(domandaId: string, insegnamentoId?: string): stri
 }
 
 export function haRisposta(valore: Valore | undefined): boolean {
-  return valore !== undefined && valore !== ''
+  return valore !== undefined && String(valore).trim() !== ''
 }
 
-// Domande obbligatorie senza risposta (i docenti saltati non contano)
+// Divide le domande in gruppi con lo stesso titolo, nell'ordine in cui compaiono.
+// Quelle senza gruppo vanno insieme, sotto `titoloSenza`.
+export function raggruppa(
+  domande: DomandaCompleta[],
+  titoloSenza: string,
+): { titolo: string; domande: DomandaCompleta[] }[] {
+  const gruppi: { titolo: string; domande: DomandaCompleta[] }[] = []
+  for (const d of domande) {
+    const titolo = d.gruppo?.trim() || titoloSenza
+    const esistente = gruppi.find((g) => g.titolo === titolo)
+    if (esistente) esistente.domande.push(d)
+    else gruppi.push({ titolo, domande: [d] })
+  }
+  return gruppi
+}
+
+// Domande Extra: si chiedono una sola volta alla fine, non per ogni materia
+export function domandeExtra(domande: DomandaCompleta[]): DomandaCompleta[] {
+  return domande.filter((d) => d.categoria === 'extra').sort(perOrdine)
+}
+
+export function contaMancantiExtra(domande: DomandaCompleta[], extra: Record<string, Valore>): number {
+  return domandeExtra(domande).filter(
+    (d) => d.obbligatoria && visibile(d, extra) && !haRisposta(extra[d.id]),
+  ).length
+}
+
+// Risposte Extra nel formato atteso dal database (solo quelle date)
+type VoceExtra = { domanda_id: string; valore_numero?: number; opzione_id?: string; testo?: string }
+
+export function preparaExtra(domande: DomandaCompleta[], extra: Record<string, Valore>) {
+  return domandeExtra(domande).flatMap((d): VoceExtra[] => {
+    const valore = extra[d.id]
+    if (!haRisposta(valore) || !visibile(d, extra)) return []
+    if (d.tipo_risposta === 'scala') return [{ domanda_id: d.id, valore_numero: Number(valore) }]
+    if (d.tipo_risposta === 'testo') return [{ domanda_id: d.id, testo: String(valore).trim() }]
+    return [{ domanda_id: d.id, opzione_id: String(valore) }]
+  })
+}
+
+// Una domanda condizionata si vede solo se la risposta alla domanda da cui dipende è una di quelle indicate.
+// Le risposte date a una domanda nascosta (ad esempio cambiando idea prima) non contano e non si inviano.
+export function visibile(
+  d: DomandaCompleta,
+  risposte: Record<string, Valore>,
+  insegnamentoId?: string,
+): boolean {
+  if (!d.mostra_se_domanda_id) return true
+  const valore = risposte[chiaveRisposta(d.mostra_se_domanda_id, insegnamentoId)]
+  return valore !== undefined && d.mostra_se_opzioni.includes(String(valore))
+}
+
+// Domande obbligatorie senza risposta (i docenti saltati e le domande nascoste non contano)
 export function contaMancanti(
   struttura: Struttura,
   risposte: Record<string, Valore>,
@@ -95,12 +151,19 @@ export function contaMancanti(
 ): number {
   let mancanti = 0
   for (const d of [...struttura.generiche, ...struttura.specifiche]) {
-    if (d.obbligatoria && !haRisposta(risposte[chiaveRisposta(d.id)])) mancanti++
+    if (d.obbligatoria && visibile(d, risposte) && !haRisposta(risposte[chiaveRisposta(d.id)])) {
+      mancanti++
+    }
   }
   for (const blocco of struttura.docenti) {
     if (saltati.includes(blocco.insegnamento.id)) continue
+    const idIns = blocco.insegnamento.id
     for (const d of blocco.domande) {
-      if (d.obbligatoria && !haRisposta(risposte[chiaveRisposta(d.id, blocco.insegnamento.id)])) {
+      if (
+        d.obbligatoria &&
+        visibile(d, risposte, idIns) &&
+        !haRisposta(risposte[chiaveRisposta(d.id, idIns)])
+      ) {
         mancanti++
       }
     }
@@ -124,7 +187,7 @@ export function preparaInvio(
 
   function aggiungi(d: DomandaCompleta, insegnamentoId?: string) {
     const valore = risposte[chiaveRisposta(d.id, insegnamentoId)]
-    if (!haRisposta(valore)) return
+    if (!haRisposta(valore) || !visibile(d, risposte, insegnamentoId)) return
     voci.push({
       domanda_id: d.id,
       ...(insegnamentoId ? { insegnamento_id: insegnamentoId } : {}),

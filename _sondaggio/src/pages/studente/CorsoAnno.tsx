@@ -1,11 +1,14 @@
 import { useNavigate } from 'react-router-dom'
-import { Avviso, Campo, Pulsante, Select } from '../../components/ui'
+import { BarraAzioni, Scelta } from '../../components/studente'
+import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
 import { supabase } from '../../lib/supabase'
+import { nomeLeggibile } from '../../lib/testo'
 import { useElenco } from '../../lib/useElenco'
 
 type Corso = { id: string; nome: string; durata_anni: number }
 
+// Primo passo: il corso di laurea. L'anno si sceglie nella pagina successiva (Anno.tsx)
 export default function CorsoAnno() {
   const { bozza, aggiorna } = useBozza()
   const navigate = useNavigate()
@@ -20,23 +23,21 @@ export default function CorsoAnno() {
   )
 
   const corso = righe?.find((c) => c.id === bozza.corsoId)
-  const anni = corso ? Array.from({ length: corso.durata_anni }, (_, i) => i + 1) : []
 
   function scegliCorso(id: string) {
     aggiorna((b) =>
-      b.corsoId === (id || null)
+      b.corsoId === id
         ? b
-        : { ...b, corsoId: id || null, anno: null, materieScelte: [], risposte: {}, saltati: {} },
+        : { ...b, corsoId: id, anno: null, materieScelte: [], risposte: {}, saltati: {} },
     )
   }
 
-  function scegliAnno(anno: number | 'fuori_corso') {
-    aggiorna((b) => (b.anno === anno ? b : { ...b, anno, materieScelte: [] }))
-  }
-
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Il tuo corso</h1>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-extrabold tracking-tight">Il tuo corso</h1>
+        <p className="mt-1 text-slate-600">Scegli il corso di laurea che frequenti.</p>
+      </div>
 
       {errore && <Avviso>{errore}</Avviso>}
 
@@ -45,70 +46,34 @@ export default function CorsoAnno() {
       ) : righe.length === 0 ? (
         <Avviso tipo="info">Nessun corso disponibile al momento.</Avviso>
       ) : (
-        <Campo etichetta="Corso di laurea">
-          <Select
-            value={bozza.corsoId ?? ''}
-            onChange={(e) => scegliCorso(e.target.value)}
-            className="!py-3 text-base"
-          >
-            <option value="">Scegli il tuo corso…</option>
+        <section aria-labelledby="titolo-corso" className="space-y-3">
+          <h2 id="titolo-corso" className="sr-only">
+            Corso di laurea
+          </h2>
+          <div className="space-y-2.5">
             {righe.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.nome}
-              </option>
+              <Scelta key={c.id} scelta={bozza.corsoId === c.id} onClick={() => scegliCorso(c.id)}>
+                {nomeLeggibile(c.nome)}
+              </Scelta>
             ))}
-          </Select>
-        </Campo>
-      )}
-
-      {corso && (
-        <div>
-          <p className="mb-2 text-sm font-medium text-slate-700">In che anno sei?</p>
-          <div className="grid grid-cols-2 gap-2">
-            {anni.map((a) => (
-              <button
-                key={a}
-                type="button"
-                aria-pressed={bozza.anno === a}
-                onClick={() => scegliAnno(a)}
-                className={`rounded-lg border px-4 py-3 text-base font-medium ${
-                  bozza.anno === a
-                    ? 'border-inchiostro bg-inchiostro text-white'
-                    : 'border-slate-300 bg-white hover:bg-slate-50'
-                }`}
-              >
-                {a}° anno
-              </button>
-            ))}
-            <button
-              type="button"
-              aria-pressed={bozza.anno === 'fuori_corso'}
-              onClick={() => scegliAnno('fuori_corso')}
-              className={`rounded-lg border px-4 py-3 text-base font-medium ${
-                bozza.anno === 'fuori_corso'
-                  ? 'border-inchiostro bg-inchiostro text-white'
-                  : 'border-slate-300 bg-white hover:bg-slate-50'
-              }`}
-            >
-              Fuori corso
-            </button>
           </div>
-        </div>
+        </section>
       )}
 
-      <div className="flex gap-3">
+      <BarraAzioni>
         <Pulsante grande onClick={() => navigate('/')}>
           Indietro
         </Pulsante>
         <Pulsante
           grande
           variante="primario"
-          disabled={!corso || bozza.anno === null}
-          onClick={() => navigate('/materie')}
+          className="flex-1"
+          disabled={!corso}
+          onClick={() => navigate('/anno')}
         >
           Continua
         </Pulsante>
-      </div>
+      </BarraAzioni>
     </div>
   )
 }

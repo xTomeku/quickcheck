@@ -15,6 +15,7 @@ import {
   CATEGORIE,
   NOME_AMBITO,
   NOME_TIPO,
+  nRisposteDi,
   type DomandaElenco,
 } from './etichette'
 
@@ -33,7 +34,7 @@ type Props = {
 }
 
 export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
-  const nRisposte = domanda?.risposte[0]?.count ?? 0
+  const nRisposte = domanda ? nRisposteDi(domanda) : 0
   // Con risposte già raccolte testo, categoria, tipo e scala non si possono più cambiare
   const bloccata = nRisposte > 0
 
@@ -42,6 +43,12 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
   const [categoria, setCategoria] = useState(domanda?.categoria ?? 'generica')
   const [ambito, setAmbito] = useState(domanda?.ambito_docente ?? 'docente')
   const [testo, setTesto] = useState(domanda?.testo ?? '')
+  const [gruppo, setGruppo] = useState(domanda?.gruppo ?? '')
+  // Condizione «mostra solo se»: la domanda da cui dipende e le sue risposte che la fanno comparire
+  const [condDomanda, setCondDomanda] = useState(domanda?.mostra_se_domanda_id ?? '')
+  const [condOpzioni, setCondOpzioni] = useState<Set<string>>(
+    new Set(domanda?.mostra_se_opzioni ?? []),
+  )
   const [tipo, setTipo] = useState(domanda?.tipo_risposta ?? 'scala')
   const [scalaMin, setScalaMin] = useState(String(domanda?.scala_min ?? 1))
   const [scalaMax, setScalaMax] = useState(String(domanda?.scala_max ?? 5))
@@ -62,6 +69,42 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
   )
   const opzMin = Number(impostazioni.righe?.find((i) => i.chiave === 'opzioni_min')?.valore ?? 3)
   const opzMax = Number(impostazioni.righe?.find((i) => i.chiave === 'opzioni_max')?.valore ?? 5)
+
+  // I gruppi già usati, da riproporre quando si scrive il titolo di un gruppo
+  const gruppiUsati = useElenco<{ gruppo: string | null }>(
+    () => supabase.from('domande').select('gruppo').not('gruppo', 'is', null),
+    'gruppi-domande',
+  )
+  const titoliGruppi = [...new Set((gruppiUsati.righe ?? []).map((g) => g.gruppo ?? ''))]
+    .filter((g) => g !== '')
+    .sort((a, b) => a.localeCompare(b))
+
+  // Domande da cui questa può dipendere: a scelta singola, della stessa categoria, a loro volta non condizionate
+  const condizionabile = ['generica', 'generica_docente', 'extra'].includes(categoria)
+  const genitori = useElenco<{ id: string; testo: string }>(
+    async () =>
+      condizionabile
+        ? await supabase
+            .from('domande')
+            .select('id, testo')
+            .eq('categoria', categoria)
+            .eq('tipo_risposta', 'scelta_singola')
+            .is('mostra_se_domanda_id', null)
+            .order('ordine')
+        : { data: [], error: null },
+    `genitori-${categoria}`,
+  )
+  const opzioniGenitore = useElenco<{ id: string; testo: string; ordine: number }>(
+    async () =>
+      condDomanda
+        ? await supabase
+            .from('opzioni_risposta')
+            .select('id, testo, ordine')
+            .eq('domanda_id', condDomanda)
+            .order('ordine')
+        : { data: [], error: null },
+    `opzioni-genitore-${condDomanda}`,
+  )
 
   const materie = useElenco<{ id: string; nome: string }>(
     () => supabase.from('materie').select('id, nome').eq('attiva', true).order('nome'),
@@ -138,10 +181,17 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       return
     }
 
+    const condizionata = condizionabile && condDomanda !== ''
+    if (!bloccata && condizionata && condOpzioni.size === 0) {
+      setErrore('Scegli almeno una risposta che fa comparire la domanda, oppure togli la condizione.')
+      return
+    }
+
     setInvio(true)
 
     // 1. La domanda
     const comuni = {
+      gruppo: gruppo.trim() || null,
       obbligatoria,
       ordine: Number(ordine) || 0,
       etichetta_min: tipo === 'scala' ? etMin.trim() || null : null,
@@ -155,6 +205,8 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       tipo_risposta: tipo,
       scala_min: tipo === 'scala' ? Number(scalaMin) : null,
       scala_max: tipo === 'scala' ? Number(scalaMax) : null,
+      mostra_se_domanda_id: condizionata ? condDomanda : null,
+      mostra_se_opzioni: condizionata ? [...condOpzioni] : [],
     }
 
     let id = idCorrente
@@ -230,7 +282,14 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
           <Select
             disabled={bloccata}
             value={categoria}
-            onChange={(e) => setCategoria(e.target.value)}
+            onChange={(e) => {
+              setCategoria(e.target.value)
+              // La domanda da cui dipende deve avere la stessa categoria
+              setCondDomanda('')
+              setCondOpzioni(new Set())
+              // La risposta scritta esiste solo nelle domande Extra
+              if (e.target.value !== 'extra' && tipo === 'testo') setTipo('scala')
+            }}
           >
             {CATEGORIE.map((c) => (
               <option key={c.id} value={c.id}>
@@ -264,9 +323,26 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
         />
       </Campo>
 
+      <Campo etichetta="Gruppo (titolo sopra le domande, facoltativo)">
+        <Input
+          list="gruppi-domande"
+          maxLength={60}
+          placeholder="ad esempio: Materiale didattico"
+          value={gruppo}
+          onChange={(e) => setGruppo(e.target.value)}
+        />
+        <datalist id="gruppi-domande">
+          {titoliGruppi.map((g) => (
+            <option key={g} value={g} />
+          ))}
+        </datalist>
+      </Campo>
+
       <Campo etichetta="4. Tipo di risposta">
         <Select disabled={bloccata} value={tipo} onChange={(e) => setTipo(e.target.value)}>
-          {Object.entries(NOME_TIPO).map(([valore, nome]) => (
+          {Object.entries(NOME_TIPO)
+            .filter(([valore]) => valore !== 'testo' || categoria === 'extra')
+            .map(([valore, nome]) => (
             <option key={valore} value={valore}>
               {nome}
             </option>
@@ -368,12 +444,66 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
           onCambia={setColInsegnamenti}
         />
       )}
-      {(categoria === 'generica' || categoria === 'generica_docente') && (
+      {(categoria === 'generica' || categoria === 'generica_docente' || categoria === 'extra') && (
         <p className="text-sm text-slate-500">
           {categoria === 'generica'
             ? 'Le domande generiche valgono per tutte le materie: non hanno collegamenti.'
-            : 'Le domande generiche sui docenti valgono per ogni docente di ogni materia: non hanno collegamenti.'}
+            : categoria === 'generica_docente'
+              ? 'Le domande generiche sui docenti valgono per ogni docente di ogni materia: non hanno collegamenti.'
+              : 'Le domande Extra si chiedono una sola volta a ogni studente, dopo tutte le materie e prima dell\'invio: non riguardano una materia né un docente. Le risposte scritte restano anonime e possono essere nascoste da Statistiche.'}
         </p>
+      )}
+
+      {condizionabile && (
+        <div className="space-y-3 rounded-lg border border-slate-200 p-3">
+          <Campo etichetta="Mostra solo se… (facoltativo)">
+            <Select
+              disabled={bloccata}
+              value={condDomanda}
+              onChange={(e) => {
+                setCondDomanda(e.target.value)
+                setCondOpzioni(new Set())
+              }}
+            >
+              <option value="">Sempre (nessuna condizione)</option>
+              {(genitori.righe ?? [])
+                .filter((g) => g.id !== idCorrente)
+                .map((g) => (
+                  <option key={g.id} value={g.id}>
+                    {g.testo}
+                  </option>
+                ))}
+            </Select>
+          </Campo>
+          {condDomanda !== '' && (
+            <fieldset className="space-y-1.5">
+              <legend className="text-sm font-medium text-slate-700">
+                …e la risposta è una di queste ({condOpzioni.size} scelte)
+              </legend>
+              {(opzioniGenitore.righe ?? []).map((o) => (
+                <label key={o.id} className="flex items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    className="size-4"
+                    disabled={bloccata}
+                    checked={condOpzioni.has(o.id)}
+                    onChange={() => {
+                      const nuove = new Set(condOpzioni)
+                      if (nuove.has(o.id)) nuove.delete(o.id)
+                      else nuove.add(o.id)
+                      setCondOpzioni(nuove)
+                    }}
+                  />
+                  {o.testo}
+                </label>
+              ))}
+            </fieldset>
+          )}
+          <p className="text-sm text-slate-500">
+            Serve a chiedere «È utile?» solo a chi risponde «Sì» a «C'è un tutoraggio?». La domanda da cui
+            dipende deve essere a scelta singola, della stessa categoria e attiva prima di questa.
+          </p>
+        </div>
       )}
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -499,7 +629,11 @@ function Anteprima({
         {testo.trim() || 'Testo della domanda'}
         {obbligatoria && <span className="text-red-600"> *</span>}
       </p>
-      {tipo === 'scala' ? (
+      {tipo === 'testo' ? (
+        <div className="mt-3 h-20 rounded-lg border border-slate-300 bg-white p-2 text-sm text-slate-400">
+          Scrivi qui (massimo 1000 caratteri)
+        </div>
+      ) : tipo === 'scala' ? (
         <div className="mt-3">
           <div className="flex gap-2">
             {valori.map((v) => (

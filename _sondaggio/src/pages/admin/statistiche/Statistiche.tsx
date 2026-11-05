@@ -5,10 +5,11 @@ import { useRiferimenti } from './dati'
 import { FILTRI_VUOTI, type Filtri } from './filtri'
 import PerDocente from './PerDocente'
 import PerDomanda from './PerDomanda'
+import PerExtra from './PerExtra'
 import PerMateria from './PerMateria'
 import Riepilogo from './Riepilogo'
 
-type Scheda = 'riepilogo' | 'domanda' | 'materia' | 'docente'
+type Scheda = 'riepilogo' | 'domanda' | 'materia' | 'docente' | 'extra'
 
 export default function Statistiche() {
   const { vedeDocenti } = useAuth()
@@ -65,6 +66,7 @@ export default function Statistiche() {
     { id: 'domanda', nome: 'Per domanda' },
     { id: 'materia', nome: 'Per materia' },
     ...(vedeDocenti ? [{ id: 'docente' as const, nome: 'Per docente' }] : []),
+    { id: 'extra', nome: 'Extra' },
   ]
 
   return (
@@ -179,6 +181,7 @@ export default function Statistiche() {
           {scheda === 'docente' && vedeDocenti && (
             <PerDocente filtri={filtri} domande={rif.domande} materie={rif.materie} />
           )}
+          {scheda === 'extra' && <PerExtra edizione={filtri.edizione} domande={rif.domande} />}
         </>
       )}
     </div>

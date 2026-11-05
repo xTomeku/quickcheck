@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate, useParams } from 'react-router-dom'
 import CampoDomanda from '../../components/CampoDomanda'
+import { AvvisoAttenzione, BarraAzioni, IconaSpunta, Segmenti } from '../../components/studente'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza, type Valore } from '../../lib/bozza'
 import {
   chiaveRisposta,
   contaMancanti,
   costruisciStruttura,
+  domandeExtra,
   haRisposta,
+  raggruppa,
+  visibile,
   type DomandaCompleta,
 } from '../../lib/sondaggio'
 import { useDomandeAttive, useMaterieCorso } from '../../lib/useDatiSondaggio'
@@ -52,6 +56,7 @@ export default function Compila() {
   const risposte = bozza.risposte[mc] ?? {}
   const saltati = bozza.saltati[mc] ?? []
   const totale = bozza.materieScelte.length
+  const haExtra = domandeExtra(domande).length > 0
 
   function rispondi(domandaId: string, valore: Valore, insegnamentoId?: string) {
     aggiorna((b) => ({
@@ -83,7 +88,7 @@ export default function Compila() {
       setMostraPer(i)
       return
     }
-    navigate(i + 1 < totale ? `/compila/${i + 1}` : '/riepilogo')
+    navigate(i + 1 < totale ? `/compila/${i + 1}` : '/extra')
   }
 
   function indietro() {
@@ -96,30 +101,27 @@ export default function Compila() {
     !haRisposta(risposte[chiaveRisposta(d.id, insegnamentoId)])
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <p className="text-sm text-slate-500">
+        <p className="text-sm font-semibold text-slate-600">
           Materia {i + 1} di {totale}
         </p>
-        <div
-          role="progressbar"
-          aria-valuemin={0}
-          aria-valuemax={totale}
-          aria-valuenow={i + 1}
-          className="mt-1 h-2 overflow-hidden rounded-full bg-slate-200"
-        >
-          <div
-            className="h-full bg-udu"
-            style={{ width: `${((i + 1) / totale) * 100}%` }}
-          />
+        <div className="mt-2">
+          <Segmenti totale={totale} corrente={i} />
         </div>
-        <h1 className="mt-3 text-2xl font-semibold">{materia.nome}</h1>
+        <h1 className="mt-4 text-2xl leading-tight font-extrabold tracking-tight">{materia.nome}</h1>
+        <p className="mt-1 text-sm text-slate-600">
+          Le domande con <span className="font-bold text-udu">*</span> sono obbligatorie.
+        </p>
       </div>
 
-      {struttura.generiche.length > 0 && (
-        <section className="space-y-3">
-          <h2 className="font-semibold text-slate-700">Domande generali</h2>
-          {struttura.generiche.map((d) => (
+      {raggruppa(
+        [...struttura.generiche, ...struttura.specifiche].filter((d) => visibile(d, risposte)),
+        'Domande generali',
+      ).map((g) => (
+        <section key={g.titolo} className="space-y-3">
+          <h2 className="text-sm font-bold tracking-wide text-udu uppercase">{g.titolo}</h2>
+          {g.domande.map((d) => (
             <CampoDomanda
               key={d.id}
               domanda={d}
@@ -129,68 +131,88 @@ export default function Compila() {
             />
           ))}
         </section>
-      )}
-
-      {struttura.specifiche.length > 0 && (
-        <section className="space-y-3">
-          <h2 className="font-semibold text-slate-700">Su questa materia</h2>
-          {struttura.specifiche.map((d) => (
-            <CampoDomanda
-              key={d.id}
-              domanda={d}
-              valore={risposte[chiaveRisposta(d.id)]}
-              onCambia={(v) => rispondi(d.id, v)}
-              mancante={manca(d)}
-            />
-          ))}
-        </section>
-      )}
+      ))}
 
       {struttura.docenti
         .filter((b) => b.domande.length > 0)
         .map((blocco) => {
           const idIns = blocco.insegnamento.id
           const saltato = saltati.includes(idIns)
+          const { nome, cognome } = blocco.insegnamento.docente
           return (
-            <section key={idIns} className="space-y-3 rounded-xl bg-slate-100 p-4">
-              <h2 className="text-lg font-semibold">
-                {blocco.insegnamento.docente.nome} {blocco.insegnamento.docente.cognome}
-              </h2>
-              <label className="flex cursor-pointer items-center gap-3 text-sm">
+            <section
+              key={idIns}
+              className="space-y-3 rounded-2xl border border-udu/15 bg-udu-velo/50 p-3.5"
+            >
+              <div className="flex items-center gap-3 px-1">
+                <span
+                  aria-hidden="true"
+                  className="grid size-11 flex-none place-items-center rounded-full bg-udu text-sm font-extrabold text-white"
+                >
+                  {`${nome.charAt(0)}${cognome.charAt(0)}`.toUpperCase()}
+                </span>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold tracking-wide text-udu uppercase">Docente</p>
+                  <h2 className="text-lg leading-tight font-extrabold">
+                    {nome} {cognome}
+                  </h2>
+                </div>
+              </div>
+              <label className="flex min-h-12 cursor-pointer items-center gap-3 rounded-xl bg-white px-3.5 py-2.5 text-[15px] font-medium ring-1 ring-slate-200">
                 <input
                   type="checkbox"
-                  className="size-5"
+                  className="peer sr-only"
                   checked={saltato}
                   onChange={() => alternaSalto(idIns)}
                 />
+                <span
+                  aria-hidden="true"
+                  className={`grid size-6 flex-none place-items-center rounded-md border-2 peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-inchiostro ${
+                    saltato ? 'border-udu bg-udu text-white' : 'border-slate-400 bg-white'
+                  }`}
+                >
+                  {saltato && <IconaSpunta className="size-4" />}
+                </span>
                 Non ho seguito questo docente
               </label>
               {!saltato &&
-                blocco.domande.map((d) => (
-                  <CampoDomanda
-                    key={d.id}
-                    domanda={d}
-                    valore={risposte[chiaveRisposta(d.id, idIns)]}
-                    onCambia={(v) => rispondi(d.id, v, idIns)}
-                    mancante={manca(d, idIns)}
-                  />
+                raggruppa(
+                  blocco.domande.filter((d) => visibile(d, risposte, idIns)),
+                  '',
+                ).map((g) => (
+                  <div key={g.titolo} className="space-y-3">
+                    {g.titolo && (
+                      <h3 className="px-1 pt-1 text-sm font-bold tracking-wide text-udu uppercase">
+                        {g.titolo}
+                      </h3>
+                    )}
+                    {g.domande.map((d) => (
+                      <CampoDomanda
+                        key={d.id}
+                        domanda={d}
+                        valore={risposte[chiaveRisposta(d.id, idIns)]}
+                        onCambia={(v) => rispondi(d.id, v, idIns)}
+                        mancante={manca(d, idIns)}
+                      />
+                    ))}
+                  </div>
                 ))}
             </section>
           )
         })}
 
       {mostraMancanti && (
-        <Avviso>Rispondi alle domande segnate con * prima di continuare.</Avviso>
+        <AvvisoAttenzione>Rispondi alle domande segnate con * prima di continuare.</AvvisoAttenzione>
       )}
 
-      <div className="flex gap-3">
+      <BarraAzioni>
         <Pulsante grande onClick={indietro}>
           Indietro
         </Pulsante>
-        <Pulsante grande variante="primario" onClick={avanti}>
-          {i + 1 < totale ? 'Materia successiva' : 'Vai al riepilogo'}
+        <Pulsante grande variante="primario" className="flex-1" onClick={avanti}>
+          {i + 1 < totale ? 'Materia successiva' : haExtra ? 'Continua' : 'Vai al riepilogo'}
         </Pulsante>
-      </div>
+      </BarraAzioni>
     </div>
   )
 }

@@ -7,6 +7,7 @@ import {
   CATEGORIE,
   NOME_CATEGORIA,
   NOME_TIPO,
+  nRisposteDi,
   type DomandaElenco,
 } from './etichette'
 import FormDomanda from './FormDomanda'
@@ -16,7 +17,7 @@ export default function Domande() {
     () =>
       supabase
         .from('domande')
-        .select('*, collegamenti_domanda(count), risposte(count)')
+        .select('*, collegamenti_domanda(count), risposte(count), risposte_extra(count)')
         .order('ordine')
         .order('created_at'),
     'domande',
@@ -49,6 +50,9 @@ export default function Domande() {
       .insert({
         testo: `${d.testo} (copia)`,
         categoria: d.categoria,
+        gruppo: d.gruppo,
+        mostra_se_domanda_id: d.mostra_se_domanda_id,
+        mostra_se_opzioni: d.mostra_se_opzioni,
         ambito_docente: d.ambito_docente,
         tipo_risposta: d.tipo_risposta,
         scala_min: d.scala_min,
@@ -155,7 +159,7 @@ export default function Domande() {
       ) : (
         <ul className="divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
           {filtrate.map((d) => {
-            const nRisposte = d.risposte[0]?.count ?? 0
+            const nRisposte = nRisposteDi(d)
             const nColl = d.collegamenti_domanda[0]?.count ?? 0
             return (
               <li key={d.id} className="flex flex-wrap items-center gap-3 p-4">
@@ -170,6 +174,13 @@ export default function Domande() {
                       {d.attiva ? 'Attiva' : nRisposte > 0 ? 'Disattivata' : 'Bozza'}
                     </span>
                     <span>{NOME_CATEGORIA[d.categoria] ?? d.categoria}</span>
+                    {d.gruppo && <span>· Gruppo «{d.gruppo}»</span>}
+                    {d.mostra_se_domanda_id && (
+                      <span>
+                        · Solo se «
+                        {(righe ?? []).find((x) => x.id === d.mostra_se_domanda_id)?.testo ?? '…'}»
+                      </span>
+                    )}
                     <span>· {NOME_TIPO[d.tipo_risposta] ?? d.tipo_risposta}</span>
                     {(d.categoria === 'specifica_materia' || d.categoria === 'specifica_docente') && (
                       <span>· {nColl} collegamenti</span>

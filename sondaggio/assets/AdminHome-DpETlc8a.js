@@ -1,0 +1,1 @@
+import{_ as e,b as t,h as n,p as r}from"./index-DQBDQmsa.js";var i=e();function a(){let{ruolo:e}=n(),a=r.find(t=>e&&t.ruoli.includes(e));return a?(0,i.jsx)(t,{to:a.percorso,replace:!0}):null}export{a as default};

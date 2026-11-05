@@ -11,6 +11,12 @@ export async function chiamaServer<T>(
   edizione: string,
   extra: Record<string, unknown> = {},
 ): Promise<EsitoServer<T>> {
+  // Solo in sviluppo, con l'anteprima: nessuna materia già compilata e nessun invio vero
+  if (import.meta.env.DEV && idToken === 'anteprima') {
+    return azione === 'stato'
+      ? { ok: true, dati: { compilate: [], extra_inviate: false } as T }
+      : { ok: false, stato: 400, errore: "L'anteprima non invia le risposte." }
+  }
   try {
     const risposta = await fetch(URL_FUNZIONE, {
       method: 'POST',

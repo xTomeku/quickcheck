@@ -8,6 +8,8 @@ import type { Filtri } from './filtri'
 type Props = { filtri: Filtri; domande: DomandaRif[]; vedeDocenti: boolean }
 
 const DOCENTE = ['generica_docente', 'specifica_docente']
+// Le Extra hanno una scheda a parte: non dipendono da corso, anno o materia
+const CATEGORIE_PER_MATERIA = CATEGORIE.filter((c) => c.id !== 'extra')
 
 export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
   const { righe, errore } = useStatRisposte(filtri, 'domanda', true)
@@ -17,7 +19,7 @@ export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
 
   function esporta() {
     const intestazione = ['categoria', 'domanda', 'tipo', 'risposte', 'media', 'distribuzione']
-    const corpo = CATEGORIE.flatMap((c) =>
+    const corpo = CATEGORIE_PER_MATERIA.flatMap((c) =>
       visibili
         .filter((d) => d.categoria === c.id)
         .sort((a, b) => a.ordine - b.ordine)
@@ -57,7 +59,7 @@ export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
               Le domande sui docenti sono visibili solo agli admin e a chi è stato autorizzato.
             </Avviso>
           )}
-          {CATEGORIE.map((c) => {
+          {CATEGORIE_PER_MATERIA.map((c) => {
             const delle = visibili
               .filter((d) => d.categoria === c.id)
               .sort((a, b) => a.ordine - b.ordine)

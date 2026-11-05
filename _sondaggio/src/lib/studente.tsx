@@ -15,7 +15,13 @@ const StudenteContext = createContext<Contesto | null>(null)
 // L'accesso dello studente sta solo in memoria: ricaricando la pagina si torna a fare l'accesso,
 // mentre la bozza delle risposte resta sul dispositivo.
 export function StudenteProvider({ children }: { children: ReactNode }) {
-  const [accesso, setAccesso] = useState<Accesso | null>(null)
+  // Solo in sviluppo: aprendo l'indirizzo con ?anteprima si salta l'accesso, per vedere le schermate.
+  // In produzione questa condizione è sempre falsa e il codice viene tolto dalla versione pubblicata.
+  const [accesso, setAccesso] = useState<Accesso | null>(() =>
+    import.meta.env.DEV && window.location.search.includes('anteprima')
+      ? { idToken: 'anteprima', email: 'anteprima@studenti.unisalento.it', scadenza: Date.now() + 36e5 }
+      : null,
+  )
 
   const imposta = useCallback((idToken: string) => {
     const dati = leggiToken(idToken)

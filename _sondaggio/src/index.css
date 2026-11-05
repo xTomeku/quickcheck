@@ -15,6 +15,8 @@
   --color-inchiostro-velo: #eef7fa;
   --color-inchiostro-scuro: #1b6580;
   --color-grafite: #16212a;
+  /* Sfondo delle pagine dello studente: un bianco appena caldo, così le schede bianche si staccano */
+  --color-carta: #fbf7f6;
   /* Pericoli ed errori: un rosso più vivo e leggero del rosso del marchio, per non confondere
      «Salva» con «Disattiva». Va sempre accompagnato da un'icona o da una parola, mai dal solo colore. */
   --color-pericolo: #d92d20;

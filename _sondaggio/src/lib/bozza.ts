@@ -13,6 +13,8 @@ export type Bozza = {
   risposte: Record<string, Record<string, Valore>>
   // per ogni materia_corso: insegnamenti dichiarati «non ho seguito questo docente»
   saltati: Record<string, string[]>
+  // risposte alle domande Extra (una volta sola, non legate a una materia): id domanda -> valore o testo
+  extra: Record<string, Valore>
 }
 
 export const BOZZA_VUOTA: Bozza = {
@@ -22,6 +24,7 @@ export const BOZZA_VUOTA: Bozza = {
   materieScelte: [],
   risposte: {},
   saltati: {},
+  extra: {},
 }
 
 const CHIAVE = 'sondaggio-bozza-v1'

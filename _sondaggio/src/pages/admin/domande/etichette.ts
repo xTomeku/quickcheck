@@ -6,6 +6,7 @@ export const CATEGORIE = [
   { id: 'specifica_materia', nome: 'Specifica per materia' },
   { id: 'generica_docente', nome: 'Generica sui docenti' },
   { id: 'specifica_docente', nome: 'Specifica per docente' },
+  { id: 'extra', nome: 'Extra (una volta sola, alla fine)' },
 ] as const
 
 export const NOME_CATEGORIA: Record<string, string> = Object.fromEntries(
@@ -15,6 +16,7 @@ export const NOME_CATEGORIA: Record<string, string> = Object.fromEntries(
 export const NOME_TIPO: Record<string, string> = {
   scala: 'Scala numerica',
   scelta_singola: 'Scelta singola',
+  testo: 'Risposta scritta (solo nelle Extra)',
 }
 
 export const NOME_AMBITO: Record<string, string> = {
@@ -25,4 +27,9 @@ export const NOME_AMBITO: Record<string, string> = {
 export type DomandaElenco = Tables<'domande'> & {
   collegamenti_domanda: { count: number }[]
   risposte: { count: number }[]
+  risposte_extra: { count: number }[]
 }
+
+// Risposte già raccolte per una domanda, sia per materia sia Extra
+export const nRisposteDi = (d: Pick<DomandaElenco, 'risposte' | 'risposte_extra'>) =>
+  (d.risposte[0]?.count ?? 0) + (d.risposte_extra[0]?.count ?? 0)

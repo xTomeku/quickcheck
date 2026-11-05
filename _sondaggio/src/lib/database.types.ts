@@ -265,7 +265,10 @@ export type Database = {
           created_at: string
           etichetta_max: string | null
           etichetta_min: string | null
+          gruppo: string | null
           id: string
+          mostra_se_domanda_id: string | null
+          mostra_se_opzioni: string[]
           obbligatoria: boolean
           ordine: number
           scala_max: number | null
@@ -280,7 +283,10 @@ export type Database = {
           created_at?: string
           etichetta_max?: string | null
           etichetta_min?: string | null
+          gruppo?: string | null
           id?: string
+          mostra_se_domanda_id?: string | null
+          mostra_se_opzioni?: string[]
           obbligatoria?: boolean
           ordine?: number
           scala_max?: number | null
@@ -295,7 +301,10 @@ export type Database = {
           created_at?: string
           etichetta_max?: string | null
           etichetta_min?: string | null
+          gruppo?: string | null
           id?: string
+          mostra_se_domanda_id?: string | null
+          mostra_se_opzioni?: string[]
           obbligatoria?: boolean
           ordine?: number
           scala_max?: number | null
@@ -567,11 +576,57 @@ export type Database = {
           },
         ]
       }
+      risposte_extra: {
+        Row: {
+          domanda_id: string
+          edizione_id: string
+          id: string
+          nascosta: boolean
+          opzione_id: string | null
+          testo: string | null
+          valore_numero: number | null
+        }
+        Insert: {
+          domanda_id: string
+          edizione_id: string
+          id?: string
+          nascosta?: boolean
+          opzione_id?: string | null
+          testo?: string | null
+          valore_numero?: number | null
+        }
+        Update: {
+          domanda_id?: string
+          edizione_id?: string
+          id?: string
+          nascosta?: boolean
+          opzione_id?: string | null
+          testo?: string | null
+          valore_numero?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "risposte_extra_domanda_id_fkey"
+            columns: ["domanda_id"]
+            isOneToOne: false
+            referencedRelation: "domande"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      stat_extra: {
+        Args: { p_edizione: string }
+        Returns: { distribuzione: Json; domanda_id: string; n: number; somma: number }[]
+      }
+      nascondi_risposta_extra: {
+        Args: { p_id: string; p_nascosta: boolean }
+        Returns: undefined
+      }
       stat_risposte: {
         Args: {
           p_anno_corso?: number

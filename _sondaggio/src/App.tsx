@@ -5,10 +5,12 @@ import RequireRole from './components/RequireRole'
 import RichiedeBozza from './components/RichiedeBozza'
 import StudenteLayout from './layouts/StudenteLayout'
 import { SEZIONI } from './lib/sezioni'
+import Anno from './pages/studente/Anno'
 import Benvenuto from './pages/studente/Benvenuto'
 import Compila from './pages/studente/Compila'
 import Conferma from './pages/studente/Conferma'
 import CorsoAnno from './pages/studente/CorsoAnno'
+import Extra from './pages/studente/Extra'
 import Riepilogo from './pages/studente/Riepilogo'
 import ScegliMaterie from './pages/studente/ScegliMaterie'
 
@@ -41,8 +43,10 @@ export default function App() {
         <Route index element={<Benvenuto />} />
         <Route element={<RichiedeBozza />}>
           <Route path="corso" element={<CorsoAnno />} />
+          <Route path="anno" element={<Anno />} />
           <Route path="materie" element={<ScegliMaterie />} />
           <Route path="compila/:indice" element={<Compila />} />
+          <Route path="extra" element={<Extra />} />
           <Route path="riepilogo" element={<Riepilogo />} />
         </Route>
         <Route path="conferma" element={<Conferma />} />

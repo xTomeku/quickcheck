@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import PulsanteGoogle from '../../components/PulsanteGoogle'
+import { BarraAzioni, IconaSpunta } from '../../components/studente'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
 import { chiamaServer } from '../../lib/server'
@@ -12,7 +13,8 @@ import { useElenco } from '../../lib/useElenco'
 
 export default function ScegliMaterie() {
   const { bozza } = useBozza()
-  if (!bozza.corsoId || bozza.anno === null) return <Navigate to="/corso" replace />
+  if (!bozza.corsoId) return <Navigate to="/corso" replace />
+  if (bozza.anno === null) return <Navigate to="/anno" replace />
   return <Contenuto corsoId={bozza.corsoId} anno={bozza.anno} />
 }
 
@@ -119,10 +121,11 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
     navigate('/compila/0')
   }
 
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-semibold">A quali materie vuoi rispondere?</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">A quali materie vuoi rispondere?</h1>
         <p className="mt-1 text-slate-600">
           Scegli quelle che hai seguito e di cui vuoi parlare: non devi rispondere a tutte.
         </p>
@@ -139,54 +142,84 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
           const abilitate = delloAnno.filter(selezionabile)
           const tutte = abilitate.length > 0 && abilitate.every((m) => scelte.has(m.materiaCorsoId))
           return (
-            <section key={a} className="rounded-xl border border-slate-200 bg-white">
-              <div className="flex items-center justify-between border-b border-slate-200 px-4 py-3">
-                <h2 className="font-semibold">{a}° anno</h2>
+            <section key={a} aria-labelledby={`anno-${a}`} className="space-y-2.5">
+              <div className="flex items-end justify-between">
+                <h2 id={`anno-${a}`} className="text-sm font-bold tracking-wide text-udu uppercase">
+                  {a}° anno
+                </h2>
                 {abilitate.length > 1 && (
                   <button
                     type="button"
                     onClick={() => alternaTutte(delloAnno)}
-                    className="text-sm text-slate-600 underline"
+                    className="px-1 py-2 text-sm font-semibold text-udu underline"
                   >
                     {tutte ? 'Deseleziona tutte' : 'Seleziona tutte'}
                   </button>
                 )}
               </div>
-              <ul className="divide-y divide-slate-100">
+              <ul className="space-y-2.5">
                 {delloAnno.map((m) => {
+                  const fatta = giaFatta(m)
                   const ok = selezionabile(m)
+                  const scelta = ok && scelte.has(m.materiaCorsoId)
                   return (
                     <li key={m.materiaCorsoId}>
                       <label
-                        className={`flex items-start gap-3 px-4 py-3 ${
-                          ok ? 'cursor-pointer hover:bg-slate-50' : 'opacity-50'
+                        className={`flex items-start gap-3 rounded-xl border-2 p-4 transition-colors ${
+                          scelta
+                            ? 'border-udu bg-udu-velo'
+                            : ok
+                              ? 'cursor-pointer border-slate-300 bg-white hover:border-slate-400'
+                              : 'border-slate-200 bg-slate-50'
                         }`}
                       >
                         <input
                           type="checkbox"
-                          className="mt-1 size-5"
+                          className="peer sr-only"
                           disabled={!ok}
-                          checked={ok && scelte.has(m.materiaCorsoId)}
+                          checked={scelta}
                           onChange={() => alterna(m.materiaCorsoId)}
                         />
-                        <span className="min-w-0">
-                          <span className="block font-medium">
+                        <span
+                          aria-hidden="true"
+                          className={`mt-0.5 grid size-6 flex-none place-items-center rounded-md border-2 peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-inchiostro ${
+                            scelta
+                              ? 'border-udu bg-udu text-white'
+                              : fatta
+                                ? 'border-udu bg-white text-udu'
+                                : ok
+                                  ? 'border-slate-400 bg-white'
+                                  : 'border-slate-300 bg-slate-100'
+                          }`}
+                        >
+                          {(scelta || fatta) && <IconaSpunta className="size-4" />}
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-base font-bold">
                             {m.nome}
                             {m.cfu !== null && (
-                              <span className="font-normal text-slate-500"> · {m.cfu} CFU</span>
+                              <span className="font-medium text-slate-500"> · {m.cfu} CFU</span>
                             )}
                           </span>
-                          <span className="block text-sm text-slate-500">
-                            {giaFatta(m)
-                              ? 'Hai già inviato le risposte per questa materia'
-                              : ok
+                          {fatta ? (
+                            <span className="mt-1 block text-sm text-slate-700">
+                              <span className="mr-2 inline-flex items-center gap-1 rounded-full bg-udu-velo px-2.5 py-0.5 text-xs font-bold text-udu">
+                                <IconaSpunta className="size-3" />
+                                Già inviata
+                              </span>
+                              Hai già risposto per questa materia.
+                            </span>
+                          ) : (
+                            <span className="mt-0.5 block text-sm text-slate-600">
+                              {ok
                                 ? m.insegnamenti.length === 0
                                   ? 'Nessun docente indicato'
                                   : m.insegnamenti
                                       .map((i) => `${i.docente.cognome} ${i.docente.nome}`)
                                       .join(', ')
                                 : 'Nessuna domanda disponibile'}
-                          </span>
+                            </span>
+                          )}
                         </span>
                       </label>
                     </li>
@@ -198,14 +231,20 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
         })
       )}
 
-      <div className="flex gap-3">
-        <Pulsante grande onClick={() => navigate('/corso')}>
+      <BarraAzioni>
+        <Pulsante grande onClick={() => navigate('/anno')}>
           Indietro
         </Pulsante>
-        <Pulsante grande variante="primario" disabled={nScelte === 0} onClick={continua}>
+        <Pulsante
+          grande
+          variante="primario"
+          className="flex-1"
+          disabled={nScelte === 0}
+          onClick={continua}
+        >
           Continua{nScelte > 0 ? ` (${nScelte})` : ''}
         </Pulsante>
-      </div>
+      </BarraAzioni>
     </div>
   )
 }
