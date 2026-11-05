@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PulsanteElimina from '../../../components/PulsanteElimina'
 import { Avviso, Azioni, Input, Pulsante, Select, StatoPill, TestataSezione } from '../../../components/ui'
 import type { Tables } from '../../../lib/database.types'
 import { messaggioErrore } from '../../../lib/errori'
@@ -172,6 +173,13 @@ export default function Materie() {
                 <Pulsante variante={m.attiva ? 'pericolo' : 'secondario'} onClick={() => cambiaStato(m)}>
                   {m.attiva ? 'Disattiva' : 'Riattiva'}
                 </Pulsante>
+                <PulsanteElimina
+                  tipo="materia"
+                  id={m.id}
+                  nome={m.nome}
+                  onEliminata={ricarica}
+                  onMessaggio={setAvviso}
+                />
               </Azioni>
               {docentiAperti === m.id && (
                 <div className="w-full rounded-xl border border-slate-200 bg-slate-50 p-5">

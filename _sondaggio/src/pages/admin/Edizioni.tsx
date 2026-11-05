@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import PulsanteElimina from '../../components/PulsanteElimina'
 import { ANELLO_APERTO, Avviso, Campo, Input, Pulsante, useAlApertura } from '../../components/ui'
 import type { Tables } from '../../lib/database.types'
 import { messaggioErrore } from '../../lib/errori'
@@ -122,6 +123,15 @@ export default function Edizioni() {
                   <Pulsante variante="primario" onClick={() => apri(e)}>
                     {e.aperta_il ? 'Riapri' : 'Apri'}
                   </Pulsante>
+                )}
+                {!e.aperta && (
+                  <PulsanteElimina
+                    tipo="edizione"
+                    id={e.id}
+                    nome={e.nome}
+                    onEliminata={ricarica}
+                    onMessaggio={setAvviso}
+                  />
                 )}
               </li>
             )

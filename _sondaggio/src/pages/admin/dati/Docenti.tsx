@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import PulsanteElimina from '../../../components/PulsanteElimina'
 import {
   ANELLO_APERTO,
   Avviso,
@@ -108,6 +109,13 @@ export default function Docenti() {
                 <Pulsante variante={d.attivo ? 'pericolo' : 'secondario'} onClick={() => cambiaStato(d)}>
                   {d.attivo ? 'Disattiva' : 'Riattiva'}
                 </Pulsante>
+                <PulsanteElimina
+                  tipo="docente"
+                  id={d.id}
+                  nome={`${d.cognome} ${d.nome}`}
+                  onEliminata={ricarica}
+                  onMessaggio={setAvviso}
+                />
               </Azioni>
             </li>
           ))}

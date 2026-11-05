@@ -619,6 +619,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      elimina_voce: {
+        Args: { p_esegui?: boolean; p_id: string; p_tipo: string }
+        Returns: Json
+      }
       stat_extra: {
         Args: { p_edizione: string }
         Returns: { distribuzione: Json; domanda_id: string; n: number; somma: number }[]

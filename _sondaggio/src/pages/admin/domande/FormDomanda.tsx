@@ -19,6 +19,9 @@ import {
   type DomandaElenco,
 } from './etichette'
 
+// Voce del menu dei gruppi che apre il campo per scriverne uno nuovo
+const NUOVO_GRUPPO = '__nuovo__'
+
 type Voce = { id: string; etichetta: string }
 type Impostazione = { chiave: string; valore: string }
 type InsegnamentoVoce = {
@@ -44,6 +47,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
   const [ambito, setAmbito] = useState(domanda?.ambito_docente ?? 'docente')
   const [testo, setTesto] = useState(domanda?.testo ?? '')
   const [gruppo, setGruppo] = useState(domanda?.gruppo ?? '')
+  const [nuovoGruppo, setNuovoGruppo] = useState(false)
   // Condizione «mostra solo se»: la domanda da cui dipende e le sue risposte che la fanno comparire
   const [condDomanda, setCondDomanda] = useState(domanda?.mostra_se_domanda_id ?? '')
   const [condOpzioni, setCondOpzioni] = useState<Set<string>>(
@@ -324,18 +328,35 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       </Campo>
 
       <Campo etichetta="Gruppo (titolo sopra le domande, facoltativo)">
-        <Input
-          list="gruppi-domande"
-          maxLength={60}
-          placeholder="ad esempio: Materiale didattico"
-          value={gruppo}
-          onChange={(e) => setGruppo(e.target.value)}
-        />
-        <datalist id="gruppi-domande">
-          {titoliGruppi.map((g) => (
-            <option key={g} value={g} />
-          ))}
-        </datalist>
+        <Select
+          value={nuovoGruppo ? NUOVO_GRUPPO : gruppo}
+          onChange={(e) => {
+            const scelto = e.target.value
+            setNuovoGruppo(scelto === NUOVO_GRUPPO)
+            setGruppo(scelto === NUOVO_GRUPPO ? '' : scelto)
+          }}
+        >
+          <option value="">Nessun gruppo</option>
+          {[...new Set([...titoliGruppi, ...(gruppo !== '' && !nuovoGruppo ? [gruppo] : [])])]
+            .sort((a, b) => a.localeCompare(b))
+            .map((g) => (
+              <option key={g} value={g}>
+                {g}
+              </option>
+            ))}
+          <option value={NUOVO_GRUPPO}>Nuovo gruppo…</option>
+        </Select>
+        {nuovoGruppo && (
+          <Input
+            autoFocus
+            className="mt-2"
+            aria-label="Nome del nuovo gruppo"
+            maxLength={60}
+            placeholder="ad esempio: Materiale didattico"
+            value={gruppo}
+            onChange={(e) => setGruppo(e.target.value)}
+          />
+        )}
       </Campo>
 
       <Campo etichetta="4. Tipo di risposta">

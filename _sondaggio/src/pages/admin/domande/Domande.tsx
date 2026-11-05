@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PulsanteElimina from '../../../components/PulsanteElimina'
 import { Avviso, Input, Pulsante, Select } from '../../../components/ui'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
@@ -201,7 +202,15 @@ export default function Domande() {
                   onClick={() => cambiaStato(d)}
                 >
                   {d.attiva ? 'Disattiva' : 'Attiva'}
-                </Pulsante>              </li>
+                </Pulsante>
+                <PulsanteElimina
+                  tipo="domanda"
+                  id={d.id}
+                  nome={d.testo}
+                  onEliminata={ricarica}
+                  onMessaggio={setAvviso}
+                />
+              </li>
             )
           })}
         </ul>
