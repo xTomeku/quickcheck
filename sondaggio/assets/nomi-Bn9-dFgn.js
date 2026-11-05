@@ -1,0 +1,1 @@
+function e(e){return e.normalize(`NFD`).replace(/\p{M}/gu,``).toLowerCase().replace(/[^\p{L}\p{N}]+/gu,` `).trim()}function t(t){return e(`${t.cognome} ${t.nome}`).split(` `).sort().join(` `)}function n(e,n){let r=t(n);return r===``?void 0:e.find(e=>t(e)===r)}export{e as n,n as r,t};
