@@ -20,10 +20,21 @@ import MaterieCorso from './MaterieCorso'
 
 type Corso = Tables<'corsi_di_laurea'> & { materie_corso: { count: number }[] }
 
+// Cosa sta facendo il modulo aperto
+type Modulo = { azione: 'nuovo' } | { azione: 'modifica' | 'duplica'; corso: Corso }
+
 const TIPI: Record<string, string> = {
   triennale: 'Triennale',
   magistrale: 'Magistrale',
   ciclo_unico: 'Ciclo unico',
+}
+
+// Il nome dei corsi è unico nel dipartimento: si propone il primo «(copia)» ancora libero
+function nomeCopia(nome: string, esistenti: string[]) {
+  const occupati = new Set(esistenti)
+  let candidato = `${nome} (copia)`
+  for (let i = 2; occupati.has(candidato); i++) candidato = `${nome} (copia ${i})`
+  return candidato
 }
 
 export default function Corsi() {
@@ -31,7 +42,7 @@ export default function Corsi() {
     () => supabase.from('corsi_di_laurea').select('*, materie_corso(count)').order('nome'),
     'corsi',
   )
-  const [modifica, setModifica] = useState<Corso | 'nuovo' | null>(null)
+  const [modulo, setModulo] = useState<Modulo | null>(null)
   const [avviso, setAvviso] = useState<string | null>(null)
   const [materieAperte, setMaterieAperte] = useState<string | null>(null)
 
@@ -57,7 +68,7 @@ export default function Corsi() {
         titolo="Corsi di laurea"
         aiuto="Apri «Materie» su un corso per scegliere quali materie ha e in che anno."
       >
-        <Pulsante variante="primario" onClick={() => setModifica('nuovo')}>
+        <Pulsante variante="primario" onClick={() => setModulo({ azione: 'nuovo' })}>
           Nuovo corso
         </Pulsante>
       </TestataSezione>
@@ -65,12 +76,15 @@ export default function Corsi() {
       {avviso && <Avviso>{avviso}</Avviso>}
       {errore && <Avviso>{errore}</Avviso>}
 
-      {modifica && (
+      {modulo && (
+        // La chiave rifà il modulo da capo quando si passa a un altro corso o a un'altra azione
         <FormCorso
-          corso={modifica === 'nuovo' ? null : modifica}
-          onAnnulla={() => setModifica(null)}
+          key={modulo.azione === 'nuovo' ? 'nuovo' : `${modulo.azione}-${modulo.corso.id}`}
+          modulo={modulo}
+          nomiEsistenti={(righe ?? []).map((c) => c.nome)}
+          onAnnulla={() => setModulo(null)}
           onSalvato={() => {
-            setModifica(null)
+            setModulo(null)
             setAvviso(null)
             ricarica()
           }}
@@ -112,7 +126,8 @@ export default function Corsi() {
                 >
                   {materieAperte === c.id ? 'Chiudi materie' : 'Materie'}
                 </Pulsante>
-                <Pulsante onClick={() => setModifica(c)}>Modifica</Pulsante>
+                <Pulsante onClick={() => setModulo({ azione: 'modifica', corso: c })}>Modifica</Pulsante>
+                <Pulsante onClick={() => setModulo({ azione: 'duplica', corso: c })}>Duplica</Pulsante>
                 <Pulsante variante={c.attivo ? 'pericolo' : 'secondario'} onClick={() => cambiaStato(c)}>
                   {c.attivo ? 'Disattiva' : 'Riattiva'}
                 </Pulsante>
@@ -137,21 +152,76 @@ export default function Corsi() {
   )
 }
 
+// Crea la copia e le collega le stesse materie, ognuna nello stesso anno. Restituisce un messaggio
+// d'errore, oppure null se è andata bene.
+async function duplicaCorso(
+  origine: Corso,
+  valori: { nome: string; tipo: string; durata_anni: number },
+): Promise<string | null> {
+  const { data: materie, error: errLettura } = await supabase
+    .from('materie_corso')
+    .select('materia_id, anno')
+    .eq('corso_id', origine.id)
+  if (errLettura) return messaggioErrore(errLettura)
+
+  // Si controlla prima di creare qualcosa: il database rifiuterebbe comunque quelle materie
+  const ultimoAnno = Math.max(0, ...(materie ?? []).map((m) => m.anno))
+  if (ultimoAnno > valori.durata_anni) {
+    return `Il corso ha materie fino al ${ultimoAnno}° anno: la durata non può essere inferiore.`
+  }
+
+  const { data: copia, error: errCorso } = await supabase
+    .from('corsi_di_laurea')
+    .insert({ ...valori, dipartimento_id: origine.dipartimento_id, attivo: origine.attivo })
+    .select('id')
+    .single()
+  if (errCorso) {
+    return errCorso.code === '23505'
+      ? 'Esiste già un corso con questo nome: scegline un altro.'
+      : messaggioErrore(errCorso)
+  }
+
+  if (!materie || materie.length === 0) return null
+  const { error: errMaterie } = await supabase
+    .from('materie_corso')
+    .insert(materie.map((m) => ({ materia_id: m.materia_id, anno: m.anno, corso_id: copia.id })))
+  if (!errMaterie) return null
+
+  // Le materie si inseriscono tutte o nessuna: senza, si toglie anche il corso appena creato
+  const { error: errPulizia } = await supabase.from('corsi_di_laurea').delete().eq('id', copia.id)
+  return errPulizia
+    ? `Le materie non sono state copiate e «${valori.nome}» è rimasto senza: eliminalo e riprova.`
+    : messaggioErrore(errMaterie)
+}
+
 function FormCorso({
-  corso,
+  modulo,
+  nomiEsistenti,
   onAnnulla,
   onSalvato,
 }: {
-  corso: Corso | null
+  modulo: Modulo
+  nomiEsistenti: string[]
   onAnnulla: () => void
   onSalvato: () => void
 }) {
   const ref = useAlApertura<HTMLFormElement>()
-  const [nome, setNome] = useState(corso?.nome ?? '')
+  const corso = modulo.azione === 'nuovo' ? null : modulo.corso
+  const [nome, setNome] = useState(() =>
+    modulo.azione === 'duplica' ? nomeCopia(modulo.corso.nome, nomiEsistenti) : (corso?.nome ?? ''),
+  )
   const [tipo, setTipo] = useState(corso?.tipo ?? 'triennale')
   const [durata, setDurata] = useState(String(corso?.durata_anni ?? 3))
   const [errore, setErrore] = useState<string | null>(null)
   const [invio, setInvio] = useState(false)
+
+  const titolo =
+    modulo.azione === 'nuovo'
+      ? 'Nuovo corso'
+      : modulo.azione === 'modifica'
+        ? 'Modifica corso'
+        : `Duplica «${modulo.corso.nome}»`
+  const nMaterie = corso?.materie_corso[0]?.count ?? 0
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
@@ -160,6 +230,13 @@ function FormCorso({
     const valori = { nome: nome.trim(), tipo, durata_anni: Number(durata) }
 
     let errDb: { code?: string; message: string } | null = null
+    if (modulo.azione === 'duplica') {
+      const messaggio = await duplicaCorso(modulo.corso, valori)
+      setInvio(false)
+      if (messaggio) setErrore(messaggio)
+      else onSalvato()
+      return
+    }
     if (corso) {
       const r = await supabase.from('corsi_di_laurea').update(valori).eq('id', corso.id)
       errDb = r.error
@@ -193,7 +270,16 @@ function FormCorso({
       onSubmit={onSubmit}
       className={`space-y-4 rounded-xl border border-slate-300 bg-white p-4 ${ANELLO_APERTO}`}
     >
-      <h3 className="font-semibold">{corso ? 'Modifica corso' : 'Nuovo corso'}</h3>
+      <div>
+        <h3 className="font-semibold">{titolo}</h3>
+        {modulo.azione === 'duplica' && (
+          <p className="mt-1 text-sm text-slate-500">
+            {nMaterie === 0
+              ? 'Il corso non ha materie da copiare.'
+              : `La copia avrà le stesse materie (${nMaterie}), ognuna nello stesso anno. Sono le stesse materie, non dei doppioni: docenti e nome restano in comune con il corso originale.`}
+          </p>
+        )}
+      </div>
       <Campo etichetta="Nome">
         <Input required value={nome} onChange={(e) => setNome(e.target.value)} />
       </Campo>
@@ -221,7 +307,7 @@ function FormCorso({
       {errore && <Avviso>{errore}</Avviso>}
       <div className="flex gap-2">
         <Pulsante type="submit" variante="primario" disabled={invio}>
-          {invio ? 'Salvataggio…' : 'Salva'}
+          {invio ? 'Salvataggio…' : modulo.azione === 'duplica' ? 'Crea copia' : 'Salva'}
         </Pulsante>
         <Pulsante variante="testo" onClick={onAnnulla}>
           Annulla
