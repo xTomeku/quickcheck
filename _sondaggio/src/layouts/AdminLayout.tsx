@@ -101,6 +101,19 @@ function AdminAccesso() {
                 </NavLink>
               </li>
             ))}
+            <li className="mt-2 border-t border-slate-200 pt-3">
+              {/* La pagina degli studenti è la stessa applicazione, alla radice: si apre in una nuova scheda */}
+              <a
+                href="./#/"
+                target="_blank"
+                rel="noopener"
+                className="flex min-h-11 items-center gap-3 rounded-lg border-l-4 border-transparent px-3 text-[15px] font-semibold text-slate-700 hover:bg-slate-100"
+              >
+                <Icona d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />
+                Vai al sondaggio
+                <span className="sr-only">(si apre in una nuova scheda)</span>
+              </a>
+            </li>
           </ul>
           <div className="mt-auto space-y-2 border-t border-slate-200 p-4">
             <p className="text-sm text-slate-500">

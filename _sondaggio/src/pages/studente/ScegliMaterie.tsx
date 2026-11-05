@@ -76,10 +76,9 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
   }
 
   const durata = corso.righe[0]?.durata_anni ?? 3
-  const anniVisibili =
-    anno === 'fuori_corso'
-      ? Array.from({ length: durata }, (_, i) => i + 1)
-      : [anno - 1, anno].filter((a) => a >= 1)
+  // Tutti gli anni fino a quello dello studente (i fuori corso vedono l'intero corso)
+  const ultimoAnno = anno === 'fuori_corso' ? durata : anno
+  const anniVisibili = Array.from({ length: ultimoAnno }, (_, i) => i + 1)
 
   const giaFatta = (m: MateriaDati) => compilate.has(m.materiaCorsoId)
   const selezionabile = (m: MateriaDati) =>

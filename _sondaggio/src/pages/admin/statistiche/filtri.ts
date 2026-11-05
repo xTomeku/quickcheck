@@ -1,4 +1,5 @@
-// '' significa «tutti»; annoStudente può essere '' | '1'..'6' | 'fuori_corso'
+// '' significa «tutti»; annoStudente può essere '' | '1'..'6' | 'fuori_corso'.
+// Materia e docente non sono nella barra dei filtri: li imposta il dettaglio aperto dalla classifica.
 export type Filtri = {
   edizione: string
   corso: string

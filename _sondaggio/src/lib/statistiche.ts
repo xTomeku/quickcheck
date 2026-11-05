@@ -8,6 +8,10 @@ export type Agg = { n: number; somma: number; distribuzione: Record<string, numb
 
 export const AGG_VUOTO: Agg = { n: 0, somma: 0, distribuzione: {} }
 
+// Sotto questa soglia i dati si mostrano lo stesso, ma segnalati: sono poco affidabili e rischiano
+// di rendere riconoscibile chi ha risposto
+export const SOGLIA_POCHE_RISPOSTE = 5
+
 export function daRiga(r: { n: number; somma: number; distribuzione: Json }): Agg {
   return { n: r.n, somma: r.somma, distribuzione: r.distribuzione as Record<string, number> }
 }

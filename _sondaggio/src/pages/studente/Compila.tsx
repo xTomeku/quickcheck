@@ -102,6 +102,16 @@ export default function Compila() {
 
   return (
     <div className="space-y-8">
+      {/* Il nome della materia resta in cima mentre si scorre, così non ci si perde fra le domande */}
+      <div className="sticky top-0 z-20 -mx-4 -mt-6 flex items-center gap-3 border-b border-slate-200 bg-white/95 px-4 py-3 shadow-sm backdrop-blur">
+        <h1 className="min-w-0 flex-1 text-xl leading-tight font-extrabold tracking-tight">
+          {materia.nome}
+        </h1>
+        <span className="flex-none rounded-full bg-udu-velo px-2.5 py-1 text-xs font-bold text-udu">
+          {i + 1}/{totale}
+        </span>
+      </div>
+
       <div>
         <p className="text-sm font-semibold text-slate-600">
           Materia {i + 1} di {totale}
@@ -109,8 +119,7 @@ export default function Compila() {
         <div className="mt-2">
           <Segmenti totale={totale} corrente={i} />
         </div>
-        <h1 className="mt-4 text-2xl leading-tight font-extrabold tracking-tight">{materia.nome}</h1>
-        <p className="mt-1 text-sm text-slate-600">
+        <p className="mt-3 text-sm text-slate-600">
           Le domande con <span className="font-bold text-udu">*</span> sono obbligatorie.
         </p>
       </div>

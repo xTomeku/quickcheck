@@ -5,8 +5,8 @@ import { messaggioErrore } from '../../../lib/errori'
 import { daRiga, type Agg } from '../../../lib/statistiche'
 import { supabase } from '../../../lib/supabase'
 import { useElenco } from '../../../lib/useElenco'
-import BloccoDomanda from './BloccoDomanda'
 import type { DomandaRif } from './dati'
+import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 
 type Props = { edizione: string; domande: DomandaRif[] }
 type RigaTesto = { id: string; domanda_id: string; testo: string | null; nascosta: boolean }
@@ -59,14 +59,18 @@ export default function PerExtra({ edizione, domande }: Props) {
   return (
     <div className="space-y-4">
       <p className="text-sm text-slate-500">
-        Le domande Extra si chiedono una sola volta a ogni studente, per questo qui valgono solo
-        per l'edizione scelta: i filtri per corso, anno, materia e docente non si applicano.
+        Le domande Extra si chiedono una sola volta a ogni studente e non riguardano una materia:
+        per questo qui si sceglie solo l'edizione.
       </p>
       {avviso && <Avviso>{avviso}</Avviso>}
 
       {extra.map((d) => {
         if (d.tipo_risposta !== 'testo') {
-          return <BloccoDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
+          return (
+            <ElencoDomande key={d.id} domande={[d]}>
+              <RigaDomanda domanda={d} agg={perDomanda.get(d.id)} />
+            </ElencoDomande>
+          )
         }
         const risposte = (testi.righe ?? []).filter((t) => t.domanda_id === d.id)
         const visibili = risposte.filter((t) => !t.nascosta).length

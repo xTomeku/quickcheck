@@ -1,13 +1,18 @@
 import { Avviso, Pulsante } from '../../../components/ui'
-import { daRiga, formatta, media, scaricaCsv, type Agg } from '../../../lib/statistiche'
+import { daRiga, scaricaCsv, type Agg } from '../../../lib/statistiche'
 import { CATEGORIE } from '../domande/etichette'
-import BloccoDomanda from './BloccoDomanda'
-import { useStatRisposte, voci, type DomandaRif } from './dati'
+import {
+  CATEGORIE_DOCENTE,
+  celleDomanda,
+  COLONNE_DOMANDA,
+  useStatRisposte,
+  type DomandaRif,
+} from './dati'
 import type { Filtri } from './filtri'
+import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 
 type Props = { filtri: Filtri; domande: DomandaRif[]; vedeDocenti: boolean }
 
-const DOCENTE = ['generica_docente', 'specifica_docente']
 // Le Extra hanno una scheda a parte: non dipendono da corso, anno o materia
 const CATEGORIE_PER_MATERIA = CATEGORIE.filter((c) => c.id !== 'extra')
 
@@ -15,30 +20,16 @@ export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
   const { righe, errore } = useStatRisposte(filtri, 'domanda', true)
   const perDomanda = new Map<string, Agg>((righe ?? []).map((r) => [r.domanda_id, daRiga(r)]))
 
-  const visibili = domande.filter((d) => vedeDocenti || !DOCENTE.includes(d.categoria))
+  const visibili = domande.filter((d) => vedeDocenti || !CATEGORIE_DOCENTE.includes(d.categoria))
 
   function esporta() {
-    const intestazione = ['categoria', 'domanda', 'tipo', 'risposte', 'media', 'distribuzione']
     const corpo = CATEGORIE_PER_MATERIA.flatMap((c) =>
       visibili
         .filter((d) => d.categoria === c.id)
         .sort((a, b) => a.ordine - b.ordine)
-        .map((d) => {
-          const agg = perDomanda.get(d.id)
-          const med = d.tipo_risposta === 'scala' ? media(agg) : null
-          return [
-            c.nome,
-            d.testo,
-            d.tipo_risposta === 'scala' ? 'scala' : 'scelta singola',
-            String(agg?.n ?? 0),
-            med === null ? '' : formatta(med),
-            voci(d, agg)
-              .map((v) => `${v.etichetta}: ${v.conteggio}`)
-              .join(' | '),
-          ]
-        }),
+        .map((d) => [c.nome, ...celleDomanda(d, perDomanda.get(d.id))]),
     )
-    scaricaCsv('statistiche-per-domanda.csv', [intestazione, ...corpo])
+    scaricaCsv('statistiche-per-domanda.csv', [['categoria', ...COLONNE_DOMANDA], ...corpo])
   }
 
   return (
@@ -65,11 +56,13 @@ export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
               .sort((a, b) => a.ordine - b.ordine)
             if (delle.length === 0) return null
             return (
-              <section key={c.id} className="space-y-3">
+              <section key={c.id} className="space-y-2">
                 <h2 className="font-semibold text-slate-700">{c.nome}</h2>
-                {delle.map((d) => (
-                  <BloccoDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
-                ))}
+                <ElencoDomande domande={delle}>
+                  {delle.map((d) => (
+                    <RigaDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
+                  ))}
+                </ElencoDomande>
               </section>
             )
           })}

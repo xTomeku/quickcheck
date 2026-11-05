@@ -1,4 +1,5 @@
-import type { Agg, RigaStat } from '../../../lib/statistiche'
+import { normalizza } from '../../../lib/nomi'
+import { formatta, media, type Agg, type RigaStat } from '../../../lib/statistiche'
 import { supabase } from '../../../lib/supabase'
 import { useElenco } from '../../../lib/useElenco'
 import { argomenti, type Filtri } from './filtri'
@@ -33,6 +34,47 @@ export function voci(domanda: DomandaRif, agg: Agg | undefined) {
   return [...domanda.opzioni_risposta]
     .sort((a, b) => a.ordine - b.ordine)
     .map((o) => ({ etichetta: o.testo, conteggio: agg?.distribuzione[o.id] ?? 0 }))
+}
+
+export const CATEGORIE_DOCENTE = ['generica_docente', 'specifica_docente']
+
+// Media di più domande a scala: ognuna viene riportata da 1 a 5, così una scala diversa non falsa il conto
+export function mediaGenerale(
+  righe: { domanda_id: string; n: number; somma: number }[],
+  domande: Map<string, DomandaRif>,
+): number | null {
+  let n = 0
+  let somma = 0
+  for (const r of righe) {
+    const d = domande.get(r.domanda_id)
+    if (d?.tipo_risposta !== 'scala' || r.n === 0) continue
+    const min = d.scala_min ?? 1
+    const max = d.scala_max ?? 5
+    if (max <= min) continue
+    somma += r.n * (1 + ((r.somma / r.n - min) / (max - min)) * 4)
+    n += r.n
+  }
+  return n > 0 ? somma / n : null
+}
+
+// Le colonne comuni a ogni esportazione: una domanda con le sue risposte
+export const COLONNE_DOMANDA = ['domanda', 'tipo', 'risposte', 'media', 'distribuzione']
+
+export function celleDomanda(d: DomandaRif, agg: Agg | undefined): string[] {
+  const med = d.tipo_risposta === 'scala' ? media(agg) : null
+  return [
+    d.testo,
+    d.tipo_risposta === 'scala' ? 'scala' : 'scelta singola',
+    String(agg?.n ?? 0),
+    med === null ? '' : formatta(med),
+    voci(d, agg)
+      .map((v) => `${v.etichetta}: ${v.conteggio}`)
+      .join(' | '),
+  ]
+}
+
+export function nomeFileCsv(tipo: string, nome: string) {
+  return `statistiche-${tipo}-${normalizza(nome).replace(/ /g, '-')}.csv`
 }
 
 // Elenchi usati per i filtri e per dare un nome a ciò che torna dal database
@@ -91,11 +133,27 @@ export function useRiferimenti() {
 
 export type Gruppo = 'domanda' | 'domanda_materia' | 'domanda_docente'
 
+const RIGHE_PER_PAGINA = 1000
+
 export function useStatRisposte(f: Filtri, gruppo: Gruppo, attivo: boolean) {
   const args = argomenti(f)
   return useElenco<RigaStat>(async () => {
     if (!attivo || !f.edizione) return { data: [], error: null }
-    return await supabase.rpc('stat_risposte', { ...args, p_gruppo: gruppo })
+    // Il database non restituisce più di 1000 righe per richiesta, e la classifica delle materie
+    // (domande × materie) ci arriva vicino: senza le pagine le medie sarebbero sbagliate senza avvisi.
+    // L'ordine fisso serve perché le pagine non si sovrappongano.
+    const righe: RigaStat[] = []
+    for (let da = 0; ; da += RIGHE_PER_PAGINA) {
+      const { data, error } = await supabase
+        .rpc('stat_risposte', { ...args, p_gruppo: gruppo })
+        .order('domanda_id')
+        .order('materia_id')
+        .order('docente_id')
+        .range(da, da + RIGHE_PER_PAGINA - 1)
+      if (error) return { data: null, error }
+      righe.push(...(data ?? []))
+      if ((data?.length ?? 0) < RIGHE_PER_PAGINA) return { data: righe, error: null }
+    }
   }, JSON.stringify(['risposte', gruppo, args, attivo]))
 }
 
