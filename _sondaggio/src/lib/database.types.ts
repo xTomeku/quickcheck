@@ -526,7 +526,9 @@ export type Database = {
           domanda_id: string
           id: string
           insegnamento_id: string | null
+          nascosta: boolean
           opzione_id: string | null
+          testo: string | null
           valore_numero: number | null
         }
         Insert: {
@@ -534,7 +536,9 @@ export type Database = {
           domanda_id: string
           id?: string
           insegnamento_id?: string | null
+          nascosta?: boolean
           opzione_id?: string | null
+          testo?: string | null
           valore_numero?: number | null
         }
         Update: {
@@ -542,7 +546,9 @@ export type Database = {
           domanda_id?: string
           id?: string
           insegnamento_id?: string | null
+          nascosta?: boolean
           opzione_id?: string | null
+          testo?: string | null
           valore_numero?: number | null
         }
         Relationships: [
@@ -630,6 +636,29 @@ export type Database = {
       nascondi_risposta_extra: {
         Args: { p_id: string; p_nascosta: boolean }
         Returns: undefined
+      }
+      nascondi_risposta: {
+        Args: { p_id: string; p_nascosta: boolean }
+        Returns: undefined
+      }
+      testi_risposte: {
+        Args: {
+          p_anno_corso?: number
+          p_anno_studente?: number
+          p_corso?: string
+          p_docente?: string
+          p_edizione: string
+          p_fuori_corso?: boolean
+          p_materia?: string
+        }
+        Returns: {
+          docente_id: string | null
+          domanda_id: string
+          id: string
+          materia_id: string
+          nascosta: boolean
+          testo: string
+        }[]
       }
       stat_risposte: {
         Args: {

@@ -13,12 +13,19 @@ export type VoceEsportazione = {
   agg: Agg | undefined
 }
 
+// Le risposte scritte, una per riga (quelle nascoste non si esportano)
+export type TestiEsportazione = {
+  titoli: string[]
+  righe: { colonne: (string | number)[]; domanda: string; testo: string }[]
+}
+
 type Esportazione = {
   nomeFile: string
   contesto: Contesto
   // Titoli delle colonne iniziali, uno per ogni valore di `colonne`
   titoliColonne: string[]
   voci: VoceEsportazione[]
+  testi?: TestiEsportazione
 }
 
 // Riga dei titoli: inchiostro scuro e testo bianco, così si stacca dai dati.
@@ -134,6 +141,19 @@ function foglioScelte(titoliColonne: string[], elenco: VoceEsportazione[]): Shee
   }
 }
 
+function foglioTesti(testi: TestiEsportazione | undefined): Sheet<unknown> | null {
+  if (!testi || testi.righe.length === 0) return null
+  return {
+    sheet: 'Risposte scritte',
+    data: [
+      [...testi.titoli.map((t) => titolo(t)), titolo('Domanda'), titolo('Risposta')],
+      ...testi.righe.map((r) => [...r.colonne.map(testo), testo(r.domanda), testo(r.testo)]),
+    ],
+    stickyRowsCount: 1,
+    columns: [...larghezzaColonne(testi.titoli.length), { width: 45 }, { width: 80 }],
+  }
+}
+
 function foglioInformazioni(contesto: Contesto): Sheet<unknown> {
   const oggi = new Date().toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })
   return {
@@ -155,11 +175,12 @@ function foglioInformazioni(contesto: Contesto): Sheet<unknown> {
 }
 
 // La libreria si carica solo qui: chi non esporta non la scarica
-export async function esportaExcel({ nomeFile, contesto, titoliColonne, voci }: Esportazione) {
+export async function esportaExcel({ nomeFile, contesto, titoliColonne, voci, testi }: Esportazione) {
   const { default: writeXlsxFile } = await import('write-excel-file/browser')
   const fogli = [
     foglioScale(titoliColonne, voci),
     foglioScelte(titoliColonne, voci),
+    foglioTesti(testi),
     foglioInformazioni(contesto),
   ].filter((f): f is Sheet<unknown> => f !== null)
   await writeXlsxFile(fogli as Sheet<Blob>[]).toFile(nomeFile)

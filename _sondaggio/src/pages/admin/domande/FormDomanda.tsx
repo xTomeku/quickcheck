@@ -361,8 +361,6 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
               // La domanda da cui dipende deve avere la stessa categoria
               setCondDomanda('')
               setCondOpzioni(new Set())
-              // La risposta scritta esiste solo nelle domande Extra
-              if (e.target.value !== 'extra' && tipo === 'testo') setTipo('scala')
             }}
           >
             {CATEGORIE.map((c) => (
@@ -431,9 +429,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
 
       <Campo etichetta="4. Tipo di risposta">
         <Select disabled={bloccata} value={tipo} onChange={(e) => setTipo(e.target.value)}>
-          {Object.entries(NOME_TIPO)
-            .filter(([valore]) => valore !== 'testo' || categoria === 'extra')
-            .map(([valore, nome]) => (
+          {Object.entries(NOME_TIPO).map(([valore, nome]) => (
             <option key={valore} value={valore}>
               {nome}
             </option>

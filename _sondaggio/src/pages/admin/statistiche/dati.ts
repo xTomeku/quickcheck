@@ -136,6 +136,34 @@ export function useStatRisposte(f: Filtri, gruppo: Gruppo, attivo: boolean) {
   }, JSON.stringify(['risposte', gruppo, args, attivo]))
 }
 
+export type TestoRisposta = {
+  id: string
+  domanda_id: string
+  materia_id: string
+  docente_id: string | null
+  testo: string
+  nascosta: boolean
+}
+
+// Le risposte scritte con gli stessi filtri delle statistiche. Le regole del database tolgono già
+// i testi sui docenti a chi non è autorizzato a vederli.
+export function useTesti(f: Filtri, attivo: boolean) {
+  const args = argomenti(f)
+  return useElenco<TestoRisposta>(async () => {
+    if (!attivo || !f.edizione) return { data: [], error: null }
+    const righe: TestoRisposta[] = []
+    for (let da = 0; ; da += RIGHE_PER_PAGINA) {
+      const { data, error } = await supabase
+        .rpc('testi_risposte', args)
+        .order('id')
+        .range(da, da + RIGHE_PER_PAGINA - 1)
+      if (error) return { data: null, error }
+      righe.push(...(data ?? []))
+      if ((data?.length ?? 0) < RIGHE_PER_PAGINA) return { data: righe, error: null }
+    }
+  }, JSON.stringify(['testi', args, attivo]))
+}
+
 export function useStatSaltati(f: Filtri, attivo: boolean) {
   const args = argomenti(f)
   return useElenco<{ docente_id: string; materia_id: string; n: number }>(async () => {

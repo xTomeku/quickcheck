@@ -16,6 +16,7 @@ import {
   mediaGenerale,
   useStatRisposte,
   useStatSaltati,
+  useTesti,
   voci,
   type DocenteRif,
   type DomandaRif,
@@ -27,6 +28,7 @@ import { esportaExcel, nomeFile, type Contesto, type VoceEsportazione } from './
 import type { Filtri } from './filtri'
 import PulsanteEsporta from './PulsanteEsporta'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
+import RisposteScritte from './RisposteScritte'
 
 type Props = {
   filtri: Filtri
@@ -165,6 +167,17 @@ function DettaglioDocente({
 }) {
   const { righe, errore } = useStatRisposte(filtri, 'domanda_materia', true)
   const saltati = useStatSaltati(filtri, true)
+  const testi = useTesti(filtri, true)
+
+  // I testi sul docente, con la materia in cui sono stati scritti
+  const testiDi = (domandaId: string) =>
+    (testi.righe ?? [])
+      .filter((t) => t.domanda_id === domandaId)
+      .map((t) => ({ ...t, etichetta: nomeMateria.get(t.materia_id) ?? '?' }))
+  const scritte = domande
+    .filter((d) => CATEGORIE_DOCENTE.includes(d.categoria) && d.tipo_risposta === 'testo')
+    .filter((d) => testiDi(d.id).length > 0)
+    .sort((a, b) => a.ordine - b.ordine)
 
   const perDomanda = new Map<string, { totale: Agg; perMateria: { materia: string; agg: Agg }[] }>()
   for (const r of righe ?? []) {
@@ -200,6 +213,14 @@ function DettaglioDocente({
       contesto,
       titoliColonne: ['Materia', 'Non l’hanno seguito'],
       voci: elenco,
+      testi: {
+        titoli: ['Materia'],
+        righe: scritte.flatMap((d) =>
+          testiDi(d.id)
+            .filter((t) => !t.nascosta)
+            .map((t) => ({ colonne: [t.etichetta], domanda: d.testo, testo: t.testo })),
+        ),
+      },
     })
   }
 
@@ -210,14 +231,20 @@ function DettaglioDocente({
         <Tessera valore={n} etichetta={n === 1 ? 'valutazione' : 'valutazioni'} />
         <Tessera valore={mediaDocente === null ? '—' : formatta(mediaDocente)} etichetta="media generale" />
         <Tessera valore={nSaltati} etichetta="non l’hanno seguito" />
-        {conDati.length > 0 && (
-          <PulsanteEsporta onEsporta={esporta} disabled={saltati.righe === null} />
+        {(conDati.length > 0 || scritte.length > 0) && (
+          <PulsanteEsporta onEsporta={esporta} disabled={saltati.righe === null || testi.righe === null} />
         )}
       </div>
+      {testi.errore && <Avviso>{testi.errore}</Avviso>}
+      {scritte.map((d) => (
+        <RisposteScritte key={d.id} domanda={d} voci={testiDi(d.id)} onCambiato={testi.ricarica} />
+      ))}
       {righe === null ? (
         <p className="text-slate-500">Caricamento…</p>
       ) : conDati.length === 0 ? (
-        <Avviso tipo="info">Nessuna risposta su questo docente con i filtri scelti.</Avviso>
+        scritte.length === 0 && (
+          <Avviso tipo="info">Nessuna risposta su questo docente con i filtri scelti.</Avviso>
+        )
       ) : (
         <ElencoDomande domande={conDati}>
           {conDati.map((d) => {

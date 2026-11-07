@@ -9,6 +9,7 @@ import {
   useStatCompilazioni,
   useStatRisposte,
   useStatSaltati,
+  useTesti,
   type CorsoRif,
   type DocenteRif,
   type DomandaRif,
@@ -20,6 +21,7 @@ import { esportaExcel, nomeFile, type Contesto, type VoceEsportazione } from './
 import type { Filtri } from './filtri'
 import PulsanteEsporta from './PulsanteEsporta'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
+import RisposteScritte from './RisposteScritte'
 
 type Props = {
   filtri: Filtri
@@ -180,7 +182,16 @@ function DettaglioMateria({
 }) {
   const perDocente = useStatRisposte(filtri, 'domanda_docente', vedeDocenti)
   const saltati = useStatSaltati(filtri, vedeDocenti)
+  const testi = useTesti(filtri, true)
   const [docenteAperto, setDocenteAperto] = useState<string | null>(null)
+
+  // Le domande a risposta scritta che hanno almeno un testo, per la materia o per un docente
+  const testiDi = (domandaId: string, docenteId: string | null) =>
+    (testi.righe ?? []).filter((t) => t.domanda_id === domandaId && t.docente_id === docenteId)
+  const scritteMateria = domande
+    .filter((d) => d.tipo_risposta === 'testo' && !CATEGORIE_DOCENTE.includes(d.categoria))
+    .filter((d) => testiDi(d.id, null).length > 0)
+    .sort((a, b) => a.ordine - b.ordine)
 
   const domandePerId = new Map(domande.map((d) => [d.id, d]))
   const perDomanda = new Map<string, Agg>(righe.map((r) => [r.domanda_id, daRiga(r)]))
@@ -205,10 +216,14 @@ function DettaglioMateria({
       media: mediaGenerale(righeDoc, domandePerId),
       nSaltati: (saltati.righe ?? []).find((s) => s.docente_id === doc.id)?.n ?? 0,
       conDati: domandeDocente.filter((d) => (agg.get(d.id)?.n ?? 0) > 0),
+      scritte: domandeDocente.filter((d) => d.tipo_risposta === 'testo' && testiDi(d.id, doc.id).length > 0),
     }
   })
 
-  const daEsportare = conDati.length > 0 || datiDocenti.some((x) => x.conDati.length > 0)
+  const daEsportare =
+    conDati.length > 0 ||
+    scritteMateria.length > 0 ||
+    datiDocenti.some((x) => x.conDati.length > 0 || x.scritte.length > 0)
 
   // Prima le domande sulla materia (trattino al posto del docente), poi quelle su ogni docente
   function esporta() {
@@ -225,6 +240,23 @@ function DettaglioMateria({
       contesto,
       titoliColonne: ['Docente', 'Non l’hanno seguito'],
       voci: [...sullaMateria, ...suiDocenti],
+      testi: {
+        titoli: ['Docente'],
+        righe: [
+          ...scritteMateria.flatMap((d) =>
+            testiDi(d.id, null)
+              .filter((t) => !t.nascosta)
+              .map((t) => ({ colonne: ['—'], domanda: d.testo, testo: t.testo })),
+          ),
+          ...datiDocenti.flatMap(({ doc, scritte }) =>
+            scritte.flatMap((d) =>
+              testiDi(d.id, doc.id)
+                .filter((t) => !t.nascosta)
+                .map((t) => ({ colonne: [`${doc.cognome} ${doc.nome}`], domanda: d.testo, testo: t.testo })),
+            ),
+          ),
+        ],
+      },
     })
   }
 
@@ -239,18 +271,29 @@ function DettaglioMateria({
         )}
         {daEsportare && (
           // Fermo finché non arrivano i dati dei docenti, altrimenti il file uscirebbe senza
-          <PulsanteEsporta onEsporta={esporta} disabled={perDocente.righe === null || saltati.righe === null} />
+          <PulsanteEsporta
+            onEsporta={esporta}
+            disabled={perDocente.righe === null || saltati.righe === null || testi.righe === null}
+          />
         )}
       </div>
 
-      {conDati.length === 0 ? (
+      {testi.errore && <Avviso>{testi.errore}</Avviso>}
+      {conDati.length === 0 && scritteMateria.length === 0 ? (
         <Avviso tipo="info">Nessuna risposta per questa materia con i filtri scelti.</Avviso>
       ) : (
-        <ElencoDomande domande={conDati}>
-          {conDati.map((d) => (
-            <RigaDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
+        <>
+          {conDati.length > 0 && (
+            <ElencoDomande domande={conDati}>
+              {conDati.map((d) => (
+                <RigaDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
+              ))}
+            </ElencoDomande>
+          )}
+          {scritteMateria.map((d) => (
+            <RisposteScritte key={d.id} domanda={d} voci={testiDi(d.id, null)} onCambiato={testi.ricarica} />
           ))}
-        </ElencoDomande>
+        </>
       )}
 
       {!vedeDocenti ? (
@@ -262,7 +305,7 @@ function DettaglioMateria({
           <section>
             <h3 className="mb-2 text-sm font-semibold text-slate-700">Docenti della materia</h3>
             <ul className="divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white">
-              {datiDocenti.map(({ doc, agg: aggDoc, media: medDoc, nSaltati, conDati: conDatiDoc }) => {
+              {datiDocenti.map(({ doc, agg: aggDoc, media: medDoc, nSaltati, conDati: conDatiDoc, scritte }) => {
                 const eAperto = docenteAperto === doc.id
                 return (
                   <li key={doc.id}>
@@ -288,16 +331,26 @@ function DettaglioMateria({
                       </span>
                     </button>
                     {eAperto && (
-                      <div className="px-4 pb-3">
-                        {conDatiDoc.length === 0 ? (
+                      <div className="space-y-2 px-4 pb-3">
+                        {conDatiDoc.length === 0 && scritte.length === 0 ? (
                           <p className="text-sm text-slate-500">Nessuna risposta su questo docente.</p>
                         ) : (
-                          <ElencoDomande domande={conDatiDoc}>
-                            {conDatiDoc.map((d) => (
-                              <RigaDomanda key={d.id} domanda={d} agg={aggDoc.get(d.id)} />
-                            ))}
-                          </ElencoDomande>
+                          conDatiDoc.length > 0 && (
+                            <ElencoDomande domande={conDatiDoc}>
+                              {conDatiDoc.map((d) => (
+                                <RigaDomanda key={d.id} domanda={d} agg={aggDoc.get(d.id)} />
+                              ))}
+                            </ElencoDomande>
+                          )
                         )}
+                        {scritte.map((d) => (
+                          <RisposteScritte
+                            key={d.id}
+                            domanda={d}
+                            voci={testiDi(d.id, doc.id)}
+                            onCambiato={testi.ricarica}
+                          />
+                        ))}
                       </div>
                     )}
                   </li>

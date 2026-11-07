@@ -1,20 +1,48 @@
 import { Avviso } from '../../../components/ui'
 import { daRiga, type Agg } from '../../../lib/statistiche'
 import { CATEGORIE } from '../domande/etichette'
-import { CATEGORIE_DOCENTE, useStatRisposte, type DomandaRif } from './dati'
+import {
+  CATEGORIE_DOCENTE,
+  useStatRisposte,
+  useTesti,
+  type DocenteRif,
+  type DomandaRif,
+  type MateriaRif,
+} from './dati'
 import { esportaExcel, nomeFile, type Contesto } from './esporta'
 import type { Filtri } from './filtri'
 import PulsanteEsporta from './PulsanteEsporta'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
+import RisposteScritte from './RisposteScritte'
 
-type Props = { filtri: Filtri; contesto: Contesto; domande: DomandaRif[]; vedeDocenti: boolean }
+type Props = {
+  filtri: Filtri
+  contesto: Contesto
+  domande: DomandaRif[]
+  materie: MateriaRif[]
+  docenti: DocenteRif[]
+  vedeDocenti: boolean
+}
 
 // Le Extra hanno una scheda a parte: non dipendono da corso, anno o materia
 const CATEGORIE_PER_MATERIA = CATEGORIE.filter((c) => c.id !== 'extra')
 
-export default function PerDomanda({ filtri, contesto, domande, vedeDocenti }: Props) {
+export default function PerDomanda({ filtri, contesto, domande, materie, docenti, vedeDocenti }: Props) {
   const { righe, errore } = useStatRisposte(filtri, 'domanda', true)
+  const testi = useTesti(filtri, true)
   const perDomanda = new Map<string, Agg>((righe ?? []).map((r) => [r.domanda_id, daRiga(r)]))
+
+  const nomeMateria = new Map(materie.map((m) => [m.id, m.nome]))
+  const nomeDocente = new Map(docenti.map((d) => [d.id, `${d.cognome} ${d.nome}`]))
+  const testiDi = (domandaId: string) =>
+    (testi.righe ?? [])
+      .filter((t) => t.domanda_id === domandaId)
+      .map((t) => ({
+        ...t,
+        etichetta: [nomeMateria.get(t.materia_id), t.docente_id ? nomeDocente.get(t.docente_id) : null]
+          .filter(Boolean)
+          .join(' · '),
+      }))
 
   const visibili = domande.filter((d) => vedeDocenti || !CATEGORIE_DOCENTE.includes(d.categoria))
 
@@ -29,12 +57,33 @@ export default function PerDomanda({ filtri, contesto, domande, vedeDocenti }: P
           .sort((a, b) => a.ordine - b.ordine)
           .map((d) => ({ colonne: [c.nome], domanda: d, agg: perDomanda.get(d.id) })),
       ),
+      testi: {
+        titoli: ['Categoria', 'Materia', 'Docente'],
+        righe: CATEGORIE_PER_MATERIA.flatMap((c) =>
+          visibili
+            .filter((d) => d.categoria === c.id && d.tipo_risposta === 'testo')
+            .sort((a, b) => a.ordine - b.ordine)
+            .flatMap((d) =>
+              testiDi(d.id)
+                .filter((t) => !t.nascosta)
+                .map((t) => ({
+                  colonne: [
+                    c.nome,
+                    nomeMateria.get(t.materia_id) ?? '?',
+                    t.docente_id ? (nomeDocente.get(t.docente_id) ?? '?') : '—',
+                  ],
+                  domanda: d.testo,
+                  testo: t.testo,
+                })),
+            ),
+        ),
+      },
     })
   }
 
   return (
     <div className="space-y-6">
-      {errore && <Avviso>{errore}</Avviso>}
+      {(errore ?? testi.errore) && <Avviso>{errore ?? testi.errore}</Avviso>}
       {righe === null ? (
         <p className="text-slate-500">Caricamento…</p>
       ) : (
@@ -55,14 +104,21 @@ export default function PerDomanda({ filtri, contesto, domande, vedeDocenti }: P
               .filter((d) => d.categoria === c.id)
               .sort((a, b) => a.ordine - b.ordine)
             if (delle.length === 0) return null
+            const numeriche = delle.filter((d) => d.tipo_risposta !== 'testo')
+            const scritte = delle.filter((d) => d.tipo_risposta === 'testo')
             return (
               <section key={c.id} className="space-y-2">
                 <h2 className="font-semibold text-slate-700">{c.nome}</h2>
-                <ElencoDomande domande={delle}>
-                  {delle.map((d) => (
-                    <RigaDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
-                  ))}
-                </ElencoDomande>
+                {numeriche.length > 0 && (
+                  <ElencoDomande domande={numeriche}>
+                    {numeriche.map((d) => (
+                      <RigaDomanda key={d.id} domanda={d} agg={perDomanda.get(d.id)} />
+                    ))}
+                  </ElencoDomande>
+                )}
+                {scritte.map((d) => (
+                  <RisposteScritte key={d.id} domanda={d} voci={testiDi(d.id)} onCambiato={testi.ricarica} />
+                ))}
               </section>
             )
           })}

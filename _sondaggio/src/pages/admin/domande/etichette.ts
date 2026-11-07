@@ -16,7 +16,7 @@ export const NOME_CATEGORIA: Record<string, string> = Object.fromEntries(
 export const NOME_TIPO: Record<string, string> = {
   scala: 'Scala numerica',
   scelta_singola: 'Scelta singola',
-  testo: 'Risposta scritta (solo nelle Extra)',
+  testo: 'Risposta scritta',
 }
 
 export const NOME_AMBITO: Record<string, string> = {

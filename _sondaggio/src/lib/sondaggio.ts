@@ -183,6 +183,7 @@ export function preparaInvio(
     insegnamento_id?: string
     valore_numero?: number
     opzione_id?: string
+    testo?: string
   }[] = []
 
   function aggiungi(d: DomandaCompleta, insegnamentoId?: string) {
@@ -193,7 +194,9 @@ export function preparaInvio(
       ...(insegnamentoId ? { insegnamento_id: insegnamentoId } : {}),
       ...(d.tipo_risposta === 'scala'
         ? { valore_numero: Number(valore) }
-        : { opzione_id: String(valore) }),
+        : d.tipo_risposta === 'testo'
+          ? { testo: String(valore).trim() }
+          : { opzione_id: String(valore) }),
     })
   }
 

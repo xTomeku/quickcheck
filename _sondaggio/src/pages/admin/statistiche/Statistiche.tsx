@@ -211,7 +211,14 @@ export default function Statistiche() {
             />
           )}
           {scheda === 'domande' && (
-            <PerDomanda filtri={filtri} contesto={contesto} domande={rif.domande} vedeDocenti={vedeDocenti} />
+            <PerDomanda
+              filtri={filtri}
+              contesto={contesto}
+              domande={rif.domande}
+              materie={rif.materie}
+              docenti={rif.docenti}
+              vedeDocenti={vedeDocenti}
+            />
           )}
           {scheda === 'extra' && <PerExtra edizione={filtri.edizione} domande={rif.domande} />}
         </>
