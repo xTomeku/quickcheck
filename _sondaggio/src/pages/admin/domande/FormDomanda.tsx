@@ -36,6 +36,60 @@ type Props = {
   onSalvato: () => void
 }
 
+// Salva le opzioni di una domanda conservando l'id di quelle che c'erano già: prima si abbinano per
+// testo uguale (così uno spostamento non cambia il significato), poi per posizione (così una
+// correzione del testo, come «Si» → «Sì», non lo cambia). Le altre si cancellano o si aggiungono.
+async function salvaOpzioni(
+  domandaId: string,
+  testi: string[],
+): Promise<{ code?: string; message: string } | null> {
+  const { data: esistenti, error: errLettura } = await supabase
+    .from('opzioni_risposta')
+    .select('id, testo')
+    .eq('domanda_id', domandaId)
+    .order('ordine')
+  if (errLettura) return errLettura
+
+  const libere = [...(esistenti ?? [])]
+  const abbinate: (string | null)[] = testi.map((t) => {
+    const k = libere.findIndex((o) => o.testo === t)
+    return k < 0 ? null : libere.splice(k, 1)[0].id
+  })
+  for (let i = 0; i < testi.length; i++) {
+    if (abbinate[i] === null && libere.length > 0) abbinate[i] = libere.shift()!.id
+  }
+
+  if (libere.length > 0) {
+    const { error } = await supabase
+      .from('opzioni_risposta')
+      .delete()
+      .in('id', libere.map((o) => o.id))
+    if (error) return error
+  }
+
+  // Ogni domanda non può avere due opzioni con lo stesso ordine: si passa da un numero provvisorio
+  for (const passo of [1000, 0]) {
+    for (let i = 0; i < testi.length; i++) {
+      const id = abbinate[i]
+      if (!id) continue
+      const { error } = await supabase
+        .from('opzioni_risposta')
+        .update({ testo: testi[i], ordine: passo + i + 1 })
+        .eq('id', id)
+      if (error) return error
+    }
+  }
+
+  const nuove = testi.flatMap((t, i) =>
+    abbinate[i] ? [] : [{ domanda_id: domandaId, testo: t, ordine: i + 1 }],
+  )
+  if (nuove.length > 0) {
+    const { error } = await supabase.from('opzioni_risposta').insert(nuove)
+    if (error) return error
+  }
+  return null
+}
+
 export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
   const nRisposte = domanda ? nRisposteDi(domanda) : 0
   // Con risposte già raccolte testo, categoria, tipo e scala non si possono più cambiare
@@ -60,7 +114,6 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
   const [etMax, setEtMax] = useState(domanda?.etichetta_max ?? '')
   const [opzioni, setOpzioni] = useState<string[]>(['', '', ''])
   const [obbligatoria, setObbligatoria] = useState(domanda?.obbligatoria ?? true)
-  const [ordine, setOrdine] = useState(String(domanda?.ordine ?? 0))
   const [colMaterie, setColMaterie] = useState<Set<string>>(new Set())
   const [colDocenti, setColDocenti] = useState<Set<string>>(new Set())
   const [colInsegnamenti, setColInsegnamenti] = useState<Set<string>>(new Set())
@@ -109,6 +162,12 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
         : { data: [], error: null },
     `opzioni-genitore-${condDomanda}`,
   )
+
+  // Solo le risposte scelte che esistono ancora nella domanda da cui dipende
+  const idOpzioniGenitore = new Set((opzioniGenitore.righe ?? []).map((o) => o.id))
+  const condValide = new Set([...condOpzioni].filter((o) => idOpzioniGenitore.has(o)))
+  const condOrfane =
+    opzioniGenitore.righe !== null && condDomanda !== '' && condValide.size < condOpzioni.size
 
   const materie = useElenco<{ id: string; nome: string }>(
     () => supabase.from('materie').select('id, nome').eq('attiva', true).order('nome'),
@@ -186,7 +245,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
     }
 
     const condizionata = condizionabile && condDomanda !== ''
-    if (!bloccata && condizionata && condOpzioni.size === 0) {
+    if (!bloccata && condizionata && condValide.size === 0) {
       setErrore('Scegli almeno una risposta che fa comparire la domanda, oppure togli la condizione.')
       return
     }
@@ -197,7 +256,6 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
     const comuni = {
       gruppo: gruppo.trim() || null,
       obbligatoria,
-      ordine: Number(ordine) || 0,
       etichetta_min: tipo === 'scala' ? etMin.trim() || null : null,
       etichetta_max: tipo === 'scala' ? etMax.trim() || null : null,
     }
@@ -210,33 +268,45 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       scala_min: tipo === 'scala' ? Number(scalaMin) : null,
       scala_max: tipo === 'scala' ? Number(scalaMax) : null,
       mostra_se_domanda_id: condizionata ? condDomanda : null,
-      mostra_se_opzioni: condizionata ? [...condOpzioni] : [],
+      mostra_se_opzioni: condizionata ? [...condValide] : [],
+    }
+
+    // Una domanda nuova, o spostata in un'altra categoria, va in fondo alla categoria:
+    // l'ordine si cambia poi con le frecce dell'elenco
+    async function inFondo() {
+      const { data } = await supabase
+        .from('domande')
+        .select('ordine')
+        .eq('categoria', categoria)
+        .order('ordine', { ascending: false })
+        .limit(1)
+      return (data?.[0]?.ordine ?? 0) + 10
     }
 
     let id = idCorrente
     if (id) {
+      const cambiaCategoria = !bloccata && domanda !== null && categoria !== domanda.categoria
       const { error } = await supabase
         .from('domande')
-        .update(bloccata ? comuni : completi)
+        .update(bloccata ? comuni : { ...completi, ...(cambiaCategoria ? { ordine: await inFondo() } : {}) })
         .eq('id', id)
       if (error) return fallito(error)
     } else {
-      const { data, error } = await supabase.from('domande').insert(completi).select('id').single()
+      const { data, error } = await supabase
+        .from('domande')
+        .insert({ ...completi, ordine: await inFondo() })
+        .select('id')
+        .single()
       if (error || !data) return fallito(error ?? { message: '' })
       id = data.id
       setIdCorrente(id)
     }
 
-    // 2. Le opzioni di risposta (sostituite per intero)
+    // 2. Le opzioni di risposta. Quelle che ci sono già si aggiornano e non si ricreano: le domande
+    // condizionate puntano al loro id, e un id nuovo le lascerebbe legate a una risposta sparita.
     if (!bloccata) {
-      const { error: errDel } = await supabase.from('opzioni_risposta').delete().eq('domanda_id', id)
-      if (errDel) return fallito(errDel)
-      if (tipo === 'scelta_singola' && testiOpzioni.length > 0) {
-        const { error } = await supabase
-          .from('opzioni_risposta')
-          .insert(testiOpzioni.map((t, i) => ({ domanda_id: id, testo: t, ordine: i + 1 })))
-        if (error) return fallito(error)
-      }
+      const errOpzioni = await salvaOpzioni(id, tipo === 'scelta_singola' ? testiOpzioni : [])
+      if (errOpzioni) return fallito(errOpzioni)
     }
 
     // 3. I collegamenti (sostituiti per intero)
@@ -499,8 +569,15 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
           {condDomanda !== '' && (
             <fieldset className="space-y-1.5">
               <legend className="text-sm font-medium text-slate-700">
-                …e la risposta è una di queste ({condOpzioni.size} scelte)
+                …e la risposta è una di queste ({condValide.size}{' '}
+                {condValide.size === 1 ? 'scelta' : 'scelte'})
               </legend>
+              {condOrfane && (
+                <Avviso>
+                  La condizione era legata a risposte che non esistono più, perché la domanda da cui
+                  dipende è stata modificata. Scegli di nuovo la risposta che fa comparire questa domanda.
+                </Avviso>
+              )}
               {(opzioniGenitore.righe ?? []).map((o) => (
                 <label key={o.id} className="flex items-center gap-2 text-sm">
                   <input
@@ -527,20 +604,15 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
         </div>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
-          <input
-            type="checkbox"
-            className="size-4"
-            checked={obbligatoria}
-            onChange={(e) => setObbligatoria(e.target.checked)}
-          />
-          6. Risposta obbligatoria
-        </label>
-        <Campo etichetta="7. Ordine nella categoria (numero più basso = prima)">
-          <Input type="number" value={ordine} onChange={(e) => setOrdine(e.target.value)} />
-        </Campo>
-      </div>
+      <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+        <input
+          type="checkbox"
+          className="size-4"
+          checked={obbligatoria}
+          onChange={(e) => setObbligatoria(e.target.checked)}
+        />
+        6. Risposta obbligatoria
+      </label>
 
       <Anteprima
         testo={testo}
