@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { BarraAzioni, Scelta } from '../../components/studente'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
@@ -21,6 +21,9 @@ export default function CorsoAnno() {
         .order('nome'),
     'corsi',
   )
+
+  // Dopo il primo invio dell'edizione il corso non si cambia più
+  if (bozza.corsoBloccato) return <Navigate to="/materie" replace />
 
   const corso = righe?.find((c) => c.id === bozza.corsoId)
 

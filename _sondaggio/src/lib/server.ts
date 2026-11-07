@@ -14,7 +14,7 @@ export async function chiamaServer<T>(
   // Solo in sviluppo, con l'anteprima: nessuna materia già compilata e nessun invio vero
   if (import.meta.env.DEV && idToken === 'anteprima') {
     return azione === 'stato'
-      ? { ok: true, dati: { compilate: [], extra_inviate: false } as T }
+      ? { ok: true, dati: { compilate: [], extra_inviate: false, scelta: null } as T }
       : { ok: false, stato: 400, errore: "L'anteprima non invia le risposte." }
   }
   try {

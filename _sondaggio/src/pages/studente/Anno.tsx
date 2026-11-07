@@ -6,7 +6,7 @@ import { supabase } from '../../lib/supabase'
 import { nomeLeggibile } from '../../lib/testo'
 import { useElenco } from '../../lib/useElenco'
 
-type Corso = { id: string; nome: string; durata_anni: number }
+type Corso = { id: string; nome: string; durata_anni: number; anni_attivi: number[] | null }
 
 // Secondo passo: l'anno, su una pagina a parte così non si perde sotto l'elenco dei corsi
 export default function Anno() {
@@ -16,16 +16,23 @@ export default function Anno() {
     () =>
       supabase
         .from('corsi_di_laurea')
-        .select('id, nome, durata_anni')
+        .select('id, nome, durata_anni, anni_attivi')
         .eq('attivo', true)
         .order('nome'),
     'corsi',
   )
 
   if (!bozza.corsoId) return <Navigate to="/corso" replace />
+  // Dopo il primo invio dell'edizione l'anno non si cambia più
+  if (bozza.corsoBloccato) return <Navigate to="/materie" replace />
 
   const corso = righe?.find((c) => c.id === bozza.corsoId)
-  const anni = corso ? Array.from({ length: corso.durata_anni }, (_, i) => i + 1) : []
+  // Nei corsi in via di soppressione restano solo gli anni ancora attivi (più «Fuori corso»)
+  const anni = !corso
+    ? []
+    : corso.anni_attivi
+      ? [...corso.anni_attivi].sort((a, b) => a - b)
+      : Array.from({ length: corso.durata_anni }, (_, i) => i + 1)
 
   function scegliAnno(anno: number | 'fuori_corso') {
     aggiorna((b) => (b.anno === anno ? b : { ...b, anno, materieScelte: [] }))

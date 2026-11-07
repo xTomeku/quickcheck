@@ -7,6 +7,8 @@ export type Bozza = {
   edizioneId: string | null
   corsoId: string | null
   anno: number | 'fuori_corso' | null
+  // Vero quando corso e anno vengono dal server: registrati al primo invio, non si cambiano più
+  corsoBloccato: boolean
   // id di materie_corso, nell'ordine in cui verranno compilate
   materieScelte: string[]
   // per ogni materia_corso: chiave domanda (o domanda:insegnamento) -> valore (numero o id opzione)
@@ -21,6 +23,7 @@ export const BOZZA_VUOTA: Bozza = {
   edizioneId: null,
   corsoId: null,
   anno: null,
+  corsoBloccato: false,
   materieScelte: [],
   risposte: {},
   saltati: {},

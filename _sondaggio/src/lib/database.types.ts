@@ -165,6 +165,7 @@ export type Database = {
       }
       corsi_di_laurea: {
         Row: {
+          anni_attivi: number[] | null
           attivo: boolean
           created_at: string
           dipartimento_id: string
@@ -174,6 +175,7 @@ export type Database = {
           tipo: string
         }
         Insert: {
+          anni_attivi?: number[] | null
           attivo?: boolean
           created_at?: string
           dipartimento_id: string
@@ -183,6 +185,7 @@ export type Database = {
           tipo: string
         }
         Update: {
+          anni_attivi?: number[] | null
           attivo?: boolean
           created_at?: string
           dipartimento_id?: string

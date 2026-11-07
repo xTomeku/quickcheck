@@ -5,8 +5,10 @@ import { IconaSpunta } from '../../components/studente'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
 import { DOMINIO_STUDENTI } from '../../lib/google'
+import { chiamaServer } from '../../lib/server'
 import { accessoValido, useStudente } from '../../lib/studente'
 import { supabase } from '../../lib/supabase'
+import type { StatoStudente } from '../../lib/useStatoStudente'
 
 type Stato =
   | { tipo: 'caricamento' }
@@ -29,6 +31,8 @@ export default function Benvenuto() {
   const connesso = accessoValido(accesso)
   const navigate = useNavigate()
   const [stato, setStato] = useState<Stato>({ tipo: 'caricamento' })
+  const [preparo, setPreparo] = useState(false)
+  const [errorePartenza, setErrorePartenza] = useState<string | null>(null)
 
   useEffect(() => {
     // Solo in sviluppo, con ?anteprima: finta edizione aperta per vedere la pagina senza toccare il database
@@ -82,15 +86,37 @@ export default function Benvenuto() {
   const edizioneId = stato.edizioneId
   const inCorso = bozza.edizioneId === edizioneId && bozza.corsoId !== null
 
-  function inizia() {
-    aggiorna((b) => (b.edizioneId === edizioneId ? b : { ...b, edizioneId }))
-    navigate('/corso')
-  }
-
-  function ricomincia() {
-    azzera()
-    aggiorna((b) => ({ ...b, edizioneId }))
-    navigate('/corso')
+  // Chi ha già inviato in questa edizione ha corso e anno fissati dal primo invio: si riprendono
+  // dal server (valgono anche su un altro dispositivo) e si va dritti alle materie
+  async function parti(daCapo: boolean) {
+    if (!accesso) return
+    setPreparo(true)
+    setErrorePartenza(null)
+    const esito = await chiamaServer<StatoStudente>('stato', accesso.idToken, edizioneId)
+    setPreparo(false)
+    if (!esito.ok) {
+      setErrorePartenza(esito.errore)
+      return
+    }
+    const scelta = esito.dati.scelta ?? null
+    if (daCapo) azzera()
+    aggiorna((b) => {
+      const base = b.edizioneId === edizioneId ? b : { ...b, edizioneId }
+      if (!scelta) return { ...base, corsoBloccato: false }
+      const stessi = base.corsoId === scelta.corso_id && base.anno === scelta.anno
+      return stessi
+        ? { ...base, corsoBloccato: true }
+        : {
+            ...base,
+            corsoId: scelta.corso_id,
+            anno: scelta.anno,
+            corsoBloccato: true,
+            materieScelte: [],
+            risposte: {},
+            saltati: {},
+          }
+    })
+    navigate(scelta ? '/materie' : '/corso')
   }
 
   return (
@@ -122,14 +148,21 @@ export default function Benvenuto() {
               </button>
             </div>
             <div className="mt-4 flex flex-col gap-3">
-              <Pulsante grande variante="primario" className="w-full" onClick={inizia}>
-                {inCorso ? 'Riprendi da dove eri rimasto' : 'Inizia'}
+              <Pulsante
+                grande
+                variante="primario"
+                className="w-full"
+                disabled={preparo}
+                onClick={() => parti(false)}
+              >
+                {preparo ? 'Un attimo…' : inCorso ? 'Riprendi da dove eri rimasto' : 'Inizia'}
               </Pulsante>
               {inCorso && (
-                <Pulsante grande className="w-full" onClick={ricomincia}>
+                <Pulsante grande className="w-full" disabled={preparo} onClick={() => parti(true)}>
                   Ricomincia da capo
                 </Pulsante>
               )}
+              {errorePartenza && <Avviso>{errorePartenza}</Avviso>}
             </div>
           </div>
         ) : (

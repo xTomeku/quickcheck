@@ -29,6 +29,12 @@ const TIPI: Record<string, string> = {
   ciclo_unico: 'Ciclo unico',
 }
 
+// «3° anno», «2° e 3° anno», «1°, 2° e 4° anno»
+function elencoAnni(anni: number[]) {
+  const voci = anni.map((a) => `${a}°`)
+  return `${voci.length > 1 ? `${voci.slice(0, -1).join(', ')} e ${voci[voci.length - 1]}` : voci[0]} anno`
+}
+
 // Il nome dei corsi è unico nel dipartimento: si propone il primo «(copia)» ancora libero
 function nomeCopia(nome: string, esistenti: string[]) {
   const occupati = new Set(esistenti)
@@ -116,6 +122,12 @@ export default function Corsi() {
                 <p className="text-sm text-slate-500">
                   {TIPI[c.tipo] ?? c.tipo} · {c.durata_anni} anni · {c.materie_corso[0]?.count ?? 0}{' '}
                   {c.materie_corso[0]?.count === 1 ? 'materia' : 'materie'}
+                  {c.anni_attivi && (
+                    <span className="font-semibold text-pericolo-testo">
+                      {' '}
+                      · attivo solo il {elencoAnni(c.anni_attivi)}
+                    </span>
+                  )}
                 </p>
               </div>
               <Azioni>
@@ -156,7 +168,7 @@ export default function Corsi() {
 // d'errore, oppure null se è andata bene.
 async function duplicaCorso(
   origine: Corso,
-  valori: { nome: string; tipo: string; durata_anni: number },
+  valori: { nome: string; tipo: string; durata_anni: number; anni_attivi: number[] | null },
 ): Promise<string | null> {
   const { data: materie, error: errLettura } = await supabase
     .from('materie_corso')
@@ -212,6 +224,13 @@ function FormCorso({
   )
   const [tipo, setTipo] = useState(corso?.tipo ?? 'triennale')
   const [durata, setDurata] = useState(String(corso?.durata_anni ?? 3))
+  // Si tengono gli anni tolti e non quelli attivi: così, allungando la durata, gli anni nuovi sono già attivi
+  const [inattivi, setInattivi] = useState<Set<number>>(() => {
+    const attivi = corso?.anni_attivi
+    if (!attivi || !corso) return new Set()
+    return new Set(Array.from({ length: corso.durata_anni }, (_, i) => i + 1).filter((a) => !attivi.includes(a)))
+  })
+  const anni = Array.from({ length: Math.min(6, Math.max(1, Number(durata) || 1)) }, (_, i) => i + 1)
   const [errore, setErrore] = useState<string | null>(null)
   const [invio, setInvio] = useState(false)
 
@@ -227,7 +246,19 @@ function FormCorso({
     e.preventDefault()
     setInvio(true)
     setErrore(null)
-    const valori = { nome: nome.trim(), tipo, durata_anni: Number(durata) }
+    const attivi = anni.filter((a) => !inattivi.has(a))
+    if (attivi.length === 0) {
+      setErrore('Lascia almeno un anno attivo, oppure disattiva il corso.')
+      setInvio(false)
+      return
+    }
+    // Tutti gli anni attivi si salvano come «nessuna limitazione»
+    const valori = {
+      nome: nome.trim(),
+      tipo,
+      durata_anni: Number(durata),
+      anni_attivi: attivi.length === anni.length ? null : attivi,
+    }
 
     let errDb: { code?: string; message: string } | null = null
     if (modulo.azione === 'duplica') {
@@ -304,6 +335,31 @@ function FormCorso({
           />
         </Campo>
       </div>
+      <fieldset>
+        <legend className="text-sm font-medium text-slate-700">Anni ancora attivi</legend>
+        <p className="text-sm text-slate-500">
+          Togli gli anni soppressi: gli studenti non potranno più sceglierli. Chi è negli anni rimasti
+          continua a vedere anche le materie degli anni precedenti.
+        </p>
+        <div className="mt-2 flex flex-wrap gap-x-5 gap-y-2">
+          {anni.map((a) => (
+            <label key={a} className="flex min-h-11 items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                className="size-4"
+                checked={!inattivi.has(a)}
+                onChange={() => {
+                  const nuovi = new Set(inattivi)
+                  if (nuovi.has(a)) nuovi.delete(a)
+                  else nuovi.add(a)
+                  setInattivi(nuovi)
+                }}
+              />
+              {a}° anno
+            </label>
+          ))}
+        </div>
+      </fieldset>
       {errore && <Avviso>{errore}</Avviso>}
       <div className="flex gap-2">
         <Pulsante type="submit" variante="primario" disabled={invio}>

@@ -3,7 +3,9 @@ import { useBozza } from './bozza'
 import { chiamaServer } from './server'
 import { useStudente } from './studente'
 
-export type StatoStudente = { compilate: string[]; extra_inviate: boolean }
+// `scelta`: corso e anno registrati al primo invio dell'edizione (assente con il server vecchio)
+export type SceltaStudente = { corso_id: string; anno: number | 'fuori_corso' }
+export type StatoStudente = { compilate: string[]; extra_inviate: boolean; scelta?: SceltaStudente | null }
 
 // Cosa ha già inviato questa persona nell'edizione (materie e domande Extra), chiesto al server
 export function useStatoStudente() {

@@ -9,7 +9,9 @@ import { costruisciStruttura, haDomande, type MateriaDati } from '../../lib/sond
 import { useStudente } from '../../lib/studente'
 import { supabase } from '../../lib/supabase'
 import { useDomandeAttive, useMaterieCorso } from '../../lib/useDatiSondaggio'
+import { nomeLeggibile } from '../../lib/testo'
 import { useElenco } from '../../lib/useElenco'
+import type { StatoStudente } from '../../lib/useStatoStudente'
 
 export default function ScegliMaterie() {
   const { bozza } = useBozza()
@@ -23,8 +25,8 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
   const navigate = useNavigate()
   const { materie, errore } = useMaterieCorso({ corsoId })
   const { domande, errore: erroreDomande } = useDomandeAttive()
-  const corso = useElenco<{ id: string; durata_anni: number }>(
-    () => supabase.from('corsi_di_laurea').select('id, durata_anni').eq('id', corsoId),
+  const corso = useElenco<{ id: string; nome: string; durata_anni: number }>(
+    () => supabase.from('corsi_di_laurea').select('id, nome, durata_anni').eq('id', corsoId),
     corsoId,
   )
 
@@ -37,11 +39,28 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
   useEffect(() => {
     if (!edizioneId || !idToken) return
     let annullato = false
-    chiamaServer<{ compilate: string[] }>('stato', idToken, edizioneId).then((esito) => {
+    chiamaServer<StatoStudente>('stato', idToken, edizioneId).then((esito) => {
       if (annullato) return
       if (esito.ok) {
         setErroreStato(null)
         setCompilate(new Set(esito.dati.compilate))
+        // Corso e anno registrati al primo invio prevalgono su quelli della bozza
+        const scelta = esito.dati.scelta
+        if (scelta) {
+          aggiorna((b) =>
+            b.corsoId === scelta.corso_id && b.anno === scelta.anno
+              ? { ...b, corsoBloccato: true }
+              : {
+                  ...b,
+                  corsoId: scelta.corso_id,
+                  anno: scelta.anno,
+                  corsoBloccato: true,
+                  materieScelte: [],
+                  risposte: {},
+                  saltati: {},
+                },
+          )
+        }
       } else {
         setErroreStato({ stato: esito.stato, errore: esito.errore })
       }
@@ -49,7 +68,7 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
     return () => {
       annullato = true
     }
-  }, [edizioneId, idToken])
+  }, [edizioneId, idToken, aggiorna])
 
   if (erroreStato) {
     return (
@@ -128,6 +147,14 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
         <p className="mt-1 text-slate-600">
           Scegli quelle che hai seguito e di cui vuoi parlare: non devi rispondere a tutte.
         </p>
+        {bozza.corsoBloccato && corso.righe[0] && (
+          <p className="mt-3 rounded-xl bg-udu-velo px-3.5 py-3 text-sm text-slate-700">
+            <span className="font-semibold">
+              {nomeLeggibile(corso.righe[0].nome)} · {anno === 'fuori_corso' ? 'fuori corso' : `${anno}° anno`}
+            </span>
+            . Sono il corso e l'anno del tuo primo invio: per questa edizione non si possono cambiare.
+          </p>
+        )}
       </div>
 
       {visibili.length === 0 ? (
@@ -231,7 +258,7 @@ function Contenuto({ corsoId, anno }: { corsoId: string; anno: number | 'fuori_c
       )}
 
       <BarraAzioni>
-        <Pulsante grande onClick={() => navigate('/anno')}>
+        <Pulsante grande onClick={() => navigate(bozza.corsoBloccato ? '/' : '/anno')}>
           Indietro
         </Pulsante>
         <Pulsante
