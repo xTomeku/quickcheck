@@ -1,1 +1,0 @@
-import{g as e,m as t,v as n,x as r}from"./index-Bv1u0P9j.js";var i=n();function a(){let{ruolo:n}=e(),a=t.find(e=>n&&e.ruoli.includes(n));return a?(0,i.jsx)(r,{to:a.percorso,replace:!0}):null}export{a as default};

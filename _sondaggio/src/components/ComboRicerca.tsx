@@ -1,7 +1,9 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { normalizza } from '../lib/nomi'
 
-export type VoceCombo = { id: string; etichetta: string }
+// `dettaglio`: seconda riga facoltativa sotto il nome (per distinguere voci con lo stesso nome);
+// anche le sue parole valgono nella ricerca
+export type VoceCombo = { id: string; etichetta: string; dettaglio?: string }
 
 type Props = {
   voci: VoceCombo[]
@@ -25,7 +27,7 @@ export default function ComboRicerca({ voci, valore, onScegli, segnaposto, ariaL
   const scelta = voci.find((v) => v.id === valore)
   const parole = normalizza(ricerca).split(' ').filter(Boolean)
   const visibili = voci.filter((v) => {
-    const testo = normalizza(v.etichetta)
+    const testo = normalizza(`${v.etichetta} ${v.dettaglio ?? ''}`)
     return parole.every((p) => testo.includes(p))
   })
 
@@ -137,6 +139,9 @@ export default function ComboRicerca({ voci, valore, onScegli, segnaposto, ariaL
                 } ${v.id === valore ? 'font-semibold' : ''}`}
               >
                 {v.etichetta}
+                {v.dettaglio && (
+                  <span className="block text-xs font-normal text-slate-500">{v.dettaglio}</span>
+                )}
               </li>
             ))
           )}

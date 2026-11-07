@@ -3,11 +3,36 @@ import ComboRicerca from '../../../components/ComboRicerca'
 import { Avviso, Campo, Input, Pulsante, Select } from '../../../components/ui'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
+import { nomeLeggibile } from '../../../lib/testo'
 import { useElenco } from '../../../lib/useElenco'
 import { collegaDocenti, useSceltaDocenti } from './SceltaDocenti'
 
 type CorsoBreve = { id: string; nome: string; durata_anni: number }
-type MateriaBreve = { id: string; nome: string }
+type MateriaBreve = {
+  id: string
+  nome: string
+  cfu: number | null
+  insegnamenti: { docenti: { nome: string; cognome: string } | null }[]
+  materie_corso: { anno: number; corsi_di_laurea: { nome: string } | null }[]
+}
+
+// «9 CFU · Rossi, Bianchi · già in Ingegneria civile (1° anno)»: serve a scegliere la materia giusta
+// quando due hanno lo stesso nome, e a sapere se è già usata altrove
+function descriviMateria(m: MateriaBreve) {
+  const docenti = m.insegnamenti
+    .flatMap((i) => (i.docenti ? [i.docenti.cognome] : []))
+    .sort((a, b) => a.localeCompare(b))
+  const corsi = m.materie_corso
+    .flatMap((mc) => (mc.corsi_di_laurea ? [`${nomeLeggibile(mc.corsi_di_laurea.nome)} (${mc.anno}° anno)`] : []))
+    .sort((a, b) => a.localeCompare(b))
+  return [
+    m.cfu !== null ? `${m.cfu} CFU` : null,
+    docenti.length > 0 ? docenti.join(', ') : 'nessun docente',
+    corsi.length > 0 ? `già in ${corsi.join(', ')}` : 'non ancora in nessun corso',
+  ]
+    .filter(Boolean)
+    .join(' · ')
+}
 type Collegamento = {
   id: string
   anno: number
@@ -32,7 +57,12 @@ export default function MaterieCorso({
     'corsi-attivi',
   )
   const tutteLeMaterie = useElenco<MateriaBreve>(
-    () => supabase.from('materie').select('id, nome').eq('attiva', true).order('nome'),
+    () =>
+      supabase
+        .from('materie')
+        .select('id, nome, cfu, insegnamenti(docenti(nome, cognome)), materie_corso(anno, corsi_di_laurea(nome))')
+        .eq('attiva', true)
+        .order('nome'),
     'materie-attive',
   )
   const [corsoId, setCorsoId] = useState(corsoFisso ?? '')
@@ -237,7 +267,7 @@ function CollegaEsistente({
               ariaLabel="Materia da aggiungere"
               segnaposto="Cerca o scegli una materia…"
               valore={materiaId}
-              voci={materie.map((m) => ({ id: m.id, etichetta: m.nome }))}
+              voci={materie.map((m) => ({ id: m.id, etichetta: m.nome, dettaglio: descriviMateria(m) }))}
               onScegli={setMateriaId}
             />
           </Campo>
