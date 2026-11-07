@@ -116,15 +116,42 @@ function foglioScelte(titoliColonne: string[], elenco: VoceEsportazione[]): Shee
     titoloNumero('Risposte (n)'),
     titoloNumero('Risposte (%)'),
   ]
+  // Un blocco per domanda: categoria e domanda solo sulla prima riga (le altre restano vuote, così
+  // filtri e ordinamento di Excel funzionano ancora), un filo sopra ogni blocco, la risposta più
+  // scelta in grassetto e in fondo il totale su cui sono calcolate le percentuali
   const righe: Row[] = scelte.flatMap(({ colonne, domanda, agg }) => {
     const n = agg?.n ?? 0
-    return voci(domanda, agg).map((x) => [
-      ...colonne.map(testo),
-      testo(domanda.testo),
-      testo(x.etichetta),
-      numero(x.conteggio),
-      numero(n > 0 ? x.conteggio / n : null, '0%'),
-    ])
+    const opzioni = voci(domanda, agg)
+    const massimo = Math.max(0, ...opzioni.map((x) => x.conteggio))
+    const larghezza = colonne.length + 4
+    const filo = { topBorderStyle: 'medium', topBorderColor: '#64748b' } as const
+    const conFilo = (riga: Row) => riga.map((c) => ({ ...(c && typeof c === 'object' ? c : {}), ...filo }))
+
+    const blocco: Row[] = opzioni.map((x, i) => {
+      const prima = i === 0
+      const piuScelta = massimo > 0 && x.conteggio === massimo
+      const evidenza = piuScelta ? ({ fontWeight: 'bold' } as const) : {}
+      // «1», «2», «3» scritti come numeri: Excel non li segnala più come numeri memorizzati come testo
+      const etichetta: Cell = /^\d+$/.test(x.etichetta)
+        ? { value: Number(x.etichetta), type: Number, align: 'left', alignVertical: 'top', ...evidenza }
+        : { ...(testo(x.etichetta) as object), ...evidenza }
+      const riga: Row = [
+        ...(prima ? colonne.map(testo) : colonne.map(() => null)),
+        prima ? { ...(testo(domanda.testo) as object), fontWeight: 'bold' } : null,
+        etichetta,
+        { ...(numero(x.conteggio) as object), ...evidenza },
+        n > 0 ? { ...(numero(x.conteggio / n, '0%') as object), ...evidenza } : null,
+      ]
+      return prima ? conFilo(riga) : riga
+    })
+
+    const totale: Row = [
+      ...Array.from({ length: larghezza - 3 }, () => null),
+      { value: 'Totale', type: String, fontStyle: 'italic', textColor: '#475569' },
+      { ...(numero(n) as object), fontStyle: 'italic', textColor: '#475569' },
+      n > 0 ? { ...(numero(1, '0%') as object), fontStyle: 'italic', textColor: '#475569' } : null,
+    ]
+    return [...(blocco.length > 0 ? blocco : [conFilo(totale)]), ...(blocco.length > 0 ? [totale] : [])]
   })
 
   return {
