@@ -1,35 +1,35 @@
-import { Avviso, Pulsante } from '../../../components/ui'
-import { daRiga, scaricaCsv, type Agg } from '../../../lib/statistiche'
+import { Avviso } from '../../../components/ui'
+import { daRiga, type Agg } from '../../../lib/statistiche'
 import { CATEGORIE } from '../domande/etichette'
-import {
-  CATEGORIE_DOCENTE,
-  celleDomanda,
-  COLONNE_DOMANDA,
-  useStatRisposte,
-  type DomandaRif,
-} from './dati'
+import { CATEGORIE_DOCENTE, useStatRisposte, type DomandaRif } from './dati'
+import { esportaExcel, nomeFile, type Contesto } from './esporta'
 import type { Filtri } from './filtri'
+import PulsanteEsporta from './PulsanteEsporta'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 
-type Props = { filtri: Filtri; domande: DomandaRif[]; vedeDocenti: boolean }
+type Props = { filtri: Filtri; contesto: Contesto; domande: DomandaRif[]; vedeDocenti: boolean }
 
 // Le Extra hanno una scheda a parte: non dipendono da corso, anno o materia
 const CATEGORIE_PER_MATERIA = CATEGORIE.filter((c) => c.id !== 'extra')
 
-export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
+export default function PerDomanda({ filtri, contesto, domande, vedeDocenti }: Props) {
   const { righe, errore } = useStatRisposte(filtri, 'domanda', true)
   const perDomanda = new Map<string, Agg>((righe ?? []).map((r) => [r.domanda_id, daRiga(r)]))
 
   const visibili = domande.filter((d) => vedeDocenti || !CATEGORIE_DOCENTE.includes(d.categoria))
 
   function esporta() {
-    const corpo = CATEGORIE_PER_MATERIA.flatMap((c) =>
-      visibili
-        .filter((d) => d.categoria === c.id)
-        .sort((a, b) => a.ordine - b.ordine)
-        .map((d) => [c.nome, ...celleDomanda(d, perDomanda.get(d.id))]),
-    )
-    scaricaCsv('statistiche-per-domanda.csv', [['categoria', ...COLONNE_DOMANDA], ...corpo])
+    return esportaExcel({
+      nomeFile: nomeFile('per-domanda'),
+      contesto,
+      titoliColonne: ['Categoria'],
+      voci: CATEGORIE_PER_MATERIA.flatMap((c) =>
+        visibili
+          .filter((d) => d.categoria === c.id)
+          .sort((a, b) => a.ordine - b.ordine)
+          .map((d) => ({ colonne: [c.nome], domanda: d, agg: perDomanda.get(d.id) })),
+      ),
+    })
   }
 
   return (
@@ -43,7 +43,7 @@ export default function PerDomanda({ filtri, domande, vedeDocenti }: Props) {
             <p className="text-sm text-slate-500">
               Ogni domanda con tutte le risposte che corrispondono ai filtri.
             </p>
-            <Pulsante onClick={esporta}>Esporta CSV</Pulsante>
+            <PulsanteEsporta onEsporta={esporta} />
           </div>
           {!vedeDocenti && (
             <Avviso tipo="info">

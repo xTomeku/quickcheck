@@ -3,6 +3,7 @@ import { Avviso, Campo, Input, Pulsante, Schede, Select } from '../../../compone
 import { useAuth } from '../../../lib/auth'
 import { SOGLIA_POCHE_RISPOSTE } from '../../../lib/statistiche'
 import { useRiferimenti } from './dati'
+import type { Contesto } from './esporta'
 import { FILTRI_VUOTI, type Filtri } from './filtri'
 import PerDocente from './PerDocente'
 import PerDomanda from './PerDomanda'
@@ -57,6 +58,22 @@ export default function Statistiche() {
     ...(vedeDocenti ? [{ id: 'docenti' as const, nome: 'Docenti' }] : []),
     { id: 'domande', nome: 'Domande' },
     { id: 'extra', nome: 'Extra' },
+  ]
+
+  // Con quali dati è stato fatto un file esportato: lo si legge nel foglio «Informazioni»
+  const edizione = rif.edizioni.find((e) => e.id === filtri.edizione)
+  const contesto: Contesto = [
+    ['Edizione', edizione?.nome ?? '?'],
+    ['Corso di laurea', corso?.nome ?? 'Tutti i corsi'],
+    ['Anno della materia', filtri.annoCorso ? `${filtri.annoCorso}° anno` : 'Tutti gli anni'],
+    [
+      'Anno dello studente',
+      filtri.annoStudente === 'fuori_corso'
+        ? 'Fuori corso'
+        : filtri.annoStudente
+          ? `${filtri.annoStudente}° anno`
+          : 'Tutti gli studenti',
+    ],
   ]
 
   const segnapostoRicerca = scheda === 'materie' ? 'Cerca materia' : 'Cerca docente'
@@ -170,6 +187,7 @@ export default function Statistiche() {
           {scheda === 'materie' && (
             <PerMateria
               filtri={filtri}
+              contesto={contesto}
               ricerca={ricerca}
               corsi={rif.corsi}
               materie={rif.materie}
@@ -183,6 +201,7 @@ export default function Statistiche() {
           {scheda === 'docenti' && vedeDocenti && (
             <PerDocente
               filtri={filtri}
+              contesto={contesto}
               ricerca={ricerca}
               domande={rif.domande}
               materie={rif.materie}
@@ -192,7 +211,7 @@ export default function Statistiche() {
             />
           )}
           {scheda === 'domande' && (
-            <PerDomanda filtri={filtri} domande={rif.domande} vedeDocenti={vedeDocenti} />
+            <PerDomanda filtri={filtri} contesto={contesto} domande={rif.domande} vedeDocenti={vedeDocenti} />
           )}
           {scheda === 'extra' && <PerExtra edizione={filtri.edizione} domande={rif.domande} />}
         </>

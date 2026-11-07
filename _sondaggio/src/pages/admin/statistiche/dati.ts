@@ -1,5 +1,4 @@
-import { normalizza } from '../../../lib/nomi'
-import { formatta, media, type Agg, type RigaStat } from '../../../lib/statistiche'
+import type { Agg, RigaStat } from '../../../lib/statistiche'
 import { supabase } from '../../../lib/supabase'
 import { useElenco } from '../../../lib/useElenco'
 import { argomenti, type Filtri } from './filtri'
@@ -55,26 +54,6 @@ export function mediaGenerale(
     n += r.n
   }
   return n > 0 ? somma / n : null
-}
-
-// Le colonne comuni a ogni esportazione: una domanda con le sue risposte
-export const COLONNE_DOMANDA = ['domanda', 'tipo', 'risposte', 'media', 'distribuzione']
-
-export function celleDomanda(d: DomandaRif, agg: Agg | undefined): string[] {
-  const med = d.tipo_risposta === 'scala' ? media(agg) : null
-  return [
-    d.testo,
-    d.tipo_risposta === 'scala' ? 'scala' : 'scelta singola',
-    String(agg?.n ?? 0),
-    med === null ? '' : formatta(med),
-    voci(d, agg)
-      .map((v) => `${v.etichetta}: ${v.conteggio}`)
-      .join(' | '),
-  ]
-}
-
-export function nomeFileCsv(tipo: string, nome: string) {
-  return `statistiche-${tipo}-${normalizza(nome).replace(/ /g, '-')}.csv`
 }
 
 // Elenchi usati per i filtri e per dare un nome a ciò che torna dal database

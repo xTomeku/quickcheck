@@ -1,14 +1,11 @@
 import { useState } from 'react'
-import { Avviso, Pulsante } from '../../../components/ui'
+import { Avviso } from '../../../components/ui'
 import { normalizza } from '../../../lib/nomi'
-import { daRiga, formatta, scaricaCsv, type Agg, type RigaStat } from '../../../lib/statistiche'
+import { daRiga, formatta, type Agg, type RigaStat } from '../../../lib/statistiche'
 import Classifica, { Tessera, type VoceClassifica } from './Classifica'
 import {
   CATEGORIE_DOCENTE,
-  celleDomanda,
-  COLONNE_DOMANDA,
   mediaGenerale,
-  nomeFileCsv,
   useStatCompilazioni,
   useStatRisposte,
   useStatSaltati,
@@ -19,11 +16,14 @@ import {
   type MateriaCorsoRif,
   type MateriaRif,
 } from './dati'
+import { esportaExcel, nomeFile, type Contesto, type VoceEsportazione } from './esporta'
 import type { Filtri } from './filtri'
+import PulsanteEsporta from './PulsanteEsporta'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 
 type Props = {
   filtri: Filtri
+  contesto: Contesto
   ricerca: string
   corsi: CorsoRif[]
   materie: MateriaRif[]
@@ -38,6 +38,7 @@ type Props = {
 // Sostituisce sia il vecchio riepilogo sia la scelta della materia nei filtri.
 export default function PerMateria({
   filtri,
+  contesto,
   ricerca,
   corsi,
   materie,
@@ -135,6 +136,7 @@ export default function PerMateria({
             return (
               <DettaglioMateria
                 filtri={{ ...filtri, materia: id }}
+                contesto={[...contesto, ['Materia', voce?.nome ?? '']]}
                 nome={voce?.nome ?? ''}
                 n={voce?.n ?? 0}
                 media={voce?.media ?? null}
@@ -155,6 +157,7 @@ export default function PerMateria({
 // Il dettaglio carica i dati dei docenti solo quando viene aperto
 function DettaglioMateria({
   filtri,
+  contesto,
   nome,
   n,
   media,
@@ -165,6 +168,7 @@ function DettaglioMateria({
   vedeDocenti,
 }: {
   filtri: Filtri
+  contesto: Contesto
   nome: string
   n: number
   media: number | null
@@ -206,17 +210,22 @@ function DettaglioMateria({
 
   const daEsportare = conDati.length > 0 || datiDocenti.some((x) => x.conDati.length > 0)
 
-  // Una riga per domanda: la colonna docente resta vuota per quelle sulla materia
+  // Prima le domande sulla materia (trattino al posto del docente), poi quelle su ogni docente
   function esporta() {
-    const sullaMateria = conDati.map((d) => ['', '', ...celleDomanda(d, perDomanda.get(d.id))])
-    const suiDocenti = datiDocenti.flatMap(({ doc, agg, nSaltati, conDati: suoi }) =>
-      suoi.map((d) => [`${doc.cognome} ${doc.nome}`, String(nSaltati), ...celleDomanda(d, agg.get(d.id))]),
+    const sullaMateria: VoceEsportazione[] = conDati.map((d) => ({
+      colonne: ['—', ''],
+      domanda: d,
+      agg: perDomanda.get(d.id),
+    }))
+    const suiDocenti: VoceEsportazione[] = datiDocenti.flatMap(({ doc, agg, nSaltati, conDati: suoi }) =>
+      suoi.map((d) => ({ colonne: [`${doc.cognome} ${doc.nome}`, nSaltati], domanda: d, agg: agg.get(d.id) })),
     )
-    scaricaCsv(nomeFileCsv('materia', nome), [
-      ['docente', 'non hanno seguito il docente', ...COLONNE_DOMANDA],
-      ...sullaMateria,
-      ...suiDocenti,
-    ])
+    return esportaExcel({
+      nomeFile: nomeFile('materia', nome),
+      contesto,
+      titoliColonne: ['Docente', 'Non l’hanno seguito'],
+      voci: [...sullaMateria, ...suiDocenti],
+    })
   }
 
   return (
@@ -230,9 +239,7 @@ function DettaglioMateria({
         )}
         {daEsportare && (
           // Fermo finché non arrivano i dati dei docenti, altrimenti il file uscirebbe senza
-          <Pulsante onClick={esporta} disabled={perDocente.righe === null || saltati.righe === null}>
-            Esporta CSV
-          </Pulsante>
+          <PulsanteEsporta onEsporta={esporta} disabled={perDocente.righe === null || saltati.righe === null} />
         )}
       </div>
 

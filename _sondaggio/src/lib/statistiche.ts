@@ -1,4 +1,3 @@
-import { creaCsv } from './csv'
 import type { Database, Json } from './database.types'
 
 export type RigaStat = Database['public']['Functions']['stat_risposte']['Returns'][number]
@@ -28,12 +27,3 @@ export function media(a: Agg | undefined): number | null {
 
 export const formatta = (x: number) => x.toFixed(2).replace('.', ',')
 
-export function scaricaCsv(nomeFile: string, righe: string[][]) {
-  const blob = new Blob([creaCsv(righe)], { type: 'text/csv;charset=utf-8' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = nomeFile
-  a.click()
-  URL.revokeObjectURL(url)
-}

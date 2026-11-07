@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import { Avviso, Pulsante } from '../../../components/ui'
+import { Avviso } from '../../../components/ui'
 import { normalizza } from '../../../lib/nomi'
 import {
   AGG_VUOTO,
   daRiga,
   formatta,
   media,
-  scaricaCsv,
   unisci,
   type Agg,
   type RigaStat,
@@ -14,10 +13,7 @@ import {
 import Classifica, { Tessera, type VoceClassifica } from './Classifica'
 import {
   CATEGORIE_DOCENTE,
-  celleDomanda,
-  COLONNE_DOMANDA,
   mediaGenerale,
-  nomeFileCsv,
   useStatRisposte,
   useStatSaltati,
   voci,
@@ -27,11 +23,14 @@ import {
   type MateriaCorsoRif,
   type MateriaRif,
 } from './dati'
+import { esportaExcel, nomeFile, type Contesto, type VoceEsportazione } from './esporta'
 import type { Filtri } from './filtri'
+import PulsanteEsporta from './PulsanteEsporta'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 
 type Props = {
   filtri: Filtri
+  contesto: Contesto
   ricerca: string
   domande: DomandaRif[]
   materie: MateriaRif[]
@@ -43,6 +42,7 @@ type Props = {
 // Tutti i docenti delle materie filtrate, in classifica
 export default function PerDocente({
   filtri,
+  contesto,
   ricerca,
   domande,
   materie,
@@ -130,6 +130,7 @@ export default function PerDocente({
             return (
               <DettaglioDocente
                 filtri={{ ...filtri, docente: id }}
+                contesto={[...contesto, ['Docente', voce?.nome ?? '']]}
                 nome={voce?.nome ?? ''}
                 n={voce?.n ?? 0}
                 mediaDocente={voce?.media ?? null}
@@ -147,6 +148,7 @@ export default function PerDocente({
 // Le domande sul docente, su tutte le materie in cui insegna
 function DettaglioDocente({
   filtri,
+  contesto,
   nome,
   n,
   mediaDocente,
@@ -154,6 +156,7 @@ function DettaglioDocente({
   nomeMateria,
 }: {
   filtri: Filtri
+  contesto: Contesto
   nome: string
   n: number
   mediaDocente: number | null
@@ -184,18 +187,20 @@ function DettaglioDocente({
 
   // Per ogni domanda il totale e, se il docente ha più materie, una riga per ciascuna
   function esporta() {
-    const corpo = conDati.flatMap((d) => {
+    const elenco: VoceEsportazione[] = conDati.flatMap((d) => {
       const dati = perDomanda.get(d.id)!
-      const perMateria = [...dati.perMateria]
+      const perMateria: VoceEsportazione[] = [...dati.perMateria]
         .sort((a, b) => a.materia.localeCompare(b.materia))
-        .map((m) => [m.materia, String(saltatiPerMateria.get(m.materia) ?? 0), ...celleDomanda(d, m.agg)])
-      const totale = ['Tutte le materie', String(nSaltati), ...celleDomanda(d, dati.totale)]
+        .map((m) => ({ colonne: [m.materia, saltatiPerMateria.get(m.materia) ?? 0], domanda: d, agg: m.agg }))
+      const totale = { colonne: ['Tutte le materie', nSaltati], domanda: d, agg: dati.totale }
       return perMateria.length > 1 ? [totale, ...perMateria] : perMateria
     })
-    scaricaCsv(nomeFileCsv('docente', nome), [
-      ['materia', 'non hanno seguito il docente', ...COLONNE_DOMANDA],
-      ...corpo,
-    ])
+    return esportaExcel({
+      nomeFile: nomeFile('docente', nome),
+      contesto,
+      titoliColonne: ['Materia', 'Non l’hanno seguito'],
+      voci: elenco,
+    })
   }
 
   return (
@@ -206,9 +211,7 @@ function DettaglioDocente({
         <Tessera valore={mediaDocente === null ? '—' : formatta(mediaDocente)} etichetta="media generale" />
         <Tessera valore={nSaltati} etichetta="non l’hanno seguito" />
         {conDati.length > 0 && (
-          <Pulsante onClick={esporta} disabled={saltati.righe === null}>
-            Esporta CSV
-          </Pulsante>
+          <PulsanteEsporta onEsporta={esporta} disabled={saltati.righe === null} />
         )}
       </div>
       {righe === null ? (
