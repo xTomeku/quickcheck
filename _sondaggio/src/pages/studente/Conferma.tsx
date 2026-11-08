@@ -28,8 +28,7 @@ export default function Conferma() {
       </span>
       <h1 className="mt-5 text-3xl font-extrabold tracking-tight">Grazie!</h1>
       <p className="mt-3 text-slate-600">
-        Le tue risposte sono state inviate. Dopo l'invio non è possibile modificarle. [Quando e dove
-        saranno visibili i risultati]
+        Le tue risposte sono state inviate. Dopo l'invio non è possibile modificarle.
       </p>
       <div className="mt-6 space-y-3">
         <Pulsante grande variante="primario" className="w-full" onClick={() => navigate('/')}>

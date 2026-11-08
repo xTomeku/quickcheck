@@ -76,9 +76,7 @@ export default function Benvenuto() {
     return (
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
         <h1 className="text-2xl font-extrabold tracking-tight">Sondaggio non aperto</h1>
-        <p className="mt-2 text-slate-600">
-          Il sondaggio non è al momento aperto. [Quando riapre o a chi rivolgersi]
-        </p>
+        <p className="mt-2 text-slate-600">Il sondaggio non è al momento aperto.</p>
       </div>
     )
   }
@@ -187,10 +185,6 @@ export default function Benvenuto() {
         <Pillola>Scegli tu le materie</Pillola>
         <Pillola>Modifichi fino all'invio</Pillola>
       </ul>
-
-      <p className="text-sm text-slate-500">
-        [Durata stimata: X minuti] [Chi promuove il sondaggio e come verranno usati i risultati]
-      </p>
     </div>
   )
 }
