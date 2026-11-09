@@ -1,1 +1,0 @@
-import{S as e,_ as t,h as n,y as r}from"./index-DbN84lkd.js";var i=r();function a(){let{ruolo:r}=t(),a=n.find(e=>r&&e.ruoli.includes(r));return a?(0,i.jsx)(e,{to:a.percorso,replace:!0}):null}export{a as default};

@@ -1,12 +1,14 @@
 import { Avviso } from '../../../components/ui'
-import { daRiga, type Agg } from '../../../lib/statistiche'
+import { AGG_VUOTO, daRiga, unisci, type Agg } from '../../../lib/statistiche'
 import { CATEGORIE } from '../domande/etichette'
 import {
   CATEGORIE_DOCENTE,
   useStatRisposte,
   useTesti,
+  type CorsoRif,
   type DocenteRif,
   type DomandaRif,
+  type MateriaCorsoRif,
   type MateriaRif,
 } from './dati'
 import { esportaExcel, nomeFile, type Contesto } from './esporta'
@@ -20,6 +22,8 @@ type Props = {
   contesto: Contesto
   domande: DomandaRif[]
   materie: MateriaRif[]
+  corsi: CorsoRif[]
+  materieCorso: MateriaCorsoRif[]
   docenti: DocenteRif[]
   vedeDocenti: boolean
 }
@@ -27,16 +31,38 @@ type Props = {
 // Le Extra hanno una scheda a parte: non dipendono da corso, anno o materia
 const CATEGORIE_PER_MATERIA = CATEGORIE.filter((c) => c.id !== 'extra')
 
-export default function PerDomanda({ filtri, contesto, domande, materie, docenti, vedeDocenti }: Props) {
-  const { righe, errore } = useStatRisposte(filtri, 'domanda', true)
+export default function PerDomanda({
+  filtri,
+  contesto,
+  domande,
+  materie,
+  corsi,
+  materieCorso,
+  docenti,
+  vedeDocenti,
+}: Props) {
+  // Con il filtro sul tipo servono i dati per materia, per tenere solo quelle dei corsi di quel tipo
+  const { righe, errore } = useStatRisposte(filtri, filtri.tipoCorso ? 'domanda_materia' : 'domanda', true)
   const testi = useTesti(filtri, true)
-  const perDomanda = new Map<string, Agg>((righe ?? []).map((r) => [r.domanda_id, daRiga(r)]))
+  const corsiDelTipo = new Set(corsi.filter((c) => c.tipo === filtri.tipoCorso).map((c) => c.id))
+  const materieDelTipo = new Set(
+    materieCorso.filter((mc) => corsiDelTipo.has(mc.corso_id)).map((mc) => mc.materia_id),
+  )
+  const nelTipo = (materiaId: string | null) =>
+    !filtri.tipoCorso || (materiaId !== null && materieDelTipo.has(materiaId))
+
+  const perDomanda = new Map<string, Agg>()
+  for (const r of righe ?? []) {
+    if (nelTipo(r.materia_id)) {
+      perDomanda.set(r.domanda_id, unisci(perDomanda.get(r.domanda_id) ?? AGG_VUOTO, daRiga(r)))
+    }
+  }
 
   const nomeMateria = new Map(materie.map((m) => [m.id, m.nome]))
   const nomeDocente = new Map(docenti.map((d) => [d.id, `${d.cognome} ${d.nome}`]))
   const testiDi = (domandaId: string) =>
     (testi.righe ?? [])
-      .filter((t) => t.domanda_id === domandaId)
+      .filter((t) => t.domanda_id === domandaId && nelTipo(t.materia_id))
       .map((t) => ({
         ...t,
         etichetta: [nomeMateria.get(t.materia_id), t.docente_id ? nomeDocente.get(t.docente_id) : null]

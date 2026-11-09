@@ -124,10 +124,10 @@ export default function Benvenuto() {
           {stato.nomeEdizione}
         </span>
         <h1 className="mt-3 text-[32px] leading-[1.1] font-extrabold tracking-tight">
-          Dì la tua su corsi e docenti
+          Pochi minuti per raccontare com'è andata.
         </h1>
         <p className="mt-3 text-lg text-slate-600">
-          Pochi minuti per raccontare com'è andata, materia per materia. Le risposte sono anonime.
+          La tua opinione conta: le risposte sono anonime e ci aiutano a individuare le criticità, sotto diversi aspetti, che riguardano il dipartimento, i corsi di laurea e i relativi insegnamenti.
         </p>
 
         {connesso && accesso ? (

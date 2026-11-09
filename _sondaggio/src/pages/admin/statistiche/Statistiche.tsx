@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Avviso, Campo, Input, Pulsante, Schede, Select } from '../../../components/ui'
 import { useAuth } from '../../../lib/auth'
+import { perTipo, TIPI_CORSO } from '../../../lib/corsi'
 import { SOGLIA_POCHE_RISPOSTE } from '../../../lib/statistiche'
 import { useRiferimenti } from './dati'
 import type { Contesto } from './esporta'
@@ -31,6 +32,10 @@ export default function Statistiche() {
   // Passando a un corso più breve, un anno che lì non esiste torna a «tutti»
   function cambia(modifica: Partial<Filtri>) {
     const nuovi = { ...filtri, ...modifica }
+    // Un corso di un altro tipo non è più fra quelli proposti
+    if (nuovi.corso && nuovi.tipoCorso && rif.corsi.find((c) => c.id === nuovi.corso)?.tipo !== nuovi.tipoCorso) {
+      nuovi.corso = ''
+    }
     const durata = rif.corsi.find((c) => c.id === nuovi.corso)?.durata_anni
     if (durata !== undefined) {
       if (Number(nuovi.annoCorso) > durata) nuovi.annoCorso = ''
@@ -51,7 +56,9 @@ export default function Statistiche() {
 
   // Un filtro attivo resta sempre in vista: niente che cambi i numeri senza vedersi
   const mostraAltri = altriFiltri || Boolean(filtri.annoStudente)
-  const qualcheFiltro = Boolean(filtri.corso || filtri.annoCorso) || mostraAltri
+  const qualcheFiltro = Boolean(filtri.tipoCorso || filtri.corso || filtri.annoCorso) || mostraAltri
+  const tipiPresenti = perTipo(rif.corsi)
+  const corsiProposti = rif.corsi.filter((c) => !filtri.tipoCorso || c.tipo === filtri.tipoCorso)
 
   const schede: { id: Scheda; nome: string }[] = [
     { id: 'materie', nome: 'Materie' },
@@ -64,6 +71,9 @@ export default function Statistiche() {
   const edizione = rif.edizioni.find((e) => e.id === filtri.edizione)
   const contesto: Contesto = [
     ['Edizione', edizione?.nome ?? '?'],
+    ...(filtri.tipoCorso
+      ? [['Tipo di corso', TIPI_CORSO.find((t) => t.id === filtri.tipoCorso)?.nome ?? '?'] as [string, string]]
+      : []),
     ['Corso di laurea', corso?.nome ?? 'Tutti i corsi'],
     ['Anno della materia', filtri.annoCorso ? `${filtri.annoCorso}° anno` : 'Tutti gli anni'],
     [
@@ -119,14 +129,32 @@ export default function Statistiche() {
           {/* Le domande Extra non dipendono né dal corso né dall'anno: lì questi filtri non si mostrano */}
           {scheda !== 'extra' && (
             <div className="flex flex-wrap items-end gap-3">
+              {tipiPresenti.length > 1 && (
+                <div className="min-w-0 flex-1 basis-36 sm:w-40 sm:flex-none">
+                  <Campo etichetta="Tipo di corso">
+                    <Select value={filtri.tipoCorso} onChange={(e) => cambia({ tipoCorso: e.target.value })}>
+                      <option value="">Tutti i tipi</option>
+                      {tipiPresenti.map((t) => (
+                        <option key={t.id} value={t.id}>
+                          {t.nome}
+                        </option>
+                      ))}
+                    </Select>
+                  </Campo>
+                </div>
+              )}
               <div className="min-w-0 flex-1 basis-36 sm:w-56 sm:flex-none">
                 <Campo etichetta="Corso di laurea">
                   <Select value={filtri.corso} onChange={(e) => cambia({ corso: e.target.value })}>
                     <option value="">Tutti i corsi</option>
-                    {rif.corsi.map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.nome}
-                      </option>
+                    {perTipo(corsiProposti).map((gruppo) => (
+                      <optgroup key={gruppo.id} label={gruppo.gruppo}>
+                        {gruppo.corsi.map((c) => (
+                          <option key={c.id} value={c.id}>
+                            {c.nome}
+                          </option>
+                        ))}
+                      </optgroup>
                     ))}
                   </Select>
                 </Campo>
@@ -206,6 +234,7 @@ export default function Statistiche() {
               domande={rif.domande}
               materie={rif.materie}
               materieCorso={rif.materieCorso}
+              corsi={rif.corsi}
               docenti={rif.docenti}
               insegnamenti={rif.insegnamenti}
             />
@@ -216,6 +245,8 @@ export default function Statistiche() {
               contesto={contesto}
               domande={rif.domande}
               materie={rif.materie}
+              corsi={rif.corsi}
+              materieCorso={rif.materieCorso}
               docenti={rif.docenti}
               vedeDocenti={vedeDocenti}
             />

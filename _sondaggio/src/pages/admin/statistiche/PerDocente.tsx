@@ -18,6 +18,7 @@ import {
   useStatSaltati,
   useTesti,
   voci,
+  type CorsoRif,
   type DocenteRif,
   type DomandaRif,
   type InsegnamentoRif,
@@ -37,6 +38,7 @@ type Props = {
   domande: DomandaRif[]
   materie: MateriaRif[]
   materieCorso: MateriaCorsoRif[]
+  corsi: CorsoRif[]
   docenti: DocenteRif[]
   insegnamenti: InsegnamentoRif[]
 }
@@ -49,6 +51,7 @@ export default function PerDocente({
   domande,
   materie,
   materieCorso,
+  corsi,
   docenti,
   insegnamenti,
 }: Props) {
@@ -58,8 +61,12 @@ export default function PerDocente({
   const nomeMateria = new Map(materie.map((m) => [m.id, m.nome]))
   const domandePerId = new Map(domande.map((d) => [d.id, d]))
 
+  const corsiDelTipo = new Set(
+    corsi.filter((c) => !filtri.tipoCorso || c.tipo === filtri.tipoCorso).map((c) => c.id),
+  )
   const materiePossibili = new Set(
     materieCorso
+      .filter((mc) => corsiDelTipo.has(mc.corso_id))
       .filter((mc) => !filtri.corso || mc.corso_id === filtri.corso)
       .filter((mc) => !filtri.annoCorso || mc.anno === Number(filtri.annoCorso))
       .map((mc) => mc.materia_id),

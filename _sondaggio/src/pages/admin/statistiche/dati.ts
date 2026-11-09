@@ -4,7 +4,7 @@ import { useElenco } from '../../../lib/useElenco'
 import { argomenti, type Filtri } from './filtri'
 
 export type EdizioneRif = { id: string; nome: string; aperta: boolean; created_at: string }
-export type CorsoRif = { id: string; nome: string; durata_anni: number }
+export type CorsoRif = { id: string; nome: string; tipo: string; durata_anni: number }
 export type MateriaRif = { id: string; nome: string }
 export type MateriaCorsoRif = { id: string; materia_id: string; corso_id: string; anno: number }
 export type DocenteRif = { id: string; nome: string; cognome: string }
@@ -67,7 +67,7 @@ export function useRiferimenti() {
     'rif-edizioni',
   )
   const corsi = useElenco<CorsoRif>(
-    () => supabase.from('corsi_di_laurea').select('id, nome, durata_anni').order('nome'),
+    () => supabase.from('corsi_di_laurea').select('id, nome, tipo, durata_anni').order('nome'),
     'rif-corsi',
   )
   const materie = useElenco<MateriaRif>(

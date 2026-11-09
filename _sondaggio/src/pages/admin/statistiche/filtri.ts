@@ -2,6 +2,8 @@
 // Materia e docente non sono nella barra dei filtri: li imposta il dettaglio aperto dalla classifica.
 export type Filtri = {
   edizione: string
+  // Non è un argomento delle funzioni del database: restringe le materie e i corsi mostrati
+  tipoCorso: string
   corso: string
   annoCorso: string
   annoStudente: string
@@ -11,6 +13,7 @@ export type Filtri = {
 
 export const FILTRI_VUOTI: Filtri = {
   edizione: '',
+  tipoCorso: '',
   corso: '',
   annoCorso: '',
   annoStudente: '',

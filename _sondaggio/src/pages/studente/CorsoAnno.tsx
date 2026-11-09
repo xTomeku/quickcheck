@@ -1,22 +1,25 @@
+import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { BarraAzioni, Scelta } from '../../components/studente'
 import { Avviso, Pulsante } from '../../components/ui'
 import { useBozza } from '../../lib/bozza'
+import { perTipo } from '../../lib/corsi'
 import { supabase } from '../../lib/supabase'
 import { nomeLeggibile } from '../../lib/testo'
 import { useElenco } from '../../lib/useElenco'
 
-type Corso = { id: string; nome: string; durata_anni: number }
+type Corso = { id: string; nome: string; tipo: string; durata_anni: number }
 
 // Primo passo: il corso di laurea. L'anno si sceglie nella pagina successiva (Anno.tsx)
 export default function CorsoAnno() {
   const { bozza, aggiorna } = useBozza()
   const navigate = useNavigate()
+  const [tipoScelto, setTipoScelto] = useState<string | null>(null)
   const { righe, errore } = useElenco<Corso>(
     () =>
       supabase
         .from('corsi_di_laurea')
-        .select('id, nome, durata_anni')
+        .select('id, nome, tipo, durata_anni')
         .eq('attivo', true)
         .order('nome'),
     'corsi',
@@ -26,6 +29,19 @@ export default function CorsoAnno() {
   if (bozza.corsoBloccato) return <Navigate to="/materie" replace />
 
   const corso = righe?.find((c) => c.id === bozza.corsoId)
+  const gruppi = perTipo(righe ?? [])
+  // Nessun elenco finché non si sceglie il tipo, così nessuno crede che il suo corso manchi.
+  // Chi torna indietro ritrova il tipo del corso già scelto; con un solo tipo non c'è niente da scegliere.
+  const tipo = tipoScelto ?? corso?.tipo ?? (gruppi.length === 1 ? gruppi[0].id : null)
+  const corsiDelTipo = gruppi.find((g) => g.id === tipo)?.corsi ?? []
+
+  function scegliTipo(id: string) {
+    setTipoScelto(id)
+    // Un corso dell'altro tipo non si vedrebbe più nell'elenco: la scelta riparte da zero
+    if (corso && corso.tipo !== id) {
+      aggiorna((b) => ({ ...b, corsoId: null, anno: null, materieScelte: [], risposte: {}, saltati: {} }))
+    }
+  }
 
   function scegliCorso(id: string) {
     aggiorna((b) =>
@@ -53,13 +69,36 @@ export default function CorsoAnno() {
           <h2 id="titolo-corso" className="sr-only">
             Corso di laurea
           </h2>
-          <div className="space-y-2.5">
-            {righe.map((c) => (
-              <Scelta key={c.id} scelta={bozza.corsoId === c.id} onClick={() => scegliCorso(c.id)}>
-                {nomeLeggibile(c.nome)}
-              </Scelta>
-            ))}
-          </div>
+          {gruppi.length > 1 && (
+            <div role="group" aria-label="Tipo di corso" className="flex gap-2">
+              {gruppi.map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  aria-pressed={tipo === g.id}
+                  onClick={() => scegliTipo(g.id)}
+                  className={`min-h-12 flex-1 rounded-xl border-2 px-3 py-2 text-base font-bold transition-colors ${
+                    tipo === g.id
+                      ? 'border-udu bg-udu text-white'
+                      : 'border-slate-400 bg-white text-grafite hover:border-udu hover:bg-udu-velo'
+                  }`}
+                >
+                  {g.nome}
+                </button>
+              ))}
+            </div>
+          )}
+          {tipo === null ? (
+            <p className="text-slate-600">Indica il tipo di corso per vedere l'elenco.</p>
+          ) : (
+            <div className="space-y-2.5">
+              {corsiDelTipo.map((c) => (
+                <Scelta key={c.id} scelta={bozza.corsoId === c.id} onClick={() => scegliCorso(c.id)}>
+                  {nomeLeggibile(c.nome)}
+                </Scelta>
+              ))}
+            </div>
+          )}
         </section>
       )}
 

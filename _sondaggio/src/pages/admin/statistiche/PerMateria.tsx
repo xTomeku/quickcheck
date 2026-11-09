@@ -66,10 +66,14 @@ export default function PerMateria({
     righePerMateria.set(r.materia_id, [...(righePerMateria.get(r.materia_id) ?? []), r])
   }
 
+  const corsiDelTipo = new Set(
+    corsi.filter((c) => !filtri.tipoCorso || c.tipo === filtri.tipoCorso).map((c) => c.id),
+  )
+
   // Una materia può stare in più corsi: una riga sola, perché le medie sono per materia
   const elencoCompleto: VoceClassifica[] = materie.flatMap((m) => {
     const legami = materieCorso
-      .filter((mc) => mc.materia_id === m.id)
+      .filter((mc) => mc.materia_id === m.id && corsiDelTipo.has(mc.corso_id))
       .filter((mc) => !filtri.corso || mc.corso_id === filtri.corso)
       .filter((mc) => !filtri.annoCorso || mc.anno === Number(filtri.annoCorso))
     if (legami.length === 0) return []

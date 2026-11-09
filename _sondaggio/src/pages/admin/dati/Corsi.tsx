@@ -7,11 +7,13 @@ import {
   Campo,
   Input,
   Pulsante,
+  Schede,
   Select,
   StatoPill,
   TestataSezione,
   useAlApertura,
 } from '../../../components/ui'
+import { durataDi, perTipo, TIPI_CORSO } from '../../../lib/corsi'
 import type { Tables } from '../../../lib/database.types'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
@@ -23,11 +25,7 @@ type Corso = Tables<'corsi_di_laurea'> & { materie_corso: { count: number }[] }
 // Cosa sta facendo il modulo aperto
 type Modulo = { azione: 'nuovo' } | { azione: 'modifica' | 'duplica'; corso: Corso }
 
-const TIPI: Record<string, string> = {
-  triennale: 'Triennale',
-  magistrale: 'Magistrale',
-  ciclo_unico: 'Ciclo unico',
-}
+const TIPI: Record<string, string> = Object.fromEntries(TIPI_CORSO.map((t) => [t.id, t.nome]))
 
 // «3° anno», «2° e 3° anno», «1°, 2° e 4° anno»
 function elencoAnni(anni: number[]) {
@@ -51,6 +49,12 @@ export default function Corsi() {
   const [modulo, setModulo] = useState<Modulo | null>(null)
   const [avviso, setAvviso] = useState<string | null>(null)
   const [materieAperte, setMaterieAperte] = useState<string | null>(null)
+  const [tipoScelto, setTipoScelto] = useState<string | null>(null)
+
+  // Una scheda per ogni tipo che ha almeno un corso
+  const gruppi = perTipo(righe ?? [])
+  const tipoAperto = gruppi.some((g) => g.id === tipoScelto) ? (tipoScelto as string) : (gruppi[0]?.id ?? 'triennale')
+  const corsiAperti = gruppi.find((g) => g.id === tipoAperto)?.corsi ?? []
 
   async function cambiaStato(corso: Corso) {
     const nMaterie = corso.materie_corso[0]?.count ?? 0
@@ -87,9 +91,12 @@ export default function Corsi() {
         <FormCorso
           key={modulo.azione === 'nuovo' ? 'nuovo' : `${modulo.azione}-${modulo.corso.id}`}
           modulo={modulo}
+          tipoIniziale={tipoAperto}
           nomiEsistenti={(righe ?? []).map((c) => c.nome)}
           onAnnulla={() => setModulo(null)}
-          onSalvato={() => {
+          onSalvato={(tipo) => {
+            // Si resta sulla scheda del corso appena salvato, anche se è il primo del suo tipo
+            setTipoScelto(tipo)
             setModulo(null)
             setAvviso(null)
             ricarica()
@@ -102,8 +109,14 @@ export default function Corsi() {
       ) : righe.length === 0 ? (
         <Avviso tipo="info">Nessun corso inserito. Crea il primo con «Nuovo corso».</Avviso>
       ) : (
+        <div className="space-y-4">
+          <Schede
+            schede={gruppi.map((g) => ({ id: g.id as string, nome: `${g.scheda} (${g.corsi.length})` }))}
+            attiva={tipoAperto}
+            onCambia={setTipoScelto}
+          />
         <ul className="divide-y divide-slate-200 rounded-xl border border-slate-200 bg-white">
-          {righe.map((c) => (
+          {corsiAperti.map((c) => (
             <li
               key={c.id}
               className={`flex flex-wrap items-center gap-3 p-4 ${
@@ -120,7 +133,7 @@ export default function Corsi() {
                   <StatoPill attivo={c.attivo} />
                 </div>
                 <p className="text-sm text-slate-500">
-                  {TIPI[c.tipo] ?? c.tipo} · {c.durata_anni} anni · {c.materie_corso[0]?.count ?? 0}{' '}
+                  {c.durata_anni} anni · {c.materie_corso[0]?.count ?? 0}{' '}
                   {c.materie_corso[0]?.count === 1 ? 'materia' : 'materie'}
                   {c.anni_attivi && (
                     <span className="font-semibold text-pericolo-testo">
@@ -159,6 +172,7 @@ export default function Corsi() {
             </li>
           ))}
         </ul>
+        </div>
       )}
     </div>
   )
@@ -208,22 +222,24 @@ async function duplicaCorso(
 
 function FormCorso({
   modulo,
+  tipoIniziale,
   nomiEsistenti,
   onAnnulla,
   onSalvato,
 }: {
   modulo: Modulo
+  tipoIniziale: string
   nomiEsistenti: string[]
   onAnnulla: () => void
-  onSalvato: () => void
+  onSalvato: (tipo: string) => void
 }) {
   const ref = useAlApertura<HTMLFormElement>()
   const corso = modulo.azione === 'nuovo' ? null : modulo.corso
   const [nome, setNome] = useState(() =>
     modulo.azione === 'duplica' ? nomeCopia(modulo.corso.nome, nomiEsistenti) : (corso?.nome ?? ''),
   )
-  const [tipo, setTipo] = useState(corso?.tipo ?? 'triennale')
-  const [durata, setDurata] = useState(String(corso?.durata_anni ?? 3))
+  const [tipo, setTipo] = useState(corso?.tipo ?? tipoIniziale)
+  const [durata, setDurata] = useState(String(corso?.durata_anni ?? durataDi(tipoIniziale)))
   // Si tengono gli anni tolti e non quelli attivi: così, allungando la durata, gli anni nuovi sono già attivi
   const [inattivi, setInattivi] = useState<Set<number>>(() => {
     const attivi = corso?.anni_attivi
@@ -265,7 +281,7 @@ function FormCorso({
       const messaggio = await duplicaCorso(modulo.corso, valori)
       setInvio(false)
       if (messaggio) setErrore(messaggio)
-      else onSalvato()
+      else onSalvato(tipo)
       return
     }
     if (corso) {
@@ -292,7 +308,7 @@ function FormCorso({
 
     setInvio(false)
     if (errDb) setErrore(messaggioErrore(errDb))
-    else onSalvato()
+    else onSalvato(tipo)
   }
 
   return (
@@ -316,7 +332,14 @@ function FormCorso({
       </Campo>
       <div className="grid grid-cols-2 gap-4">
         <Campo etichetta="Tipo">
-          <Select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+          <Select
+            value={tipo}
+            onChange={(e) => {
+              setTipo(e.target.value)
+              // Per un corso nuovo si propone la durata tipica; quella di un corso esistente non si tocca
+              if (modulo.azione === 'nuovo') setDurata(String(durataDi(e.target.value)))
+            }}
+          >
             {Object.entries(TIPI).map(([valore, etichetta]) => (
               <option key={valore} value={valore}>
                 {etichetta}
