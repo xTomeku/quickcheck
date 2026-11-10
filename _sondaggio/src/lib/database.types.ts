@@ -587,6 +587,9 @@ export type Database = {
       }
       risposte_extra: {
         Row: {
+          anno_studente: number | null
+          corso_id: string | null
+          fuori_corso: boolean | null
           domanda_id: string
           edizione_id: string
           id: string
@@ -596,6 +599,9 @@ export type Database = {
           valore_numero: number | null
         }
         Insert: {
+          anno_studente?: number | null
+          corso_id?: string | null
+          fuori_corso?: boolean | null
           domanda_id: string
           edizione_id: string
           id?: string
@@ -605,6 +611,9 @@ export type Database = {
           valore_numero?: number | null
         }
         Update: {
+          anno_studente?: number | null
+          corso_id?: string | null
+          fuori_corso?: boolean | null
           domanda_id?: string
           edizione_id?: string
           id?: string
@@ -614,6 +623,13 @@ export type Database = {
           valore_numero?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "risposte_extra_corso_id_fkey"
+            columns: ["corso_id"]
+            isOneToOne: false
+            referencedRelation: "corsi_di_laurea"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "risposte_extra_domanda_id_fkey"
             columns: ["domanda_id"]
