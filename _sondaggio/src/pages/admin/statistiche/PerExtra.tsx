@@ -9,7 +9,15 @@ import type { DomandaRif } from './dati'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 
 type Props = { edizione: string; domande: DomandaRif[] }
-type RigaTesto = { id: string; domanda_id: string; testo: string | null; nascosta: boolean }
+type RigaTesto = {
+  id: string
+  domanda_id: string
+  testo: string | null
+  nascosta: boolean
+  corso_id: string | null
+  anno_studente: number | null
+  fuori_corso: boolean | null
+}
 
 // Domande Extra: raccolte una sola volta per studente, quindi senza i filtri per corso, anno o materia
 export default function PerExtra({ edizione, domande }: Props) {
@@ -26,13 +34,27 @@ export default function PerExtra({ edizione, domande }: Props) {
       edizione
         ? await supabase
             .from('risposte_extra')
-            .select('id, domanda_id, testo, nascosta')
+            .select('id, domanda_id, testo, nascosta, corso_id, anno_studente, fuori_corso')
             .eq('edizione_id', edizione)
             .not('testo', 'is', null)
             .limit(1000)
         : { data: [], error: null },
     `extra-testi-${edizione}`,
   )
+
+  const corsi = useElenco<{ id: string; nome: string }>(
+    () => supabase.from('corsi_di_laurea').select('id, nome'),
+    'extra-corsi',
+  )
+  const nomeCorso = new Map((corsi.righe ?? []).map((c) => [c.id, c.nome]))
+
+  // Chi ha scritto la risposta, in piccolo sopra: corso e anno. Le risposte raccolte prima che si registrassero
+  // non li hanno e restano senza indicazione.
+  function chiHaScritto(t: RigaTesto): string | null {
+    if (!t.corso_id) return null
+    const anno = t.fuori_corso ? 'fuori corso' : t.anno_studente ? `${t.anno_studente}° anno` : null
+    return [nomeCorso.get(t.corso_id) ?? 'Corso', anno].filter(Boolean).join(' · ')
+  }
 
   const extra = domande.filter((d) => d.categoria === 'extra').sort((a, b) => a.ordine - b.ordine)
   const perDomanda = new Map<string, Agg>((stat.righe ?? []).map((r) => [r.domanda_id, daRiga(r)]))
@@ -93,10 +115,13 @@ export default function PerExtra({ edizione, domande }: Props) {
                       t.nascosta ? 'border-slate-200 bg-slate-50 text-slate-500' : 'border-slate-200'
                     }`}
                   >
-                    <p className="min-w-0 flex-1 break-words whitespace-pre-wrap">
-                      {t.nascosta && <span className="mr-2 font-semibold">[Nascosta]</span>}
-                      {t.testo}
-                    </p>
+                    <div className="min-w-0 flex-1">
+                      {chiHaScritto(t) && <p className="text-xs text-slate-500">{chiHaScritto(t)}</p>}
+                      <p className="break-words whitespace-pre-wrap">
+                        {t.nascosta && <span className="mr-2 font-semibold">[Nascosta]</span>}
+                        {t.testo}
+                      </p>
+                    </div>
                     {puoNascondere && (
                       <Pulsante onClick={() => nascondi(t.id, !t.nascosta)}>
                         {t.nascosta ? 'Mostra' : 'Nascondi'}
