@@ -1,1 +1,0 @@
-import{S as e,T as t,b as n,v as r}from"./index-ioteAlyZ.js";var i=e();function a(){let{ruolo:e}=n(),a=r.find(t=>e&&t.ruoli.includes(e));return a?(0,i.jsx)(t,{to:a.percorso,replace:!0}):null}export{a as default};
