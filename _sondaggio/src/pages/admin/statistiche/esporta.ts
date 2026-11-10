@@ -106,7 +106,9 @@ function foglioScale(titoliColonne: string[], elenco: VoceEsportazione[]): Sheet
 
 // Domande a scelta: una riga per opzione, con quante l'hanno scelta e la percentuale
 function foglioScelte(titoliColonne: string[], elenco: VoceEsportazione[]): Sheet<unknown> | null {
-  const scelte = elenco.filter((v) => v.domanda.tipo_risposta === 'scelta_singola')
+  const scelte = elenco.filter(
+    (v) => v.domanda.tipo_risposta === 'scelta_singola' || v.domanda.tipo_risposta === 'scelta_multipla',
+  )
   if (scelte.length === 0) return null
 
   const intestazione: Row = [

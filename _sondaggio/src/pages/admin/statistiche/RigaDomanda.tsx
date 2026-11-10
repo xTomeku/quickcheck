@@ -70,7 +70,11 @@ export default function RigaDomanda({
       <div className="min-w-0">
         <p>{domanda.testo}</p>
         <p className="text-xs text-slate-500">
-          {n === 0 ? 'Nessuna risposta' : `${n} ${n === 1 ? 'risposta' : 'risposte'}`}
+          {n === 0
+            ? 'Nessuna risposta'
+            : domanda.tipo_risposta === 'scelta_multipla'
+              ? `${n} ${n === 1 ? 'persona' : 'persone'} · più risposte possibili`
+              : `${n} ${n === 1 ? 'risposta' : 'risposte'}`}
         </p>
       </div>
       {n > 0 && agg && scala && (

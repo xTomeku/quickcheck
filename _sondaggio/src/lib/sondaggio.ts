@@ -87,6 +87,12 @@ export function chiaveRisposta(domandaId: string, insegnamentoId?: string): stri
   return insegnamentoId ? `${domandaId}:${insegnamentoId}` : domandaId
 }
 
+// In una domanda a scelta multipla il valore è l'elenco degli id delle opzioni scelte, separati da virgola
+// (negli altri tipi è un solo id): così la bozza salvata nel dispositivo resta un valore semplice.
+export function opzioniScelte(valore: Valore | undefined): string[] {
+  return valore === undefined ? [] : String(valore).split(',').filter((o) => o !== '')
+}
+
 export function haRisposta(valore: Valore | undefined): boolean {
   return valore !== undefined && String(valore).trim() !== ''
 }
@@ -140,7 +146,7 @@ export function visibile(
 ): boolean {
   if (!d.mostra_se_domanda_id) return true
   const valore = risposte[chiaveRisposta(d.mostra_se_domanda_id, insegnamentoId)]
-  return valore !== undefined && d.mostra_se_opzioni.includes(String(valore))
+  return opzioniScelte(valore).some((o) => d.mostra_se_opzioni.includes(o))
 }
 
 // Domande obbligatorie senza risposta (i docenti saltati e le domande nascoste non contano)
@@ -189,15 +195,11 @@ export function preparaInvio(
   function aggiungi(d: DomandaCompleta, insegnamentoId?: string) {
     const valore = risposte[chiaveRisposta(d.id, insegnamentoId)]
     if (!haRisposta(valore) || !visibile(d, risposte, insegnamentoId)) return
-    voci.push({
-      domanda_id: d.id,
-      ...(insegnamentoId ? { insegnamento_id: insegnamentoId } : {}),
-      ...(d.tipo_risposta === 'scala'
-        ? { valore_numero: Number(valore) }
-        : d.tipo_risposta === 'testo'
-          ? { testo: String(valore).trim() }
-          : { opzione_id: String(valore) }),
-    })
+    const base = { domanda_id: d.id, ...(insegnamentoId ? { insegnamento_id: insegnamentoId } : {}) }
+    if (d.tipo_risposta === 'scala') voci.push({ ...base, valore_numero: Number(valore) })
+    else if (d.tipo_risposta === 'testo') voci.push({ ...base, testo: String(valore).trim() })
+    // Scelta multipla: una voce per ogni opzione segnata
+    else for (const opzione of opzioniScelte(valore)) voci.push({ ...base, opzione_id: opzione })
   }
 
   for (const d of [...struttura.generiche, ...struttura.specifiche]) aggiungi(d)

@@ -108,6 +108,11 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
     new Set(domanda?.mostra_se_opzioni ?? []),
   )
   const [tipo, setTipo] = useState(domanda?.tipo_risposta ?? 'scala')
+  // Con risposte già raccolte il tipo resta fisso, tranne il passaggio da scelta singola a multipla:
+  // le risposte già date restano valide (una sola opzione segnata)
+  const sceltaDiOpzioni = tipo === 'scelta_singola' || tipo === 'scelta_multipla'
+  const siRendeMultipla =
+    bloccata && domanda?.tipo_risposta === 'scelta_singola' && tipo === 'scelta_multipla'
   const [scalaMin, setScalaMin] = useState(String(domanda?.scala_min ?? 1))
   const [scalaMax, setScalaMax] = useState(String(domanda?.scala_max ?? 5))
   const [etMin, setEtMin] = useState(domanda?.etichetta_min ?? '')
@@ -136,7 +141,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
     .filter((g) => g !== '')
     .sort((a, b) => a.localeCompare(b))
 
-  // Domande da cui questa può dipendere: a scelta singola, della stessa categoria, a loro volta non condizionate
+  // Domande da cui questa può dipendere: a scelta singola o multipla, della stessa categoria, a loro volta non condizionate
   const condizionabile = ['generica', 'generica_docente', 'extra'].includes(categoria)
   const genitori = useElenco<{ id: string; testo: string }>(
     async () =>
@@ -145,7 +150,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
             .from('domande')
             .select('id, testo')
             .eq('categoria', categoria)
-            .eq('tipo_risposta', 'scelta_singola')
+            .in('tipo_risposta', ['scelta_singola', 'scelta_multipla'])
             .is('mostra_se_domanda_id', null)
             .order('ordine')
         : { data: [], error: null },
@@ -239,8 +244,12 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       setErrore('Nella scala il valore minimo deve essere inferiore al massimo.')
       return
     }
-    if (!bloccata && tipo === 'scelta_singola' && testiOpzioni.length > opzMax) {
-      setErrore(`Una domanda a scelta singola può avere al massimo ${opzMax} opzioni.`)
+    if (tipo === 'scelta_multipla' && categoria === 'extra') {
+      setErrore('Le domande Extra non possono essere a scelta multipla: scegli un’altra categoria o la scelta singola.')
+      return
+    }
+    if (!bloccata && sceltaDiOpzioni && testiOpzioni.length > opzMax) {
+      setErrore(`Una domanda a scelta può avere al massimo ${opzMax} opzioni.`)
       return
     }
 
@@ -288,7 +297,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       const cambiaCategoria = !bloccata && domanda !== null && categoria !== domanda.categoria
       const { error } = await supabase
         .from('domande')
-        .update(bloccata ? comuni : { ...completi, ...(cambiaCategoria ? { ordine: await inFondo() } : {}) })
+        .update(bloccata ? { ...comuni, ...(siRendeMultipla ? { tipo_risposta: tipo } : {}) } : { ...completi, ...(cambiaCategoria ? { ordine: await inFondo() } : {}) })
         .eq('id', id)
       if (error) return fallito(error)
     } else {
@@ -305,7 +314,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
     // 2. Le opzioni di risposta. Quelle che ci sono già si aggiornano e non si ricreano: le domande
     // condizionate puntano al loro id, e un id nuovo le lascerebbe legate a una risposta sparita.
     if (!bloccata) {
-      const errOpzioni = await salvaOpzioni(id, tipo === 'scelta_singola' ? testiOpzioni : [])
+      const errOpzioni = await salvaOpzioni(id, sceltaDiOpzioni ? testiOpzioni : [])
       if (errOpzioni) return fallito(errOpzioni)
     }
 
@@ -428,8 +437,20 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
       </Campo>
 
       <Campo etichetta="4. Tipo di risposta">
-        <Select disabled={bloccata} value={tipo} onChange={(e) => setTipo(e.target.value)}>
-          {Object.entries(NOME_TIPO).map(([valore, nome]) => (
+        <Select
+          disabled={bloccata && domanda?.tipo_risposta !== 'scelta_singola'}
+          value={tipo}
+          onChange={(e) => setTipo(e.target.value)}
+        >
+          {Object.entries(NOME_TIPO)
+            .filter(
+              ([valore]) =>
+                !bloccata ||
+                valore === domanda?.tipo_risposta ||
+                (domanda?.tipo_risposta === 'scelta_singola' && valore === 'scelta_multipla'),
+            )
+            .filter(([valore]) => valore !== 'scelta_multipla' || categoria !== 'extra')
+            .map(([valore, nome]) => (
             <option key={valore} value={valore}>
               {nome}
             </option>
@@ -472,7 +493,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
         </div>
       )}
 
-      {tipo === 'scelta_singola' && (
+      {sceltaDiOpzioni && (
         <div className="space-y-2">
           <p className="text-sm font-medium text-slate-700">
             Opzioni di risposta (da {opzMin} a {opzMax})
@@ -595,7 +616,7 @@ export default function FormDomanda({ domanda, onAnnulla, onSalvato }: Props) {
           )}
           <p className="text-sm text-slate-500">
             Serve a chiedere «È utile?» solo a chi risponde «Sì» a «C'è un tutoraggio?». La domanda da cui
-            dipende deve essere a scelta singola, della stessa categoria e attiva prima di questa.
+            dipende deve essere a scelta singola o multipla, della stessa categoria e attiva prima di questa.
           </p>
         </div>
       )}
@@ -748,7 +769,9 @@ function Anteprima({
           ) : (
             opzioni.map((o, i) => (
               <li key={i} className="flex items-center gap-2 text-sm">
-                <span className="size-4 rounded-full border border-slate-400 bg-white" />
+                <span
+                  className={`size-4 border border-slate-400 bg-white ${tipo === 'scelta_multipla' ? 'rounded-sm' : 'rounded-full'}`}
+                />
                 {o}
               </li>
             ))
