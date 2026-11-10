@@ -1,6 +1,6 @@
 import { useId } from 'react'
 import type { Valore } from '../lib/bozza'
-import type { DomandaCompleta } from '../lib/sondaggio'
+import { opzioniScelte, type DomandaCompleta } from '../lib/sondaggio'
 import { IconaAttenzione } from './studente'
 
 // Lunghezza massima di una risposta scritta (la stessa imposta dal database)
@@ -13,7 +13,7 @@ type Props = {
   mancante: boolean
 }
 
-// Una domanda come la vede lo studente: scala di pulsanti a tutta larghezza, scelta singola o testo libero.
+// Una domanda come la vede lo studente: scala di pulsanti a tutta larghezza, scelta singola o multipla, o testo libero.
 // Il rosso dice «scelto»; una risposta obbligatoria mancante si segnala in giallo, con icona e parole.
 export default function CampoDomanda({ domanda, valore, onCambia, mancante }: Props) {
   const gruppo = useId()
@@ -21,6 +21,14 @@ export default function CampoDomanda({ domanda, valore, onCambia, mancante }: Pr
   const min = domanda.scala_min ?? 1
   const max = domanda.scala_max ?? 5
   const valoriScala = Array.from({ length: Math.max(0, max - min + 1) }, (_, i) => min + i)
+  const multipla = domanda.tipo_risposta === 'scelta_multipla'
+  const scelte = opzioniScelte(valore)
+
+  // Segna o toglie un'opzione, tenendo l'elenco nell'ordine in cui le opzioni sono mostrate
+  function alterna(id: string) {
+    const nuove = scelte.includes(id) ? scelte.filter((s) => s !== id) : [...scelte, id]
+    onCambia(domanda.opzioni_risposta.filter((o) => nuove.includes(o.id)).map((o) => o.id).join(','))
+  }
 
   return (
     <div
@@ -42,6 +50,8 @@ export default function CampoDomanda({ domanda, valore, onCambia, mancante }: Pr
           </>
         )}
       </p>
+
+      {multipla && <p className="mt-1 text-sm font-medium text-slate-600">Puoi scegliere più risposte.</p>}
 
       {domanda.tipo_risposta === 'testo' ? (
         <div className="mt-3">
@@ -93,7 +103,7 @@ export default function CampoDomanda({ domanda, valore, onCambia, mancante }: Pr
       ) : (
         <ul className="mt-3 space-y-2">
           {domanda.opzioni_risposta.map((o) => {
-            const scelta = valore === o.id
+            const scelta = multipla ? scelte.includes(o.id) : valore === o.id
             return (
               <li key={o.id}>
                 <label
@@ -102,19 +112,26 @@ export default function CampoDomanda({ domanda, valore, onCambia, mancante }: Pr
                   }`}
                 >
                   <input
-                    type="radio"
+                    type={multipla ? 'checkbox' : 'radio'}
                     name={gruppo}
                     className="peer sr-only"
                     checked={scelta}
-                    onChange={() => onCambia(o.id)}
+                    onChange={() => (multipla ? alterna(o.id) : onCambia(o.id))}
                   />
                   <span
                     aria-hidden="true"
-                    className={`grid size-6 flex-none place-items-center rounded-full border-2 bg-white peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-inchiostro ${
-                      scelta ? 'border-udu' : 'border-slate-400'
-                    }`}
+                    className={`grid size-6 flex-none place-items-center border-2 peer-focus-visible:outline-[3px] peer-focus-visible:outline-offset-2 peer-focus-visible:outline-inchiostro ${
+                      multipla ? 'rounded-md' : 'rounded-full'
+                    } ${scelta ? 'border-udu' : 'border-slate-400'} ${multipla && scelta ? 'bg-udu' : 'bg-white'}`}
                   >
-                    {scelta && <span className="size-3 rounded-full bg-udu" />}
+                    {scelta &&
+                      (multipla ? (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 12.5l4.5 4.5L19 7.5" />
+                        </svg>
+                      ) : (
+                        <span className="size-3 rounded-full bg-udu" />
+                      ))}
                   </span>
                   <span className="font-medium">{o.testo}</span>
                 </label>
