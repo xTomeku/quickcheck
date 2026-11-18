@@ -146,13 +146,13 @@ function renderAdminBugs() {
                         ${sv.label}
                     </span>
                     ${item.category ? `<span class="bug-badge category-pill">${item.category}</span>` : ''}
-                    ${item.affected_version ? `<span class="bug-versione">Ver: ${item.affected_version}</span>` : ''}
-                    ${item.fixed_version ? `<span class="bug-fixed-badge">✓ Fix: ${item.fixed_version}</span>` : ''}
+                    ${item.affected_version ? `<span class="bug-versione">Ver: ${escapeHtml(item.affected_version)}</span>` : ''}
+                    ${item.fixed_version ? `<span class="bug-fixed-badge">✓ Fix: ${escapeHtml(item.fixed_version)}</span>` : ''}
                     ${!item.is_visible ? '<span class="badge-draft">BOZZA / NASCOSTO</span>' : ''}
                 </div>
-                <h3 class="bug-titolo">${item.title}</h3>
-                <p class="bug-descrizione">${item.description.substring(0, 110)}${item.description.length > 110 ? '...' : ''}</p>
-                ${item.workaround ? `<p class="bug-workaround">💡 <em>Workaround: ${item.workaround.substring(0, 90)}${item.workaround.length > 90 ? '...' : ''}</em></p>` : ''}
+                <h3 class="bug-titolo">${escapeHtml(item.title)}</h3>
+                <p class="bug-descrizione">${escapeHtml((item.description || '').substring(0, 110))}${(item.description || '').length > 110 ? '...' : ''}</p>
+                ${item.workaround ? `<p class="bug-workaround">💡 <em>Workaround: ${escapeHtml(item.workaround.substring(0, 90))}${item.workaround.length > 90 ? '...' : ''}</em></p>` : ''}
             </div>
             <div class="actions bug-azioni">
                 <div class="actions">

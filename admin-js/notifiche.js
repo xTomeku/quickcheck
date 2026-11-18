@@ -799,7 +799,7 @@ async function fetchNotifications() {
         }).join('');
     } catch (e) {
         console.error('Errore caricamento storico notifiche:', e);
-        notificationsHistoryList.innerHTML = `<div class="admin-errore">Errore caricamento storico: ${e.message}</div>`;
+        notificationsHistoryList.innerHTML = `<div class="admin-errore">Errore caricamento storico: ${escapeHtml(e.message)}</div>`;
     }
 }
 

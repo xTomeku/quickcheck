@@ -39,10 +39,13 @@ function showToast(message, type = 'success', azione = null) {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
-    toast.innerHTML = `
-        <span class="toast-icona">${type === 'success' ? '✓' : '⚠'}</span>
-        <span>${message}</span>
-    `;
+    // Il messaggio va come testo: a volte contiene error.message, che arriva dal server
+    const icona = document.createElement('span');
+    icona.className = 'toast-icona';
+    icona.textContent = type === 'success' ? '✓' : '⚠';
+    const testo = document.createElement('span');
+    testo.textContent = message;
+    toast.append(icona, testo);
     const chiudi = () => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
@@ -448,7 +451,10 @@ logoutBtn.addEventListener('click', async () => {
     showLogin();
 });
 
+// Testo sicuro dentro innerHTML e negli attributi (anche tra apici singoli). Accetta anche
+// numeri e altri tipi; null e undefined diventano stringa vuota.
 function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    if (str === null || str === undefined) return '';
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }

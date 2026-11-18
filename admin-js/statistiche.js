@@ -1124,7 +1124,7 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
             stackedBar.appendChild(seg);
 
             const legItem = document.createElement('span');
-            legItem.innerHTML = `<span class="admin-pallino" style="background: ${color.hex};"></span> <strong>${item.version}</strong>: ${item.pct}% (${item.total})`;
+            legItem.innerHTML = `<span class="admin-pallino" style="background: ${color.hex};"></span> <strong>${escapeHtml(item.version)}</strong>: ${item.pct}% (${item.total})`;
             stackedLegend.appendChild(legItem);
         });
     }
@@ -1146,7 +1146,7 @@ function renderVersionRolloutStats(versionList, totalUsers, totalApk, totalPwa, 
             card.innerHTML = `
                 <div class="rollout-scheda-testa">
                     <div class="admin-riga">
-                        <span class="rollout-scheda-versione">${item.version}</span>
+                        <span class="rollout-scheda-versione">${escapeHtml(item.version)}</span>
                         ${badgeHtml}
                     </div>
                     <div class="version-stat-count">

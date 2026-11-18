@@ -49,11 +49,11 @@ async function fetchUpdates() {
         item.innerHTML = `
             <div class="update-item-info">
                 <h3>
-                    ${update.version} 
+                    ${escapeHtml(update.version)} 
                     ${update.is_latest ? '<span class="badge-latest">ULTIMA</span>' : ''}
                     ${!update.is_visible ? '<span class="badge-draft">BOZZA</span>' : ''}
                 </h3>
-                <p>${update.date} • ${update.details || 'Nessun dettaglio'}</p>
+                <p>${escapeHtml(update.date)} • ${escapeHtml(update.details || 'Nessun dettaglio')}</p>
             </div>
             <div class="actions">
                 <button class="btn btn-secondary btn-sm edit-btn" data-id="${update.id}">Modifica</button>

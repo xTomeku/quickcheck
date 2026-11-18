@@ -1,3 +1,10 @@
+// Testo del database dentro innerHTML: senza escape un testo con < o " diventerebbe codice
+function escHtml(testo) {
+    if (testo === null || testo === undefined) return '';
+    return String(testo).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const hamburger = document.querySelector('.hamburger');
     const navLinks = document.querySelector('.nav-links');
@@ -163,7 +170,7 @@ async function loadLegal(_supabase) {
         termsData.forEach(item => {
             html += `
                 <div class="legal-item reveal">
-                    <span class="item-title">${item.title}</span> ${item.description}
+                    <span class="item-title">${escHtml(item.title)}</span> ${escHtml(item.description)}
                 </div>
             `;
         });
@@ -206,10 +213,10 @@ async function loadPrivacy(_supabase) {
         <details class="privacy-voce"${i === 0 ? ' open' : ''}>
             <summary>
                 <span class="funzione-ms privacy-icona" aria-hidden="true">${icona(item.title)}</span>
-                <h2>${titolo(item.title)}</h2>
+                <h2>${escHtml(titolo(item.title))}</h2>
                 <span class="funzione-ms privacy-piu" aria-hidden="true">add</span>
             </summary>
-            <p>${String(item.description || '').replace(/\u200B/g, '').trim()}</p>
+            <p>${escHtml(String(item.description || '').replace(/\u200B/g, '').trim())}</p>
         </details>`).join('');
 
     // "Apri tutte" / "Chiudi tutte", aggiornato anche quando si apre o chiude una voce a mano
@@ -268,7 +275,7 @@ async function loadContacts(_supabase) {
                 btn.target = '_blank';
                 btn.rel = 'noopener noreferrer';
             }
-            btn.innerHTML = `${iconaContatto(item.icon, item.url)}<span>${item.label}</span>`;
+            btn.innerHTML = `${iconaContatto(item.icon, item.url)}<span>${escHtml(item.label)}</span>`;
             container.appendChild(btn);
         });
     };
@@ -307,7 +314,7 @@ async function loadCredits(_supabase) {
     const cached = localStorage.getItem(cacheKey);
 
     // Testi del pannello: spazi invisibili e spazi ai bordi tolti; categorie con la sola iniziale maiuscola
-    const pulito = (s) => String(s || '').replace(/\u200B/g, '').trim();
+    const pulito = (s) => escHtml(String(s || '').replace(/\u200B/g, '').trim());
     const categoria = (c) => {
         const t = pulito(c).toLowerCase() || 'generale';
         return t.charAt(0).toUpperCase() + t.slice(1);
@@ -341,7 +348,7 @@ async function loadCredits(_supabase) {
                     <div class="credits-blocco reveal">
                         <span class="sezione-etichetta">Fatto con</span>
                         <div class="credits-tecnologie">
-                            ${g.voci.map(v => `<span title="${pulito(v.description).replace(/"/g, '&quot;')}"><span class="funzione-ms" aria-hidden="true">${iconaTecnologia(v.title)}</span>${pulito(v.title)}</span>`).join('')}
+                            ${g.voci.map(v => `<span title="${pulito(v.description)}"><span class="funzione-ms" aria-hidden="true">${iconaTecnologia(v.title)}</span>${pulito(v.title)}</span>`).join('')}
                         </div>
                     </div>`;
             }
@@ -475,14 +482,14 @@ async function loadDynamicUpdates(_supabase) {
             return `
                 <details>
                     <summary>
-                        <span class="storico-numero">${versione}</span>
+                        <span class="storico-numero">${escHtml(versione)}</span>
                         <span class="storico-data">${dataLeggibile(update.date)}</span>
                         <span class="storico-conta">${modifiche.length} ${modifiche.length === 1 ? 'modifica' : 'modifiche'}</span>
                         <span class="funzione-ms" aria-hidden="true">expand_more</span>
                     </summary>
                     <div class="storico-dentro">
-                        <ul>${modifiche.map(m => `<li>${m.title && m.desc ? `<b>${m.title}.</b> ${m.desc}` : `<b>${m.title || m.desc}</b>`}</li>`).join('')}</ul>
-                        ${update.download_url ? `<a href="${update.download_url}"><span class="funzione-ms" aria-hidden="true">download</span>Scarica l'APK della ${versione}</a>` : ''}
+                        <ul>${modifiche.map(m => `<li>${m.title && m.desc ? `<b>${escHtml(m.title)}.</b> ${escHtml(m.desc)}` : `<b>${escHtml(m.title || m.desc)}</b>`}</li>`).join('')}</ul>
+                        ${update.download_url ? `<a href="${escHtml(update.download_url)}"><span class="funzione-ms" aria-hidden="true">download</span>Scarica l'APK della ${escHtml(versione)}</a>` : ''}
                     </div>
                 </details>`;
         }).join('') : '<p class="scarica-stato">Nessuna versione precedente.</p>';
@@ -508,7 +515,7 @@ function bloccoModifiche({ tipo, nome, icona, visibili }, voci) {
             </div>
             <div>
                 <ul class="novita-voci">
-                    ${voci.map((v, n) => `<li${n >= visibili ? ' hidden' : ''}>${v.title ? `<h3>${v.title}</h3>` : ''}${v.desc ? `<p>${v.desc}</p>` : ''}</li>`).join('')}
+                    ${voci.map((v, n) => `<li${n >= visibili ? ' hidden' : ''}>${v.title ? `<h3>${escHtml(v.title)}</h3>` : ''}${v.desc ? `<p>${escHtml(v.desc)}</p>` : ''}</li>`).join('')}
                 </ul>
                 ${nascoste ? `<button type="button" class="novita-altre">Mostra altre ${nascoste}<span class="funzione-ms" aria-hidden="true">expand_more</span></button>` : ''}
             </div>
@@ -649,7 +656,7 @@ function iconaFunzione(valore) {
     const nome = ICONE_FUNZIONI.has(v) ? v : EMOJI_FUNZIONI[v];
     return nome
         ? `<span class="funzione-ms" aria-hidden="true">${nome}</span>`
-        : `<span class="funzione-emoji" aria-hidden="true">${v}</span>`;
+        : `<span class="funzione-emoji" aria-hidden="true">${escHtml(v)}</span>`;
 }
 
 // Icone delle etichette sul riquadro delle funzionalità in evidenza: quelle delle funzionalità più
@@ -670,13 +677,13 @@ function rigaInEvidenza(item, index) {
     const nome = ICONE_FUNZIONI.has(v) ? v : EMOJI_FUNZIONI[v];
     const iconaGrande = nome
         ? `<span class="funzione-ms visivo-icona">${nome}</span>`
-        : `<span class="funzione-emoji visivo-icona">${v}</span>`;
+        : `<span class="funzione-emoji visivo-icona">${escHtml(v)}</span>`;
     const etichette = (Array.isArray(item.etichette) ? item.etichette : [])
         .filter(e => e && String(e.testo || '').trim())
         .slice(0, 2)
         .map((e, i) => {
             const icona = ICONE_ETICHETTE.has(e.icona) ? `<span class="funzione-ms">${e.icona}</span>` : '';
-            return `<span class="visivo-chip ${posizioni[i]}">${icona}${e.testo}</span>`;
+            return `<span class="visivo-chip ${posizioni[i]}">${icona}${escHtml(e.testo)}</span>`;
         }).join('');
     const punti = (Array.isArray(item.punti) ? item.punti : []).filter(p => String(p || '').trim());
 
@@ -685,9 +692,9 @@ function rigaInEvidenza(item, index) {
     riga.innerHTML = `
         <div class="visivo reveal" aria-hidden="true">${iconaGrande}${etichette}</div>
         <div class="reveal delay-1">
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
-            ${punti.length ? `<ul>${punti.map(p => `<li><span class="funzione-ms" aria-hidden="true">check_circle</span>${p}</li>`).join('')}</ul>` : ''}
+            <h3>${escHtml(item.title)}</h3>
+            <p>${escHtml(item.description)}</p>
+            ${punti.length ? `<ul>${punti.map(p => `<li><span class="funzione-ms" aria-hidden="true">check_circle</span>${escHtml(p)}</li>`).join('')}</ul>` : ''}
         </div>
     `;
     return riga;
@@ -730,8 +737,8 @@ async function loadFeatures(_supabase) {
             voce.innerHTML = `
                 ${iconaFunzione(item.icon)}
                 <div>
-                    <h3>${item.title}</h3>
-                    <p>${item.description}</p>
+                    <h3>${escHtml(item.title)}</h3>
+                    <p>${escHtml(item.description)}</p>
                 </div>
             `;
             container.appendChild(voce);
@@ -902,12 +909,12 @@ async function loadFAQ(_supabase) {
             faqItem.innerHTML = `
                 <h3 class="faq-heading">
                     <button type="button" class="faq-question" id="faq-q-${index}" aria-expanded="false" aria-controls="faq-a-${index}">
-                        <span class="faq-question-text">${item.question}</span>
+                        <span class="faq-question-text">${escHtml(item.question)}</span>
                         <span class="faq-toggle" aria-hidden="true">+</span>
                     </button>
                 </h3>
                 <div class="faq-answer" id="faq-a-${index}" role="region" aria-labelledby="faq-q-${index}">
-                    <div class="faq-answer-inner">${item.answer}</div>
+                    <div class="faq-answer-inner">${escHtml(item.answer)}</div>
                 </div>
             `;
             // Accordion: un solo elemento aperto alla volta; l'altezza segue la risposta reale
@@ -979,7 +986,7 @@ async function loadBugs(_supabase) {
     ];
     const data = (d) => d ? new Date(d).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' }) : '';
     // Testi del pannello: spazi invisibili tolti e "ios" scritto giusto (es. categoria "Web App ios")
-    const pulito = (s) => String(s || '').replace(/\u200B/g, '').replace(/\bios\b/gi, 'iOS').trim();
+    const pulito = (s) => escHtml(String(s || '').replace(/\u200B/g, '').replace(/\bios\b/gi, 'iOS').trim());
 
     const voce = (b) => {
         const risolto = b.status === 'resolved';
