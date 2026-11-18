@@ -21,7 +21,7 @@ function stato(e: Edizione) {
 }
 
 export default function Edizioni() {
-  const { righe, errore, ricarica } = useElenco<Edizione>(
+  const { righe, errore, ricarica: ricaricaEdizioni } = useElenco<Edizione>(
     () =>
       supabase
         .from('edizioni')
@@ -29,6 +29,17 @@ export default function Edizioni() {
         .order('created_at', { ascending: false }),
     'edizioni',
   )
+  // Studenti diversi per edizione (uno studente fa una compilazione per ogni materia)
+  const studenti = useElenco<{ edizione_id: string; n: number | null }>(
+    () => supabase.rpc('stat_studenti'),
+    'studenti-edizioni',
+  )
+  // Aprendo o chiudendo un'edizione cambia anche il conto degli studenti
+  function ricarica() {
+    ricaricaEdizioni()
+    studenti.ricarica()
+  }
+  const studentiDi = new Map((studenti.righe ?? []).map((r) => [r.edizione_id, r.n]))
   const [modifica, setModifica] = useState<Edizione | 'nuova' | null>(null)
   const [avviso, setAvviso] = useState<string | null>(null)
 
@@ -106,6 +117,8 @@ export default function Edizioni() {
                   <p className="text-sm text-slate-500">
                     Anno accademico {e.anno_accademico} · {e.compilazioni[0]?.count ?? 0}{' '}
                     compilazioni
+                    {studentiDi.get(e.id) != null &&
+                      ` da ${studentiDi.get(e.id)} ${studentiDi.get(e.id) === 1 ? 'studente' : 'studenti'}`}
                   </p>
                   {(e.aperta_il || e.chiusa_il) && (
                     <p className="text-sm text-slate-500">

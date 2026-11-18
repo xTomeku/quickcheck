@@ -172,6 +172,19 @@ export function useStatSaltati(f: Filtri, attivo: boolean) {
   }, JSON.stringify(['saltati', args, attivo]))
 }
 
+// Quanti studenti diversi hanno compilato: uno che valuta sei materie fa sei compilazioni ma un
+// solo studente. Il database dà solo il totale. null quando non si può sapere: l'edizione è già
+// stata chiusa (i codici degli studenti si cancellano) e c'è un filtro attivo.
+export function useStatStudenti(f: Filtri) {
+  const { p_edizione, p_corso, p_anno_corso, p_anno_studente, p_fuori_corso } = argomenti(f)
+  const args = { p_edizione, p_tipo_corso: f.tipoCorso || undefined, p_corso, p_anno_corso, p_anno_studente, p_fuori_corso }
+  const { righe, errore } = useElenco<{ edizione_id: string; n: number | null }>(async () => {
+    if (!f.edizione) return { data: [], error: null }
+    return await supabase.rpc('stat_studenti', args)
+  }, JSON.stringify(['studenti', args]))
+  return { n: righe?.[0]?.n ?? null, errore }
+}
+
 export function useStatCompilazioni(f: Filtri) {
   const { p_docente: _docente, ...args } = argomenti(f)
   return useElenco<{ materia_id: string; corso_id: string; anno: number; n: number }>(async () => {

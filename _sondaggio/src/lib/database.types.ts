@@ -326,6 +326,7 @@ export type Database = {
           created_at: string
           id: string
           nome: string
+          studenti_alla_chiusura: number | null
         }
         Insert: {
           anno_accademico: string
@@ -335,6 +336,7 @@ export type Database = {
           created_at?: string
           id?: string
           nome: string
+          studenti_alla_chiusura?: number | null
         }
         Update: {
           anno_accademico?: string
@@ -344,6 +346,7 @@ export type Database = {
           created_at?: string
           id?: string
           nome?: string
+          studenti_alla_chiusura?: number | null
         }
         Relationships: []
       }
@@ -710,6 +713,17 @@ export type Database = {
           p_materia?: string
         }
         Returns: { docente_id: string; materia_id: string; n: number }[]
+      }
+      stat_studenti: {
+        Args: {
+          p_anno_corso?: number
+          p_anno_studente?: number
+          p_corso?: string
+          p_edizione?: string
+          p_fuori_corso?: boolean
+          p_tipo_corso?: string
+        }
+        Returns: { edizione_id: string; n: number | null }[]
       }
       stat_compilazioni: {
         Args: {

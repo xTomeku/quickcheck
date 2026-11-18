@@ -9,6 +9,7 @@ import {
   useStatCompilazioni,
   useStatRisposte,
   useStatSaltati,
+  useStatStudenti,
   useTesti,
   type CorsoRif,
   type DocenteRif,
@@ -51,6 +52,7 @@ export default function PerMateria({
   vedeDocenti,
 }: Props) {
   const compilazioni = useStatCompilazioni(filtri)
+  const studenti = useStatStudenti(filtri)
   const risposte = useStatRisposte(filtri, 'domanda_materia', true)
   const [aperta, setAperta] = useState<string | null>(null)
 
@@ -100,7 +102,7 @@ export default function PerMateria({
 
   const totale = elencoCompleto.reduce((somma, v) => somma + v.n, 0)
   const senzaRisposte = elencoCompleto.filter((v) => v.n === 0).length
-  const errore = compilazioni.errore ?? risposte.errore
+  const errore = compilazioni.errore ?? studenti.errore ?? risposte.errore
 
   if (compilazioni.righe === null || risposte.righe === null) {
     return (
@@ -115,7 +117,14 @@ export default function PerMateria({
     <div className="space-y-3">
       {errore && <Avviso>{errore}</Avviso>}
       <p className="text-sm">
-        <strong>{totale}</strong> {totale === 1 ? 'compilazione' : 'compilazioni'} in{' '}
+        <strong>{totale}</strong> {totale === 1 ? 'compilazione' : 'compilazioni'}
+        {studenti.n !== null && (
+          <>
+            {' '}
+            da <strong>{studenti.n}</strong> {studenti.n === 1 ? 'studente' : 'studenti'}
+          </>
+        )}{' '}
+        in{' '}
         {elencoCompleto.length} {elencoCompleto.length === 1 ? 'materia' : 'materie'}
         {senzaRisposte > 0 && (
           <>
