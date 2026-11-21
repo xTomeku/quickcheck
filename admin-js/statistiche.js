@@ -248,6 +248,7 @@ function animateValue(el, target) {
 
 if (refreshAnalyticsBtn) {
     refreshAnalyticsBtn.addEventListener('click', () => {
+        svuotaCacheAdozione();
         fetchDownloadStats(true);
         fetchUserStats();
         fetchVersionRolloutStats();
@@ -893,19 +894,74 @@ function initRolloutControls() {
  * accessi al giorno una sola query ne perdeva la maggior parte e i conteggi risultavano
  * piu' bassi del reale. Qui si scaricano tutte le pagine da 1000 righe.
  * [creaQuery] deve restituire ogni volta una query NUOVA (con gli stessi filtri).
+ * Le pagine si chiedono a gruppi di [parallele] alla volta invece che una dopo l'altra: con
+ * decine di migliaia di righe il tempo era quasi tutto attesa di rete. Si ferma alla prima
+ * pagina piu' corta del previsto; nell'ultimo gruppo qualche richiesta puo' tornare vuota.
  */
-async function scaricaTutteLeRighe(creaQuery, dimensionePagina = 1000) {
+async function scaricaTutteLeRighe(creaQuery, dimensionePagina = 1000, parallele = 4) {
     const righe = [];
-    for (let da = 0; ; da += dimensionePagina) {
-        const { data, error } = await creaQuery()
-            .order('data', { ascending: true })
-            .order('uuid_utente', { ascending: true })
-            .range(da, da + dimensionePagina - 1);
-        if (error) return { data: null, error };
-        righe.push(...(data || []));
-        if (!data || data.length < dimensionePagina) break;
+    for (let primaPagina = 0; ; primaPagina += parallele) {
+        const risposte = await Promise.all(Array.from({ length: parallele }, (_, i) => {
+            const da = (primaPagina + i) * dimensionePagina;
+            return creaQuery()
+                .order('data', { ascending: true })
+                .order('uuid_utente', { ascending: true })
+                .range(da, da + dimensionePagina - 1);
+        }));
+        const conErrore = risposte.find((r) => r.error);
+        if (conErrore) return { data: null, error: conErrore.error };
+        let finito = false;
+        for (const { data } of risposte) {
+            righe.push(...(data || []));
+            if (!data || data.length < dimensionePagina) { finito = true; break; }
+        }
+        if (finito) break;
     }
     return { data: righe, error: null };
+}
+
+// Ultimo accesso di ogni utente per periodo, tenuto in memoria 5 minuti: cambiare piattaforma
+// (Tutte/APK/PWA) o tornare a un periodo gia' visto non ripete il download. Lo condividono la
+// scheda Statistiche e la Panoramica (stesso periodo = stessa chiave).
+const _cacheAdozione = new Map();
+const DURATA_CACHE_ADOZIONE_MS = 5 * 60 * 1000;
+
+function svuotaCacheAdozione() {
+    _cacheAdozione.clear();
+}
+
+function ultimiAccessiPerUtente(periodo) {
+    const chiave = periodo.giorno ? `giorno:${periodo.giorno}` : `dal:${periodo.dal}`;
+    const inCache = _cacheAdozione.get(chiave);
+    if (inCache && Date.now() - inCache.quando < DURATA_CACHE_ADOZIONE_MS) return inCache.promessa;
+
+    // Query su app_accessi per recuperare la versione dei ping (tutte le pagine, vedi scaricaTutteLeRighe)
+    const creaQuery = () => {
+        const q = _supabase
+            .from('app_accessi')
+            .select('uuid_utente, data, piattaforma, app_version');
+        return periodo.giorno ? q.eq('data', periodo.giorno) : q.gte('data', periodo.dal);
+    };
+
+    const promessa = (async () => {
+        const { data, error } = await scaricaTutteLeRighe(creaQuery);
+        if (error) throw error;
+        // Mappiamo ciascun utente univoco al record più recente nel periodo selezionato
+        const latestUserAccess = new Map();
+        (data || []).forEach(row => {
+            const existing = latestUserAccess.get(row.uuid_utente);
+            if (!existing || row.data > existing.data) {
+                latestUserAccess.set(row.uuid_utente, row);
+            }
+        });
+        return Array.from(latestUserAccess.values());
+    })();
+    _cacheAdozione.set(chiave, { quando: Date.now(), promessa });
+    // Un download fallito non resta in cache: il prossimo clic riprova
+    promessa.catch(() => {
+        if (_cacheAdozione.get(chiave)?.promessa === promessa) _cacheAdozione.delete(chiave);
+    });
+    return promessa;
 }
 
 async function fetchVersionRolloutStats() {
@@ -952,28 +1008,9 @@ async function fetchVersionRolloutStats() {
  * Lancia l'errore se app_accessi non si legge.
  */
 async function calcolaAdozioneVersioni(periodo, piattaforma = 'all') {
-    // Query su app_accessi per recuperare la versione dei ping (tutte le pagine, vedi scaricaTutteLeRighe)
-    const creaQuery = () => {
-        const q = _supabase
-            .from('app_accessi')
-            .select('uuid_utente, data, piattaforma, app_version');
-        return periodo.giorno ? q.eq('data', periodo.giorno) : q.gte('data', periodo.dal);
-    };
-
-    const { data, error } = await scaricaTutteLeRighe(creaQuery);
-    if (error) throw error;
-
-    // Mappiamo ciascun utente univoco al record più recente nel periodo selezionato
-    const latestUserAccess = new Map();
-    (data || []).forEach(row => {
-        const existing = latestUserAccess.get(row.uuid_utente);
-        if (!existing || row.data > existing.data) {
-            latestUserAccess.set(row.uuid_utente, row);
-        }
-    });
-
+    // Ultimo accesso di ogni utente nel periodo (dalla cache se gia' scaricato, vedi ultimiAccessiPerUtente)
     // Filtro per piattaforma (se selezionato 'android_apk', 'pwa' o 'web')
-    let filteredAccesses = Array.from(latestUserAccess.values());
+    let filteredAccesses = await ultimiAccessiPerUtente(periodo);
     const piattaformaDi = a => (a.piattaforma || '').toLowerCase();
     if (piattaforma === 'android_apk') {
         filteredAccesses = filteredAccesses.filter(a => piattaformaDi(a) === 'android');
@@ -1427,8 +1464,10 @@ if (deleteStatsForm) {
             deleteStatsModal.classList.add('hidden');
             if (deleteConfirmText) deleteConfirmText.value = '';
 
-            // Ricarica la vista e i KPI con l'intervallo attivo
+            // Ricarica la vista e i KPI con l'intervallo attivo (i dati in cache non valgono piu')
+            svuotaCacheAdozione();
             fetchUserStats(currentStatsRangeDays);
+            fetchVersionRolloutStats();
         } catch (err) {
             console.error('Errore durante l\'eliminazione:', err);
             showToast(`Errore: ${err.message}. Verifica la policy DELETE su Supabase.`, 'error');
