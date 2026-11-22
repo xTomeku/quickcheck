@@ -1689,7 +1689,9 @@
                 <div class="form-group">
                     <label for="export-format-type">Formato File</label>
                     <select id="export-format-type" class="form-control">
-                        <option value="csv" selected>CSV per Excel (separatore ';' punto e virgola)</option>
+                        <option value="xlsx" selected>Excel formattato (.xlsx — Riepilogo + Storico)</option>
+                        <option value="html_report">Report Stampabile / PDF (.html con grafici e KPI)</option>
+                        <option value="csv">CSV per Excel (separatore ';' punto e virgola)</option>
                         <option value="csv_comma">CSV Standard (separatore ',' virgola)</option>
                         <option value="json">JSON (Sviluppatori / API)</option>
                     </select>
@@ -1758,6 +1760,7 @@
          (client Supabase, conferma, navigazione), avvio.js per ultimo (controlla la sessione). -->
     <script src="admin-js/comune.js"></script>
     <script src="admin-js/panoramica.js"></script>
+    <script src="admin-js/esporta-telemetria.js"></script>
     <script src="admin-js/statistiche.js"></script>
     <script src="admin-js/rilascio.js"></script>
     <script src="admin-js/dati-app.js"></script>

@@ -1250,7 +1250,7 @@ if (exportRangeType && exportCustomDates) {
     });
 }
 
-// Esecuzione Esportazione (CSV o JSON)
+// Esecuzione Esportazione (Excel .xlsx predefinito, Report HTML/PDF A4, CSV o JSON)
 if (exportStatsForm) {
     exportStatsForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1263,7 +1263,6 @@ if (exportStatsForm) {
             // Costruiamo la query per recuperare lo storico da Supabase
             let query = _supabase.from('v_utenti_unici_giornalieri').select('*').order('data', { ascending: false });
 
-            const now = new Date();
             const pad = n => String(n).padStart(2, '0');
             const formatIso = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 
@@ -1333,7 +1332,21 @@ if (exportStatsForm) {
             let filename;
             const timestamp = formatIso(new Date());
 
-            if (format === 'json') {
+            if (format === 'xlsx') {
+                if (!window.QuickCheckExportTelemetria) {
+                    throw new Error('Modulo esportazione Excel non caricato.');
+                }
+                blob = window.QuickCheckExportTelemetria.generaXlsxTelemetria(data, timestamp);
+                filename = `quickcheck_telemetria_${timestamp}.xlsx`;
+            } else if (format === 'html_report') {
+                if (!window.QuickCheckExportTelemetria) {
+                    throw new Error('Modulo report HTML non caricato.');
+                }
+                const logoDataUrl = await window.QuickCheckExportTelemetria.caricaLogoDataUrl();
+                const html = window.QuickCheckExportTelemetria.generaReportHtmlTelemetria(data, timestamp, logoDataUrl);
+                blob = new Blob([html], { type: 'text/html;charset=utf-8;' });
+                filename = `quickcheck_report_telemetria_${timestamp}.html`;
+            } else if (format === 'json') {
                 blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json;charset=utf-8;' });
                 filename = `quickcheck_telemetria_${timestamp}.json`;
             } else {
@@ -1354,12 +1367,14 @@ if (exportStatsForm) {
             }
 
             // Trigger download nel browser
+            const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
+            link.href = url;
             link.download = filename;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
 
             exportStatsModal.classList.add('hidden');
             showToast('Esportazione completata con successo!', 'success');
