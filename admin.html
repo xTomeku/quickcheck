@@ -89,6 +89,7 @@
                     <div class="admin-gruppo-menu">Dati dell'app</div>
                     <a class="admin-voce" href="#mappe" data-sezione="mappe"><span class="admin-ms">map</span><span class="admin-voce-testo">Mappe</span></a>
                     <a class="admin-voce" href="#menu" data-sezione="menu"><span class="admin-ms">restaurant</span><span class="admin-voce-testo">Men&ugrave; mensa</span></a>
+                    <a class="admin-voce" href="#appelli" data-sezione="appelli"><span class="admin-ms">event_note</span><span class="admin-voce-testo">Appelli ESSE3</span></a>
 
                     <div class="admin-gruppo-menu">Notifiche</div>
                     <a class="admin-voce" href="#notifiche" data-sezione="notifiche"><span class="admin-ms">notifications</span><span class="admin-voce-testo">Push e avvisi</span></a>
@@ -1113,6 +1114,24 @@
                 </div>
             </div>
 
+            <!-- Appelli ESSE3 (admin-js/appelli.js): stato e avvio della sincronizzazione su GitHub Actions,
+                 tramite la Edge Function avvia-sync-appelli di QuickCheck (solo admin) -->
+            <div id="appelli-section" class="section-content hidden">
+                <div class="section-header">
+                    <div>
+                        <h2>Appelli ESSE3</h2>
+                        <p class="admin-sottotitolo">Gli appelli d'esame della web app vengono da ESSE3 attraverso una sincronizzazione su GitHub Actions, ogni 12 ore. L'app Android li legge invece direttamente da ESSE3. Da qui vedi com'è andato l'ultimo giro e puoi avviarne uno completo, che riscarica le pagine di tutti i turni.</p>
+                    </div>
+                    <div class="admin-azioni">
+                        <button type="button" id="app-aggiorna" class="btn btn-secondary btn-sm"><span class="admin-ms">refresh</span>Aggiorna</button>
+                        <button type="button" id="app-avvia" class="btn btn-primary btn-sm" title="Avvia su GitHub la sincronizzazione completa degli appelli"><span class="admin-ms">sync</span>Riscarica tutti gli appelli</button>
+                    </div>
+                </div>
+                <div id="app-kpi" class="mod-kpi"></div>
+                <div id="app-avviso"></div>
+                <p id="app-link" class="mod-piede"></p>
+            </div>
+
             <!-- Modifiche all'orario trovate dai controlli automatici (admin-js/modifiche.js).
                  Permessi e colonna controllata_il: _redesign/sql/pannello_modifiche_iscrizioni.sql -->
             <div id="modifiche-section" class="section-content hidden">
@@ -1766,6 +1785,7 @@
     <script src="admin-js/dati-app.js"></script>
     <script src="admin-js/notifiche.js"></script>
     <script src="admin-js/modifiche.js"></script>
+    <script src="admin-js/appelli.js"></script>
     <script src="admin-js/iscrizioni.js"></script>
     <script src="admin-js/bug.js"></script>
     <script src="admin-js/sito.js"></script>

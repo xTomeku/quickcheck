@@ -239,6 +239,7 @@ const SEZIONI_ADMIN = {
     messaggio:    { id: 'messaggio-section',     titolo: "Messaggio all'avvio",   carica: () => fetchConfigApp(['messaggio']) },
     mappe:        { id: 'mappe-section',         titolo: 'Mappe',                 carica: () => fetchConfigApp(['mappe']) },
     menu:         { id: 'menu-section',          titolo: 'Menù mensa',            carica: () => fetchConfigApp(['menu']) },
+    appelli:      { id: 'appelli-section',       titolo: 'Appelli ESSE3',         carica: () => caricaAppelli() },
     // Pre-carica anche l'elenco dei corsi per il menu a tendina
     notifiche:    { id: 'notifications-section', titolo: 'Push e avvisi',         carica: () => { fetchNotifications(); caricaCorsiUniSalento(); caricaIscrizioniCorsi(); } },
     modifiche:    { id: 'modifiche-section',     titolo: 'Modifiche orario',      carica: () => caricaModifiche() },
