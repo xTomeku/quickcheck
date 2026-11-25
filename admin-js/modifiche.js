@@ -106,12 +106,29 @@ async function leggiModificheOrario(conInvii = false) {
     return modifiche;
 }
 
+// Supabase restituisce al massimo 1000 righe per richiesta: gli invii si leggono a pagine.
+// Con una richiesta sola arrivavano solo i 1000 più vecchi e le modifiche recenti
+// risultavano "Mai inviata". L'ordine segue tutta la chiave primaria (modifica_id,
+// subscription_id) dopo inviato_il, che è uguale per tutte le righe di un giro: così le
+// pagine non saltano né ripetono righe.
+const _MOD_PAGINA_INVII = 1000;
+
 async function _leggiInvii(ids) {
-    const r = await _supabase.from('invii_automatici').select('modifica_id, inviato_il, esito')
-        .in('modifica_id', ids).order('inviato_il', { ascending: true });
-    if (r.error) throw r.error;
+    const righe = [];
+    for (let da = 0; ; da += _MOD_PAGINA_INVII) {
+        const r = await _supabase.from('invii_automatici').select('modifica_id, subscription_id, inviato_il, esito')
+            .in('modifica_id', ids)
+            .order('inviato_il', { ascending: true })
+            .order('modifica_id', { ascending: true })
+            .order('subscription_id', { ascending: true })
+            .range(da, da + _MOD_PAGINA_INVII - 1);
+        if (r.error) throw r.error;
+        const pagina = r.data || [];
+        righe.push(...pagina);
+        if (pagina.length < _MOD_PAGINA_INVII) break;
+    }
     const perModifica = new Map();
-    for (const i of r.data || []) {
+    for (const i of righe) {
         if (!perModifica.has(i.modifica_id)) perModifica.set(i.modifica_id, []);
         perModifica.get(i.modifica_id).push(i);
     }
