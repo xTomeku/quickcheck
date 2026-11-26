@@ -8,12 +8,11 @@ import {
   media,
   unisci,
   type Agg,
-  type RigaStat,
 } from '../../../lib/statistiche'
-import Classifica, { Tessera, type VoceClassifica } from './Classifica'
+import Classifica, { Tessera } from './Classifica'
+import { classificaDocenti } from './classifiche'
 import {
   CATEGORIE_DOCENTE,
-  mediaGenerale,
   useStatRisposte,
   useStatSaltati,
   useTesti,
@@ -28,6 +27,7 @@ import {
 import { esportaExcel, nomeFile, type Contesto, type VoceEsportazione } from './esporta'
 import type { Filtri } from './filtri'
 import PulsanteEsporta from './PulsanteEsporta'
+import PulsanteReport from './PulsanteReport'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 import RisposteScritte from './RisposteScritte'
 
@@ -60,37 +60,15 @@ export default function PerDocente({
 
   const nomeMateria = new Map(materie.map((m) => [m.id, m.nome]))
   const domandePerId = new Map(domande.map((d) => [d.id, d]))
-
-  const corsiDelTipo = new Set(
-    corsi.filter((c) => !filtri.tipoCorso || c.tipo === filtri.tipoCorso).map((c) => c.id),
-  )
-  const materiePossibili = new Set(
-    materieCorso
-      .filter((mc) => corsiDelTipo.has(mc.corso_id))
-      .filter((mc) => !filtri.corso || mc.corso_id === filtri.corso)
-      .filter((mc) => !filtri.annoCorso || mc.anno === Number(filtri.annoCorso))
-      .map((mc) => mc.materia_id),
-  )
-
-  const righePerDocente = new Map<string, RigaStat[]>()
-  for (const r of righe ?? []) {
-    if (r.docente_id) righePerDocente.set(r.docente_id, [...(righePerDocente.get(r.docente_id) ?? []), r])
-  }
-
-  const elencoCompleto: VoceClassifica[] = docenti.flatMap((d) => {
-    const suoi = insegnamenti.filter((i) => i.docente_id === d.id && materiePossibili.has(i.materia_id))
-    if (suoi.length === 0) return []
-    const righeDoc = righePerDocente.get(d.id) ?? []
-    return [
-      {
-        id: d.id,
-        nome: `${d.cognome} ${d.nome}`,
-        dettaglio: suoi.map((i) => nomeMateria.get(i.materia_id) ?? '?').join(', '),
-        // Chi ha valutato il docente: le domande possono avere conteggi diversi, vale la più risposta
-        n: righeDoc.reduce((massimo, r) => Math.max(massimo, r.n), 0),
-        media: mediaGenerale(righeDoc, domandePerId),
-      },
-    ]
+  const elencoCompleto = classificaDocenti({
+    filtri,
+    docenti,
+    insegnamenti,
+    materie,
+    materieCorso,
+    corsi,
+    domandePerId,
+    righe: righe ?? [],
   })
 
   const parole = normalizza(ricerca).split(' ').filter(Boolean)
@@ -240,6 +218,14 @@ function DettaglioDocente({
         <Tessera valore={nSaltati} etichetta="non l’hanno seguito" />
         {(conDati.length > 0 || scritte.length > 0) && (
           <PulsanteEsporta onEsporta={esporta} disabled={saltati.righe === null || testi.righe === null} />
+        )}
+        {(conDati.length > 0 || scritte.length > 0) && (
+          <PulsanteReport
+            richiesta={{ tipo: 'docente', id: filtri.docente }}
+            filtri={filtri}
+            contesto={contesto}
+            nome={nome}
+          />
         )}
       </div>
       {testi.errore && <Avviso>{testi.errore}</Avviso>}

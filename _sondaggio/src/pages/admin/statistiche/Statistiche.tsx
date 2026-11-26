@@ -10,6 +10,8 @@ import PerDocente from './PerDocente'
 import PerDomanda from './PerDomanda'
 import PerExtra from './PerExtra'
 import PerMateria from './PerMateria'
+import PulsanteReport from './PulsanteReport'
+import { DatiReport } from './report/riferimenti'
 
 type Scheda = 'materie' | 'docenti' | 'domande' | 'extra'
 
@@ -103,7 +105,7 @@ export default function Statistiche() {
           <Avviso tipo="info">Non c'è ancora nessuna edizione: creane una dalla sezione Edizioni.</Avviso>
         </>
       ) : (
-        <>
+        <DatiReport value={{ rif, vedeDocenti }}>
           <div className="flex flex-wrap items-end justify-between gap-3">
             <div className="max-w-2xl">
               <h1 className="text-xl font-semibold">Statistiche</h1>
@@ -112,17 +114,25 @@ export default function Statistiche() {
                 riconoscibile chi ha risposto: per questo vengono segnalati.
               </p>
             </div>
-            <div className="w-full sm:w-64">
-              <Campo etichetta="Edizione">
-                <Select value={filtri.edizione} onChange={(e) => cambia({ edizione: e.target.value })}>
-                  {rif.edizioni.map((e) => (
-                    <option key={e.id} value={e.id}>
-                      {e.nome}
-                      {e.aperta ? ' (aperta)' : ''}
-                    </option>
-                  ))}
-                </Select>
-              </Campo>
+            <div className="flex w-full flex-wrap items-end gap-3 sm:w-auto">
+              <div className="min-w-0 flex-1 basis-48 sm:w-64 sm:flex-none">
+                <Campo etichetta="Edizione">
+                  <Select value={filtri.edizione} onChange={(e) => cambia({ edizione: e.target.value })}>
+                    {rif.edizioni.map((e) => (
+                      <option key={e.id} value={e.id}>
+                        {e.nome}
+                        {e.aperta ? ' (aperta)' : ''}
+                      </option>
+                    ))}
+                  </Select>
+                </Campo>
+              </div>
+              <PulsanteReport
+                richiesta={{ tipo: 'generale' }}
+                filtri={filtri}
+                contesto={contesto}
+                etichetta="Report generale"
+              />
             </div>
           </div>
 
@@ -252,7 +262,7 @@ export default function Statistiche() {
             />
           )}
           {scheda === 'extra' && <PerExtra edizione={filtri.edizione} domande={rif.domande} />}
-        </>
+        </DatiReport>
       )}
     </div>
   )

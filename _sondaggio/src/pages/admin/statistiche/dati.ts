@@ -114,25 +114,29 @@ export type Gruppo = 'domanda' | 'domanda_materia' | 'domanda_docente'
 
 const RIGHE_PER_PAGINA = 1000
 
+// Il database non restituisce più di 1000 righe per richiesta, e la classifica delle materie
+// (domande × materie) ci arriva vicino: senza le pagine le medie sarebbero sbagliate senza avvisi.
+// L'ordine fisso serve perché le pagine non si sovrappongano.
+export async function caricaStatRisposte(args: ReturnType<typeof argomenti>, gruppo: Gruppo) {
+  const righe: RigaStat[] = []
+  for (let da = 0; ; da += RIGHE_PER_PAGINA) {
+    const { data, error } = await supabase
+      .rpc('stat_risposte', { ...args, p_gruppo: gruppo })
+      .order('domanda_id')
+      .order('materia_id')
+      .order('docente_id')
+      .range(da, da + RIGHE_PER_PAGINA - 1)
+    if (error) return { data: null, error }
+    righe.push(...(data ?? []))
+    if ((data?.length ?? 0) < RIGHE_PER_PAGINA) return { data: righe, error: null }
+  }
+}
+
 export function useStatRisposte(f: Filtri, gruppo: Gruppo, attivo: boolean) {
   const args = argomenti(f)
   return useElenco<RigaStat>(async () => {
     if (!attivo || !f.edizione) return { data: [], error: null }
-    // Il database non restituisce più di 1000 righe per richiesta, e la classifica delle materie
-    // (domande × materie) ci arriva vicino: senza le pagine le medie sarebbero sbagliate senza avvisi.
-    // L'ordine fisso serve perché le pagine non si sovrappongano.
-    const righe: RigaStat[] = []
-    for (let da = 0; ; da += RIGHE_PER_PAGINA) {
-      const { data, error } = await supabase
-        .rpc('stat_risposte', { ...args, p_gruppo: gruppo })
-        .order('domanda_id')
-        .order('materia_id')
-        .order('docente_id')
-        .range(da, da + RIGHE_PER_PAGINA - 1)
-      if (error) return { data: null, error }
-      righe.push(...(data ?? []))
-      if ((data?.length ?? 0) < RIGHE_PER_PAGINA) return { data: righe, error: null }
-    }
+    return await caricaStatRisposte(args, gruppo)
   }, JSON.stringify(['risposte', gruppo, args, attivo]))
 }
 
@@ -145,22 +149,26 @@ export type TestoRisposta = {
   nascosta: boolean
 }
 
+export async function caricaTesti(args: ReturnType<typeof argomenti>) {
+  const righe: TestoRisposta[] = []
+  for (let da = 0; ; da += RIGHE_PER_PAGINA) {
+    const { data, error } = await supabase
+      .rpc('testi_risposte', args)
+      .order('id')
+      .range(da, da + RIGHE_PER_PAGINA - 1)
+    if (error) return { data: null, error }
+    righe.push(...(data ?? []))
+    if ((data?.length ?? 0) < RIGHE_PER_PAGINA) return { data: righe, error: null }
+  }
+}
+
 // Le risposte scritte con gli stessi filtri delle statistiche. Le regole del database tolgono già
 // i testi sui docenti a chi non è autorizzato a vederli.
 export function useTesti(f: Filtri, attivo: boolean) {
   const args = argomenti(f)
   return useElenco<TestoRisposta>(async () => {
     if (!attivo || !f.edizione) return { data: [], error: null }
-    const righe: TestoRisposta[] = []
-    for (let da = 0; ; da += RIGHE_PER_PAGINA) {
-      const { data, error } = await supabase
-        .rpc('testi_risposte', args)
-        .order('id')
-        .range(da, da + RIGHE_PER_PAGINA - 1)
-      if (error) return { data: null, error }
-      righe.push(...(data ?? []))
-      if ((data?.length ?? 0) < RIGHE_PER_PAGINA) return { data: righe, error: null }
-    }
+    return await caricaTesti(args)
   }, JSON.stringify(['testi', args, attivo]))
 }
 

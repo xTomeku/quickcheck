@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Avviso } from '../../../components/ui'
 import { normalizza } from '../../../lib/nomi'
 import { daRiga, formatta, type Agg, type RigaStat } from '../../../lib/statistiche'
-import Classifica, { Tessera, type VoceClassifica } from './Classifica'
+import Classifica, { Tessera } from './Classifica'
+import { classificaMaterie } from './classifiche'
 import {
   CATEGORIE_DOCENTE,
   mediaGenerale,
@@ -21,6 +22,7 @@ import {
 import { esportaExcel, nomeFile, type Contesto, type VoceEsportazione } from './esporta'
 import type { Filtri } from './filtri'
 import PulsanteEsporta from './PulsanteEsporta'
+import PulsanteReport from './PulsanteReport'
 import RigaDomanda, { ElencoDomande } from './RigaDomanda'
 import RisposteScritte from './RisposteScritte'
 
@@ -56,42 +58,15 @@ export default function PerMateria({
   const risposte = useStatRisposte(filtri, 'domanda_materia', true)
   const [aperta, setAperta] = useState<string | null>(null)
 
-  const nomeCorso = new Map(corsi.map((c) => [c.id, c.nome]))
   const domandePerId = new Map(domande.map((d) => [d.id, d]))
-  const conteggi = new Map((compilazioni.righe ?? []).map((r) => [`${r.materia_id}|${r.corso_id}`, r.n]))
-
-  // Le domande sui docenti hanno la loro classifica: qui contano solo quelle sulla materia
-  const righePerMateria = new Map<string, RigaStat[]>()
-  for (const r of risposte.righe ?? []) {
-    const categoria = domandePerId.get(r.domanda_id)?.categoria ?? ''
-    if (!r.materia_id || CATEGORIE_DOCENTE.includes(categoria)) continue
-    righePerMateria.set(r.materia_id, [...(righePerMateria.get(r.materia_id) ?? []), r])
-  }
-
-  const corsiDelTipo = new Set(
-    corsi.filter((c) => !filtri.tipoCorso || c.tipo === filtri.tipoCorso).map((c) => c.id),
-  )
-
-  // Una materia può stare in più corsi: una riga sola, perché le medie sono per materia
-  const elencoCompleto: VoceClassifica[] = materie.flatMap((m) => {
-    const legami = materieCorso
-      .filter((mc) => mc.materia_id === m.id && corsiDelTipo.has(mc.corso_id))
-      .filter((mc) => !filtri.corso || mc.corso_id === filtri.corso)
-      .filter((mc) => !filtri.annoCorso || mc.anno === Number(filtri.annoCorso))
-    if (legami.length === 0) return []
-    return [
-      {
-        id: m.id,
-        nome: m.nome,
-        dettaglio: legami
-          .map((mc) =>
-            filtri.corso ? `${mc.anno}° anno` : `${nomeCorso.get(mc.corso_id) ?? '?'} · ${mc.anno}° anno`,
-          )
-          .join(', '),
-        n: legami.reduce((somma, mc) => somma + (conteggi.get(`${mc.materia_id}|${mc.corso_id}`) ?? 0), 0),
-        media: mediaGenerale(righePerMateria.get(m.id) ?? [], domandePerId),
-      },
-    ]
+  const { elenco: elencoCompleto, righePerMateria } = classificaMaterie({
+    filtri,
+    materie,
+    materieCorso,
+    corsi,
+    domandePerId,
+    compilazioni: compilazioni.righe ?? [],
+    righe: risposte.righe ?? [],
   })
 
   const parole = normalizza(ricerca).split(' ').filter(Boolean)
@@ -287,6 +262,14 @@ function DettaglioMateria({
           <PulsanteEsporta
             onEsporta={esporta}
             disabled={perDocente.righe === null || saltati.righe === null || testi.righe === null}
+          />
+        )}
+        {daEsportare && (
+          <PulsanteReport
+            richiesta={{ tipo: 'materia', id: filtri.materia }}
+            filtri={filtri}
+            contesto={contesto}
+            nome={nome}
           />
         )}
       </div>
