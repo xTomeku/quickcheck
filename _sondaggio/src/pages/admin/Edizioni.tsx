@@ -1,9 +1,11 @@
 import { useState, type FormEvent } from 'react'
+import AvvisoVoce from '../../components/AvvisoVoce'
 import PulsanteElimina from '../../components/PulsanteElimina'
 import { ANELLO_APERTO, Avviso, Campo, Input, Pulsante, useAlApertura } from '../../components/ui'
 import type { Tables } from '../../lib/database.types'
 import { messaggioErrore } from '../../lib/errori'
 import { supabase } from '../../lib/supabase'
+import { useAvvisoVoce } from '../../lib/useAvvisoVoce'
 import { useElenco } from '../../lib/useElenco'
 
 type Edizione = Tables<'edizioni'> & { compilazioni: { count: number }[] }
@@ -41,7 +43,7 @@ export default function Edizioni() {
   }
   const studentiDi = new Map((studenti.righe ?? []).map((r) => [r.edizione_id, r.n]))
   const [modifica, setModifica] = useState<Edizione | 'nuova' | null>(null)
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
 
   async function apri(e: Edizione) {
     const ok = window.confirm(
@@ -50,9 +52,9 @@ export default function Edizioni() {
     if (!ok) return
     const { error } = await supabase.from('edizioni').update({ aperta: true }).eq('id', e.id)
     if (error?.code === '23505') {
-      setAvviso("C'è già un'edizione aperta: chiudila prima di aprirne un'altra.")
+      segnala(e.id, "C'è già un'edizione aperta: chiudila prima di aprirne un'altra.")
     } else {
-      setAvviso(error ? messaggioErrore(error) : null)
+      segnala(e.id, error ? messaggioErrore(error) : null)
     }
     ricarica()
   }
@@ -63,7 +65,7 @@ export default function Edizioni() {
     )
     if (!ok) return
     const { error } = await supabase.from('edizioni').update({ aperta: false }).eq('id', e.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(e.id, error ? messaggioErrore(error) : null)
     ricarica()
   }
 
@@ -82,7 +84,6 @@ export default function Edizioni() {
         </Pulsante>
       </div>
 
-      {avviso && <Avviso>{avviso}</Avviso>}
       {errore && <Avviso>{errore}</Avviso>}
 
       {modifica && (
@@ -91,7 +92,7 @@ export default function Edizioni() {
           onAnnulla={() => setModifica(null)}
           onSalvato={() => {
             setModifica(null)
-            setAvviso(null)
+            togli()
             ricarica()
           }}
         />
@@ -143,9 +144,10 @@ export default function Edizioni() {
                     id={e.id}
                     nome={e.nome}
                     onEliminata={ricarica}
-                    onMessaggio={setAvviso}
+                    onMessaggio={(testo) => segnala(e.id, testo)}
                   />
                 )}
+                <AvvisoVoce testo={testoDi(e.id)} />
               </li>
             )
           })}

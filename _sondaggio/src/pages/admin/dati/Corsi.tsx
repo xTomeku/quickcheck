@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import AvvisoVoce from '../../../components/AvvisoVoce'
 import PulsanteElimina from '../../../components/PulsanteElimina'
 import {
   ANELLO_APERTO,
@@ -17,6 +18,7 @@ import { durataDi, perTipo, TIPI_CORSO } from '../../../lib/corsi'
 import type { Tables } from '../../../lib/database.types'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
+import { useAvvisoVoce } from '../../../lib/useAvvisoVoce'
 import { useElenco } from '../../../lib/useElenco'
 import MaterieCorso from './MaterieCorso'
 
@@ -47,7 +49,7 @@ export default function Corsi() {
     'corsi',
   )
   const [modulo, setModulo] = useState<Modulo | null>(null)
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
   const [materieAperte, setMaterieAperte] = useState<string | null>(null)
   const [tipoScelto, setTipoScelto] = useState<string | null>(null)
 
@@ -68,7 +70,7 @@ export default function Corsi() {
       .from('corsi_di_laurea')
       .update({ attivo: !corso.attivo })
       .eq('id', corso.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(corso.id, error ? messaggioErrore(error) : null)
     ricarica()
   }
 
@@ -83,7 +85,6 @@ export default function Corsi() {
         </Pulsante>
       </TestataSezione>
 
-      {avviso && <Avviso>{avviso}</Avviso>}
       {errore && <Avviso>{errore}</Avviso>}
 
       {modulo && (
@@ -98,7 +99,7 @@ export default function Corsi() {
             // Si resta sulla scheda del corso appena salvato, anche se è il primo del suo tipo
             setTipoScelto(tipo)
             setModulo(null)
-            setAvviso(null)
+            togli()
             ricarica()
           }}
         />
@@ -161,9 +162,10 @@ export default function Corsi() {
                   id={c.id}
                   nome={c.nome}
                   onEliminata={ricarica}
-                  onMessaggio={setAvviso}
+                  onMessaggio={(testo) => segnala(c.id, testo)}
                 />
               </Azioni>
+              <AvvisoVoce testo={testoDi(c.id)} />
               {materieAperte === c.id && (
                 <div className="w-full rounded-xl border border-slate-200 bg-slate-50 p-5">
                   <MaterieCorso corsoFisso={c.id} onCambiato={ricarica} />

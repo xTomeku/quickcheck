@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import AvvisoDocenteEsistente from '../../../components/AvvisoDocenteEsistente'
+import AvvisoVoce from '../../../components/AvvisoVoce'
 import PulsanteElimina from '../../../components/PulsanteElimina'
 import {
   ANELLO_APERTO,
@@ -16,6 +17,7 @@ import type { Tables } from '../../../lib/database.types'
 import { messaggioErrore } from '../../../lib/errori'
 import { chiaveNome, trovaUguale } from '../../../lib/nomi'
 import { supabase } from '../../../lib/supabase'
+import { useAvvisoVoce } from '../../../lib/useAvvisoVoce'
 import { useElenco } from '../../../lib/useElenco'
 
 type Docente = Tables<'docenti'> & { insegnamenti: { count: number }[] }
@@ -32,7 +34,7 @@ export default function Docenti() {
   )
   const [modifica, setModifica] = useState<Docente | 'nuovo' | null>(null)
   const [cerca, setCerca] = useState('')
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
 
   async function cambiaStato(d: Docente) {
     const n = d.insegnamenti[0]?.count ?? 0
@@ -43,7 +45,7 @@ export default function Docenti() {
       if (!ok) return
     }
     const { error } = await supabase.from('docenti').update({ attivo: !d.attivo }).eq('id', d.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(d.id, error ? messaggioErrore(error) : null)
     ricarica()
   }
 
@@ -62,7 +64,6 @@ export default function Docenti() {
         </Pulsante>
       </TestataSezione>
 
-      {avviso && <Avviso>{avviso}</Avviso>}
       {errore && <Avviso>{errore}</Avviso>}
 
       {modifica && (
@@ -71,7 +72,7 @@ export default function Docenti() {
           onAnnulla={() => setModifica(null)}
           onSalvato={() => {
             setModifica(null)
-            setAvviso(null)
+            togli()
             ricarica()
           }}
         />
@@ -116,9 +117,10 @@ export default function Docenti() {
                   id={d.id}
                   nome={`${d.cognome} ${d.nome}`}
                   onEliminata={ricarica}
-                  onMessaggio={setAvviso}
+                  onMessaggio={(testo) => segnala(d.id, testo)}
                 />
               </Azioni>
+              <AvvisoVoce testo={testoDi(d.id)} />
             </li>
           ))}
         </ul>

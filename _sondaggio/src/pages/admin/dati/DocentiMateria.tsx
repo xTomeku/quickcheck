@@ -1,10 +1,12 @@
 import { useState, type FormEvent } from 'react'
 import AvvisoDocenteEsistente from '../../../components/AvvisoDocenteEsistente'
+import AvvisoVoce from '../../../components/AvvisoVoce'
 import ComboRicerca from '../../../components/ComboRicerca'
 import { Avviso, Campo, Input, Pulsante } from '../../../components/ui'
 import { messaggioErrore } from '../../../lib/errori'
 import { trovaUguale } from '../../../lib/nomi'
 import { supabase } from '../../../lib/supabase'
+import { useAvvisoVoce } from '../../../lib/useAvvisoVoce'
 import { useElenco } from '../../../lib/useElenco'
 
 type DocenteBreve = { id: string; nome: string; cognome: string }
@@ -35,7 +37,7 @@ export default function DocentiMateria({
     `insegnamenti-${materiaId}`,
   )
   const [docenteId, setDocenteId] = useState('')
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
   const [invio, setInvio] = useState(false)
 
   function aggiorna() {
@@ -50,7 +52,7 @@ export default function DocentiMateria({
       .from('insegnamenti')
       .insert({ materia_id: materiaId, docente_id: docenteId })
     setInvio(false)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala('collega', error ? messaggioErrore(error) : null)
     if (!error) setDocenteId('')
     aggiorna()
   }
@@ -59,7 +61,7 @@ export default function DocentiMateria({
     const nome = i.docenti ? `${i.docenti.cognome} ${i.docenti.nome}` : 'il docente'
     if (!window.confirm(`Scollegare ${nome} da questa materia?`)) return
     const { error } = await supabase.from('insegnamenti').delete().eq('id', i.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(i.id, error ? messaggioErrore(error) : null)
     aggiorna()
   }
 
@@ -74,7 +76,7 @@ export default function DocentiMateria({
   async function collegaEsistente(d: DocenteElenco) {
     setSimile(null)
     if (giaCollegati.has(d.id)) {
-      setAvviso(`${d.cognome} ${d.nome} è già collegato a questa materia.`)
+      segnala('nuovo', `${d.cognome} ${d.nome} è già collegato a questa materia.`)
       return
     }
     setInvio(true)
@@ -82,7 +84,7 @@ export default function DocentiMateria({
       .from('insegnamenti')
       .insert({ materia_id: materiaId, docente_id: d.id })
     setInvio(false)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala('nuovo', error ? messaggioErrore(error) : null)
     if (!error) {
       setCognome('')
       setNome('')
@@ -99,7 +101,7 @@ export default function DocentiMateria({
     if (!forza) {
       const uguale = trovaUguale(docenti.righe ?? [], { cognome: c, nome: n })
       if (uguale) {
-        setAvviso(null)
+        togli()
         setSimile(uguale)
         return
       }
@@ -109,14 +111,15 @@ export default function DocentiMateria({
     const creato = await supabase.from('docenti').insert({ cognome: c, nome: n }).select('id').single()
     if (creato.error) {
       setInvio(false)
-      setAvviso(messaggioErrore(creato.error))
+      segnala('nuovo', messaggioErrore(creato.error))
       return
     }
     const { error } = await supabase
       .from('insegnamenti')
       .insert({ materia_id: materiaId, docente_id: creato.data.id })
     setInvio(false)
-    setAvviso(
+    segnala(
+      'nuovo',
       error ? `Docente creato, ma non collegato: ${messaggioErrore(error)}` : null,
     )
     if (!error) {
@@ -135,7 +138,6 @@ export default function DocentiMateria({
   return (
     <div className="space-y-3">
       {(docenti.errore ?? insegnamenti.errore) && <Avviso>{docenti.errore ?? insegnamenti.errore}</Avviso>}
-      {avviso && <Avviso>{avviso}</Avviso>}
 
       {insegnamenti.righe === null ? (
         <p className="text-slate-500">Caricamento…</p>
@@ -144,11 +146,12 @@ export default function DocentiMateria({
       ) : (
         <ul className="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white">
           {righe.map((i) => (
-            <li key={i.id} className="flex items-center gap-3 p-3">
+            <li key={i.id} className="flex flex-wrap items-center gap-3 p-3">
               <p className="flex-1">{i.docenti ? `${i.docenti.cognome} ${i.docenti.nome}` : '?'}</p>
               <Pulsante variante="pericolo" onClick={() => scollega(i)}>
                 Scollega
               </Pulsante>
+              <AvvisoVoce testo={testoDi(i.id)} />
             </li>
           ))}
         </ul>
@@ -167,6 +170,7 @@ export default function DocentiMateria({
         <Pulsante type="submit" variante="primario" disabled={invio || !docenteId}>
           Collega
         </Pulsante>
+        <AvvisoVoce testo={testoDi('collega')} />
       </form>
 
       {nuovo ? (
@@ -208,6 +212,7 @@ export default function DocentiMateria({
               onAnnulla={() => setSimile(null)}
             />
           )}
+          <AvvisoVoce testo={testoDi('nuovo')} />
           <div className="flex gap-2">
             <Pulsante type="submit" variante="primario" disabled={invio || simile !== null}>
               Crea e collega

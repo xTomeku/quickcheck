@@ -1,8 +1,10 @@
 import { useState, type FormEvent } from 'react'
+import AvvisoVoce from '../../../components/AvvisoVoce'
 import ComboRicerca from '../../../components/ComboRicerca'
 import { Avviso, Campo, Input, Pulsante, Select } from '../../../components/ui'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
+import { useAvvisoVoce } from '../../../lib/useAvvisoVoce'
 import { nomeLeggibile } from '../../../lib/testo'
 import { useElenco } from '../../../lib/useElenco'
 import { collegaDocenti, useSceltaDocenti } from './SceltaDocenti'
@@ -77,7 +79,7 @@ export default function MaterieCorso({
       .order('anno')
   }, corsoId)
 
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
   const [creaNuova, setCreaNuova] = useState(false)
 
   function ricaricaCollegamenti() {
@@ -87,14 +89,14 @@ export default function MaterieCorso({
 
   async function cambiaAnno(id: string, anno: number) {
     const { error } = await supabase.from('materie_corso').update({ anno }).eq('id', id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(id, error ? messaggioErrore(error) : null)
     ricaricaCollegamenti()
   }
 
   async function scollega(c: Collegamento) {
     if (!window.confirm(`Scollegare «${c.materie?.nome}» da questo corso?`)) return
     const { error } = await supabase.from('materie_corso').delete().eq('id', c.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(c.id, error ? messaggioErrore(error) : null)
     ricaricaCollegamenti()
   }
 
@@ -123,7 +125,6 @@ export default function MaterieCorso({
 
       {corsi.errore && <Avviso>{corsi.errore}</Avviso>}
       {collegamenti.errore && <Avviso>{collegamenti.errore}</Avviso>}
-      {avviso && <Avviso>{avviso}</Avviso>}
 
       {corso && (
         <>
@@ -134,7 +135,7 @@ export default function MaterieCorso({
             creaAperta={creaNuova}
             onCreaNuova={() => setCreaNuova((v) => !v)}
             onFatto={() => {
-              setAvviso(null)
+              togli()
               ricaricaCollegamenti()
             }}
           />
@@ -143,7 +144,7 @@ export default function MaterieCorso({
               corsoId={corso.id}
               anni={anni}
               onFatto={() => {
-                setAvviso(null)
+                togli()
                 ricaricaCollegamenti()
                 tutteLeMaterie.ricarica()
               }}
@@ -169,7 +170,7 @@ export default function MaterieCorso({
                     ) : (
                       <ul className="divide-y divide-slate-100">
                         {delloAnno.map((r) => (
-                          <li key={r.id} className="flex items-center gap-1 py-2 pr-1 pl-4">
+                          <li key={r.id} className="flex flex-wrap items-center gap-1 py-2 pr-1 pl-4">
                             <div className="min-w-0 flex-1">
                               <p className="text-sm font-semibold">{r.materie?.nome}</p>
                               {r.materie?.cfu != null && (
@@ -208,6 +209,7 @@ export default function MaterieCorso({
                                 <path d="M6 6l12 12M18 6L6 18" />
                               </svg>
                             </button>
+                            <AvvisoVoce testo={testoDi(r.id)} />
                           </li>
                         ))}
                       </ul>

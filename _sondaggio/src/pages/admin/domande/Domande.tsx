@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import AvvisoVoce from '../../../components/AvvisoVoce'
 import PulsanteElimina from '../../../components/PulsanteElimina'
 import { Avviso, Azioni, Input, Pulsante, Select } from '../../../components/ui'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
+import { useAvvisoVoce } from '../../../lib/useAvvisoVoce'
 import { useElenco } from '../../../lib/useElenco'
 import {
   CATEGORIE,
@@ -23,7 +25,7 @@ export default function Domande() {
     'domande',
   )
   const [modifica, setModifica] = useState<DomandaElenco | 'nuova' | null>(null)
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
   const [categoria, setCategoria] = useState('')
   const [stato, setStato] = useState('')
   const [cerca, setCerca] = useState('')
@@ -34,7 +36,7 @@ export default function Domande() {
       return
     }
     const { error } = await supabase.from('domande').update({ attiva: !d.attiva }).eq('id', d.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(d.id, error ? messaggioErrore(error) : null)
     ricarica()
   }
 
@@ -66,7 +68,7 @@ export default function Domande() {
       .select('id')
       .single()
     if (error || !data) {
-      setAvviso(messaggioErrore(error ?? { message: '' }))
+      segnala(d.id, messaggioErrore(error ?? { message: '' }))
       return
     }
     if (opzioni.data && opzioni.data.length > 0) {
@@ -79,7 +81,7 @@ export default function Domande() {
         .from('collegamenti_domanda')
         .insert(collegamenti.data.map((c) => ({ ...c, domanda_id: data.id })))
     }
-    setAvviso(null)
+    togli()
     ricarica()
   }
 
@@ -111,7 +113,8 @@ export default function Domande() {
     )
     if (fuoriPosto) {
       const genitore = elenco.find((x) => x.id === fuoriPosto.mostra_se_domanda_id)
-      setAvviso(
+      segnala(
+        d.id,
         `«${fuoriPosto.testo}» compare solo in base alla risposta a «${genitore?.testo ?? '…'}»: deve restare sotto quella domanda.`,
       )
       return
@@ -125,7 +128,7 @@ export default function Domande() {
       modifiche.map((x) => supabase.from('domande').update({ ordine: x.ordine }).eq('id', x.id)),
     )
     const errore = esiti.find((e) => e.error)?.error
-    setAvviso(errore ? messaggioErrore(errore) : null)
+    segnala(d.id, errore ? messaggioErrore(errore) : null)
     setSposto(false)
     ricarica()
   }
@@ -154,7 +157,6 @@ export default function Domande() {
         </Pulsante>
       </div>
 
-      {avviso && <Avviso>{avviso}</Avviso>}
       {errore && <Avviso>{errore}</Avviso>}
 
       {modifica && (
@@ -167,7 +169,7 @@ export default function Domande() {
           }}
           onSalvato={() => {
             setModifica(null)
-            setAvviso(null)
+            togli()
             ricarica()
           }}
         />
@@ -295,9 +297,10 @@ export default function Domande() {
                           id={d.id}
                           nome={d.testo}
                           onEliminata={ricarica}
-                          onMessaggio={setAvviso}
+                          onMessaggio={(testo) => segnala(d.id, testo)}
                         />
                       </Azioni>
+                      <AvvisoVoce testo={testoDi(d.id)} />
                     </li>
                   )
                 })}

@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import AvvisoVoce from '../../../components/AvvisoVoce'
 import PulsanteElimina from '../../../components/PulsanteElimina'
 import { Avviso, Azioni, Input, Pulsante, Select, StatoPill, TestataSezione } from '../../../components/ui'
 import type { Tables } from '../../../lib/database.types'
 import { messaggioErrore } from '../../../lib/errori'
 import { supabase } from '../../../lib/supabase'
+import { useAvvisoVoce } from '../../../lib/useAvvisoVoce'
 import { useElenco } from '../../../lib/useElenco'
 import DocentiMateria from './DocentiMateria'
 import FormMateria from './FormMateria'
@@ -28,7 +30,7 @@ export default function Materie() {
   const [cerca, setCerca] = useState('')
   const [corsoFiltro, setCorsoFiltro] = useState('')
   const [docentiAperti, setDocentiAperti] = useState<string | null>(null)
-  const [avviso, setAvviso] = useState<string | null>(null)
+  const { segnala, togli, testoDi } = useAvvisoVoce()
 
   async function cambiaStato(m: Materia) {
     if (m.attiva && m.materie_corso.length > 0) {
@@ -38,7 +40,7 @@ export default function Materie() {
       if (!ok) return
     }
     const { error } = await supabase.from('materie').update({ attiva: !m.attiva }).eq('id', m.id)
-    setAvviso(error ? messaggioErrore(error) : null)
+    segnala(m.id, error ? messaggioErrore(error) : null)
     ricarica()
   }
 
@@ -65,7 +67,6 @@ export default function Materie() {
         </Pulsante>
       </TestataSezione>
 
-      {avviso && <Avviso>{avviso}</Avviso>}
       {errore && <Avviso>{errore}</Avviso>}
 
       {modifica && (
@@ -74,7 +75,9 @@ export default function Materie() {
           onAnnulla={() => setModifica(null)}
           onSalvato={(idNuova, problema) => {
             setModifica(null)
-            setAvviso(problema ?? null)
+            const voce = idNuova ?? (modifica === 'nuovo' ? null : modifica.id)
+            if (voce && problema) segnala(voce, problema)
+            else togli()
             ricarica()
             // Se i docenti non sono stati salvati, la materia si apre sul loro pannello per completarli
             if (idNuova && problema) {
@@ -178,9 +181,10 @@ export default function Materie() {
                   id={m.id}
                   nome={m.nome}
                   onEliminata={ricarica}
-                  onMessaggio={setAvviso}
+                  onMessaggio={(testo) => segnala(m.id, testo)}
                 />
               </Azioni>
+              <AvvisoVoce testo={testoDi(m.id)} />
               {docentiAperti === m.id && (
                 <div className="w-full rounded-xl border border-slate-200 bg-slate-50 p-5">
                   <h3 className="mb-3 font-extrabold">Docenti di «{m.nome}»</h3>
